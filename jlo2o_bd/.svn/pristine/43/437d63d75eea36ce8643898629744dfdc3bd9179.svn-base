@@ -1,0 +1,284 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云注册页面</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/reg-main.css" />
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/form/js/ajaxfileupload_bd.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/form/js/form2.js"></script>
+<script type="text/javascript" src="/form/js/JLUpload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/reg.js"></script>
+</head>
+<script type="text/javascript">
+$(document).ready(function(){
+	//$("#header").load("/customer/qfy/head.jsp");
+	$("#footer").load("/customer/qfy/foot.html");
+	//加载地址信息
+	showDQXX("QY");
+})
+
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  	  });	
+  	}
+    if(index==1){
+  	  var dqjb=2;
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  	  });	
+  	}	 			
+  });
+}
+
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	$(list).each(function(i,json){
+  		if(i==0){
+  	 		$(objaft).empty();
+  	  		$(objaft).append("<option value='0'>请选择</option>");
+    	}
+  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  	});
+}
+</script>
+<body>
+	<!-- head开始 -->
+	<!-- <div id="header"></div> -->
+	<!-----公共部门开始---->
+	<div id="header">
+	  <div class="header_main">
+	    <a class="logo" href="/customer/qfy/index.html" target="_parent"><img src="/customer/qfy/images/reg-logo.png" /></a>
+	    <!------------------流程------------------>
+	    <div class="tecPro">
+	      	<div class="userLc">
+	      	<div class="userlcMain">
+	        	<div class="userlcCase"><a class="fxlc_yz">1.创建账户</a></div>
+	        	<div class="userlcCase"><span>→</span></div>
+	        	<div class="userlcCase"><a class="fxlc_zz">2.填写信息</a></div>
+	        	<div class="userlcCase"><span>→</span></div>
+	        	<div class="userlcCase"><a class="fxlc_wz">3.后台审核</a></div>
+	        	<div class="userlcCase"><span>→</span></div>
+	        	<div class="userlcCase"><a class="fxlc_wz">4.注册成功</a></div>
+	      	</div>
+	    </div>
+	  </div>
+	  </div>
+	</div>
+	<!-- head结束 -->
+	<!-- 中间录入部分开始 -->
+	<div class="clera"></div>
+	<div id="main">
+  		<ul class="userName">
+    		<li class="title">2.填写信息</li>
+  		</ul>
+  		<ul class="userName userInfo" id="user_sccj">
+    		<li><h3>基本信息</h3></li>
+    		<li class="line"></li>
+    		<li>
+    			<span>企业名称</span>
+    			<div class="bt">*</div>
+    				<input type="text" id="username" name="username" value="" style="display:none;" />
+    				<input type="text" id="password" name="password" value="" style="display:none;" />
+    				
+    				<input type="text" class="text" id="qymc" name="qymc" value="" onfocusTitle="adfadf" />
+    			<div class="tishi"></div>
+    		</li>
+    		<li>
+    			<span>联系人</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text" id="lxr" name="lxr" value="" />
+    			<div class="tishi"></div>
+    		</li>
+    		<li>
+    			<span>手机</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text"  id="phone" name="phone" value=""/>
+    			<div class="tishi"></div>
+    		</li>
+    		<li>
+    			<span>电话</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text"  id="lxdh" name="lxdh" value=""/>
+    			<div class="tishi"></div>
+    		</li>
+    		<li>
+    			<span>地址</span>
+    			<div class="bt">*</div>
+    			<select name="QYdz01" id="provinceQY" class="bankbox width100">
+                 	<option value="0">请选择</option>
+                </select>
+                <select name="QYdz02" id="cityQY" class="bankbox width100">
+                	<option value="0">请选择</option>
+                </select>
+                <select name="QYdz03" id="countryQY" class="bankbox width100">
+                 	<option value="0">请选择</option>
+                </select>
+    			<input type="text" class="text" id="QYdzdetail" name="QYdzdetail" value=""/>
+    		</li>
+    		<li>
+    			<span>邮箱</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text" id="email" name="email" value=""/>
+    			<div class="tishi"></div>
+    		</li>
+    		<li><h3>企业基本信息</h3></li>
+    		<li class="line"></li>
+    		<li>
+    			<span>法人身份证正面</span>
+    			<div jl jlid="uploadFile" id="div_fssfzzm" field='[{"zdid":"fssfzzm","file":2,"type":"text","filenum":"1"}]' >
+    			<div class="tishi"></div>
+    		</li>
+    		<li>
+    			<span>法人身份证反面</span>
+    			<div jl jlid="uploadFile" id="div_fssfzfm" field='[{"zdid":"fssfzfm","file":2,"type":"text","filenum":"1"}]' >
+    			<div class="tishi"></div>
+    		</li>
+    		<li>
+    			<span>营业执照副本</span>
+    			<div jl jlid="uploadFile" id="div_yyzzfb" field='[{"zdid":"yyzzfb","file":2,"type":"text","filenum":"1"}]' >
+    			<div class="tishi"></div>
+    		</li>
+    		<li>
+    			<span>&nbsp;</span>
+    			<a class="reg_bot" href="#" name="tijiao" onclick="perfectSave()">下一步</a>
+    		</li>
+  		</ul>
+	</div>
+	<!-- 中间录入部分结束 -->
+	<div class="clear"></div>
+	<!-- foot开始 -->
+	<div id="footer" class="clearfix mt20">
+	</div>
+	<!-- foot结束 -->
+</body>
+<script type="text/javascript">
+//判断输入项是否合法
+function checkNull(){
+	if($("#qymc").val().length == 0){
+		alert("请输入企业名称");
+		return false;
+	}
+	if($("#lxr").val().length == 0){
+		alert("请输入联系人");
+		return false;
+	}
+	if($("#phone").val().length == 0){
+		alert("请输入手机号码");
+		return false;
+	}
+	if($("#lxdh").val().length == 0){
+		alert("请输入联系电话");
+		return false;
+	}
+	if($("#provinceQY").val() == "0"){
+		alert("请选择地址");
+		return false;
+	}
+	if($("#email").val().length == 0){
+		alert("请输入邮箱");
+		return false;
+	}
+	if($("#A_file_fssfzzm").val() == undefined){
+		alert("请上传法人身份证正面");
+		return false;
+	}
+	if($("#A_file_fssfzfm").val() == undefined){
+		alert("请上传法人身份证反面");
+		return false;
+	}
+	if($("#A_file_yyzzfb").val() == undefined){
+		alert("请上传营业执照副本");
+		return false;
+	}
+	return true;
+}
+
+//注册完善方法
+function perfectSave(){
+	var flag = checkNull();
+	if(flag){
+		//弹出遮罩层
+		openWait();
+		save();
+	}
+}
+
+//表单保存成功执行
+function formSaveSuccess(rydm){
+	//关闭遮罩层
+	closeWait();
+	//修改注册信息
+ 	var XmlData = {};
+ 	XmlData["ZCXX02"]=$("#qymc").val();
+ 	XmlData["ZCXX03"]=$("#lxr").val();
+ 	XmlData["ZCXX06"]=$("#phone").val();
+ 	XmlData["ZCXX55"]=$("#lxdh").val();
+ 	XmlData["ZCXX09"]=$("#email").val();
+ 	XmlData["XTCZY01"]=rydm;
+ 	//拼接地址
+ 	var ZCXX07="";  //地址编码
+   	var ZCXX08="";  //中文地址
+   	if($("#provinceQY").val() != "0"){
+	  	ZCXX07=$("#provinceQY").val();
+	  	ZCXX08=ZCXX08+$("#provinceQY option:selected").text();
+   	}
+   	if($("#cityQY").val() != "0"){
+	  	ZCXX07=$("#cityQY").val();
+	  	ZCXX08=ZCXX08+$("#cityQY option:selected").text();
+   	}
+   	if($("#countryQY").val() != "0"){
+      	ZCXX07=$("#countryQY").val();
+	  	ZCXX08=ZCXX08+$("#countryQY option:selected").text();
+   	}
+   	ZCXX08=ZCXX08+$("#QYdzdetail").val();
+   	XmlData["ZCXX07"]=ZCXX07;
+   	XmlData["ZCXX08"]=ZCXX08;
+   	
+ 	var url = "/Register/updateRegister.action?XmlData="+JSON.stringify(XmlData);
+ 	var returnVal = visitService(url);
+ 	if(returnVal != "undefined" && returnVal.state == "success"){
+ 		//对cookies企业名称重新赋值
+ 		var MyCookie = $.cookie('userInfo');
+		var userInfo = JSON.parse(MyCookie);
+		userInfo["ZCXX02"] = $("#qymc").val();
+		$.cookie("userInfo", JSON.stringify(userInfo), {
+			expires : 30,
+			path : '/'
+		});
+ 		//跳转到成功页面
+		url = pubJson.O2OUrl+"/customer/qfy/register/registerPerfect2.html";
+		window.location.href=url;
+ 	}
+}
+</script>
+</html>

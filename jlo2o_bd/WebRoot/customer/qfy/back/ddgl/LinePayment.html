@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var dataArr = [];
+  var XmlData = {};
+  XmlData["sqlid"]="com.jlsoft.o2o.order.sql.LinePayment.LinePayment";
+  XmlData["QryType"]="Report";
+  //订单编号
+  XmlData["XSDD01"]=$("#ddbh").val();
+  //线下支付状态
+  XmlData["XSDD51"]=$("#thzt").val();
+  //汇款时间
+  XmlData["date_s"]=$("#date_s").val();
+  XmlData["date_e"]=$("#date_e").val();
+  dataArr.push(XmlData);
+  return  visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+ 
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">往来对账</a>
+    	<span>></span>
+    	<b>线下支付信息审核</b>
+	</div> -->
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+ 	
+ <ul id="screening">
+   <li style="width:830px;">
+     <span>订单编号：</span>
+		<input type="text" id="ddbh" name="ddbh" value="" size="20" class="text" />
+    <span>线下支付状态：</span>
+   	   <select id="thzt" name="thzt" style="width:150px;">
+   	   		<option value="">全部状态</option>
+   	   		<option value="0">默认</option>
+			<option value="1">待审核</option>
+			<option value="2">已审核</option>
+			<option value="3">驳回</option>
+   	   </select>
+   </li>
+   <li>
+   	 <span>按汇款时间查询：</span>
+	<input id="date_s" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+	<span class="z" style="width:20px;">~</span>
+	<input id="date_e" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+   	   <a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+   </li>
+</ul>
+<div class="clera"></div>
+ 
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4" rowClick="open" multiPage="true" height="1500" url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'XSDD01','header':'交易单号','type':'lable','width':'180px'},
+{'property':'HKRQ','header':'汇款日期','type':'lable','width':'90px'},
+{'property':'JYJE','header':'汇款金额','type':'lable','width':'90px'},
+{'property':'HKR','header':'汇款人','type':'lable','width':'80px'},
+{'property':'JYLSH','header':'交易流水号','type':'lable','width':'140px'},
+{'property':'XSDD51','header':'状态','type':'lable','width':'80px'}, 
+{'property':'XSDD01','header':'操作','type':'cwsh','width':'60px'}]" 
+
+>
+</div>
+
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+})
+
+function select_THD(THZT){
+	location.href="/customer/qfy/back/ddgl/LinePayment_item.html?JYLSH="+THZT;;
+}
+</script>

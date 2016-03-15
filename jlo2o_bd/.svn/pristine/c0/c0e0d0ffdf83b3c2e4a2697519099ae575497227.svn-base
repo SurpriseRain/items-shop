@@ -1,0 +1,21 @@
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0}
+body{font-size:12px;font-family:Verdana,"微软雅黑","HelveticaNeue","Helvetica Neue",Arial,sans-serif;-webkit-text-size-adjust:none;color: #6a6a6a}
+
+div[jlid="page_1"] #main{ width:1100px; min-height:380px; margin:20px auto; border-bottom:1px solid #e4e4e4;}
+div[jlid="page_1"] #main.w980{width:1100px;margin:0 auto;}
+div[jlid="page_1"] #main mr20{margin-right:20px}
+div[jlid="page_1"] #main .fore{padding:5px 10px}
+div[jlid="page_1"] .clearfix{display:block;}
+div[jlid="page_1"] .clearfix{display:inline-block}
+div[jlid="page_1"] #main .clearfix .shop_page{width:290px;line-height:26px}
+div[jlid="page_1"] #main .clearfix .w100{width:100%!important}
+div[jlid="page_1"] #main .clearfix .w100 .fr{float:right!important;}
+div[jlid="page_1"] #main .clearfix .w100 .fr a.prev{padding-left:20px;background-position:5px -668px}
+div[jlid="page_1"] .login_left a,.searchbtn,.myhtdbox a,#post .JQ-slide-content li,.serlink ul li h4,.ui-form-label,.indexpro_tit h2,.toplink span.contcsr em,.toplink .hshow em,.toplink .bktop,.toplink .open b.consj,.downicon b,.downicon b.up,.shop_page a.prev,.shop_page a.next{background:url(/control/images/icon.gif) no-repeat}
+div[jlid="page_1"] #main .clearfix .shop_page{width:290px;line-height:26px}
+div[jlid="page_1"] #main .clearfix .shop_page a{padding:4px 6px;border:1px #bfbfbf solid;border-radius:5px;background-color:#fff!important}
+div[jlid="page_1"] #main .clearfix .shop_page a:hover,.shop_page a.current{background-color:#0068b7!important;color:#fff}
+div[jlid="page_1"] #main .clearfix .shop_page a.prev{padding-left:20px;background-position:5px -668px}
+div[jlid="page_1"] #main .clearfix .shop_page a.next{padding-right:20px;background-position:48px -646px}
+
+

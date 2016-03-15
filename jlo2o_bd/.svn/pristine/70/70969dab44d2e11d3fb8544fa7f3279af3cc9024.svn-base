@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>下单成功</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+</head>
+<script type="text/javascript">
+var baseUrl="";
+//获取公用默认图片路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+var user=JSON.parse($.cookie("userInfo"));
+var ddze=$.getUrlParam("zfje");
+var zcxx01=user.ZCXX01;
+var xsdd01=$.getUrlParam("xsdd01");
+var zfje=$.getUrlParam("zfje");
+var ztid=$.getUrlParam("ztid");
+var dzbh=$.getUrlParam("dzbh");
+$(document).ready(function(){
+	$("#header").load("/customer/sydjt/head.jsp");
+	$("#footer").load("/customer/sydjt/foot.html");
+	$("#XSDD01").html(xsdd01);
+	//显示买家信息
+	var xmlData={};
+	xmlData["xsdd01"]=xsdd01;
+	var url="/OrderFlowManage/getOrderMessage.action?json="+JSON.stringify(xmlData);
+	var returnVal=visitService(url);
+	$(".hong").html("￥"+returnVal.XSDD02);
+	$("#shdz").html(returnVal.XSDD20);
+	$("#shr").html(returnVal.ZCXX02+" "+returnVal.ZCXX06);
+	
+	payOnline();
+});
+
+//点击立即支付
+function payOnline(){
+	$(".ljzf").attr("disabled",false);
+	$(".ljzf").on("click",function(){
+	    
+	    var payment=$("input[name='payment']:checked").val();
+		if(payment==undefined){
+		  alert("请选择支付方式！");
+		  return;
+		}
+		$(".ljzf").attr("disabled",true);
+		var xmlData=[];
+		var json={};
+		    json.payment=payment;//支付类型
+			json.XSDD01=xsdd01;//订单号
+			json.AMOUNT=zfje;//订单总金额
+			json.ZTID=ztid;//主体公司
+			json.HBID=user.ZCXX01;//伙伴
+			/**物流信息**/
+			json.logistics_type="EXPRESS";//物流类型
+			json.logistics_fee="0.00";//物流费用
+			json.logistics_payment="SELLER_PAY";//物流支付方式
+			/**收货信息**/
+			var addressList = queryADRESS();
+			json.WIDreceive_name=addressList[0].SHRMC;//"张三";//收货人姓名
+			json.WIDreceive_address=addressList[0].ADDRESS;//"北京市海淀区";//收货人地址
+			json.WIDreceive_zip=addressList[0].YZBM;//"123456";//收货人邮编
+			json.WIDreceive_phone=addressList[0].GDDH;//"0571-88158090";//收货人电话号码(固定电话)
+			json.WIDreceive_mobile=addressList[0].MOBILE;//"13312341234";//收货人手机号码
+			xmlData.push(json);
+			window.open("/AlipayOnline/payOnline.action?r="+Math.random()+"&XmlData="+JSON.stringify(xmlData),"_blank");
+	});
+}
+
+//查询收货地址
+function queryADRESS(){
+  var xmlData=[];
+  var json={};
+	  json.ZCXX01=user.ZCXX01;
+	  json.DZBH=dzbh;
+   xmlData.push(json);
+   var url="/CartManage/selectAddressInfo.action?XmlData="+JSON.stringify(xmlData);
+   var spList=visitService(url).ADDRESSLIST;
+   return spList;
+}
+</script>
+<body>
+<!-- head开始 -->
+<div id="header"></div>
+<!-- head结束 -->
+<!-- 中间展示开始 -->
+<div style="width:1200px; margin:10px auto;">
+	<div id="first">
+		<img src="/customer/sydjt/images/gou.png" class="gou" />
+		<span class="jiacu"><b class="cg" style="width:180px;">订单:<a href="#" id="XSDD01">DD1111111</a>&nbsp;总价:</b><b class="hong">￥406.00</b></span>
+		<span>&bull;&nbsp;收货地址：<b id="shdz">背景朝阳区三环以内中关村南大街6号中电信息大厦1508</b></span>
+		<span>&bull;&nbsp;收&nbsp;&nbsp;货&nbsp;&nbsp;人：<b id="shr">王智勇 139******7636</b></span>
+		<!-- <span>&bull;&nbsp;商品名称：卫客发动机润滑剂，华众离合器盘</span> -->
+	</div>
+	<div id="first">
+		<b class="xz">选择支付方式并付款</b>
+		<div class="xuanze">
+			<input class="zhifu" name="payment" type="radio" value="6" checked="checked"/>
+			<img src="/customer/sydjt/images/zhifubao.png" />
+		</div>
+	</div>
+	<a class="ljzf">立即支付</a>
+</div>
+<!-- 中间展示结束 -->
+<!-- foot开始 -->
+<div id="footer" class="clearfix mt20">
+</div>
+<!-- foot结束 -->
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPubxg.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Basinfo.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script> 
+<script type="text/javascript" src="/js/json2.js"></script>
+<script language="javascript"  src="http://webapi.amap.com/maps?v=1.3&key=b2992a19dfcee083c3e8647b38db8420"></script>
+<script type="text/javascript" src="/js/amap.js"></script>
+<style>
+#zhezhao{
+ background:#fff;
+    height: 40%;
+    left: 28%;
+  position: fixed;
+    top: 13px;
+    width: 35%;
+    z-index: 2147483647;
+    border:1px solid #e4e4e4;
+
+}
+#zhezhao ul{
+margin-top:30px;
+margin-left:35px;
+}
+
+#zhezhao li{
+height:53px;
+width:100%;
+margin-left:20px;
+
+}
+#zhezhao li span{
+}
+#zhezhao li input{
+border:1px solid #e4e4e4;
+width:212px;
+height:32px;
+}
+.yzm{
+ background: #ff4a00 none repeat scroll 0 0;
+    border: 1px solid #e4e4e4;
+    display: inline-block;
+    height: 33px;
+    margin-left: 10px;
+    width: 79px;
+}
+.yzm span{
+color:#fff;
+font-size:12px;
+margin-left:10px;
+margin-top:8px;
+display: inline-block;
+}
+.yzm b{
+color:#fff;
+font-size:12px;
+margin-left:26px;
+margin-top:8px;
+display: inline-block;
+}
+.shzt{
+color:red;
+font-size:18px;
+}
+.bhyj{
+margin-left:15px;
+}
+.xs label:hover,.cc label:hover{
+	text-decoration:underline;
+}
+.single_main{width:829px;height:auto;border:1px solid #e4e4e4;line-height:30px;text-indent:20px;}
+.single_table1 li,.single_table2 li{width:200px;padding:0 0 0 30px;float:left;text-align:left;}
+.clearfix:after{content:'.';display:block;visibility:hidden;height:0;clear:both;zoom:1;}
+</style>
+</head>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<input type="hidden" value="" id="ZCXX01" name="ZCXX01" />
+	<input type="hidden" value="" id="ZCGS01" name="ZCGS01"/>
+	<table class="single_table">
+		<tr>
+			<td colspan="2" style="font-size: 15px"><b>物流辐射区域:(为帮助您销售地域更广泛,物流区域选择后不可取消)</b></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">物流选择：</span></td>
+			<td class="wl"  style='300px;'>
+				<select id="wlxz" class="wlxz" title="">
+				<option value="0">安迅物流</option></select> 
+			</td>
+		</tr>	
+		
+		<!-- <tr>
+			<td style="width: 150px;"><span style="width: 145px;">添加区域：</span></td>
+			<td class="add1" ><select id="provinceQY" class="dy" title="">
+				<option value="0">请选择</option></select> 
+				<select id="cityQY"><option value="0">请选择</option></select>
+				<label class="caozuo" onclick="tj()">添加</label>
+				<div class="tishi"></div>
+			</td>
+		</tr> -->
+	</table>
+	<div class="clearfix"></div>
+	<div class="single_main clearfix" style="margin-top:20px;border-bottom:none;">
+		<h4>已选仓库:</h4>
+		<ul class="single_table1"></ul>
+	</div>
+	<div class="single_main clearfix " style="border-top:none;margin-bottom:20px;">
+		<h4>未选仓库:</h4>
+		<ul class="single_table2"></ul>
+	</div>
+	<!-- 存数据 -->
+	<table class="con">
+	</table>
+	
+	<table class="single_tables">
+		<tr class="bot">
+			<td colspan="2"><a style="margin-left: 193px;" class="bot Medium" id="baocun" onclick="ok()">保存</a></td>
+			<td colspan="2"><a style="margin-left: 193px;" class="bot Medium" id="baocun" onclick="goBack()">返回</a></td>
+		</tr>
+	</table>
+	
+</form>
+<!---------------------底部--------------------->
+<script type="text/javascript">
+var zcxx01 = null;
+//初始化数据
+$(document).ready(function(){
+	indate();
+});
+
+
+function indate(){
+	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	//加载地址信息
+	//初始化数据
+    zcxx01=userCookie.ZCXX01;
+	var wlid = "AXWL";
+	var json = {"zcxx01":zcxx01,"wlid":wlid};
+	var url = "/Oper_FWSGL/select_QYFGFW.action?jsonData=" + JSON.stringify(json);
+	var returnData=visitService(url);
+	//已经存在的实体仓库
+	var u =returnData.resultList;
+	//物流仓库
+	var wl = returnData.wlList;
+	if(wl.length == 0){
+	}else{
+		for (var i = 0; i < wl.length; i++){
+			$(".single_table2").append("<li  class='"+wl[i].ck01+"'><input type='checkbox' name='abc'   id='"+wl[i].ck01+"' value='"+wl[i].ck01+"' '> <td style='width: 150px;'><span style='width: 145px;' id='"+wl[i].ck01+"' >"+wl[i].ck02+"</span></li>");
+			}
+		for (var j = 0; j < u.length; j++){
+			$("."+u[j].ck01).remove();
+			$(".single_table1").append("<li><td style='width: 150px;'><span style='width: 145px;' id='"+u[j].ck01+"' >"+u[j].ck02+"</span></li>");
+			/* $("#"+u[j].ck01).attr("disabled",true);
+			$("#"+u[j].ck01).attr("checked",true);
+			$("#"+u[j].ck01).attr("name","abcd"); */
+		}
+	}
+}
+
+function ok(){
+		var abc=document.forms[0].abc;
+		var jdate=[];
+		for (i=0;i<abc.length;++ i){
+		if (abc[i].checked){
+		var id=abc[i].value;
+			jdate.push(id);
+		        }
+		}
+		if (jdate.length == 0) {
+			alert("未选择任何仓库");
+			return false;
+		}else{
+			var jsonData = [{"jdate":jdate,"zcxx01":zcxx01}];
+		    var url="/Oper_FWSGL/insert_FWSWL.action?jsonData="+JSON.stringify(jsonData);
+		    var rData=visitService(url);
+		    if(rData.STATE==1){
+		        	alert("操作成功!");
+		        	location.reload();
+		        }else{
+		        	alert("操作失败!");
+		        }
+		}
+	}
+	
+function goBack(){
+	window.location.href = "/customer/qfy/back/qxgl/Oper_FWSGL.html";
+}
+</script>
+</body>
+</html>

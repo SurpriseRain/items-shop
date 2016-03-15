@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<title>汽服云 - 个人中心</title>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/form/js/currentLog.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/menu.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<style>
+#main{
+  height: 800px;
+    margin: 30px auto 0;
+    width: 1190px;
+}
+#nav_top{
+   border-bottom: 2px solid #e4e4e4;
+    height: 42px;
+    width: 94%;
+}
+.nav_con{
+      float:left;
+    margin: 0 auto;
+    width: 60%;
+    height:40px;
+}
+.xxa{
+color: #000;
+    float: left;
+    font-size: 16px;
+    height: 40px;
+    width: 115px;
+}
+.xxb{
+   float: right;
+    margin-top: 11px;
+    width: 13%;
+}
+.xxb input{
+  margin-top:2px;
+}
+.xxb span{
+    color: #0a0404;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-top: 14px;
+}
+.hda{
+ border-bottom: 3px solid #ff4a00;
+    color: #ff4a00;
+    font-size: 22px;
+      height: 40px;
+    width: 115px;
+}
+.ya{
+clear:both;
+}
+.nav_cen{
+    height: atuo;
+    width: 94%;
+    min-height:400px;
+    margin-top:10px;
+}
+.xxd{
+  widht:100%;
+  height:80px;
+  border-bottom:1px  dashed #e4e4e4;
+}
+.xx_left{
+widht:30%;
+height:80px;
+line-height:80px;
+float:left;
+}
+.xx_left img{
+     margin-left: 48px;
+    margin-top: 19px;
+}
+.xx_rightc{
+  float: left;
+    font-size: 16px;
+    height: 60px;
+    line-height: 33px;
+    margin-left: 52px;
+    width: 70%;
+}
+.xx_rightc p{
+height: 60px;
+    margin-top: 1px;
+    color:#7f7f7f;
+}
+.xx_rightc p span{
+color:#4686c5;
+}
+.ckxq{
+margin-left:20px;
+color:#4686c5;
+}
+.nav_bottom{
+ border-top: 2px solid #e4e4e4;
+ height:40px;
+ line-height:40px;
+ width:100%;
+ margin:10px auto;
+}
+.nav_bottoms{
+  width:35%;
+  margin:10px auto;
+  height:100%:
+}
+.nav_bo{
+float:left;
+width:19%;
+margin:10px auto;
+color:#7f7f7f;
+font-size:16px;
+margin-left:20px;
+}
+.nav_boo{
+float:left;
+width:70%;
+margin:10px auto;
+}
+.nav_boo{
+    background: #f5f5f5 none repeat scroll 0 0;
+    border: 1px solid #d9d9d9;
+    color: #7f7f7f;
+    font-size: 13px;
+    height: 41px;
+    line-height: 41px;
+    margin-left: 20px;
+    width: 94px;
+}
+.nav_boo a{
+margin-left:20px;
+color:#000;
+}
+.nav_ss{
+margin-left:14px;
+}
+.nav_ssa{
+margin-left:-5px;
+}
+</style>
+</head>
+<body>
+<div id="main">
+  <div id="nav_top">
+    <ul class="nav_con">
+        <li class="xxa hda">所有消息</li>
+        <li class="xxa">消息通知</li>
+        <li class="xxa">气服云公告</li>
+    </ul>
+    <div class="xxb"><input type="checkbox" name="iTo" value="2"><span>只显示未读信息</span></div>
+  </div>
+   <div class="ya"></div>
+   <div class="nav_cen">
+	   <ul>
+	         <li class="xxd">
+	         <div class="xx_left">
+	          <div class="xx_left"><img height="26" alt="" src="/customer/qfy/images/tubiao.png"/></div>
+	         </div>
+	          <div class="xx_rightc"><p>服务订单<span>1234567890</span>上的商品<span>【版本】发动机进气道清洗剂</span>已成功取件，预计在2015-09-19时到达xxx售后部进行拆包登记 <span class="ckxq">查看详情》</span></p></div>
+	         </li>
+	         <li class="xxd">
+	         <div class="xx_left">
+	          <div class="xx_left"><img height="26" alt="" src="/customer/qfy/images/tubiao.png"/></div>
+	         </div>
+	          <div class="xx_rightc"><p>服务订单<span>1234567890</span>上的商品<span>【版本】发动机进气道清洗剂</span>已成功取件，预计在2015-09-19时到达xxx售后部进行拆包登记 <span class="ckxq">查看详情》</span></p></div>
+	         </li>
+	         <li class="xxd">
+	         <div class="xx_left">
+	          <div class="xx_left"><img height="26" alt="" src="/customer/qfy/images/tubiao.png"/></div>
+	         </div>
+	          <div class="xx_rightc"><p>服务订单<span>1234567890</span>上的商品<span>【版本】发动机进气道清洗剂</span>已成功取件，预计在2015-09-19时到达xxx售后部进行拆包登记 <span class="ckxq">查看详情》</span></p></div>
+	         </li>
+	   </ul>
+   </div>
+     <div class="nav_bottom">
+      <div class="nav_bottoms"> 
+        <div class="nav_bo"><input type="checkbox" name="iToa" value="2"><span>全选本页</span></div>
+         <div class="nav_boo"><a href="#"><span class="nav_ssa">标记为以读</span></a></div>
+         <div class="nav_boo"><a href="#"><span class="nav_ss">删除</span></a></div>
+      </div>
+     </div>
+</div>
+
+<script type="text/javascript">
+$(".xxa").mouseover(function(){
+	  $(".xxa").removeClass("hda");
+	  $(this).addClass("hda");
+});
+</script>
+</body>
+
+</html>

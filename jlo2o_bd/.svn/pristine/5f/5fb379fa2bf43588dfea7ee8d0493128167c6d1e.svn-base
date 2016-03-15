@@ -1,0 +1,15 @@
+<h3>推广商品</h3>
+<ul class="w12"><!--推广商品截点--></ul>
+<script type="text/javascript">
+$(".paging").load("../分页.html");
+$(document).ready(function(){
+  for(var i=0;i<6;i++){
+  $(".pro_list_left > ul").append('<li>'
+	                       +'<img src="'+proInfo[0].proImg+'"/>'
+	                       +'<p><a>'+proInfo[0].proName+'</a></p>'
+						   +'<b><i class="fa fa-rmb"></i>'+proInfo[0].proPic+'</b>'
+						   +'<div class="p_review">已有<a href="#" target="_blank" class="number">'+proInfo[0].proPingjia+'</a>人评价</div>'
+						   +'</li>');
+   }
+})
+</script>

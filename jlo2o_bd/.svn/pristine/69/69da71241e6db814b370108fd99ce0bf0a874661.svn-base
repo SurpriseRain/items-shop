@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/defaultPj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/stylePj.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+
+<script type="text/javascript" src="/control/js/tableGrid.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+
+</head>
+<body>
+	<div id="curPosition" >
+    	<a href="#">订单管理</a>
+    	<span>></span>
+    	<a href="#">商品评价管理</a>
+    	<span>></span>
+    	<b>评价明细</b>
+	</div>
+	<div class="clera"></div>	
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="false" url="/jlquery/selecto2o.action"
+		columnsArr="[
+		{'property':'SPXX01','header':'商品编码','type':'lable','width':'100px'},
+		{'property':'SPMC','header':'商品名称','type':'lable','width':'300px'},
+		{'property':'GMJG','header':'订单价格','type':'lable','width':'100px'},
+		{'property':'GMSL','header':'订单数量','type':'lable','width':'80px'},
+		{'property':'SPJE','header':'金额小计','type':'lable','width':'100px'}]"
+		
+		>
+		</div>
+	</div>
+
+<form id="form1" name="form1" action="">
+<div style="width: 830px;float: left;border-bottom: 1px solid #3061ef;">	</div>
+    <div id="star" class="clearfix">
+       <div class="starasses">
+          <span class="s_name" >商品描述相符：</span>
+<!--           <input type="hidden" id="SPPJ03_0" name="SPPJ03" value="SPPJ03"> -->
+          <ul class="square_ul fl" id="testid">
+            <li><a class="square-1" id="SPPJ03_1" title="很差"  ></a></li>
+            <li><a class="square-2" id="SPPJ03_2" title="一般"  ></a></li>
+            <li><a class="square-3" id="SPPJ03_3" title="好"   ></a></li>
+            <li><a class="square-4" id="SPPJ03_4" title="很好"  ></a></li>
+            <li><a class="square-5" id="SPPJ03_5" title="非常好" ></a></li>
+          </ul>
+          <span class="s_result_square fl" id="title_SPPJ03">请打分</span>
+        </div>
+       <div class="starasses">
+          <span class="s_name">物流发货速度：</span>
+          <ul class="square_ul fl">
+            <li><a class="square-1" id="SPPJ04_1" title="差" ></a></li>
+            <li><a class="square-2" id="SPPJ04_2" title="一般" ></a></li>
+            <li><a class="square-3" id="SPPJ04_3" title="好" ></a></li>
+            <li><a class="square-4" id="SPPJ04_4" title="很好" ></a></li>
+            <li><a class="square-5" id="SPPJ04_5" title="非常好" ></a></li>
+          </ul>
+          <span class="s_result_square fl" id="title_SPPJ04">请打分</span>
+        </div>
+        <div class="starasses">
+          <span class="s_name">客服服务态度：</span>
+          <ul class="square_ul fl">
+            <li><a class="square-1" id="SPPJ05_1" title="差" ></a></li>
+            <li><a class="square-2" id="SPPJ05_2" title="一般" ></a></li>
+            <li><a class="square-3" id="SPPJ05_3" title="好" ></a></li>
+            <li><a class="square-4" id="SPPJ05_4" title="很好" ></a></li>
+            <li><a class="square-5" id="SPPJ05_5" title="非常好" ></a></li>
+          </ul>
+          <span class="s_result_square fl" id="title_SPPJ05">请打分</span>
+        </div>
+        <div class="starasses">
+          <span class="s_name">配送人员态度：</span>
+          <ul class="square_ul fl">
+            <li><a class="square-1" id="SPPJ06_1" title="差" ></a></li>
+            <li><a class="square-2" id="SPPJ06_2" title="一般" ></a></li>
+            <li><a class="square-3" id="SPPJ06_3" title="好" ></a></li>
+            <li><a class="square-4" id="SPPJ06_4" title="很好" ></a></li>
+            <li><a class="square-5" id="SPPJ06_5" title="非常好" ></a></li>
+          </ul>
+          <span class="s_result_square fl" id="title_SPPJ06">请打分</span>
+        </div>
+      </div>
+      <div id="assestxt">
+          <div class="assleft">评价内容：</div>
+          <div class="assright">
+              <textarea id="textarea" name="SPPJ07"></textarea>
+          </div>
+        </div><!--  
+      <div id="assestxt" style="display:block;">
+          <div class="assleft">回复内容：</div>
+          <div class="assright">
+              <textarea id="textarea2" name="response"></textarea>
+          </div>
+          <button class="dis button" onclick="fabu();" >回复</button>
+        </div>-->
+</form>
+</body>
+</html>
+<script type="text/javascript">
+var XSDD01=null;
+var i=0;
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	XSDD01 = rowObj.find("#XSDD01").val();
+
+	var SPXX01 = rowObj.find("#SPXX01").val();
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectSPPJ','dataType':'Json','SPXX01':SPXX01,'XSDD01':XSDD01}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	var sppj03 = rData[0].sppj03;
+	var sppj04 = rData[0].sppj04;
+	var sppj05 = rData[0].sppj05;
+	var sppj06 = rData[0].sppj06;
+	setStars("SPPJ03",sppj03);
+	setStars("SPPJ04",sppj04);
+	setStars("SPPJ05",sppj05);
+	setStars("SPPJ06",sppj06);
+	$("#textarea").val(rData[0].sppj07);
+	$("#textarea").attr("disabled",true);
+	
+	i=1;
+	init();
+}
+
+function setStars(loc, star) {
+	$("#"+loc).val(star);
+	$("#title_"+loc).html($("#"+loc+"_"+star).attr("title"));
+	for (var i = 1; i <= star; i++) {
+		$("#" + loc + "_" + i).attr("class","square-" + i + " " + "active-square");
+	}
+	for(var i = star+1; i <= 5; i++){
+		$("#" + loc + "_" + i).attr("class","square-" + i);
+	}
+}
+</script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  if(i>0){	
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.Srch_OrderItem','QryType':'Report','dataType':'Json','XSDD01':XSDD01}];
+  return visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+  }
+  else{}
+}
+</script>
+
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+
+

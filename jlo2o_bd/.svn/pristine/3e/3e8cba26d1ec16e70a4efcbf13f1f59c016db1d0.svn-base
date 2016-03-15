@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="Keywords" content="汽车零配件同质配件、零配件同质配件、汽车零配件、同质配件、汽服云、汽后服云、中国汽车维修协会">
+	<title>商家首页商品展示</title>
+	<link rel="stylesheet" href="../css/shopshow.css">
+	<link rel="stylesheet" type="text/css" href="../css/public.css" />
+	<link rel="stylesheet" type="text/css" href="../css/qypublic.css" />
+	<link rel="stylesheet" type="text/css" href="../css/qy_allgoodsfl.css" />
+	<link rel="stylesheet" type="text/css" href="../css/products-main.css" />
+	<link rel="stylesheet" type="text/css" href="/customer/qfy/css/head.css" />
+	<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+	<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+	<link rel="stylesheet" type="text/css" href="../css/lunboStyle.css" />
+	<link rel="stylesheet" type="text/css" href="../css/lunboStyle0.css" />
+	<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+	<style>
+	#qfy-copyright p a{color:#000;text-decoration:none;}
+	#qfy-copyright p a:hover{color:#ff6700;text-decoration:underline;}
+	</style>
+</head>
+<body>
+	<!-----公共部门开始---->
+	<div id="shopHead"></div>
+	<div class="clera"></div>
+	<div class="container">
+		<div class="banner">
+			<div id="wrapper">
+				<div class="callbacks_container">
+					<ul class="rslides" id="slider4">
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="content">
+			<div class="shopLeft">
+				<ul class="shopxx">
+					<li class="shopbox">
+						<h4>店铺信息</h4>
+						<div class="shopJbxx">
+							<ul>
+								<li><h3 id="dpmc"></h3></li>
+								<li>创建店面时间：<span id="cjsj"></span></li>
+								<li>经营模式：<span id="jyms"></span></li>
+								<!-- <li>所在地区：<span id="szdq"></span></li> -->
+							</ul>
+							<a href="#" onclick="scdp()">收藏店铺</a>
+
+						</div>
+					</li>
+					<li>
+						<h4>经销品牌</h4>
+						<a id="jxppMore" href="#">更多&gt;&gt;</a>
+						<div class="shopJbxx shopImg shopH" id="jxppImg">
+								
+							<div class="clear"></div>
+						</div>
+						
+						
+					</li>
+					<li>
+						<h4>企业资质</h4>
+						<a id="qyzzMore" href="#">更多&gt;&gt;</a>
+						<div class="shopJbxx shopImg shopH" id="qyzzImg">
+						
+							<div class="clear"></div>
+						</div>
+					</li>
+					<li>
+						<h4>联系我们</h4>
+						<div class="shopJbxx shopH">
+							<p>经营地址：<span id="jydz"></span></p>
+							<ul class="shoplxr">
+								<li>联系人：<span id="lxr"></span></li>
+								<li>电&nbsp;&nbsp;&nbsp;话：<span id="lxdh"></span></li>
+								<li>邮&nbsp;&nbsp;&nbsp;箱：<span id="email" title=""></span></li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="shopRight">
+				<div class="shopPX">
+					<ul class="sx-left">
+						<!-- <li><a id="shubiao2" title="点击月销量从高到低" class="jiangxu px2">综合</a></li> -->
+						<li><a id="shubiao1" title="点击月销量从高到低" class="jiangxu px1">销量</a></li>
+						<li><a id="shubiao5" title="点击后按照上架时间排序" class="shenxu px2 sjss" style="display:none;">上架时间</a></li>
+						<li><a id="shubiao6" title="点击后按照上架时间排序"  class="jiangxu px2 sjss">上架时间</a></li>
+						<!-- <li><a id="shubiao3" title="点击价格从高到低" class="jiangxu px3">价格</a></li>
+						<li><a id="shubiao4" title="点击价格从低到高" class="shenxu px4">价格</a></li> -->
+						<a href="#" id="qbspMore" class="shopgd">更多&gt;&gt;</a>	
+					</ul>
+				</div>
+					<div class="clera"></div>
+				    <div class="shopshow" jl jlid="splist_1" id="z1" url="/getSpxx.do" >
+				 		<ul class="pro-case" id="xpsj"></ul>
+				 	    <div class="clera"></div>
+				 	</div>
+			</div>
+		</div>
+	</div>
+	<div class="clera"></div>
+	<div id="footer"></div>
+	
+	<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+	<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="/js/jquery.pagecommon.js"></script>
+	<script type="text/javascript" src="/js/edlg.min.js"></script>
+	
+	<script type="text/javascript" src="../js/responsiveslides.min.js"></script>
+	<script type="text/javascript">
+		var MyCookie = $.cookie('userInfo');
+		var usercookie = JSON.parse(MyCookie);
+		var DQXX01="120100";
+		var imgUrl = pubJson.path_sptp;//图片默认路径 +"/sptp/"
+		//获取公用默认图片路径
+		//var defaultImgUrl = pubJson.defaultImgUrl;
+		var defaultImgUrl = "/customer/qfy/images/cptpzq.png";
+		var defaultDpxxImgUrl = "/customer/qfy/images/dpmsimg.png";
+		var defaultBannerImgUrl = "/customer/qfy/images/bannermsimg.jpg"
+		//var defaultDpxxImgUrl = pubJson.defaultDpxxImgUrl;
+		var baseUrl = "";	
+		var rmssc = "";
+		var pagesize = "9";//分页
+		var fileName = "";
+		var gsid = $.getUrlParam("gsid");
+		var sppx = 6;
+		$(document).ready(function(){
+			$("#header").load("/customer/qfy/showDpxx/shopHead.html");	
+			$("#footer").load("/customer/qfy/foot-08.html");
+			selectCarousel(); // 轮播图显示
+			selectSellersInfo(); // 展示店铺信息
+			selectSpecialGoods();//展示新品
+			$("#jxppMore").attr("href","/customer/qfy/showProduct/pinpai.html?gsid=" + gsid);
+			$("#qyzzMore").attr("href","/customer/qfy/showDpxx/shopOverview.html?gsid=" + gsid + "#zzrzxx");
+			$("#qbspMore").attr("href","/customer/qfy/showDpxx/shopAllGoods.html?gsid=" + gsid);
+		    $(".sx-left a").each(function(index){
+		    	$(this).click(function(){
+		    		// 隐藏的属性显示
+		    		// 显示的属性隐藏
+		    		if($(this).hasClass("sjss")){
+		    			if($(this).hasClass("shenxu")){
+		    				$(".sx-left .px2").attr("style","display: none;").show().css({'background':'url(../images/sx-ico.png) no-repeat 55px -40px'});
+		    				
+		    			}else{
+		    				$(".sx-left .px2").attr("style","display: none;").show().css({'background':'url(../images/sx-ico.png) no-repeat 55px 3px'});
+				    		
+		    			}
+		    			$(this).attr("style","display: none;");
+		    		}
+		    		addrssid = $(this).attr("id");
+		    		id = addrssid.replace('shubiao','');
+	    			$(".sx-left a").removeClass('current');
+	    			$("#shubiao"+id).addClass('current');
+	    			sppx = id;
+	    			selectSpecialGoods();
+	    		});
+	    	});
+		    $("#shopHead").load("/customer/qfy/showDpxx/shopHead.html?ss="+Math.random());
+		});
+		/*箭头样式操作*/
+		$(document).ready(function(){
+			$('#shubiao5').mouseover(function(){
+				$(this).css({'background':'url(../images/sx-ico.png) no-repeat 55px -20px'})
+				}).mouseout(function(){
+					$(this).css({'background':'url(../images/sx-ico.png) no-repeat 55px 6px'})
+				})
+			$('#shubiao6').mouseover(function(){
+				$(this).css({'background':'url(../images/sx-ico.png) no-repeat 55px -65px'})
+				}).mouseout(function(){
+					$(this).css({'background':'url(../images/sx-ico.png) no-repeat 55px -39px'})
+				})
+		})
+		
+		// 店铺信息
+		function selectSellersInfo(){
+			var jsonData = [{"ZCXX01":gsid}];
+			var url = "/SellersShop/selectSellersInfo.action?jsonData=" + JSON.stringify(jsonData);
+			var dpxxData = visitService(url);
+			if(dpxxData.STATE == "1"){
+				$("#dpmc").html(dpxxData.dpxxList[0].ZCXX02);
+				$("#cjsj").html(dpxxData.dpxxList[0].ZCXX14);
+				var jyms = "";
+				if(dpxxData.dpxxList[0].LX == "42"){
+					jyms = "经销企业"
+				} else if(dpxxData.dpxxList[0].LX == "43"){
+					jyms = "生产厂家"
+				}
+				$("#jyms").html(jyms);
+				/* $("#szdq").html(dpxxData.PROVINCE + "&nbsp;&nbsp;" + dpxxData.CITY); */
+				for(var i = 0; i < dpxxData.pptpList.length; i++){
+					var jxppStr = "";
+					jxppStr+="<img id='jxppImg" + i + "' src='" + imgUrl + "/pptp/" + dpxxData.pptpList[i].PPTP02 + "' alt=''>";
+					$("#jxppImg").append(jxppStr);
+					$("#jxppImg" + i).attr("onerror","this.onerror=null;this.src='"+defaultDpxxImgUrl+"'");
+				}
+				for(var i = 0; i < dpxxData.dpxxList.length; i++){
+					var qyzzStr = "";
+					qyzzStr+="<img id='qyzzImg" + i + "' src='" +  imgUrl + "/dptp/" + gsid + "/" + dpxxData.dpxxList[i].DPTP02 + "' alt=''>";
+					$("#qyzzImg").append(qyzzStr);
+					$("#qyzzImg" + i).attr("onerror","this.onerror=null;this.src='"+defaultDpxxImgUrl+"'");
+				}
+				$("#jydz").html(dpxxData.dpxxList[0].ZCXX08);
+				$("#lxr").html(dpxxData.dpxxList[0].ZCXX03);
+				$("#lxdh").html(dpxxData.dpxxList[0].ZCXX06);
+				var email = dpxxData.dpxxList[0].ZCXX09;
+				var mail = email.length > 15 ? email.substring(0,15)+"..." : email;
+				$("#email").attr("title",email).html(mail).css({"cursor":"pointer"});
+			}
+		}
+		
+		// 轮播图显示
+		function selectCarousel(){
+			
+			var jsonData = [{"ZCXX01":gsid}];
+			var url = "/SellersShop/selectDPLBT.action?jsonData=" + JSON.stringify(jsonData);
+			var dplbtData = visitService(url);
+			if(dplbtData.dplbtList.length > 0){
+				$(dplbtData.dplbtList).each(function(ind, lbt){
+					var str = "";
+					str+="<li>";
+					str+="<a href='" + lbt.FILE05 + "'>";
+					str+="<img src='" + imgUrl + "/banner/" + gsid + "/" + lbt.FILE02 + "' onerror='this.onerror=null;this.src=\"" + defaultBannerImgUrl + "\"' alt=''>";
+					str+="</a>"
+					str+="</li>"
+					$("#slider4").append(str);
+				});
+			} else {
+				var str = "<img src='" + defaultBannerImgUrl + "' alt=''>";
+				$("#slider4").append(str);
+			}
+			
+			
+			 $("#slider4").responsiveSlides({
+					auto: true,
+					pager: true,
+					nav: true,
+					speed: 500,
+					namespace: "callbacks",
+					before: function () {
+					  $('.events').append("<li>before event fired.</li>");
+					},
+					after: function () {
+					  $('.events').append("<li>after event fired.</li>");
+					}
+				  });
+		}
+		//商品展示
+		function selectSpecialGoods(){
+			var xmlData = [];
+			var spJson = {};
+				spJson.gsid = gsid;
+				spJson.sppx = sppx;
+				spJson.DQXX01 = DQXX01;
+				spJson.sqlid = "com.jlsoft.o2o.PCproduct.selectAllGoods";
+				spJson.dataType = "Json";
+				spJson.limit = 9;
+				xmlData.push(spJson);
+	
+				//查询总数量
+				var url =  "/jlquery/selecto2o.action?XmlData=" + JSON.stringify(xmlData); 
+				
+				$.ajax({
+				    type: "GET",  //请求方式
+				    url:encodeURI(url),
+				    async:false,
+				    success: function(data){
+				      if (data != null){
+				        try{
+				        	var json = jQuery.parseJSON(data);
+				        	//展示数据
+				            showSPXX(json.data);
+				          	//返回文件名
+				            fileName =  json.fileName;
+				    		$('.pager').kkPages({ 
+				    	 	   PagesClass:'li.jl', //需要分页的元素
+				    	 	   RowNum:json.data.length,
+				    	 	   FileName:fileName,
+				    	 	   PagesMth:pubJson.PagesMth, //每页显示个数 
+				    	 	   PagesNavMth:pubJson.PagesNavMth, //显示导航个数
+				    	 	   callback:function(pageData){
+									showSPXX(pageData);
+							   }
+				    	 	});
+				        }catch(e){
+				          return;
+				        }
+				      }
+				    },
+			    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+			        }
+				});
+				
+		}
+		//展示数据
+		function showSPXX(rData0){
+			var returnVal = rData0;
+			var spObj = $(".pro-case");
+			spObj.empty();
+			$(returnVal).each(function(j,lcsp){
+				//楼层商品图片路径
+				var lcspUrl = "";
+				if(lcsp.SPTP02 == null || lcsp.SPTP02 == undefined){
+					lcspUrl = defaultImgUrl;
+				}else{ 
+					lcspUrl=imgUrl+"/"+"sptp"+"/"+lcsp.ZCXX01+"/"+lcsp.SPXX02+"/images/"+lcsp.SPXX02+"_" + lcsp.SPTP01 + "_big."+lcsp.SPTP02;
+				}
+				spObj.append('<li class="jl"><a class="img"><img id="sptp_' + j + '" src="' + lcspUrl + '" onerror="this.onerror=null;this.src=\'' + defaultImgUrl + '\'" /></a><div class="pro-name"><a href="" class="shopTitle" title=""></a></div><div class="pro-pic"><span class="shop-pp">品&nbsp;牌：'+lcsp.ppb02+'</span></div><div class="pro-pic"><span class="shop-oem">OEM：'+lcsp.SPGLLJH01+'</span></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp" href=""></a></div><div class="pro-pic"><span class="shop-oldjg">原&nbsp;价：<b class="shop-jg"></b></span></div></li>');
+				//商品图片和链接
+				spObj.find("li").eq(j).find("a").first().attr("href","/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02));
+				//spObj.find("li").eq(j).find("a").first().attr("href","/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).find("img").attr("src",lcspUrl).attr("onerror","this.onerror=null;this.src='"+defaultImgUrl+"'");
+				//商品名称和链接
+				spObj.find("li").eq(j).find("div.pro-name").find("a").attr("href","/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).attr('title',lcsp.SPXX04).html(lcsp.SPXX04);
+				if(usercookie!=null) {
+				  	  if((usercookie.LX=="43" || usercookie.LX=="42")&&usercookie.ZCXX01!=lcsp.ZCXX01){
+				  			spObj.find("li").eq(j).find("div.pro-pic").eq(2).find("b").html("价格不可见");
+							}else if(usercookie.Role == 5){
+								spObj.find("li").eq(j).find("div.pro-pic").eq(2).find("b").html("价格不可见");
+							}else{
+								//商品零售价
+								spObj.find("li").eq(j).find("div.pro-pic").eq(2).find("b").html(accounting.formatMoney(lcsp.SPJGB05));
+							}
+				} else {
+					spObj.find("li").eq(j).find("div.pro-pic").eq(2).find("b").html("登录可见");						
+				}
+				//购买链接
+				spObj.find("li").eq(j).find("div.pro-rz").eq(0).find("a.cat").attr("href","/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02));
+				//店铺名称和链接
+				spObj.find("li").eq(j).find("div.pro-dp").find("a.dp").attr("href","/customer/qfy/showDpxx/shopShow.html?gsid="+lcsp.ZCXX01).html(lcsp.ZCXX02).css({'padding-left':'15px'});
+			});
+		}
+		function selectKhspjg(SPXX01){
+			var xmlData=[];
+			var spJson={};
+				spJson.SPXX01=SPXX01;
+				spJson.ZCXX01=gsid;//ZTID
+			
+				spJson.hbid=usercookie.ZCXX01;
+				
+				xmlData.push(spJson);
+				var url="/HomePage/selectKhspjg.action?XmlData="+JSON.stringify(xmlData);
+				var rData=visitService(url);
+				return rData.map[0].KHSPJGI01;
+		}
+		
+		// 收藏店铺
+		function scdp(){
+			if(usercookie!=null) {
+				if((usercookie.LX != "43" && usercookie.LX != "42")){
+					var jsonData = [];
+					var spJson = {};
+						spJson.ZCXX01 = usercookie.ZCXX01;
+						spJson.COLLECTINFO = gsid;
+						jsonData.push(spJson);
+					var url = "/SellersShop/insertSCDP.action?jsonData=" + JSON.stringify(jsonData);
+					var rData = visitService(url);
+					if(rData.STATE == "1"){
+						alert("收藏成功!");
+					} else {
+						alert("收藏失败!");
+					}
+				} else {
+					alert("不能收藏店铺!");
+				}
+			} else {
+				alert("请登录!");					
+			}
+			
+		}
+	</script>
+</body>
+</html>

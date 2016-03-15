@@ -1,0 +1,64 @@
+body{font:12px/1.5 Microsoft YaHei,arial,"宋体";list-style:none;}
+.activeSH{width: 828px;height: auto;border:1px solid #e4e4e4;margin-top:10px;padding-bottom:20px;font-family:"microsoft yahei"}
+.clear{clear: both;}
+/******************************************活动审核局部样式开始**************************************************/
+.activeSHWT{width:800px;height:auto;margin:5px;}
+.activeSHWT h4{background:#f5f5f5;border:1px solid #e4e4e4;}
+.activeSHWT input,.activeSHWT textarea,.activeSHWT #mjgz em,.activeSHWT #hdmc,.activeSHWT #hdys{color:#000;}
+.activeSHWT textarea{margin:10px 0px;}
+.activeSHWT #mjgz{width:400px;margin:0 auto;height:auto;}
+/******************************************活动审核局部样式结束**************************************************/
+
+/******************************************活动-创建-审核开始****************************************************/
+.activeSH h4{font-size: 16px;width: 100%;text-align:center;height: 40px;line-height: 40px;background:#f5f5f5;border-bottom:1px solid #e4e4e4;color:#3c3c3c;}
+.activeSH ul,.activeSH ul li{width: 100%;height: auto;clear:both;}
+.activeStyle .lsj{width:400px;}
+.activeSH label,.activeSH span{display:block;width: 200px;text-align:center;font-size: 14px;line-height: 30px;height: 30px;float: left;margin-top: 5px;}
+.activeSH label>span{display:block;color:red;font-size:14px;float:right;margin-right:5px;line-hieght:20px;}
+.activeSH span{width: auto;}
+ .activeGZ .activemt{margin-top:12px;}
+ .activeGZ .activemb{margin-top:-4px;}
+#spfl{text-align:center;float:left;position: relative;top: -22px;left: 177px;width: 450px;}
+.activeSH select{margin-top:5px;height:30px;border:1px solid #ccc;}
+.activeSH input[type=button],.activeSH a{display:inline-block;text-align:center;width:auto;height:30px;line-height:30px;padding:0 20px;background:#ff8800;color:#fff;cursor:pointer;margin-left:5px;}
+.activeSH h3{width: 100%;text-align: left;margin:5px 0;text-indent:20px;float: left;font-size:14px;color:#3c3c3c;background:#f5f5f5;border-bottom:1px solid #e4e4e4;border-top:1px solid #e4e4e4;height:30px;line-height:30px;}
+.activeStyle,.activeGZ{float: left;width: 100%;height: auto;}
+.activeStyle{margin:5px 0;}
+.activeGZ #mjgz{width:auto;float:left;height:auto;}
+.activeGZ span{width: auto;line-height: 40px;}
+.activeSH span input{margin: 0 10px;text-align: center;height:28px;line-height:20px;}
+.activeGZ p{width:auto;line-height: 55px;height: auto;}
+.activeGZ p input{font-size: 12px;text-align:center;;margin:0 10px;width:80px;height:28px;line-height:20px;}
+.activeGZ p input[type=button]{border:none;border:1px solid #C76E09}
+.activeSH input[type=button]:hover{background:#C76E09;}
+.activeSHArr p{width: 400px;margin:0 auto;}
+.activeSH input[type=text]{width: 130px;line-height: 20px;margin-top: 5px; border: 1px solid #ccc;}
+.activeSH input[type=submit]{line-height: 30px;height:30px;width: auto;text-align: center;margin-left: 20px;margin: 10px;border: none;background: #ff8800;color:#fff; font-family:"microsoft yahei";text-align:center; cursor:pointer; border:1px solid #c76e09; margin:10px 20px;padding: 0 10px;float:left;}
+.activeSH input[type=submit]:hover{background:#c76E09;}
+.activeStyle input[type=submit]{width: auto;padding:0 10px;line-height: 20px;font-size: 12px;}
+.activeSH a:hover{background:#C76E09}
+.activeSH a{border:1px solid #C76E09}
+.activeMJ{display:none;}
+.activeMJ input{height:28px;line-height:20px;border:1px solid #ccc;}
+/******************************************活动创建-审核-结束**************************************************/
+
+/**********************************************报名中心开始*****************************************************/
+.activeBMZX{height: auto;margin: 0 auto;font:12px/1.5 Microsoft YaHei,arial,"宋体";position: relative;margin-top:10px;border:1px solid #e4e4e4;}
+.activeBMZX ul{width: 100%;height: auto;}
+.activeBMZX>h4,.activeBMZX .activeBMTitle>h4{width: 828px;height: 40px;line-height: 40px;color: #ff8800;text-align: left;font-size: 16px;margin-bottom:10px;border:1px solid #e4e4e4;border-left:none;border-top:none;text-indent:20px;}
+.activeBMZX .activeBMTitle>h4{background: #f6f6f6;}
+.activeBMZX>h4{border-bottom: 2px solid #ff8800;text-indent:40px;margin-bottom: 10px;height: 30px;line-height: 30px;font-size: 12px;}
+.activeSP{background:#e8f1f6;}
+.activeBMZX .activeSP>li,.activeBMZX .activeBMSPAll>li,.activeBMZX .activeBMSPAllOne>li{width:265px;height:auto;float: left;background:#e8f1f6;margin:0 0 10px 5px;}
+.activeBMTitle .activepl{cursor:pointer;}
+.activeBMSPAll,.activeBMSPAllOne{width: 100%;height: auto;}
+.activeSP h4 span,.activeBMSPAllOne h4 span{color: #ff7324;font-size: 14px;cursor:pointer;}
+.activeSP li h4 {padding-left:5px}
+.activeBMZX ul li{width:100%;line-height: 30px;height: auto;text-indent:5px;}
+.activeXH{float: right;}
+.activeXH a,.activeBMSPAll a,.activeBMSPAll a{display:block;width:auto;height:30px;line-height: 30px;text-align: center;padding: 0 20px;background: #fff; border: 1px solid #dcdcdc; float: left;color: #ff6403;margin:10px;}
+.activeshow,.activeshowXS{width: 100%;height:auto;line-height: 40px;margin: 20px 0;}
+.activeshow1,.activeshow2{display:block;border: none;background: none;color: #ff6600;width: 40px;height: 40px;font-size: 12px;line-height: 40px;border: 1px solid #ff8800;float:right;border-right:none;cursor:pointer;}
+.activeshow1,.activeshow2{background:url('/images/activetp.png') -2px -1px no-repeat;width:100px;padding-left:40px;}
+.activeBMSPAll,.activeBMSPAllOne{display: none;}
+/**********************************************报名中心结束*****************************************************/

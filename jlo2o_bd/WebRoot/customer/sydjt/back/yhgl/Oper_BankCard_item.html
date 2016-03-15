@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+</head>
+<body>
+	<div id="curPosition" style="width:98.5%;">
+    	<a href="#">用户管理</a>
+    	<span>></span>
+    	<b>公司银行卡详情</b>
+	</div>
+	<div class="clera"></div>
+    <form name="form1" id="form1" action="" method="post" enctype="multipart/form-data">
+	  <input type="hidden" id="ZCXX01" name="ZCXX01" value="" />
+	  <input type="hidden" id="GSYHK01" name="GSYHK01" value="" />
+	  
+	  <table class="single_table">
+	     <tr>
+	       <td style="width:100px;"><span>银行卡号：<b>*</b></span></td>
+	       <td style="width:550px;"><input id="GSYHK02" name="GSYHK02" value="" onKeyUp="value=value.replace(/\D/g,'')" /></td>
+	     </tr>
+	     	     <tr>
+	       <td style="width:100px;"><span>联系人：<b>*</b></span></td>
+	       <td style="width:550px;"><input id="GSYHK06" name="GSYHK06" value=""/></td>
+	     </tr>
+	     	     <tr>
+	       <td style="width:100px;"><span>联系电话：<b>*</b></span></td>
+	       <td style="width:550px;"><input id="GSYHK07" name="GSYHK07" value="" onKeyUp="value=value.replace(/\D/g,'')" /></td>
+	     </tr>
+	     	     <tr>
+	       <td style="width:100px;"><span>邮箱：<b>*</b></span></td>
+	       <td style="width:550px;"><input id="GSYHK08" name="GSYHK08" value=""/></td>
+	     </tr>
+	     	     <tr>
+	       <td style="width:100px;"><span>开户行：<b>*</b></span></td>
+	       <td style="width:550px;"><input id="GSYHK03" name="GSYHK03" value=""/></td>
+	     </tr>
+	     	     <tr>
+	       <td style="width:100px;"><span>开户省：<b>*</b></span></td>
+	       <td style="width:550px;"><input id="GSYHK04" name="GSYHK04" value=""/></td>
+	     </tr>
+	     	     <tr>
+	       <td style="width:100px;"><span>开户市：<b>*</b></span></td>
+	       <td style="width:550px;"><input id="GSYHK05" name="GSYHK05" value=""/></td>
+	     </tr>
+	     	     <tr>
+	       <td style="width:100px;"><span>开户支行名称：<b>*</b></span></td>
+	       <td style="width:550px;"><input id="GSYHK09" name="GSYHK09" value=""/></td>
+	     </tr>
+	     
+	     <tr>
+	     	<td><span>上传LOGO图片：<b>*</b></span></td>
+	     	<td><input type="file" name="file" value="" id="file01"  size="34" />
+	     	</td>
+	     </tr>
+	     <tr>
+	     	<td><span>上传LOGO图片：<b>*</b></span></td>
+	     	<td><input type="file" name="file" value="" id="file02"  size="34" />
+	     	</td>
+	     </tr>
+	     
+	     <tr id="GSYHK11_TR" style="display:none">
+	     	<td><span>是否启用：</span></td>
+	     	<td>
+		     	<input type="radio" class="radio" id="GSYHK110" name="GSYHK11" value="0" /><label class="radio">禁用</label>
+		     	<input type="radio" class="radio" id="GSYHK111" name="GSYHK11" value="1" checked/><label class="radio">启用</label>
+	     <tr>
+	     
+	     <tr class="bot">
+	       <td colspan="2">
+	         <a href="javascript:void(0);" onclick="okclick();" class="bot Long">确 定</a>
+	       </td>
+	      </tr>    
+	   </table>
+	   <div class="clera"></div>
+	</form>
+</body>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user=JSON.parse(MyCookie);
+//var GSYHK01=$.getUrlParam('GSYHK01');
+var GSYHK01=null;
+var ZCXX01 =user.ZCXX01;
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	$("#GSYHK11_TR").show();
+	GSYHK01 = rowObj.find("#GSYHK01").val();
+	if(MyCookie==null){
+	}else{
+	$("#ZCXX01").val(user.ZCXX01);
+	}
+	if(GSYHK01!=undefined&&GSYHK01!="null"){
+		$("#GSYHK01").val(GSYHK01);
+		selectW_GSYHK();
+	}else{
+		$("#albh").val("");
+	}
+}
+function selectW_GSYHK(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.selectW_GSYHK2','QryType':'Report','dataType':'Json',"GSYHK01":GSYHK01}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData!=undefined&&rData!=""){
+		$("#GSYHK02").val(rData[0].GSYHK02);
+		$("#GSYHK03").val(rData[0].GSYHK03);
+		$("#GSYHK04").val(rData[0].GSYHK04);
+		$("#GSYHK05").val(rData[0].GSYHK05);
+		$("#GSYHK06").val(rData[0].GSYHK06);
+		$("#GSYHK07").val(rData[0].GSYHK07);
+		$("#GSYHK08").val(rData[0].GSYHK08);
+		$("#GSYHK09").val(rData[0].GSYHK09);
+		if(rData[0].GSYHK11=="1"){
+			$("#GSYHK111").attr("checked",'checked');
+		}else{
+			$("#GSYHK110").attr("checked",'checked');
+		}
+		}
+}
+//新增保存
+function okclick(){
+		$("#ZCXX01").val(ZCXX01);
+		var XmlData1 = $("#form1").formToJson();
+		var arr=$("input[name='file']");
+		var fileArray=[];
+		for(var i=1;i<=arr.length;i++){
+		    fileArray.push("file0"+i);
+		}
+		var yhkh=$("#GSYHK02").val();
+		if(yhkh=="" || yhkh==null){
+			alert("请输入银行卡号!");
+			return false;
+		}
+		var lxr=$("#GSYHK06").val();
+		if(lxr=="" || lxr==null){
+			alert("请输入联系人!");
+			return false;
+		}
+		var lxdh=$("#GSYHK07").val();
+		if(lxdh=="" || lxdh==null){
+			alert("请输入联系电话!");
+			return false;
+		}else{
+			if(!checkPhone()){
+				return false;
+			}
+		}
+		var yx=$("#GSYHK08").val();
+		if(yx=="" || yx==null){
+			alert("请输入联系邮箱!");
+			return false;
+		}else{
+			if(!checkEmail()){
+				return false;
+			}
+		}
+		var khh=$("#GSYHK03").val();
+		if(khh=="" || khh==null){
+			alert("请输入开户行!");
+			return false;
+		}
+		var khs=$("#GSYHK04").val();
+		if(khs=="" || khs==null){
+			alert("请输入开户省!");
+			return false;
+		}
+		var khss=$("#GSYHK05").val();
+		if(khss=="" || khss==null){
+			alert("请输入开户市!");
+			return false;
+		}
+		var khzhmm=$("#GSYHK09").val();
+		if(khzhmm=="" || khzhmm==null){
+			alert("请输入开户支行名称!");
+			return false;
+		}
+		var val="";
+		if(GSYHK01!=null){
+			if($("#file01").val()==""||$("#file02").val()==""){//只要有一个图片为空,就不更换图片
+				XmlData1[0].TPBJ="0";//图片标记,后台判断用
+				}else{
+					XmlData1[0].TPBJ="1";//图片标记
+					}
+				val="/UserInfo/updateW_GSYHK.action"; //修改信息
+			}else{
+				if($("#file01").val()==""||$("#file02").val()==""){
+						alert("请上传图片!");
+						return false;
+					}
+			 	//新增信息
+				val="/UserInfo/insertW_GSYHK.action";
+				}
+		var val="";
+		if(GSYHK01!=null){
+			if($("#file01").val()==""||$("#file02").val()==""){//只要有一个图片为空,就不更换图片
+				XmlData1[0].TPBJ="0";//图片标记,后台判断用
+				}else{
+					XmlData1[0].TPBJ="1";//图片标记
+					}
+				val="/UserInfo/updateW_GSYHK.action"; //修改信息
+			}else{
+				if($("#file01").val()==""||$("#file02").val()==""){
+						alert("请上传图片!");
+						return false;
+					}
+			 	//新增信息
+				val="/UserInfo/insertW_GSYHK.action";
+				}
+		//新增信息
+		var XmlData = escape(JSON.stringify(XmlData1));
+		 var json={"CUS_ID":ZCXX01,"ZCXX01":ZCXX01,"CUS_NAME":user.ZCXX02,"ACC_BANK":$("#GSYHK03").val(),
+				"ACC_PRO":$("#GSYHK04").val(),"ACC_CTY":$("#GSYHK05").val(),"ACC_BCH":$("#GSYHK03").val(),"ACC_BRANCH_NUM":"308521015080","ACC_NO":$("#GSYHK02").val(),"OP_TYPE":"01"};
+		//var url="/TGYInterface/BankBound.action?json="+JSON.stringify(json);  
+		var url="/insertW_GSYHK.action?XmlData="+JSON.stringify(XmlData); 
+		var r = confirm('确认更新信息吗?');
+		if(r==true){
+			//var fileArray=[];
+			//fileArray.push("file1");
+			//fileArray.push("file2");
+			$.ajaxFileUpload({
+				type:"POST",
+				secureuri:false,
+				fileElementId:fileArray,
+				url:encodeURI(val),//encodeURI避免中文乱码
+				data:{"XmlData":XmlData},
+				dataType:"text",
+				success: function(data) { 
+					var json = jQuery.parseJSON(data);
+					var jsondata = json.data;
+					var data1=jsondata.STATE;
+					//alert(jsondata.STATE);
+					if(data1==1){
+						alert("保存成功!");
+						parent.execBackFun("aaa");
+						parent.$("#ajaxGrid").remove();
+						}else{
+						alert("保存失败!");
+							}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(textStatus);
+			    }
+			});
+			}
+		else return;
+}
+
+			function checkPhone(){
+				var isMobile=/^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+				if(!isMobile.test($("#GSYHK07").val())){
+					alert("请正确填写手机号码,例如:13415764179");
+					return false;
+				}else{
+					return true;
+				}
+			}
+			function checkEmail(){
+				var email=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+				if(!email.test($("#GSYHK08").val())){
+					alert("请正确输入邮箱地址");
+					return false;
+				}else{
+					return true;
+				}
+		}
+//审核通过
+function shtg(){
+	if($("#ZCGS01").val() == 2){
+		alert("请完善注册信息");
+		return;
+	}
+	if($("#ZCGS01").val() == 4){
+		alert("已审核");
+		return;
+	}
+	if($("#ZCGS01").val() == 3){
+		 var XmlData={"XTCZY01":$("#XTCZY01").val()};
+		var url="/Register/auditRegister.action?json="+JSON.stringify(XmlData);
+		var returnVal = visitService(url);
+    	if(returnVal.state=="success"){
+			$("#ZCGS01").val(returnVal.gszt);
+			$("#span_zt").html(eval("changeColumns.ZCGS01_"+returnVal.gszt));
+			alert("审核成功");
+		}else{
+			alert("审核失败");
+		}
+	}
+}
+</script>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<title>汽服云 - 个人中心</title>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/form/js/currentLog.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/menu.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<style>
+#main{
+width:1190px;
+margin:0 auto;
+height:800px;
+}
+.nav_content{
+    border-bottom: 1px solid #e4e4e4;
+    height: 62px;
+    margin-top: 17px;
+}
+.nav_left{
+    border-bottom: 4px solid #ff4a00;
+    bottom: 0;
+    float: left;
+    font-size: 30px;
+    height: 59px;
+    letter-spacing: 11px;
+    line-height: 59px;
+    width: 175px;
+}
+.nav_left p{
+margin-bottom:5px;
+}
+.nav_right{
+     color: #ff4a00;
+    font-size: 20px;
+    height: 83px;
+    letter-spacing: 2px;
+    line-height: 92px;
+    margin-left: -19px;
+    width: 60%;
+}
+.nav_ys{
+     color:red;
+}
+.nav_right a {
+background: #f8f7f6 none repeat scroll 0 0;
+    display: inline-block;
+    height: 74px;
+    line-height: 74px;
+    margin-top: 20px;
+    width: 187px;
+}
+.nav_right a  span{
+    width: 100%;
+    color:#ff4a00;
+}
+.nav_right span{
+color:#e4e4e4;
+font-size:20px;
+}
+#nav_ys{
+color:#ff4a00;
+}
+#msg{
+    margin: 30px auto 5px;
+    width: 80%;
+    height:450px;
+}
+.center{
+   border-bottom: 1px solid #e4e4e4;
+    height: 63px;
+}
+.nav_righta{
+ font-size: 20px;
+    height: 59px;
+    letter-spacing: 2px;
+    line-height: 92px;
+    margin-left: 666px;
+    width: 44%;
+}
+
+.nav_aa{
+ border-bottom: 1px dashed #e4e4e4;
+ display:none;
+}
+.nav_bottom:hover{
+background-color:#e4e4e4;
+}
+.nav_bottom span{
+margin: 0 auto 0 69px;
+    width: 100%;
+}
+.nav_ab{
+    border-bottom: 1px dashed #e4e4e4;
+    float: left;
+    height: 40px;
+    width: 100%;
+}
+.nav_ab:hover{
+background:#e4e4e4;
+}
+.nav_bottom{
+float: left;
+    line-height: 36px;
+    width: 164px;
+}
+.nav_bottom a{
+   background: #ff4a00 none repeat scroll 0 0;
+    color: #fff;
+    display: inline-block;
+    height: 35px;
+    margin-left: 3px;
+    margin-top: 3px;
+    width: 54px;
+ 
+}
+.nav_bottom a span{
+margin-left:7px;
+}
+.bor_live{
+border:1px solid #ff4a00;
+color:#ff4a00;
+}
+.fr_pj{
+color:#ff4a00;
+}
+</style>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+// 商品需求发布
+function changeProduce(){
+	$("#msg").attr("src","/customer/qfy/c2b/repair/ProduceDemand.html");
+}
+// 协作维修发布
+function changeOutSourcing(){
+	$("#msg").attr("src","/customer/qfy/c2b/repair/OutSourcing.html");
+}
+// 招聘信息发布
+function changeRecruit(){
+	$("#msg").attr("src","/customer/qfy/c2b/repair/Recruit.html");
+}
+
+</script>
+</head>
+<body>
+<div id="header">
+</div>
+<div class="clera"></div>
+<div id="main">
+<div class="nav_content">
+	<div class="nav_left">
+	<p>发布需求</p>
+	</div>
+	
+</div>	
+<div class="clera"></div>
+<div align="center">
+<div class="nav_right">
+			  <a href="#" onclick="changeProduce()"id="nav_ys" class="fr_fr bor_live"><span >配件</span></a>
+			  <a href="#" onclick="changeOutSourcing()" class="fr_fr"><span >外协</span></a>
+			  <a href="#" onclick="changeRecruit()" class="fr_fr"><span >招聘</span></a>
+	</div>
+	<iframe id="msg" scrolling="no" frameborder="0"></iframe>
+</div>
+<div class="center" style="display:none;">
+<div class="nav_left" style="display:none;">
+	<p>历史需求</p>
+	</div>
+	<div class="nav_righta" style="display:none;">
+			  <a href="#" id="nav_ys" >价格排序</a>
+			  <a href="#" >距离排序</a>
+			  <a href="#" >好评排序</a>
+			  <a href="#" >放心汽修</a>
+			   <a href="#" >操作</a>
+			  
+	 </div>
+	
+	</div>
+		 <ul class="nav_aa">
+				<li class="nav_ab" >
+			 <div class="nav_bottom"><span>北京四会汽修厂</span></div>
+			 <div class="nav_bottom"><span>50元</span></div>
+			 <div class="nav_bottom"><span>1.2KM</span></div>
+			 <div class="nav_bottom"><span>好评23（90%）</span></div>
+			 <div class="nav_bottom"><span>北京四会汽修厂</span></div>
+			  <div class="nav_bottom"><span><img src="/customer/qfy/images/fxpp/xiaogou.png" /></span></div>
+			   <div class="nav_bottom"><span><a><span>就选它</span></a></span></div>
+			 	</li>
+			  <li class="nav_ab">
+			   	 <div class="nav_bottom"><span>北京四会汽修厂</span></div>
+			 <div class="nav_bottom"><span>50元</span></div>
+			 <div class="nav_bottom"><span>1.2KM</span></div>
+			 <div class="nav_bottom"><span>好评23（90%）</span></div>
+			 <div class="nav_bottom"><span>北京四会汽修厂</span></div>
+			  <div class="nav_bottom"><span><img src="/customer/qfy/images/fxpp/xiaogou.png" /></span></div>
+			   <div class="nav_bottom"><span><a><span>就选它</span></a></span></div>
+			 </li>
+			  <li class="nav_ab">
+			    	 <div class="nav_bottom"><span>北京四会汽修厂</span></div>
+			 <div class="nav_bottom"><span>50元</span></div>
+			 <div class="nav_bottom"><span>1.2KM</span></div>
+			 <div class="nav_bottom"><span>好评23（90%）</span></div>
+			 <div class="nav_bottom"><span>北京四会汽修厂</span></div>
+			  <div class="nav_bottom"><span><img src="/customer/qfy/images/fxpp/xiaogou.png" /></span></div>
+			   <div class="nav_bottom"><span><a><span>就选它</span></a></span></div>
+			  </li>
+		 </ul>
+</div>
+	<div class="clera"></div>
+<div id="footer">
+</div>
+
+<script type="text/javascript">
+$("#header").load("/customer/qfy/head-08.jsp?",function(reponse,status){
+	if(status=="success"){
+		$(".zzfws").css({"color":"#ff8800"});
+	}
+});
+$("#msg").attr("src","/customer/qfy/c2b/repair/ProduceDemand.html");
+$("#footer").load("/customer/qfy/foot-08.html");
+$(".fr_fr").mouseover(function(){
+	  $(".fr_fr").removeClass("bor_live").removeClass("fr_pj");
+	  $(this).addClass("bor_live").addClass("fr_pj");
+});
+</script>
+</body>
+
+</html>

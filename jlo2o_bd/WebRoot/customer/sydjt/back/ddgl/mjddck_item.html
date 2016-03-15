@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<!--<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/shop-Delete.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/shop-Public.css" />-->
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var XSDD01 = $.getUrlParam('xsdd01');
+var sm_list="";//已扫过的商品条码串
+function initData(){
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["sqlid"]="com.jlsoft.o2o.sql.mjck.selectMJCKSPXX";
+    XmlData["XSDD01"]=XSDD01;
+	XmlData["dataType"]="Json";
+	dataArr.push(XmlData);
+	var rData = visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+	var data = rData.data;
+	var a = 0;//商品条码与扫码ID
+	var b = 1;//扫码枪选择ID
+	var str="<table class='list_table text_1'><tr class='title' style='text-align:left;'><td>商品名称</td><td>商品条码</td><td>商品分类</td><td>供货商</td><td>扫码操作</td></tr>";
+	for(var i=0;i<data.length;i++) {
+		var count = data[i].xsddi05;
+		if(count>1){
+			for(var j=0;j<count;j++) {
+				a++;
+				b++;
+				str+='<tr><td>'+data[i].spxx04+'</td>';
+				str+='<td><input type="hidden" id="ckcm_'+a+'" value="'+data[i].barcode+'"/>'+data[i].barcode+'</td>';
+				str+='<td>'+data[i].spfl02+'</td><td>'+data[i].zcxx02+'</td>';
+				str+='<td><input type="text" id="'+a+'" class="list_1" name="cm_list" onkeypress="return userName_onkeypress(event,'+a+','+b+')" /></td></tr>';
+			 }
+		}else{
+			a++;
+			b++;
+			str+='<tr><td>'+data[i].spxx04+'</td>';
+			str+='<td><input type="hidden" id="ckcm_'+a+'" value="'+data[i].barcode+'"/>'+data[i].barcode+'</td>';
+			str+='<td>'+data[i].spfl02+'</td><td>'+data[i].zcxx02+'</td>';
+			str+='<td><input type="text" id="'+a+'" name="cm_list"  onkeypress="return userName_onkeypress(event,'+a+','+b+')" /></td></tr>';
+		}
+		
+	 }
+	str+='</table>'
+	$(".center").html(str);
+}
+
+//扫码操作
+function userName_onkeypress(event,n,obj){  
+ 	if(event.keyCode==13){
+ 		var a = 0;
+ 		var x = $("#ckcm_"+n).val();//要校验的条码
+ 		var y = $("#"+n).val();//扫码枪
+ 		var z = y.substring(5,18);
+ 		if(x==z){
+ 			var list_1 = $("input[class='list_1']");
+ 	 		for(var i=0;i<list_1.length;i++) {
+ 	 			var sm = list_1[i].id;
+ 	 			var sm_value = $("#"+sm).val();
+ 				if(sm_value==y){
+ 					a++;
+ 				  } 
+ 			 }
+ 	 		if(a>1){
+ 	 			alert("该商品已扫过！");
+ 	 			$("#"+n).val("");
+ 	 			return false;
+ 	 		}
+ 			$("#"+obj).focus();
+ 			sm_list+=y+",";
+ 		}else{
+ 			alert("该商品不在此订单内！");
+ 			$("#"+n).val("");
+ 		}
+ 		
+  }
+ 		
+} 
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridListNoPage.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<div id="curPosition">
+    	<a href="#">库房管理</a>
+    	<span>></span>
+    	<b>订单出库</b>
+    		<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+	</div>
+	<div class="clera"></div>
+  <ul id="screening">
+    <li style="width:818px;">
+	<a href="javascript:void(0);" class="bot Short sub_bot">保存</a>
+   </li>
+  </ul>
+	<div class="clera"></div>
+	<div class="center">
+	
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+	initData();
+  //点击保存
+  $(".sub_bot").click(function(){
+	  var cm_list = $("input[name='cm_list']");
+ 		for(var i=0;i<cm_list.length;i++) {
+ 			var sm = cm_list[i].id;
+ 			var sm_value = $("#"+sm).val();
+			if(sm_value==""){
+				alert("还存在未扫描的商品！");
+				return false; 
+			  } 
+		 }
+ 		sm_list = sm_list.substring(0,sm_list.length-1);
+ 		var XmlData={"XSDD01":XSDD01,"sm_list":sm_list};
+ 		var url="/Oper_MJRK/insert_XSDDCM.action?XmlData="+JSON.stringify(XmlData);
+ 		var returnVal=visitService(url);
+ 		var loginState = returnVal.STATE;
+ 		if (loginState == 1) {
+ 			alert("保存成功！");
+ 			location.href="/customer/sydjt/back/ddgl/mjddck.html";
+ 		}else{
+ 			alert("保存失败！");
+ 		} 
+  });
+})
+//执行回调方法
+function backFun(parameters){
+	init();
+}
+
+</script>

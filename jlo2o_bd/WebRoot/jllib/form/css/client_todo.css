@@ -1,0 +1,18 @@
+body{ margin:0 auto;}
+h3,h4,ul,li{ padding:0px; margin:0px; list-style:none;}
+.clear{ clear:both;}
+#body{right:-300px; background-color:#f9f9f9;}
+#body h3{ float:left; width:290px; height:40px; line-height:40px; background-color:#6089d4; padding-left:10px; font-weight:100; font-size:12px;}
+#body h3 span{ float:left; color:#eee;}
+#body h3 a{ cursor:pointer; font-family:"microsoft yahei"; margin-right:10px; color:#ccc;}
+#body h3 a.xuan{ font-weight:bold; color:#f97979; font-size:14px;}
+#body ul.dbmain{ width:279px; border-left:1px solid #e4e4e4;}
+#body ul#gz-main{ display:none;}
+#body ul.dbmain li.dbtitle{ line-height:40px; font-size:13px; color:#333; width:300px;cursor:hand}
+#body ul.dbmain li.dbtitle h4{ color:#333; border-bottom:1px solid #eee; padding-left:20px; font-family:"microsoft yahei";}
+#body ul.dbmain li.dbtitle:hover h4{ background-color:#f1f1f1;}
+#body ul.dbmain li.dbtitle ul.dbzcd{ width:100%; display:none;}
+#body ul.dbmain li.dbtitle ul.dbzcd li{ height:30px; line-height:30px; width:290px; margin:5px 0 0 0; font-size:12px; margin-left:10px; border-bottom:1px solid #fff;}
+#body ul.dbmain li.dbtitle ul.dbzcd li span{ float:left; /* width:200px; */ overflow: hidden;white-space: nowrap;text-overflow: ellipsis;padding-left: 20px;}
+#body ul.dbmain li.dbtitle ul.dbzcd li span.BZMC:hover{ color:red;}
+#body ul.dbmain li.dbtitle ul.dbzcd li:hover{ color:#333; border-bottom:1px solid #eee;}

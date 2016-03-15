@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.c2b.service.sql.oper_fwcx" >
+	<!--查询服务套餐列表  -->
+	<select id="select_fwcx" parameterType="map" resultType="map">
+		SELECT id,ServiceName,OriginalPrice,CurrentPrice,Status FROM service  where 1=1 AND PublisherId=#{ZCXX01}
+	 	<if test="fwmc!='' and fwmc!=null"> AND ServiceName LIKE CONCAT('%',#{fwmc},'%')</if>
+	 	ORDER BY Id DESC
+ 	</select>
+ 	<!-- 查询总列表 -->
+ 	<select id="select_fwcx_sum" parameterType="map" resultType="map">
+		SELECT COUNT(1) as COUNT  FROM service where 1=1  AND PublisherId=#{ZCXX01}
+	  <if test="fwmc!='' and fwmc!=null"> AND ServiceName LIKE CONCAT('%',#{fwmc},'%')  </if> 
+	  ORDER BY Id DESC 
+ 	</select>
+</mapper>

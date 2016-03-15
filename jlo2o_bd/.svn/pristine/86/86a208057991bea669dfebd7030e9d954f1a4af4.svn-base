@@ -1,0 +1,88 @@
+body{ margin:0 auto; font-size:12px; color:#666; font-family:Arial,Verdana; background:url(../images/reg_bg.jpg) #f5f5f5;}
+ul,li,h2,h3,h4,input{ list-style:none; margin:0px; padding:0px;}
+a{ text-decoration:none; cursor:pointer;}
+.clear{ clear:both;}
+
+#header{ width:100%; height:100px; background-color:#fff; border-bottom:1px solid #e4e4e4; box-shadow: 1px 1px 5px #eee; position:fixed; top:0px; margin-bottom:90px; z-index:9999;}
+#header .header_main{ width:1000px; height:100px; border-bottom:1px solid #e4e4e4; margin:0 auto;}
+#header .header_main a.logo{ float:left; height:80px; margin:10px 0;}
+#header .header_main a.logo img{ border:0px; height:80px;}
+#header .header_main .tecPro{ width:600px; height:60px; margin:20px 0; float:right;}
+
+#header .header_main .tecPro .userLc{ float:left; width:600px; height:60px; position:relative;}
+#header .header_main .tecPro .userLc .userlcLeft{ float:left; width:15px; height:60px; background:url(../images/moreDb_ico.png) none #f5f5f5; background-position:15px 0; border-left:1px solid #e4e4e4; border-right:1px solid #fff; position:absolute;}
+#header .header_main .tecPro .userLc .userlcRight{ float:left; width:15px; height:60px; background:url(../images/moreDb_ico.png) none #f5f5f5; border-left:1px solid #fff; border-right:1px solid #e4e4e4; position:absolute; right:0px;}
+#header .header_main .tecPro .userLc:hover .userlcLeft{ background:url(../images/moreDb_ico.png) #f5f5f5; border-right:1px solid #e4e4e4; background-position:15px 0;}
+#header .header_main .tecPro .userLc:hover .userlcLeft:hover{ background-color:#e4e4e4; cursor:pointer;}
+#header .header_main .tecPro .userLc:hover .userlcRight{ background:url(../images/moreDb_ico.png) #f5f5f5; border-left:1px solid #e4e4e4; background-position:30px 0;}
+#header .header_main .tecPro .userLc:hover .userlcRight:hover{ background-color:#e4e4e4; cursor:pointer;}
+
+
+#header .header_main .tecPro .userLc .userlcMain{ width:600px; height:60px float:left; margin-left:30px;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase{ float:left; line-height:60px; position:relative;}
+#header .header_main .tecPro .userLc li.title{ font-family:"microsoft yahei"; color:#ccc; margin:0 20px 0 5px;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase a{ float:left; font-family:"microsoft yahei"; font-size:14px; font-weight:bold; height:20px; line-height:20px; padding:0 8px; background-color:#eee; margin:20px 0; color:#fff;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase span{ color:#ccc; margin:0 15px; font-family:"microsoft yahei"; font-weight:bold;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase a.fxlc_yz{ background-color:#999;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase a.fxlc_zz{ background-color:#ee4400;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase a.fxlc_wz{ background-color:#03931b;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase .fxlc_main{ width:200px; height:40px; position:absolute; background-color:#fff; top:50px; border:1px solid #ee4400; left:-80px; z-index:999;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase .fxlc_main .lj{ width:1px; height:10px; background-color:#ee4400; position:absolute; top:-11px; left:100px;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase .fxlc_close{ width:15px; height:15px; background-color:#ee4400; color:#fff; position:absolute; right:-15px; top:-1px; cursor:pointer; line-height:15px; text-align:center; font-size:20px;}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase .fxlc_main a{ background-color:#ee4400; margin:10px}
+#header .header_main .tecPro .userLc .userlcMain .userlcCase .fxlc_main a:hover{ background-color:#c76e09;}
+
+
+#main{ width:742px; margin:50px auto; background-color:#fff; }
+
+#main ul.userName{ width:700px; background-color:#fff; float:left; padding:10px 20px;box-shadow: 0px 0px 8px #ccc; margin-top:90px;}
+#main ul.userInfo{box-shadow: 1px 5px 8px #ccc; margin-top:-30px;}
+#main ul.userName li.title{ width:700px; height:50px; border-bottom:1px solid #2f80eb; line-height:40px; font-family:"microsoft yahei"; font-size:14px; color:#3c3c3c; text-align:left; font-weight:bold; float:left;}
+#main ul.userName li{ float:left; width:100%; margin-bottom:20px; position:relative; }
+#main ul.userName li.csyj{ float:left; width:480px; margin-left:100px; position:relative; border:#ccc 1px solid;}
+#main ul.userName li.csyj span.ts{font-family:"microsoft yahei"; font-size:14px; color:#666; float:left; width:480px; text-align:center;line-height:37px;}
+#main ul.userName li.csyj a.cxfs{ float:left; background:#CCC; color:#999; width:200px; line-height:25px; text-align:center; border:#e4e4e4 1px solid; margin-left:24px; margin-bottom:10px;box-shadow:3px 4px 3px #999}
+#main ul.userName li.csyj a.ljjr{ float:left; background:#ccc; color:#000; width:200px; line-height:25px; text-align:center; border:#e4e4e4 1px solid; margin-left:24px; margin-bottom:10px;box-shadow:3px 4px 3px #999}
+#main ul.userName li span{ font-family:"microsoft yahei"; font-size:14px; color:#999; float:left; width:150px; text-align:right; margin-right:20px; line-height:37px;}
+#main ul.userName li label.yzmts{ float:left; width:200px; line-height:35px; color:#CCC; font-size:12px; font-weight:100; margin-left:10px;}
+#main ul.userName li span.yz{ font-family:"microsoft yahei"; font-size:14px; color:#333; float:left; width:550px; text-align:left; margin-left:20px; line-height:37px;}
+#main ul.userName li span.yz a.gx{ float:left; color:#333; font-size:16px}
+#main ul.userName li input.text{ float:left; width:300px; height:35px; border:1px solid #ccc; padding:0 5px; width:250px;}
+#main ul.userName li .bt{ float:left; line-height:45px; position:absolute; width:20px; left:150px; color:#cc4400; font-size:20px; text-align:center;}
+#main ul.userName li select{ float:left; height:37px; border:1px solid #ccc; padding:0 0 0 5px;}
+#main ul.userName li input.pwd{ width:200px;}
+#main ul.userName li input.yzm{ width:100px;}
+#main ul.userName li input.file{ width:auto; height:auto; margin-top:5px; float:left; border:1px solid #ccc; padding:5px 0;}
+#main ul.userName li input.checkbox{ float:left; margin-right:10px;}
+#main ul.userName li input.radio{ float:left; width:15px; height:15px; margin:12px 5px 13px 0; cursor:pointer;}
+#main ul.userName li input.text:hover{ border-color:#999;}
+#main ul.userName li label{ float:left; line-height:37px; margin-right:20px; font-family:"microsoft yahei"; font-size:14px; color:#3c3c3c; font-weight:bold;}
+#main ul.userName li img.yzmimg{ float:left; height:35px; margin:0 10px; border:1px solid #ccc; cursor:pointer;}
+#main ul.userName li .tishi{ display:none;float:left; height:30px; background-color:#faf3ea; margin-left:10px; border:1px solid #f9d2a3;margin-top:2px; position:relative; line-height:30px;}
+#main ul.userName li .tishi .tishi_bq{ float:left; width:15px; height:15px; background:url(../images/1COYhD8EL6.png) no-repeat; margin:7px 5px;}
+#main ul.userName li .tishi .tishi_jt{ position:absolute; width:8px; height:10px; left:-6px; top:10px; background:url(../images/1COYhD8EL6.png) no-repeat; background-position:-8px -511px;}
+
+#main ul.userName li a.sxyzm{ float:left; width:50px; font-size:15px;height:20px; background:url(../images/sxyzm.png); margin:7px 0;}
+#main ul.userName li a.sxyzm:hover{ background-position:0 -20px;}
+#main ul.userName li a.text{ color:#ff8800;}
+#main ul.userName li a.text:hover{ text-decoration:underline;}
+#main ul.userName li a.reg_bot{ float:left; width:216px; height:35px; line-height:35px; font-size:15px; border:1px solid #c76e09; background-color:#ff8800; text-align:center; color:#fff; font-family:"microsoft yahei"; box-shadow:0px 0px 2px #ccc; margin-top:10px;text-shadow: 0px 0 1px #666}
+#main ul.userName li a.reg_bot:hover{ background-color:##ee8800;}
+#main ul.userName li.line{ border-top:1px dotted #e4e4e4;}
+#main ul.userName li h3{ float:left; margin-left:80px; font-family:"microsoft yahei"; color:#3c3c3c; font-size:14px; margin-top:20px;}
+#main ul.userName li.shenhe{ height:200px; padding-top:20px;}
+#main ul.userName li.shenhe .shenheimg{ float:left; width:40px; height:300px; background:url(../images/reg_shenhe_ico.png); margin-left:20px;}
+#main ul.userName li.shenhe .shenhe_wh{ float:left; width:630px; height:30px; line-height:30px; font-weight:bold; color:#ff8800; font-size:15px;}
+#main ul.userName li.shenhe .shenhe_ts{ font-size:12px; color:#666; font-weight:500;}
+#main ul.userName li.shenhe .shenhe_ts a{ color:#ff8800; margin-left:10px;}
+#main ul.userName li.shenhe .shenhe_ts a:hover{ text-decoration:underline;}
+
+
+  .foce{
+
+  	height:38px;line-height:38px;font-size:16px;
+
+  }
+
+
+

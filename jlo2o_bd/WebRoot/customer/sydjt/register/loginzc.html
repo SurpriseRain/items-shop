@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/login.js" ></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/login.css" />
+<title>用户注册</title>
+<style>
+.yangshi{
+  	border-right: 1px dashed #e4e4e4;
+    float: left;
+    height: 326px;
+    margin: 10px 0;
+    width: 300px;
+}
+.yangshi li h2{
+	color: #3c3c3c;
+    font-family: "microsoft yahei";
+    font-size: 16px;
+    line-height: 40px;
+}
+.yangshia{
+	padding-left: 43px;
+}
+.reg_main{
+   padding-left: 43px;
+}
+.yangshib{
+    display: inline-block;
+     padding-top: 27px;
+    text-align: center;
+    width: 125px;
+    color: #3c3c3c;
+    font-family: "microsoft yahei";
+    font-size: 25px;
+    font-weight: 400;
+}
+#zhezhao{ width:900px; height:544px; background-color:rgba(1,1,1,0.3); position:fixed; display:none;z-index:99999;
+left:50%;
+top:50%;
+margin-left:-450px;
+margin-top:-272px;}
+#zhezhaoa{ width:900px; height:544px; background-color:rgba(1,1,1,0.3); position:fixed; display:none;z-index:99999;
+left:50%;
+top:50%;
+margin-left:-450px;
+margin-top:-272px;}
+.chunxiao{background: #fff none repeat scroll 0 0;
+height: 460px;width: 100%;
+overflow: auto;}
+.yangshiaa{font-zize:12px;padding:0px 10px;}
+h4{display:inline-bolck;font-size:12px;margin:13px;}
+.zt{font-size: 13px;font-weight: bold;}
+.zhezhao-title {background-color: #f5f5f5;
+border-bottom: 1px solid #eee;height: 34px;width: 100%;}
+.tl{height: 23px;
+display: block;
+width: 94px;
+padding-top: 10px;}
+.close{ cursor: pointer; background-color: #e40;border: 1px solid #e40;color: #fff;display: inline-block;font-size: 18px;font-weight: bold; position: absolute; right:16px;text-align: center;top:6px;width: 16px;}
+.btn-img{   background: #e4393c none repeat scroll 0 0;border: 1px solid;border-radius: 3px;color: #fff; font-family: "微软雅黑";cursor: pointer;font-size: 16px;font-weight: 800; height: 34px; margin: 18px;margin-left: 264px;margin-top: 12px;text-align: center; width: 322px;}
+.qd{ background-color:#f5f5f5;height: 60px;}
+</style>
+<script>
+/* 买家协议显示 */
+function abcs(){
+	$("#zhezhao").show();
+}
+function asd(){
+	$("#zhezhao").hide(); 
+}
+function asdf(){
+	$("#zhezhao").hide();
+	xieyi.window.qwer();
+	
+}
+/* 卖家协议显示 */
+function abcss(){
+	$("#zhezhaoa").show();
+}
+
+function asdd(){
+	$("#zhezhaoa").hide(); 
+}
+function asdff(){
+	$("#zhezhaoa").hide();
+	xieyi.window.qwer();
+	
+}
+</script>
+</head>
+<body>
+<!------------------------------------------------------------------------------------------------>
+<!-- 买家协议 -->
+<div id="zhezhao">
+<div class="zhezhao-title">
+<b id="carname" class="tl" title="汽服云服务协议">汽服云服务协议</b>
+<a class="close" onclick="asd()">×</a>
+</div>
+<div class="chunxiao">
+<h2>汽服云服务协议</h2>
+	<p class="yangshiaa">在使用汽服云平台服务之前，您应当认真阅读并遵守《汽服云服务协议》（以下简称“本协议”），请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制责任的条款、争议解决和法律适用条款。</p>
+	<p class="yangshiaa">当您按照注册页面提示填写信息、阅读并同意本协议且完成全部注册程序后，或您按照激活页面提示填写信息、阅读并同意本协议且完成全部激活程序后，或您以其他乙方允许的方式实际使用汽服云平台服务时，即表示甲方已充分阅读、理解并接受本协议的全部内容。甲方承诺接受并遵守本协议的约定，届时甲方不应以未阅读本协议的内容或者未获得乙方对甲方问询的解答等理由，主张本协议无效，或要求撤销本协议。</p>
+	<p class="yangshiaa">
+	本协议由甲方与汽服云平台的经营者共同缔结。
+	</p>
+	<p class="yangshiaa">
+    汽服云平台的经营者是指法律认可的经营汽服云平台网站的责任主体，汽服云平台网站包括但不限于汽服云（域名为 motorsc.com），本协议项下各汽服云平台的经营者可单称或合称为“汽服云“。除另行明确声明外，汽服云平台服务包含任何乙方及其关联公司提供的基于互联网以及移动互联网的相关服务。 
+	</p>
+	<p class="yangshiaa">
+乙方有权根据需要不时地制订、修改本协议项下各类业务规则，并以网站公示的方式进行变更公告，无需另行单独通知甲方。变更后的规则一经在网站公布后，构成对协议的变更，在公告明确的特定时间自动生效。若甲方在前述变更公告后继续使用汽服云平台服务的，即表示甲方已经阅读、理解并接受经修订的协议。
+	</p>
+	<h3>协议内容</h3>
+	<p class="yangshiaa">
+甲、乙双方本着诚信、互惠、共赢的原则，依据《中华人民共和国合同法》等相关法律法规，就汽车零配件销售和售后服务包括但不限于汽车零配件批发、零售和服务等，在自愿、平等、协商一致的基础上，达成如下协议。
+	</p>
+	<h3>1．协议中术语定义</h3>
+	<p class="yangshiaa">
+	如无特别说明，下列用语在本协议中的含义为：
+	</p>
+	<p class="yangshiaa">
+	<h3>1.1 交易主体</h3>
+	系指乙方及其认证的汽车零部件供应商、汽车零部件代理商、授权客户服务商、汽车维修保养企业、物流企业和开户银行等参与交易的主体。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.2 销售网络</h4>
+	系指乙方拥有的签约汽车修理企业、签约汽配经销商、其它汽车零部件采购方、加盟服务商、网上商城等。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.3 合作产品</h4>
+	系指在乙方销售网络上销售的由甲方提供的汽车配件及用品。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.4平台</h4>
+	系指乙方应用的由天津车福网络科技有限公司（下称 “天津车福” ）开发运营的基于互联网进行汽车零配件采购、销售、仓储配送管理以及网上支付结算等功能的电子商务交易平台与汽车服务平台。
+	</p>
+<p class="yangshiaa">
+	<h4>1.5 电子产品目录</h4>
+系指在电子商务平台上列示的产品信息表包括但不限于产品名称、生产厂家、型号、产品基本属性、产品图片信息、产品备货分类、适配车型、供应价格、销售价格、售后服务条款以及产品交付周期等。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.6 配送点</h4>
+	系指由甲方自建或甲方合作租用的用于客户配送的集中分发站点。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.7 区域库</h4>
+	系指由甲方自建或甲方租用的用于存放合作产品的区域仓库，一个区域仓库可以为事先设定的多个配送点补充库存。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.8 快销件</h4>
+	用于标识电子产品目录中客户最频繁采购的产品。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.9 常用件</h4>
+   用于标识电子产品目录中客户比较频繁采购的产品。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.10 长尾件</h4>
+   用于标识电子产品目录中客户偶尔采购的产品。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.11 交付周期</h4>
+   系指自客户下单之时起，到客户收到订单商品所需的时间。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.12 知识产权</h4>
+   统指双方基于体系依法产生的各类权利，包括但不限于如下权利：著作权与有关权利；商标；工业品外观设计；专利；对商业秘密和技术秘密的权利。
+	</p>
+	<p class="yangshiaa">
+	<h4>1.12 知识产权</h4>
+   统指双方基于体系依法产生的各类权利，包括但不限于如下权利：著作权与有关权利；商标；工业品外观设计；专利；对商业秘密和技术秘密的权利。
+	</p>
+	<h3>2．合作原则</h3>
+	<p class="yangshiaa">
+	甲乙双方秉承资源共享、及时沟通、相互依存，合作共赢的原则，实现共同发展的目标。
+	</p>
+	<h3>3．合作事项</h3>
+    <p class="yangshiaa">
+	<h4>3.1合作产品的电子产品目录管理</h4>
+	</p>
+	  <p class="yangshiaa">
+	<span class="zt">3.1.1</span>甲方负责按乙方的数据要求向乙方提供其所有合作产品的电子产品目录，保证发布的产品目录是真实有效的。
+	</p>
+	  <p class="yangshiaa">
+	  <span class="zt">3.1.2</span> 甲方应当对产品的基本属性、成色、瑕疵等必须说明的信息进行真实、准确、完整的描述。甲方保证其出售的产品在合理期限内可以正常使用，包括产品不存在危及人身安全的不合理危险，具备产品应当具备的使用性能，符合产品或其外包装上注明采用的标准等。
+	</p>
+   <p class="yangshiaa">
+ <span class="zt">3.1.3</span> 甲方为自有品牌产品生产商或经该生产商依法授权的生产厂家、经销商或代理商，发布的产品信息必须是其自有品牌，并向乙方提交商标注册证明或商标注册受理通知书的原件扫描件。
+	</p>
+	<p class="yangshiaa">
+	<span class="zt">3.1.4</span> 甲方在交易平台发布商品信息时须遵守乙方关于发布商品或信息的相关规定。甲方不得在交易平台发布违法国家法律法规、行政政策及其他规范中禁止发布的产品。甲方不得发布、提供商品本身或外包装上所注明的产品标准、认证标志、成份及含量不符合国家规定的商品；甲方不得发布、提供未经权威质检部门或生产商认定、公布的商品或召回的商品，国家明令淘汰或停止销售的商品，过期、失效、变质的商品；甲方不得发布、提供具有交通安全隐患类的商品。
+	</p>
+	<p class="yangshiaa">
+	<span class="zt">3.1.5</span> 甲方在交易平台不得发布假冒伪劣产品或信息。
+	</p>
+	<p class="yangshiaa">
+	<span class="zt">3.1.6</span>甲方在交易平台不得同时发布两件以上的同款产品。
+	</p>
+	<p class="yangshiaa">
+	<span class="zt">3.1.7</span> 甲方不得在交易平台发布二手产品，且不得以拍卖自动发货形式发布产品。
+	</p>
+	<p class="yangshiaa">
+<span class="zt"> 3.1.8</span> 甲方发布的产品不得包含以下外部链接：
+	</p>
+	<p class="yangshiaa">
+	<span class="zt"> 3.1.8.1</span>  产品信息及页面中含有供应商自身店铺链接。
+	</p>
+	<p class="yangshiaa">
+	 <span class="zt">3.1.8.2</span>  产品信息及页面中含有供应商自身店铺的文字或图片广告及水印。
+	</p>
+	<p class="yangshiaa">
+	<h4>3.2 合作产品的质量保证</h4>
+	</p>
+	<p class="yangshiaa">
+	<span class="zt"> 3.2.1</span> 甲方提供的合作产品，应当符合国家或行业的质量技术标准，并在国家物品编码中心进行编码备案。甲方对其提供的合作产品的质量承担全部责任。
+	</p>
+	<p class="yangshiaa">
+	<span class="zt"> 3.2.2</span> 甲方对其用于供平台销售或赠送的产品质量负责。如客户从平台采购商品后，因质量问题提出退换货，由第三方鉴定机构对该争议产品进行鉴定，如经鉴定确认产品确有质量问题的，甲方须接受退换货，并由其承担产品往返的费用。如非因产品质量问题提出的退换货由乙方负责处理，其中如因汽修厂操作不当造成的产品损坏、变形等瑕疵或者损毁的，由汽修厂承担责任。
+	</p>
+ <p class="yangshiaa">
+	<h4>3.3合作产品的售价管理</h4>
+</p>
+<p class="yangshiaa">
+	<span class="zt">3.3.1 </span> 甲方负责在电子商务平台上维护产品的价格。
+</p>
+<p class="yangshiaa">
+	 <h4>3.4 合作产品的营销与销售管理。</h4>
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.4.1</span>  平台认定的供应商可在平台上建立自己的旗舰店，以展示自己的品牌形象，乙方可以对其提供必要的培训与网络营销指导。同时，平台认定的供应商还可以借助乙方推出自己的新品发布或进行产品促销。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.4.2</span> 对于乙方组织的市场推广活动，甲方有义务为活动提供必要的支持，这些支持包括但不限于市场宣传材料、必要的展示产品等。
+</p>
+<p class="yangshiaa">
+	  <span class="zt">3.4.3</span>  甲乙双方都可以在电子商务平台上进行合作产品的促销活动，由甲方单方发起的促销活动由甲方负责相关促销费用，由甲乙双方共同发起的促销活动费用按双方共同协商一致达成的费用分摊办法共同负担相关促销费用。
+</p>
+<p class="yangshiaa">
+   <h4>3.5 合作产品的技术支持与售后服务保障</h4>
+</p>
+<p class="yangshiaa">
+	<span class="zt">3.5.1</span> 甲方对提供的合作产品需要明确每一个产品的售后服务承诺，包括但不限于产品退换货政策、保修里程与产品理赔。为了实现乙方对会员客户承诺的“先行赔付”政策，甲方需向乙方交纳一定金额的保证金，专门用于解决客户理赔的保障押金。协议终止后，如甲方未发生违约行为，且未因违反国家法律法规而致使乙方遭受国家有关机关处罚、裁决赔偿等损失，甲方可向乙方提出书面清户申请，乙方收到甲方终止确认函，审核通过两个月后将保证金余额归还甲方。如甲方支付的保证金，不足以抵扣应由甲方支付违约金、赔偿金等款项的，乙方将不予退还保证金，并有权要求甲方补充不足部分。
+</p>
+<p class="yangshiaa">
+	<span class="zt">3.5.2</span> 甲方负责合作产品的售后服务工作，当出现批量或重大质量问题时，甲方需无条件召回该全部相关产品并承担相应的运费。对于一般的产品质量问题处理，乙方视不同情形对会员客户的退货、换货以及理赔要求，进行不同方式处理，相关费用由甲方承担。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.5.3</span> 甲方负责合作产品的售后服务工作，当出现批量或重大质量问题时，甲方需无条件召回该全部相关产品并承担相应的运费。对于一般的产品质量问题处理，乙方视不同情形对会员客户的退货、换货以及理赔要求，进行不同方式处理，相关费用由甲方承担。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.5.4</span> 对于重大质量事故，甲方应尽快达到现场予以处理，乙方或乙方指定的授权服务商有配合义务。如果超过三个工作日，甲方不处理或者处理无效果，乙方有权单独处理或者指定乙方的授权服务商处理。对于乙方或乙方的授权服务商先行赔付的款项以及由此发生的一切费用，甲方有义务承担。
+</p>
+<p class="yangshiaa">
+<h4>3.7  合作产品的交易方式与交易信息管理</h4>
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.7.1</span>    甲方有义务应用乙方提供的电子商务平台进行全部业务处理，以保证交易的效率与电子数据的完整性。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.7.2</span>    双方发现在电子商务平台上发布的合作产品信息有误或者信息不完整，有权利要求对方根据具体情况进行纠正或进行有效的补充。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.7.3 </span>  乙方对于电子商务平台上合作产品的各种采购、销售数据、交易主体的各类数据享有所有权。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.7.4</span>   在本协议有效期内，对于甲方销售产品有关的销售数据和库存信息，乙方可向甲方开放，但甲方对乙方提供的相关信息承担保密责任。
+</p>
+<p class="yangshiaa">
+<h4>3.8  结算管理</h4>
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.8.1</span>   合作产品的销售货款结算：结算周期为10天，在客户签收后，开始计算结算周期，每月10、20日、当月最后一天为结算日，每个结算日的次日乙方生成结算单，双方核对一致后乙方安排付款。对于库存的还没售出的产品，不属于结算范围。
+</p>
+<p class="yangshiaa">
+	 <h4>3.8.2结算方式：</h4>  
+    ①支票 ②电汇/信汇 
+</p>
+<p class="yangshiaa">
+	<h4>.8.3结算金额 </h4> 
+    结算金额=本期结算订单交易总额-本期销售退款额-技术服务费-其他费用，如甲方签订了附件一及附件二合同，则要扣除附件一及附件二约定的费用。 
+</p>
+<p class="yangshiaa">
+	<h4>3.8.4 合作产品的营销费用结算：</h4>  
+    由甲方发起或参与的促销活动，其促销费用在甲乙双方的结算货款中进行冲减，并由乙方为甲方开具发票。 
+</p>
+<p class="yangshiaa">
+	 <span class="zt">3.8.5</span>  
+    乙方通过银行转账或电汇方式向甲方或甲方指定收款方下述银行账号付款。
+</p>
+<p class="yangshiaa">
+	<h4> 3.8.6 合作产品的技术服务费结算：</h4>  
+  鉴于甲方在乙方的电子商务平台上完成所有的交易，甲方需每月按交易额的     向乙方支付技术服务费，并由乙方从结算货款中直接扣除。技术服务费计算公式：甲方商品的订单交易额*对应商品约定的技术服务费比例。订单交易额=订单商品单价*商品数量-商家优惠券。
+</p>
+<p class="yangshiaa">
+	 <span class="zt"> 3.8.7 </span> 
+乙方通过银行转账或电汇方式向甲方或甲方指定收款方下述银行账号付款
+</p>
+<p class="yangshiaa">
+	 <h4>3.8.8 平台使用费结算：</h4>  
+平台使用费支付标准为人民币______元，甲方应于本协议签订后3日内支付至乙方指定账户。合作满12月，销售额达到      元，返还    平台使用费。
+</p>
+<p class="yangshiaa">
+	<h4> 3.8.9保证金：</h4>  
+甲方在签订本协议后 3 日内向乙方支付商品质量和服务保证金人民币（大写）      元。如甲方在签订本协议前已在合同编号为[ ]的协议中向乙方交纳过保证金，则该保证金自动转为本协议的保证金，若保证金余额不足甲乙双方约定的数额的，甲方应在本协议签订后3日内补足。
+</p>
+<p class="yangshiaa">
+	 <h4>3.8.10乙方收款账户信息：</h4>  
+除另有其他书面约定，甲方应通过银行转账或电汇方式向乙方或乙方指定收款方下述银行账号付款。
+</p>
+<p class="yangshiaa">
+	<h4> 3.8.10乙方收款账户信息： </h4>
+除另有其他书面约定，甲方应通过银行转账或电汇方式向乙方或乙方指定收款方下述银行账号付款。
+</p>
+<p class="yangshiaa">
+	 <h4>3.9 发票</h4>  
+</p>
+<p class="yangshiaa">
+	 <span class="zt"> 3.9.1</span>  
+甲方负责给购买甲方商品的顾客开具符合税法规定的正式发票，相关税收应按国家相关规定由商户自行承担；无论甲方采用快递等何种方式，必须保证顾客能够及时取得购买商品的发票等凭据。
+</p>
+<p class="yangshiaa">
+	  <span class="zt">3.9.2</span>   
+甲方可在每期结算后按照缴纳的技术服务费金额，向乙方申请符合税务规定的正式发票。
+</p>
+<p class="yangshiaa">
+	<span class="zt"> 3.9.2 </span>  
+甲方可在每期结算后按照缴纳的技术服务费金额，向乙方申请符合税务规定的正式发票。
+</p>
+<p class="yangshiaa">
+	 <h3>4甲方可与乙方建议的第三方物流公司签署物流协议</h3> 
+	由第三方物流公司对乙方提供仓储和配送服务。
+同意使用，并签署附件一的三方协议；
+不同意，由甲方自行提供物流公司，并由该物流公司与乙方签订相关协议。 
+</p>
+<p class="yangshiaa">
+	 <h3>5乙方可向甲方提供电商代运营服务</h3> 
+由乙方直接与甲方签署协议。
+同意使用，并签署附件二的两方协议；
+不同意，由甲方自行开展运营业务。
+</p>
+<p class="yangshiaa">
+	 <h3>6.知识产权说明</h3>  是乙方在汽车行业电子商务应用的品牌。乙方拥有该电子商务平台的网络服务的著作权、专利权、商标、商业秘密及其它权利。非经乙方书面同意，任何人均不得自行下载、复制、传输、改编、编辑界面等信息，及侵犯乙方相关著作权、专利权、商标、商业秘密及其它合法权利。
+</p>
+<p class="yangshiaa">
+	 <h3>7．协议期限与违约责任</h3>是乙方在汽车行业电子商务应用的品牌。乙方拥有该电子商务平台的网络服务的著作权、专利权、商标、商业秘密及其它权利。非经乙方书面同意，任何人均不得自行下载、复制、传输、改编、编辑界面等信息，及侵犯乙方相关著作权、专利权、商标、商业秘密及其它合法权利。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">7.1 </span>	      
+	 本协议经双方代表签字、单位盖章后生效，有效期为2015年      月      日至2015年     月     日。协议到期后，甲乙双方再协商延续合作事项。
+</p>
+<p class="yangshiaa">
+	<span class="zt">7.2</span>若甲方违反本协议的约定，乙方有权对甲方进行包括但不限于关闭店铺、冻结账号、冻结资金、没收全部或部分保证金、终止合作、要求甲方支付赔偿金等处罚。如因甲方原因导致乙方受到起诉或遭受行政部门查处或者第三方向乙方主张权利或索赔的，由甲方承担全部责任。如甲方销售的商品或提供的服务导致纠纷或政府部门查处，甲方须按乙方的要求提供必要的证明材料和相关证据，必要时应与乙方一起参加诉讼或授权乙方代其进行诉讼。甲方同意赔偿给乙方造成的一切损失，乙方有权要求甲方直接出面解决上述诉讼与非诉纠纷，指令甲方向行政部门直接交纳罚款、承担因此发生的诉讼费、律师费、交通费、向第三方（权利人或顾客）支付的赔偿费及其它一切合理支出，包括直接损失与间接损失；如果甲方的行为对乙方的声誉造成影响，应赔偿乙方因此造成的一切损失。
+</p>
+<p class="yangshiaa">
+	<span class="zt">7.3</span>若有顾客向乙方投诉甲方，包括但不限于下列情形：甲方销售侵权、假冒伪劣商品的；销售方式、宣传图片等侵权或违法的；甲方销售国家禁止流通、限制流通商品的；甲方提供非法服务的；甲方销售的产品被政府或相关有权机构检出有质量问题的；其它乙方认为不宜继续销售的情形，乙方可作下列处理：
+</p>
+<p class="yangshiaa">
+	 <span class="zt">7.3.1</span>乙方对该商品进行即时下架删除处理,并通知甲方提供相关授权经营证明文件，甲方应在2日内提交。若甲方不能提供的，乙方有权解除本协议，并有权要求甲方赔偿乙方因此造成的一切损失；
+</p>
+<p class="yangshiaa">
+	 <span class="zt">7.3.2</span>经查投诉属实，乙方有权解除本协议，并保留对甲方处罚权，除要求甲方赔偿乙方实际损失外，乙方有权视甲方的违约情形要求甲方支付不低于   万元的违约金，并扣除甲方的全部保证金。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">7.4</span>甲方如出现包括但不限于：商品缺、断货，顾客投诉问题未解决，未能履行销售或促销承诺，未及时送货及随意取消顾客订单的情形，经乙方限期要求纠正后仍未解决的，应向甲方承担每次1万元的违约金；累计次数达5次以上的，乙方可终止本协议，扣划作为违约金的保证金，另要求甲方承担5万元的违约金。
+</p>
+<p class="yangshiaa">
+	 <span class="zt">7.5 </span>	    
+如因发生以上条款致甲方被乙方处罚或停止合作，甲方仍需继续执行售后服务并对已售出商品承担一切责任。
+</p>
+<p class="yangshiaa">
+ <span class="zt">7.6</span>		    
+甲方承诺，不会采取任何手段或措施，包括但不限于明示或暗示用户或通过其他方式转移其可以通过乙方网络平台在线达成的交易，或达成交易后不经乙方平台收取交易款项以规避向乙方支付相关服务费用等，否则视为严重违约，乙方将有权立即终止本协议，并将其保证金作为违约金予以划扣，还可要求甲方承担每次5万元的违约金。
+</p>
+<p class="yangshiaa">
+	 <span class="zt"> 7.7</span>		    
+协议一方不履行协议义务或履行义务不符合协议约定给另一方造成损失的，应承担损害赔偿责任。
+</p>
+<p class="yangshiaa">
+ <span class="zt">7.8 </span>甲方之代理人、受任人、受雇人、合伙人、股权所有人之一切行为均代表甲方，其违反合同之行为视为甲方之行为，甲方应对此承担连带责任。
+</p>
+<p class="yangshiaa">
+	<span class="zt"> 7.9 </span>   
+甲方保证在平台销售的所有商品为正品行货，如果消费者或第三人对甲方的商品提出了非正品行货的投诉或举报，甲方未按本协议履行退换等责任的，乙方有权单方确定甲方的赔偿金额，如果该赔偿是由乙方直接向消费者或第三人支付的，乙方有权向甲方追偿。
+</p>
+<p class="yangshiaa">
+	<span class="zt"> 7.10 </span>	    
+当出现需解除合同的重大事由，乙方有权终止该协议，并在书面通知甲方终止协议的十日内，乙方协助甲方退回所有合作产品，同时清算所有销售货款、营销费用以及平台服务费。
+</p>
+<p class="yangshiaa">
+	<span class="zt">7.11</span>	    
+由本协议产生的所有争议先由双方协商解决，当双方协商不能解决争议的情况下，提交乙方所在地人民法院进行裁决。
+</p>
+<p class="yangshiaa">
+	<span class="zt"> 7.10 </span>	    
+当出现需解除合同的重大事由，乙方有权终止该协议，并在书面通知甲方终止协议的十日内，乙方协助甲方退回所有合作产品，同时清算所有销售货款、营销费用以及平台服务费。
+</p>
+<p class="yangshiaa">
+	<span class="zt">7.11</span>	    
+由本协议产生的所有争议先由双方协商解决，当双方协商不能解决争议的情况下，提交乙方所在地人民法院进行裁决。
+</p>
+</div>
+<div class='qd'>
+  <input class="btn-img" type=""  value="同意并继续" button"="" onclick="asdf()">
+</div>
+</div>
+<!-- 卖家协议 -->
+<div id="zhezhaoa">
+<div class="zhezhao-title">
+<b id="carname" class="tl" title="汽服云服务协议">汽服云服务协议</b>
+<a class="close" onclick="asdd()">×</a>
+</div>
+<div class="chunxiao">
+<h2 style="margin:12px;">汽服云服务协议</h2>
+	<p class="yangshiaa">在使用汽服云平台服务之前，您应当认真阅读并遵守《汽服云服务协议》（以下简称“本协议” ），请您务必审慎阅读、充分理解各条款内容，特别是免除或者限制责任的条款、争议解决和法律适用条款。</p>
+	<p class="yangshiaa">当您按照注册页面提示填写信息、阅读并同意本协议且完成全部注册程序后，或您按照激活页面提示填写信息、阅读并同意本协议且完成全部激活程序后，或您以其他汽服云允许的方式实际使用汽服云平台服务时，即表示您已充分阅读、理解并接受本协议的全部内容。</p>
+	<p class="yangshiaa">
+	汽服云平台的经营者是指法律认可的经营汽服云平台网站的责任主体，汽服云平台网站包括但不限于汽服云（域名为 motorsc.com），本协议项下各汽服云平台的经营者可单称或合称为“汽服云“。除另行明确声明外，汽服云平台服务包含任何汽服云及其关联公司提供的基于互联网以及移动互联网的相关服务。
+	</p>
+	<h4>协议内容</h4>
+	<p class="yangshiaa">
+您与汽服云本着诚信、互惠、共赢的原则，依据《中华人民共和国合同法》等相关法律法规，就汽车零配件销售和售后服务包括但不限于汽车零配件批发、零售和服务等，在自愿、平等、协商一致的基础上，达成如下协议。
+	</p>
+	<h4>1 合作产品的电子产品目录管理</h4>
+	<p class="yangshiaa"><span class="zt">1.1</span> 负责按汽服云的数据要求向汽服云提供其所有合作产品的电子产品目录，保证发布的产品目录是真实有效的。</p>
+	<p class="yangshiaa"><span class="zt">1.2</span> 您应当对产品的基本属性、成色、瑕疵等必须说明的信息进行真实、准确、完整的描述。</p>
+	<p class="yangshiaa"><span class="zt">1.3</span>为自有品牌产品生产商或经该生产商依法授权的生产厂家、经销商或代理商，发布的产品信息必须是其自有品牌，并向汽服云提交商标注册证明或商标注册受理通知书的原件扫描件。</p>
+     <p class="yangshiaa"><span class="zt">1.4</span> 在交易平台发布商品信息时须遵守汽服云关于发布商品或信息的相关规定。您不得在交易平台发布违法国家法律法规、行政政策及其他规范中禁止发布的产品。</p>
+  <h4>2 合作产品的质量保证</h4>
+  <p class="yangshiaa"><span class="zt">2.1</span> 您提供的合作产品，应当符合国家或行业的质量技术标准，并在国家物品编码中心进行编码备案。您对其提供的合作产品的质量承担全部责任。</p>
+  <p class="yangshiaa"><span class="zt">2.2</span> 您对其用于供平台销售或赠送的产品质量负责。</p>
+  <h4>3 合作产品的售价管理</h4>
+  <p class="yangshiaa"><span class="zt">3.1</span>您负责在电子商务平台上维护产品的价格。</p>
+  <h4>4 合作产品的技术支持与售后服务保障</h4>
+   <p class="yangshiaa"><span class="zt">4.1</span>您对提供的合作产品需要明确每一个产品的售后服务承诺，包括但不限于产品退换货政策、保修里程与产品理赔。</p>
+      <p class="yangshiaa"><span class="zt">4.2</span>您负责合作产品的售后服务工作，当出现批量或重大质量问题时，您需无条件召回该全部相关产品并承担相应的运费。</p>
+	  <h4>5 发票</h4>
+	<p class="yangshiaa"><span class="zt">5.1</span>您负责给购买您商品的顾客开具符合税法规定的正式发票，相关税收应按国家相关规定由商户自行承担；无论您采用快递等何种方式，必须保证顾客能够及时取得购买商品的发票等凭据。</p>
+	  <h4>6．协议期限与违约责任</h4>
+	  <p class="yangshiaa"><span class="zt">6.1</span>有效期为申请之日至2015年12月31日。协议到期后，甲乙双方再协商延续合作事项。</p>
+	  <p class="yangshiaa"><span class="zt">6.2</span>若您违反本协议的约定，汽服云有权对您进行包括但不限于关闭店铺、冻结账号、冻结资金、没收全部或部分保证金、终止合作、要求您支付赔偿金等处罚。</p>
+	  	  <p class="yangshiaa"><span class="zt">6.3</span>
+ 若您违反本协议的约定，汽服云有权对您进行包括但不限于关闭店铺、冻结账号、冻结资金、没收全部或部分保证金、终止合作、要求您支付赔偿金等处罚。</p>
+</div>
+<div class='qd'>
+  <input class="btn-img" type=""  value="同意并继续" button"="" onclick="asdff()">
+</div>
+</div>
+
+<div id="main">
+  <div class="logo">
+    <a href="/customer/sydjt/index.html"><img src="/customer/sydjt/images/logo.png" /></a>
+    <span class="yangshib">用户注册</span>
+  </div>
+  <div class="login">
+    <div class="login-left">
+      <a href="#"><img src="/customer/sydjt/images/login-left.png" /></a>
+    </div>
+    <div class="login-right">
+    <div class="yangshi">
+      <li class="yangshia"><h2>电器服务云注册</h2></li>
+       <div class="reg_main" > 
+          <iframe src="/customer/sydjt/register/registerDB.html" name="xieyi" frameborder="0" marginheight="0" marginwidth="0" style="border:0px solid #F0F0F0;width:278px;height:250px;" scrolling="no"></iframe>
+      </div>
+          </div>
+      <div class="login-ewm">
+        <img src="/customer/sydjt/images/sjewm.png" />
+      </div>
+    </div>
+  </div> 
+</div>
+</body>
+</html>

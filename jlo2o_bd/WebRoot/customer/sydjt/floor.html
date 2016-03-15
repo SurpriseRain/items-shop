@@ -1,0 +1,58 @@
+<div class="content">
+<div class="row">
+  <div class="w12 floor_title">
+    <h3 class="w03"><i class="fa fa-sun-o"></i><span>1F</span>冰箱/洗衣机/空调</h3>
+    <ul>
+      <li class="xuan">全部</li>
+<!--      <li>乐视</li>-->
+<!--      <li>格力</li>-->
+<!--      <li>美的</li>-->
+<!--      <li>创维</li>-->
+<!--      <li>海尔</li>-->
+<!--      <li>飞利浦</li>-->
+    </ul>
+  </div>
+  <div class="w12 floor_main">
+    <div class="w03 floor_adve">
+      <a><img src="/customer/sydjt/images/ch.png" class="w12" /></a>
+    </div>
+    <div id="fl-tz-grid" class="grid-col-1 grid-col">
+    <ul class="w09 lg_w09 md_w08 floor_list">
+    </ul>
+    </div>
+  </div>
+  <div class="w12 floor_brand">
+    <ul class="w12">
+      <li class="w02"><a><img src="/customer/sydjt/images/ch.png" class="w12" /></a></li>
+      <li class="w02"><a><img src="/customer/sydjt/images/gl.png" class="w12" /></a></li>
+      <li class="w02"><a><img src="/customer/sydjt/images/cw.png" class="w12" /></a></li>
+      <li class="w02"><a><img src="/customer/sydjt/images/md.png" class="w12" /></a></li>
+      <li class="w02"><a><img src="/customer/sydjt/images/he.png" class="w12" /></a></li>
+      <li class="w02"><a><img src="/customer/sydjt/images/flp.png" class="w12" /></a></li>
+    </ul>
+  </div>
+  <div class="w12 floor_brand"><a><img src="/customer/sydjt/images/floor_img.png" class="w12" /></a></div>
+</div>
+</div>
+	<!--楼层一-->
+    <script type="text/template" id="m-tpl-4-1">
+        <%_.each(mapList, function(item,index) {%>
+				<a href="<%= item.href%>" target="_blank"><img src="<%= item.src%>" data-src="<%= item.src%>" title="<%= item.gname%>" class="w12" /></a>
+        <%});%>
+    </script>
+    <!--楼层一-->
+    <script type="text/template" id="m-tpl-4">
+        <%_.each(mapList, function(item,index) {%>
+				<%if(index!=0){%>
+				<li class="w03 lg_w03 md_w04"><a class="" href="<%= item.href%>" target="_blank">
+				<dl><dt><img src="../../images/s.gif" data-src="<%= item.src%>" title="<%= item.gname%>" /></dt><dd><%= item.shortGName%></dd><dd class="price">￥:<%= item.SPJGB05%></dd></dl>
+				</a></li>
+				<%}%>
+        <%});%>
+    </script>
+
+
+<script type="text/javascript">
+console.log("2233");
+</script>
+

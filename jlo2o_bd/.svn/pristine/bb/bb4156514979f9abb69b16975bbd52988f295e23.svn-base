@@ -1,0 +1,287 @@
+package com.jlsoft.o2o.qxgl.service;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jlsoft.framework.JLBill;
+import com.jlsoft.framework.dataset.DataSet;
+import com.jlsoft.utils.JLTools;
+import com.jlsoft.utils.PubFun;
+@Controller
+@RequestMapping("/Oper_FSFW")
+public class Oper_FSFW extends JLBill{
+	/**
+	 * 插入生产企业的辐射区域范围
+	 * 2015/12/14
+	 * NineDragon
+	 * @param
+	 * 		array:区域代码
+	 * 		zcxx01:公司id
+	 * 		type:  经销企业品牌未入驻时：自行分配的销售区域 type 字段为1   生产企业和物流为0
+	 * 		lx: 1表示物流  0 表示生产企业或者经销
+	 * 		t : 0表示虚拟仓库  1表示：实体仓库
+	 * @throws Exception
+	 */
+	@RequestMapping("/insert_SCFSFW.action")
+	public Map<String, Object> insert_SCFSFW(String XmlData) throws Exception{
+		cds=new DataSet(XmlData);
+		String[] QYFW = cds.getField("array", 0).split(",");
+		String zcxx01 = cds.getField("zcxx01", 1);
+		String type = cds.getField("type", 2);//0 表示物流和生产  1表示经销
+		String t = cds.getField("t", 4);// 0表示虚拟仓库  1表示：实体仓库
+		Map<String, Object> map=new HashMap<String, Object>();
+		try {
+			String sql ="DELETE FROM w_dqck WHERE ck01 = (SELECT b.ck01 FROM w_gsck a LEFT JOIN ck b ON a.ck01=b.ck01 WHERE a.zcxx01='"+zcxx01+"' AND b.ck09=0 AND b.type='"+t+"')  AND type='"+type+"' ";
+			Map row = getRow(sql, null, 0);
+			int i = execSQL(o2o, sql, row);
+			int i1=0;
+			if(QYFW.length>0){
+				for(int j=0 ; j<QYFW.length ; j++){
+			        String GSXX = new String(QYFW[j]);   
+			        String GSXXS[] = GSXX.split("-");  
+			        String dqxx01 = GSXXS[0];
+			        String dqxx02 = GSXXS[1];
+			        
+			        // 判断是否省级单位
+			        List<String> GSXX_list = new ArrayList<String>();
+			        if("0000".equals(dqxx01.substring(2))){
+						String citySql = "SELECT a.DQBZM01 DQXX01, CONCAT (b.dqbzm02,a.DQBZM02)DQBZM02   "
+									+ "FROM DQBZM a  LEFT JOIN DQBZM b ON a. dqbzm_dqbzm01=b.dqbzm01   WHERE a.DQBZM_DQBZM01 = '" + dqxx01 +  "' "
+									+ "AND a.DQBZM03 = 2 ORDER BY a.DQBZM01";
+						List city_List = queryForList(o2o, citySql);
+						for (int GSXX_Nj = 0; GSXX_Nj < city_List.size(); GSXX_Nj++){
+							 Map city_map = (Map)city_List.get(GSXX_Nj);
+							 String city_DQXX01 =  (String) city_map.get("DQXX01");
+							 String city_DQBZM02 =  (String) city_map.get("DQBZM02");
+							 String city = city_DQXX01+"-"+city_DQBZM02;
+							 GSXX_list.add(city);
+						}
+						 for (int n = 0; n < GSXX_list.size(); n++) {
+						        String GSXX_DQXX = new String(GSXX_list.get(n));   
+						        String GSXX_DQ[] = GSXX_DQXX.split("-");  
+						        String dq01 = GSXX_DQ[0];
+						        String dq02 = GSXX_DQ[1];
+						        String  DQCK_SQL = "INSERT INTO w_dqck(dqxx01,ck01,dqxx02,ck02,type) VALUES ('"+dq01+"',(SELECT b.ck01 FROM w_gsck a LEFT JOIN ck b ON a.ck01=b.ck01 WHERE a.zcxx01='"+zcxx01+"' AND b.ck09=0 AND b.type='"+t+"'),'"+dq02+"',(SELECT b.ck02 FROM w_gsck a LEFT JOIN ck b ON a.ck01=b.ck01 WHERE a.zcxx01='"+zcxx01+"' AND b.ck09=0 AND b.type='"+t+"'),'"+type+"')";
+								Map DQCK_row = getRow(DQCK_SQL, null, 0);
+								i1+=execSQL(o2o, DQCK_SQL, DQCK_row);
+						 }
+					}else{
+						//省份单位
+						// 20151231 齐俊宇 update 修改插入语句,不使用子查询 BEGIN
+						//String DQCK_sqls="INSERT INTO w_dqck(dqxx01,ck01,dqxx02,ck02,type) VALUES ('"+dqxx01+"',(SELECT b.ck01 FROM w_gsck a LEFT JOIN ck b ON a.ck01=b.ck01 WHERE a.zcxx01='"+zcxx01+"' AND b.ck09=0 AND b.type='"+t+"'),'"+dqxx02+"',(SELECT b.ck02 FROM w_gsck a LEFT JOIN ck b ON a.ck01=b.ck01 WHERE a.zcxx01='"+zcxx01+"' AND b.ck09=0 AND b.type='"+t+"'),'"+type+"')";
+						String DQCK_sqls="INSERT INTO w_dqck(dqxx01,ck01,dqxx02,ck02,type) SELECT '" + dqxx01 + "', b.ck01, '" + dqxx02 + "', b.ck02, '" + type + "' FROM w_gsck a LEFT JOIN ck b ON a.ck01 = b.ck01 WHERE a.zcxx01 = '" + zcxx01 + "' AND b.ck09 = 0 AND b.type = '" + t + "'";
+						// 20151231 齐俊宇 update 修改插入语句,不使用子查询 END
+						System.out.println(DQCK_sqls);
+						Map DQCK_rows = getRow(DQCK_sqls, null, 0);
+						i1+=execSQL(o2o, DQCK_sqls, DQCK_rows);
+					}
+				}
+			}
+			//判断插入的是物流企业    1表示物流 
+			String lx = cds.getField("lx", 3);
+			if(lx.equals("1")){
+				//物流企业的辐射范围进行修改时，需要全部更新修改状态
+				//重复的状态 赋予状态为1**************************
+				List<String> city_lists = new ArrayList<String>();
+				String citySqls = "SELECT dqxx01 FROM w_dqck WHERE TYPE='2' AND dqxx01  IN (SELECT dqxx01 FROM  w_dqck WHERE ck01=(SELECT b.ck01 FROM w_gsck a LEFT JOIN ck b ON a.ck01=b.ck01 WHERE a.zcxx01='"+zcxx01+"' AND b.ck09=0 AND b.type='"+t+"'))";
+				List WL_Lists = queryForList(o2o, citySqls);
+				for (int WL_j = 0; WL_j < WL_Lists.size(); WL_j++){
+					 Map WL_map = (Map)WL_Lists.get(WL_j);
+					 String WL_DQXX01 =  (String) WL_map.get("dqxx01");
+					 city_lists.add(WL_DQXX01);
+				}
+				for (int n = 0; n < city_lists.size(); n++) {
+			        String WL_DQXX = new String(city_lists.get(n)); 
+			        System.out.println(WL_DQXX);
+			        String  WL_SQL = "UPDATE w_dqck SET STATUS='1' WHERE dqxx01='"+WL_DQXX+"' AND TYPE='2'";
+			        Map WL_row = getRow(WL_SQL, null, 0);
+			        i1+=execSQL(o2o, WL_SQL, WL_row); 
+				}
+				
+				//不重复的状态 赋予状态为0**************************
+				List<String> WLlist = new ArrayList<String>();
+				String citySqlss = "SELECT dqxx01 FROM w_dqck WHERE TYPE='2' AND dqxx01 NOT IN (SELECT dqxx01 FROM  w_dqck WHERE ck01=(SELECT b.ck01 FROM w_gsck a LEFT JOIN ck b ON a.ck01=b.ck01 WHERE a.zcxx01='"+zcxx01+"' AND b.ck09=0 AND b.type='"+t+"'))";
+				List WLLists = queryForList(o2o, citySqlss);
+				for (int wLjs = 0; wLjs < WLLists.size(); wLjs++){
+					 Map WL_maps = (Map)WLLists.get(wLjs);
+					 String WLDQXX01 =  (String) WL_maps.get("dqxx01");
+					 WLlist.add(WLDQXX01);
+				}
+				for (int C = 0; C < WLlist.size(); C++) {
+			        String WLDQXX = new String(WLlist.get(C)); 
+			        System.out.println(WLDQXX);
+			        String  WLSQLs = "UPDATE w_dqck SET STATUS='0' WHERE dqxx01='"+WLDQXX+"' AND TYPE='2'";
+			        Map WLrows = getRow(WLSQLs, null, 0);
+			        i1+=execSQL(o2o, WLSQLs, WLrows); 
+				}
+			}
+			if (i1 > 0) {
+				map.put("STATE", "0");
+			} else {
+				map.put("STATE", "1");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("STATE", "1");
+			throw e;
+		}
+		return map;
+	}
+	
+	/**
+	 * 
+	 * 前提条件：ck表  type为0的虚拟仓库  必须保证一个公司下只有一个虚拟仓库
+	 * http://localhost:8088/Oper_FSFW/insert_test.action?XmlData=[{"in":"in"}]
+	 * 
+	 */
+	@RequestMapping("/insert_oldData.action")
+	public Map<String, Object> insert_oldData(String XmlData) throws Exception{
+		cds=new DataSet(XmlData);
+		Map<String, Object> map=new HashMap<String, Object>();
+		int i1=0;
+		try {
+			//查询之前注册公司的 zcxx01 
+			List<String> list = new ArrayList<String>();
+			String sql = "SELECT zcxx01,zcxx02 FROM w_zcgs WHERE zcgs01=4 AND (zcgs03 =43 OR zcgs03=42)";
+			List GSList = queryForList(o2o, sql);
+			for (int j = 0; j < GSList.size(); j++){
+				 Map GSmap = (Map)GSList.get(j);
+				 String z01 =  (String) GSmap.get("zcxx01");
+				 String z02 =  (String) GSmap.get("zcxx02");
+				 //为空判断
+				 if( z01 == null || z01.equals("") ){
+					 continue;
+				 }
+				 if( z02 == null || z01.equals("")){
+					 continue;
+				 }
+				 String gs = z01+"-"+z02;
+				 list.add(gs);
+			}
+			for (int n = 0; n < list.size(); n++) {
+		        String GSXX = new String(list.get(n));   
+		        String GSXXS[] = GSXX.split("-"); 
+		        String zcxx01 = GSXXS[0];
+		        String zcxx02 = GSXXS[1];
+		        
+		        //生成ck01
+		        String ck01 = JLTools.getID_X(PubFun.updateWBHZT(o2o, "CK", 1),8);
+				System.out.println(ck01);
+		        
+				//判断之前老数据ck01是否为8位，ture不操作
+				String sql8 =" SELECT ck01 FROM w_gsck WHERE zcxx01='"+zcxx01+"' AND CK01=(SELECT ck01 FROM ck WHERE ck09=0 AND TYPE=0 AND gsxx01='"+zcxx01+"')";
+				List queryForList = queryForList(o2o, sql8);
+				//为空判断 
+				int length;
+				if(queryForList.size() > 0){
+					Map map8 = (Map) queryForList.get(0);
+					String ck018 = (String) map8.get("ck01");
+				    length = ck018.toString().length();
+				}else{
+					length =9;
+				}
+				if(length == 8){
+					//不操作
+				}else{
+				
+		        //【w_gsck 表插入 数据】
+		        //进行判断是否有值：
+		        String GS_sql = "SELECT zcxx01,CK01 FROM w_gsck WHERE zcxx01='"+zcxx01+"' ";
+				List GS_List = queryForList(o2o, GS_sql);
+				int size = GS_List.size();
+				if(size >0){
+					//更新
+					String  GSCK_SQL = "UPDATE w_gsck SET CK01='"+ck01+"' WHERE zcxx01='"+zcxx01+"' AND CK01=(SELECT ck01 FROM ck WHERE ck09=0 AND TYPE=0 AND gsxx01='"+zcxx01+"')  ";
+					Map GSCK_row = getRow(GSCK_SQL, null, 0);
+			        i1+=execSQL(o2o, GSCK_SQL, GSCK_row); 
+				}else{
+					//插入
+			        String GSCK_SQLS ="INSERT INTO w_gsck(zcxx01,CK01) VALUES ('"+zcxx01+"','"+ck01+"') ";
+					Map GSCK_rows = getRow(GSCK_SQLS, null, 0);
+					i1 += execSQL(o2o, GSCK_SQLS, GSCK_rows);
+				}
+				//【ck表中插入数据】
+				//进行判断是否有值 
+				String CK_SQL = "SELECT ck01 FROM ck WHERE gsxx01='"+zcxx01+"' AND ck09=0 AND TYPE=0 ";
+				List CK_List = queryForList(o2o, CK_SQL);
+				int sizes = CK_List.size();
+				if(sizes >0){
+					//更新
+					String  W_CK_SQL = "UPDATE ck SET ck01='"+ck01+"' ,ERPDZ='0001010103'  WHERE gsxx01='"+zcxx01+"'AND TYPE='0' ";
+					Map W_CK_row = getRow(W_CK_SQL, null, 0);
+			        i1+=execSQL(o2o, W_CK_SQL, W_CK_row);
+				}else{
+					//插入
+					String W_CK_SQLS ="INSERT INTO ck(ck01,ck02,ck09,gsxx01,ERPDZ,TYPE)  VALUES ('"+ck01+"','"+zcxx02+"仓库',0,'"+zcxx01+"','0001010103',0) ";
+					Map W_CK_rows = getRow(W_CK_SQLS, null, 0);
+					i1 += execSQL(o2o, W_CK_SQLS, W_CK_rows);
+				}
+				
+				//【w_kcxx表插入数据】
+				//进行判断是否有值 
+				String KCXX_SQL = "SELECT zcxx01,spxx01,ck01 FROM w_kcxx WHERE zcxx01='"+zcxx01+"' AND ck01=03 ";
+				List KCXX_List = queryForList(o2o, KCXX_SQL);
+				int sizess = KCXX_List.size();
+				if(sizess >0){
+					//更新  
+					String W_KCXX_SQL ="UPDATE w_kcxx SET ck01='"+ck01+"'   WHERE zcxx01='"+zcxx01+"' AND ck01='03' ";
+					Map W_KCXX_rows = getRow(W_KCXX_SQL, null, 0);
+					i1 += execSQL(o2o, W_KCXX_SQL, W_KCXX_rows);
+				}else{
+					//插入
+					//无需操作：说明该企业没有发布商品。
+				}
+				//往  w_dqck增加默认数据 --- dqxx01=120100 
+				//判断zcxx01 是生产还是经销企业  43生产  42经销
+				String sqllx = "SELECT zcgs03 FROM w_zcgs WHERE zcxx01='"+zcxx01+"'";
+				List Listlx = queryForList(o2o, sqllx);
+				 Map maplx = (Map)Listlx.get(0);
+				 Integer zcgslx =  (Integer) maplx.get("zcgs03");
+				 System.out.println(zcgslx);
+		        if(zcgslx ==43){
+		        	//生产
+		        	//判断w_dqck表中是否有天津仓库的数据
+		        	String sqltj ="SELECT ck01 FROM w_dqck WHERE ck01=(SELECT ck01 FROM ck WHERE gsxx01='"+zcxx01+"' AND TYPE='0') AND dqxx01='120100'";
+		        	List Listtj = queryForList(o2o, sqltj);
+		        	int sizetj = Listtj.size();
+		        	if(sizetj > 0){
+		        		//不插入
+		        	}else{
+		        		String insertDqckSql = "INSERT INTO w_dqck (dqxx01, ck01, ck02, dqxx02, type, status) VALUES ('120100','"+ck01+"', '"+zcxx02+"仓库',"+"'天津天津市', 0, 0)";
+						Map row = getRow(insertDqckSql, null, 0);
+						i1 += execSQL(o2o, insertDqckSql, row);	
+						System.out.println("insert into w_dqck: "+ ck01);
+		        	}
+		        }else{
+		        	//经销
+		        	//判断w_dqck表中是否有天津仓库的数据
+		        	String sqltj ="SELECT ck01 FROM w_dqck WHERE ck01=(SELECT ck01 FROM ck WHERE gsxx01='"+zcxx01+"' AND TYPE='0') AND dqxx01='120100'";
+		        	List Listtj = queryForList(o2o, sqltj);
+		        	int sizetj = Listtj.size();
+		        	if(sizetj > 0){
+		        		//不插入
+		        	}else{
+		        		String insertDqckSql = "INSERT INTO w_dqck (dqxx01, ck01, ck02, dqxx02, type, status) VALUES ('120100','"+ck01+"', '"+zcxx02+"仓库',"+"'天津天津市', 1, 0)";
+						Map row = getRow(insertDqckSql, null, 0);
+						i1 += execSQL(o2o, insertDqckSql, row);	
+						System.out.println("insert into w_dqck: "+ ck01);
+		        	}
+		        }
+				}
+			}
+			if (i1 > 0) {
+				map.put("STATE", "成功");
+			} else {
+				map.put("STATE", "失败");
+			}
+		} catch (Exception e) {
+			e.getStackTrace();
+			map.put("STATE", "失败");
+		}
+		return map;
+	}
+}

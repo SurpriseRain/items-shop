@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心 - 基本信息</title>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Basinfo.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script> 
+<script type="text/javascript" src="/js/json2.js"></script>
+
+<script language="javascript"  src="http://webapi.amap.com/maps?v=1.3&key=b2992a19dfcee083c3e8647b38db8420"></script>
+<script type="text/javascript" src="/js/amap.js"></script>
+</head>
+<script type="text/javascript">
+$(document).ready(function(){
+	var url="/InitZcgs/selectLatLon.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.servicelist).each(function(index,val){
+		 	searchPostionA(val.zcxx01,val.zcxx08,"false");
+	     });
+	}
+});
+mapInit();
+//cityCode 城市代码  address
+function searchPostionA(zcxx01, address,flag){
+	var cityCode = "";
+	if(undefined != address && "" != address){
+		AMap.service(["AMap.PlaceSearch"], function() {
+	    var placeSearch;
+	    if(null != cityCode && "" != cityCode){
+	    	placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+	        pageSize: 5,
+	        pageIndex: 1,
+	        city: cityCode, //城市
+	        map: mapObj,
+	        panel: "resultDiv"
+	   	 });
+	    }else{
+	    	placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+	        pageSize: 5,
+	        pageIndex: 1,
+	        map: mapObj,
+	        panel: "resultDiv"
+	   	 });
+	    }
+	    //关键字查询
+	    placeSearch.search(address, function(status, result) {
+	    	if(result.info == "OK" && null != result.poiList && result.poiList.count > 0 ){
+	    		var obj = (result.poiList.pois)[0];
+	    		var locat = obj.location;
+	    		insertlatlon(zcxx01,locat.lng,locat.lat);
+	    	}
+	    });
+		});
+	}
+}
+//插入经纬度
+function insertlatlon(obj1,obj2,obj3){
+	var XmlData = {};
+	XmlData["zcxx01"]=obj1;
+	XmlData["lng"]=obj2;
+	XmlData["lat"]=obj3;
+	var url="/InitZcgs/insertLatLon.action?XmlData="+JSON.stringify(XmlData);
+	var rData = visitService(url);
+}
+</script>
+</html>

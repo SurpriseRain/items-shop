@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>电器服务云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/userIndex.css" />
+
+<script type="text/javascript" src="/customer/sydjt/js/columns/columns_carlist.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+<script type="text/javascript">
+//初始化数据
+var a = 0;
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+function initData(){
+	 a++;
+	 loadInfos();
+	 var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectMyGHS","dataType":"Json","HBID":usercookie.ZCXX01}];
+	 var url ="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 var rData0 = visitService(url);
+	 for(var i=0;i<rData0.length; i++){
+	 var sz=rData0[i];
+		 $("#ZTID").append('<option value="'+sz.ZTID+'">'+sz.ZTMC+'</option>');
+	 }
+	 if(a==1){
+	  //$("#FLAG").attr("value",$.getUrlParam('FLAG'));
+	  $("#FLAG").attr("value",JL.getParam("FLAG"));
+	 }
+	 var zt = $("#FLAG").val();
+	 var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_XSDD','QryType':'Report','dataType':'Json','HBID':usercookie.ZCXX01,"ZTID":$("#ZTID").val(),"FLAG":zt,"SPMC":$("#SPMC").val()}];
+	 return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+function loadInfos(){
+	$("#wust").empty();
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"1",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM1 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"2",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM2 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"3",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM3 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"4",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM4 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"5",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM5 = visitService(url)[0].SUM;
+	var	XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"6",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM6 = visitService(url)[0].SUM;
+
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM7 = visitService(url)[0].SUM;
+	//条件筛选	    
+	$(".user_page_tab .w09").empty();
+	$(".user_page_tab .w09").append(
+	'<li class="xuan" onclick="changeIframeSize(\'ddgl/myorder.html?FLAG=3\',\'#centerFrame\',null,\'#FLAG\',0)" >全部订单('+SUM7+')</li>'+
+	'<li onclick="changeIframeSize(\'ddgl/myorder.html?FLAG=3\',\'#centerFrame\',3,\'#FLAG\',1)">待支付订单('+SUM3+')</li>'+
+	'<li onclick="changeIframeSize(\'ddgl/myorder.html?FLAG=4\',\'#centerFrame\',4,\'#FLAG\',2)">待发货订单('+SUM4+')</li>'+
+	'<li onclick="changeIframeSize(\'ddgl/myorder.html?FLAG=5\',\'#centerFrame\',5,\'#FLAG\',3)">待收货订单('+SUM5+')</li>'+
+	'<li onclick="changeIframeSize(\'ddgl/myorder.html?FLAG=6\',\'#centerFrame\',6,\'#FLAG\',4)">待评价订单('+SUM6+')</li>'
+	);
+}
+</script>
+<script type="text/javascript" src="/control/js/carlist-back.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+
+<!--<script type="text/javascript" src="/js/jquery.kkPages.js"></script>-->
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+
+</head>
+<body>
+<div class="w12 merch_main">
+<ul class="w12 merch_breadcrumb">
+    <li><i class="fa fa-home"></i><span>首页</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>订单管理</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><b>我的订单</b></li>
+</ul>
+</div>
+<div class="w12 user_content">
+<div class="w12 user_page_tab">
+    <ul class="w09">
+	<!--<a><li class="xuan">全部订单(3)</li></a><a><li>待付款(1)</li></a><a><li>待收货(2)</li></a><a><li>待评价</li></a>--></ul>
+    <div class="w03 order_seach">
+	<select name="ZTID" id="ZTID" class="bankbox" style="display:none">
+	      <option value="">请选择</option>
+	    <option value="0000">沈阳兴隆大家庭</option></select>
+	<select name="FLAG" id="FLAG" class="bankbox" style="display:none">
+	      <option value="">全部订单</option>
+	      <option value="3">待支付订单</option>
+	      <option value="4">待发货订单</option>
+	      <option value="5">待收货订单</option>
+		  <option value="6">待评价订单</option>
+    </select> 
+	<input type="text" name="SPMC" id="SPMC" class="w10" placeholder="订单号/商品名称可搜索" /><a class="w02" onclick="init()"><i class="fa fa-search"></i></a></div>
+ </div>
+<div class="w12 user_page_main" id="centerFrame" name="centerFrame">
+  <div class="center">
+	<div jl jlid="DefStaPer"  id="carlist_htd" newclos="4" multiPage="true" emtype="htd" url="/getcarlist_htd.do" newline="" before_reply="" after_reply=""></div>
+  </div>
+  </div>
+</div>
+
+  <!-- <div class="w12 user_page_list">
+    <dl class="w12">
+      <dt class="w12"><span>收货人：刹那芳华</span><span>2015-10-09 12:06:28</span><span>订单号：10322652151</span><span>店铺：XXXXX旗舰店</span><i class="fa fa-trash-o" title="删除订单"></i></dt>
+      <dd class="w06">
+        <div class="w02"><a href="../proItem/proItem.html"><img src="../images/sp.jpg" /></a></div>
+        <div class="w08"><a href="../proItem/proItem.html">商品名称商品商品名称商品名称商品名称商品名称商品名称名称商品名称商品名称商品名称</a></div>
+        <div class="w02"><span class="w12">×1</span></div>
+      </dd>
+      <dd class="w02"><b class="w12">￥ 5,288.00</b><span class="w12">在线支付</span></dd>
+      <dd class="w02"><b class="w12">等待付款</b><span class="w12">订单详细</span></dd>
+      <dd class="w02"><input type="button" value="立即付款" class="jl_btn btn_red" /></dd>
+    </dl>
+  </div>
+   -->
+ 
+</body>
+</html>
+
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function toCart(DZBH,W_DJZX02,XSDD02,ZTID,XSDD01){
+	if(W_DJZX02==3){
+		window.open("/customer/sydjt/shopping/cartSuccess.html?xsdd01="+XSDD01+"&zfje="+XSDD02+"&ztid="+ZTID+"&dzbh="+DZBH);
+	}else if(W_DJZX02==5){
+	if(!confirm('此订单货物已收到!?')){return;};
+		var XmlData=[{"XSDD01":XSDD01}];
+		var url = "/OrderFlowManage/OkMyOrder.action?XmlData="+JSON.stringify(XmlData);
+		var state = visitService(url).STATE;
+		if(state==1) {
+			$("#wust").empty();
+			init();
+		} else {
+			alert("确认收货失败");
+			return;
+		}
+	}
+}
+function toSPPJ(W_DJZX02,XSDD04,ZTID,SPXX01,XSDD01){
+	parent.ajaxGrid('/customer/sydjt/back/ddgl/myhtd_assess_open.html?XSDD04='+XSDD04+'&SPXX01='+SPXX01+'&XSDD01='+XSDD01);
+}
+//执行回调方法
+function backFun(parameters){
+	init();
+}
+</script>

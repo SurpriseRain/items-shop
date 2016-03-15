@@ -1,0 +1,75 @@
+<div class="content">
+<div class="row">
+  <div class="w02 pro_nav">
+    <h3>全部商品分类</h3><i class="fa fa-chevron-down"></i>
+  </div> 
+  <div class="w02 pro_nav_main">
+    <div class="w02 pro_nav_list"><!--一级菜单截点--></div>
+    <div class="w10 lg_w10 md_w02 pro_nav_case display_none">
+      <div class="w09 lg_w09 md_w12"><!--二级菜单截点--></div>
+      <div class="w03 lg_w03 md_hidden">
+        <ul class="w12"><li class="w06"><a class="w12"><img src="../images/ch.png" class="w12" /></a></li><li class="w06"><a class="w12"><img src="../images/gl.png" class="w12" /></a></li><li class="w06"><a class="w12"><img src="../images/cw.png" class="w12" /></a></li><li class="w06" class="w12"><a class="w12"><img src="../images/md.png" class="w12" /></a></li><li class="w06"><a class="w12"><img src="../images/he.png" class="w12" /></a></li><li class="w06"><a class="w12"><img src="../images/gl.png" class="w12" /></a></li></ul>
+        <ul class="w12"><li class="w12"><a class="w12"><img src="../images/ch.png" class="w12" style="height:114px;" /></a></li><li class="w12"><a class="w12"><img src="../images/ch.png" class="w12" style="height:114px;" /></a></li></ul>
+      </div>
+    </div>
+  </div>
+  
+  <ul class="w10 lg_w10 md_w09 title_nav">
+    <li><a href="index.html">首页</a></li>
+    <li><a>品牌</a></li>
+    <li><a href="抢购.html">商城</a></li>
+    <li><a href="newsList/新闻页.html">新闻中心</a></li>
+    <li><a>安装</a></li>
+    <li><a>维修</a></li>
+    <li><a>菜单分类</a></li>
+    <li><a>菜单分类</a></li>
+    <li><a>菜单分类</a></li>
+    <li><a>菜单分类</a></li>
+  </ul>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  var i,j;
+  for(i=0;i<14;i++){$(".pro_nav_list").append('<dl class="w12"><dd class="w11"></dd><dt class="w01"><i class="fa fa-angle-right"></i></dt></dl>')}
+  for(j=0;j<3;j++){$(".pro_nav_list > dl > dd").append('<a href="../proList/proList.html">'+ptNav[0].navY+'</a>/')}  
+  for(var i=0;i<6;i++){
+	$(".pro_nav_case > .w09").append('<dl class="w12"><dt class="w02"><a href="../proList/proList.html" class="w09">'+ptNav[0].navY+'<dt><dd class="w10"></dd></dl>')
+  }
+  for(j=0;j<15;j++){$(".pro_nav_case > .w09 > dl > dd").append('<a href="../proList/proList.html">'+ptNav[0].navE[0].navE01+'</a>')};  	
+})
+$(document).ready(function(){
+	var html_title = $("title").text();
+    $(".pro_nav_list > dl").mouseover(function(){
+	$(".pro_nav_main").attr("class","w12 pro_nav_main");
+	$(".pro_nav_list > dl").removeClass("xuan");
+	$(this).addClass("xuan");
+	$(".pro_nav_case").attr("class","w10 lg_w10 md_w02 pro_nav_case display_block");
+  })
+    $(".pro_nav_main").mouseleave(function(){
+	$(".pro_nav_main").attr("class","w02 pro_nav_main");
+	$(".pro_nav_list > dl").removeClass("xuan");
+	$(".pro_nav_case").attr("class","w10 lg_w10 md_w02 pro_nav_case display_none");
+  })
+	var html_title = $("title").text();
+	if(html_title == "电器服云首页"){
+		$(".pro_nav > i").attr("class","fa fa-chevron-down display_none");
+        $(".pro_nav > i").mouseover(function(){
+	    $(this).attr("class","fa fa-chevron-up display_block");
+	    $(".pro_nav_main").attr("class","w02 pro_nav_main display_block");
+      })
+	}else{
+		$(".pro_nav > i").attr("class","fa fa-chevron-down display_block");
+		$(".pro_nav_main").attr("class","w02 pro_nav_main display_none");
+        $(".pro_nav").mouseover(function(){
+	      $(this).children("i").attr("class","fa fa-chevron-up display_block");
+	      $(".pro_nav_main").attr("class","w02 pro_nav_main display_block");
+       })
+        $(".pro_nav_main").mouseleave(function(){
+	      $(".pro_nav > i").attr("class","fa fa-chevron-down display_block");
+	      $(".pro_nav_main").attr("class","w02 pro_nav_main display_none");
+       })
+	}
+	
+});
+</script>

@@ -1,0 +1,528 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 品牌上传</title>
+<link type="text/css" rel="stylesheet"href="/customer/qfy/css/backPub.css"  />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script> 
+<style type="text/css">
+.bm_r{widht:5px; float:left;}
+#flmc_div{float: left;}
+#flmc_div li{float: left;}
+#flmc_div li input{width: 20px;}
+#flmc_div li span{width: 70px; text-align: left;margin: 0px;float: none;}
+#abcdef span{height:200px;}
+table.single_table tr td .jrx{position:static;} 
+</style>
+</head>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<div class="clera"></div>
+    <input type="hidden" name="role" value=""/>
+    <input type="hidden" id="HBID" name="HBID" value=""/>
+    <input type="hidden" id="PPB01" name="PPB01" value=""/>
+    <input type="hidden" id="PPTP01" name="PPTP01" value="1"/>
+	<table class="single_table">
+		<tr>
+	       <td style="width:100px;"><span>申请企业：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="sqgs" class="sqgs" value="" id="sqgs"  size="34" readonly="readonly" />
+	       <div class="sqgs"></div>
+	       </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>所属企业：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="gsmc" class="ppcz" value="" id="gsmc"  size="34" readonly="readonly" />
+	       <div class="gsmc"></div>
+	       </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>商标名称：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="ppmc" class="ppcz" value="" id="ppmc"  size="34" readonly="readonly" /> 
+	       <div class="ppmc"></div>
+	       </td>
+	     </tr>
+	     <tr>
+	       	<td>
+	       		<span>商标LOGO：</span>
+	       	</td>
+	       	<td>
+	     		<img class="img" id="imgUrl1" onerror="this.onerror=null;this.src='/customer/qfy/images/cptpzq.png'" />
+     			<input style="width:250px; display: none;" type="file" name="fileLogo" value="" id="file1" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" onchange="checkNullLength(this.value, 'logots')" size="34" />
+     			<div class="logots"></div>
+     		</td>
+     	</tr> 
+     	<tr>
+       		<td><span id="ppName">商标授权证：</span></td>
+       		<td>
+	        	<img src="" id="imgUrl2" class="img"  onerror="this.onerror=null;this.src='/customer/qfy/images/cptpzq.png'"/>
+		       	<input style="width:250px; display: none;" type="file" name="fileMsg" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" onchange="checkNullLength(this.value, 'ppzmts')" value="" id="file2"  size="34" />
+		       	<div class="ppzmts"></div>
+	       	</td>
+     	</tr> 
+	      <tr>
+	       <td style="width:100px;"><span>申请截止日期：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="jzrq" value="" id="jzrq"  size="34" readonly="readonly" onchange="checkDate(this.value, 'jzrq')" /> 
+	       <div class="jzrq"></div>
+	       </td>
+	     </tr>
+	       <!-- <tr class="ppendTime_hide">
+	       <td style="width:100px;"><span>商标截止日期：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text"  name="ppendTime" value="" id="ppendTime"  size="34" class="Wdate" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})" onchange="checkDate(this.value, 'ppendTime')" /> 
+	       <div class="ppendTime"></div>
+	       </td>
+	     </tr> -->
+	       <tr>
+	       <td style="width:100px;"><span>商标截止日期：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="endTime" value="" id="endTime"  size="34"  readonly="readonly" onchange="checkDate(this.value, 'endTime')" /> 
+	        <div class="endTime"></div>
+	        </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>所属分类：</span></td>
+	       <td  id="shfl" style="width:550px;"><font>*</font><input  type="text" name="ppfl" value="" id="ppfl"  size="34" readonly="readonly"/></td>
+	       <td id="abcdef" style="display: none;"><font>*</font>
+			  <div id="flmc_div" ></div>
+			 <input id="ppfl" name="ppfl" type="hidden" />
+			 <div class="flts"></div>
+		   </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>审批意见：</span></td>
+	       <td style="width:550px;"><textarea id="spyj" class="ppcz" style="float: left;margin: 11px 0 11px 15px; border:1px solid #fff; min-width: 250px;max-width: 300px;min-height: 100px;" placeholder="请在此输入审批或驳回意见"></textarea></td>
+	     </tr>
+	     <tr class="bot">
+	       <td colspan="2">
+	         <a style="margin: 10px 20px 0 80px;" href="javascript:void(0);" onclick="okclick();" class="bot Medium" style="display: block;">同意</a>
+	         <a style="margin: 10px 20px 0 80px;" href="javascript:void(0);" onclick="unclick();" class="bot Medium" style="display: block;">驳回</a>
+	       </td>
+	      </tr>    
+	</table>
+	<div class="clera"></div>
+</form>
+</body>
+<script type="text/javascript">
+var o = document.forms[0];
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var gslx;
+var flid = [];
+//点击行，弹开窗口执行事件
+/* function openUrlInit(rowObj){
+	PPB01 = rowObj.find("#PPBH").val();
+	query();
+} */
+var PPB01= $.getUrlParam('PPBH');
+var gsid= $.getUrlParam('id');
+//申请公司类型
+var sqgslx = null;
+var sqgsid = null;
+query();
+function query(){
+	var XmlData=[{"ppbh":PPB01, "sqlid":"com.jlsoft.o2o.info.sql.selectW_PPXX","dataType":"Json","ZCXX01":gsid}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var data=visitService(url);
+	if(data!=undefined&&data!=""){
+		gslx = data[0].GSLX;
+		sqgslx = data[0].SQGSLX;
+		sqgsid = data[0].GSID;
+		$("#PPB01").val(PPB01);
+		$("#HBID").val(data[0].GSID);
+		$("#sqgs").val(data[0].GSMC);
+		$("#gsmc").val(data[0].PPB07);
+		$("#ppmc").val(data[0].PPNAME);
+		$("#endTime").val(data[0].PPB08);
+		if(data[0].PPTP02!='' && data[0].PPTP02!=null && data[0].PPTP02!=undefined){			
+				$("#imgUrl1").attr("src",pubJson.path_sptp+"/pptp/"+data[0].PPTP);
+				if (gslx == "43"){
+					$("#ppName").text("商标注册证：");
+					$("#PPTP01").val("2");
+				}
+					$("#imgUrl2").attr("src",pubJson.path_sptp+"/pptp/"+data[0].PPTP02);
+		}
+		$("#spyj").val(data[0].BZ);
+		$("#jzrq").val(data[0].ENDTIME);
+		var fltemp = null;
+		for(var i=0; i<data.length; i++){
+			if(fltemp == null || fltemp == ""){
+				fltemp = data[i].SPFL02;
+			}
+			else{
+				fltemp = fltemp + "," + data[i].SPFL02;
+			}
+			flid.push(data[i].SPFL01);
+		}
+		$("#ppfl").val(fltemp);
+		$('#ppfl').attr('title',fltemp).css({'cursor':'pointer'});
+		if(data[0].STATE=="0"){
+			$("#endTime").attr("onclick", "WdatePicker();");
+			}
+		else if(data[0].STATE=="1"){
+			$(".Medium").css({"background-color":"#8D8881"});
+			$(".Medium").removeAttr("onclick");
+			var s='<td colspan="2" style="text-align: center;font-size: 26px;font-family: microsoft yahei;color:#ff8800;font-weight: bold;">审核已通过  '
+					+'<a href="javascript:void(0);" class="bot Shot seach_bot edit"  onclick="edit()">修改</a> '
+					+'<a href="javascript:void(0);" class="bot Shot seach_bot save" style="display:none;" onclick="save()">保存</a></td> '
+			$("tr.bot").show();
+			$("tr.bot").html(s);
+			$("#spyj").attr("readOnly",true);
+			}
+		else if(data[0].STATE=="2"){
+			$(".Medium").css({"background-color":"#8D8881"});
+			$(".Medium").removeAttr("onclick");
+			var s='<td colspan="2" style="text-align: center;font-size: 26px;font-family: microsoft yahei;color:#ff8800;font-weight: bold;">审核未通过</td>'
+			$("tr.bot").show();
+			$("tr.bot").html(s);
+			$("#spyj").attr("readOnly",true);
+			}/* {
+			//$(".Medium").attr("display","none");
+			//var s='<td colspan="2" style="text-align: center;font-size: 26px;font-family: microsoft yahei;color:#ff8800;font-weight: bold;">审核未通过:'+data[0].PPB05+'</td>'
+			$("tr.bot").html(s);
+			//$(".Medium").removeAttr("onclick");
+			
+		} */
+		else if(data[0].STATE=="3"){
+			$(".Medium").css({"background-color":"#8D8881"});
+			$(".Medium").removeAttr("onclick");
+			var s='<td colspan="2" style="text-align: center;font-size: 26px;font-family: microsoft yahei;color:#ff8800;font-weight: bold;">停用</td>'
+			$("tr.bot").show();
+			$("tr.bot").html(s);
+			$("#spyj").attr("readOnly",true);
+			}
+	}
+}
+
+function unclick() {
+	var etime = $("#endTime").val();
+	if (etime == "" || etime.length == 0) {
+		tse('endTime',"请选择商标截止日期");
+		return false;
+	}else if (!checkDate($("#endTime").val(),'endTime')) {
+		tse('endTime',"日期不能小于当前日期");
+		return false;
+	}else{
+		ts('endTime');
+	}
+	var spyj = $("#spyj").val();
+	var XmlData=[{"PPB01":PPB01,"STATE":"2","SPYJ":spyj,"ETIME":etime,"GSID":gsid,"GSLX":sqgslx}];
+	var url="/Oper_PPGL/auditPPXX.action?XmlData="+JSON.stringify(XmlData);
+	var returnVal=visitService(url);
+   	if(returnVal.STATE=='1'){
+   	   	alert("驳回成功!");
+   	 	//location.href="/customer/qfy/back/spgl/Oper_PPSH_itema.html?PPBH="+PPB01+"&id="+gsid;
+   		location.href="/customer/qfy/back/spgl/Oper_PPSHA.html";
+   	}else{
+   	   	alert("驳回失败!");
+ 	}
+}
+
+
+function checkedPPMC(){
+	var pname = $("#ppmc").val();
+	var jsonData = [{"PPMC":pname,"GSLX":gslx,"SQGSLX":sqgslx,"SQGSID":sqgsid}];
+	var url = "/Oper_PPGL/selectPP.action?jsonData="+escape(JSON.stringify(jsonData));
+	var rData = visitService(url);
+	if(rData.STATE == "1"){
+		if(sqgslx == 43 && rData.COUNT > 0){
+			tse("ppmc","该品牌生产企业已使用,只能驳回操作!");
+			return false;
+		}else if(sqgslx == 42 && rData.COUNT > 0){
+			tse("ppmc","该品牌已使用,只能驳回操作!");
+			return false;
+		}
+		else{
+			return true 
+		}
+	}
+}
+
+function okclick(){
+	if (!checkedPPMC()) {
+		return false;
+	}
+	var etime = $("#endTime").val();
+	if (etime == "" || etime.length == 0) {
+		tse('endTime',"请选择商标截止日期");
+		return false;
+	}else if (!checkDate($("#endTime").val(),'endTime')) {
+		tse('endTime',"日期不能小于当前日期");
+		return false;
+	}else{
+		ts('endTime');
+	}
+	var spyj = $("#spyj").val();
+	var XmlData=[{"PPB01":PPB01,"STATE":"1","SPYJ":spyj,"ETIME":etime,"GSLX":sqgslx,"GSID":gsid}];
+	var url="/Oper_PPGL/auditPPXX.action?XmlData="+JSON.stringify(XmlData);
+	var returnVal=visitService(url);
+   	if(returnVal.STATE=='1'){
+   	   	alert("审核成功!");
+   	// location.href="/customer/qfy/back/spgl/Oper_PPSH_itema.html?PPBH="+PPB01+"&id="+gsid;
+   	location.href="/customer/qfy/back/spgl/Oper_PPSHA.html";
+   	}else{
+   	   	alert("审核失败!");
+ 	}
+}
+
+function edit(){
+	$("#shfl").remove();
+	$("#abcdef").css({'display':'block'});
+	$(".edit").remove();
+	$(".save").css({'display':'block'});
+	
+	$("#ppmc").attr("onblur", "checkPPName(this.value)");
+	var url = "/showGoods/selectFL2.action?s=" + Math.random();
+	var data = visit(url, "");
+	var bm00 = showfl(data.fl);// 查询第一级的部门
+	$("#flmc_div").append(bm00);
+	$(".ppcz").removeAttr("readonly");
+	var $flc = $(".bm_r");
+	for(var i = 0; i < $flc.length; i++){
+		for(var j = 0; j < flid.length; j++){
+			if($flc[i].value == flid[j]){
+				$flc[i].checked = true;
+			}
+		}
+	}
+	$("#jzrq").attr("onclick", "WdatePicker();");
+	$("#endTime").attr("onclick", "WdatePicker();");
+	$("td > img").attr("class", "img");
+	$("#file1").css("display", "block");
+	$("#file2").css("display", "block");
+	/* $("#sqgs").attr("onblur", "selectAdd(this.value,this.id)"); */
+	$("#gsmc").attr("onchange", "selectAdd(this.value,'gsmc')");
+}
+
+function save(){
+	var flag = checkNull();
+	if (!flag) {
+		return false;
+	}
+	var XmlData1 = $("#form1").formToJson();	                                     	
+	XmlData1[0]["GSLX"]=gslx;
+	if ($("#spyj").val() != "" ) {
+		XmlData1[0]["spyj"]=$("#spyj").val();
+	}
+	var XmlData=escape(JSON.stringify(XmlData1));
+	var fileArray=[];
+	var arr = $("input[id^='file']");
+	for(var i = 0;i < arr.length;i++){
+		var attId = arr[i].id;
+		if($("#" + attId).val().length > 0){
+		    fileArray.push(attId);
+		}
+	}
+	var val="/Oper_PPGL/updatePP.action";
+	var r = confirm('确认更新信息吗？');
+	if(r==true){
+		$.ajaxFileUpload({
+			type:"POST",
+			secureuri:false,
+			fileElementId:fileArray,
+			url:encodeURI(val),//encodeURI避免中文乱码
+			data:{"XmlData":XmlData},
+			dataType:"text",
+			success: function(data) { 
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				if(data1==1){
+					alert("更新成功!");
+					window.location.href = "/customer/qfy/back/spgl/Oper_PPSH_itema.html?PPBH="+PPB01+"&id="+gsid;
+					}else{
+					alert("更新失败!");
+						}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert(textStatus);
+		    }
+		});
+	}
+	else return;
+}
+
+
+//显示分类
+function showfl(data) {
+	var sbm = '';
+	for ( var i = 0; i < data.length; i++) {
+		sbm = sbm+'<li><input name="flc" type="checkbox" class="bm_r" value="'+data[i].FLCODE+'"/>'
+			+ '<span>' + data[i].FLNAME + '</span></li>';
+	}
+	return sbm;
+}
+//回填
+function parentWindowFunc(result,rowindex,id){
+	$("#"+id).attr("value",result.getColumnValue(rowindex,"CODE"));
+	$("#s_"+id).attr("value",result.getColumnValue(rowindex,"NAME"));
+}
+
+function checkNull(){
+	if ($("#sqgs").val() =="" || $("#sqgs").val().length == 0) {
+		tse("sqgs","申请企业名称不能为空！");
+		return false;
+	}
+	if ($("#gsmc").val() =="" || $("#gsmc").val().length == 0) {
+		tse("gsmc","申请企业名称不能为空！");
+		return false;
+	}
+	if ($("#ppmc").val() =="" || $("#ppmc").val().length == 0) {
+		tse("sqgs","申请企业名称不能为空！");
+		return false;
+	}
+	
+	if ($("#file1").val() != "" || $("#file1").val().length != 0) {
+		  if(!tpCheck("file1")){
+			  tse('logots',"图片不能大于1M");
+			  return false;
+		  }else{
+			  ts('logots');
+		  }
+	}
+	if ($("#file2").val() != "" || $("#file2").val().length != 0){
+		  if(!tpCheck("file2")){
+			  tse('ppzmts',"图片不能大于1M");
+			  return false;
+		  }else{
+			  ts('ppzmts');
+		  }
+	}
+	if ($("#jzrq").val()== "" || $("#jzrq").val().length == 0) {
+		tse('jzrq',"申请截止日期不能为空");
+		return false;
+	}else{
+		if (!checkDate($("#jzrq").val(),'jzrq')) {
+			tse('jzrq',"日期不能小于当前日期");
+			return false;
+		}
+	} 
+	if ($("#endTime").val()== "" || $("#endTime").val().length == 0) {
+		tse('endTime',"商标截止日期不能为空");
+		return false;
+	}else{
+		if (!checkDate($("#endTime").val(),'endTime')) {
+			tse('endTime',"日期不能小于当前日期");
+			return false;
+		}
+	} 
+	var flcStr="";
+	var flc=$("input[name='flc']:checked").each(function(o){
+		if("" == flcStr){
+			flcStr = $(this).val();
+		} else {
+			flcStr = flcStr + "," + $(this).val();
+		}
+	});
+	if(flcStr == ""){
+		tse("flts","请选择所属分类！");
+		return false;
+	} else {
+		$("#ppfl").val(flcStr);
+		ts("flts");
+	}
+	return true;
+}
+
+
+// 检日期
+function checkDate(val, cls){
+	var chDate = val;  
+	var now = new Date();  
+	var nowDate =  now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(); 
+	var d1 = new Date(chDate.replace(/\-/g, "\/"));  
+	var d2 = new Date(nowDate.replace(/\-/g, "\/")); 
+	if(d1 > d2){
+		ts(cls);
+		return true;
+	} else {
+		tse(cls, "日期不能小于当前日期");
+		return false;
+	}
+}
+
+//验证公司名是否重复
+function selectAdd(Cname,ss){
+	if (Cname.length != 0) {
+		var address = $.trim($("#qymc").val());
+		var url="/Register/selectAddress.action?address="+Cname;
+		var data = visitService(url);
+			if(data.state=="success"){
+				ts(ss);
+					return true;
+				}else{
+					tse(ss,Cname+"名称已存在！");
+					return false;
+					alert("该企业名称已存在!");
+			}
+	}else{
+		return false;
+	}
+}
+
+//品牌名称验证
+function checkPPName(name){
+	var ppName = $.trim(name);
+	if(ppName != "" && ppName.length > 0){
+		if(ppName == $("#ppmc").val()){
+			ts("ppmc");
+		} else {
+			var jsonData = [{"PPMC" : ppName}];
+			var url = "/Oper_PPGL/selectPPMC.action?jsonData=" + escape(JSON.stringify(jsonData));
+			var rData = visitService(url);
+			if(rData.STATE == "1"){
+				if(rData.COUNT > 0){
+					tse("ppmc","该品牌名称已存在!");
+					return false;
+				} else {
+					ts("ppmc");
+				}
+			}
+		}
+	} else {
+		tse("ppmc","请输入名称!");
+	}
+}
+
+//提示
+function checkNullLength(val, cls){
+	if($.trim(val).length > 0){
+		ts(cls);
+	} else {
+		tse(cls, "不能为空!");
+	}
+}
+
+//图片大小验证
+function tpCheck(obj){
+	 var i = document.getElementById(obj).files[0].size;
+	 var limit = 1 * 1024 * 1024;
+	if(i > limit){
+		return false;
+	} else {
+		return true;
+	}
+}
+//图片点击放大
+$(document).ready(function(){
+	$("td > img").click(function(){
+	  var td_img = $(this).attr("class");
+	  if(td_img == "img"){
+		 $(this).attr("class","big")
+		}else if(td_img == "big"){
+		 $(this).attr("class","img") 
+		}
+	 })
+	
+})
+</script>
+</html>

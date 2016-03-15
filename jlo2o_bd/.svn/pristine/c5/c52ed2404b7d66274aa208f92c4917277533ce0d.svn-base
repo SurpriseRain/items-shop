@@ -1,0 +1,1129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<title>汽服云 - 卖家中心</title>
+<style type="text/css">
+@charset "UTF-8";
+/* reset start */
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+
+body,button,input,select,textarea {
+	font-family: Microsoft YaHei, arial, "\5b8b\4f53";
+	font-size: 12px;
+	*line-height: 1.5;
+	-ms-overflow-style: scrollbar;
+}
+body{
+	overflow-x:visible;
+	overflow-x:hidden;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	font-size: 100%;
+	font-weight: normal;
+}
+
+address,cite,dfn,em,var {
+	font-style: normal;
+}
+
+code,kbd,pre,samp {
+	font-family: courier new, courier, monospace;
+}
+
+small {
+	font-size: 12px;
+}
+
+ul,ol {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	color: #000;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a:visited {
+	color: #000;
+}
+
+sup {
+	vertical-align: text-top;
+}
+
+sub {
+	vertical-align: text-bottom;
+}
+
+legend {
+	color: #000;
+}
+
+fieldset,img {
+	border: 0;
+}
+
+button,input,select,textarea {
+	font-size: 100%;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.wrap {
+	margin-left: 10px;
+	margin-top:20px;
+	overflow-x:visible;
+}
+
+.msg-head {
+	
+}
+
+.msg-body {
+	
+}
+
+.msg-menu {
+	height: 36px;
+}
+
+.msg-menu ul {
+	list-style: outside none none;
+}
+
+.msg-menu li {
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	border-color: -moz-use-text-color;
+	border-image: none;
+	border-style: solid solid none;
+	border-width: 1px 1px 0;
+	float: left;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	width: 90px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+li.active {
+	background-color: #F1E8E8;
+}
+
+.msg-main {
+	min-height: 400px;
+	position: relative;
+	width: 830px;
+	top:-2px;
+	background:#fff;
+	z-index:1000;
+}
+.msg-menu li{
+width:90px;
+height:36px;
+line-height:36px;
+border-radius:6px;
+
+}
+
+.msg-leftList {
+	min-height: 398px;
+	border: 1px solid;
+	width: 413px;
+}
+.sp-leftList {
+	min-height: 398px;
+	border: 1px solid;
+	width: 413px;
+}
+
+.msg-content {
+	border: 1px solid;
+	border-left: 0;
+	min-height: 398px;
+	position: absolute;
+	left: 414px;;
+	top: 0;
+	width: 380px;
+}
+.sp-content {
+	border: 1px solid;
+	border-left: 0;
+	min-height: 398px;
+	position: absolute;
+	left:414px;
+	top: 0;
+	width: 380px;
+}
+.xtnr_title{
+	display:block;
+    width:300px;
+	margin:30px auto;
+	font-size:16px;
+	font-weight:600;
+	color:#000;
+	text-align:center;
+}
+.xtnr_xtsj{
+	 color:#111;
+	 display:block;
+	 font-size:12px;
+	 height:20px;
+	 line-height:20px;
+	 float:right;
+	 margin-top:20px;
+	 padding-right:40px;
+	 position:absolute;
+	 bottom:20px;
+	 right:0px;
+	 font-weight:200;
+}
+.xtnr_xtnr{
+	display:block;
+	width:300px;
+	font-size:14px;
+	height:20px;
+	line-height:20px;
+	text-indent:30px;
+	color:#000;
+	font-weight:600;
+	padding-left: 45px;
+}
+.zxnr_xx,.zxnr_title_bm,.zxnr_title_mc,.zxnr_title_jg{
+	display:block;
+	height:20px;
+	line-height:20px;
+	color:blue;
+	font-size:12px;
+	cursor:pointer;
+	float:left;
+
+	
+}
+.zxnr_title_bm,.zxnr_title_mc,.zxnr_title_jg{
+	color:#000;
+	margin-left:25px;
+	
+}
+.zxnr_xx{
+	width:100%;
+}
+
+
+.zxnr_mjtw,.zxnr_wdhd{
+ 	color:red;
+ 	font-size:13px;
+ 	margin:10px 0px 5px 0px;
+ 	float:left;
+}
+.zxnr_wdhd{
+	color:green;
+}
+.zxnr_mjtws{
+ 	display:block;
+	font-size:12px;
+	height:auto;
+	line-height:12px;
+	color:#333;
+	padding-left:10px;
+	padding-right:10px;
+	word-break: break-all;
+	text-indent:69px;
+	width:360px;
+	float:left;
+}
+.zxnr_rq{
+	display:block;
+	height:20px;
+	line-height:20px;
+	position:absolute;
+	bottom:20px;
+	right:10px;
+	color:#333;
+	font:Arial 13px;
+}
+.zxnr_kg{
+	margin-left:30px;
+	box-shadow:inset 10px 0 10px reba(3,3,3,.5);
+	-moz-box-shadow:inset 10px 0 10px reba(3,3,3,.5);
+	-webkit-box-shadow:inset 10px 0 10px reba(3,3,3,.5);
+	-o-box-shadow:inset 10px 0 10px reba(3,3,3,.5);
+	box-shadow:inset 0 10px 10px reba(3,3,3,.5);
+	-moz-box-shadow:inset 0 10px 10px reba(3,3,3,.5);
+	-webkit-box-shadow:inset 0 10px 10px reba(3,3,3,.5);
+	-o-box-shadow:inset 0 10px 10px reba(3,3,3,.5);
+}
+.zxnr_img{
+	width:70px;
+	height:70px;
+	/* background:red; */
+	float:left;
+	margin-left:20px;
+}
+#hfnr{
+	width:400px;
+	height:300px;
+	box-shadow:10px 0 10px reba(3,3,3,.5);
+	box-shadow:0 10px 10px reba(3,3,3,.5);
+	
+}
+.bot{
+	display:block;
+ 	width:60px;
+ 	height:25px;
+ 	line-height:25px;
+ 	text-align:center;
+ 	font:Arial;
+ 	font-size: 14px;
+ 	background:#ccc;
+ 	color:#fff;
+ 	font-weight:600;
+ 	cursor:pointer;
+}
+.Title,.Title_zx_maijia,.Title_zx_maijia,.xtnr_title,.Title_zx{
+	height:20px;
+	line-height:20px;
+	cursor:pointer;
+	font-size:14px;
+	font:Arial;
+	
+}
+.fengexian,.fengexian_zx,.fengexian_zx_maijia{
+ color:blue;
+}
+
+.msg-footer {
+	
+}
+.pager_xt .Pagination,.sp_pager_maijia{
+	
+	position:absolute;
+	bottom:20px;
+	left:5px;
+	width:366px;
+}
+.fengexian_zxnr{
+	display:block;
+	width:100%;
+	height:2px;
+	border-bottom:1px solid #000;
+	float:left;
+}
+.pager_xt .Pagination{float: none;}
+.pager_sp_mj .Pagination,.pager_sp_maijia .Pagination,.pager_xt .Pagination,.sp_pager_maijia{float: none;position:absolute;bottom:20px;left:45px;width:366px;}
+.pager_sp_maijia .Pagination,.pager_sp_mj .Pagination{bottom:35px;}
+.zfxz{border:none;width:60px;line-height:20px;background:none;}
+</style>
+</head>
+<body>
+	<div class="wrap">
+		<div class="msg-head"></div>
+
+		<div class="msg-body">
+			<div class="msg-menu">
+				<ul id="menu">
+					<li class="active">系统消息</li>
+					<li>商品咨询</li>
+				</ul>
+			</div>
+			<div class="msg-main xt">
+				<div class="msg-leftList"><!-- 系统-标题 -->
+				<div class="xitong_biaoti"></div><!--系统标题  -->
+				<div class="pager_xt"></div><!-- 系统分页 -->
+				</div>
+				<div class="msg-content">
+				</div><!-- 系统-内容 -->
+				<div class="msg-footer">
+				<ul>
+					<li>
+						<input type="checkbox" name="display"  id="rdo_checked_all" /><label for="rdo_checked_all"  ></label>&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" id="btn_delValue" value="删除" />
+						<!-- <input type="button" id="btn_setValue" value="标记已读" /> -->
+					</li>
+				</ul>
+				</div>
+			</div>
+			<div class="msg-main sp" style="display: none;">
+				<div class="sp-leftList">
+				<div class="sp_biaoti_maijia"></div><!-- 商品卖家标题 -->
+				<div class="sp_pager_maijia"></div><!-- 商品卖家分页 -->
+				
+				
+				</div>
+				<div class="sp-content">商品-信息 </div>
+				<div class="sp-footer-mj" id="sp-footer-mj" style="display: none">
+				<!-- 买家 -->
+				<ul>
+					<li>
+						<input type="checkbox" name="display_mj"  id="rdo_checked_all_mj" /><label for="rdo_checked_all"  ></label>&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" id="btn_delValue_mj" value="删除" />
+						<!-- <input type="button" id="btn_setValue_mj" value="标记已读" /> -->
+					</li>
+				</ul>
+				</div>
+				<div class="sp-footer-maijia" id="sp-footer-maijia" style="display: none" >
+				<!-- 卖家 -->
+				<ul>
+					<li>
+						<input type="checkbox" name="display_maijia"  id="rdo_checked_all_maijia" /><label for="rdo_checked_all"  ></label>&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" id="btn_delValue_maijia" value="删除" />
+						<!-- <input type="button" id="btn_setValue_maijia" value="标记已读" /> -->
+					</li>
+				</ul>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/control/js/o2o.js"></script>
+	<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+	<script type="text/javascript" src="/js/jquery.pagecommon.js"></script>
+	<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="/control/js/tuidan_carlist.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+
+	<script type="text/javascript">
+		//初始化数据
+		$(function() {
+			var MyCookie = $.cookie('userInfo');
+			var usercookie = JSON.parse(MyCookie);
+			var u = usercookie.ZCXX01;
+			//var u =228;
+			var hf = usercookie.LX;
+			//系统和商品之间的切换
+			$("#menu").on("click", "li", function() {
+				var $this = $(this), index = $this.index();
+				$this.addClass("active").siblings("li").removeClass("active");
+				$(".msg-main").hide().eq(index).show();
+				
+			});
+/*-------------------系统消息--开始------------------------------------------------------------------------------*/			
+	//查询系统消息的总数量
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.message.sql.Oper_XiaoXiGL.select_XTXX_sum','QryType':'Report','dataType':'Json','ZCXX01':u}];
+	var rumData = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	var rowNum = rumData[0].COUNT;
+	//查询所有的留言信息
+			var xmlData = [ {
+				'ZCXX01' : u
+			} ];
+			var url = "/message/jlquery/selectAllXT.action?XmlData="
+					+ JSON.stringify(xmlData);
+			$.ajax({
+				type : "GET", //请求方式
+				url : encodeURI(url),
+				//async:false,
+				success : function(data) {
+					var json = jQuery.parseJSON(data);
+					var data =json.data;
+					if (data.length != 0) {
+						try {
+							//var json = jQuery.parseJSON(data);
+							//展示数据
+							showSPXX(data);
+							//返回文件名
+							fileName =  json.fileName;
+							$('.pager_xt').kkPages({ 
+							   PagesClass:'li.jl', //需要分页的元素
+							   RowNum:rowNum,
+							   FileName:fileName,
+							   PagesMth:pubJson.PagesMth, //每页显示个数 
+							   PagesNavMth:pubJson.PagesNavMth, //显示导航个数
+							   callback:function(pageData){
+									showSPXX(pageData);
+								}
+							});
+						} catch (e) {
+							return;
+						}
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest
+							+ "+" + errorThrown);
+				}
+			});
+		});
+/*----------------------------------------------商品咨询--开始--------------------------------------------------------------------*/
+			$(function() {	
+			var MyCookie = $.cookie('userInfo');
+			var usercookie = JSON.parse(MyCookie);
+			var u = usercookie.ZCXX01;
+			var hf = usercookie.LX;
+		//公司类型--44/24为买家
+				//var hf=44;
+				//var u=13;
+				if(hf!=44 && hf!=24){
+					//显示卖家的div
+					document.getElementById("sp-footer-maijia").style.display="";
+					//卖家
+					//查询卖家消息的总数量
+					var XmlData=[{'sqlid':'com.jlsoft.o2o.message.sql.Oper_XiaoXiGL.select_ZXXX_sum','QryType':'Report','dataType':'Json','ZCXX01':u}];
+					var rumData = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+					var rowNum = rumData[0].COUNT;
+					//查询卖家-所有咨询留言信息
+					//var  u = usercookie.ZCXX01;
+							var xmlData = [ {
+								'ZCXX01' : u
+							} ];
+							var url = "/message/jlquery/selectAllZX.action?XmlData="
+									+ JSON.stringify(xmlData);
+							$.ajax({
+								type : "GET", //请求方式
+								url : encodeURI(url),
+								success : function(data) {
+									var json = jQuery.parseJSON(data);
+									var data =json.data;
+									if (data.length != 0) {
+										try {
+											//var json = jQuery.parseJSON(data);
+											//展示数据
+											showZXXX(data);
+											//返回文件名
+											  fileName =  json.fileName;
+											$('.sp_pager_maijia').kkPages({ 
+											   PagesClass:'li.jl', //需要分页的元素
+											   RowNum:rowNum,
+											   FileName:fileName,
+											   PagesMth:pubJson.PagesMth, //每页显示个数 
+											   PagesNavMth:pubJson.PagesNavMth, //显示导航个数 
+											   callback:function(pageData){
+												   showZXXX(pageData);
+												}
+											});
+										} catch (e) {
+											return;
+										}
+									}
+								},
+								error : function(XMLHttpRequest, textStatus, errorThrown) {
+									alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest
+											+ "+" + errorThrown);
+								}
+							});
+				}else{
+					//显示买家的div
+					document.getElementById("sp-footer-mj").style.display="";
+					//买家
+					//查询系统消息的总数量
+					var XmlData=[{'sqlid':'com.jlsoft.o2o.message.sql.Oper_XiaoXiGL.select_ZXXX_maijia_sum','QryType':'Report','dataType':'Json','ZCXX01':u}];
+					var rumData = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+					var rowNum = rumData[0].COUNT;
+					//alert(rowNum);
+					//查询买家-所有咨询留言信息
+					//var  u = usercookie.ZCXX01;
+							var xmlData = [ {
+								'ZCXX01' : u
+							} ];
+							var url = "/message/jlquery/selectAllZX_maijia.action?XmlData="
+									+ JSON.stringify(xmlData);
+							$.ajax({
+								type : "GET", //请求方式
+								url : encodeURI(url),
+								success : function(data) {
+									var json = jQuery.parseJSON(data);
+									var data =json.data;
+									if (data.length != 0) {
+										try {
+											//var json = jQuery.parseJSON(data);
+											//展示数据
+											showZXXX_maijia(data);
+											//返回文件名
+											  fileName =  json.fileName;
+											$('.sp_pager_maijia').kkPages({ 
+											   PagesClass:'li.jl', //需要分页的元素
+											   RowNum:rowNum,
+											   FileName:fileName,
+											   PagesMth:pubJson.PagesMth, //每页显示个数 
+											   PagesNavMth:pubJson.PagesNavMth, //显示导航个数
+											   callback:function(pageData){
+												   showZXXX_maijia(pageData);
+												}
+											});
+										} catch (e) {
+											return;
+										}
+									}
+								},
+								error : function(XMLHttpRequest, textStatus, errorThrown) {
+									alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest
+											+ "+" + errorThrown);
+								}
+							});
+				}
+		});
+/*--------------------------------------------------商品咨询end----------------------------------------------------------------------*/
+		//展示系统数据
+		function showSPXX(rData0) {
+			var u = rData0;
+			var spObj = $(".xitong_biaoti");
+			spObj.empty();
+			var str = "";
+			for (var i = 0; i < u.length; i++) {
+				str += setSPZXHtml(u[i]);
+			}
+			spObj.html(str);
+		}
+		//展示-卖家-咨询数据
+		function showZXXX(rData0) {
+			var u = rData0;
+			var spObj = $(".sp_biaoti_maijia");
+			spObj.empty();
+			var str = "";
+			for (var i = 0; i < u.length; i++) {
+				str += setZXHtml(u[i]);
+			}
+			spObj.html(str);
+		}
+		//展示-买家-咨询数据
+		function showZXXX_maijia(rData0) {
+			var u = rData0;
+			var spObj = $(".sp_biaoti_maijia");
+			spObj.empty();
+			var str = "";
+			for (var i = 0; i < u.length; i++) {
+				str += setZXHtml_maijia(u[i]);
+			}
+			spObj.html(str);
+		}
+		//系统标题-拼接的方法
+		function setSPZXHtml(data) {
+			var str = "";
+			//str += "<span class='cb'><input type='checkbox' name='no'  id='"+data.id+"' value='"+data.id+"' /></span><span class='Title'>"+ data.Title+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ data.MessageCreateTime + "</span> <br>";
+			str += "<span class='Title'><input type='checkbox' name='no'   value='"+data.id+"' />系统消息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ data.MessageCreateTime + "</span> <br>";
+			str += "<span class='fengexian'>-----------------------------------------------------------------------------</span><br>";
+			return str;
+		}
+		//咨询-卖家标题-拼接的方法
+		function setZXHtml(data) {
+			var str = "";
+			//str += "<span class='cb'><input type='checkbox' name='no'  id='"+data.id+"' value='"+data.id+"' /></span><span class='Title'>"+ data.Title+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ data.MessageCreateTime + "</span> <br>";
+			str += "<span class='Title_zx'><input type='checkbox' name='no_zx'   value='"+data.id+"' /><input type='text' class='zfxz' name='' disabled='disabled'  value='"+ data.spxx04+ "' />，商品咨询-请尽快回复&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ data.MessageCreateTime + "</span> <br>";
+			str += "<span class='fengexian_zx'>-----------------------------------------------------------------------------</span><br>";
+			return str;
+		}
+		
+		
+		//咨询-买家标题-拼接的方法
+		function setZXHtml_maijia(data) {
+			var str = "";
+			str += "<span class='Title_zx_maijia'><input type='checkbox' name='no_zx_maijia'   value='"+data.id+"' /><input type='text' class='zfxz' name='' disabled='disabled'  value='"+ data.spxx04+ "' />，商品咨询&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ data.MessageCreateTime + "</span> <br>";
+			str += "<span class='fengexian_zx_maijia'>-----------------------------------------------------------------------------</span><br>";
+			return str;
+		} 
+		//系统内容-拼接的方法
+		function setXTZXHtml(data) {
+			var str = "";
+			str += "<span class='xtnr_title'>系统消息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> <span class='xtnr_xtnr'>"+data.Content+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> <span class='xtnr_xtsj'>"+ data.MessageCreateTime + "</span> <br>";
+			return str;
+		}
+		//咨询-卖家内容-拼接的方法
+		function setZXHtml_zx(data) {
+			var hf=data.Reply;
+			//公司为卖家并且已回复
+			if (hf != undefined) {
+				var str = "";
+				str += "<span class='zxnr_xx'>商品信息：</span>";
+				str += "<div class='zxnr_img'></div>";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_title_bm'>商品编码：&nbsp;&nbsp;"+ data.barcode+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_title_mc'>品牌名称：&nbsp;&nbsp;<input type='text' class='zfxz' name='' disabled='disabled'  value='"+ data.spxx04+ "' />&nbsp;&nbsp;</span><span class='zxnr_title_jg'>价格：&nbsp;&nbsp;"+ data.spjgb05+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ";
+				str += "<span class='fengexian_zxnr'></span><br>";
+				str += "<span class='zxnr_mjtw'>买家提问：</span><br> ";
+				str += "<span class='zxnr_mjtws'>"+ data.Content+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_kg'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_wdhd'>我的回答：</span><br> ";
+				str += "<span class='zxnr_mjtws'>"+ data.Reply+ "</span><br> ";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_rq'>"+ data.MessageCreateTime+ "</span><br> ";
+				return str;
+			}else{
+				var str = "";
+				str += "<span class='zxnr_xx'>商品信息：</span>";
+				str += "<div class='zxnr_img'></div>";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_title_bm'>商品编码：&nbsp;&nbsp;"+ data.barcode+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_title_mc'>品牌名称：&nbsp;&nbsp;<input type='text' class='zfxz' name='' disabled='disabled'  value='"+ data.spxx04+ "' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class='zxnr_title_jg'>价格：&nbsp;&nbsp;"+ data.spjgb05+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='fengexian_zxnr'></span><br>";
+				str += "<span class='zxnr_mjtw'>买家提问：</span><br> ";
+				str += "<span class='zxnr_mjtws'>"+ data.Content+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_kg'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_wdhd'>我的回答：</span><br> ";
+				str += "<td style='width: 550px;'><textarea  id='hfnr'onkeyup='checkMaxInput(this)' onKeyDown='checkMaxInput(this)'value='' class='hfnr' name='hfnr' title='' col='4' row='5'style='border: 1px solid #e4e4e4; height: 97px; width: 308px; margin-left: 28px; margin-bottom: 10px;'></textarea><div id='remLen' class='remLen'style='margin-left: 20px; line-height: 20px; color: red;width:120px;float:left;'>还剩下200个字</div><label class='bz'></label></td>";
+				str += "<td colspan='2'><a style='margin-left: 20px;float:left;'class='bot Medium btn_' onclick='ok("+ data.id+ ","+ $("#hfnr").val() + ")'>回复</a></td><br>";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_rq'>"+ data.MessageCreateTime+ "</span><br> ";
+				return str;
+			}
+		}
+	
+		//咨询-买家内容-拼接的方法fli.active
+		function setZXHtml_zx_mj(data) {
+			var hf=data.Reply;
+			//买家提问的问题，卖家已回复
+			if (hf != undefined) {
+				var str = "";
+				str += "<span class='zxnr_xx'>商品信息：</span>";
+				str += "<div class='zxnr_img'></div>";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_title_bm'>商品编码：&nbsp;&nbsp;"+ data.barcode+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_title_mc'>品牌名称：&nbsp;&nbsp;<input type='text' class='zfxz' name='' disabled='disabled'  value='"+ data.spxx04+ "' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class='zxnr_title_jg'>价格：&nbsp;&nbsp;"+ data.spjgb05+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='fengexian_zxnr'></span><br>";
+				str += "<span class='zxnr_mjtw'>我的提问：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_mjtws'>&nbsp;&nbsp;&nbsp;&nbsp;"+ data.Content+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_kg'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_wdhd'>卖家回答：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_mjtws'>&nbsp;&nbsp;&nbsp;&nbsp;"+ data.Reply+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_rq'>"+ data.MessageCreateTime+ "</span><br> ";
+				return str;
+			}else{
+				var str = "";
+				str += "<span class='zxnr_xx'>商品信息：</span>";
+				str += "<div class='zxnr_img'></div>";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_title_bm'>商品编码：&nbsp;&nbsp;"+ data.barcode+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_title_mc'>品牌名称：&nbsp;&nbsp;<input type='text' class='zfxz' name='' disabled='disabled'  value='"+ data.spxx04+ "' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span class='zxnr_title_jg'>价格：&nbsp;&nbsp;"+ data.spjgb05+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='fengexian_zxnr'></span><br>";
+				str += "<span class='zxnr_mjtw'>我的提问：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_mjtws'>&nbsp;&nbsp;&nbsp;&nbsp;"+ data.Content+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_kg'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_wdhd'>卖家回答：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				str += "<span class='zxnr_xx' style='text-indent:95px;'>卖家占时还未回复消息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br> ";
+				//str += "<td style='width: 550px;'><textarea id='hfnr'onkeyup='checkMaxInput(this)' onKeyDown='checkMaxInput(this)'value='' class='hfnr' name='hfnr' title='' col='4' row='5'style='border: 1px solid #e4e4e4; height: 97px; width: 308px; margin-left: 15px; margin-bottom: 10px;'></textarea><div id='remLen' class='remLen'style='margin-left: 20px; line-height: 20px; color: red;'>还剩下200个字</div><label class='bz'></label></td>";
+				//str += "<td colspan='2'><a style='margin-left: 193px;'class='bot Medium btn_' onclick='ok("+ data.id+ ","+ $("#hfnr").val() + ")'>回复</a></td><br>";
+				//str += "&nbsp;&nbsp;&nbsp;&nbsp;<span class='zxnr_rq'>"+ data.MessageCreateTime+ "</span><br> ";
+				return str;
+			}
+		}
+		var maxLen = 200;	//定义用户可以输入的最多字数
+		function checkMaxInput(obj) {
+			var val = obj.value,
+				len = val.length;
+			if (len > maxLen){	//如果输入的字数超过了限制
+				val = obj.value.substring(0, maxLen);	//就去掉多余的字
+				$('#hfnr').attr('value',val);
+			}
+			else{
+				document.getElementById('remLen').innerHTML = '还可以输入' + (maxLen - obj.value.length) + '个字';//计算并显示剩余字数
+			}
+		}
+		function ok(id) {
+			var hfnr = $("#hfnr").val();
+			 //发布的消息
+			var json = {
+				"id" : id,
+				"hfnr":hfnr
+			};
+			var url = "/YHZX/insert_XiaoXi.action?XmlData=" + JSON.stringify(json);
+			visitSvcAsync(url, function(rData) {
+				if (rData.STATE == "1") {
+					alert("回复成功!");
+					location.reload();
+				} else {
+					alert("回复失败!");
+				}
+			}); 
+
+		}
+		
+		
+		//系统-点击行，选中当前行行的checkbox
+		$(document).on('click', '.Title', function() {
+			var input = $(this).find("input");
+			var u =input.val();
+			//点击查看 1.先进行update将状态为由0改为1
+			var xmlData = {
+				"id" : u
+			};
+			var url = "/YHZX/update_zx.action?XmlData="
+					+ JSON.stringify(xmlData);
+			$.ajax({
+				type : "GET", //请求方式
+				url : encodeURI(url),
+				success : function(data) {
+					 var xmlData = [{'id':u}];
+						var url = "/message/jlquery/selectByid_xt.action?XmlData="+ JSON.stringify(xmlData);
+						 $.ajax({
+							type : "GET", //请求方式
+							url : encodeURI(url),
+							success : function(data) {
+								var json = jQuery.parseJSON(data);
+								var u = json.data;
+								var spObj = $(".msg-content");
+								spObj.empty();
+								var str = "";
+								for (var i = 0; i < u.length; i++) {
+									str += setXTZXHtml(u[i]);
+								}
+								$(".msg-content").html(str);
+							},
+							error : function(XMLHttpRequest, textStatus, errorThrown) {
+								alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest + "+"
+										+ errorThrown);
+							}
+						}); 
+				}
+			}); 
+			 if ($(input).attr("checked")) {
+                $(input).removeAttr("checked");
+            }
+             else
+            {
+                $(input).attr("checked", true);
+            }  
+		});
+		//咨询-卖家-点击行，选中当前行行的checkbox
+		$(document).on('click', '.Title_zx', function() {
+			var input = $(this).find("input");
+			var u =input.val();
+			//点击查看 1.先进行update将状态为由0改为1
+			var xmlData = {
+				"id" : u
+			};
+			var url = "/YHZX/update_zx.action?XmlData="
+					+ JSON.stringify(xmlData);
+			$.ajax({
+				type : "GET", //请求方式
+				url : encodeURI(url),
+				success : function(data) {
+					//点击查看 2. 再进行拼接显示
+					var xmlData = [{'id':u}];
+					var url = "/message/jlquery/selectByid_zx.action?XmlData="+ JSON.stringify(xmlData);
+					 $.ajax({
+						type : "GET", //请求方式
+						url : encodeURI(url),
+						success : function(data) {
+							var json = jQuery.parseJSON(data);
+							var u = json.data;
+							var spObj = $(".sp-content");
+							spObj.empty();
+							var str = "";
+							 for (var i = 0; i < u.length; i++) {
+								str += setZXHtml_zx(u[i]);
+							} 
+							$(".sp-content").html(str);
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest + "+"
+									+ errorThrown);
+						}
+					}); 
+				}
+			}); 
+			 if ($(input).attr("checked")) {
+                $(input).removeAttr("checked");
+            }
+             else
+            {
+                $(input).attr("checked", true);
+            }  
+		});
+	
+		//咨询-买家-点击行，选中当前行行的checkbox
+		$(document).on('click', '.Title_zx_maijia', function() {
+			var input = $(this).find("input");
+			var u =input.val();
+			//点击查看 1.先进行update将状态为由0改为1
+			var xmlData = {
+				"id" : u
+			};
+			var url = "/YHZX/update_zx.action?XmlData="
+					+ JSON.stringify(xmlData);
+			$.ajax({
+				type : "GET", //请求方式
+				url : encodeURI(url),
+				success : function(data) {
+					//点击查看 2. 再进行拼接显示
+					var xmlData = [{'id':u}];
+					var url = "/message/jlquery/selectByid_zx.action?XmlData="+ JSON.stringify(xmlData);
+					 $.ajax({
+						type : "GET", //请求方式
+						url : encodeURI(url),
+						success : function(data) {
+							var json = jQuery.parseJSON(data);
+							var u = json.data;
+							var spObj = $(".sp-content");
+							spObj.empty();
+							var str = "";
+							 for (var i = 0; i < u.length; i++) {
+								str += setZXHtml_zx_mj(u[i]);
+							} 
+							$(".sp-content").html(str);
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest + "+"
+									+ errorThrown);
+						}
+					}); 
+				}
+			}); 
+			 if ($(input).attr("checked")) {
+                $(input).removeAttr("checked");
+            }
+             else
+            {
+                $(input).attr("checked", true);
+            }  
+		});
+/*----------------------------------------系统消息-----------判断radio是否有选中，获取选中的值--------*/
+	    $(function(){
+	             /*-----全选-----*/
+	          $('#rdo_checked_all').click(function(){
+	              var is_checked=$('#rdo_checked_all').attr('checked');
+	              if(is_checked=="checked"){
+	                  $('input[name=no]').attr('checked',true);
+	              }
+	              else{
+	                 $('input[name=no]').attr('checked',false);          
+	              }
+	            }); 
+	             /*----------删除-------*/
+	            $('#btn_delValue').click(function(){
+                    var array = new Array(); //用于保存 选中的那一条数据的ID   
+                    var flag; //判断是否一个未选   
+                    $("input[name='no']:checkbox").each(function() { //遍历
+                                if ($(this).attr("checked")) { //判断是否选中    
+                                    flag = true; //只要有一个被选择 设置为 true  
+                                }  
+                            })  
+                    if (flag) {  
+                        $("input[name='no']:checkbox").each(function() { //遍历 
+                                    if ($(this).attr("checked")) { //判断是否选中    
+                                        var id = $(this).val()
+                                        var xmlData =  {'id' : id} ;
+                                        var url = "/YHZX/deleteByid.action?XmlData="
+                            				+ JSON.stringify(xmlData);
+                                        $.ajax({
+                                			type : "GET", //请求方式
+                                			url : encodeURI(url),
+                                			success : function(data) {
+                                				//刷新 
+                                				location.reload();
+                                			},
+                                		});
+                                    }
+                                })  
+                        
+                    } else {  
+                        //alert("请至少选择一个用户");  
+                    }  
+	            });  
+	       /*----------标记已读------------*/
+	            $('#btn_setValue').click(function(){
+                    var array = new Array(); //用于保存 选中的那一条数据的ID   
+                    var flag; //判断是否一个未选   
+                    $("input[name='no']:checkbox").each(function() { //遍历
+                                if ($(this).attr("checked")) { //判断是否选中    
+                                    flag = true; //只要有一个被选择 设置为 true  
+                                }  
+                            })  
+                    if (flag) {  
+                        $("input[name='no']:checkbox").each(function() { //遍历 
+                                    if ($(this).attr("checked")) { //判断是否选中    
+                                        var id = $(this).val()
+                                        var xmlData =  {
+                                    			'id' : id
+                                    		};
+                                    var url = "/YHZX/updateByid.action?XmlData="
+                            				+ JSON.stringify(xmlData);
+                            		$.ajax({
+                            			type : "GET", //请求方式
+                            			url : encodeURI(url),
+                            			success : function(data) {
+                            			},
+                            			error : function(XMLHttpRequest, textStatus, errorThrown) {
+                            				alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest + "+"
+                            						+ errorThrown);
+                            			}
+                            		});
+                                    }
+                                })  
+                        
+                    } else {  
+                        //alert("请至少选择一个消息");  
+                    }  
+	            });
+	     });
+/*------------------------------------系统消息end--------------------------------------------------------------------*/
+/*----------------------------------------卖家--咨询消息-----------判断radio是否有选中，获取选中的值--------*/
+	    	$(function(){
+	             /*-----全选-----*/
+	        $('#rdo_checked_all_maijia').click(function(){
+	              var is_checked=$('#rdo_checked_all_maijia').attr('checked');
+	              if(is_checked=="checked"){
+	                  $('input[name=no_zx]').attr('checked',true);
+	              }
+	              else{
+	                 $('input[name=no_zx]').attr('checked',false);          
+	              }
+	            });
+	             /*----------删除-------*/
+	            $('#btn_delValue_maijia').click(function(){
+                    var array = new Array(); //用于保存 选中的那一条数据的ID   
+                    var flag; //判断是否一个未选   
+                    $("input[name='no_zx']:checkbox").each(function() { //遍历
+                                if ($(this).attr("checked")) { //判断是否选中    
+                                    flag = true; //只要有一个被选择 设置为 true  
+                                }  
+                            })  
+                    if (flag) {  
+                        $("input[name='no_zx']:checkbox").each(function() { //遍历 
+                                    if ($(this).attr("checked")) { //判断是否选中    
+                                        var id = $(this).val()
+                                        var xmlData =  {'id' : id} ;
+                                        var url = "/YHZX/deleteByid.action?XmlData="
+                            				+ JSON.stringify(xmlData);
+                                        $.ajax({
+                                			type : "GET", //请求方式
+                                			url : encodeURI(url),
+                                			success : function(data) {
+                                				//刷新 
+                                				location.reload();
+                                			},
+                                		});
+                                    }
+                                })  
+                        
+                    } else {  
+                        //alert("请至少选择一个用户");  
+                    }  
+	            });
+	       /*----------标记已读------------*/
+	            $('#btn_setValue_maijia').click(function(){
+                    var array = new Array(); //用于保存 选中的那一条数据的ID   
+                    var flag; //判断是否一个未选   
+                    $("input[name='no_zx']:checkbox").each(function() { //遍历
+                                if ($(this).attr("checked")) { //判断是否选中    
+                                    flag = true; //只要有一个被选择 设置为 true  
+                                }  
+                            })  
+                    if (flag) {  
+                        $("input[name='no_zx']:checkbox").each(function() { //遍历 
+                                    if ($(this).attr("checked")) { //判断是否选中    
+                                        var id = $(this).val()
+                                        var xmlData =  {
+                                    			'id' : id
+                                    		};
+                                    var url = "/YHZX/updateByid.action?XmlData="
+                            				+ JSON.stringify(xmlData);
+                            		$.ajax({
+                            			type : "GET", //请求方式
+                            			url : encodeURI(url),
+                            			success : function(data) {
+                            			},
+                            			error : function(XMLHttpRequest, textStatus, errorThrown) {
+                            				alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest + "+"
+                            						+ errorThrown);
+                            			}
+                            		});
+                                    }
+                                })  
+                        
+                    } else {  
+                        alert("请至少选择一个消息");  
+                    }  
+	            });
+	             
+	            
+	     });
+/*------------------------------------卖家---咨询消息end--------------------------------------------------------------------*/
+/*----------------------------------------------------------买家--咨询消息-----------判断radio是否有选中，获取选中的值--------*/
+	    $(function(){
+	             /*-----全选-----*/
+	         $('#rdo_checked_all_mj').click(function(){
+	              var is_checked=$('#rdo_checked_all_mj').attr('checked');
+	              if(is_checked=="checked"){
+	                  $('input[name=no_zx_maijia]').attr('checked',true);
+	              }
+	              else{
+	                 $('input[name=no_zx_maijia]').attr('checked',false);          
+	              }
+	            });
+	             /*----------删除-------*/
+	            $('#btn_delValue_mj').click(function(){
+                    var array = new Array(); //用于保存 选中的那一条数据的ID   
+                    var flag; //判断是否一个未选   
+                    $("input[name='no_zx_maijia']:checkbox").each(function() { //遍历
+                                if ($(this).attr("checked")) { //判断是否选中    
+                                    flag = true; //只要有一个被选择 设置为 true  
+                                }  
+                            })  
+                    if (flag) {  
+                        $("input[name='no_zx_maijia']:checkbox").each(function() { //遍历 
+                                    if ($(this).attr("checked")) { //判断是否选中    
+                                        var id = $(this).val()
+                                        var xmlData =  {'id' : id} ;
+                                        var url = "/YHZX/deleteByid.action?XmlData="
+                            				+ JSON.stringify(xmlData);
+                                        $.ajax({
+                                			type : "GET", //请求方式
+                                			url : encodeURI(url),
+                                			success : function(data) {
+                                				//刷新 
+                                				location.reload();
+                                			},
+                                		});
+                                    }
+                                })  
+                        
+                    } else {  
+                        //alert("请至少选择一个用户");  
+                    }  
+	            }); 
+	       /*----------标记已读------------*/
+	            $('#btn_setValue_mj').click(function(){
+                    var array = new Array(); //用于保存 选中的那一条数据的ID   
+                    var flag; //判断是否一个未选   
+                    $("input[name='no_zx_maijia']:checkbox").each(function() { //遍历
+                                if ($(this).attr("checked")) { //判断是否选中    
+                                    flag = true; //只要有一个被选择 设置为 true  
+                                }  
+                            })  
+                    if (flag) {  
+                        $("input[name='no_zx_maijia']:checkbox").each(function() { //遍历 
+                                    if ($(this).attr("checked")) { //判断是否选中    
+                                        var id = $(this).val()
+                                        var xmlData =  {
+                                    			'id' : id
+                                    		};
+                                    var url = "/YHZX/updateByid.action?XmlData="
+                            				+ JSON.stringify(xmlData);
+                            		$.ajax({
+                            			type : "GET", //请求方式
+                            			url : encodeURI(url),
+                            			success : function(data) {
+                            			},
+                            			error : function(XMLHttpRequest, textStatus, errorThrown) {
+                            				alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest + "+"
+                            						+ errorThrown);
+                            			}
+                            		});
+                                    }
+                                })  
+                        
+                    } else {  
+                        //alert("请至少选择一个消息");  
+                    }  
+	            });
+	     });
+/*------------------------------------买家---咨询消息end--------------------------------------------------------------------*/
+		</script>
+</body>
+</html>

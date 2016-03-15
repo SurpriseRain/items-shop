@@ -1,0 +1,423 @@
+<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+    <li><i class="fa fa-home"></i><span>首页</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>个人管理</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><b>收货地址</b></li>
+</ul>
+</div>
+<!--<div class="w12 user_page_title"><h3>收货地址</h3></div>-->
+<div class="w12 user_content">
+  <div class="w12 user_page_tab">
+    <ul class="w12">
+    	<li class="xuan">我的收货地址</li>
+    </ul>
+  </div>
+  <div class="w12 user_page_main">
+  <div class="w12"><input type="button" value="新增收货地址" class="jl_btn btn_red" onclick="jl_modal_show(-1);" /></div>
+  <div class="w12 user_page_list">
+  </div>
+  </div>
+</div>
+<input type="hidden" id="djbj" value=""/>
+
+<!----------------------编辑弹出层---------------------------->
+<div class="jl_modal display_none">
+  <div class="jl_modal_hidden" onclick="jl_modal_hidden();"></div>
+  <div class="set_address"></div>
+</div>
+<script type="text/javascript">
+$(".set_address").load("/customer/sydjt/back/yhgl/set_address.html");
+
+var MyCookie = $.cookie('userInfo');
+var DQXX01 = "";
+var baseUrl="";
+var dzList="";
+var user=JSON.parse($.cookie("userInfo"));
+var flag=1;
+
+
+selectDZXX(user);
+//显示配送地址信息
+function selectDZXX(user){
+	var xmlData=[];
+	var json={};
+	json.ZCXX01=user.ZCXX01;
+	xmlData.push(json);
+	var url="/CartManage/selectAddressInfo.action?XmlData="+JSON.stringify(xmlData);
+	var dzList2=visitService(url);
+	$(".user_page_list").children().remove();
+	$(dzList2.ADDRESSLIST).each(function(i,dzxx){
+			var str='';
+			if(dzxx.MARK == 1){
+				  	str += '<dl class="w12  public_list user_page_address  xuan">';
+				  	str += '<dt class="w12"><h3>'+dzxx.SHRMC+'</h3><h3>'+dzxx.MOBILE.replace(dzxx.MOBILE.substring(3,7),"****")+'</h3><em>默认地址</em><i class="fa fa-trash-o" title="删除地址" id="'+dzxx.DZBH+'"></i><i class="fa fa-pencil-square-o" title="编辑地址" id="'+dzxx.DZBH+'" onclick="jl_modal_show('+i+');"></i></dt>';
+			}else{
+			  	str += '<dl class="w12  public_list user_page_address ">';
+			  	str += '<dt class="w12"><h3>'+dzxx.SHRMC+'</h3><h3>'+dzxx.MOBILE.replace(dzxx.MOBILE.substring(3,7),"****")+'</h3><i class="fa fa-trash-o" title="删除地址" id="'+dzxx.DZBH+'"></i><i class="fa fa-map-marker" title="设为默认地址" id="'+dzxx.DZBH+'"></i><i class="fa fa-pencil-square-o" title="编辑地址" id="'+dzxx.DZBH+'" onclick="jl_modal_show('+i+');"></i></dt>';
+			}
+			str += '<dd class="w12">'+dzxx.PROVINCE_NAME+' - '+dzxx.CITY_NAME+' - '+dzxx.COUNTY_NAME+' - '+dzxx.STREET_NAME+' - '+dzxx.OTHERDZ+'</dd>';
+		  	str += '<dd class="w12">邮箱：'+dzxx.EMAIL+'</span></dd>';
+		  	str += '</dl>';
+		  	$(".user_page_list").append(str);
+	})
+
+
+	//设置默认地址
+	 $(".fa-map-marker").click(function(){
+	     //if(!$(this).parent("a").hasClass('current'))return;
+	   	 var xmlData=[];
+		 var json={};
+			 json.ZCXX01=user.ZCXX01;
+			 json.DZBH=$(this).attr("id");
+			 xmlData.push(json);
+		 var url="/oper_shdz/updateDz.action?XmlData="+JSON.stringify(xmlData);
+		 var returnVal=visitService(url);
+			if(returnVal.STATE =="success"){
+			  alert("设置默认地址成功！");
+			  dzList=selectDZXX(user);
+			}else{
+			  alert("设置默认地址失败！");
+			}
+	 })
+	 
+	 //编辑地址
+	 $(".fa-pencil-square-o").click(function(){
+	   $("#djbj").val("0");
+	 })
+	 
+	 //删除地址
+	 $(".fa-trash-o").click(function(){
+	   //if(!$(this).parent("a").hasClass('current'))return;
+		 if(confirm("确定删除？")){
+		   	 var xmlData=[];
+			 var json={};
+				 json.DZBH=$(this).attr("id");
+				 xmlData.push(json);
+			 var url="/oper_shdz/deleteDz.action?XmlData="+JSON.stringify(xmlData);
+			 var returnVal=visitService(url);
+			if(returnVal.STATE =="success"){
+			  alert("删除地址成功！");
+			  dzList=selectDZXX(user);
+			}else{
+			  alert("删除地址失败！");
+			}
+		 }
+	 })
+	 dzList=dzList2;
+	 return dzList;
+}
+
+function jl_modal_show(i){
+	$(".jl_modal").show();
+	if(flag=="1"){
+		showDQXX();
+		flag=0;
+	}else{}
+	updateDzxx(i);
+
+}
+function jl_modal_hidden(){
+	$(".jl_modal").hide();
+}
+
+//显示大区信息
+function showDQXX(){
+	var xmlData=[];
+  	var json={};
+  	var url="/oper_qydz/qryDQ.action?XmlData="+xmlData;
+  	$("#modifyadd").find("select").each(function(index){
+  			if(index==0){
+  				var num=0;
+  				var dqjb=1;
+  				var dqxx=dqxxList(num,dqjb);
+  				$(dqxx).each(function(i,dqxxjson){
+  					$("#selects").append("<option>"+dqxxjson.DQXX02+"</option>");
+  					$("#selects").find("option").eq(i+1).val(dqxxjson.DQXX01);
+  				});	
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select2",2);
+  					var con="<option value='0'>请选择</option>";
+					$("#select3").html(con).val(0);
+  				});	
+  			}
+  			if(index==1){
+  				var dqjb=3;
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select3",dqjb);
+  				});	
+  			}
+  			if(index==2){
+  				var dqjb=4;
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select4",dqjb);
+  				});	
+  			}
+  	});
+}
+
+/*限制添加收货地址*/
+function dqxxList(num,dqjb){
+			var xmlData=[];
+		  	var json={};
+			  	json.qydm=num;
+			  	json.dqjb=dqjb;
+			  	xmlData.push(json);
+		  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+		  	var data=visitService(url);
+		  	return data.mapList;
+}
+//加载下级地址
+function setVal(objnow,objaft,dqjb){
+	   var num=$(objnow).find("option:selected").val();
+	   if(num==09||num==01||num==02||num==22){
+		    $("#select2").hide();		    
+		
+		    dqjb=dqjb+1;
+		    num=num+'01';    
+		    var list=dqxxList(num,dqjb);
+		  	$(list).each(function(i,json){
+		  		if(i==0){
+		  			$("#select3").empty();
+		  			$("#select3").append("<option value='0'>请选择</option>");
+		  		}
+		  		$("#select3").append("<option>"+json.DQXX02+"</option>");
+		  		$("#select3").find("option").eq(i+1).val(json.DQXX01);
+		  	});
+	   }else{
+		    $("#select2").show();
+		    var list=dqxxList(num,dqjb);
+		  	$(list).each(function(i,json){
+		  		if(i==0){
+		  			$(objaft).empty();
+		  			$(objaft).append("<option value='0'>请选择</option>");
+		  		}
+		  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+		  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+		  	});
+	   }
+}
+
+function updateDzxx(i){
+	clearDZXX();
+	if(i != "-1"){
+	var dzxx=dzList.ADDRESSLIST[i];
+	/***回填信息开始***/
+	$("#textfield2").val(dzxx.SHRMC);
+	$("#textfield1").val(dzxx.OTHERDZ);					
+	$("#textfield4").val(dzxx.MOBILE);//.replace(dzxx.MOBILE.substring(3,7),"****"));
+	$("#textfield7").val(showUndefind(dzxx.EMAIL));
+
+	var province;
+	$("#selects").find("option").each(function(){
+			if(dzxx.PROVINCE ==$(this).val()){
+				$(this).attr("selected",true);
+				$("#selects").val(dzxx.PROVINCE);
+				$(this).trigger("change");
+				$("#select2").find("option").each(function(){
+					if(dzxx.CITY ==$(this).val()){
+						$(this).attr("selected",true);
+						$(this).trigger("change");
+						$("#select3").find("option").each(function(){
+							if(dzxx.COUNTY ==$(this).val()){
+								$(this).attr("selected",true);
+								$(this).trigger("change");
+								$("#select4").find("option").each(function(){
+									if(dzxx.STREET ==$(this).val()){
+										$(this).attr("selected",true);
+									}
+							    }); 
+							}
+					    });
+					}
+			});
+			}
+	});
+	/***回填信息结束***/
+	}
+	$("#save").on("click",function(){
+		    $("#modifyadd").addClass("displayblock");
+			var province="";
+			var city="";
+			var county="";
+			var street="";
+			$("#selects").find("option").each(function(){
+					if($(this).is(":selected")){
+						province=$(this).val();
+					}
+			});
+			$("#select2").find("option").each(function(){
+					if($(this).is(":selected")){
+						city=$(this).val();
+					}
+			});
+			$("#select3").find("option").each(function(){
+					if($(this).is(":selected")){
+						county=$(this).val();
+					}
+			});
+			$("#select4").find("option").each(function(){
+				if($(this).is(":selected")){
+					street=$(this).val();
+				}
+			});
+			if(province=="-1"||city=="0"||county=="0"){
+				//alert("请认真填写收货地址！");
+				$("#modifyadd").find("label").remove();
+				$("#selects").parent().append("<label>请选择所在地！</label>");
+				return false;
+			}
+			var shrmc=$("#textfield2").val();
+			var otherdz=$("#textfield1").val();
+			var gddh="";//$("#textfield3").val();
+			var sjhm=$("#textfield4").val();
+			var yzbm="";//$("#textfield5").val();
+			var mark=dzxx==undefined?"0":dzxx.MARK;//$("input[name='default']:checked").val()==undefined?"0":"1";
+			var email=$("#textfield7").val();
+			var dzbh=dzxx==undefined?"":dzxx.DZBH;//$("#textfield8").val();
+			if(checkDzxx(shrmc,otherdz,sjhm,gddh,yzbm,email)==false) {
+				return;
+			}
+			var xmlData=[];
+			var json={};
+			json.province=province;
+			json.city=city;
+			json.county=county;
+			json.street=street;
+			json.shrmc=shrmc;
+			json.otherdz=otherdz;
+			json.sjhm=sjhm;
+			json.yzbm=yzbm;
+			json.gddh=gddh;
+			json.mark=mark;
+			json.email=email;
+			json.dzbm=dzbh;
+			json.zcxx01=user.ZCXX01;
+			//修改
+			if($("#djbj").val()=="0"){
+				xmlData.push(json);
+				var url="/oper_shdz/updateshdz.action?XmlData="+JSON.stringify(xmlData);
+	
+			}
+			//新增
+			if($("#djbj").val()=="1"){
+				json.wldw01=user.ZCXX01;
+				xmlData.push(json);
+				var url="/oper_shdz/insertshdz.action?XmlData="+JSON.stringify(xmlData);
+			}
+
+			ajaxQ({
+				"url" : url,//原始url 
+				"callback" : function(returnVal){
+					if(returnVal.status =="success"){
+						//alert("保存成功!");
+						$("#modifyadd").removeClass("displayblock");
+						dzList=selectDZXX(user);
+						jl_modal_hidden();
+										
+					}
+				}
+			});
+			
+	});
+	return dzList;
+}
+
+function showUndefind(data){
+	if(data==null||data=='undefined'){
+		return "";
+	}else{
+		return data;
+	}
+}
+
+function clearDZXX(){
+	$("#selects").find("option").first().attr("selected",true).trigger("change");
+	$("#select2").find("option").each(function(index){
+		if(index==0){
+			$(this).trigger("change");
+		}else{
+			$(this).remove();
+		}
+	});
+	$("#select3").find("option").each(function(index){
+		if(index==0){
+			$(this).trigger("change");
+		}else{
+			$(this).remove();
+		}
+	});
+	$("#select4").find("option").each(function(index){
+		if(index==0){
+			$(this).trigger("change");
+		}else{
+			$(this).remove();
+		}
+	});
+	$("#textfield3").val("");
+	$("#textfield4").val("");
+	$("#textfield2").val("");
+	$("#textfield5").val("");
+	$("#textfield1").val("");
+	$("#textfield7").val("");
+	
+	$("#textfield8").val("");
+	$("#djbj").val("1");
+
+	$("#modifyadd").find("label").remove();
+	
+}
+
+function checkDzxx(shrmc,otherdz,sjhm,gddh,yzbm,email) {
+	$("#modifyadd").find("label").remove();
+	if(shrmc==""||shrmc==null) {
+		//alert("请填写收货人！");
+		$("#textfield2").parent().append("<label>姓名不能为空！</label>");
+		return false;
+	}
+	if(otherdz==""||otherdz==null) {
+		//alert("请详细填写收货地址2！");
+		$("#textfield1").parent().append("<label>详细地址不能为空！</label>");
+		return false;
+	}
+	if(sjhm==""){
+		//alert("请填写手机号！");
+		$("#textfield4").parent().append("<label>手机号码不能为空！</label>");
+		return false;
+	} 
+	var sjhmReg=/(^13\d{9}$)|(^14)[5,7]\d{8}$|(^15[0,1,2,3,5,6,7,8,9]\d{8}$)|(^17)[6,7,8]\d{8}$|(^18\d{9}$)/g;
+	if(sjhm!=""&&!sjhmReg.test(sjhm)) { 
+		//alert("请填写正确的手机号码！");
+		$("#textfield4").parent().append("<label>请填写正确的手机号码！</label>");
+		return false;
+	}	
+	
+	var gddhReg =/^((0?1[358]\d{9})|((0(10|2[1-3]|[3-9]\d{2}))?[1-9]\d{6,7}))$/;
+	if(gddh!=""){
+		if(gddh!=""&&!gddhReg.test(gddh)){
+		    alert("固定电话中只能输入数字！");
+			return false;
+		}
+	}
+	
+	/* if(yzbm==""){
+		alert("请填写邮政编码！");
+		return false;
+	} */
+	var yzbmReg=/^[1-9][0-9]{5}$/;
+	if(yzbm!=""){
+		if(yzbm!=""&&!yzbmReg.test(yzbm)){
+		    alert("请填写正确的邮政编码！");
+			return false;
+		}
+	}
+	
+	var emailReg=/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/
+	if(email!=""&&!emailReg.test(email)){
+	    //alert("邮箱格式不正确！例如 weixing@163.com");
+	    $("#textfield7").parent().append("<label>邮箱格式不正确！例如 weixing@163.com</label>");
+		return false;
+	}
+	return true;
+}
+</script>

@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/qy_allgoodsfl.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/gyl-index.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/index.css" />
+<link rel="stylesheet" type="text/css" href="../css/products-main.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script>
+<!--<script type="text/javascript" src="/customer/qfy/js/global.js"></script>-->
+<script type="text/javascript" src="/customer/qfy/js/tab_shop_tp.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){
+		$("#header").load("/customer/qfy/head.jsp");
+	})
+</script>
+</head>
+<body>
+<!-----公共部门开始---->
+<!-----公共部门开始---->
+<div id="header"></div>
+<div class="clera"></div>
+<!-----------------------------菜单、banner--------------------------------->
+<div id="gyl-nav">
+  <a class="nav xuan" href="gyl-index.html">车型分类</a>
+  <ul id="nav-mian">
+    <li>
+      <a class="da">中国车型配件</a>
+      <a class="xiao">北京汽车</a><a class="xiao">比亚迪</a>
+      <a class="xiao">宝骏</a><a class="xiao">北汽</a><a class="xiao">昌河</a>
+      <a class="xiao">长丰</a><a class="xiao">长安</a><a class="xiao">长城</a>
+      <a class="xiao">帝豪</a><a class="xiao">东南</a><a class="xiao">东风</a>
+      <a class="xiao">福田</a><a class="xiao">广汽传祺</a><a class="xiao">黄海汽车</a>
+      <a class="xiao">汇众</a><a class="xiao">华泰</a><a class="xiao">一汽红旗</a>
+      <a class="xiao">海马</a><a class="xiao">哈飞</a><a class="xiao">华普</a>
+      <a class="xiao">金杯</a><a class="xiao">吉奥</a><a class="xiao">江淮</a>
+      <a class="xiao">吉利</a><a class="xiao">江铃</a><a class="xiao">开瑞</a>
+      <a class="xiao">力帆</a><a class="xiao">陆风</a><a class="xiao">理念</a>
+      <a class="xiao">MG</a><a class="xiao">纳智捷</a><a class="xiao">南汽</a>
+      <a class="xiao">启辰</a><a class="xiao">奇瑞</a><a class="xiao">全球鹰</a>
+      <a class="xiao">荣威</a><a class="xiao">瑞麒</a><a class="xiao">思铭</a>
+      <a class="xiao">五菱</a><a class="xiao">威麟</a><a class="xiao">夏利</a>
+      <a class="xiao">一汽</a><a class="xiao">英伦</a><a class="xiao">永源</a>
+      <a class="xiao">众泰</a><a class="xiao">郑州海马</a><a class="xiao">中华</a>
+    </li>
+    <li>
+      <a class="da">德国车型配件</a>
+      <a class="xiao">奥迪</a><a class="xiao">奔驰</a><a class="xiao">保时捷</a>
+      <a class="xiao">宝马</a><a class="xiao">大众</a><a class="xiao">迷你</a>
+      <a class="xiao"> 斯柯达</a><a class="xiao">西雅特</a>
+    </li>
+    <li>
+     <a class="da">美国车型配件</a>
+     <a class="xiao">别克</a><a class="xiao">道奇</a><a class="xiao">福特</a>
+     <a class="xiao">吉普</a><a class="xiao">凯迪拉克</a><a class="xiao">克莱斯勒</a>
+     <a class="xiao">欧宝</a><a class="xiao">雪佛兰</a>
+    </li>
+    <li>
+     <a class="da">日本车型配件</a>
+     <a class="xiao" href="#">本田</a><a class="xiao">丰田</a><a class="xiao">雷克萨斯</a>
+     <a class="xiao">马自达</a><a class="xiao">铃木</a><a class="xiao">讴歌</a>
+     <a class="xiao">本田</a><a class="xiao">丰田</a><a class="xiao">三菱</a>
+     <a class="xiao">斯巴鲁</a><a class="xiao">英菲尼迪</a>
+    </li>
+    <li>
+     <a class="da">韩国车型配件</a>
+     <a class="xiao">起亚</a><a class="xiao">双龙</a><a class="xiao">现代</a>
+    </li>
+    <li>
+     <a class="da">欧洲车型配件</a>
+     <a class="xiao">标致</a><a class="xiao">菲亚特</a><a class="xiao">捷豹</a>
+     <a class="xiao">莲花</a><a class="xiao">雷诺</a><a class="xiao">路虎</a>
+     <a class="xiao">萨博</a><a class="xiao">沃尔沃</a><a class="xiao">雪铁龙</a>
+    </li>
+  </ul>
+  <a class="nav" href="gyl-accClass.html">配件分类</a>
+  <a class="nav" href="gyl-accSs.html">配件品牌</a>
+  <a class="nav" href="gyl-carSs.html">汽车品牌</a>
+</div>
+<!-----公共部门结束---->
+<!--  
+<div id="bannera">
+  <div id="js_banner" class="banner">
+	<ul id="js_banner_img" class="banner_img clear">
+		<li class="bgli01"><div class="banner_inner"></div></li>
+		<li class="bgli02"><div class="banner_inner"></div></li>
+		<li class="bgli03"><div class="banner_inner"></div></li>
+		<li class="bgli04"><div class="banner_inner"></div></li>
+	</ul>
+  </div>	
+</div>
+-->
+<!-----产品列表---->
+<div class="clear"></div>
+<div id="gyl-pptj">
+  <ul>
+    <li><a href="#" class="img"><img src="../images/gyl-ggw.jpg" /></a></li>
+  </ul>
+</div>
+<div class="clera"></div>
+<!-----------------------------品牌推荐--------------------------------->
+<div id="pptj">
+  <div class="pptitle"></div>
+  <span></span>
+  <a href="#"><img src="../images/pptj-case01.png" /></a>
+  <span></span>
+  <a href="#"><img src="../images/pptj-case02.png" /></a>
+  <span></span>
+  <a href="#"><img src="../images/pptj-case01.png" /></a>
+  <span></span>
+  <a href="#"><img src="../images/pptj-case02.png" /></a>
+</div>
+<!-----------------------------楼层--------------------------------->
+<div id="main">
+  <div class="main-left">
+<!-----------------------------楼层--------------------------------->
+    <div class="folor">
+      <div class="title">
+        <h2>新品上架</h2>
+        <div class="zcd"><a href="#">齿轮油</a><span></span><a href="#">刹车油</a><span></span><a href="#">自动变速箱</a><span></span><a href="#">柴机油</a><span></span><a href="#">汽机油</a><span></span><a href="#">更多</a></div>
+      </div>
+      <div class="clera"></div>
+      <ul class="pro-case">
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div>        <div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+      </ul>
+     </div>
+     <div class="clera"></div> 
+<!-----------------------------楼层--------------------------------->
+    <div class="folor">
+      <div class="title">
+        <h2>新品上架</h2>
+        <div class="zcd"><a href="#">齿轮油</a><span></span><a href="#">刹车油</a><span></span><a href="#">自动变速箱</a><span></span><a href="#">柴机油</a><span></span><a href="#">汽机油</a><span></span><a href="#">更多</a></div>
+      </div>
+      <div class="clera"></div>
+      <ul class="pro-case">
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div>
+        <div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+      </ul>
+     </div>
+     <div class="clera"></div>   
+<!-----------------------------楼层--------------------------------->
+    <div class="folor">
+      <div class="title">
+        <h2>新品上架</h2>
+        <div class="zcd"><a href="#">齿轮油</a><span></span><a href="#">刹车油</a><span></span><a href="#">自动变速箱</a><span></span><a href="#">柴机油</a><span></span><a href="#">汽机油</a><span></span><a href="#">更多</a></div>
+      </div>
+      <div class="clera"></div>
+      <ul class="pro-case">
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+       <li>
+        <a href="#" class="img"><img src="../images/msimg.jpg" /></a>
+        <div class="pro-name"><a href="#">机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油机油</a></div>
+        <div class="pro-pic"><span>零售价：</span><b>999.00</b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp">宝马官方旗舰店</a></div>
+      </li>
+      </ul>
+     </div>
+    <div class="clear"></div>
+  </div>
+<!-----------------------------直通车--------------------------------->
+  <div class="main-right">
+    <h2>直通车</h2>
+    <ul id="ztc">
+      <li>
+        <a href="#" class="img"><img src="../images/baoma.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img src="../images/baoshijie.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img src="../images/benchi.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img src="../images/baoma.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img src="../images/baoshijie.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img src="../images/benchi.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img src="../images/baoma.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img src="../images/baoshijie.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img src="../images/baoshijie.png" /></a>
+        <div href="#" class="text">
+          <h4>宝马官方旗舰店</h4>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+<div class="clear"></div>
+<!---------------------底部--------------------->
+<div id="footer">
+  <div class="fooer-menu">
+    <dl>
+      <dt>购物指南</dt>
+      <dd><a href="#">免费注册</a></dd>
+      <dd><a href="#">采购商品</a></dd>
+      <dd><a href="#">常见问题</a></dd>
+      <dd><a href="#">联系客服</a></dd>
+    </dl>
+    <dl>
+      <dt>购物指南</dt>
+      <dd><a href="#">免费注册</a></dd>
+      <dd><a href="#">采购商品</a></dd>
+      <dd><a href="#">常见问题</a></dd>
+      <dd><a href="#">联系客服</a></dd>
+    </dl>
+    <dl>
+      <dt>购物指南</dt>
+      <dd><a href="#">免费注册</a></dd>
+      <dd><a href="#">采购商品</a></dd>
+      <dd><a href="#">常见问题</a></dd>
+      <dd><a href="#">联系客服</a></dd>
+    </dl>
+    <dl>
+      <dt>购物指南</dt>
+      <dd><a href="#">免费注册</a></dd>
+      <dd><a href="#">采购商品</a></dd>
+      <dd><a href="#">常见问题</a></dd>
+      <dd><a href="#">联系客服</a></dd>
+    </dl>
+    <dl>
+      <dt>购物指南</dt>
+      <dd><a href="#">免费注册</a></dd>
+      <dd><a href="#">采购商品</a></dd>
+      <dd><a href="#">常见问题</a></dd>
+      <dd><a href="#">联系客服</a></dd>
+    </dl>
+  </div>
+  <div class="bq"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>串码管理</title>
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/th-sq.css" />
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var CKDH = $.getUrlParam("CKDH");
+var cms_w=[];//未入库单号
+var cms_y=[];//已入库单号
+var cms_z="";//二次入库单号
+function userName_onkeypress(event){  
+   	if(event.keyCode==13){
+   		var str="";
+   		var cm = $("#cm").val();
+   		var XmlData=[{"uniqueCode":cm}];
+   		var url="/Oper_MJRK/GetProduceExist.action?XmlData="+JSON.stringify(XmlData);
+   		var returnVal=visitService(url);
+   		if(returnVal.result.uniqueCode!=""){
+   			alert("该商品已存在！");
+   			$("#cm").val("");
+   			return false;
+   		}
+   		for(var i=0;i<cms_y.length;i++) {
+    		if(cm==cms_y[i]){
+   				alert("该条码已存在！");
+   				$("#cm").val("");
+   				return false;
+   			}
+    	}
+   		var flage=false;
+   		for(var j=0;j<cms_w.length;j++){
+   			if(cm==cms_w[j]){
+   				var str='<b>&nbsp;'+cm+'&nbsp;</b>';
+   				cms_w.splice(j,1);
+   				cms_y.push(cm);
+   				cms_z+=cm+",";
+   				flage = true;
+	   			break;
+   			}
+   		}
+   		if(flage==false){
+			alert("不存在该条码！");
+			$("#cm").val("");
+   		}
+    	$(".clear").append(str);
+    	$("#cm").val("");
+   	}
+}   
+
+function okclick(){
+	if(cms_y.length>0){
+		var RKCM = cms_z.substring(0,cms_z.length-1);
+	}else{
+		return false;
+	}
+	var XmlData=[{"CKDH":CKDH,"RKCM":RKCM}];
+	var url="/Oper_MJRK/insert_RKD.action?XmlData="+JSON.stringify(XmlData);
+	var returnVal=visitService(url);
+	var loginState = returnVal.STATE;
+	if (loginState == 1) {
+		alert("保存成功！");
+		location.href="/customer/qfy/back/ddgl/mjpjrk.html";
+	}else{
+		alert("保存失败！");
+	} 
+	
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+<style>
+.tj{ background: #ff8800 none repeat scroll 0 0;border: 1px solid #cccccc;color: #ffffff; cursor: pointer;font-size: 16px;line-height: 20px; margin-left: 50px;padding: 5px 10px;text-align: center;width: 100px; }
+.tj:hover{background: #c76e09 none repeat scroll 0 0;}
+.dqlcs{margin-top: 20px;}
+</style>
+
+
+<div id="curPosition" style="width:100%;">
+    	<a href="#">库房管理</a>
+    	<span>></span>
+    	<a href="#">配件入库</a>
+</div>
+
+	<ul id="screening">
+	    <li style="width:818px;">
+	    <span>串码：</span>
+		<input id="cm"  style="width:260px;" type="text" placeholder=" 串码名称" onkeypress="return userName_onkeypress(event)" />
+		<a class="tj" onclick="okclick()">保存</a>
+	   </li>
+	</ul>
+
+
+
+<div class="clear"></div>
+
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#cm").focus();
+	$("body").css("height","500px");
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.mjrk.selectCKDSPXX','dataType':'Json','CKDH':CKDH}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+    var rData=visitService(url);
+    if(rData!=undefined&&rData!=""){
+    	if(rData[0].wr!=undefined&&rData[0].wr!=""){
+	    	cms_w=rData[0].wr.split(",");
+    	}
+    	if(rData[0].yr!=undefined&&rData[0].yr!=""){
+	    	cms_y=rData[0].yr.split(",");
+    	}
+    }
+	
+});
+</script>
+</html>

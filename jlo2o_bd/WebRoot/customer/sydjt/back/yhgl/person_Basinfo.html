@@ -1,0 +1,534 @@
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/shop-Basinfo.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+    <li><i class="fa fa-home"></i><span>首页</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>个人管理</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><b>个人信息</b></li>
+</ul>
+</div>
+
+<!--<div class="w12 user_page_title"><h3>个人信息</h3></div>-->
+
+<div class="w12 user_content">
+  <div class="w12 user_page_tab">
+    <ul class="w09"><li class="xuan">基本资料</li><li>头像照片</li><li>更多个人信息</li></ul>
+  </div>
+  <form id="form1" name="form1" action="" method="post">
+  <div class="w12 user_page_main" id="JBXX">
+  <dl class="w12 public_form">
+    <dt class="w02"><em class="font_red">*</em>昵称：</dt>
+    <dd class="w10"><input id="dpName" name="dpName" type="text" class="w03"><!-- <label>提示信息！！！！</label> --></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02"><em class="font_red">*</em>性别：</dt>
+    <dd class="w10">
+      <input id="Six1" name="Six" value="1" type="radio"><span>男</span>
+      <input id="Six2" name="Six" value="2" type="radio"><span>女</span>
+      <input id="Six3" name="Six" value="3" type="radio" checked="checked"><span>保密</span>
+    </dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">生日：</dt>
+    <dd class="w10">       		
+      <select name="YYYY" id="YYYY" onchange="YYYYMM(this.value) class="w01"><option>请选择</option></select>
+      <select name="MM" id="MM" onchange="MMDD(this.value)" class="w01"><option>请选择</option></select>
+      <select name="DD" id="DD" class="w01"><option>请选择</option></select>
+      <span class="font_grey">填生日有惊喜哦~</span>
+    </dd>
+  </dl>
+  <!-- 
+  <dl class="w12 public_form">
+    <dt class="w02"><em class="font_red">*</em>兴趣爱好：</dt>
+    <dd class="w10"><span>请选择您感兴趣的分类，给您最精准的推荐</span></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">&nbsp;</dt>
+    <dd class="w10">
+      <ul class="w12">
+        <li class="xuan"><a>图书/音像/数字商品</a><em></em></li>
+        <li><a>家用电器<em></em></a></li>
+        <li><a>家用电器<em></em></a></li>
+      </ul>
+    </dd>
+  </dl> -->
+  <dl class="w12 public_form">
+    <dt class="w02"><em class="font_red">*</em>手机号码：</dt>
+    <dd class="w10"><input id="phone" name="phone" type="text" class="w03"></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">邮箱：</dt>
+    <dd class="w10"><input id="eml" name="eml" type="text" class="w03"></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02"><em class="font_red">*</em>真实姓名：</dt>
+    <dd class="w10"><input id="lxr" name="lxr" type="text" class="w02"></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">所在地：</dt>
+    <dd class="w10 add1" style="display: none;">
+      <select id="provinceQY" class="w01"><option value="0">请选择</option></select>
+      <select id="cityQY" class="w01"><option value="0">请选择</option></select>
+      <select id="countryQY" class="w01"><option value="0">请选择</option></select>
+      <input id="QYdzdetail" type="text" class="w04">
+      <label class="caozuo">取消</label>
+    </dd>
+    <dd class="w10 add2">
+    <input type="text" class="w02" value="" title="" id="add" readonly="readonly" style="width:300px;"/>
+    <label class="caozuo">修改</label>
+    </dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">座机号码：</dt>
+    <dd class="w10"><input id="zj" name="zj" type="text" class="w03"></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">微信号码：</dt>
+    <dd class="w10"><input id="weixin" name="weixin" type="text" class="w03"></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">QQ号码：</dt>
+    <dd class="w10"><input id="qq" name="qq" type="text" class="w03"></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">兴隆卡号：</dt>
+    <dd class="w10"><input id="xl" name="xl" type="text" class="w03"></dd>
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w02">&nbsp;</dt>
+    <dd class="w10">
+      <input type="button" class="jl_btn btn_red" onclick="ok()" value="提交">
+    </dd>
+  </dl> 
+  	<input type="hidden" value="" id="ZCXX01" name="ZCXX01" />
+    <input type="hidden" value="" id="dqdm" name="dqdm" />
+  	<input type="hidden" value="" id="address" name="address" />   
+  </div>
+  </form>
+  <div class="w12 user_page_infor" id="TXZP" style="display:none;">
+  <dl class="w12 infor_main">
+        <dd class="w07 btn_margin_left">
+        <input type="button" class="btn_medium" value="请选择您要上传的头像">
+        <label class="font_grey">仅支持JPG、GIF、PNG、JPEG、BMP格式，文件小于4M</label>
+        </dd>
+        <dd class="w07 btn_margin_left" style="height:250px; border:1px solid #eee;">
+        </dd>
+        <dd class="w07 btn_margin_left">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        <img src="../images/info_tx.png">
+        </dd>
+        <dd class="w07 btn_margin_left">
+        <input type="button" class=" btn_shot" value="保存">
+        </dd>
+        </dl>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+var dqdm="";
+var imgUrl=pubJson.path_sptp+"/dptp/";
+initData();
+var YWL={};
+
+YWL.alert = function(id,text){
+	$("#"+id).parent().append("<label class=\"error_msg\">"+text+"</label>");
+}
+
+function initData(){
+	
+	//加载地址信息
+	showDQXX("QY");
+
+	birthday();
+	
+	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	var zcxx01 = userCookie.ZCXX01;
+	$("#ZCXX01").val(zcxx01);
+	var arr = [];
+	var o = {};
+	o["ZCXX01"] = zcxx01;
+	arr.push(o);
+	var data = visitService("/UserInfo/selectCompanyInfo.action?XmlData="+JSON.stringify(arr));
+	var list=data.lists;
+	$("#dpName").val(list[0].ZCXX02);
+	$("#Six"+list[0].ZCXX04).attr("checked","checked");
+	/*$("#hym").val(list[0].HYGLM);
+	$("#csm").val(list[0].SBM);
+	$("#csm").attr("title",list[0].SBM);
+	$("#qym").val(list[0].WZM);
+	$("#qym").attr("title",list[0].WZM);*/
+	dqdm = list[0].ZCXX07;
+	$("#add").val(list[0].ZCXX08);
+	$("#add").attr("title",list[0].ZCXX08);
+	/*$("#frdb").val(list[0].ZCXX03);
+	$("#frdb").attr("title",list[0].ZCXX03);*/
+	$("#lxr").val(list[0].ZCXX03);
+	$("#lxr").attr("title",list[0].ZCXX33);
+	$("#phone").val(list[0].ZCXX06);
+	$("#phone").attr("title",list[0].ZCXX06);
+	$("#zj").val(list[0].ZCXX55);
+	$("#zj").attr("title",list[0].ZCXX55);
+	$("#eml").val(list[0].ZCXX09);
+	$("#eml").attr("title",list[0].ZCXX09);
+
+	$("#weixin").val(list[0].ZCXX67);
+	$("#qq").val(list[0].ZCXX57);
+	$("#xl").val(list[0].ZCXX68);
+	var str = list[0].ZCXX66;
+	if(str !="" && str!=null){
+	$("#YYYY").val(str.substring(0,4));
+	$("#MM").val(str.substring(6,7));
+	$("#DD").val(str.substring(9,10));
+	}
+
+	$(data.lists).each(function(index,val){
+		if(val.DPTP01==3){
+			$(".yyzzbh").val(val.DPTP05);
+			$(".yyzzbh").attr("title",val.DPTP05);
+			$("#imgUrl1").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==4){
+			$(".zzjgbh").val(val.DPTP05);
+			$(".zzjgbh").attr("title",val.DPTP05);
+			$("#imgUrl2").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==5){
+			$(".swdjbh").val(val.DPTP05);
+			$(".swdjbh").attr("title",val.DPTP05);
+			$("#imgUrl3").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==6){
+			$(".yhkfzbh").val(val.DPTP05);
+			$(".yhkfzbh").attr("title",val.DPTP05);
+			$("#imgUrl4").attr("src",imgUrl+val.DPTP02);
+		}
+
+	})
+
+	//图片点击放大
+		$("td > img").click(function(){
+		  var td_img = $(this).attr("class");
+		  if(td_img == "img"){
+			 $(this).attr("class","big")
+			}else if(td_img == "big"){
+			 $(this).attr("class","img") 
+			}
+		 })
+}
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  	  });	
+  	}
+    if(index==1){
+  	  var dqjb=2;
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  	  });	
+  	}	 			
+  });
+}
+
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	$(list).each(function(i,json){
+  		if(i==0){
+  	 		$(objaft).empty();
+  	  		$(objaft).append("<option value='0'>请选择</option>");
+    	}
+  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  	});
+}
+
+
+function changefile(id){
+	$("#filename"+id).val(id);
+}
+function cancelfile(id){
+	$("#filename"+id).val("");
+}
+function ok(){
+	if(checkNull()){
+		var temp = $(".add2").attr("style");
+		if(temp=="display: none"){
+		 	//拼接地址
+		 	var ZCXX07=null;  //地址编码
+		   	var ZCXX08="";  //中文地址
+		   	if($("#provinceQY").val() != "0"){
+			  	ZCXX07=$("#provinceQY").val();
+			  	ZCXX08=ZCXX08+$("#provinceQY option:selected").text();
+		   	}
+		   	if($("#cityQY").val() != "0"){
+			  	ZCXX07=$("#cityQY").val();
+			  	ZCXX08=ZCXX08+$("#cityQY option:selected").text();
+		   	}
+		   	if($("#countryQY").val() != "0"){
+		      	ZCXX07=$("#countryQY").val();
+			  	ZCXX08=ZCXX08+$("#countryQY option:selected").text();
+		   	}
+		   	$("#dqdm").val(ZCXX07);
+		   	var address=ZCXX08+$("#QYdzdetail").val();
+		   	if(address != ""){
+		   	$("#address").val(address);
+		   	}else{
+		   		$("#address").val($("#add").val());
+			}
+		}
+		else{
+		   	$("#dqdm").val(dqdm);
+		   	$("#address").val($("#add").val());
+		}
+	
+	var XmlData1 = $("#form1").formToJson(); 
+	if(XmlData1[0].dqdm == ""){ 
+	XmlData1[0].dqdm= null;
+	}                                 	
+	var XmlData=escape(JSON.stringify(XmlData1));
+	var fileArray=[];
+	/*
+	if($("#filename1").val()=="" && $("#imgUrl1").attr("src")=="" ){
+		alert("请上传营业执照!");
+		return false;
+	}
+	if($("#filename2").val()=="" && $("#imgUrl2").attr("src")==""){
+		alert("请上传组织机构代码证!");
+		return false;
+	}
+	if($("#filename3").val()=="" && $("#imgUrl3").attr("src")==""){
+		alert("请上传税务登记证!");
+		return false;
+	}
+	if($("#filename4").val()=="" && $("#imgUrl4").attr("src")==""){
+		alert("请上传银行开户许可证!");
+		return false;
+	}
+	fileArray.push("file1");
+	fileArray.push("file2");
+	fileArray.push("file3");
+	fileArray.push("file4");
+	*/
+	var val="/UserInfo/updateCompanyInfo.action";
+	var r = confirm('确认更新信息吗？');
+	if(r==true){
+	$.ajaxFileUpload({
+		type:"POST",
+		secureuri:false,
+		fileElementId:fileArray,
+		url:encodeURI(val),//encodeURI避免中文乱码
+		data:{"XmlData":XmlData},
+		dataType:"text",
+		success: function(data) { 
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			if(data1==1){
+				alert("保存成功!");
+				}else{
+				alert("保存失败!");
+					}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert(textStatus);
+	    }
+	});
+	}
+	else return;
+	}else{}
+}
+
+//判断输入项是否合法
+function checkNull(){
+	$("#JBXX").find("label").remove();
+	/*if($(".csm").val().length == 0){
+		alert("请输入厂商识别码");
+		return false;
+	}
+	if($(".frdb").val().length == 0){
+		alert("请输入企业法人");
+		return false;
+	}*/
+	if($("#dpName").val().length == 0){
+		//alert("请输入昵称");
+		YWL.alert("dpName","请输入昵称！");
+		return false;
+	}
+
+	if($("#lxr").val().length == 0){
+		//alert("请输入真实姓名");
+		YWL.alert("lxr","请输入真实姓名！");
+		return false;
+	}
+	if($("#phone").val().length == 0){
+		//alert("请输入手机号码");
+		YWL.alert("phone","请输入手机号码！");
+		return false;
+	}else{
+		if(!checkPhone()){
+			return false;
+		}
+	}
+
+	if($("#zj").val().length != 0){
+		if(!checkTel()){
+			return false;
+		}
+	}
+
+	if($("#eml").val().length != 0){
+		if(!checkEmail()){
+			return false;
+		}
+	}
+	return true;
+}
+function checkPhone(){
+	var isMobile=/^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	if(!isMobile.test($("#phone").val())){
+		//alert("请正确填写手机号码,例如:134****4179");
+		YWL.alert("phone","请正确填写手机号码!例如:134****4179");
+		return false;
+	}else{
+		return true;
+	}
+}
+function checkTel(){
+	var isPhone=/^((0\d{2,3}))?(\d{7,8})(-(\d{3,}))?$/;   //座机验证规则
+	if(!isPhone.test($("#zj").val())){
+		//alert("请正确填写联系电话,例如:0104816048");
+		YWL.alert("zj","请正确填写座机号码!例如:010***4179");
+		return false;
+	}else{
+		return true;
+	}
+}
+function checkEmail(){
+		var email=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+		if(!email.test($("#eml").val())){
+			//alert("请正确输入邮箱地址");
+			YWL.alert("eml","请正确输入邮箱地址!");
+			return false;
+		}else{
+			return true;
+		}
+}
+
+function birthday(){ 
+	//strYYYY = document.form2.YYYY.outerHTML;  
+	//strMM = document.form2.MM.outerHTML;  
+	//strDD = document.form2.DD.outerHTML;  
+	MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];  
+	  
+	//先给年下拉框赋内容  
+	var y = new Date().getFullYear();  
+	var str = "";//strYYYY.substring(0, strYYYY.length - 9);  
+	//for (var i = (y-30); i < (y+30); i++) //以今年为准，前30年，后30年  
+	for (var i = y; i > (y-80); i--)
+	{  
+	str += "<option value='" + i + "'> " + i + "</option>\r\n";  
+	}  
+	//document.form2.YYYY.outerHTML = str +"</select>";
+	$("#YYYY").append(str); 
+	  
+	//赋月份的下拉框  
+	var str = "";//strMM.substring(0, strMM.length - 9);  
+	for (var i = 1; i < 13; i++)  
+	{  
+	str += "<option value='" + i + "'> " + i + "</option>\r\n";  
+	}  
+	//document.form2.MM.outerHTML = str +"</select>";  
+	$("#MM").append(str); 
+	  
+	//document.form2.YYYY.value = y;
+	$("#YYYY").val(y);  
+	//document.form2.MM.value = new Date().getMonth() + 1;
+	$("#MM").val(new Date().getMonth() + 1);  
+	var n = MonHead[new Date().getMonth()];  
+	if (new Date().getMonth() ==1 && IsPinYear(YYYYvalue)) n++;  
+	writeDay(n); //赋日期下拉框  
+	//document.form2.DD.value = new Date().getDate();
+	$("#DD").val((new Date().getDate()));  
+	}  
+	function YYYYMM(str) //年发生变化时日期发生变化(主要是判断闰平年)  
+	{  
+	//var MMvalue = document.form2.MM.options[document.form2.MM.selectedIndex].value;  
+	var MMvalue = $("#MM").val();
+	if (MMvalue == ""){
+		//DD.outerHTML = strDD; 
+		$("#DD").html('<option value="">日</option>');
+		return;
+	}  
+	var n = MonHead[MMvalue - 1];  
+	if (MMvalue ==2 && IsPinYear(str)) n++;  
+	writeDay(n)  
+	}  
+	function MMDD(str) //月发生变化时日期联动  
+	{  
+	//var YYYYvalue = document.form2.YYYY.options[document.form2.YYYY.selectedIndex].value;  
+	var YYYYvalue = $("#YYYY").val();
+	if (str == ""){
+		//DD.outerHTML = strDD; 
+		$("#DD").html('<option value="">日</option>');
+		return;
+	}  
+	var n = MonHead[str - 1];  
+	if (str ==2 && IsPinYear(YYYYvalue)) n++;  
+	writeDay(n)  
+	}  
+	function writeDay(n) //据条件写日期的下拉框  
+	{  
+	var s = "";//strDD.substring(0, strDD.length - 9);  
+	for (var i=1; i<(n+1); i++)  
+	s += "<option value='" + i + "'> " + i + "</option>\r\n";  
+	//document.form2.DD.outerHTML = s +"</select>"; 
+	$("#DD").append(s);  
+	}
+	function IsPinYear(year)//判断是否闰平年  
+	{ return(0 == year%4 && (year%100 !=0 || year%400 == 0))}  
+</script>

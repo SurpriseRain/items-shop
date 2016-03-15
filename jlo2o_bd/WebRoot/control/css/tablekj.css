@@ -1,0 +1,32 @@
+body{ margin:0 auto; font-size:12px; padding:0px; color:#3c3c3c;}
+ul,li{ margin:0px; padding:0px; list-style:none;}
+.clear{ clear:both;}
+a{ cursor:pointer}
+
+table.dyryqx{width:99%;  border-collapse: collapse; margin:10px auto;}
+table tr{text-align:center;  line-height:40px; border-bottom:1px solid #ccc;}
+
+/*******************************************������ԱȨ��************************************************/
+ table{ border:1px solid #ccc;}
+ table tr.defStaPer_form{ background-color:#f5f5f5; font-size:14px; font-family: "microsoft yahei";}
+ table.dyryqx tr td{ text-align:center; text-indent:10px;}
+ table.dyryqx tr.defStaPer_form td.no1{ width:50px;}
+ table.dyryqx tr.defStaPer_form td.no2{ width:150px; text-indent:15px;}
+
+#main .center table tr td span{ color:#333; font-size:12px; font-weight:100; font-family:"Arial Black", Gadget, sans-serif}
+ table.dyryqx td ul.cd_qx{ position:absolute; z-index:999; border:1px solid #e4e4e4; width:150px; background-color:#fff; min-height:150px; margin:-5px 0 0 10px; box-shadow:0px 0px 5px #e4e4e4; padding:10px; display:none;}
+ table.dyryqx td ul.cd_qx li{ float:left; width:140px; height:30px; line-height:30px; color:#999; cursor:pointer;}
+ table.dyryqx td ul.cd_qx li input{ float:left; width:14px; height:14px; margin:8px 5px 0 5px;}
+ table.dyryqx td ul.cd_qx li input.a{float:left; width:40px; height:20px; margin:8px 5px 0 5px; margin-left:70px}
+ table.dyryqx td ul.cd_qx li font{ float:left; text-indent:0px;}
+ table.dyryqx td ul.cd_qx li font.xuan{ color:#333;}
+ table.dyryqx td ul.cd_qx li:hover{ color:#333;}
+ table.dyryqx td a.rpl{ text-decoration:none; color:#f40}
+
+table.dyryqx td ul.cd_qx li.sj{ text-indent:10px;}
+table.dyryqx td ul.cd_qx li.sj input.checkbox{float:left; width:14px; margin:10px 0px 0 20px;}
+table.dyryqx td ul.cd_qx li.sj span{ float:left; margin-top:3px;}
+
+table.dyryqx td.no4 .cdqx_zcd { position:absolute; z-index:999; border:1px solid #e4e4e4; width:150px; background-color:#fff; min-height:150px; margin:-5px 0 0 10px; box-shadow:0px 0px 5px #e4e4e4; padding:10px; display:none;}
+table.dyryqx td.no4 .cdqx_zcd input{ float:left; width:14px; height:14px; margin:10px 0px 0 5px;}
+table.dyryqx td.no4 .cdqx_zcd span{ float:left; width:50px; height:30px; margin-top:2px; color:#333; font-size:12px; line-height:30px; text-align:left;}

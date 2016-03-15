@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>流程样式</title>
+<link rel="stylesheet" type="text/css" href="/form/css/tecPro.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script> 
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userInfo = JSON.parse(MyCookie);
+var rydm = userInfo.XTCZY01;
+
+$(document).ready(function(){
+	$(".moreInfo_title").mouseover(function(){
+	   $(".userinfo_Main").fadeIn();	
+     })
+	$(".userinfo_Main").mouseleave(function(){
+	   $(".userinfo_Main").fadeOut();	
+    })
+	
+	$(".moreDb_title").mouseover(function(){
+	   $(".moreDb_main").fadeIn();	
+     })
+	$(".moreDb_main").mouseleave(function(){
+	   $(".moreDb_main").fadeOut();	
+    })
+	
+	$(".fxlc_close").click(function(){
+	   $(this).parent(".fxlc_main").fadeOut(100);		
+    })
+	$(".fxlc_zz").click(function(){
+	   $(this).next(".fxlc_main").fadeIn(100);		
+    })
+	$(".userlcRight").click(function(){
+	   $(".userlcZhe").animate({"margin-left":"-400px"});		
+    })
+	$(".userlcLeft").click(function(){
+	   $(".userlcZhe").animate({"margin-left":"0"});		
+    })		
+  
+    /****************给用户信息赋值****************************/	
+    $(".userName").children("h3").children("b").html(userInfo.XTCZY01);
+    $(".usermainName").children("b").html(userInfo.XTCZY01);
+    
+    /**********************汇总代办记录条数  开始************************************************/
+	var url3=pubJson.PcrmUrl+'/document/queryNewLog.do?XmlData={"PI_USERNAME":"'+rydm+'"}';
+	var data3 = visitService(url3).returnList;
+	$(".userDblist").empty();
+	$(".moreDb_main").empty();
+	if(rydm == "jladmin"){
+		$(".userDblist").append('<a href="/form/currentLog.html" target="centerFrame">你有 <font>&nbsp;'+data3[0].NUM+'&nbsp;</font>条代办事宜未处理</a>');
+		$(".moreDb_main").append('<a href="/form/currentLog.html" target="centerFrame">你有 <font>&nbsp;'+data3[0].NUM+'&nbsp;</font>条代办事宜未处理</a>');
+	}
+	/**********************汇总代办记录条数  结束************************************************/
+	selectW_DPXX();//查询左上角企业logo
+})
+//查询左上角企业logo
+function selectW_DPXX() {
+	var xmlData=[];
+	var newsJson={};
+	newsJson.ZCXX01=userInfo.ZCXX01;
+	xmlData.push(newsJson);
+	var url="/HomePage/selectW_DPXX.action?XmlData="+JSON.stringify(xmlData);
+	var rData=visitService(url);
+	if(rData.mapList!=undefined&&rData.mapList!=""){
+		var imgpath=pubJson.path_sptp+"/dptp/"+rData.mapList[0].DPXX02;
+		$(".userTx").find("img").attr("src",imgpath).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/nopic.jpg'" );
+		$(".usermainTx").find("img").attr("src","/customer/qfy/images/nopic.jpg");			
+		}else{
+		$(".userTx").find("img").attr("src","/customer/qfy/images/nopic.jpg");
+		$(".usermainTx").find("img").attr("src","/customer/qfy/images/nopic.jpg");			
+	}
+ 
+}
+</script>
+</head>
+<body>
+<div id="tecPro">
+<!------------------用户信息------------------>
+  <div class="userInfo">
+    <div class="userTx"><a href="#"><img src="" /></a></div>
+    <div class="userName">
+    	<h3>
+    	    <!-- 用户名 -->
+    		<b></b>
+    		<font></font>
+    	</h3>
+    	<div class="tb">
+    		<!-- <span title="上次登录时间">2015-02-10</span> -->
+    		<a target="centerFrame" href="/customer/qfy/back/yhgl/resetPwd.html" onclick="changeIframeSize()">
+    			<span title="修改密码">修改密码</span>
+    		</a>
+    	</div>
+    </div>
+    <div class="moreInfo_title"></div>
+    <div class="userinfo_Main">
+      <ul>
+        <li class="bq">
+          <div class="usermainTx"><a href="#" class="img"><img src="" /></a></div>
+          <div class="usermainName"><b>刹那芳华</b></div>
+          <div class="usermainZw"></div>
+        </li>
+        <li id="accountM"><span>账户余额</span><label>0.00</label></li>
+        <!-- <li id="lastL"><span>上次登录</span><font>2015-02-10 14:56:11</font></li> -->
+        <li><a class="text" target="centerFrame" href="/customer/qfy/back/yhgl/resetPwd.html" onclick="changeIframeSize()">修改密码</a><a class="text">修改手机</a><a class="text">修改邮箱</a></li>
+      </ul>
+    </div>
+  </div>
+<!------------------流程------------------>
+  <div class="userLc">
+    <div class="userlcLeft" title="上一步流程"></div>
+    <div class="userlcMain">
+      <div class="userlcZhe">
+	      <!-- <div class="userlcCase"><a class="fxlc_yz">入库</a></div>
+	      <div class="userlcCase"><span>→</span></div>
+	      <div class="userlcCase"><a class="fxlc_yz">转入</a></div>
+	      <div class="userlcCase"><span>→</span></div>
+	      <div class="userlcCase">
+	        <a class="fxlc_zz">审核</a>
+	        <div class="fxlc_main" style="display:none;">
+	          <div class="lj"></div>
+	          <div class="fxlc_close" title="关闭">×</div>
+	          <a>驳回</a>
+	          <a>通过</a>
+	          <a>转向</a>
+	          <a>驳回</a>
+	        </div>
+	     </div>
+	     <div class="userlcCase"><span>→</span></div>
+	     <div class="userlcCase"><a class="fxlc_wz">出库</a></div>
+	     <div class="userlcCase"><span>→</span></div>
+	     <div class="userlcCase"><a class="fxlc_wz">物流</a></div>
+	     <div class="userlcCase"><span>→</span></div>
+	     <div class="userlcCase"><a class="fxlc_wz">物流</a></div>
+	     <div class="userlcCase"><span>→</span></div>
+	     <div class="userlcCase"><a class="fxlc_wz">物流</a></div>
+	     <div class="userlcCase"><span>→</span></div>
+	     <div class="userlcCase"><a class="fxlc_wz">物流</a></div>
+	     <div class="userlcCase"><span>→</span></div>
+	     <div class="userlcCase"><a class="fxlc_wz">物流</a></div> -->
+      </div>
+     </div>
+     <div class="userlcRight" title="下一步流程"></div>
+  </div>
+  <!------------------待办------------------>
+  <div class="userDb">
+    <div class="userDblist"><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a></div> 
+    <div class="moreDb_title" title="更多待办"></div>
+    <div class="moreDb_main"><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">单 <font>100</font></a><a href="#">单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a><a href="#">订单 <font>100</font></a></div>   
+  </div>
+</div>
+</body>
+<!-----------新加入厂家滚动JS--------->
+</html>

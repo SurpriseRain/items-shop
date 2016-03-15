@@ -1,0 +1,273 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<META HTTP-EQUIV="pragma" CONTENT="private, no-cache, no-store, proxy-revalidate, no-transform">
+<META HTTP-EQUIV="Cache-Control" CONTENT="private, no-cache, no-store, proxy-revalidate, no-transform">
+<META HTTP-EQUIV="expires" CONTENT="-1">
+<meta name="robots" content="all" />
+<meta name="author" content="天放网科" />
+<meta name="copyright" content="http://www.tfwk.cn" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/index.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/defaultPj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/stylePj.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var spxx01 = $.getUrlParam("SPXX01");  
+var pagesize="5";
+var fileName="";
+var baseUrl="";	
+$(document).ready(function(){
+	var spxxJson={};
+	spxxJson.pagesize=pagesize;
+	spxxJson.spxx01=spxx01;
+	var xmlData=[];
+	xmlData.push(spxxJson);
+    var url="/ProductDisplay/jlquery/selectKHPJ.action?XmlData="+JSON.stringify(xmlData);
+    var rData0 = "";
+    $.ajax({
+	    type: "GET",  //请求方式
+	    async: false,   //true表示异步 false表示同步
+	    url:encodeURI(url),
+	    data:{},
+	    success: function(data){
+	      if (data != null){
+	        try{
+	          var json = jQuery.parseJSON(data);
+	          rData0 = json.data;
+	          fileName = json.fileName;
+	        }catch(e){
+	          return;
+	        }
+	      }
+	    },
+    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+        }
+	  });
+   // var returnData=visitService(url);
+    var returnData=rData0;
+    $("#khpj").empty();
+    if(returnData.length=="0"){
+    	$("#khpj").append("暂无评价");
+        }else{
+    for(var i=0;i<returnData.length;i++){      
+    	khpjmap=returnData[i]; 
+	    $("#khpj").append('<div class="sd_left">'+
+	         	             '<strong>'+khpjmap.ZCXX02+'</strong>'+
+	                      '</div>'+
+	
+	                      '<div class="sd_right">'+
+	    
+					      '<div class="title clearfix"> '+
+					        '<span class="yushou fl"><font class="bold">综合评价：'+khpjmap.ZHPJ+'</font></span>  '+
+					        '<span class="time fr">评价日期：'+khpjmap.SPPJ02+'</span>  '+
+					      '</div> '+
+	     
+	                      '<ul class="starlist clearfix">'+
+					          '<li>'+
+					                '<span>商品描述相符：</span>'+
+					                '<span class="star star'+khpjmap.SPPJ03+'"></span>'+
+					                
+					          '</li>'+
+	             
+				              '<li>'+
+				                    '<span>物流发货速度：</span>'+
+				                    '<span class="star star'+khpjmap.SPPJ04+'"></span>'+
+				                   
+				              '</li>'+
+	             
+				              '<li>'+
+				                   '<span class="fl">客服服务态度：</span>'+
+				                   '<span class="star star'+khpjmap.SPPJ05+'"></span>'+
+				                
+				              '</li>'+
+	             
+				              '<li>'+
+				                   '<span class="fl">配送人员态度：</span>'+
+				                   '<span class="star star'+khpjmap.SPPJ06+'"></span>'+
+				                  
+				              '</li>'+	             
+	       				   '</ul>'+
+	       
+				       '<div class="evaluate clearfix">'+
+				            '<span>评价：</span>'+
+				            '<p>'+khpjmap.SPPJ07+'</p>'+
+				       '</div>'+
+	
+		     		   '<span class="clorgray">购买日期：'+khpjmap.SPPJ08+'</span>'+
+	              '</div>'
+	                       );
+        }
+    loadPages();
+       }
+
+});
+
+//分页 
+function loadPages(){	
+			var spxxJson={};
+			spxxJson.pagesize=pagesize;
+			spxxJson.spxx01=spxx01;
+			var xmlData=[];
+			xmlData.push(spxxJson);
+		    var url=baseUrl+"/ProductDisplay/jlquery/selectKHPJsum.action?XmlData="+JSON.stringify(xmlData);
+			var orderSum = visitService(url)[0].AMOUNT;
+			$("#TOTAL").empty();
+			$("#TOTAL").append(orderSum);				
+			totalPage=Math.ceil(orderSum/pagesize);		
+			$("#page").empty();
+			$("#page").append("<b class='clorange'>1</b>/"+totalPage);	
+			$("#PAGING").empty();
+			for(var i=1;i<=totalPage;i++){
+				$("#PAGING").append("<option value='"+i+"'>"+i+"</option>");
+			   }
+}	
+//分页 
+function PAGING(page){
+	var pages=page.value;	
+	$("#page").empty();
+	$("#page").append("<b class='clorange'>"+pages+"</b>/"+totalPage);	
+	loadMoreOrder(pages);
+}
+//上一页 
+function pageUp(){
+	if($("#PAGING").val()==1||$("#PAGING").val()==null){
+		alert("已是首页");
+		return;
+	}else{
+		var pageUp=$("#PAGING").val()*1-1;
+		$("#PAGING").val(pageUp);
+		$("#page").empty();
+		$("#page").append("<b class='clorange'>"+pageUp+"</b>/"+totalPage);
+		loadMoreOrder(pageUp);
+	}	
+}
+//下一页 
+function pageDown(){
+	if($("#PAGING").val()==totalPage){
+		alert("已是最后一页");
+		return;
+	}else{
+		var pageDown=$("#PAGING").val()*1+1;
+		$("#PAGING").val(pageDown);
+		$("#page").empty();
+		$("#page").append("<b class='clorange'>"+pageDown+"</b>/"+totalPage);
+		loadMoreOrder(pageDown);
+	}
+}
+//分页 
+function loadMoreOrder(liPages){
+	$("#khpj").empty();
+	var url="/GridPageDataServlet?pages="+liPages+"&fileName="+fileName;
+	var returnData = "";
+	$.ajax({
+	    type: "GET",  //请求方式
+	   // dataType: "JSON",
+	    async: false,   //true表示异步 false表示同步
+	    url:encodeURI(url),
+	    data:{},
+	    success: function(data){
+	      if (data != null){
+	        try{
+	        	returnData = jQuery.parseJSON(data);
+	        }catch(e){
+	        	alert("获取");
+	          return;
+	        }
+	      }
+	    },
+    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+        }
+	  });
+		   for(var i=0;i<returnData.length;i++){      
+		    	khpjmap=returnData[i];
+		    
+			    $("#khpj").append('<div class="sd_left">'+
+			         	             '<strong>'+khpjmap.XTCZY01+'</strong>'+
+			         	             
+			                      '</div>'+
+			
+			                      '<div class="sd_right">'+
+			    
+							      '<div class="title clearfix"> '+
+							        '<span class="yushou fl"><font class="bold">综合评价：'+khpjmap.ZHPJ+'</font></span>  '+
+							        '<span class="time fr">评价日期：'+khpjmap.SPPJ02+'</span>  '+
+							      '</div> '+
+			     
+			                      '<ul class="starlist clearfix">'+
+							          '<li>'+
+							                '<span>商品描述相符：</span>'+
+							                '<span class="star star'+khpjmap.SPPJ03+'"></span>'+
+							                
+							          '</li>'+
+			             
+						              '<li>'+
+						                    '<span>物流发货速度：</span>'+
+						                    '<span class="star star'+khpjmap.SPPJ04+'"></span>'+
+						                   
+						              '</li>'+
+			             
+						              '<li>'+
+						                   '<span class="fl">客服服务态度：</span>'+
+						                   '<span class="star star'+khpjmap.SPPJ05+'"></span>'+
+						                
+						              '</li>'+
+			             
+						              '<li>'+
+						                   '<span class="fl">配送人员态度：</span>'+
+						                   '<span class="star star'+khpjmap.SPPJ06+'"></span>'+
+						                  
+						              '</li>'+	             
+			       				   '</ul>'+
+			       
+						       '<div class="evaluate clearfix">'+
+						            '<span>评价：</span>'+
+						            '<p>'+khpjmap.SPPJ07+'</p>'+
+						       '</div>'+
+			
+				     		   '<span class="clorgray">购买日期：'+khpjmap.SPPJ08+'</span>'+
+			              '</div>'
+			                       );
+		        }
+}
+
+</script>
+</head>
+<body>
+    <div id="assesscon">
+    <div class="assbox">
+    		<!-- 评价 -->
+            <div class="members clearfix" id="khpj">
+            </div>             
+            <!-- pages -->
+            <div class="filter_top noline" style="border:1px solid red;">
+                <div class="fore clearfix">
+                          <div class="shop_page w100">                    
+								 <span class="shopnum clorange fl">共<span id="TOTAL">0</span>条评价</span>
+				                 <span class="fl" id="page"><b class="clorange"></b></span>
+				                 <span class="fr">
+				                  <a onclick="pageUp()" class="prev">上一页</a>
+				                  <select name="PAGING" id="PAGING" onchange="PAGING(this)"></select>
+				                  <a onclick="pageDown()" class="next">下一页</a>
+				                 </span>
+				                 <br class="clear">
+                          </div>
+                    </div>
+              </div>
+        </div>
+    </div>
+</body>
+</html>

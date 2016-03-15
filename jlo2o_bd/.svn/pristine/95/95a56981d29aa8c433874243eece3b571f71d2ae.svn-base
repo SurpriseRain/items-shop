@@ -1,0 +1,515 @@
+package com.jlsoft.o2o.order.service;
+
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jlsoft.framework.JLBill;
+import com.jlsoft.framework.dataset.DataSet;
+import com.jlsoft.o2o.interfacepackage.V9.V9FH;
+import com.jlsoft.o2o.interfacepackage.V9.V9RKD;
+import com.jlsoft.o2o.interfacepackage.V9.V9THD;
+import com.jlsoft.o2o.interfacepackage.V9.V9XSDD;
+import com.jlsoft.o2o.pub.service.KmsService;
+import com.jlsoft.o2o.pub.service.PubService;
+import com.jlsoft.utils.JLTools;
+import com.jlsoft.utils.JlAppResources;
+import com.jlsoft.utils.PubFun;
+/**
+ * 
+ * @THD 退货操作类
+ *
+ */
+@Controller
+@RequestMapping("/Oper_MJRK")
+public class Oper_MJRK extends JLBill{
+		@Autowired
+		private DataSourceTransactionManager txManager_o2o;
+		@Autowired
+		private V9RKD v9RKD;
+		@Autowired
+		private PubService pubService;
+		@Autowired
+		private V9XSDD v9XSDD;
+		@Autowired
+		private V9THD v9THD;
+		@Autowired
+		private V9FH v9FH;
+		@Autowired
+		private KmsService kmsService;
+		JLTools tool = new JLTools();
+		PublicZSXT zs =new PublicZSXT();
+		String path = JlAppResources.getProperty("trace_url");
+		/*
+		 * 新增入库单
+		 * */
+		@SuppressWarnings("unchecked")
+		@RequestMapping("/insert_RKD.action")
+		public Map insert_RKD(HttpServletRequest request,
+				HttpServletResponse response,String XmlDataa,String spjs,String spcs)throws Exception{
+			Map map =new HashMap();
+			try {
+				String SHCK="";
+				String XmlData = JLTools.unescape(request.getParameter("XmlData"));
+				cds=new DataSet(XmlData);
+				//JSONArray json= JSONArray.fromObject(XmlData);
+				//获取单号
+				String RKDH = "RK"+JLTools.getID_X(PubFun.updateWBHZT(o2o,"W_RKD",1),10);
+				// 20151218 齐俊宇 update
+				// 查询入库的ZCXX01 和 收货仓库SHCK
+				Map ckdMap = pubService.selectCKDForRKD(cds.getField("CKDH", 0));
+				//插入入库单
+				String insert_rkd ="INSERT INTO W_RKD (RKDH,ZCXX01,CKDH,SHCK,RKSJ) VALUES('" + RKDH + "','" + ckdMap.get("ZCXX01").toString() + "','" + cds.getField("CKDH", 0) + "','" + ckdMap.get("SHCK").toString() + "',NOW())";
+				//String insert_rkd ="INSERT INTO w_rkd (RKDH,ZCXX01,CKDH,SHCK,RKSJ) VALUES('"+RKDH+"',(SELECT ZCXX01 FROM W_CKD WHERE CKDH ='"+cds.getField("CKDH", 0)+"'),'"+cds.getField("CKDH", 0)+"',(SELECT SHCK FROM W_CKD WHERE CKDH ='"+cds.getField("CKDH", 0)+"'),NOW())";
+				Map row=getRow(insert_rkd, null, 0);
+				int a =execSQL(o2o, insert_rkd, row);
+				//插入入库单串码
+				String rkcm []=cds.getField("RKCM",0).split(",");
+				for(int i=0;i<rkcm.length;i++)
+				{
+					if(rkcm[i].substring(rkcm[i].length()-2,rkcm[i].length()).equals("00"))
+					{
+						String insert_rkdcm ="INSERT INTO w_rkdcm(RKDH,SPXX01,SPCM01,BARCODE,PCH,XLH) " +
+		                          "VALUES('"+RKDH+"'," +
+		                          "(SELECT SPXX01 FROM w_ckdcm WHERE CKDH ='"+cds.getField("CKDH", 0)+"' AND SPCM01='"+rkcm[i]+"')," +
+		                          "'"+rkcm[i]+"'," +
+		                          "(SELECT BARCODE FROM w_ckdcm WHERE CKDH ='"+cds.getField("CKDH", 0)+"' AND SPCM01 = '"+rkcm[i]+"')," +
+		                          "(SELECT PCH FROM w_ckdcm WHERE CKDH ='"+cds.getField("CKDH", 0)+"' AND SPCM01 = '"+rkcm[i]+"')," +
+		                          "(SELECT XLH FROM w_ckdcm WHERE CKDH ='"+cds.getField("CKDH", 0)+"' AND SPCM01 = '"+rkcm[i]+"'))";
+						Map row_rkdcm=getRow(insert_rkdcm, null, 0);
+						execSQL(o2o, insert_rkdcm, row_rkdcm);
+					}
+					else
+					{
+						String query="SELECT curCode from w_spcmbz where parentCode = '"+rkcm[i]+"'";
+						List list =queryForList(o2o, query);
+						for(int j=0;j<list.size();j++)
+						{
+							Map UCmap =(Map) list.get(j); 
+							String insert_rkdcm ="INSERT INTO w_rkdcm(RKDH,SPXX01,SPCM01,BARCODE,PCH,XLH) " +
+			                          "VALUES('"+RKDH+"'," +
+			                          "(SELECT SPXX01 FROM w_ckdcm WHERE CKDH ='"+cds.getField("CKDH", 0)+"' AND SPCM01='"+UCmap.get("curCode")+"')," +
+			                          "'"+UCmap.get("curCode")+"'," +
+			                          "(SELECT BARCODE FROM w_ckdcm WHERE CKDH ='"+cds.getField("CKDH", 0)+"' AND SPCM01 = '"+UCmap.get("curCode")+"')," +
+			                          "(SELECT PCH FROM w_ckdcm WHERE CKDH ='"+cds.getField("CKDH", 0)+"' AND SPCM01 = '"+UCmap.get("curCode")+"')," +
+			                          "(SELECT XLH FROM w_ckdcm WHERE CKDH ='"+cds.getField("CKDH", 0)+"' AND SPCM01 = '"+UCmap.get("curCode")+"'))";
+							Map row_rkdcm=getRow(insert_rkdcm, null, 0);
+							execSQL(o2o, insert_rkdcm, row_rkdcm);
+						}
+					}
+				}
+				//插入入库单明细
+				String insert_rkditem="INSERT INTO w_rkditem(RKDH,SPXX01,RKSL,HJBH)  SELECT RKDH,SPXX01,COUNT(1),0 FROM w_rkdcm WHERE RKDH='"+RKDH+"' GROUP BY RKDH,SPXX01";
+				Map row_rkditem=getRow(insert_rkditem, null, 0);
+				execSQL(o2o, insert_rkditem, row_rkditem);
+				//写入库存信息
+				String queryRKD="SELECT ZCXX01, SPXX01, SHCK, RKSL FROM w_rkd LEFT JOIN w_rkditem ON w_rkditem.RKDH = w_rkd.RKDH where w_rkd.RKDH='"+RKDH+"'";
+				List ckList = queryForList(o2o, queryRKD);
+				for(int i =0;i<ckList.size();i++)
+				{
+					Map ckMap = (Map) ckList.get(i);
+					SHCK=ckMap.get("SHCK").toString();
+					kmsService.insertGwcSpxx(ckMap.get("ZCXX01").toString(), Double.valueOf(ckMap.get("SPXX01").toString()),ckMap.get("RKSL").toString(), 0, 0, 0, ckMap.get("SHCK").toString(), "0", 1, RKDH, Integer.parseInt(ckMap.get("RKSL").toString()), 0);
+				}
+				
+				//更新入库数量
+				String update_rkd="UPDATE w_rkditem,(SELECT spxx01,count(1) c from w_rkdcm where rkdh = '"+RKDH+"' GROUP BY spxx01)t set w_rkditem.RKSL = t.c where t.spxx01 = w_rkditem.SPXX01" ;
+				Map row_rkdsl=getRow(update_rkd, null, 0);
+				execSQL(o2o, update_rkd, row_rkdsl);
+
+				//更新入库总数量
+				String update_ckdsl="UPDATE w_ckditem, ( SELECT spxx01, sum(rksl) c FROM w_rkd LEFT JOIN w_rkditem ON w_rkditem.RKDH = w_rkd.RKDH WHERE ckdh = '"+cds.getField("CKDH", 0)+"' GROUP BY spxx01 ) t SET RKSL = t.c WHERE t.spxx01 = w_ckditem.spxx01";
+				Map row_ckdsll=getRow(update_ckdsl, null, 0);
+				execSQL(o2o, update_ckdsl, row_ckdsll);
+				//更新出库单状态 1部分出库 2全部出库
+				String update_ckzt="UPDATE w_ckd SET CKZT = (CASE WHEN (SELECT SUM(CKSL)-SUM(RKSL) AS C from w_ckditem where CKDH = '"+cds.getField("CKDH", 0)+"')>0 THEN '1' ELSE '2' END) WHERE CKDH = '"+cds.getField("CKDH", 0)+"'";
+				Map row_ckzt=getRow(update_ckzt, null, 0);
+				execSQL(o2o, update_ckzt, row_ckzt);
+				
+				//于追溯系统对接
+				if(tool.getCurConf(4)==1)
+				{
+					//追溯地址
+					String address=path+"/AddProduceCollection.json";
+					//String address="http://192.168.1.244:88/producetrace/AddProduceCollection.json";
+					//拼接串码
+					String s="";
+					for(int i=0;i<rkcm.length;i++)
+					{
+						if(i==0)
+						{
+							s=s+"'"+rkcm[i]+"'";
+						}else
+						{
+							s=s+",'"+rkcm[i]+"'";
+						}
+						
+					}
+					//NineDragon 2015/11/18 检查厂家发货后 仓库收货 状态为1
+					String query="SELECT SPCM01, SPXX04, SPCM03, SPCM02,ZCXX02,ZCXX08,ZCXX55,barcode,(SELECT SPTP02 FROM w_sptp WHERE SPXX01 = w_spxx.SPXX01 AND sptp01 = '1') SPTP FROM w_spcm LEFT JOIN w_spxx ON w_spxx.spxx01 = w_spcm.spxx01 LEFT JOIN w_zcxx ON w_zcxx.zcxx01 = w_spcm.zcxx01 where spcm01 in ("+s+") or spcm01 in (select curCode from w_spcmbz where parentCode in("+s+"))";
+					List list = queryForList(o2o, query);
+					zs.rk(list,address,"1");
+				}
+				//入库对接
+				String sql = "SELECT ZCXX01 FROM w_ckd WHERE CKDH ='"+cds.getField("CKDH", 0)+"'";
+				Map zcMap = queryForMap(o2o, sql);
+				Map erpMap = pubService.getECSURL(zcMap.get("ZCXX01").toString());
+				if(erpMap.get("DJLX") != null){
+					if(erpMap.get("DJLX").equals("V9")){
+						String returnStr = v9RKD.createRKD(erpMap,cds.getField("CKDH", 0),RKDH);
+						System.out.println(returnStr+"  @@@@@@@@@@@@");
+						JSONObject jsonObject = JSONObject.fromObject(returnStr);
+						JSONObject returnData =(JSONObject) jsonObject.get("data");
+						if(!returnData.getString("JL_State").equals("1")){
+							throw new Exception("入库对接ERP失败");
+						}
+					}
+				}
+				map.put("SHCK", SHCK);
+				map.put("RKDH", RKDH);
+				int d=a;
+				if(d==1)
+				{
+					map.put("STATE", "1");	
+				}
+				else
+				{
+					map.put("STATE", "0");	
+				}
+			} catch (Exception ex) {
+				map.put("STATE", "0");
+				ex.printStackTrace();
+				throw ex;
+			}
+			return map;
+		}
+		/*
+		 * 新增打包
+		 */
+			@SuppressWarnings("unchecked")
+			@RequestMapping("/insert_XSDDCM.action")
+			public Map insert_XSDDCM(HttpServletRequest request,
+					HttpServletResponse response,String XmlDataa,String spjs,String spcs)throws Exception{
+				Map map =new HashMap();
+				try {
+					String XmlData = JLTools.unescape(request.getParameter("XmlData"));
+					cds=new DataSet(XmlData);
+					//JSONArray json= JSONArray.fromObject(XmlData);
+					String smList []=cds.getField("sm_list",0).split(",");
+					//插入订单串码
+					String spcm ="";
+					for(int i=0;i<smList.length;i++)
+					{
+						if(i==0)
+						{
+							spcm=spcm+"'"+smList[i]+"'";
+						}else
+						{
+							spcm=spcm+",'"+smList[i]+"'";
+						}
+					}
+					
+					//add 2015.11.03. 从商品串码里查询输入串码的数量，如果多或者少，说明串码存在问题，返回进行提示
+					String querySpcmCount = "SELECT COUNT(spcm01) FROM W_SPCM where spcm01 in ("+spcm+")";
+					int spcmCount = queryForInt(o2o, querySpcmCount);
+					if(spcmCount != smList.length){
+						map.put("STATE", "3");
+						return map;		
+					}
+					//查询串码在销售订单串码中是否存在,如果存在返回进行提示					
+					String queryXsddcm = "select count(1) from w_xsddcm where spcm01 in ("+spcm+")";
+					int count = queryForInt(o2o, queryXsddcm);
+					if(count > 0){
+						map.put("STATE", "2");
+						return map;						
+					}
+					
+					//String xsddcm ="INSERT INTO w_xsddcm (XSDD01,SPXX01,SPCM01,BARCODE,PCH,XLH) VALUES('"+cds.getField("XSDD01", 0)+"',(SELECT SPXX01 FROM W_SPCM WHERE SPCM01 ='"+smList[i]+"'),'"+smList[i]+"',(SELECT BARCODE FROM W_SPCM WHERE SPCM01 ='"+smList[i]+"'),(SELECT SPCM03 FROM W_SPCM WHERE SPCM01 ='"+smList[i]+"'),(SELECT SPCM04 FROM W_SPCM WHERE SPCM01 ='"+smList[i]+"'))";
+					String xsddcm ="INSERT INTO w_xsddcm (XSDD01,SPXX01,SPCM01,BARCODE,PCH,XLH) select '"+cds.getField("XSDD01", 0)+"',SPXX01,SPCM01,BARCODE,spcm03,spcm04 from w_spcm where spcm01 in ("+spcm+")";
+					Map rowcm=getRow(xsddcm, null, 0);
+					execSQL(o2o, xsddcm, rowcm);
+					
+					String update_xsdd41="UPDATE w_xsdd set XSDD39=NOW(),xsdd41='"+cds.getField("XSDD41", 0)+"' where xsdd01='"+cds.getField("XSDD01", 0)+"'";
+					Map row=getRow(update_xsdd41, null, 0);
+					execSQL(o2o, update_xsdd41, row);
+					
+					String update ="update w_djzx set w_djzx02='16' where w_djzx01 = '"+cds.getField("XSDD01", 0)+"'";
+					Map updaterow=getRow(update, null, 0);
+					execSQL(o2o, update, updaterow);
+					
+					//对接ERP系统
+					// 20151224 齐俊宇 update 修改查询ZCXX65的sql改为查询出仓的仓库类型为ZCXX65->CKLX BEGIN
+						/*String sql = "SELECT A.XSDD01,A.ZTID,B.PFD01 FXDH,A.XSDD19 SHR,A.XSDD20 SHDZ,A.XSDD21 SHRDH,A.XSDD26 PSFS," +
+										   "(SELECT ZCXX65 FROM W_ZCXX WHERE ZCXX01=A.ZTID) ZCXX65 "+
+										   "FROM W_XSDD A,W_XSDDGROUP B " +
+										   "WHERE A.XSDD01=B.XSDD01 AND A.XSDD01='"+cds.getField("XSDD01", 0)+"'";*/
+						String sql = "SELECT DISTINCT A.XSDD01, A.ZTID, B.PFD01 FXDH, A.XSDD19 SHR, A.XSDD20 SHDZ, A.XSDD21 SHRDH, A.XSDD26 PSFS, C.TYPE CKLX "
+								+ "FROM W_XSDD A LEFT JOIN W_XSDDGROUP B ON A.XSDD01 = B.XSDD01 LEFT JOIN W_KCXX G ON G.ZCXX01 = A.ZTID "
+								+ "LEFT JOIN CK C ON G.CK01 = C.CK01 LEFT JOIN W_GSCK D ON C.CK01 = D.CK01 LEFT JOIN W_DQCK F ON D.CK01 = F.CK01 "
+								+ "WHERE F.DQXX01 = A.CITY AND A.XSDD01='"+cds.getField("XSDD01", 0)+"'";
+					// 20151224 齐俊宇 update 修改查询ZCXX65的sql改为查询出仓的仓库类型为ZCXX65->CKLX END
+							Map xsddMap = queryForMap(o2o, sql);
+							Map erpMap = pubService.getECSURL(xsddMap.get("ZTID").toString());
+							if(erpMap.get("DJLX") != null){
+								if(erpMap.get("DJLX").equals("V9")){
+									//生成客户资料，当时送货上门时才建档
+									if(((Integer)xsddMap.get("PSFS")).intValue()==0 && ((Integer)xsddMap.get("CKLX")).intValue()==1){
+										xsddMap.putAll(erpMap);
+										String returnStr=v9XSDD.createKHJD(xsddMap);
+										System.out.println(returnStr+"  @@@@@@@@@@@@");
+										JSONObject jsonObject = JSONObject.fromObject(returnStr);
+										JSONObject returnData =(JSONObject) jsonObject.get("data");
+										if(!returnData.getString("JL_State").equals("1")){
+											throw new Exception("客户建档ERP失败");
+										}
+									}
+								}
+							}
+					map.put("STATE", "1");	
+				} catch (Exception ex) {
+					map.put("STATE", "0");
+					ex.printStackTrace();
+					throw ex;
+				}
+				return map;
+			}
+			
+		/*
+		 * 新增买家出库单
+		 * */
+		@SuppressWarnings("unchecked")
+		@RequestMapping("/XSDDCK.action")
+		public Map XSDDCK(HttpServletRequest request,
+				HttpServletResponse response,String XmlDataa,String spjs,String spcs)throws Exception{
+			Map map =new HashMap();
+			try {
+				String XmlData = JLTools.unescape(request.getParameter("XmlData"));
+				cds=new DataSet(XmlData);
+				//更新单据状态
+				String update ="update w_djzx set w_djzx02='5' where w_djzx01 = '"+cds.getField("XSDD01", 0)+"'";
+				Map updaterow=getRow(update, null, 0);
+				execSQL(o2o, update, updaterow);
+				//更新发货时间
+				String sqlFHSJ = "UPDATE W_XSDD SET XSDD40=NOW(),XSDD42='"+cds.getField("XSDD42", 0)+"',XSDD43='"+cds.getField("XSDD43", 0)+"' WHERE XSDD01='"+cds.getField("XSDD01", 0)+"'";
+				execSQL(o2o,sqlFHSJ,new HashMap());
+				//与追溯系统对接
+				if(tool.getCurConf(4)==1)
+				{
+					String address=path+"/AddProduceEventCollection.json";
+					//String address="http://192.168.1.244:88/producetrace/AddProduceCollection.json";
+					//NineDragon 2015/11/18 检查物流送货  状态为2
+					String query="SELECT SPCM01, SPXX04, SPCM03, SPCM02, (select ZCXX02 FROM W_ZCXX WHERE ZCXX01='"+cds.getField("ZCXX01", 0)+"')ZCXX02,(select ZCXX08 FROM W_ZCXX WHERE ZCXX01='"+cds.getField("ZCXX01", 0)+"')ZCXX08,(select ZCXX55 FROM W_ZCXX WHERE ZCXX01='"+cds.getField("ZCXX01", 0)+"')ZCXX55,barcode FROM w_spcm LEFT JOIN w_spxx ON w_spxx.spxx01 = w_spcm.spxx01 LEFT JOIN w_zcxx ON w_zcxx.zcxx01 = w_spcm.zcxx01 where w_spcm.spcm01 in (select spcm01 from w_xsddcm where xsdd01 = '"+cds.getField("XSDD01", 0)+"')";
+					List list = queryForList(o2o, query);
+					zs.ck(list,address,"2",cds.getField("XSDD01", 0));
+							
+					//对接ERP系统
+					String sql = "SELECT A.ZTID,B.PFD01 FXDH,A.XSDD19 SHR,A.XSDD20 SHDZ,A.XSDD21 SHRDH,A.XSDD26 PSFS FROM W_XSDD A,W_XSDDGROUP B " +
+                    							"WHERE A.XSDD01=B.XSDD01 AND A.XSDD01='"+cds.getField("XSDD01", 0)+"'";
+					Map xsddMap = queryForMap(o2o, sql);
+					Map erpMap = pubService.getECSURL(xsddMap.get("ZTID").toString());
+					if(erpMap.get("DJLX") != null){
+						if(erpMap.get("DJLX").equals("V9")){
+							//生成出库单
+							List listResult=v9FH.createFH(erpMap, cds.getField("XSDD01", 0));
+						}
+					}
+				}
+				map.put("STATE", "1");	
+			} catch (Exception ex) {
+				map.put("STATE", "0");
+				ex.printStackTrace();
+				throw ex;
+			}
+			return map;
+		}
+		
+		/*
+		 * 新增退库单
+		 * */
+		@SuppressWarnings("unchecked")
+		@RequestMapping("/insert_THDCM.action")
+		public Map insert_THDCM(HttpServletRequest request,
+				HttpServletResponse response,String XmlDataa,String spjs,String spcs)throws Exception{
+			Map map =new HashMap();
+			try {
+				String XmlData = JLTools.unescape(request.getParameter("XmlData"));
+				cds=new DataSet(XmlData);
+				//JSONArray json= JSONArray.fromObject(XmlData);
+				String smList []=cds.getField("sm_list",0).split(",");
+				String check_list[] = cds.getField("check_list", 0).split(",");
+				String spcm="";
+				for(int i=0;i<smList.length;i++)
+				{
+					String xsddcm ="INSERT INTO w_thdcm (THDH,SPXX01,SPCM01,BARCODE,PCH,XLH) VALUES('"+cds.getField("THDH", 0)+"',(SELECT SPXX01 FROM W_SPCM WHERE SPCM01 ='"+smList[i]+"'),'"+smList[i]+"',(SELECT BARCODE FROM W_SPCM WHERE SPCM01 ='"+smList[i]+"'),(SELECT SPCM03 FROM W_SPCM WHERE SPCM01 ='"+smList[i]+"'),(SELECT SPCM04 FROM W_SPCM WHERE SPCM01 ='"+smList[i]+"'))";
+					Map row=getRow(xsddcm, null, 0);
+					execSQL(o2o, xsddcm, row);
+				}
+				for(int i=0;i<check_list.length;i++)
+				{
+					if(i==0)
+					{
+						spcm=spcm+"'"+check_list[i]+"'";
+					}else
+					{
+						spcm=spcm+",'"+check_list[i]+"'";
+					}
+				}
+				if(check_list.length>0)
+				{
+					String update ="update w_thdcm set XSBJ='1' where SPCM01 in("+spcm+")";
+					Map row=getRow(update, null, 0);
+					execSQL(o2o, update, row);
+				}
+				//与追溯系统对接
+				if(tool.getCurConf(4)==1)
+				{
+					String address=path+"/AddProduceEventCollection.json";
+					//String address="http://192.168.1.244:88/producetrace/AddProduceCollection.json";
+					String s="";
+					for(int i=0;i<smList.length;i++)
+					{
+						if(i==0)
+						{
+							s=s+"'"+smList[i]+"'";
+						}else
+						{
+							s=s+",'"+smList[i]+"'";
+						}
+						
+					}
+					// NineDragon 2015/11/18检查 安迅物流退货商品入库 状态为4
+					String query="SELECT SPCM01, SPXX04, SPCM03, SPCM02, (select ZCXX02 FROM W_ZCXX WHERE ZCXX01=(SELECT HBID FROM W_THD WHERE THDH = '"+cds.getField("THDH", 0)+"'))ZCXX02,(select ZCXX08 FROM W_ZCXX WHERE ZCXX01=(SELECT HBID FROM W_THD WHERE THDH = '"+cds.getField("THDH", 0)+"'))ZCXX08,(select ZCXX55 FROM W_ZCXX WHERE ZCXX01=(SELECT HBID FROM W_THD WHERE THDH = '"+cds.getField("THDH", 0)+"'))ZCXX55,barcode FROM w_spcm LEFT JOIN w_spxx ON w_spxx.spxx01 = w_spcm.spxx01 LEFT JOIN w_zcxx ON w_zcxx.zcxx01 = w_spcm.zcxx01 where spcm01 in ("+s+")";
+					List list = queryForList(o2o, query);
+					zs.ck(list, address, "4", cds.getField("THDH", 0));
+				}
+				
+				String update = "update w_thd set THZT = '2' where thdh='"+cds.getField("THDH", 0)+"'";
+				Map updaterow=getRow(update, null, 0);
+				execSQL(o2o, update, updaterow);
+				String sql = "SELECT ZTID FROM W_THD WHERE THDH='"+cds.getField("THDH", 0)+"'";
+				map = queryForMap(o2o,sql);
+				Map erpMap = pubService.getECSURL(map.get("ZTID").toString());
+				erpMap.put("THDH", cds.getField("THDH", 0));
+				if(erpMap.get("DJLX") != null){
+					if(erpMap.get("DJLX").equals("V9")){
+						String str = v9THD.createTHRK(erpMap);
+						}
+					}
+					map.put("STATE", "1");	
+			} catch (Exception ex) {
+				map.put("STATE", "0");
+				ex.printStackTrace();
+				throw ex;
+			}
+			return map;
+		}
+		
+		/*
+		 * 根据包装码查询追溯系统是否存在
+		 */
+		@SuppressWarnings("unchecked")
+		@RequestMapping("/GetProduceExist.action")
+		public Map GetProduceExist(String XmlData)throws Exception{
+			Map map=new HashMap();
+			try{
+				String address=path+"/GetProduceTraceEventExist.json";
+				//JSONArray jsonList=new JSONArray(); 
+				cds = new DataSet(XmlData);
+				String uniqueCode="";
+				boolean flag = true;
+				if(cds.getField("uniqueCode",0).toString().substring(cds.getField("uniqueCode",0).length()-2, cds.getField("uniqueCode",0).length()).equals("00"))
+				{
+					uniqueCode=cds.getField("uniqueCode",0);
+					JSONObject jsonObject_ = new JSONObject();
+					jsonObject_.put("uniqueCode",uniqueCode);
+					jsonObject_.put("eventType", "1");
+					//jsonList.add(jsonObject_);
+					Map zsmap=new HashMap();
+					zsmap.put("content",writeObject(jsonObject_));
+					System.out.println("调用地址："+address+"   ###################");
+					System.out.println("调用参数："+zsmap+"     @@@@@@@@@@@@@");
+					String reponseString=RequestOauthUtil.postData(address, null,zsmap,"POST");
+					JSONObject jsonObject = JSONObject.fromObject(reponseString);
+					//String result=(String) jsonObject.get("result");
+					String resultCode=(String) jsonObject.get("resultCode");
+					if("1".equals(resultCode)){
+					//成功
+						flag=false;
+						map.put("STATE", "1");
+						map.put("flag",flag);
+					}else{
+					//失败
+						map.put("flag",flag);
+						map.put("STATE", "0");
+					}
+				}
+				else
+				{
+					String query="SELECT curCode from w_spcmbz where parentCode = '"+cds.getField("uniqueCode",0)+"'";
+					List list =queryForList(o2o, query);
+					for(int i=0;i<list.size();i++)
+					{
+						Map UCmap =(Map) list.get(i); 
+						uniqueCode=(String) UCmap.get("curCode");
+						JSONObject jsonObject_ = new JSONObject();
+						jsonObject_.put("uniqueCode",uniqueCode);
+						jsonObject_.put("eventType", "1");
+						//jsonList.add(jsonObject_);
+						Map zsmap=new HashMap();
+						zsmap.put("content",writeObject(jsonObject_));
+						System.out.println("调用地址："+address+"   ###################");
+						System.out.println("调用参数："+zsmap+"     @@@@@@@@@@@@@");
+						String reponseString=RequestOauthUtil.postData(address, null,zsmap,"POST");
+						JSONObject jsonObject = JSONObject.fromObject(reponseString);
+						//String result=(String) jsonObject.get("result");
+						String resultCode=(String) jsonObject.get("resultCode");
+						if("1".equals(resultCode)){
+						//成功
+							flag=false;
+							map.put("STATE", "1");
+							map.put("flag",flag);
+							break;
+						}else{
+						//失败
+							map.put("flag",flag);
+							map.put("STATE", "0");
+						}
+					}
+				}
+			}catch(Exception e){
+				map.put("STATE", "0");
+		    	e.printStackTrace();
+		    	throw e;
+		    }
+			return map;
+		}
+		public static String writeObject(Object obj) {
+			ObjectMapper mapper = new ObjectMapper();
+			
+			StringWriter writer = new StringWriter();
+			String re = null;
+			try {
+				JsonGenerator json = new JsonFactory().createGenerator(writer);
+				mapper.writeValue(json, obj);
+				re = writer.toString();
+				json.close();
+				writer.close();
+			} catch (Exception e) {
+			}
+			return re;
+		}
+}

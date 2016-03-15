@@ -1,0 +1,629 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>退货审核</title>
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<link type="text/css" rel="stylesheet"href="/customer/qfy/css/backPub.css"  />
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/th-sq.css" />
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<style>
+.xxtk {
+	display : none;
+}
+
+.line{
+	border-top: 1px dotted #e4e4e4;
+	width: 390px;
+
+</style>
+
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var THDH = $.getUrlParam('THDH');
+var TYPE = $.getUrlParam('TYPE');//页面权限区分
+var THZT = $.getUrlParam('THZT');//退货状态
+var imgUrl=pubJson.path_sptp+"/sptp/";//图片默认路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+var pay_method="";
+var zffs = ""; //退款方式
+var fkfs = "";//付款方式
+function initData(){
+	 var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.return.good.queryReturnGood','QryType':'Report','dataType':'Json','THDH':THDH}];
+	 var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 var rData=visitService(url);
+
+	 zffs = rData[0].XSDD50;
+	 fkfs = rData[0].skfs;
+     $("#skfs").html(showSKFS(fkfs));
+	
+	 if(TYPE == "1"){//买家退货单查看
+		 //$(".shdd").remove();
+		 $("#BZ").attr("disabled",true);
+
+		 
+		 if(zffs == "1" || fkfs=="11"){
+			$(".xxtk").show();
+			$("#KHMC").val(rData[0].KHMC);
+			$("#KHYH").val(rData[0].KHYH);
+			$("#YHZH").val(rData[0].YHZH);
+			$("#wtms").attr("disabled",true);
+			$("#KHMC").attr("disabled",true);
+			$("#KHYH").attr("disabled",true);
+			$("#YHZH").attr("disabled",true);
+			$("#KTDH").attr("disabled",true);
+			$("#KTGS").attr("disabled",true);
+		 }
+		 
+		 if(zffs == "1" && rData[0].THZT=="11" && rData[0].WLLX == "2"){
+			 $(".button_8").show();
+			 //删除多余操作按钮
+			 $(".button_1").remove();
+			 $(".button_3").remove();
+			 $(".button_4").remove();
+			 $(".button_5").remove();
+			 $(".button_6").remove();
+			 $(".button_7").remove();
+		 }
+	 }
+
+	 if(TYPE == "2"){//卖家审核
+		 //线下付款&&快递
+		 if(rData[0].THZT=="0" && rData[0].WLLX == "2" && zffs == "1"){
+			 $(".button_1").show();
+			 $(".button_3").show();
+			 //删除多余操作按钮
+			 $(".button_2").remove();
+			 $(".button_4").remove();
+			 $(".button_5").remove();
+			 $(".button_6").remove();
+			 $(".button_7").remove();
+		 }else if(rData[0].THZT=="0"){
+			 $(".button_2").show();
+			 $(".button_3").show();
+			 //删除多余操作按钮
+			 $(".button_4").remove();
+			 $(".button_5").remove();
+			 $(".button_6").remove();
+			 $(".button_7").remove();
+		 }else if(rData[0].THZT=="2"){
+			 $(".button_4").show();
+			 $(".button_5").show();
+			 $("#BZ").attr("disabled",true);
+			 //删除多余操作按钮
+			 $(".button_2").remove();
+			 $(".button_3").remove();
+			 $(".button_6").remove();
+			 $(".button_7").remove();
+		 }else if(rData[0].THZT=="6" || rData[0].THZT=="10" || rData[0].THZT=="11"){
+			 $("#BZ").attr("disabled",true);
+			 $(".button_4").remove();
+			 $(".button_5").remove();
+			 //删除多余操作按钮
+			 $(".button_2").remove();
+			 $(".button_3").remove();
+			 $(".button_6").remove();
+			 $(".button_7").remove();
+		 }
+		 
+	 }
+	 if(TYPE == "3"){//财务审核
+		 if(fkfs=="11"){
+			 $(".xxtk").show();
+				$("#BZ").attr("disabled",true);
+				$("#KHMC").val(rData[0].KHMC);
+				$("#KHYH").val(rData[0].KHYH);
+				$("#YHZH").val(rData[0].YHZH);
+		 }
+		 if(THZT=="8" || THZT=="7"){
+			 $(".shdd").remove();
+			 $("#BZ").attr("disabled",true);
+		 }else if(THZT=="4"){
+			 if(rData[0].XSDD50 == "1"){
+				$(".xxtk").show();
+				$("#BZ").attr("disabled",true);
+				$("#KHMC").val(rData[0].KHMC);
+				$("#KHYH").val(rData[0].KHYH);
+				$("#YHZH").val(rData[0].YHZH);
+			 }
+			 $(".button_6").show();
+			 $(".button_7").show();
+			//删除多余操作按钮
+			 $(".button_2").remove();
+			 $(".button_3").remove();
+			 $(".button_4").remove();
+			 $(".button_5").remove();
+			 $("#BZ").attr("disabled",true);
+		 }
+	 }
+	
+	 var str='<div class="bt">&nbsp;</div><span>退货状态：</span><div class="bt" >&nbsp</div><label class="hui">'+eval("changeColumns.THZT_"+rData[0].THZT)+'</label>';
+	 $(".thzt_").html(str);
+	
+	 if(rData[0].WLLX==0){
+		  $("#thfs2").hide();
+		  $("#thfs3").hide();
+	  }
+	  else if(rData[0].WLLX==1){
+		  $("#thfs").hide();
+		  $("#thfs3").hide();
+	  }
+	  else if(rData[0].WLLX==2){
+		  $("#thfs").hide();
+		  $("#thfs2").hide();
+	  }	  
+	  pay_method=rData[0].skfs;	
+	  $("#ddh").append(THDH);
+	  $("#THSL").val(rData[0].SPSL);
+	  $("#count").html(rData[0].XSDDI05);
+	  $(".goodsname").html(rData[0].SPXX04)
+	  $(".user_name").val(rData[0].LXR);
+	  $("#user_tel").val(rData[0].LXDH);
+	  $("#QYdzdetail").val(rData[0].XXDZ);
+	  $("#provinceQY").val(rData[0].PROVINCE);
+	  $("#wtms").val(rData[0].BZ);//申请退货描述
+	  $("#BZ").val(rData[0].SHYJ);//卖家意见
+	  $("#imgs").attr("src", imgUrl+rData[0].ZTID+"/"+rData[0].SPXX02+"/images/"+rData[0].SPXX02+"_1_small."+rData[0].SPTP02);
+	  $("input[type='radio'][name='THLX']").get(rData[0].THLX).checked = true;
+	  $("input[type='radio'][name='WLLX']").get(rData[0].WLLX).checked = true;
+	  
+	  $("#LXRS").val(rData[0].hy01);
+	  $("#LXDHS").val(rData[0].hy02);
+	  $("#QYdzdetails").val(rData[0].hy03);
+	  $("#KTDH").val(rData[0].KTDH);
+	  $("#KTGS").val(rData[0].KTGS);
+	  
+	  //快递至卖家地址显示
+	  $("#LXRS3").val(rData[0].zcxx03);
+	  $("#LXDHS3").val(rData[0].zcxx06);
+	  $("#QYdzdetail3").val(rData[0].zcxx08);	  
+	  //退款金额
+	  $("#thje").html(accounting.formatMoney(rData[0].THJE));
+	  
+	  var str="";
+	  var result = rData[0].SPLIST;
+	  str+='<li name="photoscount"><div class="bt">&nbsp;</div>';
+	  str+='<span>图片信息：</span><div class="imgsizes">&nbsp;';
+	  for(var i=0; i<result.length;i++){
+		  str+= '<div><img  class="imgsize" src="'+pubJson.path_sptp+'/thdtp/'+result[i].TPMC+'"/></div>';
+		} 
+	  str+='</div></li>';
+	  $(".photos").append(str);
+	  var thpz=document.getElementsByName("thpzs");
+	  var arr=[];
+	  if(rData[0].THPZ.length>1){
+		 arr=rData[0].THPZ.split("#");
+		 for(var i=0;i<arr.length;i++){
+		  if(arr[i]==thpz[i].value){
+			  thpz[i].checked=true;
+		  }
+		 }
+	  }else{
+		  thpz[rData[0].THPZ].checked=true;
+	  }
+	  var list=dqxxList(rData[0].PROVINCE,2);
+	  	$(list).each(function(i,json){
+	  		if(i==0){
+	  	 		$("#cityQY").empty();
+	  	  		$("#cityQY").append("<option value='0'>请选择</option>");
+	    	}
+	  		$("#cityQY").append("<option>"+json.DQXX02+"</option>");
+	  		$("#cityQY").find("option").eq(i+1).val(json.DQXX01);
+	  	});
+	  	$("#cityQY").val(rData[0].CITY);
+	  	
+	  var list=dqxxList(rData[0].CITY,3);
+	  	$(list).each(function(i,json){
+	  		if(i==0){
+	  	 		$("#countryQY").empty();
+	  	  		$("#countryQY").append("<option value='0'>请选择</option>");
+	    	}
+	  		$("#countryQY").append("<option>"+json.DQXX02+"</option>");
+	  		$("#countryQY").find("option").eq(i+1).val(json.DQXX01);
+	  	});
+	  	$("#countryQY").val(rData[0].COUNTY);
+	  	var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+  		$("#QYdzdetail").css("width", width+"px"); 
+  		
+  		var list=dqxxList(rData[0].COUNTY,4);
+	  	$(list).each(function(i,json){
+	  		if(i==0){
+	  	 		$("#streetQY").empty();
+	  	 		$("#streetQY").hide();
+	  	  		/* $("#streetQY").append("<option value='0'>请选择</option>"); */
+	    	}
+	  		$("#streetQY").append("<option>"+json.DQXX02+"</option>");
+	  		$("#streetQY").find("option").eq(i+1).val(json.DQXX01);
+	  	});
+	  	$("#streetQY").val(rData[0].STREET);
+	  	var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+  		$("#QYdzdetail").css("width", width+"px"); 
+	  
+	  $("img").error(function() {
+      	$(this).attr("src", defaultImgUrl);
+      });
+	  
+	  $("input[type='radio']").attr("disabled",true);
+	  $("input[type='checkbox']").attr("disabled",true);
+	  $("input[type='text']").attr("disabled",true);
+	  $(".disabled").attr("disabled",true);
+	  
+	  if(zffs=="1" && rData[0].WLLX=="2"){
+		  if(TYPE=="1"){
+				if(rData[0].THZT=="11"){
+					$("#KTDH").attr("disabled",false);
+					$("#KTGS").attr("disabled",false);			  
+				}
+		  }else if(TYPE=="2"){
+			  $("#KTDH").attr("disabled",true);
+			  $("#KTGS").attr("disabled",true);
+		  }else{
+			  $("#ktdh").hide();
+			  $("#ktgs").hide();
+		  }
+	  }else{
+		  $("#ktdh").hide();
+		  $("#ktgs").hide();
+	  }
+}
+
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+<div id="list-main">
+	<table class="sellpro" style="margin-top: 0px;" >
+		<tr class="title">
+			<td colspan="2" style="text-align:center;">商品信息</td>
+			<td>赠品信息</td>
+			<td>购买数量</td>
+		</tr>
+		<tr>
+			<td><a href="#" class="img"><img id="imgs" /></a></td>
+			<td class="nm"><a class="name goodsname"></a ></td>
+			<td></td>
+			<td id="count"></td>
+		</tr>
+	 </table>
+</div>
+<div class="clear"></div>
+<form id="form1" name="form1">
+   <ul class="tuidan">
+    <li><h3>退货单据明细</h3></li>
+    <li class="thzt_" ><div class="bt">&nbsp;</div></li>
+    <li><div class="bt">*</div><span>付款方式：</span>
+    <span id="skfs" /></li>
+    <li><div class="bt">*</div><span>退货类型：</span>
+    <input type="radio"   name="THLX" class="radio radio1" value="0"/><label class="hui">退货</label>
+    <!-- <input type="radio"  name="THLX" class="radio radio1"  value="1"/><label class="hui">换货</label> -->
+    </li>
+    <li><div class="bt">*</div><span>退货数量：</span>
+    <div class='total'><input type="text" value="" class="goods_total" id="THSL" name="THSL" /></div>
+    <input type="hidden" value="" id="goodslist"/>
+    <input type="hidden" value="" id="xsddi02" name="SPJG"/>
+    <input type="hidden" value="" id="THJE" name="THJE"/>
+    <input type="hidden" value="" id="XSDD01" name="XSDD01"/>
+    <input type="hidden" value="" id="SPXX01" name="SPXX01"/>
+    
+    </li> 
+    <!-- modify 2015.11.03.增加退货金额显示 -->
+    <li><div class="bt">&nbsp;</div><span>退货金额：</span><span id="thje"></span></li>
+    
+    <li><div class="bt">&nbsp;</div><span>退货凭证：</span>
+    <input type="checkbox" name="thpzs" class="radio radio1" value="0"/>
+    <label class="hui">购物发票</label>
+    <input type="checkbox" name="thpzs" class="radio radio1"  value="1"/>
+    <label class="hui">第三方检测报告</label>
+    <input type="hidden" name="THPZ" id="THPZ" value=""/>
+    </li>
+    <li><div class="bt">*</div><span>问题描述：</span><textarea name="BZ" id="wtms" class="disabled"></textarea></li>
+    <li><div class="bt">*</div><span>退货方式：</span>
+    <div><input type="radio" name="WLLX" class="radio radio1" value="0"/><label class="hui">上门取件</label></div>
+    <div><input type="radio" name="WLLX" class="radio radio1"  value="1"/><label class="hui">送货至自提点</label></div>
+    <div><input type="radio" name="WLLX" class="radio radio1"  value="2"/><label class="hui">快递至卖家地址</label></div>
+    </li>
+	<div id="thfs">
+	<li id="dzs">
+	<div class="bt">*</div>
+	<span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
+	<select name="PROVINCE" id="provinceQY" class="disabled">
+     	<option value="0">请选择</option>
+    </select>
+    <select name="CITY" id="cityQY" class="disabled">
+    	<option value="0">请选择</option>
+    </select>
+    <select name="COUNTY" id="countryQY" class="disabled">
+     	<option value="0">请选择</option>
+    </select>
+    <select name="streetQY" id="streetQY" class="disabled">
+     	<option value="0">请选择</option>
+    </select>
+	<input type="text" class="text" id="QYdzdetail" name="XXDZ" value="" />
+	</li>
+   <li><div class="bt">*</div><span>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span><input type="text" class="text user_name"  name="LXR" value="" /></li>   
+   <li><div class="bt">*</div><span>联系电话：</span><input type="text" class="text" id="user_tel" name="LXDH" value="" /></li>
+   </div>
+   
+   <div id="thfs2">
+	<li id="dzs">
+	<div class="bt">*</div>
+	<span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
+	<input style="width: 360px;" disabled="disabled" type="text" class="text" id="QYdzdetails" name="XXDZS" value="" />
+	</li>
+   <li><div class="bt">*</div><span>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span><input disabled="disabled" type="text" class="text" id="LXRS" name="LXRS" value="" /></li>   
+   <li><div class="bt">*</div><span>联系电话：</span><input type="text" disabled="disabled" class="text" id="LXDHS" name="LXDHS" value="" /></li>
+   </div>
+   <!-- 卖家地址Div开始 add 2015.10.28. -->
+   <div id="thfs3">
+	<li id="dzs3">
+		<div class="bt">*</div>
+		<span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
+		<input style="width: 360px;" disabled="disabled" type="text" class="text" id="QYdzdetail3" name="XXDZS" value="" />
+	</li>
+   	<li><div class="bt">*</div><span>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span><input disabled="disabled" type="text" class="text" id="LXRS3" name="LXRS" value="" /></li>   
+   	<li><div class="bt">*</div><span>联系电话：</span><input type="text" disabled="disabled" class="text" id="LXDHS3" name="LXDHS3" value="" /></li>
+   </div>
+   <!-- 卖家地址Div结束 -->
+    <li class="photos" name="photoscount">
+    
+    </li>
+	
+    <li><div class="bt">*</div><span>卖家意见：</span><textarea name="BZ" id="BZ" placeholder="卖家填写回复意见，仅限500字内！"></textarea></li>
+    <li></li>
+    <li class="xxtk line">
+    </li>
+    <li class="xxtk">
+    	<p style="font-size: 16px;">收款信息</p>
+    	<div class="bt">*</div><span>收款银行开户名：</span>
+    	<input type="text" class="text" style="color: red;" id="KHMC" name="KHMC" value="" />
+    </li>
+  	<li class="xxtk">
+    	<div class="bt">*</div><span>收款银行开户行：</span>
+    	<input type="text" class="text" style="color: red;" id="KHYH" name="KHYH" value="" />
+    </li>
+    <li class="xxtk">
+    	<div class="bt">*</div><span>收款银行账号&nbsp;&nbsp;&nbsp;：</span>
+    	<input type="text" class="text" style="color: red;" id="YHZH" name="YHZH" value="" />
+    </li>
+    
+    <li class="ktdh" id="ktdh">
+    	<div class="bt">*</div><span>快递单号：</span>
+    	<input type="text" class="text" style="color: red;" id="KTDH" name="KTDH" value="" />
+    </li>
+    <li class="ktgs" id="ktgs">
+    	<div class="bt">*</div><span>快递公司：</span>
+    	<input type="text" class="text" style="color: red;" id="KTGS" name="KTGS" value="" />
+    </li>
+    
+    <a class="shdd button_1"  style="display: none;" onclick="okclick('11')">同意退货</a>
+    <a class="shdd button_8"  style="display: none;" onclick="okclick('10')" >更新快递信息</a>
+    <!-- 上面两个按钮主要用在物流快递 -->
+    <a class="shdd button_2"  style="display: none;" onclick="okclick('10')" >同意退货</a>
+    <a class="shdd button_3"  style="display: none;" onclick="okclick('3')">不同意</a>
+    <a class="shdd button_4"  style="display: none;" onclick="okclick('4')">收货后退款</a>
+    <a class="shdd button_5"  style="display: none;" onclick="okclick('5')">不同意</a>
+    <a class="shdd button_6"  style="display: none;" onclick="okclick('8')">审核</a>
+    <a class="shdd button_7"  style="display: none;" onclick="okclick('7')">驳回</a>
+    </ul>
+</form>
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+$(document).ready(function(){
+	showDQXX("QY");
+	initData();
+	
+});
+ //加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  		var con="<option value='0'>请选择</option>";
+  		$("#countryQY").html(con).val(0);
+  		var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+  		$("#QYdzdetail").css("width", width+"px");
+  	  });	
+  	}
+    if(index==1){
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  		var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+  		$("#QYdzdetail").css("width", width+"px"); 
+  	  });	
+  	}
+    if(index==2){
+   	  $(this).bind("change",function(inx){
+   		setVal(this,"#street"+id,4);
+   		var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+   		$("#QYdzdetail").css("width", width+"px"); 
+   	  });	
+   	}
+  });
+} 
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	$(list).each(function(i,json){
+  		if(i==0){
+  	 		$(objaft).empty();
+  	  		$(objaft).append("<option value='0'>请选择</option>");
+    	}
+  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  	});
+}
+
+function back(){
+	history.go(-1);
+}
+
+//obj:10同意退货,3不同意退货,4收货后退款,5不同意退款,7财务审核驳回,8财务审核通过
+//pay_method 收款方式6支付宝 7同根源 8银联 9微信 11钱包
+function okclick(obj){
+	if(obj=="8"&&pay_method=="6"){
+		var shyj=$("#BZ").val();
+		//window.open("/AlipayOnline/THTBline.action?r="+Math.random()+"&thdh="+THDH,"_blank");
+		var url="/AlipayOnline/THTBline.action?r="+Math.random()+"&thdh="+THDH+"&shyj="+shyj;
+		$.ajax({
+		    type: "GET",  //请求方式
+		    async: false,   //true表示异步 false表示同步
+		    url:encodeURI(url),
+		    data:{},
+		    success: function(data){
+		      if (data != null){
+		        try{
+		        	if(data=="{\"dataType\":\"xml\",\"data\":{\"is_success\":\"1\"}}"){
+		        		alert("支付宝退款成功");
+		        		back();
+		        	}else{
+		        		alert("支付宝退款失败，详情请咨询管理员");
+		        	}
+		        }catch(e){
+		          return;
+		        }
+		      }
+		    },
+	        //获取错误信息
+	    	error:function(data,XMLHttpRequest, textStatus, errorThrown) {
+		    	//alert(data.responseText+"获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+	        }
+		  });
+	}else if(obj=="8"&&pay_method=="9"){
+		var shyj=$("#BZ").val();
+		var url="/WeixinController/THTBline.action?r="+Math.random()+"&thdh="+THDH+"&shyj="+shyj;
+		$.ajax({
+		    type: "GET",  //请求方式
+		    async: false,   //true表示异步 false表示同步
+		    url:encodeURI(url),
+		    data:{},
+		    success: function(data){
+		      if (data != null){
+		        try{
+		        	if(data=="{\"dataType\":\"xml\",\"data\":{\"is_success\":\"1\"}}"){
+		        		alert("微信退款成功");
+		        		back();
+		        	}else{
+		        		alert("微信退款失败，详情请咨询管理员");
+		        	}
+		        }catch(e){
+		          return;
+		        }
+		      }
+		    },
+	        //获取错误信息
+	    	error:function(data,XMLHttpRequest, textStatus, errorThrown) {
+		    	//alert(data.responseText+"获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+	        }
+		  });
+	}else{
+		//判断是否要跟跟物流对接
+		if(obj == "2"){
+			var wlUrl = "/PubService/getZCGSWL.action?ZCXX01="+usercookie.ZCXX01;
+	        var wlReturnData = visitService(wlUrl);
+	        if(wlReturnData.CurConf == "1" && wlReturnData.APP_KEY == undefined){
+	        	alert("请先在安迅物流上注册");
+	        	return;
+	        }
+		}
+		
+		if($("#BZ").val().length == 0){
+			alert("请输入审核意见！");
+			return false;
+		}
+		var SHYJ = $("#BZ").val();
+		var XmlData=[{"THZT":obj,"ZFFS":zffs,"SHYJ":SHYJ,"THDH":THDH,"ZCXX01":usercookie.ZCXX01,"FKFS":fkfs}];
+		//退货方式
+		var thfs = $('input[type="radio"][name="WLLX"]:checked').val();
+		if(obj == "10" && thfs=="2" && zffs=="1"){
+			if($("#KTDH").val().length == 0){
+				alert("请输入快递单号！");
+				return false;
+			}
+			if($("#KTGS").val().length == 0){
+				alert("请输入快递公司！");
+				return false;
+			}
+			
+			//快递单、快递公司
+			var KTDH = $("#KTDH").val();
+			var KTGS = $("#KTGS").val();
+			
+			XmlData=[{"THZT":obj,"SHYJ":SHYJ,"THDH":THDH,"ZCXX01":usercookie.ZCXX01,"KTDH":KTDH,"ZFFS":zffs,"KTGS":KTGS,"THFS":thfs}];
+		}
+		var url="/Oper_THD/update_SHYJ.action?XmlData="+JSON.stringify(XmlData);
+		var rData=visitService(url);
+		if(rData.STATE==1){
+			alert("操作成功!");
+			location.href="/customer/qfy/back/ddgl/tuidan.html?THZT=0&TYPE=2";
+		}else if(rData.STATE==2){
+			alert("操作成功!");
+			location.href="/customer/qfy/back/ddgl/tuidan.html?THZT=0&TYPE=2";
+		}else if(rData.STATE==3){
+			alert("操作成功!");
+			location.href="/customer/qfy/back/thgl/tdcwsh.html?TYPE=3";
+		}else{
+				alert("操作失败!");
+			} 
+	}
+	
+}
+
+//图片点击放大
+$(document).ready(function(){
+	$(".imgsize").click(function(){
+	  var td_img = $(this).attr("class");
+	  if(td_img == "imgsize"){
+		 $(this).attr("class","big")
+		}else if(td_img == "big"){
+		 $(this).attr("class","imgsize") 
+		}
+	 })
+	
+})
+
+</script>
+</html>

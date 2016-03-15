@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/index.css" />
+<title>电器服务云平台</title>
+</head>
+
+<body>
+<div class="w12 toper"><!---toper截点---></div>
+<div class="w12 header"><!---头部截点---></div>
+<div class="w12 nav"><!---导航截点---></div>
+<div class="w12 banner"><!---banner截点---></div>
+<div id="floor"></div> 
+<div class="w12 service"><!---底部截点---></div>
+<div class="w12 footer" class="w12 floor"><!---底部截点---></div>
+<div class="floor_nav display_none"><!---floor_nav截点---></div>
+<div class="fastop display_none"><!---返回顶部截点---></div>
+
+
+</body>
+<script type="text/javascript" src="/customer/sydjt/js/jquery-1.11.1.min.js"></script>
+
+<script type="text/javascript" src="/customer/sydjt/js/ui.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var url="/oper_floor/selectAllFloor.action";
+	var result = visitService(url);
+	$(result.mapList).each(function(index,obj){
+		$("#floor").append('<div class="w12 floor" id="floor_'+obj.LCFL01+'" data-index="'+index+'"><!---floor截点---></div> ')
+	});
+	console.log("1111");
+	$(".floor").load("/customer/sydjt/floor.html",function(){
+
+		});
+});
+</script>
+
+<script type="text/javascript" src="/customer/sydjt/js/loadpage.js"></script>
+
+</html>

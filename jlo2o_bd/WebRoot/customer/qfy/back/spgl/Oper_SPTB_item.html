@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/tablekj.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<style type="text/css">
+.qr:hover{ background-color:#1a47cc;}
+.qr{ float:left; width:200px; height:50px; background-color:#2f80eb; color:#fff; line-height:30px; text-align:center; margin:30px 0 30px 10px;}
+</style>
+</head>
+<body>
+  <div class="dqlc"><a href="#" class="dqlc-a">基础设置</a> > <a href="#" class="dqlc-a">商品同步</a> > <a href="#" class="dqlc-a">商品同步明细</a></div>
+<form name="form1" id="form1" action="" method="post">
+			<input type="hidden" id="sqlid" value="">
+			<input type="hidden" name="splxbj" id="splxbj" value="" />
+			<input type="hidden" name="jxs" id="jxs" value="" />
+			<input type="hidden" name="gsid" id="gsid" value="" />
+			<input type="hidden" name="spys" id="spys" value="" />
+			<input type="hidden" name="spzl" id="spzl" value="" />
+			<input type="hidden" name="sp_id" id="sp_id" value="" />
+			<input type="hidden" name="qycodes" id="qycodes" value="" />
+			<input type="hidden" name="fxdj" id="fxdj" value="" />
+			
+			<table id="TABLESty" cellpadding="3" cellspacing="3" class="table2" width="100%">
+			<tr>
+			<td id="l" width="60%" class="td" valign="top">
+			<fieldset>
+							<legend
+								style="font-size: 12px; font-weight: bold; margin-left: 20px; border: 0px">
+								发布商品详细信息
+							</legend>
+							<table id="TABLE" cellpadding="0" cellspacing="0" width="100%">
+								<tr>
+									<td align="right" width="10%">
+										商品名称
+									</td>
+									<td width="24%" style="POSITION:relative;border:0px;">
+									<input type="text" class="text" name="spname" id="spname" value="" size="25" readOnly="readOnly" />
+			        <img alt="查询" title="查询" src="../../images/srch.gif" style="cursor: pointer;"onclick="window.showModalDialog('/customer/qfy/back/spgl/Oper_Spbm_sptb.html', window, 'dialogHeight:480px; dialogWidth:780px; status:no; help:no; resizable:yes;');" />
+			</td>
+									<td align="right" width="10%">
+										商品品牌
+									</td>
+									<td width="24%">
+										<input type="text" name="ppname" value="" id="ppname" size="25" class="text" readOnly="readOnly" />
+										<input type="hidden" name="sppp" id="sppp" value="" />
+									</td>
+								</tr>
+								<tr>
+									<td align="right" width="10%">
+										商品分类
+									</td>
+									<td width="23%">
+										<input type="text" name="flname" id="flname" value="" size="25" class="text" readOnly="readOnly" />
+										<input name="spfl" id="spfl" type="hidden" size="10" value="" />
+									</td>
+									<td align="right" style="color: #0066ff">
+										发布类型
+									</td>
+									<td>
+										<input type="checkbox" name="tjbj" id="tjbj" value="1"/>
+										促销
+										<input type="checkbox" name="tjsp" id="tjsp" value="1"/>
+										推荐
+										<input type="checkbox" name="rmbj" id="rmbj" value="1"/>
+										热卖
+										<input type="checkbox" name="xpbj" id="xpbj" value="1"/>
+										新品
+									</td>
+								</tr>
+								<tr>
+									<td align="right" style="color: #0066ff">
+										商品价格
+									</td>
+									<td>
+										<input type="text" class="text" name="spjg" id="spjg"
+											onblur="checkSPJG();" value="" size="25" />
+									</td>
+									<td align="right" style="color: #0066ff">
+										平台预售库存
+									</td>
+									<td>
+										<input type="text" class="text" name="cksl" id="cksl" value="" size="25" />
+									</td>
+								</tr>
+								<tr>
+									<td align="right" style="color: #0066ff">
+										起购数量
+									</td>
+									<td>
+										<input type="text" class="text" name="minnum" id="minnum" value="" size="25" onblur="checkQGSL();"/>
+									</td>
+									<td align="right" style="color: #0066ff">
+										限购数量
+									</td>
+									<td>
+										<input type="text" class="text" name="maxnum" id="maxnum" value="" size="25" />
+									</td>
+								</tr>
+<!--									<td align="right">-->
+<!--										商品库存-->
+<!--									</td>-->
+<!--									<td>-->
+<!--										<input type="text" class="text" size="25"   name="ckkc" id="ckkc" value="" disabled="disabled" readOnly="readOnly"/>-->
+<!--									</td>-->
+								<tr>
+										
+												<td align="right" style="color: #0066ff">
+													大厅展示
+												</td>
+												<td>
+													<select name="dtbj" id="dtbj" style="width: 182px;">
+														<option value="2" selected="selected">
+															展示
+														</option>
+														<option value="0">
+															不展示
+														</option>
+													</select>
+												</td>
+										
+								</tr>
+								<tr>
+									<td align="right" style="color: #0066ff">
+										商品简述
+									</td>
+									<td colspan="3">
+										<textarea rows="3" cols="70"  name="tjly" id="tjly" ></textarea>
+									</td>
+								</tr>
+								<tr>
+									<td align="right" style="color: #0066ff">
+										发布原因
+									</td>
+									<td colspan="3">
+										<textarea rows="5" class="text" cols="70"  name="fbyy" id="fbyy"></textarea>
+									</td>
+								</tr>
+								<tr >
+									<td colspan="2" ><a class="qr" onclick="okclick();" style="float:center">确认发布商品</a></td>
+								</tr>
+					</table>
+				</fieldset>
+			</td>
+			</tr>
+			</table>
+			<!--拖动层开始-->
+			<jsp:include flush="true" page="../include/ViewDragDiv.jsp" />
+			<!--拖动层结束-->
+		</form>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//var win = dialogArguments;
+//var SPXX01=$.getUrlParam('SPXX01');
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	var SPXX01=rowObj.find("#SPXX01").val();
+	if(SPXX01!=null){
+		srchSPXX(SPXX01);
+		}
+}
+$(document).ready(function(){
+
+});
+
+
+function okclick(){
+	var  XmlData1 = $("#form1").formToJson();
+	var tjly = $("#tjly").val();//发布商品简单些的描述话
+	if(minnum == ""){
+		alert("最低购买数量限制不能为空！");
+		$("#minnum").focus();
+		return false;
+	}
+	if(maxnum == ""){
+		alert("限购数量不能为空！");
+		$("#maxnum").focus();
+		return false;
+	}
+	var yhkh=$("#spname").val();
+	if(yhkh=="" || yhkh==null){
+		alert("请输入商品名称!");
+		return false;
+	}
+	var lxr=$("#spjg").val();
+	if(lxr=="" || lxr==null){
+		alert("请输入商品价格!");
+		return false;
+	}
+	var yskc=$("#cksl").val();
+	if(yskc=="" || yskc==null){
+		alert("请输入预售库存!");
+		return false;
+	}
+	var qgsl=$("#minnum").val();
+	if(qgsl=="" || qgsl==null){
+		alert("请输入起购数量!");
+		return false;
+	}
+	var xdsl=$("#maxnum").val();
+	if(xdsl=="" || xdsl==null){
+		alert("请输入限定数量!");
+		return false;
+	}
+	var spms=$("#tjly").val();
+	if(spms=="" || spms==null){
+		alert("请输入商品描述!");
+		return false;
+	}
+	var fbyx=$("#fbyy").val();
+	if(fbyx=="" || fbyx==null){
+		alert("请输入发布原因!");
+		return false;
+	}
+	if(document.getElementById("tjbj").checked){
+		var tjbj = 1;		//发布类型  促销	
+	}
+	else{
+		tjbj = 0;
+	}
+	XmlData1[0].tjbj=tjbj;
+	if(document.getElementById("tjsp").checked){
+		var tjsp = 1;		//发布类型  推荐
+	}
+	else{
+		tjsp = 0;
+	}
+	XmlData1[0].tjsp=tjsp;
+	if(document.getElementById("rmbj").checked){
+		var rmbj = 1;		//发布类型  热卖
+	}
+	else{
+		rmbj = 0;
+	}
+	XmlData1[0].rmbj=rmbj;
+	if(document.getElementById("xpbj").checked){
+		var xpbj = 1;		//发布类型  新品
+	}
+	else{
+		xpbj = 0;
+	}
+
+	
+	XmlData1[0].xpbj=xpbj;
+	var fbyy = $("#fbyy").val();		//发布原因
+	var cxlxbj = $("#cxlxbj").val();	//促销类型
+	var XmlData=JSON.stringify(XmlData1);
+	if(confirm("确认发布商品？")){
+	$.ajax({
+		type:"POST",
+		async:false,
+		url:encodeURI("/showGoods/save_SPFB_SPXX.action?XmlData="+XmlData),
+		data:{XmlData:XmlData},
+		dataType:"text",
+		success: function(data) { 
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			//alert(jsondata.STATE);
+			if(data1==1){
+				alert("保存成功!");
+				parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+				}else{
+				alert("保存失败!");
+					}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	        alert(textStatus);
+	    }
+	});
+	}
+}
+//修改商品时查询商品详细信息
+function srchSPXX(SPXX01){
+	   var baseUrl="";
+	   var url=baseUrl+"/showGoods/srchSPXX.action?sp_id=" + SPXX01 ;
+	   var rData = visitService(url);//RdATA 为JSON
+	   var spxxMap=rData.list;
+	   if(spxxMap!=""){
+	   		$("#jxs").attr("value",spxxMap[0].JXS);
+	   		$("#sp_id").attr("value",spxxMap[0].SP_ID);
+	   		$("#fxdj").attr("value",spxxMap[0].FXDJ);
+	   		$("#spname").attr("value",spxxMap[0].SPNAME);
+	   		$("#ppname").attr("value",spxxMap[0].PPNAME);
+	   		$("#flname").attr("value",spxxMap[0].FLNAME);
+	   		$("#spfl").attr("value",spxxMap[0].SPFL);
+	   		if(spxxMap[0].TJBJ=='1'){
+				$("#tjbj").attr("checked",true);
+		   		}
+	   		if(spxxMap[0].TJSP=='1'){
+				$("#tjsp").attr("checked",true);
+		   		}
+	   		if(spxxMap[0].RMBJ=='1'){
+				$("#rmbj").attr("checked",true);
+		   		}
+	   		if(spxxMap[0].XPBJ=='1'){
+				$("#xpbj").attr("checked",true);
+		   		}
+	   		$("#spjg").attr("value",spxxMap[0].SPJG);
+	   		$("#minnum").attr("value",spxxMap[0].MINNUM);
+	   		$("#maxnum").attr("value",spxxMap[0].MAXNUM);
+	   		$("#cksl").attr("value",spxxMap[0].CKSL);
+	   		$("#ckkc").attr("value",spxxMap[0].CKKC);
+	   		//给大厅展示赋值
+	   		if(spxxMap[0].DTBJ=='0'){
+	   			$("#dtbj").get(0).options[1].selected = "selected";
+		   		}
+	   		if(spxxMap[0].DTBJ=='2'){
+	   			$("#dtbj").get(0).options[0].selected = "selected";
+	   			//$("#dtbj option").eq(2).remove();
+	   			//$("#dtbj").append("<option value=2 selected='selected'>展示</option>");
+		   		}
+	   	//商品简述，，发布原因
+	   		$("#tjly").attr("value",spxxMap[0].TJLY);
+	   		$("#fbyy").attr("value",spxxMap[0].FBYY);
+		   	  		
+	   }  
+}
+</script>

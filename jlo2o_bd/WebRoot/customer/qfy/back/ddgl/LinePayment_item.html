@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+	var JYLSH = $.getUrlParam('JYLSH');
+  	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.orderInvoice.sel_xxhksh','dataType':'Json','JYLSH':JYLSH}];
+    return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<div class="clera"></div> 
+	
+	<div class="center">
+			<table class="show_table">
+		    <tr>
+		    	<td><span>汇款人：</span></td><td><label id="huik" title=""></label></td>
+		    	<td><span>交易银行：</span></td><td><label id="jyyh" title=""></label></td>
+			</tr>
+			<tr>
+		       <td><span>交易单号：</span></td><td><label id="jydh" title=""></label></td>
+		       <td><span>交易金额：</span></td><td><label id="jyje" title="" ></label></td>
+		    </tr>
+		    <tr>
+		    	<td><span>交易地址：</span></td><td><label id="jydz" title="" ></label></td>
+		    	<td><span>汇款日期：</span></td><td><label id="hkrq" title="" ></label></td>
+		    </tr>
+		      <tr>
+		    	<td><span>交易流水号：</span></td><td><label id="jylsh" title="" ></label></td>
+		    	<td id="bzTips" tips=""><span>汇款备注：</span></td><td><label id="hkbz"  title="" ></label></td>
+		    </tr>
+		</table>
+    	<div class="clera"><input type="hidden" id="audit_jydh" value=""/></div>
+
+	    <!-- 展示明细 -->
+		<div jl jlid="DefStaPer" id="lb" style="overflow:auto;" newclos="4" multiPage="false" url="/jlquery/selecto2o.action"
+		columnsArr="[
+		{'property':'XSDD01','header':'订单编号','type':'lable','width':'200px'},
+		{'property':'xsdd02','header':'订单金额','type':'lable','width':'100px'},
+		{'property':'count','header':'商品数量','type':'lable','width':'100px'},
+		{'property':'xsdd04','header':'下单时间','type':'lable','width':'200px'}]"
+		>
+		</div>
+	</div>
+	<div class="clera"></div> 
+	
+	<!----------------------->	
+	<div class="clera"></div> 
+
+	
+	<!-- 展示按钮 -->
+		 <div style="text-align:center;width:400px; margin:0 auto;">
+			<div id="auditDiv"><a href="javascript:void(0);" onclick="audit();;" id="shBtn" class="bot Medium FH" style="text-align:center;">审核</a></div>
+			<a href="javascript:void(0);" onclick="back();" class="bot Medium FH" style="text-align:center;">返回</a>
+		</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//初始化数据
+var JYLSH = $.getUrlParam('JYLSH');
+//初始查询主表信息
+$(document).ready(function(){
+	var json = {"JYLSH":JYLSH};
+	var url = "/LinePayment/select_LinePayment.action?XmlData=" + JSON.stringify(json);
+	var returnData=visitService(url);
+	var u=returnData.spfllist[0].JYDH;
+	if(returnData != null && returnData.spfllist.length > 0){
+		var kk=returnData.spfllist[0].HKR;
+		$("#huik").html(kk);
+		$("#jyyh").html(returnData.spfllist[0].JYYH);
+		$("#jydh").html(returnData.spfllist[0].JYDH);
+		$("#jyje").html("￥"+ returnData.spfllist[0].JYJE);
+		$("#jydz").html(returnData.spfllist[0].JYDZ);
+		$("#hkrq").html(returnData.spfllist[0].HKRQ);
+		$("#jylsh").html(returnData.spfllist[0].JYLSH);
+		$("#hkbz").html(returnData.spfllist[0].HKBZ);
+		$("#hkbz").attr("title",returnData.spfllist[0].HKBZ);
+		$("#audit_jydh").val(returnData.spfllist[0].JYDH);
+		if(returnData.spfllist[0].XSDD51 !="1"){
+			$("#auditDiv").hide();
+		}
+	}
+});
+	function audit(){
+		if(confirm("确认审核通过该信息吗？")){
+			var jydh = $("#audit_jydh").val();
+		    var url= "/LinePayment//auditPayStatus.action?JYDH="+ jydh;
+			ajaxQ({
+				"url" : url,
+				"callback":function(data){
+						var data1=data.state;
+						if(data1=="success"){
+							if(confirm("审核通过转账信息成功!")){
+								back();
+								//window.location.href="/customer/qfy/back/shop-main.html";
+							}
+						}
+				}
+			});	
+		 }
+	}
+	
+	function back(){
+		history.go(-1);
+	}
+</script>

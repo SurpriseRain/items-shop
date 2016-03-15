@@ -1,0 +1,11 @@
+<div class="content">
+<div class="row">
+  <div class="w03 logo"><a href="/customer/sydjt/index.html"><img src="/customer/sydjt/images/logo02.png"/></a></div>
+  <div class="w07 seach_main">
+  	<input type="hidden" id="search-t" value="cp">
+    <div class="w12 seach_input"><input id="mq" type="text" class="w08" /><a id="search" class="w02">搜 索</a></div>
+    <div class="w10 seach_hot"><a>美的冰箱</a><a>格力空调</a><a>大金空调</a></div>
+    <div class="w02"></div>
+  </div>
+</div>
+</div>

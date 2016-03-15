@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 销售查询</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+	var CITY = "120100";
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectXSCX','QryType':'Report','dataType':'Json','CITY':CITY,'COUNTRY':$("#COUNTRY").val(), 'date_s':$('#date_s').val(),'date_e':$('#date_e').val(),'CXNAME':$("#CXNAME").val()}];
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+<!-- 	<div id="curPosition">
+    	<a href="#">销售管理</a>
+    	<span>></span>
+    	<b>销售量查询</b>
+	</div> -->
+	<div class="clera"></div>
+		<ul id="screening">
+			<li style="width:830px;">
+	   		<span>订单时间：</span>
+			<input id="date_s" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+	   		<span class="z" style="width:20px;">~</span>
+	    	<input id="date_e" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+		    	<span>行政区域：</span>
+				<select id="COUNTRY" name="COUNTRY" style="width:100px;">
+		       		<option value="">全部</option>
+	        	</select>
+				<input id="CXNAME" name="CXNAME" value="" type="text" placeholder="买家/商品" style="margin-left: 25px;height: 30px;"/>
+				<a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+			</li>
+		</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+		{'property':'GMRQ','header':'购买日期','type':'lable','width':'100px'},
+		{'property':'ZCXX02','header':'购买企业','type':'lable','width':'200px'},
+		{'property':'SPXX04','header':'商品名称','type':'lable','width':'200px'},
+		{'property':'XSDDI05','header':'商品数量','type':'lable','width':'100px'},
+		{'property':'DQBZM02','header':'行政区域','type':'lable','width':'130px'},
+		{'property':'ZCXX08','header':'企业地址','type':'lable','width':'220px'},
+		{'property':'ZCXX06','header':'联系电话','type':'lable','width':'130px'}]" 
+		>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+    var n = new Date();
+	var now = n.getFullYear() + "-" + (n.getMonth() + 1) + "-" + n.getDate();
+	var l = new Date(n.getTime() - 1000 * 60 * 60 * 24 * 7);
+	var lw = l.getFullYear() + "-" + (l.getMonth() + 1) + "-" + l.getDate();
+	document.getElementById("date_e").value = now;
+	document.getElementById("date_s").value = lw;
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  });
+  setVal("#COUNTRY",3);
+});
+//执行回调方法
+function backFun(parameters){
+	init();
+}
+//设置地址信息
+function setVal(objaft,dqjb){
+  	var num = "120100";  	
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb= dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	ajaxQ({
+  		"url":url,
+  		"callback":function(data){
+  			var list = data.mapList;
+  			$(list).each(function(i,json){
+  		  		if(i==0){
+  		  	 		$(objaft).empty();
+  		  	  		$(objaft).append("<option value=''>全部</option>");
+  		    	}
+  		  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  		  	});
+  		}
+  	});
+}
+</script>

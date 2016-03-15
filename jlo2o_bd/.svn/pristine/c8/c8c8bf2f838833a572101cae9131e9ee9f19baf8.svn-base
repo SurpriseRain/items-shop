@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jlsoft.o2o.prpduct.sql.KCXX">
+	
+	<!--  查询库存     -->
+  	<select id="select_kcxx" parameterType="Map" resultType="java.util.Map">
+	SELECT 
+		ck02
+		,w_goods.barcode
+		,w_spxx.spxx04
+		,ifnull(w_kcxx.CKSP04 + w_kcxx.CKSP05 + w_kcxx.KCXX01 - w_kcxx.KCXX02,0) num 
+	from w_spxx
+	LEFT JOIN w_goods on w_goods.spxx01 = w_spxx.spxx01
+	LEFT JOIN w_kcxx on w_kcxx.spxx01 = w_spxx.spxx01
+	LEFT JOIN ck on w_kcxx.ck01 = ck.ck01
+	WHERE 1=1 AND w_kcxx.ck01!=''
+	<if test="ck01!=''">AND ck.ck01 = #{ck01} AND ck.ck09 = (select ck09 from ck where ck01=#{ck01})</if>
+	<if test="barcode!=''">AND w_goods.barcode like concat('%',#{barcode},'%')</if>
+	<if test="ZCXX01!=null and ZCXX01!=''"> AND w_goods.ZCXX01 = #{ZCXX01}</if>
+	<if test="spxx04!=''">AND w_spxx.spxx04 like concat('%',#{spxx04},'%') </if>
+	ORDER BY w_spxx.spxx01
+	</select>
+	
+	<select id="select_kcxx_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT count(1) as COUNT
+	from w_spxx
+	LEFT JOIN w_goods on w_goods.spxx01 = w_spxx.spxx01
+	LEFT JOIN w_kcxx on w_kcxx.spxx01 = w_spxx.spxx01
+	LEFT JOIN ck on w_kcxx.ck01 = ck.ck01
+	WHERE 1=1 AND w_kcxx.ck01!=''
+	<if test="ck01!=''">AND ck.ck01 = #{ck01} AND ck.ck09 = (select ck09 from ck where ck01=#{ck01})</if>
+	<if test="barcode!=''">AND w_goods.barcode like concat('%',#{barcode},'%')</if>
+	<if test="ZCXX01!=null and ZCXX01!=''"> AND w_goods.ZCXX01 = #{ZCXX01}</if>
+	<if test="spxx04!=''">AND w_spxx.spxx04 like concat('%',#{spxx04},'%') </if>
+	ORDER BY w_spxx.spxx01
+	</select>
+	<!-- 查询库存查询条件 -->
+	 <select id="select_kcxx_filter" parameterType="Map" resultType="java.util.Map">
+		SELECT ck01,ck02 from ck
+	</select>
+</mapper>
+  

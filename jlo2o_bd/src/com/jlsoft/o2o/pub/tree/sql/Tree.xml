@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.pub.tree.sql">
+
+   <resultMap id="result_viewTree" type="com.jlsoft.o2o.pub.tree.bean.Tree">
+      <result property="id" column="CODE" />
+      <result property="text" column="NAME"/>
+      <result property="leaf" column="LEAF"/>
+      <result property="cls" column="CLS"/>
+    </resultMap>
+    
+    <!-- 加载管理员定义操作员菜单权限树 -->
+    <select id="viewQXCD01Tree" parameterType="Map" resultMap="result_viewTree">
+	SELECT distinct RTRIM(M.CODE) CODE,
+                M.NAME NAME,
+                CASE
+                  WHEN LENGTH(RTRIM(M.CODE)) / 2 = 1 THEN
+                   '0'
+                  ELSE
+                   '1'
+                END LEAF,
+                IF(LENGTH(RTRIM(M.CODE)) / 2 = 1, 'folder', 'file') CLS
+  	FROM W_XTCZYMENU M, W_XTCZYCZ B
+ 	   where M.CODE = B.CD
+ 	    
+     <if test="backStr!=''">and (select count(A.CODE)
+          from W_XTCZYMENU A, W_XTCZYCZ B
+         where B.PERSON_ID = #{backStr}
+           and A.TYPE = 0
+           and A.CODE LIKE CONCAT (rtrim(B.CD),'%')    
+           and A.CODE LIKE CONCAT (rtrim(M.CODE),'%'))> 0 </if>
+     <if test="treeCxjb!=''">AND LENGTH(RTRIM(M.CODE)) / 2 = #{treeCxjb} </if>
+     <if test="pid!=null">AND M.CODE LIKE CONCAT (#{pid},'%')</if> 
+     ORDER BY CODE
+	</select>
+	 
+    <select id="viewDQXX01Tree" parameterType="Map" resultMap="result_viewTree">
+	SELECT RTRIM(DQXX01) CODE,DQXX02 NAME,
+	CASE WHEN DQXX04 = 0 THEN '0' ELSE '1' END LEAF,
+	IF(DQXX04 = 0,'folder','file') CLS
+  	FROM DQXX WHERE  DQXX03 &lt; 3 
+    <if test="treeCxjb!=''">AND DQXX03 = #{treeCxjb}</if>
+    <if test="pid!=null">AND DQX_DQXX01=#{pid}</if>
+	ORDER BY DQXX01
+		
+    </select>
+    
+    <select id="viewSPFL01Tree" parameterType="Map" resultMap="result_viewTree">
+		SELECT RTRIM(M.SPFL01) CODE,M.SPFL02 NAME
+			,CASE WHEN M.SPFL04 = 0 THEN '0' ELSE '1' END LEAF,
+			IF(M.SPFL04 = 0,'folder','file') CLS 
+			FROM SPFL M 
+		WHERE LENGTH(M.SPFL01) &lt; 9 
+	<if test="treeCxjb!=''"> AND M.SPFL03 = #{treeCxjb} </if>
+    <if test="pid != null">  AND M.SPF_SPFL01=#{pid} </if>
+    <if test="pxbj != null"> AND M.PXBJ>0 </if>
+			ORDER BY M.SPFL01 ASC
+	</select>
+
+	<!-- 商品分类只显示2级 -->
+	<select id="viewSPFLZDYTree" parameterType="Map" resultMap="result_viewTree">
+		SELECT RTRIM(spfl01) CODE,
+	       spfl02 NAME,
+	       CASE
+	         WHEN spfl03 = 1 THEN
+	          '0'
+	         WHEN spfl03 = 2 THEN
+	          '1'
+	       END LEAF,
+	       IF(spfl03 = 2, 'file', 'folder') CLS
+	  	FROM spfl 
+		WHERE LENGTH(SPFL01) &lt; 5 
+	<if test="treeCxjb!=''"> AND SPFL03 = #{treeCxjb} </if>
+	<if test="pid != null">  AND SPF_SPFL01=#{pid} </if>
+	and spfl01 not in (select spfl01 from spflzdy)
+			ORDER BY spfl01 ASC
+	</select>
+	
+	<!-- 商品录入商品编辑分类展示-->
+	<select id="SpbjSpflTree" parameterType="Map" resultMap="result_viewTree">
+		SELECT RTRIM(M.SPFL01) CODE,M.SPFL02 NAME
+			,CASE WHEN M.SPFL04 = 0 THEN '0' ELSE '1' END LEAF,
+			IF(M.SPFL04 = 0,'folder','file') CLS 
+			FROM SPFL M 
+		WHERE LENGTH(M.SPFL01) &lt; 9 
+	<if test="treeCxjb!=''"> AND M.SPFL03 = #{treeCxjb} </if>
+    <if test="pid != null">  AND M.SPF_SPFL01=#{pid} </if>
+    <if test="pxbj != null"> AND M.PXBJ>0 </if>
+			ORDER BY M.SPFL01 ASC
+	</select>
+	
+	<!-- 商品录入商品编辑分类展示-->
+	<select id="cxflTree" parameterType="Map" resultMap="result_viewTree">
+	    SELECT RTRIM(M.TYPECODE) CODE,
+	           M.TYPE NAME,
+	           CASE
+	             WHEN LENGTH(RTRIM(M.TYPECODE)) = 12 THEN
+	                '1'
+	             else
+	                '0'
+	           END LEAF,
+	           if(LENGTH(RTRIM(M.TYPECODE))/2 &gt; 3, 'file', 'folder') CLS
+	      FROM w_automobile_fl M
+	 	WHERE LENGTH(RTRIM(M.TYPECODE))/2 &lt; 7
+	<if test="treeCxjb!=''"> AND LENGTH(RTRIM(M.TYPECODE))/2 = #{treeCxjb} </if>
+    <if test="pid != null">  AND M.PRESTAGE_CODE=#{pid} </if>
+		 ORDER BY M.TYPE DESC 
+	</select>
+	
+	
+</mapper>

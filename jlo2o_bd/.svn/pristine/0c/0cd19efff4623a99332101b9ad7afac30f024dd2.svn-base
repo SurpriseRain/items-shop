@@ -1,0 +1,727 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云注册页面</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/reg-main.css" />
+<!-- 列表页  第二版 -->
+<link rel="stylesheet" type="text/css" href="../css/products_2.css" />
+<link rel="stylesheet" type="text/css" href="../css/member_shop_2.css" />
+<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+<link rel="stylesheet" type="text/css" href="../css/carSs_2.css" />
+<link rel="stylesheet" type="text/css" href="/control/css/splist_1.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/reg.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+var userName = $.getUrlParam("userName");
+
+$(document).ready(function(){
+	// 车主查询
+	var jsonData = {"ACCOUNTNAME": userName};
+	var url = "/CarOwnerRegist/select_carOwnerNameAndPwd.action?jsonData=" + JSON.stringify(jsonData);
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		$("#username").val(rData.ACCOUNTNAME);
+		$("#password").val(rData.PASSWORD);
+	}
+	$("#footer").load("/customer/qfy/foot.html");
+	// 加载地址信息
+	showDQXX("QY");
+	$("#QYdzdetail").css("width", "220px");
+	
+	if(navigator.userAgent.indexOf("MSIE")>0){   
+      	//待优化
+	    if(navigator.userAgent.indexOf("MSIE 8.0")>0)  
+	    {  
+	    	$("#provinceQY").css("padding-bottom","10px");
+	    	$("#cityQY").css("padding-bottom","10px");
+	        $("#countryQY").css("padding-bottom","10px");
+	    } else{
+	    	$("#countryQY").css("padding-bottom","0px");
+	        $("#cityQY").css("padding-bottom","0px");
+	    	$("#provinceQY").css("padding-bottom","0px");
+	    }
+	}
+});
+
+// 加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index,e){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+    	var xmlData=[];
+      	var json={};
+        json.qydm=num;
+    	json.dqjb=dqjb;
+      	xmlData.push(json);
+      	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+      	ajaxQ({
+      		"url":url,
+      		"callback":function(data){
+      			var dqxx = data.mapList;
+      			 $(dqxx).each(function(i,dqxxjson){
+      		  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+      		  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+      		  	  });		 
+      		  	  $(e).bind("change",function(inx){
+      		  		setVal(e,"#city"+id,2);
+      		  		var con="<option value='0'>请选择</option>";
+      		  		$("#countryQY").html(con).val(0);
+      		  		var width = $("#main").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-260;
+      		  		$("#QYdzdetail").css("width", 200+"px");
+      		  	  });	
+      		  	}  			
+      		});
+      	}
+  	else{
+	  	  $(e).bind("change",function(inx){
+	  		setVal(this,"#country"+id,3);
+	  		var width = $("#main").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-260;
+	  		$("#QYdzdetail").css("width", 200+"px"); 
+	  	  });	
+	  	}	
+   });
+}
+// 设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();  	
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	ajaxQ({
+  		"url":url,
+  		"callback":function(data){
+  			var list = data.mapList;
+  			$(list).each(function(i,json){
+  		  		if(i==0){
+  		  	 		$(objaft).empty();
+  		  	  		$(objaft).append("<option value='0'>请选择</option>");
+  		    	}
+  		  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  		  	});
+  		}
+  	});
+}
+</script>
+<style>
+.a-upload {
+    padding: 4px 10px;
+    height: 27px;
+    line-height: 20px;
+    width: 210px;
+    position: relative;
+    cursor: pointer;
+    color: #888;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1
+}
+
+.a-upload  input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
+
+.a-upload:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none
+}
+.flmain{
+    float: left;
+    width:125px;
+    margin-bottom: 20px;
+    position: relative;
+}
+</style>
+</head>
+<body>
+	<!-- head开始 -->
+	<!-- <div id="header"></div> -->
+	<!-----公共部门开始---->
+	<div id="header">
+	  <div class="header_main">
+	    <a class="logo" href="/customer/qfy/index.html" target="_parent"><img src="/customer/qfy/images/reg-logo.png" /></a>
+	    <!------------------流程------------------>
+	    <div class="tecPro">
+	      	<div class="userLc">
+	      	<div class="userlcMain">
+	        	<div class="userlcCase"><a class="fxlc_yz">1.创建账户</a></div>
+	        	<div class="userlcCase"><span>→</span></div>
+	        	<div class="userlcCase"><a class="fxlc_zz">2.填写信息</a></div>
+	        	<div class="userlcCase"><span>→</span></div>
+	        	<div class="userlcCase"><a class="fxlc_wz">3.注册成功</a></div>
+	      	</div>
+	    </div>
+	  </div>
+	  </div>
+	</div>
+	<!-- head结束 -->
+	<!-- 中间录入部分开始 -->
+	<div class="clera"></div>
+	<form name="form1" id="form1" action="" method="post" enctype="multipart/form-data">
+	<input type="hidden" id="username" name="ACCOUNTNAME" />
+	<input type="hidden" id="password" name="PASSWORD" />
+	<div id="main">
+  		<ul class="userName">
+    		<li class="title">注册信息</li>
+  		</ul>
+  		<ul class="userName userInfo" id="user_sccj">
+    		<li><h3>基本信息</h3></li>
+    		<li class="line"></li>
+    		<li>
+    			<span>真实姓名</span>
+    			<div class="bt">*</div>
+    				<input type="text" class="text foce" id="zsxm" name="REALLYNAME" value=""  />
+    		</li>
+			<li>
+    			<span>性别</span>
+    			<div class="bt">*</div>
+				<label><input type="radio" class="xb" name="GENDER" value="0" checked="checked" />男</label>
+    			<label><input type="radio" class="xb" name="GENDER" value="1"  />女</label>
+    		</li>
+    		<li>
+    			<span>生日</span>
+    			<div class="bt">*</div>
+    			<input id="sr" name="BIRTHDAY" value="" type="text" class="text foce" placeholder="请点击选择生日" onClick="WdatePicker()" />
+    		</li>
+    		<li>
+    			<span>头像</span>
+ 			    <div class="bt">&nbsp;</div>
+    			<input type="file" class="a-upload" id="tx" name="HEADIMAGEPATH" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"  value=""/>
+    		</li>
+    		<li>
+    			<span>手机</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text foce"  id="phone" name="PHONE" value="" />
+    			<p>请正确填写手机号码,例如:13412345678</p>
+    		</li>
+    		<li>
+    			<span>邮箱</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text foce" id="email" name="EMAIL" value="" />
+    			<p>请输入正确格式：1605239188@qq.com<p>
+    		</li>
+    		<li>
+    			<span>地址</span>
+    			<div class="bt">*</div>
+    			<select name="QYdz01" id="provinceQY" class="bankbox width100">
+                 	<option value="0">请选择</option>
+                </select>
+                <select name="QYdz02" id="cityQY" class="bankbox width100">
+                	<option value="0">请选择</option>
+                </select>
+                <select name="QYdz03" id="countryQY" class="bankbox width100">
+                 	<option value="0">请选择</option>
+                </select>
+    			<input type="text" class="text foce" id="QYdzdetail" name="dzxx" value="" style="width: 0px;"/>
+    			<input type="hidden" id="ADDRESS" name="ADDRESS" value="" />
+    		</li>
+    		<li>
+    			<span>车牌号</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text foce" id="cph" name="CARNUMBER" value="" />
+    		</li>
+    		<li>
+    			<span>车型品牌</span>
+    			<input type="text" class="text foce" id="pp" placeholder="可输入车型品牌,也可选择" title="" name="CARBRAND" value="" />
+    			<a id="xzcx" onclick="show_flpp()" name="cx_sousuo" > 选择车型 </a>
+    			<div id="FLPP_ZZ"></div>
+			    <div id="FLPP_ZZ_1">
+					<div id="container">
+						<div class="title_zz">
+						  <b>车型选择</b><a onclick="closeflpp()">关闭</a>
+						</div>			
+						<div id="sxtj" style="width: 750px;">
+						  <a href="#" class="xuan reset_cx" >按首字母查找</a>
+						</div>			
+						<div id="sxtjxx" class="sxtjxx">
+						  <div class="xxtitle" style="margin-left:20px;">
+						      <a href="#">全部：</a>
+							  <div id="CarOne">
+							  </div>
+						  </div>			  
+						</div>
+						<div id="yxz">			   
+						</div>
+						<div id="member_list">
+						   <div id="cxpp_list" ></div>
+						</div>
+					</div>
+				</div>
+    		</li>
+    		
+    		<li>
+    			<span>&nbsp;</span>
+    			<a class="reg_bot" href="#" name="tijiao" onclick="register()">注册</a>
+    		</li>
+  		</ul>
+	</div>
+	</form>
+	<!-- 中间录入部分结束 -->
+	<div class="clear"></div>
+	<!-- foot开始 -->
+	<div id="footer" class="clearfix mt20">
+	</div>
+	<!-- foot结束 -->
+</body>
+<script type="text/javascript">
+// 添加车型第二版
+function show_flpp(){
+	selectqfylist();
+	$("#FLPP_ZZ").show();
+	$("#FLPP_ZZ_1").show();
+}
+
+function delect(){
+	selectqfylist();
+}
+
+function closeflpp(){
+	$("#FLPP_ZZ").hide();
+	$("#FLPP_ZZ_1").hide();
+}
+
+var OneShow ="";
+function selectqfylist(){
+	$("#CarOne").html("");
+	var fkqgSpUrl="/showGoods/qfylist.action";
+	var rData0 = visitService(fkqgSpUrl);
+	OneShow = rData0.qfylist;
+	for(var i=0; i<OneShow.length;i++){
+		$("#CarOne").append('<a class="zm" id="'+OneShow[i].MNEMONICCODE+'" >'+OneShow[i].MNEMONICCODE+'</a>');
+	}
+	$(".zm").on('click',function(){
+        $(".zm").removeClass("zmxuan");
+        $(this).addClass("zmxuan");
+        var zm = $(this).attr("id");
+        cxpp_mc(zm);
+	});
+	
+	var str ="";
+	$("#yxz").html('<label class="y">已选择：</label>');
+	for(var i=0; i<OneShow.length;i++){
+		for(var j=0;j<OneShow[i].PPFL02list.length;j++){
+		str+='<div class="logo_list flmain" code="'+OneShow[i].MNEMONICCODE+'">';
+		str+='<a><img src="/customer/qfy/images/mycar/'+OneShow[i].PPFL02list[j].BRANDPY+'_'+OneShow[i].PPFL02list[j].BRAND_ID+'.png" />';
+		str+='<b class="text" style="line-height:50px;">'+OneShow[i].PPFL02list[j].BRAND+'</b></a></div>';
+		}
+	}
+	$("#cxpp_list").html(str);
+	$(".flmain").on('click',function(){
+        var cx_mc_1 = $(this).text();
+        var code = $(this).attr("code");
+        $("#"+code).addClass("zmxuan");
+        cxpp_cx_mc_1(cx_mc_1);
+	});	
+	
+}
+
+//查询车型品牌名称及LOGO 
+function cxpp_mc(obj){
+	$("#yxz").html('<label class="y">已选择：</label>');
+	var str=""
+	for(var i=0; i<OneShow.length;i++){
+		if(OneShow[i].MNEMONICCODE==obj){
+			for(var j=0;j<OneShow[i].PPFL02list.length;j++){
+			str+='<div class="logo_list flmain" style="width: 125px">';
+			str+='<a id="brand"><img src="/customer/qfy/images/mycar/'+OneShow[i].PPFL02list[j].BRANDPY+'_'+OneShow[i].PPFL02list[j].BRAND_ID+'.png" />';
+			str+='<b class="text" style="line-height:50px;">'+OneShow[i].PPFL02list[j].BRAND+'</b></a></div>';
+			}
+			break;
+		}
+	}
+	$("#cxpp_list").html(str);
+	$(".flmain").on('click',function(){
+        var cx_mc_1 = $(this).text();
+        cxpp_cx_mc_1(cx_mc_1);
+	});	
+}
+
+//查询该车型下所有类型品牌
+function cxpp_cx_mc_1(cx_mc_1,type){
+	if(type!="1"){
+		$("#yxz").append('<div class="yxz_list cx_1"><label>'+cx_mc_1+'&nbsp;&nbsp;</label><a id="cx_1" title="删除" onclick="delect_cx($(this))">×</a></div>');
+	}
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.product.sql.Oper_SpglDao.cxpp_mc","brand_mc":cx_mc_1,'dataType':'Json'}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	ajaxQ({
+			"url" : url,//原始url 
+			"callback" : function(returnData){
+				var str="";
+				 for(var i=0;i<returnData.length;i++){
+					 str+='<div class="pp_"><h5>'+returnData[i].car_type+'</h5></div>';
+					 var car_name = returnData[i].car_name;
+					 var car_list = car_name.split(",");
+					 for(var j=0;j<car_list.length;j++){
+						 str+='<div class="pp_s car_list"><a>'+car_list[j]+'</a></div>';
+					 }
+				 }
+				$("#cxpp_list").html(str);
+				$(".car_list").on('click',function(){
+			        var cx_mc_2 = $(this).text();
+			        cxpp_cx_mc_2(cx_mc_1,cx_mc_2);
+				});
+			}
+		});
+	 
+}
+//按车型二级分类查询 出厂年份
+function cxpp_cx_mc_2(cx_mc_1,cx_mc_2,type){
+	if(type!="1"){
+		$("#yxz").append('<div class="yxz_list cx_1 cx_2"><label>'+cx_mc_2+'&nbsp;&nbsp;</label><a id="cx_2" tuid="'+cx_mc_1+'" code="'+cx_mc_2+'" title="删除" onclick="delect_cx($(this))">×</a></div>');
+	}
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.product.sql.Oper_SpglDao.cxpp_mc_year","brand_mc_2":cx_mc_2,'dataType':'Json'}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 
+	 ajaxQ({
+			"url" : url,//原始url 
+			"callback" : function(returnData){
+				var str="";
+				 for(var j=0;j<returnData.length;j++){
+					 str+='<div class="pp_year car_list"><a>'+returnData[j].mobile_modle_year+'</a></div>';
+				 }
+				$("#cxpp_list").html(str);
+				$(".car_list").on('click',function(){
+			        var cx_mc_3 = $(this).text();
+			        cxpp_cx_mc_3(cx_mc_2,cx_mc_3);
+				});	
+			}
+		});
+	 
+}
+//按车型年份查询 汽车排量
+function cxpp_cx_mc_3(cx_mc_2,cx_mc_3,type){
+	 if(type!="1"){
+		 $("#yxz").append('<div class="yxz_list cx_1 cx_2 cx_3"><label>'+cx_mc_3+'&nbsp;&nbsp;</label><a id="cx_3" tuid="'+cx_mc_2+'" code="'+cx_mc_3+'" title="删除" onclick="delect_cx($(this))">×</a></div><div id="pl"></div>');
+	 }
+	 var XmlData=[{"sqlid":"com.jlsoft.o2o.product.sql.Oper_SpglDao.mobile_displacement","brand_mc_2":cx_mc_2,"brand_year":cx_mc_3,'dataType':'Json'}];
+	 var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 var returnData=visitService(url);
+	 var str="";
+	 for(var j=0;j<returnData.length;j++){
+		 str+='<div class="displacement car_list"><a>'+returnData[j].mobile_displacement+'</a></div>';
+	 }
+	
+	 var XmlData=[{"sqlid":"com.jlsoft.o2o.product.sql.Oper_SpglDao.mobile_modle","brand_mc_2":cx_mc_2,"brand_year":cx_mc_3,'dataType':'Json'}];
+	 var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 var returnData=visitService(url);
+	 str+='<div id="modle" style="float:left;border-top:2px solid #eeeeee;height:10px; width:100%;">';
+	 for(var j=0;j<returnData.length;j++){
+		 str+='<div class="modle_list"><a class="mobile_modle" id="'+returnData[j].mobile_modle_id+'" code="'+returnData[j].mobile_modle_id+'">'+returnData[j].mobile_modle+'</a></div>';
+	 }
+	 str+='</div>';
+	 $("#cxpp_list").html(str);
+	 $(".car_list").on('click',function(){
+        var mobile_displacement = $(this).text();
+        cxpp_cx_mc_4(cx_mc_2,cx_mc_3,mobile_displacement);
+	 });
+	 $(".mobile_modle").on('click',function(){
+        var mobile_modle = $(this).text();
+        var chexing_id = $(this).attr("id");
+        var mobile_modle_id = $(this).attr("code");
+        $("#pp").val(mobile_modle);
+        $("#FLPP_ZZ").hide();
+        $("#FLPP_ZZ_1").hide();
+    	$(".llcx_list_1").on('click',function(){
+    		var modle = $(this).text();
+            var modle_id = $(this).attr("id");
+            var mobile_modle_id = $(this).attr("code");
+            $("#pp").val(modle);
+            scrollOffset($("#city_name").offset());
+    	});
+	 });
+	 
+}
+//按车型排量查询 特定车型
+function cxpp_cx_mc_4(cx_mc_2,cx_mc_3,mobile_displacement){
+	 $("#pl").html('<div class="yxz_list cx_1 cx_2 cx_3 cx_4"><label>'+mobile_displacement+'&nbsp;&nbsp;</label><a tuid="'+cx_mc_2+'" code="'+cx_mc_3+'" class="cx_1 cx_2 cx_3 cx_4" id="cx_4" title="删除" onclick="delect_cx($(this))">×</a></div>');
+	 var XmlData=[{"sqlid":"com.jlsoft.o2o.product.sql.Oper_SpglDao.mobile_modle","brand_mc_2":cx_mc_2,"brand_year":cx_mc_3,"mobile_displacement":mobile_displacement,'dataType':'Json'}];
+	 var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 
+	 ajaxQ({
+			"url" : url,//原始url 
+			"callback" : function(returnData){
+				 var str="";
+				 for(var j=0;j<returnData.length;j++){
+					 str+='<div class="modle_list"><a class="mobile_modle" id="'+returnData[j].mobile_modle_id+'" code="'+returnData[j].mobile_modle_id+'">'+returnData[j].mobile_modle+'</a></div>';
+				 }
+				
+				 $("#modle").html(str);
+				 $(".mobile_modle").on('click',function(){
+			        var mobile_modle = $(this).text();
+			        var chexing_id = $(this).attr("id");
+			        var mobile_modle_id = $(this).attr("code");
+			        $("#pp").val(mobile_modle);
+			        $("#FLPP_ZZ").hide();
+			        $("#FLPP_ZZ_1").hide();
+			    	$(".llcx_list_2").on('click',function(){
+			    		var modle = $(this).text();
+			            var modle_id = $(this).attr("id");
+			            var mobile_modle_id = $(this).attr("code");
+			            $("#pp").val(modle);
+			            scrollOffset($("#city_name").offset());
+			    	});
+				});
+			}
+		});
+}
+//删除已选车型,刷新当前数据
+function delect_cx(obj){
+	var cx_id = obj.attr("id");
+	$("."+cx_id).remove();
+	if(cx_id=="cx_1"){
+		selectqfylist();
+	}else if(cx_id=="cx_2"){
+		var cx_mc_1 = obj.attr("tuid");
+		cxpp_cx_mc_1(cx_mc_1,"1");
+	}else if(cx_id=="cx_3"){
+		var cx_mc_1 = obj.attr("code");
+		var cx_mc_2 = obj.attr("tuid");
+		cxpp_cx_mc_2(cx_mc_1,cx_mc_2,"1");
+	}else if(cx_id=="cx_4"){
+		var cx_mc_2 = obj.attr("tuid");
+		var cx_mc_3 = obj.attr("code");
+		cxpp_cx_mc_3(cx_mc_2,cx_mc_3,"1");
+	}
+}
+
+
+// 判断生日是否大于当前系统日期
+function checkBirth(){
+	var vDate = new Date();
+	var vYear = vDate.getFullYear();
+	var vMon = vDate.getMonth() + 1;
+	var vDay = vDate.getDate();
+	var nowDate = vYear + "-" + (vMon<10 ? "0" + vMon : vMon) + "-" + (vDay<10 ? "0"+ vDay : vDay);
+	if(nowDate < $("#sr").val()){
+		alert("生日选择错误,请重新选择!");
+		return false;
+	}
+	return true;
+}
+
+//判断输入项是否合法
+function checkNull(){
+
+	if($("#zsxm").val().length == 0){
+		alert("请输入真实姓名！");	
+		return false;
+	}
+	
+	if($("#sr").val().length == 0){
+		alert("请选择出生日期！");
+		return false;
+	} else {
+		if(!checkBirth()){
+			return false;
+		}
+	}
+	
+	if($("#tx").val() != undefined && $("#tx").val() != ""){
+		if(!txdx()){
+			return false;
+		}
+	}
+	
+	if($("#phone").val().length == 0){
+		alert("请输入手机号码");
+		return false;
+	}else{
+		if(!checkPhone()){
+			return false;
+		}
+	}
+	
+	if($("#email").val().length == 0){
+		alert("请输入邮箱");
+		return false;
+	}else{
+		if(!checkEmail()){
+			return false;
+		}
+	}
+	
+	if($("#provinceQY").val() == "0"){
+		alert("地址不明确");
+		return false;
+	}
+	var province = $("#provinceQY").val();
+	if(province != "990000"){
+		if($("#cityQY").val() == "0"){
+			alert("地址不明确");
+			return false;
+		}
+		if($("#countryQY").val() == "0"){
+			alert("地址不明确");
+			return false;
+		}
+	}
+	if(province != "820000"){
+		if($("#cityQY").val() == "0"){
+			alert("地址不明确");
+			return false;
+		}
+		if($("#countryQY").val() == "0"){
+			alert("地址不明确");
+			return false;
+		}
+	}
+	if($("#QYdzdetail").val() == ""){
+		alert("地址不明确");
+		return false;
+	}
+	
+	if($("#cph").val().length == 0){
+		alert("请输入车牌号!");
+		return false;
+	}
+	/* if($("#pp").val().length == 0){
+		alert("请输入品牌信息!");
+		return false;
+	} */
+	return true;
+}
+
+// 验证手机规则
+function checkPhone(){
+	var isMobile=/^1\d{10}$/; //手机号码验证规则
+	if(!isMobile.test($("#phone").val())){
+		alert("请正确填写手机号码,例如:13415764179");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+// 检查图片大小
+function txdx(){
+	 var i = document.getElementById("tx").files[0].size;
+	 var limit = 1*1024*1024;
+	if(i > limit){
+		alert("上传的图片大小要在1M以下");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+// 检查邮箱
+function checkEmail(){
+	var email=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+	if(!email.test($("#email").val())){
+		alert("请正确输入邮箱地址");
+		return false;
+	}else{
+		return true;
+	}
+}
+// 注册
+function register(){
+	var flag = checkNull();
+	if(flag){
+	 	//拼接地址
+	 	var DZBM="";  //地址编码
+	   	var ZWDZ="";  //中文地址
+	   	if($("#provinceQY").val() != "0"){
+		  	DZBM = $("#provinceQY").val();
+		  	ZWDZ = ZWDZ + $("#provinceQY option:selected").text();
+	   	}
+	   	if($("#cityQY").val() != "0"){
+		  	DZBM = $("#cityQY").val();
+		  	ZWDZ = ZWDZ + $("#cityQY option:selected").text();
+	   	}
+	   	if($("#countryQY").val() != "0"){
+	      	DZBM = $("#countryQY").val();
+		  	ZWDZ = ZWDZ + $("#countryQY option:selected").text();
+	   	}
+	   	ZWDZ = ZWDZ + $("#QYdzdetail").val();
+	   	$("#ADDRESS").val(ZWDZ);
+		var jsonData1 = $("#form1").formToJson();
+		var jsonData = escape(JSON.stringify(jsonData1));
+	   	//拼接图片
+	   	var fileArray=[];
+	   	fileArray.push("tx");
+	   	//与数据库交互
+	   	var url="/CarOwnerRegist/update_carownerinfo.action?jsonData=" + JSON.stringify(jsonData);
+	   	$.ajaxFileUpload({
+				type:"POST",
+				secureuri:false,
+				fileElementId:fileArray,
+				url:encodeURI(url),
+				data:{"jsonData":jsonData},
+				dataType:"text",
+				success: function(data) { 
+					var json = jQuery.parseJSON(data);
+					var jsondata = json.data;
+					var data1 = jsondata.STATE;
+					if(data1 == "1"){
+						alert("注册成功!");
+						var uName = $("#username").val();
+						var pwd = $("#password").val();
+						// 跳转到首页
+						var c2bState = carOwnerLogin(uName, pwd);
+						if(c2bState == "1"){
+							var rememberUrl = "/customer/qfy/index.html";
+							window.location.href = rememberUrl;
+							return;
+						}
+					}else{
+						alert("保存失败!");
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(textStatus);
+			    }
+			});
+		//与数据库交互完毕
+	}
+}
+
+// 注册成功后车主登录
+function carOwnerLogin(userName,password){
+    var json={};
+	json["userName"] = $("#username").val();
+	json["password"] = $("#password").val();
+	var data = visitService("/CarOwnerRegist/carOwerLogin.action?jsonData="+JSON.stringify(json));
+	data["LX"]="24";
+	data["ZCXX01"] = "JL";
+	data["ZCXX07"] = "120100";
+	var loginState = data.STATE;
+	if(loginState == "1"){
+		$.cookie("userInfo", null, {
+				path : '/'
+		});
+		$.cookie("userInfo", JSON.stringify(data), {
+				expires : 1,
+				path : '/'
+		});
+	}
+	return loginState;
+}
+
+</script>
+</html>

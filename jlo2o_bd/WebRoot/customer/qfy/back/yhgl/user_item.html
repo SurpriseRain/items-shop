@@ -1,0 +1,577 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心 - 基本信息</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPubxg.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Basinfo.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script> 
+<script type="text/javascript" src="/js/json2.js"></script>
+<style>\
+#zhezhao{
+ background:#fff;
+    height: 40%;
+    left: 28%;
+  position: fixed;
+    top: 13px;
+    width: 35%;
+    z-index: 2147483647;
+    border:1px solid #e4e4e4;
+
+}
+#zhezhao ul{
+margin-top:30px;
+margin-left:35px;
+}
+
+#zhezhao li{
+height:53px;
+width:100%;
+margin-left:20px;
+
+}
+#zhezhao li span{
+}
+#zhezhao li input{
+border:1px solid #e4e4e4;
+width:212px;
+height:32px;
+}
+.yzm{
+ background: #ff4a00 none repeat scroll 0 0;
+    border: 1px solid #e4e4e4;
+    display: inline-block;
+    height: 33px;
+    margin-left: 10px;
+    width: 79px;
+}
+.yzm span{
+color:#fff;
+font-size:12px;
+margin-left:10px;
+margin-top:8px;
+display: inline-block;
+}
+.yzm b{
+color:#fff;
+font-size:12px;
+margin-left:26px;
+margin-top:8px;
+display: inline-block;
+}
+.mjjbxx .jxqyjbxx .scqyjbxx{
+display:none;
+}
+</style>
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user = JSON.parse(MyCookie);
+var ZCXX01 = $.getUrlParam('ZCXX01');
+var LX = $.getUrlParam('gslx');
+var zcgs01 = "";
+var dqdm="";
+var imgUrl=pubJson.path_sptp+"/dptp/"+ZCXX01+"/";
+$(document).ready(function(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.select_shyj','dataType':'Json','ZCXX01':ZCXX01}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+    var rData=visitService(url);
+	var obj = "";
+	if(rData.length==0){
+		obj +='<tr><td colspan="2" style="line-height:20px;border:1px solid #e4e4e4;text-align:center;color:red;">';
+		obj +='暂无信息...</td></tr>';
+	}else{
+		for(var i=0; i<rData.length;i++){
+			obj +='<tr><td colspan="2" style="line-height:20px;border:1px solid #e4e4e4;">';
+			obj +='	<div style="padding-left: 20px;">'+rData[i].CZSJ+'</div>';
+			obj +='	<div style="padding-left: 20px;padding-right: 20px;">'+rData[i].Content+'</div>';
+			obj +='</td></tr>';
+		}
+	}
+	$(".single_table").append(obj);
+	$("#ZCXX01").val(ZCXX01);
+	var arr = [];
+	var o = {};
+	o["ZCXX01"] = ZCXX01;
+	arr.push(o);
+	var data = visitService("/UserInfo/selectCompanyInfo.action?XmlData="+JSON.stringify(arr));
+	var list=data.lists;
+	var gslx = list[0].LX;
+	// 判断公司类型 44是维修企业 43是生产企业 42是经销企业
+	if(gslx == 44){
+		$(".dp_tp").html("我的头像：");
+		$(".sfz").hide();
+		$(".dp_name").remove();
+		$("#fplx_").remove();
+		$("#cssbm").remove();
+		$("#jx_tp").remove();
+	}
+	if(gslx == 43){
+		$(".dp_tp").html("店铺LOGO：");
+		$("#wzbm").remove();
+		$("#jx_tp").remove();
+		$("#fxqx").remove();
+	}
+	if(gslx == 42){
+		$(".dp_tp").html("店铺LOGO：");
+		$("#wzbm").remove();
+		$("#fxqx").remove();
+	}
+	$("#DPXX02").attr("src",imgUrl+list[0].ZCXX27);
+	$(".yhmName").val(list[0].XTCZY01);
+	$(".dpName").val(list[0].ZCXX02);
+	$(".add").val(list[0].ZCXX08);
+	$(".lxr").val(list[0].ZCXX03);
+	$(".ZCXX70").val(list[0].ZCXX70);
+	$(".phone").val(list[0].ZCXX06);
+	$(".eml").val(list[0].ZCXX09);
+	$(".cssbm").val(list[0].SBM);
+	$(".wzm").val(list[0].WZM);
+	$(".hyjgm").val(list[0].HYGLM);
+	$(".qq").val(list[0].ZCXX57);
+	$(".weixin").val(list[0].ZCXX67);
+	$(".fplx").val(list[0].ZCXX64);
+	$(".jskhhmc").val(list[0].GSYHK09);
+	$(".jshkhh").val(list[0].GSYHK03);
+	$(".jshkhhzh").val(list[0].GSYHK02);
+	dqdm = list[0].ZCXX07;
+	zcgs01 = list[0].zcgs01;
+	var str = '<td><a class="bot Medium" style="margin-left:100px;" onclick="updata('+0+')">通过</a></td><td><a class="bot Medium" onclick="updata('+1+')">驳回</a></td>';
+	if(user.Role==1){
+	  $(".bhyj").hide();
+	}
+	if(user.Role==1 && (zcgs01==3 || zcgs01==6)){
+		$(".sub_bt").hide();
+		/* $(".sub_bt").html(str); */
+		if(gslx == 44){
+			$(".sfz").hide();
+			$(".yw_2").hide();
+			$("tr.xs").show();
+			$(".yw_3").hide();
+			$(".sub_bt").html(str);
+		}else{
+			$(".sfzcz").hide();
+			$("tr.xs").show();
+			$(".yw_2").show();
+			$(".yw_3").hide();
+			$(".sub_bt").html(str);
+		}
+	}
+	if(user.Role==2 && zcgs01==3){
+		$(".sub_bt").html(str);
+		if(gslx == 44){
+			$(".sfz").hide();
+			$(".yw_2").hide();
+			$("tr.xs").show();
+			$(".yw_3").hide();
+			$(".sub_bt").html(str);
+		}else{
+			$(".sfzcz").hide();
+			$("tr.xs").show();
+			$(".yw_2").show();
+			$(".yw_3").hide();
+			$(".sub_bt").html(str);
+		}
+	}
+	if(user.Role==2 && zcgs01==2){
+		$(".sub_bt").hide();
+		$(".yw_2").hide();
+		$(".yw_3").hide();
+		$(".cw_3").hide();
+	}
+	if(user.Role==2 && (zcgs01==7 || zcgs01==6 || zcgs01==5 || zcgs01==4)){
+		$(".sub_bt").hide();
+		$(".bhyj").hide();
+		if (gslx != 44) {
+			$(".sfzcz").hide();
+			$("tr.xs").show();
+			$(".yw_2").show();
+			$(".yw_3").hide();
+		}else{
+			$(".sfz").hide();
+			$(".wx").show();
+			$(".yw_2").hide();
+			$("tr.xs").show();
+			$(".yw_3").hide();
+		}
+	}
+	if(user.Role==3 && zcgs01==6){
+		$(".sub_bt").html(str);
+		if(gslx == 44){
+			$(".sfz").hide();
+			$(".yw_2").hide();
+			$(".yw_3").show();
+			$("tr.wx").show();
+			$(".zz").hide();
+			$(".sub_bt").html(str);
+		}else{
+			$(".sfz").hide();
+			$(".sfzcz").hide();
+			$("tr.wx").hide();
+			$(".zz").hide();
+			$(".yw_2").hide();
+		}
+	}
+	if(user.Role==3 && (zcgs01==3 || zcgs01==4 || zcgs01==5 || zcgs01==7)){
+		$(".sub_bt").hide();
+		if(gslx == 44){
+			$(".sfz").hide();
+			$(".yw_2").hide();
+			$(".yw_3").show();
+			$("tr.wx").show();
+			$(".zz").hide();
+		}else{
+			$(".sfz").hide();
+			$(".sfzcz").hide();
+			$("tr.wx").hide();
+			$(".zz").hide();
+			$(".yw_2").hide();
+		}
+	}
+	if(user.Role==2){
+		$(".cw_3").remove();
+		if (gslx == 44 && zcgs01== 5) {
+			$(".sfz").hide();
+			$(".yw_2").hide();
+			$("tr.xs").show();
+			$(".yw_3").hide();
+			$(".sub_bt").html(str);
+		}else if((gslx == 42 || gslx == 43 )&& zcgs01== 5){
+			$("tr.xs").show();
+			$(".yw_2").show();
+			$(".yw_3").hide();
+			$(".sub_bt").html(str);
+		
+	}
+	}
+	/* if(user.Role==3){	
+		$(".yw_2").hide();
+		$("tr.xs").show();
+	} */
+	
+	$(data.lists).each(function(index,val){
+		if(val.DPTP01==1){
+			$("#imgUrl11").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==2){
+			$("#imgUrl10").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==3){
+			$("#yyzzfb_code").val(val.DPTP05);
+			$("#imgUrl1").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==4){//zzjg_4
+			$("#zzjg_code").val(val.DPTP05);
+			$("#imgUrl2").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==5){
+			$("#swdj_code").val(val.DPTP05);
+			$("#imgUrl3").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==6){
+			$("#khyh_code").val(val.DPTP05);
+			$("#imgUrl4").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==7){
+			$("#ybnsr_code").val(val.DPTP05);
+			$("#imgUrl5").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==8){
+			$("#imgUrl7").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==9){
+			$("#dlxkz_code").val(val.DPTP05);
+			$("#imgUrl9").attr("src",imgUrl+val.DPTP02);
+		}
+
+	});
+	$("input[type='text']").attr("disabled",true);
+	//图片点击放大
+	$("td > img").click(function(){
+	  var td_img = $(this).attr("class");
+	  if(td_img == "img"){
+		 $(this).attr("class","big")
+		}else if(td_img == "big"){
+		 $(this).attr("class","img") 
+		}
+	 });
+});
+
+</script>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<input type="hidden" value="" id="ZCXX01" name="ZCXX01" />
+	<div id="curPosition">
+    	<a href="#">账户管理</a>
+    	<span>></span>
+    	<b>基本信息</b>
+	</div>
+	<table class="single_table">
+		<tr class="title">
+			<td colspan="2"><b>基本信息</b></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;"
+				class="dp_tp">店铺LOGO：</span></td>
+			<td class="xstp"><img src="" id="DPXX02" class="img" /></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">用户名：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="yhmName" name="yhmName" disabled="true" readonly="readonly" style="width: 300px;" /></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">联系人：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="lxr"
+				name="lxr" disabled="true" readonly="readonly"
+				style="width: 300px;" /></td>
+		</tr>
+		<tr class="dp_name">
+			<td style="width: 150px;"><span style="width: 145px;">店铺名称：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="ZCXX70"
+				name="ZCXX70" disabled="true" readonly="readonly"
+				style="width: 300px;" /></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">企业名称：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="dpName"
+				name="dpName" style="width: 300px;"  /></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">经营地址：</span></td>
+			
+			<td class="add2" style="display: table-cell block; width: 550px;"><input
+				value="" title="" type="text" class="add" readonly="readonly"
+				style="width: 300px;" /></td>
+		</tr>
+		
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">手机号码：</span></td>
+			<td style="width: 550px;"><input type="text" value=""
+				class="phone" name="phone" title="" style="width: 300px;" /></td>
+		</tr>
+		
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">邮箱地址：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="eml"
+				name="eml" title="" style="width: 300px;" /></td>
+		</tr>
+		<td style="width: 150px;"><span style="width: 145px;">QQ号码：</span></td>
+		<td style="width: 550px;"><input type="text" value="" class="qq" name="qq"
+			title="" style="width: 300px;" /></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">微信：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="weixin" name="weixin"
+				title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="title xs zz">
+			<td colspan="2"><b>资质认证</b></td>
+		</tr>
+		<tr class="sfz">
+			<td style="width: 150px;"><span style="width: 145px;">法人身份证正面：</span></td>
+			<td class="xstp"><img src="" id="imgUrl11" class="img" /><label
+				class="caozuo sfzcz">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename9" /> <input style="width: 300px;" type="file"
+				name="fssfzzm_1" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"
+				value="" id="fssfzzm_1" size="34" onchange="changefile(9);" /><label
+				class="caozuo" onclick="cancelfile(9);">取消</label></td>
+		</tr>
+		<tr class="sfz">
+			<td style="width: 150px;"><span style="width: 145px;">法人身份证反面：</span></td>
+			<td class="xstp"><img src="" id="imgUrl10" class="img" /><label
+				class="caozuo sfzcz">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename10" /> <input style="width: 300px;" type="file"
+				name="fssfzfm_2" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"
+				value="" id="fssfzfm_2" size="34" onchange="changefile(10);" /><label
+				class="caozuo" onclick="cancelfile(10);">取消</label></td>
+		</tr>
+		<tr class="yw_2 xs" >
+			<td style="width: 150px;"><span style="width: 145px;">营业执照编号：</span></td>
+			<td style="width: 550px;"><input type="text" value="" id="yyzzfb_code"
+				name="yyzzfb_code" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2 xs">
+			<td style="width: 150px;"><span style="width: 145px;">营业执照：</span></td>
+			<td class="xstp"><img src="" id="imgUrl1" class="img" /></td>
+		</tr>
+		
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">组织机构代码证编号：</span></td>
+			<td style="width: 550px;"><input type="text" value="" id="zzjg_code"
+				name="zzjg_code" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">组织机构代码证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl2" class="img" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">税务登记证编号：</span></td>
+			<td style="width: 550px;"><input type="text" value="" id="swdj_code"
+				name="swdj_code" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">税务登记证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl3" class="img" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">银行开户许可证编号：</span></td>
+			<td style="width: 550px;"><input type="text" value="" id="khyh_code"
+				name="khyh_code" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">银行开户许可证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl4" class="img" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">一般纳税人证明：</span></td>
+			<td style="width: 550px;"><input type="text" value="" id="ybnsr_code"
+				name="ybnsr_code" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">一般纳税人许可证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl5" class="img" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">结算户开户行名称：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="jskhhmc"
+				name="jskhhmc" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">结算户开户行：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="jshkhh"
+				name="jshkhh" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2">
+			<td style="width: 150px;"><span style="width: 145px;">结算户开户行账号：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="jshkhhzh"
+				name="jshkhhzh" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="title cw_3 ss">
+			<td colspan="2"><b>行业认证</b></td>
+		</tr>
+		<tr class="mjjbxx cw_3 ss" id="wzbm">
+			<td style="width: 150px;"><span style="width: 145px;">企业位置码：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="wzm"
+				name="wzm" title="" style="width: 300px;" /></td>
+		</tr>
+		<!-- <tr class="mjjx" style="display: none;">
+			<td style="width: 150px;"><span style="width: 145px;">行业监管码：</span></td>
+			<td style="width: 550px;"><input value="" class="hyjgm"
+				name="hyjgm" title="" style="width: 300px;" /></td>
+		</tr> -->
+		<tr class="jxqyjbxx cw_3" id="cssbm">
+			<td style="width: 150px;"><span style="width: 145px;">厂商识别码：</span></td>
+			<td style="width: 550px;"><input type="text" value="" class="cssbm"
+				name="cssbm" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2 yw_3 xs wx" >
+			<td style="width: 150px;"><span style="width: 145px;">道路许可证编号：</span></td>
+			<td style="width: 550px;"><input type="text" value="" id="dlxkz_code"
+				name="dlxkz_code" title="" style="width: 300px;" /></td>
+		</tr>
+		<tr class="yw_2 yw_3 xs wx">
+			<td style="width: 150px;"><span style="width: 145px;">道路许可证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl9" class="img" /></td>
+		</tr>
+		<!-- <tr class="jxqyjbxx cw_3" id="jx_tp">
+			<td style="width: 150px;"><span style="width: 145px;">经销商授权：</span></td>
+			<td class="xstp"><img src="" id="imgUrl7" class="img" /></td>
+			
+		</tr> -->
+		<tr class="bhyj">
+			<td style="width: 150px;"><span style="width: 145px;">审核意见：</span></td>
+			<td style="width: 550px;">
+				<textarea  rows="3" style="width: 300px;margin:15px;" id="Content_yj"></textarea>
+			</td>
+		</tr>
+		
+		<!-- <tr id="fxqx">
+			<td style="width: 150px;"><span style="width: 145px;">放心汽修：</span></td>
+			<td style="width: 550px;"><input type="checkbox"  name="zcxx69" id="zcxx69"  style="width:0px;"/></td>
+		</tr> -->
+		<tr class="bot sub_bt">
+			
+		</tr>
+		<tr style="height: 10px;"></tr>
+		<tr class="title yw_2">
+			<td colspan="2"><b>审核意见</b></td>
+		</tr>
+	</table>
+	<div class="clera"></div>  
+  	<div class="clera"></div>
+  	<input type="hidden" value="" id="dqdm" name="dqdm" />
+  	<input type="hidden" value="" id="address" name="address" />
+</form>
+<!---------------------底部--------------------->
+</body>
+<script type="text/javascript">
+
+function updata(obj){
+	var XmlData = {};
+	var state = getStatus(zcgs01,obj);
+	XmlData["ZCXX01"]=user.ZCXX01;
+	XmlData["ZCXX"] = ZCXX01;
+	XmlData["XTCZY01"]=$(".yhmName").val();
+	XmlData["Content"]=$("#Content_yj").val();
+	if($("#zcxx69").attr("checked")){
+		XmlData["ZCXX69"]="1";	
+	}else{
+		XmlData["ZCXX69"]="0";
+	}
+	XmlData["updateStatus"]=state;
+	var url="/Register/auditRegister.action?json="+JSON.stringify(XmlData);
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(data){
+			if(data.state=="success"){
+				alert("操作成功!");
+				parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+			}else{
+				alert("操作失败!");
+			}
+		}
+	});
+}
+function getStatus(zcgs01,type)
+{
+	var updateStatus;
+	if(zcgs01=="3")
+	{
+		if(type=="0")
+		{
+			updateStatus="6";
+		}else
+		{
+			updateStatus="7";
+		}
+	}else if(zcgs01=="6")
+	{
+		if(type=="0")
+		{
+			updateStatus="4";
+		}else
+		{
+			updateStatus="5";
+		}
+	}
+	if(zcgs01=="5"){
+		if (type=="0") {
+			updateStatus="6";
+		} else {
+			updateStatus="3";
+		}
+	}
+	return updateStatus;
+}
+</script>
+</html>

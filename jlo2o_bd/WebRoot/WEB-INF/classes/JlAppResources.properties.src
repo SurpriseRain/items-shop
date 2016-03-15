@@ -1,0 +1,4 @@
+#MAPPER文件路径
+mapper.path=/jlsoft/mapper/
+scm.report=prints.xml
+Port=8080

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.order.sql.LinePayment">
+	<!--查询服务套餐列表 -->
+	<select id="LinePayment" parameterType="map" resultType="map">
+		SELECT  a.JYDH, b.XSDD01,DATE_FORMAT(a.HKRQ,'%Y-%c-%d') AS HKRQ,a.JYJE,a.JYLSH,a.HKR,
+	(CASE XSDD51
+         WHEN 0 THEN
+          '默认'
+         WHEN 1 THEN
+          '待审核'
+         WHEN 2 THEN
+          '已审核'
+          WHEN 3 THEN
+          '驳回'
+       END) XSDD51,
+       XSDD51 status
+	FROM w_jyd a, w_jyditem b
+	WHERE a.XSDD50=1 and a.XSDD51>0
+	AND a.JYDH=b.JYDH AND HKRQ is not null 
+	<if test="XSDD01!=''">AND b.XSDD01 =#{XSDD01}</if>
+	<if test="XSDD51!=''">AND a.XSDD51 =#{XSDD51}</if>
+	<if test="date_s!=''">AND a.HKRQ &gt;= #{date_s}</if> 
+  	<if test="date_e!=''">AND a.HKRQ &lt;= #{date_e}</if>
+  	 GROUP BY a.JYLSH
+  	 order by a.HKRQ desc,  status asc
+	</select>
+	<!-- 查询总列表 -->
+	<select id="LinePayment_sum" parameterType="map" resultType="map">
+		SELECT COUNT(1) as COUNT FROM w_jyd a, w_jyditem b
+	WHERE a.XSDD50=1
+	AND a.JYDH=b.JYDH
+	<if test="XSDD01!=''">AND b.XSDD01 =#{XSDD01}</if>
+	<if test="XSDD51!=''">AND a.XSDD51 =#{XSDD51}</if>
+	<if test="date_s!=''">AND a.HKRQ &gt;= #{date_s}</if> 
+  	<if test="date_e!=''">AND a.HKRQ &lt;= #{date_e}</if>
+	</select>
+</mapper>

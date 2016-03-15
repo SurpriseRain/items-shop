@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.prpduct.sql.oper_floor" >
+	<!-- 查询楼层 -->
+	<select id="select_lcfl" parameterType="Map" resultType="Map">
+			SELECT A.LCFL01 ,A.LCFL02, 
+			DATE_FORMAT(A.OPERTIME, '%Y-%m-%d %k:%i:%s') OPERTIME
+			 FROM W_LCFL A WHERE 1=1	
+			<if test=" lcfl01 != null and lcfl01 != ''">AND A.LCFL01 = #{lcfl01}</if>
+			<if test=" lcfl02 != null and lcfl02 != '' ">AND A.LCFL02 LIKE CONCAT ('%',#{lcfl02},'%') </if>
+			ORDER BY A.LCFL01 ASC
+	</select>
+	
+	<!-- 查询楼层总和 -->
+	<select id="select_lcfl_sum" parameterType="Map" resultType="Map">
+			SELECT COUNT(1) as COUNT FROM W_LCFL A WHERE 1=1	
+			<if test=" lcfl01 != null and lcfl01 != ''">AND A.LCFL01 = #{lcfl01}</if>
+			<if test=" lcfl02 != null and lcfl02 != '' ">AND A.LCFL02 LIKE CONCAT ('%',#{lcfl02},'%') </if>
+			ORDER BY A.LCFL01 ASC
+	</select>
+	
+	<select id="select_lclx" parameterType="Map" resultType="Map">
+	SELECT LCSPLX01,LCSPLX02 FROM W_LCSPLX A,W_LCFL B WHERE A.LCFL01=B.LCFL01
+	<if test=" lcfl01 != null and lcfl01 != ''">AND A.LCFL01 = #{lcfl01}</if>
+	ORDER BY LCSPLX01
+	</select>
+	<!-- 编辑商品类型查询 -->
+	<select id="editLcfl" parameterType="Map" resultType="Map">
+		SELECT A.LCFL01 FROM W_LCFL A WHERE A.LCFL01=0
+	</select>
+
+	<!-- 楼层商品 -->
+	<select id="selectspxxlc" parameterType="Map" resultType="Map">
+	SELECT A.SPXX01 SPID,
+       B.SPXX04 SPMC,
+       C.ZCXX02 GHSNAME,
+       A.ZCXX01 GSID,
+       B.PPB01 PPBCODE,
+       B.PPB02 PPBNAME,
+       B.SPFL02_CODE FLCODE,
+       B.SPFL02_NAME FLNAME,
+       D.SPJGB01 SPJG,
+       A.SPGL12 SJBJ,
+       TO_CHAR((SUM(E.CKSP04 + E.CKSP05 + E.KCXX01 - E.KCXX02))) NUM
+  FROM W_SPGL A, W_SPXX B, W_ZCXX C,CK, W_SPJGB D, W_KCXX E
+ WHERE A.SPXX01 = B.SPXX01
+   AND A.ZCXX01 = C.ZCXX01
+   AND A.SPXX01 = D.SPXX01
+   AND A.ZCXX01 = D.ZCXX01
+   AND A.SPXX01 = E.SPXX01
+   AND A.ZCXX01 = D.ZCXX01
+   AND E.CK01 = CK.CK01 AND CK.ck09='0'
+   <if test="sp_id!=''">AND A.SPXX01 = #{sp_id}</if>
+   <if test="gsid!=''">AND A.ZCXX01 = #{gsid}</if>
+   <if test="spname!=''">AND B.SPXX04 like '%'||#{spname}||'%'</if>
+ GROUP BY A.SPXX01,
+          B.SPXX04,
+          C.ZCXX02,
+          A.ZCXX01,
+          B.PPB01,
+          B.PPB02,
+          B.SPFL02_CODE,
+          B.SPFL02_NAME,
+          D.SPJGB01,
+          A.SPGL12
+	</select>
+	<!-- 查询商品信息 -->
+	<select id="selectSpxxForLc" parameterType="Map" resultType="Map">
+	SELECT A.SPXX01 SPXX01,
+	       D.SPXX04 SPXX04,
+	       A.ZCXX01 GSID,
+	       (SELECT GS.ZCXX02 FROM W_ZCXX GS WHERE A.ZCXX01 = GS.ZCXX01) GHSNAME,
+	       D.PPB01 PPBCODE,
+	       D.PPB02 PPBNAME,
+	       D.SPFL01 FLCODE,
+	       B.SPJGB01 SPJG,
+	       D.SPFL02_NAME FLNAME,
+	       A.SPGL12 SJBJ,
+	       (SUM(C.CKSP04 + C.CKSP05 + C.KCXX01 - C.KCXX02)) NUM
+	  FROM W_SPGL A, W_SPJGB B, W_KCXX C,CK, W_SPXX D
+	 WHERE B.SPXX01 = A.SPXX01
+	   AND A.ZCXX01 = B.ZCXX01
+	   AND C.SPXX01 = A.SPXX01
+	   AND C.ZCXX01 = A.ZCXX01
+	   AND A.SPXX01 = D.SPXX01
+	   AND C.CK01 = CK.CK01 AND CK.ck09='0'
+	   AND A.SPGL12 IN ('1', '3')
+	   AND NOT EXISTS (SELECT 1 FROM W_LCSP E WHERE A.SPXX01 = E.SPXX01)
+     <if test="SPXX01!=''">AND A.SPXX01 = #{SPXX01}</if>
+   	 <if test="SPXX04!=''">AND D.SPXX04 like concat ('%',#{SPXX04},'%')</if>
+   GROUP BY A.SPXX01,
+              D.SPXX04,
+              A.ZCXX01,
+              D.PPB01,
+              D.PPB02,
+              D.SPFL01,
+              B.SPJGB01,
+              D.SPFL02_NAME,
+              A.SPGL12
+     ORDER BY A.SPXX01
+	</select>
+	
+	<select id="selectSpxxForLc_sum" parameterType="Map" resultType="Map">
+	SELECT COUNT(1) AS COUNT FROM (
+		SELECT A.SPXX01 SPXX01,
+		       D.SPXX04 SPXX04,
+		       A.ZCXX01 GSID,
+		       (SELECT GS.ZCXX02 FROM W_ZCXX GS WHERE A.ZCXX01 = GS.ZCXX01) GHSNAME,
+		       D.PPB01 PPBCODE,
+		       D.PPB02 PPBNAME,
+		       D.SPFL01 FLCODE,
+		       B.SPJGB01 SPJG,
+		       D.SPFL02_NAME FLNAME,
+		       A.SPGL12 SJBJ,
+		       (SUM(C.CKSP04 + C.CKSP05 + C.KCXX01 - C.KCXX02)) NUM
+		  FROM W_SPGL A, W_SPJGB B, W_KCXX C,CK, W_SPXX D
+		 WHERE B.SPXX01 = A.SPXX01
+		   AND A.ZCXX01 = B.ZCXX01
+		   AND C.SPXX01 = A.SPXX01
+		   AND C.ZCXX01 = A.ZCXX01
+		   AND A.SPXX01 = D.SPXX01
+		   AND C.CK01 = CK.CK01 AND CK.ck09='0'
+		   AND A.SPGL12 IN ('1', '3')
+		   AND NOT EXISTS (SELECT 1 FROM W_LCSP E WHERE A.SPXX01 = E.SPXX01)
+	     <if test="SPXX01!=''">AND A.SPXX01 = #{SPXX01}</if>
+	   	 <if test="SPXX04!=''">AND D.SPXX04 like concat ('%',#{SPXX04},'%')</if>
+	   GROUP BY A.SPXX01,
+	              D.SPXX04,
+	              A.ZCXX01,
+	              D.PPB01,
+	              D.PPB02,
+	              D.SPFL01,
+	              B.SPJGB01,
+	              D.SPFL02_NAME,
+	              A.SPGL12
+	     ORDER BY A.SPXX01) as total
+	</select>
+	<!-- 楼层选择 -->
+	<select id="selectLcfl" parameterType="Map" resultType="Map">
+	SELECT A.LCFL01 ,A.LCFL02,A.OPERTIME FROM W_LCFL A WHERE 1=1
+	<if test="ztfb01!=0">AND ZTFB01 = #{ztfb01}</if>
+<!--	<if test="lcfl01!=0">-->
+<!--		<if test="lcfl01!=''">-->
+<!--		AND A.LCFL01 = #{ztfb01}</if>-->
+<!--	</if>-->
+<!--	<if test="lcfl02!=''">AND A.LCFL02 LIKE = '%'||#{lcfl02}||'%'</if>-->
+	</select>
+	<!-- 查询楼层商品 -->
+	<select id="selectlcsp" parameterType="Map" resultType="Map">
+	SELECT DISTINCT D.LCFL01 LCFL01,
+ 		A.LCSPLX01 LCSPLX01,
+       D.LCSPLX02 LCSPLX02,
+       A.SPXX01   SPXX01,
+       B.SPXX02   SPCODE, 
+       B.SPXX04   SPMC,
+       A.ZCXX01   ZCXX01,
+       C.ZCXX02    GSMC,
+       DATE_FORMAT(A.OPERTIME, '%Y-%m-%d ') OPERTIME,
+       E.SPJGB01 SPJG ,
+       E.SPJGB02 SCJG 
+  FROM W_LCSP A, W_SPXX B, W_ZCXX C, W_LCSPLX D,W_SPJGB E ,W_SPGL F
+ WHERE A.SPXX01 = B.SPXX01
+   AND A.ZCXX01 = C.ZCXX01
+   AND A.LCSPLX01 = D.LCSPLX01
+   AND A.SPXX01 =E.SPXX01
+   AND A.ZCXX01 =E.ZCXX01
+   AND A.SPXX01 =F.SPXX01
+   AND F.SPGL12 IN ('1','3')
+	<if test="spxx01!=''">AND A.SPXX01 =#{spxx01}</if>
+	<if test="lcspmc!=''">AND B.SPXX04 LIKE CONCAT ('%',#{lcspmc},'%')</if>
+	<if test="lcfl01!=''">AND A.LCFL01 =#{lcfl01}</if>
+		ORDER BY A.SPXX01 
+	</select>
+	<!-- 查询楼层商品总数 -->
+	<select id="selectlcsp_sum" parameterType="Map" resultType="Map">
+	SELECT 
+         COUNT(1) as COUNT
+    FROM  (SELECT DISTINCT D.LCFL01 LCFL01,
+		 		A.LCSPLX01 LCSPLX01,
+		       D.LCSPLX02 LCSPLX02,
+		       A.SPXX01   SPXX01,
+		       B.SPXX02   SPCODE, 
+		       B.SPXX04   SPMC,
+		       A.ZCXX01   ZCXX01,
+		       C.ZCXX02    GSMC,
+		       DATE_FORMAT(A.OPERTIME, '%Y-%m-%d ') OPERTIME,
+		       E.SPJGB01 SPJG ,
+		       E.SPJGB02 SCJG 
+		  FROM W_LCSP A, W_SPXX B, W_ZCXX C, W_LCSPLX D,W_SPJGB E ,W_SPGL F
+		 WHERE A.SPXX01 = B.SPXX01
+		   AND A.ZCXX01 = C.ZCXX01
+		   AND A.LCSPLX01 = D.LCSPLX01
+		   AND A.SPXX01 =E.SPXX01
+		   AND A.ZCXX01 =E.ZCXX01
+		   AND A.SPXX01 =F.SPXX01
+		   AND F.SPGL12 IN ('1','3')
+			<if test="spxx01!=''">AND A.SPXX01 =#{spxx01}</if>
+			<if test="lcspmc!=''">AND B.SPXX04 LIKE CONCAT ('%',#{lcspmc},'%')</if>
+			<if test="lcfl01!=''">AND A.LCFL01 =#{lcfl01}</if>
+				ORDER BY A.SPXX01 ) as total
+	</select>
+
+	
+	<select id="selectLcflitem" parameterType="Map" resultType="Map"> 
+		SELECT A.LCFL01, A.SPFL01, B.SPFL02,STR_TO_DATE(A.OPERTIME,'%Y-%m-%d ') OPERTIME
+		FROM W_LCFLITEM A, SPFL B 
+		WHERE A.SPFL01 = B.SPFL01
+   		<if test="LCFL01!=''">
+   			<if test="LCFL01!=0" >AND A.LCFL01 = #{LCFL01}</if>
+   		</if>
+   		<if test="SPFL02!=''">AND B.SPFL02 LIKE CONCAT ('%', #{SPFL02} ,'%')</if>
+   		ORDER BY A.LCFL01 ASC
+	</select>
+	
+	<!-- 楼层品牌 -->
+	<select id="selectlcpp"  parameterType="Map" resultType="Map"> 
+		SELECT A.LCFL01, A.LCPP02, A.LCPP03, A.LCPP04, A.LCPP05, STR_TO_DATE(A.OPERTIME, '%Y-%m-%d ') OPERTIME	
+  		FROM W_LCPP A, W_LCFL B
+		WHERE  A.LCFL01 = B.LCFL01	
+		<if test="ztfb01!=''">AND B.ZTFB01 = #{ztfb01}</if>		
+			
+   		<if test="LCFL01!=''">
+   			<if test="LCFL01!=0" >AND A.LCFL01 = #{LCFL01}</if>
+   		</if>		   			
+		<if test="LCPP02!=''">AND A.LCPP02 LIKE CONCAT ('%',#{LCPP02},'%')</if>	  		
+	</select>
+	
+	<!-- 楼层商品类型查询 -->
+	<select id="selectLcsplx" parameterType="Map" resultType="Map">
+		SELECT A.LCFL01 ,A.LCSPLX01,A.LCSPLX02,STR_TO_DATE(A.OPERTIME, '%Y-%m-%d ') OPERTIME 
+		FROM W_LCSPLX A WHERE 1=1
+		<if test="LCFL01!=''">
+			<if test="LCFL01!=0">AND A.LCFL01 = #{LCFL01}</if>
+		</if>
+		<if test="LCSPLX01!=''">
+			<if test="LCSPLX01!=0">AND A.LCSPLX01 = #{LCSPLX01}</if>
+		</if>	
+		<if test="LCSPLX02!=0">AND A.LCSPLX02 LIKE CONCAT ('%', #{LCSPLX02} ,'%')</if>	
+		ORDER BY A.LCSPLX01 ASC
+	</select>
+	<!-- 定义商品类型 -->
+	<select id="edit_LCSPLX" parameterType="Map" resultType="Map">
+	SELECT LCSPLX02 FROM W_LCSPLX where lcsplx01=-1
+	</select>
+	
+	<!-- 楼层热门搜索查询 -->
+	<select id="select_rmss" parameterType="Map" resultType="Map" >
+	   SELECT W.RMSSC01,W.RMSSC02,W.RMSSC03 FROM W_RMSS W where 1=1
+	   <if test="RMSSC01!=''">
+			<if test="RMSSC01!=0">AND W.RMSSC01 = #{RMSSC01}</if>
+		</if>
+		<if test="GSXX01!=''">AND W.GSXX01 = #{GSXX01}</if>	
+		<if test="RMSSC02!=0">AND W.RMSSC02 LIKE CONCAT ('%', #{RMSSC02} ,'%')</if>	
+	  	order by W.RMSSC01 ASC
+	</select>
+	
+	
+	
+</mapper>

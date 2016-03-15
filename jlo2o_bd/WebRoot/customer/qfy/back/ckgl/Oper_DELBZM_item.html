@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>串码管理</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/css/multiSelectTree.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+/* if(MyCookie==null){
+	alert("亲，您还未登录！");
+	location.href="/gui_o2o/qfy/fore/index.html";
+} */
+var user = JSON.parse(MyCookie);
+var gsid=user.ZCXX01;
+var czr = user.XTCZY01;
+$(document).ready(function(){
+	//包装码
+	var SPCM01 = $.getUrlParam("SPCM01");
+	//批次号
+	var BatchNumber = $.getUrlParam("PCH");
+	if(BatchNumber!=""){
+		$("#BatchNumber").val(BatchNumber);
+	}else{
+		var count = SPCM01.indexOf("(21)")-(SPCM01.indexOf("(10)")+4);
+		$("#BatchNumber").val(SPCM01.substr(SPCM01.indexOf("(10)")+4,count));
+	}
+	//顺序号
+	/*var SerialNumber =  $.getUrlParam("XLH");
+	if(SerialNumber!=""){
+		$("#SerialNumber").val(SerialNumber);
+	}else{
+	
+		$("#SerialNumber").val(SPCM01.substr(SPCM01.indexOf("(21)")+4,count));
+	}
+	 
+	//商品名称
+	var GoodsNname =  $.getUrlParam("SPXX04");
+	$("#GoodsNname").val(GoodsNname);*/
+	//条码
+	var BARCODE =  $.getUrlParam("BARCODE");
+	$("#Barcode").val(BARCODE);
+	//出库时间
+	var DRRQ =  $.getUrlParam("DRRQ");
+	$("#DRRQ").val(DRRQ);
+	var XmlData = [{"spcm01":SPCM01,"zcxx01":gsid,"flag":"item"}];
+	var url = "/XmlUploadProduct/deleteW_SPCM.action?XmlData="+JSON.stringify(XmlData);
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.spcmlist).each(function(index,val){
+		 	var count = val.curCode.indexOf("(9999)")-(val.curCode.indexOf("(21)")+4);
+		 	if(index==0){
+		 		$("#screening").append("<li width='830px'><span style='width:80px'>商品名称：</span><input name='GoodsNname' id=GoodsNname value='"+val.spxx04+"' style='width:400px' class='text1'/></li>");
+		 	}
+	    	$("#screening").append("<li width='830px'><span style='width:80px'>商品串码：</span><input name='SPCM01' id='SPCM01' style='width:550px' value='"+val.curCode+"' class='text1'/><span style='width:80px'>顺序号：</span><input id='SerialNumber' type='text' value='"+val.curCode.substr(val.curCode.indexOf("(21)")+4,count)+"' style='width:60px' class='text1'/></li>");
+	     });
+	}
+});
+</script>
+<style>
+	ul#screening li input.text1{
+		border:none;
+		background:#f4f4f4;
+		
+		
+	}
+	ul#screening li input{
+		max-width:330px;
+	}
+	
+</style>
+</head>
+<body>
+ 	<ul id="screening">
+		<li width="830px">
+	    	<span style="width:80px">商品条码：</span>
+	    	<input name="Barcode" id="Barcode" style="width:295px" class='text1'/>
+			<span style="display:block;width:80px;margin-left:43px;">出库时间：</span>
+			<input id="DRRQ" type="text" style="width:135px" class='text1'/>
+			<span style="display:block;width:50px">批次号：</span>
+			<input id="BatchNumber" type="text" class='text1' style="width:80px;"/>
+	   </li>
+	</ul>
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+// 查询
+function query(){
+	init();
+}
+//列表
+function detailBZM(x){
+		location.href="/customer/qfy/back/hdgl/Srch_TCBM.html?ACTIVITYID="+x;
+}
+</script>
+</html>

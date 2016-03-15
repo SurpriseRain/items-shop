@@ -1,0 +1,96 @@
+#readExcelStyle{
+          border-spacing:0;
+          border-collapse:collapse;
+          border:0;
+          width:100%;
+          height:500px;
+          margin: 0 auto;
+          padding:0;
+          text-align:center;
+          position:absolute;
+          top:0;
+          left:0;
+          z-index:11;
+}
+#readExcelStyle td{
+          text-align:center;
+          vertical-align: middle;
+          padding:0;
+}
+#readExcelStyle .mwindow{
+          border:1px solid #3C78B5;
+          /*border:1px solid #7fabe7;*/
+          background-color:#eff6ff;
+          width:350px;
+          margin:0 auto;
+          padding-bottom:20px;
+}
+#readExcelStyle .mwindow .mwindowstitle{
+          color:#FFFFFF;
+          background:#3C78B5;
+          /*background:#D5E6F6;*/
+          padding:5px 0 5px 10px;
+          font-weight:bold;
+          text-align:left;
+}
+#readExcelStyle .mwindow .mwindowsmsg{
+          padding:40px 40px;
+}
+
+#div_readExcel_Bg{
+   width:100%;
+   height:100%;
+   margin: 0 auto;
+   background-color:#CCCCCC;
+   padding:0;
+   text-align:center;
+   filter:alpha(opacity=40);
+   opacity:.4;
+   position:absolute;
+   top:0;
+   left:0;
+   z-index:10;
+}
+
+#readimport{
+          border-spacing:0;
+          border-collapse:collapse;
+          border:0;
+          width:100%;
+          height:500px;
+          margin: 0 auto;
+          padding:0;
+          text-align:center;
+          position:absolute;
+          top:0;
+          left:0;
+          z-index:11;
+}
+
+.readimport_mwindowsmsg td{
+          text-align:center;
+          vertical-align: middle;
+          padding:0;
+}
+
+.readimport_mwindow{
+          border:1px solid #3C78B5;
+          /*border:1px solid #7fabe7;*/
+          background-color:#eff6ff;
+          width:350px;
+          margin:0 auto;
+          padding-bottom:20px;
+}
+
+.readimport_mwindow .readimport_mwindowstitle{
+          color:#FFFFFF;
+          background:#3C78B5;
+          /*background:#D5E6F6;*/
+          padding:5px 0 5px 10px;
+          font-weight:bold;
+          text-align:left;
+}
+
+.readimport_mwindow .readimport_mwindowsmsg{
+          padding:40px 40px;
+}

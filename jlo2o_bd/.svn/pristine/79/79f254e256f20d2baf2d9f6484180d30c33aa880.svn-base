@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<title>微信支付-结果通知</title>
+</head>
+	<style type="text/css">
+   
+    span.ddfh b.cg {
+	    float: left;
+	    font-weight: bold;
+	    font-size: 40px;
+	    color: #3C0;
+	    margin-top: 70px;
+	}
+	
+	#second img.gou {
+	    float: left;
+	    margin-left: 450px;
+	    padding-top: 70px;
+	}
+	a.qd {
+	    float: left;
+	    width: 200px;
+	    line-height: 50px;
+	    color: #FFF;
+	    background: #03C;
+	    text-align: center;
+	    font-size: 24px;
+	    margin-left: 535px;
+	    margin-top: 10px;
+	    cursor: pointer;
+	}
+	</style>
+<body>
+<div class="w12 toper"><!---toper截点---></div>
+<div class="w12 header"><!---头部截点---></div>
+<div class="w12 nav"><!---导航截点---></div>
+
+	<div class="clera"></div>
+	<div style="width: 500px;margin-left: 35%;">
+	<img src="/customer/sydjt/images/success.png" class="gou" />
+	</div>
+
+<div class="w12 footer"><!---底部截点---></div>
+</body>
+<script type="text/javascript" src="/customer/sydjt/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/ui.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/loadpage.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/index-09.js"></script>
+</html>

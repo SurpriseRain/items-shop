@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.info.sql.Srch_ZXXW','QryType':'Report','dataType':'Json','jlbh':$('#jlbh').val(),'date_s':$('#regdate_str').val(),'date_e':$('#regdate_end').val(),'title':$('#title').val(),'code':$('#code').val()}];
+ /*  var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+  var rData=visitService(url);
+  alert(JSON.stringify(rData)); */
+  var rData= visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+  if(rData[0]!=undefined&&rData[0]!=""){
+	 $("#code").empty();
+ 	 $("#code").append(
+ 		 	 '<option value="">请选择</option>'+
+	  		'<option value='+rData[0].LXCODE+'>'+rData[0].LXNAME+'</option>'
+	  	);
+  	}
+  return rData;
+}
+</script>
+<!--  <script type="text/javascript" src="/control/js/tableGrid.js"></script>
+<script type="text/javascript" src="/js/jquery.kkPages.js"></script>-->
+
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+<!-- 	<div id="curPosition">
+    	<a href="#">信息管理</a>
+    	<span>></span>
+    	<b>资讯新闻</b>
+	</div> -->
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:830px;">
+	   	<span>新闻编码：</span>
+		<input type="text" id="jlbh" name="jlbh" class="text" size="20"/>
+	   	<span>资讯标题：</span>
+		<input type="text" id="title" name="title" class="text" size="20"/>
+	    <span>资讯类型：</span>
+			<select id="code" name="code" style="width: 163px;">
+						<option value="">请选择</option>
+			</select> 
+	   </li>	   
+	   <li style="width:830px;">
+	      	<span>发布时间：</span>
+			<input id="regdate_str" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+			<span class="z" style="width:20px;">~</span>
+			<input id="regdate_end" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+	   
+			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="newXX()">新增</a>
+			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'JLBH','header':'信息编号','type':'lable','width':'50px','id':'ZCXX01'},
+							{'property':'TITLE','header':'标题','type':'lable','width':'80px','id':'ZCXX02'},
+							{'property':'FBSJ','header':'发布时间','type':'lable','width':'120px','id':'DPXX01'},
+							{'property':'LXNAME','header':'新闻类型','type':'lable','width':'50px','id':'DPXX02'}]"
+		afterUrl="/customer/qfy/back/xxgl/zxxw/Oper_ZXXW_item.html?JLBH=">
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+function newXX(){
+	parent.ajaxGrid('/customer/qfy/back/xxgl/zxxw/Oper_ZXXW_item.html');
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+</script>

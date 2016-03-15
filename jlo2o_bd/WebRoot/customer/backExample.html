@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 后台表格样式模版</title>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<!--<script type="text/javascript" src="js/shop_table.js"></script>-->
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+
+</head>
+
+<body>
+  <!------------------------弹出层模板--------------------->
+   <a class="bot Long" onclick="ajaxGridOpen()">点击弹出Grid</a>
+   <a class="bot Medium" onclick="ajaxGridOpen()">点击弹出Grid</a>
+  <div class="shop-right-main">
+  <!------------------------当前位置模板--------------------->
+  <div id="curPosition">
+    <a href="#">我是卖家</a>
+    <span>></span>
+    <a href="#">公益品牌</a>
+    <span>></span>
+    <b>申请公益品牌</b>
+  </div>
+  <div class="clera"></div>
+  <!------------------------搜索栏样式模板--------------------->
+  <ul id="screening">
+   <li><span>条件搜索：</span><input /><a class="bot Short">搜 索</a></li>
+   <li>
+     <span>单选搜索：</span>
+     <input type="radio" class="radio" name="tj" /><label class="radio">条件一</label>
+     <input type="radio" class="radio" name="tj" /><label class="radio">条件二</label>
+     <a class="bot Short">搜 索</a>
+   </li>
+   <li>
+     <span>下拉选择：</span>
+     <select><option>选择条件一</option><option>选择条件二</option><option>选择条件三选择条件三</option></select>
+     <a class="bot Short">搜 索</a>
+   </li>
+   <li>
+     <span>复选搜索：</span>     
+     <input type="checkbox" class="checkbox" name="tj" /><label class="checkbox">条件一</label>
+     <input type="checkbox" class="checkbox" name="tj" /><label class="checkbox">条件二</label>
+   </li>
+   <li class="bot">
+      <a class="bot Short" style="margin-left:100px;">搜 索</a><a class="bot Short">搜 索</a>
+   </li>
+  </ul>
+  <div class="clera"></div>
+  <!------------------------单表前台模板--------------------->
+  <table class="single_table">
+     <tr class="title"><td colspan="2"><b>申请公益品牌</b><font>* 必填项</font></td></tr>
+     <tr>
+       <td style="width:100px;"><span>企业名称：</span></td>
+       <td style="width:550px;"><font>*</font><input value="武汉任驰汽配专营店" style="width:300px;" /></td>
+     </tr>
+     <tr>
+       <td><span>企业性质：</span></td>
+       <td><font>*</font>
+         <input type="radio" class="radio" /><label class="radio">生产企业</label>
+         <input type="radio" class="radio" /><label class="radio">23</label>
+         <input type="checkbox" class="checkbox" /><label class="checkbox">生产企业</label>
+       </td>
+     </tr>   
+     <tr>
+       <td><span>图片例子：</span></td>
+       <td><font>*</font>
+        <img src="images/3.jpg" onclick="imgOpen()" />
+       </td>
+     </tr> 
+     <tr><td><span>企业地址：</span></td><td><font>*</font><select class="dq"><option>省</option><option>湖北省</option></select><select class="dq"><option>市/区</option><option>武汉市</option><option>孝感市</option></select><select class="dq"><option>市/县</option><option>武汉市</option><option>孝感市</option></select><input /></td></tr>      
+     <tr><td><span>联系人：</span></td><td><font>*</font><input type="file"/><input type="checkbox" class="checkbox" /><label class="checkbox">34534534 </label></td></tr>
+     <tr class="bot">
+       <td colspan="2">
+         <a class="bot Long">确 定</a>
+         <a class="bot Medium">确 定</a>
+         <a class="bot Short">确 定</a>
+       </td>
+      </tr>    
+    </table>
+  <div class="clera"></div>
+  <!------------------------列表前台模板--------------------->
+  <table class="list_table">
+      <tr class="title">
+        <td><input type="checkbox" class="checkbox all" /></td>
+        <td>商品名称</td>
+        <td>数字<font>（单位）</font></td>
+        <td>规格</td>
+        <td>计量单位</td>
+        <td>操作</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="checkbox all" /></td>
+        <td><a title="泰溥（Taipu）汽车防雪挡风挡汽车防雪挡风挡防霜罩防霜罩 罩 轿车款" style="width:200px;">泰溥（Taipu）汽车防雪汽车防雪挡风挡防霜罩挡风挡防霜罩 罩 轿车款</a></td>
+        <td><span class="pic">1000.00</span></td>
+        <td><input type="radio" class="radio" /><label class="radio">是</label><input type="radio" class="radio" /><label class="radio">否</label></td>
+        <td><input type="checkbox" class="checkbox" /><label class="checkbox">是</label><input type="checkbox" class="checkbox" /><label class="checkbox">否</label></td>
+        <td><a class="operation">删除</a><a class="operation">删除</a></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="checkbox all" /></td>
+        <td><input /></td>
+        <td><select><option>下拉列表样式</option><option>下拉列表样式</option></select></td>
+        <td><input type="radio" class="radio" /><label class="radio">是</label><img src="images/3.jpg" onclick="imgOpen()" /></td>
+        <td><input type="checkbox" class="checkbox" /><label class="checkbox">是</label><input type="checkbox" class="checkbox" /><label class="checkbox">否</label></td>
+        <td><a class="operation">删除</a><a class="operation">删除</a></td>
+      </tr>
+     <tr class="bot">
+       <td colspan="6">
+         <a class="bot Long">确 定</a>
+         <a class="bot Medium">确 定</a>
+         <a class="bot Short">确 定</a>
+       </td>
+      </tr> 
+    </table>
+  <div class="clera"></div>
+  <!------------------------数据展示列模板---------------------> 
+  <table class="show_table">
+    <tr><td><span>商品名称：</span></td><td><label title="泰溥（Taipu）汽车防雪挡风挡汽车防雪挡风挡防霜罩防霜罩 罩 轿车款">泰溥（Taipu）汽车防雪挡风挡汽车防雪挡风挡防霜罩防霜罩 罩 轿车款</label></td><td><span>商品价格：</span></td><td><label class="pic">￥:1000.00</label></td></tr>
+    <tr><td><span>商品规格：</span></td><td><label>200*100*20</label></td><td><span>商品规格：</span></td><td><label>200*100*20</label></td></tr>      
+    <tr class="bot">
+       <td colspan="4">
+         <a class="bot Long">确 定</a>
+         <a class="bot Medium">确 定</a>
+         <a class="bot Short">确 定</a>
+       </td>
+      </tr> 
+  </table>
+    <div class="clera"></div>
+  <!------------------------分页模板---------------------> 
+  <div id="paging">
+   <div class="fy">
+       <a href="#" class="xuan"><< 上一页</a>
+       <a href="#" class="xuan">1</a>
+       <a href="#">2</a>
+       <a href="#">3</a>
+       <a href="#">...</a>
+       <a href="#">8</a>
+       <a href="#">9</a>
+       <a href="#">10</a>
+       <a href="#">下一页 >></a>
+       <span>共4页，到第</span><input /><span class="tb">页</span>
+       <a href="#" class="botton">确定</a>
+    </div>
+  </div>
+  <div class="clera"></div>
+    
+</div>
+<div class="clear"></div>
+<!---------------------底部--------------------->
+</body>
+</html>

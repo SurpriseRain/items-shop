@@ -1,0 +1,8 @@
+<dl class="w12">
+  <dt class="w12"><i class="fa fa-file"></i></dt>
+  <dd class="w12"><a>调查问卷</a></dd>
+</dl>
+<dl class="w12" onclick="$('html,body').animate({scrollTop:0}, 300);">
+  <dt class="w12"><i class="fa fa-arrow-circle-up"></i></dt>
+  <dd class="w12"><a>返回顶部</a></dd>
+</dl>

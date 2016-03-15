@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/proItem.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/base.css" />
+
+<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/openbox.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/qy_head.js"></script>
+<script type="text/javascript" src="../js/jquery.jqzoom.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="../js/accounting.min.js"></script>
+<!--<link rel="stylesheet" type="text/css" href="/control/css/pictureScanStyle.css" />-->
+<script type="text/javascript" src="../js/pubJson.js"></script>
+<script type="text/javascript" src="/control/js/pictureScan.js" charset="gbk"></script>
+<title>电器服云 - 商品详细</title>
+</head>
+
+<body>
+<div class="w12 toper"><!---toper截点---></div>
+<div class="w12 header"><!---头部截点---></div>
+<div class="w12 nav"><!---导航截点---></div>
+<div class="w12 bread_nav"><!---面包导航---></div>
+<div class="w12 pro_card"><!---商品名片截点---></div>
+<div class="w12 pro_info"><!---商品详细截点---></div>
+
+<div class="w12 service"><!---底部截点---></div>
+<div class="w12 footer"><!---底部截点---></div>
+<div class="fastop display_none"><!---返回顶部截点---></div>
+
+
+</body>
+<script type="text/javascript" src="/customer/sydjt/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/loadpage.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/ui.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/json.js"></script>
+<script type="text/javascript" src="/jllib/form/js/jl-all.js"></script>
+<script type="text/javascript" src="/jllib/form/js/jl-basic.js"></script>
+<script type="text/javascript" src="/jllib/form/js/jl-form.js"></script>
+<script>
+JL.setUrlParam(window.location.href);
+$(document).on("click",".w12 > li",function(){
+	var sss = $(this).text();
+	$("ul.w12 > li").removeClass("selected");
+	$(this).addClass("selected");
+	var url="";
+	if(sss == "商品详情"){
+		$("#frameContent").html('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">');
+		//url=getCorrectUrl(ImgUrl+"/spjs/"+spxxJson.SPXX02+"_spym.html","/customer/sydjt/images/tp_a.jpg");
+		url = ImgUrl+"/spjs/"+spxxJson.SPXX02+"_spym.html";
+		$("#frameContent").load(url);
+       //$(".info").load("商品详情.html");
+	}else if(sss == "规格参数"){
+		$("#frameContent").html('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">');
+		//url=getCorrectUrl(ImgUrl+"/spjs/"+spxxJson.SPXX02+"_spcs.html","/customer/sydjt/images/tp_a.jpg");
+		url = ImgUrl+"/spjs/"+spxxJson.SPXX02+"_spcs.html";
+		$("#frameContent").load(url);
+       //$(".info").load("商品参数列表.html");
+	}else if(sss == "包装清单"){
+		$("#frameContent").html('<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">');
+		//url=getCorrectUrl(ImgUrl+"/spjs/"+spxxJson.SPXX02+"_spbz.html","/customer/sydjt/images/tp_a.jpg");
+		url = ImgUrl+"/spjs/"+spxxJson.SPXX02+"_spbz.html";
+		$("#frameContent").load(url);
+       //$(".info").load("评价列表.html");
+	}else if(sss == "累计评价"){
+		$("#frameContent").load("assess.html?SPXX01="+SPXX01);
+	}
+	//$("#frameContent").attr("src",url).attr("onerror","this.onerror=null;this.src='/customer/sydjt/images/msimg.jpg'");
+	//$("#frameContent").load(function(){
+		//var contentHeight = $(this).contents().find("body").height()+10;
+		//$(this).height(contentHeight);
+		//$(".xqtp").height(contentHeight);
+	//});
+})
+</script>
+</html>

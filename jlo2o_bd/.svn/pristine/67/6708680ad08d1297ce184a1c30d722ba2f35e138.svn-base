@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_CKD','QryType':'Report','CKDH':$('#ckdh').val(),'date_s':$('#date_s').val(),'date_e':$('#date_e').val(),'ZCXX01':usercookie.ZCXX01}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<div id="curPosition">
+	    <a href="#">我是卖家</a>
+    	<span>></span>
+    	<a href="#">商品管理</a>
+    	<span>></span>
+    	<b>查询厂家出库</b>
+	</div>
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+ 	
+ <ul id="screening">
+   <li style="width:830px;">
+	<span>出库单号：</span>
+	<input type="text" id="ckdh" name="ckdh" value="" size="20" class="text"/>
+   	<span>出库时间：</span>
+	<input id="date_s" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+	<span class="z" style="width:20px;">~</span>
+	<input id="date_e" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+
+    <a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+   </li>
+</ul>
+<div class="clera"></div>
+ 
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4" rowClick="open" multiPage="true" height="1500" url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'CKDH','header':'出库单号','type':'lable','width':'100px'},
+{'property':'SHCK','header':'收货仓库','type':'lable','width':'150px'},
+{'property':'CKR','header':'出库人','type':'lable','width':'150px'},
+{'property':'CKSJ','header':'出库时间','type':'lable','width':'180px'},
+{'property':'BZ','header':'备注','type':'lable','width':'80px'}]" 
+
+afterUrl="/customer/qfy/back/spgl/Oper_CKD_item.html"
+>
+</div>
+
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+})
+</script>

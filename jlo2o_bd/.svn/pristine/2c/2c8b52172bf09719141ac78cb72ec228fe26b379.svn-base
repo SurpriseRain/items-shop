@@ -1,0 +1,95 @@
+<!--<script type="text/javascript" src="/js/jquery-1.7.min.js"></script>-->
+<script type="text/javascript" src="/customer/sydjt/dqfwy/js/common.js"></script>
+<script type="text/javascript" src="../js/quick_links.js"></script>
+<script type="text/javascript" src="../js/parabola.js"></script>
+<link rel="stylesheet" type="text/css" href="../css/rig_nav.css" />
+<link rel="stylesheet" type="text/css" href="../css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="../css/public-new.css" />
+
+<!--右侧贴边导航quick_links.js控制-->
+<div class="mui-mbar-tabs">
+	<div class="quick_link_mian">
+		<div class="quick_links_panel">
+			<div id="quick_links" class="quick_links">
+				<li id="shopCart">
+					<a href="#" class="message_list" ><i class="message"></i><div class="span">购物车</div><span id="right-shopping-amount" class="cart_num">0</span></a>
+				</li>
+				<!-- 
+				<li>
+					<a href="#" class="history_list"><i class="view"></i></a>
+					<div class="mp_tooltip" style=" visibility:hidden;">我的资产<i class="icon_arrow_right_black"></i></div>
+				</li>
+				<li>
+					<a href="#" class="mpbtn_histroy"><i class="zuji"></i></a>
+					<div class="mp_tooltip">我的足迹<i class="icon_arrow_right_black"></i></div>
+				</li>
+				<li>
+					<a href="#" class="mpbtn_wdsc"><i class="wdsc"></i></a>
+					<div class="mp_tooltip">我的收藏<i class="icon_arrow_right_black"></i></div>
+				</li> -->
+			</div>
+			<div class="quick_toggle">
+				<li>
+					<a href="#"><em class="fa fa-comment-o font_grey kfzx"></em></a>
+					<div class="mp_tooltip">客服中心<i class="icon_arrow_right_black"></i></div>
+				</li>
+				<li><a href="#top" class="return_top"><em class="fa fa-chevron-up font_grey top"></em></a></li>
+			</div>
+		</div>
+		<div id="quick_links_pop" class="quick_links_pop hide"></div>
+	</div>
+</div>
+
+
+
+
+<script type="text/javascript">
+	$(".quick_links_panel li").mouseenter(function(){
+		$(this).children(".mp_tooltip").animate({left:-92,queue:true});
+		$(this).children(".mp_tooltip").css("visibility","visible");
+		$(this).children(".ibar_login_box").css("display","block");
+	});
+	$(".quick_links_panel li").mouseleave(function(){
+		$(this).children(".mp_tooltip").css("visibility","hidden");
+		$(this).children(".mp_tooltip").animate({left:-121,queue:true});
+		$(this).children(".ibar_login_box").css("display","none");
+	});
+	$(".quick_toggle li").mouseover(function(){
+		$(this).children(".mp_qrcode").show();
+	});
+	$(".quick_toggle li").mouseleave(function(){
+		$(this).children(".mp_qrcode").hide();
+	});
+
+// 元素以及其他一些变量
+var eleFlyElement = document.querySelector("#flyItem"), eleShopCart = document.querySelector("#shopCart");
+var numberItem = 0;
+// 抛物线运动
+var myParabola = funParabola(eleFlyElement, eleShopCart, {
+	speed: 400, //抛物线速度
+	curvature: 0.0008, //控制抛物线弧度
+	complete: function() {
+		eleFlyElement.style.visibility = "hidden";
+		eleShopCart.querySelector("span").innerHTML = ++numberItem;
+	}
+});
+// 绑定点击事件
+if (eleFlyElement && eleShopCart) {
+	
+	[].slice.call(document.getElementsByClassName("btnCart")).forEach(function(button) {
+		button.addEventListener("click", function(event) {
+			// 滚动大小
+			var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft || 0,
+			    scrollTop = document.documentElement.scrollTop || document.body.scrollTop || 0;
+			eleFlyElement.style.left = event.clientX + scrollLeft + "px";
+			eleFlyElement.style.top = event.clientY + scrollTop + "px";
+			eleFlyElement.style.visibility = "visible";
+			
+			// 需要重定位
+			myParabola.position().move();			
+		});
+	});
+}
+
+var xy;
+</script>

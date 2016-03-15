@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/hd-public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="../css/carSs.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<title>公益品牌</title>
+<script type="text/javascript">
+var baseUrl = "";	
+function AutoScroll(obj){
+        $(obj).find("ul:first").animate({
+                marginTop:"-25px"
+        },500,function(){
+                $(this).css({marginTop:"0px"}).find("li:first").appendTo(this);
+        });
+}
+$(document).ready(function(){
+setInterval('AutoScroll(".scrollDiv")',1500)
+	$("#header").load("/customer/qfy/head-08.jsp?ss="+Math.random(),function(reponse,status){
+		if(status=="success"){
+		$(".qtpp").css({"color":"#ff8800"});
+		}
+	});
+	$("#footer").load("/customer/qfy/foot-08.html?ss="+Math.random());	
+	selectcompany();
+	selectpinpai();
+});
+
+//显示新加入企业信息
+function selectcompany() {
+	var functionName = "loadcompany";
+	var XmlData = [{}];
+	var url = baseUrl+"/QFY/selectcompany.action?XmlData="+JSON.stringify(XmlData);
+	visitService1(url,functionName);
+}
+
+function loadcompany(){
+	var data = returnData;
+	$(data.list).each(function(index,newsObj){
+		if(newsObj.lx == "43") {
+			$(".xjrsccj").next().find(".infoList").append("<li><a href='/customer/qfy/showDpxx/shopIndex.html?gsid="+newsObj.zcxx01+"&gsmc="+escape(newsObj.zcxx02)+"'>"+newsObj.zcxx02+"</a></li>");
+		}
+		
+	});	
+	$(".new_main > .new_list > .topLoop > .hd > .num > li").click(function(){
+		$(this).parent(".num").children("li").removeClass("on");
+		$(this).addClass("on");
+	  var li_text = $(this).text();
+	  var pad_height = $(this).parent(".num").parent(".hd").siblings(".bd").children("ul").css("height");
+	  if(li_text == "1"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"0"})  
+	  }else if(li_text == "2"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-300px"})  
+	  }else if(li_text == "3"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-600px"})  
+	  }
+	})
+}
+
+//显示新加入品牌信息
+function selectpinpai(){
+	var functionName = "loadpinpai";
+	var XmlData = [{}];
+	var url = baseUrl+"/QFY/selectpinpai.action?XmlData="+JSON.stringify(XmlData);
+	visitService1(url,functionName);
+}
+
+function loadpinpai(){
+	var data = returnData;
+	$(data.list).each(function(index,newsObj){
+			$(".xjrpp").next().find(".infoList").append("<li><a href='/customer/qfy/showProduct/member_shop_n.html?ppb01=\""+newsObj.ppb01+"\"'>"+newsObj.ppb02+"</a></li>");
+	});	
+	$(".new_pinpai > .new_list > .topLoop > .hd > .num > li").click(function(){
+	$(this).parent(".num").children("li").removeClass("on");
+	$(this).addClass("on");
+	var li_text = $(this).text();
+	var pad_height = $(this).parent(".num").parent(".hd").siblings(".bd").children("ul").css("height");
+	if(li_text == "1"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"0"})  
+	}else if(li_text == "2"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-150px"})  
+	}else if(li_text == "3"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-300px"})  
+	  }
+	})
+}
+</script>
+</head>
+
+<body>
+<!--------------------------------头部-------------------------------------->
+<div id="header"></div>
+<div class="clera"></div>
+<div id="pdb-banner">
+  <!-- <div><a>立即加入</a></div> -->
+</div> 
+<div id="pdb-main">
+  <ul class="pdb-left">
+    <li>
+      <h2><b>01.</b>什么是公益品牌？</h2>
+      <span>公益品牌是中国汽车后市场特有的品牌；</span>
+      <span>它独立于企业既有品牌之外，代表了通过国家相关部门质量检验、被市场认可的产品，它打造了一个具有公信力的放心汽配品牌。</span>
+      <span>类似于国际通行的红十字品牌。</span>
+    </li>
+    <li>
+      <h2><b>02.</b>放心汽配有什么特点？</h2>
+      <span>"放心汽配"所拥有的︰统一编码、质量相当、证明商标、合理价格等属性高度符合四大市场的现实需求，将是进入该市场的有力标识。</span>
+      <span>放心品牌的建立必将为全行业带来重大影响的示范效应，有力提升和促进行业发展，并实现市场化落地。</span>
+    </li>
+    <li>
+      <h2><b>03.</b>为什么要申请公益品牌？</h2>
+      <span>我有自己的企业和产品，质量过硬，但苦于自身品牌认知度不高，推广力度有限，所以想申请公益品牌，加入这个大家庭，通过行业协会的资源进行推广。
+      </span>
+      <span>我有自己的企业和品牌，认知度也高，现在想申请公益品牌，采用双品牌运作，扩大品牌影响力，提升营销利润。</span>
+    </li>
+    <li>
+      <h2><b>04.</b>如何使用公益品牌？</h2>
+      <span>凡是申请并获得许可的企业，等于获得了国家认证的资质，均可以在电商平台、企业logo、产品包装、门店抬头上贴上公益品牌的标识，让消费者放心消费。
+      </span>
+    </li>
+  </ul>
+  <ul class="pdb-right">
+    <div class="new_main">
+      <b class="xjrsccj"></b>
+        <div class="new_list">
+		  <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd">
+			  <ul class="infoList">
+			  </ul>
+			</div>
+		  </div>        
+        </div>
+     </div>
+    <div class="new_main" style="margin-top:77px">
+      <b class="xjrpp"></b>
+        <div class="new_list">
+		  <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd">
+			  <ul class="infoList">
+
+			  </ul>
+			</div>
+		  </div>        
+        </div>
+    </div>
+<!--    <li class="scrollDiv">-->
+<!--      <h2><b>最近续费企业</b><font>加入公益品牌交易量超过1500万</font></h2>-->
+<!--      <ul>-->
+<!--        <li>甘肃赛亚汽车销售服务有限公司</li>-->
+<!--        <li>中山中裕丰田汽车销售服务有限公司</li>-->
+<!--        <li>广州白云国际机场空港快线运输有限公司</li>-->
+<!--        <li>玉林市宏远汽车维修有限公司</li>-->
+<!--        <li>上海大众汽车桂林特约维修站</li>-->
+<!--        <li>黑龙江龙达汽车销售服务股份有限公司</li>-->
+<!--      </ul>-->
+<!--    </li>-->
+  </ul>
+</div>
+<div class="clear"></div>
+<!---------------------底部--------------------->
+<!-- foot开始 -->
+<div id="footer">
+</div>
+<!-- foot结束 -->
+</body>
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    
+    <JLConfig id="JHZY.Login_Request">  <!--请求（登陆）-->
+        <FIELD attrname="id" target="SF01"/> <!--帐号（必输项）string -->
+        <FIELD attrname="password" target="SF02"/> <!--密码 string -->
+        <FIELD attrname="type" target="SFLX01"/> <!--身份类型（0: 卡片；1：手机；2：微信；3：微博；4：QQ）（必输项）int -->       
+    </JLConfig>    
+    
+    <JLConfig id="JHZY.UpdatePassword_Request">  <!--请求（修改密码）-->
+        <FIELD attrname="type" target="SFLX01"/> <!--身份类型（0: 卡片；1：手机；2：微信；3：微博；4：QQ）（必输项）int -->    
+        <FIELD attrname="id" target="SF01"/> <!--帐号（必输项）string -->
+        <FIELD attrname="password_old" target="SF02"/> <!--原密码 string -->   
+        <FIELD attrname="password_new" target="NMM"/> <!--新密码 string -->     
+    </JLConfig>       
+    
+    <JLConfig id="JHZY.Register_Request">  <!--请求（注册）-->
+        <FIELD attrname="id" target="SF01"/> <!--帐号（必输项）string -->
+        <FIELD attrname="password" target="SF02"/> <!--密码 string -->
+        <FIELD attrname="type" target="SFLX01"/> <!--身份类型（0: 卡片；1：手机；2：微信；3：微博；4：QQ）（必输项）int -->
+<!--        <FIELD attrname="" target="VIP01"/> VIP内码          -->
+<!--        <FIELD attrname="" target="VIP02"/> VIP编码  -->
+        <FIELD attrname="mobile" target="VIP04"/> <!--手机号码（必输项）string -->
+        <FIELD attrname="address" target="VIP05"/> <!--联系地址 string -->
+<!--        <FIELD attrname="" target="VIPLX01"/> 类型编号-->
+<!--        <FIELD attrname="" target="VIP15"/> 建卡日期-->
+        <FIELD attrname="client" target="VIP18"/> <!--登记人（必输项）string -->   
+<!--        <FIELD attrname="" target="VIP19"/> 登记日期        -->
+        <FIELD attrname="password" target="VIP28"/> <!--取款密码 string -->
+<!--        <FIELD attrname="" target="GSXX01"/> 公司代码    -->
+        <FIELD attrname="name" target="VIPI01"/> <!--会员姓名 string-->
+        <FIELD attrname="sex" target="VIPI03"/> <!--性别（男、女）string -->
+        <FIELD attrname="birthday" target="VIPI31"/> <!--出生日期 string -->  
+    </JLConfig>
+    
+</root>

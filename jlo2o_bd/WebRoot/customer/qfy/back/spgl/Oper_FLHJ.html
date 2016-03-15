@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Author" content="汽服云集成" />  
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/control/js/dtree.js"></script>
+<title>商品分类管理</title>
+<style type="text/css">
+#main {
+height: 800px;
+}
+#left {
+    float: left;
+    height: 100%;
+    overflow: auto;
+    padding-left: 12px;
+    width: 45%;
+    border-right:1px solid #e4e4e4;
+   
+}
+#right {
+ float: left;
+    margin-left: 10px;
+    width: 50%;
+}
+#biaoge{
+border: 1px solid #e4e4e4;
+    clear: both;
+    height: 100%;
+    margin-top: 12px;
+    width: 99.2%;
+    border-top:0px;
+}
+ul.dqbd{ width:auto; padding-left:10px; margin:10px 0; border:1px solid #e4e4e4; float:left;}
+ul.dqbd li{ line-height:50px; width:auto; position:relative; float:left;}
+ul.dqbd li span.name{ float:left; margin-left:15px; width:100px; text-align:right; color:#3c3c3c;}
+ul.dqbd li input{ border:1px solid #aaa; height:25px; line-height:25px; font-family:"microsoft yahei"; font-size:14px; padding-left:5px; float:left; margin:12px 0 0 10px;}
+ul.dqbd li input.sptm{ width:200px;}
+ul.dqbd li input.spmc{ width:500px;}
+ul.dqbd li input.spsl{ width:60px;}
+ul.dqbd li input.lsj{ width:100px; color:#e40000;}
+ul.dqbd li input.spgg-rl{ width:60px;}
+ul.dqbd li select{ margin:0px; padding:0px; border:1px solid #aaa; height:27px; line-height:27px; float:left; margin:12px 0 0 10px; font-family:"microsoft yahei"; font-size:14px;}
+ul.dqbd li select.cd{ margin-right:5px; width:150px;}
+ul.dqbd li select.ge{ width:100px;}
+ul.dqbd li select.cx{ width:150px;}
+ul.dqbd li label{ margin:0 0 0 5px; float:left;}
+ul.dqbd li .btx{ float:left; margin-right:5px; line-height:50px; color:#e40000; position:absolute; left:112px;}
+ul.dqbd li .tishi{ float:left; margin-left:20px; line-height:50px; color:#999;}
+ul.dqbd li .tishi font{ color:#090; font-weight:bold; margin:0 5px;}
+ul.dqbd li .spge{}
+ul.dqbd li a.qr{ float:left; width:200px; height:30px; background-color:#2f80eb; color:#fff; line-height:30px; text-align:center; margin:30px 0 30px 10px;}
+ul.dqbd li a.qr:hover{ background-color:#1a47cc;}
+#curPosition {
+    border: 1px solid #e4e4e4;
+    float: left;
+    line-height: 30px;
+    padding-left: 10px;
+    width: 98%;
+}
+#curPosition a {
+    color: #004098;
+    float: left;
+    line-height: 30px;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+</style>
+<script type="text/javascript">
+//获取货架编码
+function updatetype(typecode,pid,typename,isend){
+	$("#hjbh").removeAttr("disabled");
+	$("#tuid").val(typecode);
+	$("#type_id").val(typecode);
+	$("#type_name").val(typename);
+	if(isend=="1"){
+		$("#is_end").prop("checked",true);
+	}else{
+		$("#is_end").removeAttr("checked");
+	}
+	//货架编码（入库的具体位置）
+    $(document).ready(function(){
+    	  //点击查询
+    	  $("#hjbh").click(function(){
+    		  parent.ajaxGrid("/customer/qfy/back/spgl/Srch_HJBM.html");
+    	  })
+    	})  
+	$(".dqbd").show();
+	$("#sureclick").text("入库保存");
+	$("#sureclick").show();
+}
+//NineDragon  main FLHJ HJBM 三个页面间传值
+function setPid(paras){
+	$("#hjbh").val(paras);
+}
+//入库保存
+function save(){
+	//商品编码
+	var type_id= $("#type_id").val();
+	//货架编号
+	var hjbh = $("#hjbh").val();
+	//alert(type_id);
+	if(hjbh==null||hjbh==""||type_id==null||type_id==""){
+		alert("商品编码/货架编号不能为空");
+		}else{
+			var searchMap={};
+			var searchlist=[];
+			searchMap["type_id"]=type_id;
+			searchMap["hjbh"]=hjbh;
+			searchlist.push(searchMap);
+			var url="/Oper_FLHJ/insert_FLHJ.action?XmlData="+JSON.stringify(searchlist);
+			var returnVal=visitService(url)
+			if(returnVal.STATE=="1"){
+				alert("入库成功");
+				window.location.reload();
+			}else{
+					alert("新增失败");
+			}
+		}
+}
+</script>
+</head>
+<body>
+<div id="main">
+ <!-- <div id="curPosition">
+    <a href="#">商品管理</a>
+    <span>></span>
+    <b>分类货架对照</b>
+  </div> -->
+	<div class="clera"></div>
+		<div id="biaoge">
+<div id="left">
+	<div style="display:none" height="50px"><span class="name">类型名称：</span></div>
+	<div id="left_content">
+		<script type="text/javascript">
+				var d = new dTree('d');
+				d.add(0,-1, "商品类型");
+				var pid = 0;
+				var btn = "";
+				var url="/Oper_SPFL/selectTotalSPLX.action";
+				var search_type_name=$.getUrlParam("search_type_name");
+				if(search_type_name==null){
+				}else{
+					var searchMap={};
+					var searchlist=[];
+					searchMap["search_type_name"]=search_type_name;
+					searchlist.push(searchMap);
+					url=url+"?XmlData="+JSON.stringify(searchlist);
+				}
+				var returnData=visitService(url);
+				var resultList = returnData.spfllist;
+				 $(resultList).each(function(index,FL01){
+					var typecode=FL01.FLCODE;
+					var typename=FL01.FLNAME;
+					var pid=FL01.FATHERCODE;
+					var pname=FL01.FATHERNAME;
+					var isend=FL01.isend;
+					if(pid==""){
+						pid=0;
+					}
+					if(pid==0){
+						btn = "<a href='javascript:void(0)'>"+typename+"</a>";
+					}else{
+						if(isend=="1"){
+							btn = "<a style='color: blue' onclick=\"updatetype('"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\" >"+typename+"</a>";
+						}else{
+							btn = "<a href='javascript:void(0)'>"+typename+"</a>";
+						}
+					}
+					d.add(typecode,pid,btn);
+				});
+				//document.write(d);
+				$("#left_content").html(d.toString())
+			</script>
+	</div>
+</div>
+<div id="right" >
+ <ul class="dqbd">
+    <li style="display:none"><div class="btx">*</div><span class="name">父类型名称：</span><input class="sptm" name="pidname" id="pidname" value=""    disabled="disabled"/></li>
+    <li><span class="name"><span style="color:red"></span>分类名称：</span><input class="sptm" name="type_name" id="type_name" value=""  disabled="disabled"   /></li>
+    <li><span class="name"><span style="color:red"></span>分类编码：</span><input class="sptm" name="type_id" id="type_id" value=""     disabled="disabled"  /></li>
+    <li><span class="name"><span style="color:red"></span>货架编号：</span><input class="sptm" name="hjbh" id="hjbh" value=""  disabled="disabled"  /></li>
+    <li><span class="name">&nbsp;</span><a href="#" class="qr" id="sureclick" onclick="save()"></a></li>      
+    <input type="hidden" id="tuid">
+  </ul>
+</div>
+</div>
+</div>
+</body>
+</html>

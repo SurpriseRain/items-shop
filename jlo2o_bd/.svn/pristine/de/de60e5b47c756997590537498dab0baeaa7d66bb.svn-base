@@ -1,0 +1,147 @@
+body{ margin:0 auto; color:#666; font-size:14px; background-color:#f5f5f5; font-family:"microsoft yahei";}
+ul,li,h2,h3,h4,input,select{ list-style:none; margin:0px; padding:0px; font-family:"microsoft yahei"; outline:none;}
+a{ text-decoration:none; cursor:pointer;}
+.clear{ clear:both;}
+div.bot a{float:left; width:90%; height:50px; margin:20px 5% 20px 5%; line-height:50px; text-align:center; font-size:20px; background-color:#ff8800; color:#fff; font-weight:bold;}
+div.bot a.esc{ color:#fff;}
+div.bot_xf{ width:100%; position:fixed; height:50px; line-height:50px; background-color:#f5f5f5; border-top:1px solid #e4e4e4; bottom:0px;}
+div.bot_xf a{ float:left; width:50%; height:50px; line-height:50px; text-align:center; font-size:18px; background-color:#ff8800; color:#fff;}
+div.bot_xf .line{ position:absolute; width:1px; height:50px; background-color:#e4e4e4; left:50%;}
+input.seach{ width:80%; height:28px; border:1px solid #f5f5f5; float:left; margin:9px 0; padding:0 5px; float:left; background:url(/customer/qfy/app/images/seach.png) no-repeat #fff; padding-left:30px; font-size:14px;}
+
+/***********广告位***************/
+#banner{ width:100%; height:80px; background-color:#ccc;}
+
+
+
+/***********遮罩层***************/
+#ajaxGried{ width:100%; height:1000px; background:url(/customer/qfy/app/images/ajaxGried_bg.png); position:fixed; z-index:9999; top:0px; display:none;}
+#ajaxGried .ajaxGried_bk{ width:200px; height:115px; line-height:30px; position:absolute; left:50%; margin-left:-100px; background-color:#666; top:100px; border-radius:2px; float:left; text-align:center; color:#fff;}
+#ajaxGried .ajaxGried_bk span{ float:left; width:90%; height:40px; line-height:40px; margin:10px 5% 0 5%; border:1px solid #ccc; border-radius:5px;}
+
+/***********登入页面***************/
+.login_main{ width:90%; height:121px; margin:50px 5% 0 5%; border:1px solid #e4e4e4; background-color:#fff; border-radius:5px;}
+.login_main input{ color:#3c3c3c; float:left; width:100%; height:60px; border:0px; outline:none; text-indent:45px; color:#666; border-radius:5px; font-size:18px;}
+.login_main select{ color:#3c3c3c; float:left; width:100%; height:60px; border:0px solid #fff; outline:none; text-indent:45px; color:#666; border-radius:5px; font-size:18px; background-color:#fff; background:#fff;}
+
+.reg_main{ height:244px; margin:50px 5% 0 5%;}
+
+.login_main .login_name_pwd{ width:100%; height:60px; position:relative;}
+.login_main .login_name{ border-bottom:1px solid #e4e4e4;}
+
+.login_main .login_name_pwd span{ float:left; width:50px; height:50px; position:absolute; background:url(/customer/qfy/app/images/login_ico.png); z-index:10; left:0px; top:5px;}
+.login_main .login_name_pwd span.pwd{ background-position:0 -50px;}
+.login_main .login_name_pwd span.lx{ background-position:0 -100px;}
+
+.login_main .login_name_pwd label{ position:absolute; z-index:9; width:50px; height:50px; right:0; top:5px; float:right; background:url(/customer/qfy/app/images/pwd_eyes.png);}
+.login_main .login_name_pwd label.eyes_open{ background-position:0 -50px;}
+
+
+
+.reg_fpwd{ width:90%; height:40px; line-height:40px; margin:0 5%;}
+.reg_fpwd a{ color:#ff8800;}
+.reg_fpwd a.reg{ float:left;}
+.reg_fpwd a.fpwd{ float:right;}
+.reg_fpwd a:hover{ text-decoration:underline;}
+
+/*********************头部部分*****************/
+#header{ width:100%; height:49px; background-color:#08a8eb;}
+#header h2{ width:200px; text-align:center; height:49px; line-height:49px; color:#fff; position:absolute; left:50%; margin-left:-100px; padding:0px; font-weight:100; font-size:20px;}
+#header a{ float:right; line-height:49px; margin-right:8px; color:#fff;}
+#header a.fh{ float:left; background:url(/customer/qfy/app/images/fh_ico.png) no-repeat; background-position:0 13px; padding-left:18px;}
+
+#header .tbsm{ float:right; height:30px; width:50px; margin:8px 0; background:url(/customer/qfy/app/images/tbsm.png) no-repeat;}
+#header .logo{ float:left; height:30px; width:30px; margin:8px; background:url(/customer/qfy/app/images/logo.png) no-repeat;}
+
+
+/*********************首页扫描部分*****************/
+ul#seach_sm{ width:100%; height:120px; background-color:#0960d2;}
+ul#seach_sm li{ width:50%; height:120px; position:relative; float:left;}
+ul#seach_sm li a{ float:left; width:100%; height:120px;}
+ul#seach_sm li a:hover{ background-color:#0960d2;}
+ul#seach_sm li a div{ width:90px; height:120px; position:absolute; left:50%; margin-left:-45px;}
+ul#seach_sm li a div img{ border:0px; width:44px; height:40px; margin:28px 23px 10px 23px; float:left;}
+ul#seach_sm li a div span{ float:left; width:90px; height:20px; line-height:20px; color:#feb361; text-align:center;}
+/*********************首页内容部分*****************/
+ul#pro_main{ margin:10px 5px 60px 10px; float:left;}
+ul#pro_main li{ float:left; height:130px; position:relative; margin:0 5px 5px 0px; }
+
+#pro_main li a{ float:left; width:100%; height:130px; position:relative; border-radius:4px;}
+#pro_main li a.pro_main_sis{ background-color:#fe864a;}
+#pro_main li a.pro_main_seach{ background-color:#08a8eb;}
+#pro_main li a.pro_main_rk{ background-color:#747ae8;}
+#pro_main li a.pro_main_ck{ background-color:#22ad38;}
+#pro_main li a.pro_main_spzs{ background-color:#ff6678;}
+#pro_main li a.pro_main_user{ background-color:#0fc4d9;}
+#pro_main li a .gn_nav{ width:80px; height:90px; position:absolute; left:50%; margin-left:-40px; top:20px;}
+#pro_main li a .gn_nav .gn_text{ width:100%; height:30px; line-height:30px; color:#fff; text-align:center; font-size:18px;}
+#pro_main li a .gn_nav .gn_img{ width: 100%; height:60px;}
+#pro_main li a .gn_nav .gn_img img{ border:0px; height:50px; position:absolute; left:50%; margin:5px 0 0 -25px;}
+
+
+/*********************出入库页面*****************/
+#pro_rk_img{ width:100%; height:200px; position:relative; background-color:#fff; border-bottom:1px solid #e4e4e4;}
+#pro_rk_img img{ width:200px; height:200px; position:absolute; left:50%; margin-left:-100px;}
+#pro_rk_info{ width:100%; background-color:#fff; float:left; font-weight:bold;}
+#pro_rk_info li{ width:100%; line-height:50px; border-bottom:1px solid #eee; float:left;}
+#pro_rk_info li h3{ color:#3c3c3c; float:left; margin:15px 10px; line-height:24px;}
+#pro_rk_info li span{ float:left; width:70px; color:#666; text-align:right; color:#3c3c3c;}
+#pro_rk_info li label{ float:left; margin-left:15px;}
+#pro_rk_info li label.pic{ color:#e40000; font-size:20px;}
+#pro_rk_cz{ width:100%; height:50px; margin:50px 0 70px 0; z-index:9999;}
+#pro_rk_cz a{ float:left; width:90%; height:50px; line-height:50px; font-size:20px; text-align:center; background-color:#ff8800; color:#fff; margin:0 5%;}
+
+/*********************出入库列表*****************/
+input.list_seach{ margin:10px; border-color:#e4e4e4;}
+#pro_rk_list{ width:100%; float:left; background-color:#fff; border-top:1px solid #e4e4e4;}
+
+
+#pro_rk_list li{ width:100%; height:65px; line-height:65px; position:relative; border-bottom:1px solid #e4e4e4; float:left;}
+#pro_rk_list li b{ position:absolute; float:left; width:50px; height:25px; background-color:#ff8800; line-height:25px; text-align:center; right:20px; color:#fff; font-weight:500;}
+#pro_rk_list li a{ float:left; width:100%; height:65px;}
+#pro_rk_list li a img{ float:left; width:49px; height:49px; border-radius:50%; border:1px solid #eee; margin:7px 10px;}
+#pro_rk_list li a .text{ float:left; height:45px; margin:7px 10px;}
+#pro_rk_list li a .text .pro_name{ height:20px; line-height:20px; font-size:16px; float:left; width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; margin-top:2px; color:#3c3c3c; font-weight:bold;}
+#pro_rk_list li a .text .pro_tm{ height:20px; line-height:20px; font-size:12px; float:left; width:100%; margin-top:5px;}
+#pro_rk_list li a .text .pro_tm span.tm{ float:left; color:#3c3c3c; font-size:16px;}
+#pro_rk_list li a .text .pro_tm span.time{ float:right; font-size:12px; color:#999;}
+
+/**************个人中心***************/
+ul.userCenter{ width:100%; background-color:#fff; float:left; border-top:1px solid #e4e4e4;}
+ul.userCenter li{ float:left; width:100%; border-bottom:1px solid #e4e4e4; height:50px; line-height:50px; float:left;}
+ul.userCenter li input{ width:60%; height:30px; border:1px solid #e4e4e4; margin:8px 0 8px 20px; float:left; padding:0 5px; outline:none; font-size:14px; color:#3c3c3c;}
+ul.userCenter li select{ float:left; height:32px; border:1px solid #e4e4e4; margin:8px 0 8px 8px;}
+ul.userCenter li label{ float:left; width:100px; text-align:right; font-size:14px; font-weight:bold; color:#3c3c3c;}
+ul.userCenter li.img{ height:60px; line-height:60px;}
+ul.userCenter li a{ float:left; width:100%; float:left; position:relative;}
+ul.userCenter li.img a img{ position:absolute; right:18px; height:50px; margin:0 5px;}
+ul.userCenter li a label{ position:absolute; left:10px; color:#3c3c3c; font-weight:100; font-family:"microsoft yahei"; font-size:14px; width:150px; text-align:left; font-weight:bold;}
+ul.userCenter li a span{ position:absolute; right:18px; text-align:right; color:#999;}
+ul.userCenter li a span.wws{ color:#f40000;}
+ul.userCenter li a b{ position:absolute; background:url(/customer/qfy/app/images/userCenter_ico.png); right:0px; top:14px; float:right; width:20px; height:20px;} 
+ul.userCenter li.case{ width:25%; height:80px; float:left; border-bottom:1px solid #e4e4e4; position:relative;}
+ul.userCenter li.case .line{ position:absolute; float:right; width:1px; height:80px; background-color:#e4e4e4; right:0px; top:0px;}
+ul.userCenter li.case .img{ width:30px; height:30px; margin:15px 0 15px -15px; position:absolute; left:50%;}
+ul.userCenter li.case .text{ width:100%; text-align:center; height:20px; line-height:20px; margin-top:50px;}
+
+
+/*********************功能菜单*****************/
+#bottom_nav{ width:100%; height:50px; position:fixed; bottom:0px; background-color:#f1f1f1; border-top:1px solid #e4e4e4;}
+#bottom_nav li{ width:25%; height:50px; position:relative; float:left;}
+#bottom_nav li .xxtx{ width:20px; height:20px; border-radius:50%; background-color:#f52e38; color:#fff; font-size:12px; text-align:center; line-height:20px; font-family:Verdana, Geneva, sans-serif; position:absolute; top:-10px; left:50%; margin-left:10px;}
+#bottom_nav li a{ width:50px; height:50px; position:absolute; left:50%; margin-left:-25px; color:#666;}
+#bottom_nav li a .nav_img{ float:left; width:25px; height:25px; margin:2px 12px; background:url(/customer/qfy/app/images/bottom_nav.png);}
+#bottom_nav li a .dbsy{ background-position:0 -50px;}
+#bottom_nav li a .khfw{ background-position:0 -100px;}
+#bottom_nav li a .me{ background-position:0 -150px;}
+#bottom_nav li a .nav_text{ float:left; width:50px; line-height:20px; text-align:center; font-size:12px;}
+#bottom_nav li a.xuan .nav_text{ color:#08a8eb;}
+
+#bottom_nav li a.xuan .nav_img{ float:left; width:25px; height:25px; margin:2px 12px; background:url(/customer/qfy/app/images/bottom_nav.png); background-position:0 -25px;}
+#bottom_nav li a.xuan .dbsy{ background-position:0 -75px;}
+#bottom_nav li a.xuan .khfw{ background-position:0 -125px;}
+#bottom_nav li a.xuan .me{ background-position:0 -175px;}
+
+
+/*********************版权位置*****************/
+#zhizuoren{ width:100%; height:25px; line-height:25px; text-align:center; bottom:0px; text-shadow:1px 1px 0px #fff; color:#e4e4e4;}

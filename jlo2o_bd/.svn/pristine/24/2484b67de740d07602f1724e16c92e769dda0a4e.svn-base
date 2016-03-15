@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0" />
+<title>汽后服云 - 账户信息</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/app/css/public.css" />
+<script type="text/javascript" src="/customer/qfy/app/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/app/js/loAndRe.js"></script>
+</head>
+<body>
+<div id="header">
+  <a class="fh" href="index2.html">返回</a>
+  <h2>完善资料</h2>
+</div>
+<ul class="userCenter">
+  <li><label>营业执照</label><input type="file" multiple onchange="upLoading1(this,1)" /></li>
+  <li><label>营业执照</label><input type="file" multiple onchange="upLoading1(this,2)" /></li>
+  <li><label>法人执照</label><input type="file" multiple onchange="upLoading1(this,3)" /></li>
+  <li><label>企业名称</label><input id="companyName" /></li>
+  <li><label>联系人</label><input id="linkman" /></li>
+  <li><label>电子邮箱</label><input id="emailAddress" /></li>
+  <li><label>手机</label><input id="phone" /></li>
+</ul>
+<div class="clear"></div>
+<div id="pro_rk_cz" onclick="re2();">
+  <a>保存</a>
+</div>
+</body>
+</html>

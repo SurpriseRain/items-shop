@@ -1,0 +1,61 @@
+<div class="w12 user_page_main">
+<div class="w12">
+  <dl class="w12 accSecur">
+    <dd class="w01"><i class="w12 right fa fa-check"></i></dd>
+    <dd class="w02"><h2 class="w12">登录密码</h2><div class="line"></div></dd>
+    <dd class="w05"><label class="font_red">互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</label></dd>
+    <dd class="w04"><span class="w12">修改</span></dd>
+  </dl>
+  <div class="w12 detaInfo detaInfo_none">
+      <div class="jt"></div>
+      <div class="w06 ml_w03 techProcess">
+        <div class="w12 jdt"></div>
+        <ul class="w12">
+          <li class="w04 yjzg">
+            <dl class="w12"><dt></dt><dd>1</dd></dl>
+            <span class="w12">验证账户</span>
+          </li>
+          <li class="w04">
+            <dl class="w12"><dt></dt><dd>2</dd></dl>
+            <span class="w12 yjzg_tex">修改密码</span>
+          </li>
+          <li class="w04">
+            <dl class="w12"><dt></dt><dd><i class="fa fa-check"></i></dd></dl>
+            <span class="w12 yjzg_tex">完成</span>
+          </li>
+        </ul>
+      </div>
+      <dl class="w12 public_form">
+        <dt class="w05">已验证手机：</dt><dd class="w07">1897******544</dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">请填写手机校验码：</dt>
+        <dd class="w07"><input type="text" class="w03" /><input type="button" class="jl_btn btn_grey" value="获取短信校验" /></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">验证码：</dt>
+        <dd class="w07"><input type="text" class="w02" /><img src="../images/apple.jpg" class="yzm" /></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">&nbsp;</dt>
+        <dd class="w07"><input type="button" class="jl_btn btn_red" value="提交"></dd>
+      </dl>
+  </div>
+</div>
+<div class="w12">
+  <dl class="w12 accSecur">
+    <dd class="w01"><i class="w12 error fa fa-exclamation-triangle"></i></dd>
+    <dd class="w02"><h2 class="w12">手机验证</h2><div class="line"></div></dd>
+    <dd class="w05"><label>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</label></dd>
+    <dd class="w04"><input type="button" class="jl_btn btn_red" value="立即绑定" /></dd>
+  </dl>
+</div>
+<div class="w12">
+  <dl class="w12 accSecur">
+    <dd class="w01"><i class="w12 error fa fa-exclamation-triangle"></i></dd>
+    <dd class="w02"><h2 class="w12">绑定邮箱</h2><div class="line"></div></dd>
+    <dd class="w05"><label>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</label></dd>
+    <dd class="w04"><input type="button" class="jl_btn btn_red" value="立即绑定" /></dd>
+  </dl>
+</div>
+</div>

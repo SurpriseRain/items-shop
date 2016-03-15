@@ -1,0 +1,27 @@
+<div class="floor_nav_main">
+<!--  <dl>-->
+<!--    <dt class="w12">1F</dt>-->
+<!--    <dt hidden>1</dt>-->
+<!--    <dd class="w12 xuan">名称</dd>-->
+<!--  </dl>-->
+</div>
+<!-- <script type="text/javascript">
+$(document).ready(function(){
+		var XmlData=[];
+		var json={};
+		json["DQXX01"]=$("#city_value").val();
+		json["ZCXX01"]='0000';
+		json["GGLX01"]=$("#floor").data("gglx");
+		XmlData.push(json);
+	    //加载楼层数据
+	var url="/oper_floor/selectGGLXFloor.action?XmlData="+JSON.stringify(XmlData);
+	var result = visitService(url);
+	$(result.mapList).each(function(index,obj){
+		$(".floor_nav_main").append('  <dl>'+
+			    '<dt class="w12">'+obj.LCFL01+'F</dt>'+
+			    '<input style="display:none;" value="'+obj.LCFL01+'"></input>'+
+			    '<dd class="w12">'+obj.LCFL02.substring(0,2)+'</dd>'+
+			  '</dl>');
+	});
+});
+</script> -->

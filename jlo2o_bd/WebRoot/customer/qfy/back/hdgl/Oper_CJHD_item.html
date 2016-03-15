@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/control/js/dtree.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+.btn_2 {
+	background-color: #2f80eb;
+	color: #fff;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	width: 200px;
+}
+
+.yangshi {
+	border: 1px solid #e4e4e4;
+	float: left;
+	height: 400px;
+	margin-left: 1px;
+	padding-left: 21px;
+	padding-top: 29px;
+	width: 97%;
+	overflow-y: scroll;
+}
+a.bot{
+    margin: 10px 72px;
+    position: relative;
+	left: 50%;
+	margin-left:-50px;
+}
+
+</style>
+</head>
+<body>
+	<div id="left" class="yangshi">
+		<div id="left_content">
+			<script type="text/javascript">
+				var d = new dTree('d');
+				d.add(0, -1, "商品类型");
+				var pid = 0;
+				var btn = "";
+				var url = "/Oper_HDGL/selectHDSPFL.action";
+				var yxfl = $.getUrlParam("yxfl");
+				
+				if (yxfl == "") {
+
+				} else {
+					var jsonData = [{"yxfl":yxfl}];
+					url = url + "?jsonData=" + JSON.stringify(jsonData);
+				}
+				var returnData = visitService(url);
+				var resultList = returnData.spfllist;
+				
+				$(resultList).each(function(index, FL01) {
+					var typecode = FL01.FLCODE;
+					var typename = FL01.FLNAME;
+					var pid = FL01.FATHERCODE;
+					var pname = FL01.FATHERNAME;
+					var isend = FL01.ISEND;
+					var lev = FL01.SPFL03
+					
+					if (pid == "") {
+						pid = 0;
+					}
+					if(FL01.YXFL != null && FL01.YXFL != ""){
+						btn = "<a href='javascript:void(0)'>" + typename + " <input type='checkbox' name='menucheckbox' checked='checked' id='" + typecode + "' value='"+typecode+"'> </a>";
+					} else {
+						btn = "<a href='javascript:void(0)'>" + typename + " <input type='checkbox' name='menucheckbox' id='" + typecode + "' value='"+typecode+"'> </a>";
+					}
+					/* if (isend == 0) {
+						btn = "<a href='javascript:void(0)'>" + typename + "</a>";
+					} else {
+						if(FL01.YXFL != null && FL01.YXFL != ""){
+							btn = "<a href='javascript:void(0)'>" + typename + " <input type='checkbox' name='menucheckbox' checked='checked' value='"+typecode+"'> </a>";
+						} else {
+							btn = "<a href='javascript:void(0)'>" + typename + " <input type='checkbox' name='menucheckbox' value='"+typecode+"'> </a>";
+						}
+					} */
+					d.add(typecode, pid, btn);
+				});
+				$("#left_content").html(d.toString());
+			</script>
+		</div>
+	</div>
+	<div>
+		<a href="javascript:void(0);" class="bot" onclick="save()">提交</a>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+	function init() {
+		var divs = $("div[jl]");
+		for (var i = 0; i < divs.length; i++) {
+			eval($(divs[i]).attr('jlid') + ".init(" + $(divs[i]).attr('id')
+					+ ");");
+		}
+	}
+	function query() {
+		init();
+		var divs = $("div[jl]");
+		for (var i = 0; i < divs.length; i++) {
+			eval($(divs[i]).attr('jlid') + ".init(" + $(divs[i]).attr('id')
+					+ ");");
+		}
+	}
+	//执行回调方法
+	function backFun(parameters) {
+		query();
+	}
+	
+	// 获取选中的值
+	function save(){
+		var obj = $("input[name='menucheckbox']:checked");
+		var chk_value = [];
+		var chk_name = [];
+		$(obj).each(function(i, val){
+			var finVal = "";
+			// 判断分类信息
+			if($(this).val().length == 2){
+				finVal = $(this).val();
+			} else if($(this).val().length == 4){
+				if($("#" + $(this).val().substring(0,2))[0].checked == true){
+					finVal = $(this).val().substring(0,2);
+				} else {
+					finVal = $(this).val();
+				}
+			} else {
+				if($("#" + $(this).val().substring(0,2))[0].checked == true){
+					finVal = $(this).val().substring(0,2);
+				} else if($("#" + $(this).val().substring(0,4))[0].checked == true) {
+					finVal = $(this).val().substring(0,4);
+				} else {
+					finVal = $(this).val();
+				}
+			}
+			if(chk_value.indexOf(finVal) != -1){
+				return true;
+			}
+			chk_value.push(finVal); 
+			chk_name.push($("#" + finVal).parent("a").text());
+		});
+		chk_value = chk_value + "#" + chk_name;
+		parent.execBackFun(chk_value);
+		parent.$("#ajaxGrid").remove();
+		top.closeWait();
+	}
+	
+	// 初始化点击事件获取全选和不全选功能
+	$(function(){
+		var $chk = $("input[name='menucheckbox']");
+		var $chked = $("input[name='menucheckbox']:checked");
+		$($chked).each(function(i, val){
+			if(val.value.length == 2){
+				$("input[id^='" + val.value + "']").attr("checked", true);
+			} else if(val.value.length == 4){
+				$("input[id^='" + val.value + "']").attr("checked", true);
+			} else {
+				$("#" + val.value).attr("checked", true);
+			}
+		});
+		$chked.value
+		$($chk).on("click", function(){
+			var $this = $(this)[0].value;
+			if($(this)[0].checked == true){
+				if($this.length != 6){
+					$($chk).each(function(i, val){
+						b = val.value;
+						if(b.substring(0, $this.length) == $this){
+							val.checked = true;
+						}
+					});
+					if($this.length == 4){
+						var subStr = $this.substring(0, 2);
+						var chsub = $("input[id^='" + subStr + "']").length; //获取check的个数  
+					    var checkedsub = $("input[id^='" + subStr + "']:checked").length; //获取选中的check的个数
+					    if (checkedsub == (chsub - 1)) {  
+					        $("#" + subStr).attr("checked", true);
+					    } else {
+					    	$("#" + subStr).attr("checked", false);
+					    }
+					}
+					
+				} else {
+					var subStr = $this.substring(0, 4);
+					var chsub = $("input[id^='" + subStr + "']").length; //获取check的个数  
+				    var checkedsub = $("input[id^='" + subStr + "']:checked").length; //获取选中的check的个数  
+				    if (checkedsub == (chsub - 1)) {  
+				        $("#" + subStr).attr("checked", true);
+				    } else {
+				    	$("#" + subStr).attr("checked", false);
+				    }
+				    
+				    var subStr = $this.substring(0, 2);
+					var chsub = $("input[id^='" + subStr + "']").length; //获取check的个数  
+				    var checkedsub = $("input[id^='" + subStr + "']:checked").length; //获取选中的check的个数
+				    if (checkedsub == (chsub - 1)) {  
+				        $("#" + subStr).attr("checked", true);
+				    } else {
+				    	$("#" + subStr).attr("checked", false);
+				    }
+				}
+				
+			} else {
+				$($chk).each(function(i, val){
+					b = val.value;
+					if(b.substring(0, $this.length) == $this){
+						val.checked = false;
+					}
+					if($this.length == 6){
+						var subStr = $this.substring(0, 4);
+						$("#" + subStr).attr("checked", false);
+						subStr = $this.substring(0, 2);
+						$("#" + subStr).attr("checked", false);
+					} else if($this.length == 4){
+						var subStr = $this.substring(0, 2);
+						$("#" + subStr).attr("checked", false);
+					}
+				});
+			}
+			
+		});
+	});
+</script>

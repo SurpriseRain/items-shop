@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Author" content="汽服云集成" />  
+
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/control/js/dtree.js"></script>
+<title>商品分类管理</title>
+
+<style type="text/css">
+
+.left {
+    height: 800px;
+    overflow: auto;
+    padding-left: 12px;
+    border: 1px solid #e4e4e4;
+}
+.right {
+ margin-left: 10px;
+ border: 1px solid #e4e4e4;
+}
+
+</style>
+<script type="text/javascript">
+
+//更新
+function updatetype(typecode,pid,typename,isend){
+	$("#type_name").removeAttr("disabled");
+	$("#pid").attr("disabled","disabled");
+	$("#tuid").val(typecode);
+	$("#type_id").val(typecode);
+	$("#type_name").val(typename);
+	if(isend=="1"){
+		$("#is_end").prop("checked",true);
+	}else{
+		$("#is_end").removeAttr("checked");
+	}
+	$("#pid").val(pid);
+	$(".dqbd").show();
+	$("#sureclick").text("更新保存");
+	$("#sureclick").show();
+}
+//新增
+function addtype(id,isend){
+	if(isend=="1"){
+		$("#is_end").prop("checked",true);
+	}else{
+		$("#is_end").removeAttr("checked");
+	}
+	$("#pid").attr("disabled","disabled");
+	$("#type_name").removeAttr("disabled");
+	
+	$("#tuid").val("");
+	$("#sureclick").text("新增保存");
+	$("#sureclick").show();
+	$("#type_id").val("");
+	$("#type_name").val("");
+	$("#pid").val(id);
+	$(".dqbd").show();
+}
+//删除
+function deletetype(typecode,pid,typename,isend){
+	if(isend=="1"){
+		$("#is_end").prop("checked",true);
+	}else{
+		$("#is_end").removeAttr("checked");
+	}
+	$("#type_name").attr("disabled","disabled");
+	$("#pid").attr("disabled","disabled");
+	$("#sureclick").hide();
+	$("#type_id").val(typecode);
+	$("#type_name").val(typename);
+	$("#pid").val(pid);
+	$(".dqbd").show();
+	if(isend=="1"){
+		if(window.confirm("确认删除"+typename)){
+			var searchMap={};
+			var searchlist=[];
+			searchMap["SPFL01"]=typecode;
+			searchMap["SPF_SPFL01"]=pid;
+			searchlist.push(searchMap);
+			
+			var url="/Oper_SPFL/deleteSPFL.action?XmlData="+JSON.stringify(searchlist);
+			var returnVal=visitService(url)
+			if(returnVal.STATE==1){
+				alert("已删除");
+				window.location.reload()
+			}else{
+				alert("删除失败");
+			}
+		}
+	}
+	
+}
+
+//保存
+function save(){
+	var tuid=$("#tuid").val();
+	if(tuid==""){
+		//新增
+		var SPFL01=$("#type_id").val();
+		var SPF_SPFL01=$("#pid").val();
+		var SPFL02=$("#type_name").val();
+		if(SPFL02==null||SPFL02==""){
+			alert("分类名称不能为空");
+			return false;
+		}
+		var searchMap={};
+		var searchlist=[];
+		searchMap["SPFL01"]=SPFL01;
+		searchMap["SPF_SPFL01"]=SPF_SPFL01;
+		searchMap["SPFL02"]=SPFL02;
+		searchlist.push(searchMap);
+		
+		var url="/Oper_SPFL/insert_SPFL.action?XmlData="+JSON.stringify(searchlist);
+		var returnVal=visitService(url)
+		if(returnVal.STATE=="1"){
+			alert("新增成功");
+			window.location.reload()
+		}else{
+			alert("新增失败");
+		}
+	}else{
+		var SPFL01=$("#type_id").val();
+		var SPFL02=$("#type_name").val();
+		if(SPFL02==null||SPFL02==""){
+			alert("分类名称不能为空");
+			return false;
+		}
+		var searchMap={};
+		var searchlist=[];
+		searchMap["SPFL01"]=SPFL01;
+		searchMap["SPFL02"]=SPFL02;
+		searchlist.push(searchMap);
+		
+		//修改
+		var url="/Oper_SPFL/update_SPFL.action?XmlData="+JSON.stringify(searchlist);
+		var returnVal=visitService(url)
+		if(returnVal.STATE==1){
+			alert("更新成功");
+			window.location.reload()
+		}else{
+			alert("更新失败");
+		}
+	}
+}
+function search(){
+	var search_type_name=$("#search_type_name").val();
+	if(search_type_name!=""){
+		window.location.href="/customer/sydjt/back/spgl/Oper_SPFL.html?search_type_name="+escape(search_type_name);
+	}else{
+		window.location.href="/customer/sydjt/back/spgl/Oper_SPFL.html";
+	}
+}
+</script>
+</head>
+
+<body>
+<div class="w12 merch_main">
+	<ul class="w12 merch_breadcrumb">
+		<li><i class="fa fa-home"></i><span>首页</span></li>
+		<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+		<li><span>商品管理</span></li>
+		<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+		<li><b>定义分类</b></li>
+	</ul>
+	<div class="w12 user_content">
+		<div class="w12 user_page_tab" style="display:none">
+			<dl class="w12 public_form">
+				<dt class="w01">
+					<label class="w12">类型名称：</label>
+				</dt>
+				<dd class="w02">
+					<input type="text" id="search_type_name" name="search_type_name" onblur="search()">
+				</dd>
+			 </dl>
+		</div>
+	</div>
+	<div class="w12 user_page_main center">
+		<div id="left_content" class="left w06"></div>
+		<div class="right w05 dqbd">
+			 <dl class="w12 public_form">
+				<dt class="w05">
+					<label class="w12">父类型名称：</label>
+				</dt>
+				<dd class="w07">
+					<input type="text" name="pidname" id="pidname" value=""    disabled="disabled"/>
+				</dd>
+			 </dl>
+			 <dl class="w12 public_form">
+				<dt class="w05">
+					<label class="w12">分类编码：</label>
+				</dt>
+				<dd class="w07">
+					<input type="text" name="type_id" id="type_id" value=""
+					disabled="disabled"  />
+				</dd>
+			 </dl>
+			 <dl class="w12 public_form">
+				<dt class="w05">
+					<label class="w12">分类名称：</label>
+				</dt>
+				<dd class="w07">
+					<input type="text" name="type_name" id="type_name" value=""  disabled="disabled"   />
+				</dd>
+			 </dl>
+			 <dl class="w12 public_form">
+				<dt class="w05">
+					<label class="w12">上级编码：</label>
+				</dt>
+				<dd class="w07">
+					<input type="text"  name="pid" id="pid" value=""  
+					disabled="disabled"  />
+				</dd>
+			 </dl>
+			 <dl class="w12 public_form">
+				<dt class="w05">
+					<label class="w12">是否末级：</label>
+				</dt>
+				<dd class="w07">
+					<input type="checkbox"  name="is_end" id="is_end" value=""  disabled="disabled"  />
+				</dd>
+			 </dl>
+			 <dl class="w12 public_form">
+				<dt class="w05">
+					<label class="w12">&nbsp;</label>
+				</dt>
+				<dd class="w07">
+					<input type="button" id="sureclick" value="新增保存" class="jl_btn btn_red" onclick="save()"/>
+					<input type="hidden" id="tuid">
+				</dd>
+			 </dl>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+				var d = new dTree('d');
+				d.add(0,-1, "商品类型");
+				var pid = 0;
+				var btn = "";
+				var url="/Oper_SPFL/selectTotalSPLX.action";
+				var search_type_name=$.getUrlParam("search_type_name");
+				if(search_type_name==null){
+					
+				}else{
+					var searchMap={};
+					var searchlist=[];
+					searchMap["search_type_name"]=search_type_name;
+					searchlist.push(searchMap);
+					url=url+"?XmlData="+JSON.stringify(searchlist);
+				}
+				var returnData=visitService(url);
+				var resultList = returnData.spfllist;
+				 $(resultList).each(function(index,FL01){
+					var typecode=FL01.FLCODE;
+					var typename=FL01.FLNAME;
+					var pid=FL01.FATHERCODE;
+					var pname=FL01.FATHERNAME;
+					var isend=FL01.isend;
+					if(pid==""){
+						pid=0;
+					}
+					if(pid==0){
+						btn = "<a href='javascript:void(0)'>"+typename+"</a>";
+					}else{
+						if(isend=="1"){
+							btn = "<a  href='javascript:void(0)'>"+typename+"</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"addtype('"+typecode+"','"+isend+"')\">新增</a>&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"updatetype('"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\">修改</a>&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"deletetype('"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\">删除</a>";
+
+						}else{
+							btn = "<a  href='javascript:void(0)'>"+typename+"</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"addtype('"+typecode+"','"+isend+"')\">新增</a>&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"updatetype('"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\">修改</a>";
+						}
+					}
+					
+					d.add(typecode,pid,btn);
+				});
+				//document.write(d);
+				$("#left_content").html(d.toString())
+</script>
+	
+
+</body>
+</html>

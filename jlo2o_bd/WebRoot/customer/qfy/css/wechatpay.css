@@ -1,0 +1,103 @@
+*{
+    margin:0;
+    padding: 0;
+}
+html{
+    font-family: 'Microsoft Yahei';
+}
+body{
+    background-color: #f1f3f7;
+}
+#header,#qfyPay{
+    width: 1190px;
+    margin: 0 auto;
+}
+#header{
+    height: 60px;
+    background-color: #EAEAEA;
+}
+#header>p{
+    width: 200px;
+    margin-left: 120px;
+    height: 60px;
+    line-height: 60px;
+}
+#header>p>img{
+    height: 55px;
+    margin-top: 5px;
+    float: left;
+}
+#header span{
+    font-size: 16px;
+    border-left: 1px solid silver;
+    display: block;
+    float: left;
+    padding-left: 12px;
+    height: 40px;
+    margin-top: 10px;
+    line-height: 40px;
+    font-weight: bold;
+}
+
+#payInfo {
+    width: 950px;
+    margin: 0 auto;
+}
+.pay-ifno{
+    height: 63px;
+    padding: 15px 0 0 40px;
+    position:relative;
+}
+.pay-ifno>p{
+    height: 26px;
+    line-height: 26px;
+}
+.pay-desc-1 {
+    font-size: 14px;
+}
+.pay-desc-2 {
+    font-size: 12px;
+}
+.pay-desc-2>span{
+    color: red;
+}
+.pay-price{
+    position: absolute;
+    right: 0;
+    bottom: 14px;
+    margin-right: 74px;
+    font-size: 12px;
+}
+.pay-price span{
+    color: red;
+    font-weight: bold;
+}
+
+.pay-content{
+    border-top: 2px solid #4a5a78;
+    background-color: #fff;
+}
+.pay-content>p{
+    margin: 20px 0 15px 40px;
+    color: #909090;
+    font-size: 18px;
+}
+.pay-erwm{
+    position: relative;
+    height: 430px;
+}
+.pay-phone{
+    position: absolute;
+    right: 0;
+    margin-right: 90px;
+}
+.pay-zf{
+    position: absolute;
+    margin-left: 125px;
+}
+.pay-erwm-wrap{
+    width: 263px;
+    height: 265px;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 36px;
+}

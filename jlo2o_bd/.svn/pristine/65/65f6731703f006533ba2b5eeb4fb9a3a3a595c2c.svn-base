@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 品牌上传</title>
+<link type="text/css" rel="stylesheet"href="/customer/sydjt/css/backPub.css"  />
+<!--<link type="text/css" rel="stylesheet"href="/customer/sydjt/css/FlList.css"  />-->
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/FlList.js"></script>
+</head>
+<style>
+.bm_r{widht:5px; float:left;}
+#flmc_div{float: left;}
+#flmc_div li{float: left;}
+#flmc_div li input{width: 20px;}
+#flmc_div li span{width: 70px; text-align: left;margin: 0px;float: none;}
+
+</style>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<div id="curPosition">
+    	<a href="#">商品管理</a>
+    	<span>></span>
+    	<a href="#">品牌上传</a>
+    	<span>></span>
+    	<b>上传明细</b>
+	</div>
+	<div class="clera"></div>
+    <input type="hidden" name="role" value=""/>
+    <input type="hidden" id="gsid" name="HBID" value=""/>
+	<table class="single_table">
+	     <tr class="title"><td colspan="2"><b>品牌上传</b><font>* 必填项</font></td></tr>
+	     <tr>
+	       <td style="width:100px;"><span>企业名称：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="gsmc" value="" id="gsmc"  size="34" readonly="readonly" /></td>
+	     </tr>
+	     <tr>
+	       <td><span>品牌名称：</span></td>
+	       <td><font>*</font><input  type="text" name="ppmc" value="" id="ppmc"  size="34" /></td>
+	     </tr>   
+	     <tr>
+	     	<td><span>上传品牌LOGO：</span></td><td><font>*</font><input style="width:250px;" type="file" name="file" value="" id="file1"  size="34" />
+	     	<label class="bz" title="请上传200*200格式的品牌logo，方便录入商品和品牌展示。" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:420px;">请上传200*200格式的品牌logo，方便录入商品和品牌展示。</label>
+	     	</td>
+	     </tr>
+	     <tr>
+	     	<td><span>品牌证明文件：</span></td><td><font>*</font><input style="width:250px;" type="file" name="file" value="" id="file2"  size="34" />
+	     	<label class="bz" title="请上传品牌注册资质文件，如工商总局办法的许可证书和品牌注册证书，如有多份，请合并成一张图片上传。" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:420px;">请上传品牌注册资质文件，如工商总局办法的许可证书和品牌注册证书，如有多份，请合并成一张图片上传。</label>
+	     	</td>
+	     </tr>
+	     <tr id="abcdef">
+	       <td><span>所属分类：</span></td>
+	       <td><font>*</font>
+			  <div id="flmc_div" ></div>
+			 <input id="ppfl" name="ppfl" type="hidden" />
+		   </td>
+	     </tr>
+	     <tr class="bot">
+	       <td colspan="2">
+	         <a href="javascript:void(0);" onclick="okclick();" class="bot Medium">确 定</a>
+	       </td>
+	     </tr>    
+	</table>
+  	<div class="clera"></div>
+</form>
+
+<div class="clera"></div>
+<div id="jl_bmxx1" class="tcc"></div>
+<div class="clera"></div>
+
+</body>
+<script type="text/javascript">
+var o = document.forms[0];
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var gsid = usercookie.ZCXX01;
+var hbid=usercookie.XTCZY01;
+window.onload = function(){
+	//queryclick();
+	$("#gsmc").val(usercookie.ZCXX02);
+	$("#gsid").val(usercookie.ZCXX01);
+}
+$(function(){
+	var url = "/showGoods/selectFL2.action?s=" + Math.random();
+	var data = visit(url, "");
+	var bm00 = showfl(data.fl);// 查询第一级的部门
+	$("#flmc_div").append(bm00);
+
+}); 
+function showfl(data) {
+	var sbm = '';
+	for ( var i = 0; i < data.length; i++) {
+		sbm = sbm+'<li><input name="flc" type="checkbox" class="bm_r" value="'+data[i].FLCODE+'"/>'
+			+ '<span>' + data[i].FLNAME + '</span></li>';
+		
+	}
+	return sbm;
+}
+// 初次加载
+
+function queryclick(){
+	var XmlData=[{"gsid":gsid}];
+	var url="/QFY/selectW_DPXX.action?XmlData="+JSON.stringify(XmlData);
+	var returnVal=visitService(url);
+    var rData=returnVal.dpxxlist;alert(returnVal.dpxxlist);
+    if(rData.length==0){
+		$("#ppfl").val("");
+    }else{
+      	$("#ppfl").val(rData[0].DPXX01);
+    }
+}
+
+function newclick() {
+	//clearValue();
+	//changeCanEnter();
+	window.location.reload();//刷新当前页面
+}
+
+function okclick(){
+	if(o.ppmc.value == "" || o.ppmc.value == ""){
+		alert("请填写品牌名称！");
+		$("#ppmc").focus();
+		return false;
+	}
+	if(o.file1.value == "" || o.file2.value == ""){
+		alert("请上传图片！");
+		return false;
+	}
+	var flcStr="";
+	var flc=$("input[name='flc']:checked").each(function(o){
+		if(""==flcStr){
+			flcStr=$(this).val();
+		}else{
+			flcStr=flcStr+","+$(this).val();
+		}
+	});
+	
+	if(flcStr == ""){
+		alert("请选择所属分类！");
+		return false;
+	}else{
+		$("#ppfl").val(flcStr);
+	}
+	var XmlData1 = $("#form1").formToJson();	                                     	
+	var XmlData=escape(JSON.stringify(XmlData1));
+	var val="/QFY/insertPPB.action";
+	var r = confirm('确认更新信息吗？');
+	if(r==true){
+	var fileArray=[];
+	fileArray.push("file1");
+	fileArray.push("file2");
+	$.ajaxFileUpload({
+		type:"POST",
+		secureuri:false,
+		fileElementId:fileArray,
+		url:encodeURI(val),//encodeURI避免中文乱码
+		data:{"XmlData":XmlData},
+		dataType:"text",
+		success: function(data) { 
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			//alert(jsondata.STATE);
+			if(data1==1){
+				alert("保存成功,等待管理员审核!");
+				parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+				}else{
+				alert("保存失败!");
+					}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert(textStatus);
+	    }
+	});
+	}
+	else return;
+}
+
+//回填
+function parentWindowFunc(result,rowindex,id){
+	$("#"+id).setAttribute("value",result.getColumnValue(rowindex,"CODE"));
+	$("#s_"+id).setAttribute("value",result.getColumnValue(rowindex,"NAME"));
+}
+</script>
+</html>

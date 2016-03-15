@@ -1,0 +1,1312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 买家中心 -确认订单</title>
+<meta name="Author" content="汽服云集成" />  
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/default.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+<style>
+.cart_list_top{margin-right:24px; margin-left:24px; text-align:right; background:#fff;clear:both;}
+.affirm_pass_top_p{height:60px; line-height:60px; border-bottom:2px solid #e4e4e4; color:#ff4a00; font-size:14px; margin-right:24px; margin-left:24px;}
+</style>
+</head>
+<body>
+<!-- head开始 -->
+<div id="header"></div>
+<!-- head结束 -->
+
+<div id="main" class="w980 clearfix">
+	<div class="cart">
+	<div class="cart_top">
+		<h2>我的购物车</h2>
+		<div class="cartcurrent mt20">
+			<ul class="carttitlist">
+				<li class="current">
+				<strong></strong>
+				<span>1.我的购物车</span>
+				</li>
+				<li class="current">
+				<strong></strong>
+				<span>2.订单审核</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>3.确认付款</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>4.等待收货</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>5.完成订单</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<br class="clear"/>
+	<!-- con -->
+	<div class="car_remaining mt10">
+		<div class="affirm_in">
+		<form id="form1" action="">
+			<input type="hidden" id="ZCXX01" name="ZCXX01" />
+			<input type="hidden" name="XSDD32" value="0" /><!-- b2b平台支付 -->
+			<input type="hidden" name="XSDD26" value="0"/><!-- 配送方式:供货商 配送-->
+			<!-- 邮费 TODO-->
+			<!-- 配送地址 -->
+                 <div class="affirm_pass">
+                      <div class="affirm_pass_top">
+                      		<!-- 区分新增 和修改标记 -->
+                      		<input type="hidden" name="djbj" id="djbj" value="" />
+                           <p style="height:35px; line-height:35px; border-bottom:2px solid #e4e4e4; color:#ff4a00; font-size:14px;" >配送方式</p>
+                      </div>
+                      <div class="cho" id="add">
+                      <ul class="choosein" style="list-style:inline; line-height:35px;">
+					    <li id="ba0" style="color:#666; font-size:14px; float:left; width:125px;">请选择配送方式：</li>
+                      	<li id="ba1" class="cur" style="float:left; width:85px;"  >
+                           <input type="radio" onclick="cart_psfs()" id="psfs1" name="psfs" value="" class="radiobtn" style="padding:0px; margin:0px; vertical-align:middle;"/>
+                           <label class="psfs-01" for="psfs1">商家配送</label>
+                      	</li>
+                      	<li id="ba2" class="cur" style="float:left; width:100px;" >
+                           <input type="radio" onclick="cart_psfs()" id="psfs2" name="psfs" value="" class="radiobtn" style="padding:0px; margin:0px; vertical-align:middle;"/>
+                           <label class="psfs-02" for="psfs2">买家自提</label>
+                      	</li>
+                      	<br class="clear" />
+                      	
+                      </ul>
+                      </div>
+                      
+                      <div style="font-size: 14px; margin-top: 10px; clear:both;" id="mjzt">
+	                      <div>
+	                        <span style="color:red; font-size:12px; padding:0px; margin:0px;">*</span>
+	                        <span>上门取件地址：天津市东丽区大毕庄镇跃进路1199号  </span>
+	                        <span style="margin-left: 28px;">联系人姓名：王利生</span>
+	                        <span style="margin-left: 28px;">联系人电话：13110087060 </span>
+	                        <input type="hidden" id="SHRMC" name="SHRMC" value="" class="radiobtn" style="padding:0px; margin:0px; vertical-align:middle;border:1px solid #ccc;"/>
+	                      </div>
+	                      <!-- <div style="margin-top: 15px;">
+	                        联系人电话：&nbsp;&nbsp;13110087060<input type="hidden" id="MOBILE" name="MOBILE" value="" class="radiobtn" style="padding:0px; margin:0px; vertical-align:middle;border:1px solid #ccc;"/>
+	                      </div>
+	                      <div style="margin-top: 15px;">
+	                        &nbsp;&nbsp;取件地址：&nbsp;&nbsp;天津市东丽区大毕庄镇跃进路1199号 
+	                      </div>
+	                           -->
+	                      
+                      </div>
+               <div id="sjps">       
+               <div class="affirmtit" style="border:none;">
+					       <p style="height:35px; line-height:35px; border-bottom:2px solid #e4e4e4; color:#ff4a00; font-size:14px;" >收货地址<span style="padding-left:15px;"><a href="javascript:void(0);" class="clorange" style="padding:0px; font-size:13px;">[新增]</a><a href="javascript:void(0);" class="modify" style="padding-left:6px; font-size:13px;"><!-- [修改] --></a></span></p>
+               		     </div>
+               		  <!-- 配送地址开始 -->
+                      <div class="choose" id="address">
+						 <div class="choosebox">
+						 	<ul class="clearfix">
+							</ul>
+						 </div>
+					 </div>
+					 <!-- 配送地址结束 -->
+					<!--choose end-->
+					<div id="modifyadd">
+						<table style=" float: none;" width="100%" border="0" cellspacing="0" cellpadding="4" class="myreger registab mt20">
+		                    <tbody>
+		                      <input type="hidden" name="dzbh" id="textfield8" value=""/>
+                              <tr>
+                              
+                                <td width="10%"><span style="color:red; font-size:12px; padding:0px; margin:0px;">*</span>收货地址：</td>
+                                <td colspan="2" style="text-align: left;">
+                                  <select name="province" id="selects" class="bankbox" style="width:100px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none;"><option value="-1">请选择</option></select>
+                                  <select name="city" id="select2" class="bankbox " style="width:100px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none;"><option>请选择</option></select>
+                                  <select name="county" id="select3" class="bankbox" style="width:100px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none;"><option>请选择</option></select>
+                                  <select name="county" id="select4" class="bankbox" style="width:100px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none;"><option>请选择</option></select>
+                                  <input type="text" name="otherdz" id="textfield1" class="regbox" value="请填写准确的收货地址" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;"/>
+								</td>
+                              </tr>
+                              <tr>
+                                <td><span style="color:red; font-size:12px; padding:0px; margin:0px;">*</span><span style="letter-spacing:7px;">收货</span>人：</td>
+                                <td colspan="2" style="text-align: left;"><input type="text" name="shrmc" id="textfield2" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;"/>
+                                   <!-- <input type="radio" name="radio" id="radio" value="0" style="padding:0px; margin:0 6px; vertical-align:middle;"/>先生<input type="radio" name="radio" id="radio2" value="1" style="padding:0px; margin:0 6px; vertical-align:middle;">女士 -->
+								</td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;&nbsp;固定电话：</td>
+                                <td colspan="2" style="text-align: left;">
+								    <input type="text" name="gddh" id="textfield3" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;" />
+								    <span style="color:red; font-size:12px; padding:0px; margin:0px;">&nbsp;</span>
+								     请正确填写电话号码,例如:03178861463
+								</td>
+                                <!--  td class="ft12"></td> -->
+                              </tr>
+                              <tr>
+                                <td><span style="color:red; font-size:12px; padding:0px; margin:0px;">*</span>手机号码：</td>
+                                <td colspan="2" style="text-align: left;">
+								    <input type="text" name="sjhm" id="textfield4" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;">
+								     <span style="color:red; font-size:12px; padding:0px; margin:0px;">&nbsp;</span>
+								    请正确填写手机号码,例如:13415764179 
+								</td>
+                                <!-- td class="ft12"></td> -->
+                              </tr>
+                              <tr>
+                                <td>&nbsp;&nbsp;<span style="letter-spacing:28px;">邮</span>编：</td>
+                                <td colspan="2" style="text-align: left;"><input type="text" name="yzbm" id="textfield5" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;">
+								</td>
+                              </tr>
+                              <tr>
+                                <td><span style="color:red; font-size:12px; padding:0px; margin:0px;">&nbsp;</span>&nbsp;<span style="letter-spacing:28px;">邮</span>箱：</td>
+                                <td style="text-align: left;"><input type="text" name="email" id="textfield7" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;" />
+								   <span style="color:red; font-size:12px; padding:0px; margin:0px;">&nbsp;</span>
+								   用来接收订单提醒邮件，便于您及时了解订单状态！
+								  <div id="mrdz" style="float: right; margin-right: 438px;">设为默认：<input type="checkbox" name="default" id="textfield6" class="regbox" value="1" /></div> 
+								</td>
+                              </tr>
+                              <tr>
+                                <td colspan = "2" style="text-align: left;"> <input type="button" name="button2" id="changebtnok" value="确定" class="btn  btn_samller btn_blue ml10 fr" />
+                               <input type="button" name="button2" id="changebtnno" value="取消" class="btn  btn_samller btn_hui fr" />
+                           </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                           <!--  div class="openwbtn">
+                              </div-->
+					</div>
+					</div>
+                 </div>
+             </div>    
+                 <!-- 发票信息 -->
+						<div class="affirm_pass">
+						<!-- 支付方式开始 -->
+	                      <div  class="cho" style="clear:both;">
+		                      <ul style="list-style:inline; line-height:35px;">
+							    <li id="pay_type0" style="color:#666; font-size:14px; float:left; margin-left:24px; width:125px;">支付方式：</li>
+		                      	<li id="pay_type1" class="cur" style="float:left; width:85px;"  >
+		                           <input type="radio" id="zffs1" name="zffs" value="0" class="radiobtn" style="padding:0px; margin:0px; vertical-align:middle;" checked="checked"/>
+		                           <label class="psfs-01" for="zffs1">在线支付</label>
+		                      	</li>
+		                      	<li id="pay_type2" class="cur" style="float:left; width:100px;" >
+		                           <input type="radio" id="zffs2" name="zffs" value="1" class="radiobtn" style="padding:0px; margin:0px; vertical-align:middle;"/>
+		                           <label class="psfs-02" for="zffs2">线下转账</label>
+		                      	</li>
+		                      	<br class="clear" />                      	
+		                      </ul>
+	                      </div>
+                      	<!-- 支付方式结束 -->
+							<div class="affirm_pass_top" style="clear:both;">
+								<p style="height:35px; line-height:35px; border-bottom:2px solid #e4e4e4; color:#ff4a00; font-size:14px; margin-right:24px; margin-left:24px;" >
+									发票信息
+									<!-- <a href="javascript:void(0);" class="clorange invo_add">[增加]</a> -->
+									: 请关注每家店铺的开票规则，达到标准后去个人中心‘申请开具发票’。							
+								</p>
+							</div>
+							<div class="invo_choose" id="invoice">
+							<!--
+							  <div>
+								<ul class="chooseinvo" style=" margin-right:24px; margin-left:24px; margin-top:5px; line-height:20px;">
+									<li id="ban1"  class="cur" style="width:125px;height:14px;"><input type="radio" name="1" id="invo1" value="" checked="checked" class="radiobtn" style="padding:5px; margin:-2px 5px 0 0; vertical-align:middle;"/>
+									<label class="invo-01" for="invo1">不需要发票</label></li>
+									<li id="ban2" style="width:110px;height:25px;"><input type="radio" name="1" id="invo2" value=""   class="radiobtn" style="padding:5px; margin:-2px 5px 0 0; vertical-align:middle;"/> 
+									<label class="invo-02" for="invo2">普通发票</label></li>
+									<li id="ban3"  style="width:120px;height:14px;"><input type="radio" name="1" id="invo3" value="" class="radiobtn"  style="padding:5px; margin:-2px 5px 0 0; vertical-align:middle;"/>
+									<label class="invo-03" for="invo3">增值税发票</label></li>
+
+									<br class="clear" />
+								</ul>
+								</div>
+								 
+								<div class="invo_open" style="padding:0 24px;clear:both;">
+									<div id='fp0' class="bankcon"></div>
+									<div id='fp1' class="bankcon" style="display:none;">
+										<div style=" color: #999; font-size: 13px; margin-bottom: 5px; height: 25px;line-height: 25px;">
+											<span>发票抬头：</span>
+											<span><input id="FPTT" name="FPTT" type="text" disabled="disabled" style="padding:0 6px; margin:0px; width:252px; height:23px; line-height:23px; background:#fff; color:#666; border:1px solid #666;"/>
+										     <span style="font-size:13px;"> </span>
+										</div>
+										<div style=" color: #999; font-size: 13px; ">
+											<span>邮寄地址：</span>
+											<span><input id="YJDZ" name="YJDZ" type="text"  style="padding:0 6px; margin:0px; width:252px; height:23px; line-height:23px; background:#fff; color:#666; border:1px solid #666;"/>
+										     <span style="font-size:13px;"> 
+										         <a onclick="modifyFptt()" id="ttupdate">[修改]</a>
+										         <a onclick="modifyFpttxx()" id="ttsave" style="display: none;">[保存]</a>
+										     </span></span>
+										</div>
+										
+										<!-- <dl style="height:56px; line-height:20px; background:#fafafa;">
+										  <dt style="padding:0 5px; width:75px; float:left; color:#0068b7; font-size:14px;  height:20px; line-height:20px;">发票抬头：</dt>
+										  <dd>
+										     <input id="FPTT" name="FPTT" type="text" disabled="disabled" style="padding:0 6px; margin:0px; width:252px; height:15px; line-height:15px; background:#fff; color:#666; border:1px solid #666;"/>
+										     <span style="font-size:13px;"> 
+										     </span>
+										  <dd/>
+										  <dt style="width:75px; float:left; color:#0068b7; font-size:14px;  height:20px; line-height:20px;">邮寄地址：</dt>
+										  <dd>
+										     <input id="YJDZ" name="YJDZ type="text"  style="padding:0 6px; margin:0px; width:252px; height:15px; line-height:15px; background:#fff; color:#666; border:1px solid #666;"/>
+										     <span style="font-size:13px;"> 
+										         <a onclick="modifyFptt()" id="ttupdate">[修改]</a>
+										         <a onclick="modifyFpttxx()" id="ttsave" style="display: none;">[保存]</a>
+										     </span>
+										  <dd/>
+										</dl> -->
+										<!-- 
+									</div>
+									<div id='fp2' class="bankcon" style="display:none;">
+										<h3 style="color:#ff4a00; font-size:14px; font-weight:100; height:20px; line-height:20px; background:#fafafa; padding:0 6px;">增值税发票信息：
+										   <span  style="font-size:13px;  margin-left: 20px;"> 
+										         <a onclick="modifyFpxx()" id="update">[修改]</a>
+										         <a onclick="modifyFp()" id="save" style="display: none;">[保存]</a> 
+										   </span>
+										</h3>
+									 <div style="height:200px; width:100%;">	
+										<dl class="order_basis" id="sssafp" style="margin-top:10px; width:100%; height:25px; line-height:25px; float:left;">
+											<dd style="padding:0 6px 0 0; font-size:13px; float:left; "><span style="color:red; font-size:13px;">*</span>单&nbsp&nbsp位&nbsp&nbsp名&nbsp&nbsp称&nbsp：</dd>
+											<dt id="FPTT_ZZ">
+												 <input type="text" id="DWMC" name="DWMC" disabled="disabled"  style="padding:0 6px; vertical-align:middle; margin:4px 0; width:252px; height:25px; line-height:25px; background:#fff; color:#666; border:1px solid #666;"/>
+											</dt>
+											<dd  style="padding:0 6px 0 0; font-size:13px; float:left; "><span style="color:red; font-size:13px;">*</span>纳税人识别&nbsp号&nbsp:&nbsp</dd>
+											<dt>
+												<input type="text" id="NSRSBH" name="NSRSBH" disabled="disabled"  style="padding:0 6px; margin:4px 0; vertical-align:middle; width:252px; height:25px; line-height:25px; background:#fff; color:#666; border:1px solid #666;"/>
+											</dt>
+											<dd  style="padding:0 6px 0 0; font-size:13px; float:left; "><span style="color:red; font-size:13px;">*</span>开&nbsp&nbsp户&nbsp&nbsp银&nbsp&nbsp行&nbsp：</dd>
+											<dt>
+												<input type="text" id="KHH" name="KHH" disabled="disabled"  style="padding:0 6px; margin:4px 0; vertical-align:middle; width:252px; height:25px; line-height:25px; background:#fff; color:#666; border:1px solid #666;"/>
+											</dt>
+											<dd  style="padding:0 6px 0 0; font-size:13px; float:left; "><span style="color:red; font-size:13px;">*</span>银&nbsp&nbsp行&nbsp&nbsp账&nbsp&nbsp号&nbsp：</dd>
+											<dt>
+												<input type="text" id="CWZH" name="CWZH" disabled="disabled"  style="padding:0 6px; margin:4px 0; vertical-align:middle; width:252px; height:25px; line-height:25px; background:#fff; color:#666; border:1px solid #666;"/>
+											</dt>
+ 												<input type="hidden" id="FPLXDH" name="FPLXDH" disabled="disabled" /> 
+											<dd  style="padding:0 6px 0 0; font-size:13px; float:left; "><span style="color:red; font-size:13px;">*</span>邮&nbsp&nbsp寄&nbsp&nbsp地&nbsp&nbsp址&nbsp：</dd>
+											<dt>
+												<input type="text" id="FPYJDZ" name="FPYJDZ" disabled="disabled" style="padding:0 6px; margin:4px 0; vertical-align:middle; width:252px; height:25px; line-height:25px; background:#fff; color:#666; border:1px solid #666;"/>
+											</dt>
+										</dl>
+									  <div>
+									</div>
+								</div>
+							</div>
+						</div>
+						-->
+						<!--choose end-->
+						<!-- 
+						<div id="invoice_open">
+						<table width="100%" border="0" cellspacing="0" cellpadding="4" class="myreger registab mt20">
+		                    <tbody>
+                              <tr>
+                                <td align="right"><strong>*</strong>单位名称：</td>
+                                <td><input type="text" name="textfield2" id="textfield2" class="regbox">
+                                </td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>*</strong>纳税人识别号：</td>
+                                <td><input type="text" name="textfield3" id="textfield3" class="regbox"></td>
+                                <td class="ft12"></td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>*</strong>开户银行：</td>
+                                <td><input type="text" name="textfield5" id="textfield5" class="regbox"></td>
+                                <td>&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>*</strong>银行账号：</td>
+                                <td><input type="text" name="textfield5" id="textfield5" class="regbox"></td>
+                                <td>&nbsp;</td>
+                              </tr>
+                              <tr>
+                                <td align="right"><strong>*</strong>地址：</td>
+                                <td><input type="text" name="textfield5" id="textfield5" class="regbox"></td>
+                                <td>&nbsp;</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="openwbtn">
+                            	<input type="submit" name="button2" id="fpchangebtnok" value="确定" class="btn  btn_samller btn_blue ml10 fr">
+                                <input type="submit" name="button2" id="fpchangebtnno" value="取消" class="btn  btn_samller btn_hui fr">
+                          </div>
+					</div>
+					-->
+                 <!-- 商品信息 -->
+                 <div class="affirm_pass" id="spxxItem" style="clear:both;">
+                      <div class="affirm_pass_top">
+                           <p class="affirm_pass_top_p" >商品信息</p>
+                      </div>
+                 </div>
+           		</form>
+            </div>
+            
+            <div class="cartItem">
+				<ul class="cartItem_pro_list">
+				</ul>
+				 <div style="float:right; width:205px; height:100%">
+			      	<span>实付款:<b id="totalPrice" style="color:#ff4a00;font-size: 22px;">¥00.00</b></span>
+					<a class="cartback" href="cart.html">返回购物车</a> 
+					<input type="button" class="btn btn_small fl mt10" value="提交订单" id="button" name="button" />
+				  </div>
+			</div>
+            
+			<div class="c_list_close clearfix">
+		    
+			</div>
+	</div>
+</div>
+</div>
+</div>
+<!-- foot开始 -->
+<div id="footer" class="clearfix mt20">
+</div>
+<!-- foot结束 -->
+
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/cart.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/edlg.min.js"></script>
+<script type="text/javascript">
+//主要用于展示物流费用时，获取地址信息
+var result_spList;
+var MyCookie = $.cookie('userInfo');
+var DQXX01 = "120100";
+var baseUrl="";
+//var usercookie = JSON.parse(MyCookie);
+var user=JSON.parse($.cookie("userInfo"));
+//modify 2015.12.30. 修改默认选择的地址
+var dq = JSON.parse($.cookie("city_list"));
+DQXX01 = dq[0].city_value_2;
+
+var url="";
+var a =0;
+var type = $.getUrlParam("type");
+var ddList=unescape($.getUrlParam("xmlData"));
+ddList = JSON.parse(ddList);
+//获取公用默认图片路径 http://115.182.209.133:8080/jlsoft
+var imgUrl=pubJson.path_sptp+"/sptp/"
+var fplx = 1;//不需要发票
+var dzList;
+$(document).ready(function(){
+	$("#header").load("/customer/qfy/head-08.jsp");
+	$("#footer").load("/customer/qfy/foot-08.html");
+	$("#mjzt").hide();
+	$("#sjps").hide();
+	$("#mrdz").css("display","none");
+	if(user==null){
+		location.href="index.html";
+	}
+
+	$(".imgURL").error(function() { 
+		$(this).attr("src", "/customer/qfy/images/msimg.jpg"); 
+		}); 
+	
+	$("#ZCXX01").val(user.ZCXX01);
+	$("a.topLink").click(function() {
+		$("html, body").animate({
+		   scrollTop: $($(this).attr("href")).offset().top + "px"
+		}, {
+		duration: 800,
+		easing: "swing"
+	});
+		return false;
+	});
+	$(".invo_open > div:first").show();
+	$(".chooseinvo li").each(function(index){
+		$(this).click(function(){
+			addrssid = $(this).attr("id");
+			id = addrssid.replace('ban','');
+			if($("#invo"+id).is(":checked")) {
+			    fplx = id;
+			    modifyFpxx();
+			    modifyFptt();
+				$(".chooseinvo li").removeClass('cur');
+				$("#ban"+id).addClass('cur');
+				//$(".invo_open > div:visible").hide();
+				$("#fp0").hide();
+				$("#fp1").hide();
+				$("#fp2").hide();
+				$("#fp"+index).show();	
+			}
+		});
+	});
+	//选择配送方式
+	$(".choosein li").each(function(index){
+		$(this).click(function(){
+			addrssid = $(this).attr("id");
+			id = addrssid.replace('ba','');
+			if($("#psfs2").attr("checked")) {
+				$(".choosein li").removeClass('cur');
+				$("#ba2").addClass('cur');
+				$(".peisong").hide();
+				$(".wlcost").hide();
+				$(".affirmtit").hide();
+				$("#modifyadd").hide();
+				$("#address").hide();
+			}else if($("#psfs1").attr("checked")){//商家配送
+				$("#ba1").addClass('cur');
+				$(".peisong").show();
+				$(".wlcost").show();
+				$(".affirmtit").show();
+				$("#address").show();
+				}
+		});
+	});
+	//查询地址信息
+	showDQXX();
+	var spList=selectGHSgwc(ddList);
+	var fpxx=selectFpxx(user);//发票信息
+	result_spList = spList;
+	 //新增地址
+	 $(".affirmtit a").first().on("click",function(){
+		var dzList= selectDZXX(user);//展示地址信息
+		 //新增地址
+		//dzList=updateDzxx(user,dzList);
+		$("#selects").val(-1);
+		$("#select2").show();
+	 	$("#modifyadd").addClass("displayblock");
+	 	$(this).addClass("clorange");
+	 	$(".affirmtit a").last().removeClass("clorange");
+	 	var objects = document.getElementsByName("name");
+		for(var i=0;i<objects.length;i++){
+			if(objects[i].type=='radio'){
+				objects[i].checked=""
+	 		}
+		}  
+		$("ul.clearfix").find("a").attr("style","cursor: not-allowed;");
+		$("ul.clearfix").find("a").removeClass("current");
+		if(dzList.ADDRESSLIST.length==0 && a==0){
+			$("#textfield6").attr("checked",true);
+			$("#mrdz").css("display","none");
+		}else{
+			$("#textfield6").attr("checked",false);
+			$("#mrdz").css("display","none");
+		}
+		clearDZXX();
+	 });
+    $(".affirmtit a").last().on("click",function(){
+	    $("#select2").show();
+	 	$("#modifyadd").addClass("displayblock");
+	 	$(".affirmtit a").first().removeClass("clorange");
+	 	$(this).addClass("clorange");
+	 	$("#djbj").val("0");
+	 });
+	//点击取消时清除样式
+    $("#changebtnno").on("click",function(){
+    	$("#modifyadd").removeClass("displayblock");
+    })
+	 jiesuanOrder(user,fpxx,dzList,spList);
+});
+
+function peisong(){
+	$("#add").on("click",function(){
+		addrssid = $(this).attr("id");
+		id = addrssid.replace('ban','');
+		if($("#invo"+id).attr("checked")) {
+			$(".chooseinvo li").removeClass('cur');
+			$("#ba"+id).addClass('cur');
+			$(".peisong > div:visible").hide();
+			$(".peisong > div:eq(" + index + ")").show();	
+		}
+	});
+}
+
+function clearDZXX(){
+	$("#selects").find("option").first().attr("selected",true).trigger("change");
+	$("#select2").find("option").each(function(index){
+		if(index==0){
+			$(this).trigger("change");
+		}else{
+			$(this).remove();
+		}
+	});
+	$("#select3").find("option").each(function(index){
+		if(index==0){
+			$(this).trigger("change");
+		}else{
+			$(this).remove();
+		}
+	});
+	$("#textfield3").val("");
+	$("#textfield4").val("");
+	$("#textfield2").val("");
+	$("#textfield5").val("");
+	$("#textfield1").val("");
+	$("#textfield7").val("");
+	
+	$("#textfield8").val("");
+	$("#djbj").val("1");
+	a++;
+}
+
+function cart_psfs(){
+	if($("#psfs1").is(":checked")){
+		$("#mjzt").hide();
+		$("#sjps").show();
+		var dzList= selectDZXX(user);//展示地址信息
+		 //新增地址
+	    dzList=updateDzxx(user,dzList);
+	}else{
+		$("#mjzt").show();
+		$("#sjps").hide();
+		for(var i=0;i<ddList.length;i++) {
+			  var SPLIST = ddList[i].SPLIST;
+			  for(var j=0;j<SPLIST.length;j++){
+			      //modify 2015.12.29
+				  //SPLIST[j].CKZT="120100";
+				  SPLIST[j].CKZT=ddList[i].DQXX01;
+			  }
+			 
+		 }
+		 //DQXX01 = "120100";
+		selectGHSgwc(ddList)
+	}
+}
+function checkDzxx(shrmc,otherdz,sjhm,gddh,yzbm,email) {
+	if(otherdz==""||otherdz==null) {
+		//alert("请详细填写收货地址！");
+		dlgShow({content:"请详细填写收货地址"});
+		return false;
+	}
+	if(shrmc==""||shrmc==null) {
+		//alert("请填写收货人！");
+		dlgShow({content:"请填写收货人"});
+		return false;
+	}
+	if(sjhm==""){
+		//alert("请填写手机号！");
+		dlgShow({content:"请填写手机号"});
+		return false;
+	} 
+	var sjhmReg=/(^13\d{9}$)|(^14)[5,7]\d{8}$|(^15[0,1,2,3,5,6,7,8,9]\d{8}$)|(^17)[6,7,8]\d{8}$|(^18\d{9}$)/g;
+	if(sjhm!=""&&!sjhmReg.test(sjhm)) { 
+		//alert("请填写正确的手机号码！");
+		dlgShow({content:"请填写正确的手机号码"});
+		return false;
+	}	
+	
+	var gddhReg =/^((0?1[358]\d{9})|((0(10|2[1-3]|[3-9]\d{2}))?[1-9]\d{6,7}))$/;
+	if(gddh!=""){
+		if(gddh!=""&&!gddhReg.test(gddh)){
+		    //alert("固定电话中只能输入数字！");
+		    dlgShow({content:"固定电话中只能输入数字"});
+			return false;
+		}
+	}
+	
+	/* if(yzbm==""){
+		alert("请填写邮政编码！");
+		return false;
+	} */
+	var yzbmReg=/^[1-9][0-9]{5}$/;
+	if(yzbm!=""){
+		if(yzbm!=""&&!yzbmReg.test(yzbm)){
+		    //alert("请填写正确的邮政编码！");
+		    dlgShow({content:"请填写正确的邮政编码"});
+			return false;
+		}
+	}
+	
+	var emailReg=/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/
+	if(email!=""&&!emailReg.test(email)){
+	    //alert("邮箱格式不正确！例如 weixing@163.com");
+	    dlgShow({content:"邮箱格式不正确！例如 weixing@163.com"});
+		return false;
+	}
+	return true;
+}
+
+
+function updateDzxx(user,dzList){
+	$("#changebtnok").bind("click",function(){
+		    $("#modifyadd").addClass("displayblock");
+			var province="";
+			var city="";
+			var county="";
+			var street="";
+			$("#selects").find("option").each(function(){
+					if($(this).is(":selected")){
+						province=$(this).val();
+					}
+			});
+			$("#select2").find("option").each(function(){
+					if($(this).is(":selected")){
+						city=$(this).val();
+					}
+			});
+			$("#select3").find("option").each(function(){
+					if($(this).is(":selected")){
+						county=$(this).val();
+					}
+			});
+			$("#select4").find("option").each(function(){
+				if($(this).is(":selected")){
+					street=$(this).val();
+				}
+			});
+			if(province=="-1"||city=="0"||county=="0"){
+				//alert("请认真填写收货地址！");
+				dlgShow({content:"请认真填写收货地址"});
+				return false;
+			}
+			var shrmc=$("#textfield2").val();
+			var otherdz=$("#textfield1").val();
+			var gddh=$("#textfield3").val();
+			var sjhm=$("#textfield4").val();
+			var yzbm=$("#textfield5").val();
+			var mark=$("input[name='default']:checked").val()==undefined?"0":"1";
+			var email=$("#textfield7").val();
+			var dzbh=$("#textfield8").val();
+			if(checkDzxx(shrmc,otherdz,sjhm,gddh,yzbm,email)==false) {
+				return;
+			}
+			var xmlData=[];
+			var json={};
+			json.province=province;
+			json.city=city;
+			json.county=county;
+			json.street=street;
+			json.shrmc=shrmc;
+			json.otherdz=otherdz;
+			json.sjhm=sjhm;
+			json.yzbm=yzbm;
+			json.gddh=gddh;
+			json.mark=mark;
+			json.email=email;
+			json.dzbm=dzbh;
+			json.zcxx01=user.ZCXX01;
+			//修改
+			if($("#djbj").val()=="0"){
+				xmlData.push(json);
+				var url="/oper_shdz/updateshdz.action?XmlData="+JSON.stringify(xmlData);
+	
+			}
+			//新增
+			if($("#djbj").val()=="1"){
+				json.wldw01=user.ZCXX01;
+				xmlData.push(json);
+				var url="/oper_shdz/insertshdz.action?XmlData="+JSON.stringify(xmlData);
+			}
+			
+			ajaxQ({
+				"url" : url,//原始url 
+				"callback" : function(returnVal){
+					if(returnVal.status =="success"){
+						//alert("保存成功!");
+						dlgShow({content:"保存成功"});
+						$("#modifyadd").removeClass("displayblock");
+						dzList=selectDZXX(user);
+										
+					}
+				}
+			});
+			
+	});
+	return dzList;
+}
+
+//显示大区信息
+function showDQXX(){
+	var xmlData=[];
+  	var json={};
+  	var url="/oper_qydz/qryDQ.action?XmlData="+xmlData;
+  	$("#modifyadd").find("select").each(function(index){
+  			if(index==0){
+  				var num=0;
+  				var dqjb=1;
+  				var dqxx=dqxxList(num,dqjb);
+  				$(dqxx).each(function(i,dqxxjson){
+  					$("#selects").append("<option>"+dqxxjson.DQXX02+"</option>");
+  					$("#selects").find("option").eq(i+1).val(dqxxjson.DQXX01);
+  				});	
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select2",2);
+  					var con="<option value='0'>请选择</option>";
+					$("#select3").html(con).val(0);
+  				});	
+  			}
+  			if(index==1){
+  				var dqjb=3;
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select3",dqjb);
+  				});	
+  			}
+  			if(index==2){
+  				var dqjb=4;
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select4",dqjb);
+  				});	
+  			}
+  	});
+}
+/*限制添加收货地址*/
+  function dqxxList(num,dqjb){
+  			var xmlData=[];
+		  	var json={};
+			  	json.qydm=num;
+			  	json.dqjb=dqjb;
+			  	xmlData.push(json);
+		  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+		  	var data=visitService(url);
+		  	return data.mapList;
+  }
+  
+  function setVal(objnow,objaft,dqjb){
+	   var num=$(objnow).find("option:selected").val();
+	   if(num==09||num==01||num==02||num==22){
+		    $("#select2").hide();		    
+		
+		    dqjb=dqjb+1;
+		    num=num+'01';    
+		    var list=dqxxList(num,dqjb);
+		  	$(list).each(function(i,json){
+		  		if(i==0){
+		  			$("#select3").empty();
+		  			$("#select3").append("<option value='0'>请选择</option>");
+		  		}
+		  		$("#select3").append("<option>"+json.DQXX02+"</option>");
+		  		$("#select3").find("option").eq(i+1).val(json.DQXX01);
+		  	});
+	   }else{
+		    $("#select2").show();
+		    var list=dqxxList(num,dqjb);
+		  	$(list).each(function(i,json){
+		  		if(i==0){
+		  			$(objaft).empty();
+		  			$(objaft).append("<option value='0'>请选择</option>");
+		  		}
+		  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+		  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+		  	});
+	   }
+}
+
+//运费保险
+var spbf=0;
+var totalPrice=0;//总金额
+//展示购物车商品
+function selectGHSgwc(ddList){
+	//alert(JSON.stringify(ddList));
+	$(".cartItem_pro_list").html("");
+	totalPrice=0;
+	var ddListObj=ddList;
+	var ZCXX01_LIST=[];
+	var xmlData=[];
+	var json={};
+	json.HBID=user.ZCXX01;
+	xmlData.push(json);
+	xmlData[0].ddList=ddListObj;
+//	xmlData[0].CKZT=ddListObj;
+	xmlData[0].CKZT=DQXX01;
+	
+	var url="/CartManage/selectGwcSpxxInfo_New.action?XmlData="+JSON.stringify(xmlData);
+	var spList0=visitService(url);
+	var spList=spList0.spxxListObj;
+	var spxxStr='<li class="title"><span style="width:500px;">商品名称</span><span style="width:160px;">单价（元）</span><span style="width:105px;">数量</span><span style="width:160px;">小计</span><span style="width:90px;">库存</span></li>';
+	$(spList).each(function (index,spxxObj){
+			var spsl=0;
+			var spze=0;
+			var spxxitem='';
+				$(spxxObj.SPXXLIST).each(function (i,spxxJson){
+					ZCXX01_LIST.push(spxxJson.ZCXX01);
+					var spxxUrl="/customer/qfy/showProduct/product.html?spxx01="+spxxJson.SPXX01+"&zcxx01="+spxxJson.ZCXX01+"&gsid="+spxxJson.ZCXX01+"&gsmc="+escape(spxxObj.ZTMC);
+					var picUrl="";
+					if(spxxJson.SPTP02==null){//为null时候后面商品不显示了.
+						picUrl=pubJson.defaultImgUrl;
+						}else{ 
+						picUrl=imgUrl + spxxJson.ZCXX01 + "/"+spxxJson.SPXX02+"/images/"+spxxJson.SPXX02+"_1_small."+(spxxJson.SPTP02).split(".")[1];
+							 }
+					if(spxxJson.CKZT!=0){
+						var CKZT = "<b>有货</b>";
+					}else{
+						var CKZT = "<b style='color:red;'>无货</b>";
+					}
+					 //拼商品明细数据
+					spxxitem=spxxitem+'<li><a href="'+spxxUrl+'"><img src="'+picUrl+'"/></a><h3 style="width:425px;"><a href="'+spxxUrl+'" style="color:#5A6BE9;">'+spxxJson.SPXX04+'</a></h3>'+
+					'<label style="width:160px; margin-left:10px;">'+spxxJson.GWC02+'</label>'+
+					'<label style="width:105px;">'+parseInt(spxxJson.GWC01)+'</label>'+
+					'<label style="width:160px; color:#ff4a00; font-size:14px; text-align:center;">'+parseInt(spxxJson.GWC01)*parseFloat(spxxJson.GWC02)+'</label><label style="width:90px; color:#ff4a00; font-size:14px; text-align:center;">'+CKZT+'</label></li>';
+					spsl+=spxxJson.GWC01;
+					spze+=parseFloat(spxxJson.GWC01*spxxJson.GWC02);
+				});
+				totalPrice+=spze;
+				//拼装主明细数据
+				spxxStr=spxxStr+'<div class="spxxItem"><li style="margin:15px 10px;">供货商：'+spxxObj.ZTMC+'</li>'+
+				spxxitem+
+				'<div class="car_bz_js"><span>备注：</span><input name="textarea" id="textarea" maxlength="30" placeholder="给卖家留言(30个字符)"/>'+
+				'<label style="margin-right:15px;">合计：<font>'+accounting.formatMoney(spze)+'</font></label><label>订单数量：'+spsl+'</label></div></div>';
+			});
+	$(".cartItem_pro_list").append(spxxStr);
+	$("#totalPrice").html(accounting.formatMoney(totalPrice));
+	
+	//add 2015.10.30. 增加为空的判断
+	if(ZCXX01_LIST.length ==0){
+		return null;
+	}
+	var ZCXX02_LIST=[{'sqlid':'com.jlsoft.o2o.sql.order.selectNumXNCK','dataType':'Json','ZCXX01':ZCXX01_LIST}];
+	var returnVal = visit("/jlquery/selecto2o.action",JSON.stringify(ZCXX02_LIST));
+	var state = returnVal[0].count;
+	if (state != 0) {
+		$("#psfs2").attr("disabled",true);
+	}
+	//图片不存在添加默认图片
+	$("img").attr("onerror", "this.src='/customer/qfy/images/msimg.jpg'");
+	return spList;
+}
+
+
+//显示配送地址信息
+function selectDZXX(user){
+	var xmlData=[];
+	var json={};
+	json.ZCXX01=user.ZCXX01;
+	xmlData.push(json);
+	var url="/CartManage/selectAddressInfo.action?XmlData="+JSON.stringify(xmlData);
+	var dzList=visitService(url);
+	$("div.choosebox ul.clearfix").children().remove();
+	$(dzList.ADDRESSLIST).each(function(i,dzxx){
+			$("div.choosebox ul.clearfix").append("<li style='float:left;'><input type='radio' address_code=\""+dzxx.DZBH+"\" name='name' value=''style=' float:left; padding:0px; margin:5px 0; vertical-align:middle;'/><a class='size_radioToggle' style='cursor: not-allowed;'><span></span><span></span><span></span></a><a class='op-btns ar' style='cursor: not-allowed;'><span></span><span></span><span></span></a></li>");
+			$("ul.clearfix").find("input[name='name']").eq(i).val(i).bind("click",function(){
+			$("ul.clearfix").find("a").attr("style","cursor: not-allowed;");
+					if($(this).is(":checked")){
+						$("#select2").show();
+						$("ul.clearfix").find("a").removeClass("current");
+						$(this).siblings("a").addClass("current");
+						var province;
+						$("#selects").find("option").each(function(){
+								if(dzxx.PROVINCE ==$(this).val()){
+									$(this).attr("selected",true);
+									$("#selects").val(dzxx.PROVINCE);
+									$(this).trigger("change");
+									$("#select2").find("option").each(function(){
+										if(dzxx.CITY ==$(this).val()){
+											$(this).attr("selected",true);
+											$(this).trigger("change");
+											$("#select3").find("option").each(function(){
+												if(dzxx.COUNTY ==$(this).val()){
+													$(this).attr("selected",true);
+													$(this).trigger("change");
+													$("#select4").find("option").each(function(){
+														if(dzxx.STREET ==$(this).val()){
+															$(this).attr("selected",true);
+														}
+												    }); 
+												}
+										    });
+										}
+								});
+								}
+						});
+						/* $("#select2").find("option").each(function(){
+								if(dzxx.CITY ==$(this).val()){
+									$(this).attr("selected",true);
+									$(this).trigger("change");
+								}
+						}); */
+						/* $("#select3").find("option").each(function(){
+								if(dzxx.COUNTY ==$(this).val()){
+									$(this).attr("selected",true);
+								}
+						}); */
+
+						var shrmc=$("#textfield2").val(dzxx.SHRMC);
+						var otherdz=$("#textfield1").val(dzxx.OTHERDZ);
+						var pcode = dzxx.MOBILE;
+						
+						var sjhm=$("#textfield4").val(dzxx.MOBILE);
+						var yzbm=$("#textfield5").val(showUndefind(dzxx.YZBM));
+						var email=$("#textfield7").val(showUndefind(dzxx.EMAIL));
+						var gddh=$("#textfield3").val(showUndefind(dzxx.GDDH));
+						var dzbh=$("#textfield8").val(dzxx.DZBH);
+						$("#textfield6").attr("checked",false);
+						var obj = document.getElementsByName("default");
+						if(dzxx.MARK==1){
+							//$("#textfield6").attr("checked",true);
+							obj[0].checked=true;
+							$("#SHRMC").val(dzxx.SHRMC);
+							$("#MOBILE").val(dzxx.MOBILE);
+							}
+						$(this).siblings("a.current").attr("style","cursor: pointer;");
+					}
+					 for(var i=0;i<ddList.length;i++) {
+						  var SPLIST = ddList[i].SPLIST;
+						  for(var j=0;j<SPLIST.length;j++){
+							  SPLIST[j].CKZT=dzxx.CITY;
+						  }
+						 
+					 }
+					DQXX01 = dzxx.CITY;
+					selectGHSgwc(ddList);
+					var city_list = [];
+					var o = {};
+					o.city_value = dzxx.PROVINCE;
+					o.city_name = dzxx.PROVINCE_NAME;
+					o.city_value_2 = dzxx.CITY;
+					o.city_name_2 = dzxx.CITY_NAME;
+					city_list.push(o);
+					$.cookie("city_list", JSON.stringify(city_list), {
+						expires : 365, path : '/'
+					}); 
+						
+				});
+			if(dzxx.MARK==1){
+				$("ul.clearfix").find("input[name='name']").eq(i).attr("checked",true).siblings("a").addClass("current");
+			    $("ul.clearfix").find("input[name='name']").eq(i).trigger("click");
+			}
+			var pcode = dzxx.MOBILE;
+			pcode = pcode.replace(pcode.substring(3,7),"****"); 
+			$("ul.clearfix").find("a.size_radioToggle").eq(i).find("span").eq(0).text(dzxx.ADDRESS).next().first().text(dzxx.SHRMC).next().first().text((pcode==""||pcode==undefined)?dzxx.GDDH:pcode);
+			$("ul.clearfix").find("a.op-btns").eq(i).find("span").eq(0).attr("class","ftx-05 mr10 setdefault-consignee").attr("id",dzxx.DZBH).text("设为默认地址")
+			                                            .next().first().attr("class","ftx-05 mr10 edit-consignee").attr("id",dzxx.DZBH).text("编辑")
+			                                            .next().first().attr("class","ftx-05 del-consignee").attr("id",dzxx.DZBH).text("删除");
+		});
+		
+		//设置默认地址
+	 $(".setdefault-consignee").click(function(){
+	     if(!$(this).parent("a").hasClass('current'))return;
+	   	 var xmlData=[];
+		 var json={};
+			 json.ZCXX01=user.ZCXX01;
+			 json.DZBH=$(this).attr("id");
+			 xmlData.push(json);
+		 var url="/oper_shdz/updateDz.action?XmlData="+JSON.stringify(xmlData);
+		 var returnVal=visitService(url);
+			if(returnVal.STATE =="success"){
+			  //alert("设置默认地址成功！");
+			  dlgShow({content:"设置默认地址成功"});
+			  dzList=selectDZXX(user);
+			}else{
+			  //alert("设置默认地址失败！");
+				dlgShow({content:"设置默认地址失败"});
+			}
+	 })
+	 
+	 //编辑地址
+	 $(".edit-consignee").click(function(){
+		 if(dzList.ADDRESSLIST.length==0 && a==0){
+				$("#textfield6").attr("checked",true);
+				$("#mrdz").css("display","none");
+			}else{
+				$("#textfield6").attr("checked",false);
+				$("#mrdz").css("display","none");
+			}
+	   if(!$(this).parent("a").hasClass('current'))return;
+	   $("#modifyadd").addClass("displayblock");
+	   $("#djbj").val("0");
+	 })
+	 
+	 //删除地址
+	 $(".del-consignee").click(function(){
+	   var DZBH = $(this).attr("id");
+	   if(!$(this).parent("a").hasClass('current'))return;
+		 /* if(confirm("确定删除？")){
+		   	 var xmlData=[];
+			 var json={};
+				 json.DZBH=$(this).attr("id");
+				 xmlData.push(json);
+			 var url="/oper_shdz/deleteDz.action?XmlData="+JSON.stringify(xmlData);
+			 var returnVal=visitService(url);
+			if(returnVal.STATE =="success"){
+			  //alert("删除地址成功！");
+			  dlgShow({content:"删除地址成功"});
+			  dzList=selectDZXX(user);
+			}else{
+			  //alert("删除地址失败！");
+				dlgShow({content:"删除地址失败"});
+			}
+		 } */
+		 
+		 dlgShow({content:"确定删除?",yesFn:function(){
+			 var xmlData=[];
+			 var json={};
+				 json.DZBH=DZBH;
+				 xmlData.push(json);
+			 var url="/oper_shdz/deleteDz.action?XmlData="+JSON.stringify(xmlData);
+			 var returnVal=visitService(url);
+			if(returnVal.STATE =="success"){
+			  //alert("删除地址成功！");
+			  dlgShow({content:"删除地址成功"});
+			  dzList=selectDZXX(user);
+			}else{
+			  //alert("删除地址失败！");
+				dlgShow({content:"删除地址失败"});
+			}	
+		 },noFn:function(){
+			 
+		 }
+		 });
+	 })
+	 
+	return dzList;
+}
+
+function showUndefind(data){
+		if(data==null||data=='undefined'){
+			return "";
+		}else{
+			return data;
+		}
+}
+
+//展示发票信息
+function selectFpxx(user){
+	var xmlData=[];
+	var json={};
+	json.ZCXX01=user.ZCXX01;
+	xmlData.push(json);
+	var url="/CartManage/selectInvoiceInfo.action?XmlData="+JSON.stringify(xmlData);
+	var fpxx=visitService(url);
+	$("#FPTT").val(showUndefind(fpxx.ZCXX37));
+	$("#YJDZ").val(showUndefind(fpxx.ZCXX24));
+	$("#DWMC").val(showUndefind(fpxx.ZCXX37));
+	$("#NSRSBH").val(showUndefind(fpxx.ZCXX28));
+	$("#KHH").val(showUndefind(fpxx.ZCXX22));
+	$("#CWZH").val(showUndefind(fpxx.ZCXX23));
+	$("#FPYJDZ").val(showUndefind(fpxx.ZCXX24));
+	return fpxx;
+	
+}
+
+//修改发票抬头
+function modifyFptt(){
+	$("#FPTT").attr("disabled",false);
+	$("#YJDZ").attr("disabled",false);
+	$("#ttupdate").hide();
+	$("#ttsave").show();
+}
+
+function modifyFpttxx(){
+	var XmlData=$("#form1").formToJson();
+	//var XmlData=[{"FPTT":"昆山市巴城镇明珠欣达电器商行","ZCXX01":"900429"}];
+	var baseUrl="";
+	var url=baseUrl+"/UserInfo/modifyFpttxx.action";
+	//alert(JSON.stringify(XmlData));
+	dlgShow({content:JSON.stringify(XmlData)});
+	var rData=visit(url,JSON.stringify(XmlData));
+	if(rData.STATE=='1'){
+		//alert("修改成功");
+		dlgShow({content:"修改成功"});
+		$("#ttupdate").show();
+		$("#ttsave").hide();
+		$("#FPTT").attr("disabled",true);
+		$("#YJDZ").attr("disabled",true);
+	}else {
+		//alert("修改失败");
+		dlgShow({content:"修改失败"});
+	}
+}
+
+function modifyFpxx(){
+	$("#DWMC").attr("disabled",false);
+	$("#NSRSBH").attr("disabled",false);
+	$("#KHH").attr("disabled",false);
+	$("#CWZH").attr("disabled",false);
+	$("#FPLXDH").attr("disabled",false);
+	$("#FPYJDZ").attr("disabled",false);
+	
+	$("#update").hide();
+	$("#save").show();
+}
+
+function modifyFp(){
+	
+	var xhxh=$("#DWMC").val();
+	if(xhxh.length==0){
+		//alert("单位名称为必填!")
+		dlgShow({content:"单位名称为必填"});
+		return false;
+	}
+	var xhxh=$("#NSRSBH").val();
+	if(xhxh.length==0){
+		//alert("纳税人识别号为必填!")
+		dlgShow({content:"纳税人识别号为必填"});
+		return false;
+	}
+	var xhxh=$("#KHH").val();
+	if(xhxh.length==0){
+		//alert("开户银行为必填!")
+		dlgShow({content:"开户银行为必填"});
+		return false;
+	}
+	var xhxh=$("#KHH").val();
+	if(xhxh.length>20){
+		//alert("开户银行不能超过二十个字!")
+		dlgShow({content:"开户银行不能超过二十个字"});
+		return false;
+	}
+	var CWZH=$("#CWZH").val();
+	if(!/^\d{19}$/.test(CWZH)){
+	    //alert("银行账号输入有误")
+	    dlgShow({content:"银行账号输入有误"});
+	    return false;
+	}
+	var xhxh=$("#FPYJDZ").val();
+	if(xhxh.length==0){
+		//alert("邮寄地址为必填!")
+		dlgShow({content:"邮寄地址为必填"});
+		return false;
+	}
+	
+	var XmlData=$("#form1").formToJson();
+	
+	var baseUrl="";
+	var url=baseUrl+"/UserInfo/modifyFpxx_mz.action";
+	var rData=visit(url,JSON.stringify(XmlData));
+	if(rData.STATE=='1'){
+		//alert("修改成功");
+		dlgShow({content:"修改成功"});
+		$("#update").show();
+		$("#save").hide();
+		$("#DWMC").attr("disabled",true);
+		$("#NSRSBH").attr("disabled",true);
+		$("#KHH").attr("disabled",true);
+		$("#CWZH").attr("disabled",true);
+		$("#FPLXDH").attr("disabled",true);
+		$("#FPYJDZ").attr("disabled",true);
+	}else {
+		//alert("修改失败");
+		dlgShow({content:"修改失败"});
+	}
+}
+
+//点击“结算本订单”所需数据
+var sj=0;  //商品总金额数据
+function jiesuanOrder(user,fpxx,dzList,spList){
+	if(spList.length==0){
+		/* if(confirm("购物车没有商品! 是否去购物")){
+			location.href="/customer/qfy/index.html";
+		} */
+		dlgShow({content:"购物车没有商品, 是否去购物?",yesFn:function(){
+			location.href="/customer/qfy/index.html";
+		},noFn:function(){}
+		});
+		return false;
+	}
+	var xmlData=$("#form1").formToJson();
+	xmlData[0].HBID=user.ZCXX01;
+	xmlData[0].DQXX01=DQXX01;
+	xmlData[0].XSDD18="";//发票备注
+	
+	//点击“结算本订单”按钮
+	$("#button").on("click",function(){
+		var user=JSON.parse($.cookie("userInfo"));
+		if(user==null){
+			//alert("请登录后再结算商品！");
+			dlgShow({content:"请登录后再结算商品"});
+			return false;
+		}
+		var spxxList=[];
+		var fpxxx=selectFpxx(user);
+		$(spList).each(function (i,spxxJson){
+			var json={};
+			json.DDJE=spxxJson.DDJE;
+			json.HBID=spxxJson.HBID;
+			json.ZTID=spxxJson.ZTID;
+			json.ZTMC=spxxJson.ZTMC;
+			json.SPXXLIST=spxxJson.SPXXLIST;
+			json.DQXX01=DQXX01;
+			//买家留言备注
+			json.XSDD07=$(".car_bz_js").find("input[name='textarea']").eq(i).val();
+			spxxList.push(json);
+		});
+		xmlData[0].SPITEMLIST=spxxList;//商品详情
+	
+		var i=$("input[name='name']:checked").val();
+		if($("#psfs1").is(":checked")||$("#psfs2").is(":checked")){
+		
+		}else
+		{
+			//alert("请选择配送方式");
+			dlgShow({content:"请选择配送方式"});
+			return false;
+		}
+		if(i==undefined&&$("#psfs1").is(":checked")){
+			//alert("商家配送时，收货地址为必选项!");
+			dlgShow({content:"商家配送时，收货地址为必选项"});
+			return false;
+		}
+		if(spList.length==0){
+			/* if(confirm("购物车没有商品! 是否去购物")){
+				location.href="index.html";
+			} */
+			dlgShow({content:"购物车没有商品, 是否去购物?",yesFn:function(){
+				location.href="index.html";
+			},noFn:function(){
+				 
+			 }
+			});
+			return false;
+		}
+		xmlData[0].XSDD03="0";					//邮费金额
+	  	xmlData[0].XSDD10=fplx;					//发票类型
+		xmlData[0].XSDD11="";					//发票抬头
+	  	xmlData[0].XSDD13="";//纳税人识别号
+		xmlData[0].XSDD14="";//开户行
+		xmlData[0].XSDD15="";//财务账号
+		xmlData[0].XSDD16="";//发票邮寄地址
+		xmlData[0].XSDD27="";//发票抬头		
+		xmlData[0].XSDD50="";//支付方式 add 2015.10.19.
+		
+		//设置支付方式的值 add 2015.10.19.	
+		var payType = $("input[name='zffs']:checked").val();
+		xmlData[0].XSDD50= payType;
+		//发票信息提交
+	  	if(fplx == 2){//普通发票
+	    	xmlData[0].XSDD11=showUndefind(fpxxx.ZCXX37)==""?$("#FPTT").val():showUndefind(fpxxx.ZCXX37);//发票抬头
+	    	xmlData[0].XSDD16=showUndefind(fpxxx.ZCXX24)==""?$("#YJDZ").val():showUndefind(fpxxx.ZCXX24);//邮寄地址
+  		}else if(fplx == 3){//增值税发票
+  			xmlData[0].XSDD11=showUndefind(fpxx.ZCXX37)==""?$("#DWMC").val():showUndefind(fpxx.ZCXX37);//发票抬头
+	    	xmlData[0].XSDD13=showUndefind(fpxxx.ZCXX28)==""?$("#NSRSBH").val():showUndefind(fpxxx.ZCXX28);//纳税人识别号
+		    xmlData[0].XSDD14=showUndefind(fpxxx.ZCXX22)==""?$("#KHH").val():showUndefind(fpxxx.ZCXX22);//开户行
+		    xmlData[0].XSDD15=showUndefind(fpxxx.ZCXX23)==""?$("#CWZH").val():showUndefind(fpxxx.ZCXX23);//财务账号
+		    xmlData[0].XSDD16=showUndefind(fpxxx.ZCXX24)==""?$("#FPYJDZ").val():showUndefind(fpxxx.ZCXX24);//发票邮寄地址
+	  	}
+			
+			xmlData[0].JYJE=totalPrice;
+			xmlData[0].DQXX01=DQXX01;
+			//加入库存验证 -- 待修改
+			//库存验证
+			var KCYZ="/OrderFlowManage/getKcxxNum.action?json="+JSON.stringify(xmlData);
+			
+			var returnKCYZVal=visitService(KCYZ);
+			if(returnKCYZVal.STATE == '1')
+			{	
+				var dzList= selectDZXX(user);
+				if(i!=undefined&&$("#psfs1").is(":checked")){
+					xmlData[0].XSDD19=dzList.ADDRESSLIST[i].SHRMC;   //收货人
+					xmlData[0].XSDD20=dzList.ADDRESSLIST[i].ADDRESS; //收货地址
+					xmlData[0].XSDD21=dzList.ADDRESSLIST[i].MOBILE;	 //收货联系电话
+					xmlData[0].XSDD26="0";    					     //配送方式0卖家配送，1买家自提
+					xmlData[0].DZBH=dzList.ADDRESSLIST[i].DZBH;
+					
+				}else{
+					xmlData[0].XSDD19="王利生";
+					xmlData[0].XSDD20="天津市东丽区大毕庄镇跃进路1199号"
+					xmlData[0].XSDD21="13110087060 ";
+					xmlData[0].XSDD26="1";
+				}
+				var url="/OrderFlowManage/insertCombinedOrder.action?XmlData="+JSON.stringify(xmlData);
+				var returnVal=visitService(url);
+				if(returnVal.STATE == '1'){
+					var JYDH=returnVal.JYDH;
+					var zfje=parseFloat(totalPrice);
+					location.href="cartSuccess.html?JYDH="+JYDH+"&zfje="+zfje+"&dzbh="+returnVal.DZBH+"&type="+payType+"&show=0";
+				}else{
+					//alert("提交订单失败!");
+					dlgShow({content:"提交订单失败"});
+					location.href="#";
+				}	
+			}
+			else
+			{
+				//
+				dlgShow({content:returnKCYZVal.SPXX04+"商品库存不足,请修改购物车",yesFn:function(){
+					if(type!="ljgm"){
+						location.href="cart.html";
+					}
+				}});
+				
+			}
+		});
+}
+
+</script>
+</body>
+</html>

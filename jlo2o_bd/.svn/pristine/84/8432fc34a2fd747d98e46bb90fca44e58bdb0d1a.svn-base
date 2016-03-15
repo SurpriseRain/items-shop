@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.qxgl.sql.oper_qxgl" >
+<!--NineDragon  -->
+<!-- 查询用户列表-->
+	<select id="selectuserlist" parameterType="Map" resultType="Map">
+		SELECT B.PERSON_ID,
+		A.ZCXX02
+		FROM W_ZCGS A,
+			 W_XTCZY B 
+		WHERE A.ZCXX01=B.GSID AND A.ZCGS01=4 
+	<if test="yhzh01!=''">AND B.PERSON_ID =#{yhzh01}</if>
+	<if test="gsmc!=''">AND A.ZCXX02 LIKE CONCAT ('%',#{gsmc},'%')</if>
+	</select>
+<!-- 查询用户列表总和-->
+	<select id="selectuserlist_sum" parameterType="Map" resultType="Map">
+		SELECT 
+        COUNT(1) as COUNT
+    	FROM  (
+    			SELECT B.PERSON_ID,
+				A.ZCXX02
+				FROM W_ZCGS A,
+			 	W_XTCZY B 
+				WHERE A.ZCXX01=B.GSID AND A.ZCGS01=4 
+	<if test="yhzh01!=''">AND B.PERSON_ID =#{yhzh01}</if>
+	<if test="gsmc!=''">AND A.ZCXX02 LIKE CONCAT ('%',#{gsmc},'%')</if>
+    	) as total
+	</select>
+<!--NineDragon  -->	
+<!--查询权限列表  -->
+	<select id="selectqxlist" parameterType="Map" resultType="Map">
+	SELECT CODE FLCODE,NAME FLNAME,(CASE WHEN LENGTH(CODE)=2 THEN '0' ELSE SUBSTR(CODE,1,2)END)  
+	FATHERCODE, NULL FATHERNAME,W_XTCZYCZ.cd FROM W_XTCZYMENU LEFT JOIN 
+	(SELECT * FROM W_XTCZYCZ WHERE person_id = '"+s+"')
+	W_XTCZYCZ ON W_XTCZYCZ.cd = W_XTCZYMENU.code
+	<if test="yhzh01!=''">AND B.PERSON_ID =#{yhzh01}</if>
+	<if test="gsmc!=''">AND A.ZCXX02 LIKE CONCAT ('%',#{gsmc},'%')</if>
+	</select>
+</mapper>

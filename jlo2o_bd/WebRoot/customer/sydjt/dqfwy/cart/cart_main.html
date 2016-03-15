@@ -1,0 +1,49 @@
+
+<div class="content">
+<div class="row">
+  <ul class="w12 cart_filter_bar"><li class="xuan"><span>全部商品</span><b>5</b></li><li>已选商品：<b>￥2200.00</b><input type="button" class="jl_btn btn_red" value="结算" /></li></ul>
+</div>
+</div>
+
+<div class="content">
+<div class="row">
+  <div class="w12 cart_info">
+    <div class="cart_thead"><dl class="w12"><dt class="w01"><input type="checkbox" />全选</dt><dd class="w05">商品信息</dd><dd class="w01">单价（元）</dd><dd class="w02">数量</dd><dd class="w01">小计（元）</dd><dd class="w02">操作</dd></dl></div>
+    <div class="w12 cart_case">
+    <div class="w12 cart_title"><dl class="w12"><dt><input type="checkbox" /></dt><dd>店铺名称</dd></dl></div>
+    <div class="w12 cart_list"><!--截点--></div>
+    <div class="cart_end cart_fixed">
+    <dl class="w12"><dt class="w01"><input type="checkbox" />全选</dt><dd class="w05"><a>删除</a><a>移入收藏夹</a></dd><dd class="w02">已选择<b>5</b>件商品<i class="fa fa-angle-double-up"></i></dd><dd class="w04" style="line-height:50px; height:50px; float: left;"><span style="float:left;">合计（不含运费）：</span><b style="margin-bottom:20px; float:left;">￥2200.00</b><a href="../settlement/settlement.html" style="margin-right: 0px;float: right;"><input type="button" class="jl_btn btn_red" value="结算" /></a></dd></dl>
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  for(var i=0;i<5;i++){
+  $(".cart_list").append('<dl class="w12">'
+                         +'<dt><input type="checkbox" /></dt>'
+						 +'<dd class="w06">'
+						 +'<div class="w02 pro_img"><a href="../proItem/proItem.html"><img src="../images/sp.jpg" class="w12" /></a></div>'
+						 +'<div class="w08 pro_name"><a href="../proItem/proItem.html">努比亚（nubia）小牛4 Z9mini 全黑 移动联通电信4G手机 双卡双待</a></div></dd>'
+						 +'<dd class="w01"><div class="pro_pic">2200.00</div></dd>'
+						 +'<dd class="w02"><div class="pro_form"><i>-</i><input type="text" value="1" /><div><i>+</i></div></dd>'
+						 +'<dd class="w01"><div class="pro_pic">2200.00</div></dd>'
+						 +'<dd class="w02"><div class="pro_cz"><a class="w12">删除</a><a class="w12">移入收藏夹</a></div></dd>'
+						 +'</dl>');
+   }
+/****************购物车****************/
+$(window).scroll(function(){
+	var hei = $("body").height();
+     var scrollBottom = $("body").height() - $(window).height() - $(window).scrollTop();
+	 if(scrollBottom > 240 || scrollBottom == 240){
+		$(".cart_end").addClass("cart_fixed"); 
+	  }else if(scrollBottom < 240){
+        $(".cart_end").removeClass("cart_fixed"); 
+	  }
+})
+})
+
+
+</script>

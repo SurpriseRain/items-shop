@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Tmsq.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+
+$(document).ready(function(){
+	//$("#shopHead").load("/gui_o2o/qfy/fore/vendor/shop-Header.html?ss="+Math.random());	
+	//$("#shopLeft").load("/gui_o2o/qfy/fore/vendor/shop-Left.html?menuId=spgl_tmsq&ss="+Math.random());
+	//$("#footer").load("/gui_o2o/qfy/fore/Foot.html?ss="+Math.random());
+})
+
+//展示搜索结果
+function selectSPCM(){
+	var listData=[];
+	var xmlData = {};
+	xmlData["QryType"]="Fore";
+	xmlData["ZCXX01"]=userCookie.ZCXX01;
+	//获取查询分页内容
+	//$(".Tmsq").after("<div id=\"pro-fy\"><div class=\"fy\"></div></div>");
+	//showChangePage(1);
+	//展示查询结果
+	xmlData["sqlid"]="com.jlsoft.o2o.product.sql.getSPXX-Oper_Spcm";
+	listData.push(xmlData);
+	var url = "/jlquery/selectO2O.action?XmlData="+JSON.stringify(listData);
+	var spcmData = visitService(url);
+	//展示结果
+	var tabObj = $(".Tmsq");
+    var str = "";
+    $(spcmData).each(function(index,spcmObj){
+       str = str+"<tbody class=\"dqsp-title\"><tr id=\"tr_"+index+"\">";
+	   str = str+"<td><input type=\"checkbox\" /><input type=\"hidden\" value=\""+spcmObj.SPXX01+"\"/></td>";
+       str = str+"<td><b title=\""+spcmObj.BARCODE+"\">"+spcmObj.BARCODE+"</b></td>";
+       var cmqzm = (spcmObj.SPCM01==undefined)?"":spcmObj.SPCM01;
+	    str = str+"<td><input value=\""+cmqzm+"\" placeholder=\"串码起止码\" class=\"bmhd\" /></td>";
+	    var cmsl = (spcmObj.SPCM02==undefined)?"":spcmObj.SPCM02;
+	    str = str+"<td><input value=\""+cmsl+"\" placeholder=\"串码数量\" class=\"bmsl\" /></td>";
+	    str = str+"<td><b title=\""+spcmObj.SPXX04+"\">"+spcmObj.SPXX04+"</b></td>";
+	    var scsj = (spcmObj.SPCM03==undefined)?"":spcmObj.SPCM03;
+	    str = str+"<td><font>"+scsj+"</font></td>";
+	    str = str+"<td><a href=\"javascript:void(0);\" onclick=\"editSPTM("+index+")\">编辑</a>";
+	    str = str+"<a href=\"javascript:void(0);\" onclick=\"del("+index+")\">删除</a></td>";
+        str = str+"</tr></tbody>";
+    })
+    $(".dqsp-title").empty();
+    $(".Tmsq").append(str);
+    //增加鼠标移上去显示效果
+    $(".dqsp-title > tr").mouseover(function(){
+		$(this).addClass("bian");     
+	})
+   $(".dqsp-title > tr").mouseleave(function(){
+	    $(this).removeClass("bian");     
+	})
+}
+
+var rowTotal = 210;
+var pageSize = 10;
+var pageTotal = Math.ceil(rowTotal/pageSize);
+//展示翻页内容
+function showChangePage(pageNum){
+   //获取首页和尾页值
+   var firstPage = ((pageNum -5)>1 && (pageNum -5)<pageTotal)?(pageNum -5):1;
+   var lastPage = pageNum+4;
+   if(lastPage<=10){
+	  lastPage = 10;
+   }else if(lastPage>10 && lastPage>pageTotal){
+	  lastPage = pageTotal;
+   }
+   firstPage = (lastPage-firstPage)<10?(lastPage-9):firstPage;
+   //显示分页内容
+   var changePageObj = $("#pro-fy .fy");
+   changePageObj.empty();
+   changePageObj.append("<a href=\"#\" id=\"prev\"><< 上一页</a>");
+   for(var i=firstPage;i<=lastPage;i++){
+	 changePageObj.append("<a href=\"#\" onclick=\"showChangePage("+i+")\"> "+i+" </a>");
+   }
+   changePageObj.append("<a href=\"#\" id=\"next\">下一页 >></a>");
+   //对不能点击的页赋予样式
+   $("#prev").addClass("xuan");
+}
+
+//编辑商品条码展示窗口
+function editSPTM(rowId){
+	//获取行里面所有值
+	var trObj = $("#tr_"+rowId+"");
+	var spxx01 = trObj.find("td").eq(0).find("input").eq(1).val();
+	var sptm = trObj.find("td").eq(1).find("b").html();
+	var hmd = trObj.find("td").eq(2).find("input").eq(0).val();
+	var sl = trObj.find("td").eq(3).find("input").eq(0).val();
+	var spmc = trObj.find("td").eq(4).find("b").html();
+	var scsj = trObj.find("td").eq(5).find("font").html();
+	//展示编辑页面
+	$("#SPXX01").val(spxx01);
+	$("#SPCM03").val(scsj);
+	$("#tmsqzz").css({"display":"block"});
+	$(".tmsqzz-title > .bmzc").val(sptm);
+    $(".tmsqzz-title > .bmsl").val(sl);
+    $(".tmsqzz-title > .bmhd").val(hmd);
+    $(".tmsqzz-title > b").html(spmc);
+	if(scsj==undefined || scsj==""){
+		//新增串码
+		$(".tmsqzz-list").html("");
+		for(var i=0;i<sl;i++){
+			var spcm = eval(parseInt(hmd)+i);
+		    addSPCM(sptm,spcm);
+		}
+	}else{
+		//查询串码明细，进行编辑
+		var xmlData = {};
+		xmlData["ZCXX01"]=userCookie.ZCXX01;
+		xmlData["SPXX01"]=$("#SPXX01").val();
+		//数据库交互查询串码明细
+		var listData = [];
+		listData.push(xmlData);
+		var url = "/oper_Spcm/getSPCM.action?XmlData="+JSON.stringify(listData);
+		var returnDate = visitService(url).spcmList;
+		$(".tmsqzz-list").html("");
+		for(var i=0;i<returnDate.length;i++){
+			var spcmObj = returnDate[i];
+			var spcm = spcmObj.SPCMI01.replace(sptm,"");
+			addSPCM(sptm,spcm);
+		}
+	}
+	//增加鼠标移上去显示效果
+	$(".tmsqzz-list > li").mouseover(function(){
+	   $(this).addClass("bian");     
+	})
+   	$(".tmsqzz-list > li").mouseleave(function(){
+	   $(this).removeClass("bian");     
+	})
+	//增加删除串码方法
+	$(".tmsqzz-list > li > a").click(function(){
+	   $(this).parent("li").remove();
+	   $("#SPCM02").val(parseInt($("#SPCM02").val())-1);
+    })
+ }
+ 
+ //增加单个商品条码
+ function addSPCM(sptm,spcm){
+ 	var spcmStr = "";
+	spcmStr = spcmStr + "<li>";
+	spcmStr = spcmStr + "<input type=\"checkbox\" class=\"checkbox\" />";
+	spcmStr = spcmStr + "<input value=\""+sptm+"\" title=\"国家编码中心编码\" class=\"bmzc\" readonly=\"readonly\" />";
+	spcmStr = spcmStr + "<span>-</span><input value=\""+spcm+"\" title=\"国家编码中心编码\" class=\"bmgs\" />";
+	spcmStr = spcmStr + "<a>删除</a>";
+	spcmStr = spcmStr + "</li>";
+	$(".tmsqzz-list").append(spcmStr);
+ }
+ 
+ //商品串码保存修改
+ function save(){
+ 	//获取提交参数
+    var xmlData = {};
+ 	var spcmArr = $(".tmsqzz-list").find("li");
+    var spcms = "";
+    for(var i=0;i<spcmArr.length;i++){
+	   spcms = spcms + spcmArr.eq(i).find("input").eq(2).val() + ";";
+    }
+    xmlData["spcms"]=spcms;
+    xmlData["ZCXX01"]=userCookie.ZCXX01;
+    xmlData["SPXX01"]=$("#SPXX01").val();
+    xmlData["BARCODE"]=$("#BARCODE").val();
+    xmlData["SPCM02"]=$("#SPCM02").val();
+    xmlData["SPCM01"]=$("#SPCM01").val();
+ 	//与后台交互
+ 	var listData = [];
+ 	listData.push(xmlData);
+ 	var url = "";
+ 	if($("#SPCM03").val().length>0){
+ 		url = "/oper_Spcm/updateSPCM.action?XmlData="+JSON.stringify(listData);
+ 	}else{
+ 		url = "/oper_Spcm/addSPCM.action?XmlData="+JSON.stringify(listData);
+ 	}
+ 	var returnData = visitService(url);
+ 	if(returnData.STATE == 1){
+ 		$("#tmsqzz").css({"display":"none"});
+ 		selectSPCM();
+ 	}
+ }
+ 
+ //上传串码删除
+ function del(rowId){
+ 	if(confirm("确定删除？")){
+	 	//获取提交参数
+	 	var trObj = $("#tr_"+rowId+"");
+		var spxx01 = trObj.find("td").eq(0).find("input").eq(1).val();
+	 	var xmlData = {};
+	 	xmlData["ZCXX01"]=userCookie.ZCXX01;
+	    xmlData["SPXX01"]=spxx01;
+	    //与后台交互
+	    var listData = [];
+	 	listData.push(xmlData);
+	 	var url = "/oper_Spcm/deleteSPCM.action?XmlData="+JSON.stringify(listData);
+	 	var returnData = visitService(url);
+	 	if(returnData.STATE == 1){
+	 		selectSPCM();
+	 	}
+ 	}
+ }
+</script>
+<body>
+<!-- 编辑界面展示开始 -->
+<div id="tmsqzz">
+  <div class="tmsqzz-bg">
+    <div class="tmsqzz-main">
+      <div class="tmsqzz-title">
+	      <input type="hidden" id="SPXX01" name="SPXX01" value=""/>
+	      <input type="hidden" id="SPCM03" name="SPCM03" value=""/>
+	      <span>商品条码：</span><input id="BARCODE" name="BARCODE" value="" title="国家编码中心编码" class="bmzc" />
+	      <span>串码起止码：</span><input id="SPCM01" name="SPCM01" value="" title="号码段" class="bmhd" />
+	      <span>串码数量：</span><input id="SPCM02" name="SPCM02" value="" title="数量" class="bmsl" />
+	      <span>商品名称：</span><b></b>
+	      <font title="关闭">×</font>
+      </div>
+      <ul class="tmsqzz-list">
+        <li class="xz">
+         	<label>新增条码</label>    
+        </li>
+      </ul>
+      <div class="tmsqzz-a">
+	        <div class="qx"><input type="checkbox" class="checkbox" /><span>全选</span></div>
+	        <a class="qxsc">批量删除</a>
+	        <div class="bot">
+	          <a href="javascript:void(0);" onclick="save()">保存</a>
+	          <a href="javascript:void(0);" onclick="">取消</a>
+	        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 编辑界面展示结束 -->
+<!-- 中间开始 -->
+<div id="shop-main">
+
+  <div class="shop-right-main">
+  <div class="dqlc"><a href="#" class="dqlc-a">我是卖家</a> > <a href="#" class="dqlc-a">商品管理</a> > <b class="dqlc-b">条码申请</b></div>
+  <div class="dqtb">
+     <div class="qx"><input type="checkbox" class="checkbox" /><span>全选</span></div>
+     <a class="qxsc">批量删除</a>
+     <input placeholder="请输入商品名称/条码" class="seach" />
+     <a href="javascript:void(0);" class="seach_bot" onclick="selectSPCM()">搜索</a>
+  </div>
+  <table class="Tmsq">
+	    <tbody>
+		    <tr class="title">
+		      <td width="2%"></td>
+		      <td width="23%">商品条码</td>
+		      <td width="15%">串码起止码</td>
+		      <td width="10%">串码数量</td>
+		      <td width="25%">商品名称</td>
+		      <td width="10%">上传时间</td>
+		      <td width="15%">操作</td>
+		    </tr>
+	    </tbody>
+  </table>
+  <!-- 翻页展示开始 -->
+  <div id="pro-fy">
+	   <!-- <div class="fy">
+		    <a href="#" class="xuan"><< 上一页</a>
+		    <a href="#" class="xuan">1</a>
+		    <a href="#">2</a>
+		    <a href="#">3</a>
+		    <a href="#">...</a>
+		    <a href="#">8</a>
+		    <a href="#">9</a>
+		    <a href="#">10</a>
+		    <a href="#">下一页 >></a>
+		    <span>共4页，到第</span><input /><span class="tb">页</span>
+		    <a href="#" class="botton">确定</a>
+	   </div> -->
+  </div>
+  <!-- 翻页展示结束 -->
+  </div>
+</div>
+<div class="clear"></div>
+<!-- 中间结束 -->
+</body>
+</html>

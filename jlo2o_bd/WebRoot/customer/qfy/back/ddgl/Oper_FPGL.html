@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  //用户类型
+  var TYPE = $.getUrlParam("TYPE");
+  var dataArr = [];
+  var XmlData = {};
+  XmlData["sqlid"]="com.jlsoft.o2o.sql.orderInvoice.sel_fporder";
+  XmlData["QryType"]="Report";
+  //用户类型
+  XmlData["ZTID"]=usercookie.ZCXX01;
+  XmlData["TYPE"]=TYPE;
+  XmlData["fpstate"]=$("#fpstate").val();
+  dataArr.push(XmlData);
+  var data =  visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+  return data;
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">往来对账</a>
+    	<span>></span>
+    	<b>发票审核</b>
+	</div> -->
+ 	
+ <ul id="screening">
+   <li style="width:830px;">
+    <span>发票状态：</span>
+   	   <script type="text/javascript">
+			document.write(showStateHtml('FPZT','fpstate'));
+		</script>
+   	   <a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+   </li>
+</ul>
+<div class="clera"></div>
+ 
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4" rowClick="open" multiPage="true" height="1500" url="/jlquery/selecto2o.action" 
+columnsArr="[
+		{'property':'fpbh','header':'编号','type':'lable','width':'160px'},
+		{'property':'sName','header':'卖家','type':'lable','width':'120px'},
+		{'property':'bName','header':'买家','type':'lable','width':'120px'},
+		{'property':'INVOICETYPE','header':'发票类型','type':'number','width':'80px'},
+		{'property':'FPZT','header':'发票状态','type':'number','width':'60px'},
+		{'property':'THDH','header':'操作','type':'fpxq','width':'60px'}]" 
+	>
+
+</div>
+
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+})
+
+function select_THD(obj){
+	location.href="/customer/qfy/back/ddgl/Oper_FPGL_item.html?fpbh="+obj+"&type="+$.getUrlParam("TYPE");
+}
+</script>

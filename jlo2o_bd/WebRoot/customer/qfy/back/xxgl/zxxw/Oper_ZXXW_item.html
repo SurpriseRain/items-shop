@@ -1,0 +1,264 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<bean:message key="define.xx.title"/>
+</title>
+
+<style type="text/css">
+.mxxCalendar{behavior: url(/js/MxxCalendar.htc);}
+</style>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+ <LINK href="/css/multiSelectTree.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="/css/ext-all.css" />
+	   	<link type="text/css" rel="StyleSheet" href="/css/style.css"/>
+		<link type="text/css" rel="stylesheet" href="/css/header-min.css"/>
+	    <link type="text/css" rel="stylesheet"  href="/css/item_list_v2.1.css"/>
+	    <link type="text/css" rel="StyleSheet" href="/css/jquery.autocomplete.css"/>
+	    <link type="text/css" rel="stylesheet" href="/css/multiSelectTree.css" />
+		<script type="text/javascript" src="/js/ext-base.js"></script>
+		<script type="text/javascript" src="/js/ext-all.js"></script>
+		<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+		<script type="text/javascript" src="/js/json2.js"></script>
+		<script type="text/javascript" src="/js/commons.js"></script>
+		<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+		<script charset="utf-8" src="/keditor/kindeditor.js"></script>
+		<script charset="utf-8" src="/keditor/lang/zh_CN.js"></script>
+		<script type="text/javascript" src="/js/admin/Ajax.js"></script>
+		<script type="text/javascript" src="/js/multiSelectTree.js"></script>
+		<script type="text/javascript" src="/js/ext-multree-jl.js"></script>
+		<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/js/pubJson.js"></script>
+		
+<script>
+//看懂KindEditor用法
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="context"]', {
+			cssPath : '../keditor/plugins/code/prettify.css',
+			uploadJson : '/servlet/TpUploadServlet?filename=newstp',
+			fileManagerJson : '/fileManageServlet?filename=newstp',
+			allowFileManager : true,
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					document.forms['form1'].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					document.forms['form1'].submit();
+				});
+			}
+		});
+		//prettyPrint();
+	});
+</script>
+<style type="text/css">
+.imgLeftTD{
+   width:10%;
+   text-align:right;
+   border-left-width:0px;
+}
+.qr:hover{ background-color:#1a47cc;}
+.qr{ float:left; width:200px; height:50px; background-color:#2f80eb; color:#fff; line-height:30px; text-align:center; margin:30px 0 30px 10px;}
+.imgRightTD{
+   border-right-width:0px;
+}
+</style>
+</head>
+
+<body leftmargin="0" topmargin="0" rightmargin="0" scroll="auto">
+ <html:errors/>
+ <form id="form1" name="form1" method="post" >
+  <input type="hidden" id="jlbh" name="jlbh" value=""/>
+  <input type="hidden" id="QYCODES" name="QYCODES" value=""/>
+    <!--拖动层开始-->
+    <jsp:include flush="true" page="../../include/ViewDragDiv.jsp" />
+    <!--拖动层结束-->
+  <div id="curPosition" style="width:98.5%">
+    <a href="#">信息管理</a>
+    <span>></span>
+    <a href="#">资讯新闻</a>
+    <span>></span>
+    <b>资讯新闻发布</b>
+  </div>
+  <div class="clera"></div>
+  <table class="single_table">
+     <tr class="title"><td colspan="2"><b>资讯新闻发布</b><font>* 必填项</font></td></tr>
+     <tr>
+       <td style="width:100px;"><span style="width:110px;">资讯标题：</span></td>
+       <td style="width:550px;"><font>*</font><input type="text" class="text" id="title" name="title" value="" size="30"/></td>
+     </tr>
+     <tr>
+       <td style="width:100px;"><span style="width:110px;">资讯类型：</span></td>
+       <td style="width:550px;"><font>*</font>
+       		<select id="code" name="code" style="width: 153px;" >
+       		<option value="">请选择</option>
+       		</select>
+       </td>
+     </tr>
+     <tr>
+       <td style="width:100px;"><span style="width:110px;">展示范围：</span></td>
+       <td style="width:550px;">
+     		<select name="zsfw" style="width: 153px;">
+       			<option value="0" id="zsfw_0" >O2O平台新闻</option>
+       			<option value="1" id="zsfw_1">公司动态新闻</option>
+       		</select>
+	   </td>
+     </tr>
+     <tr>
+     	<td colspan="2">
+     	  <div>
+          <textarea id="context" name="context"  style="width:820px;height:300px;" ></textarea>
+          </div>
+        </td>
+     </tr>
+     <tr class="bot">
+       <td colspan="2">
+         <a href="javascript:void(0);" class="bot Long" onclick="update();">确 认 发 布</a>
+       </td>
+      </tr>    
+    </table>
+  <div class="clera"></div>
+
+  </form>
+  <script language="javascript" type="text/javascript">
+  $(document).ready(function(){
+    /**标题字符限制**/
+    $('#title').maxLength(100); 
+  });
+</script>
+</body>
+
+<script type="text/javascript">
+var start;
+var MyCookie = $.cookie('userInfo');
+var user=JSON.parse(MyCookie);
+//var JLBH=$.getUrlParam('JLBH');
+var JLBH=null;
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	JLBH=rowObj.find("#JLBH").val();
+	//信息类型
+var url="/Xxgl/selectW_XXLX.action";
+var xxlx=visitService(url);
+var xxlist=xxlx.xxlxlist;
+for(var i=0;i<xxlist.length;i++){
+	$("#code").append(
+	  		'<option value='+xxlist[i].CODE+'>'+xxlist[i].NAME+'</option>'
+	  	);
+	}
+if(JLBH!=undefined&&JLBH!="null"){
+		$("#jlbh").val(JLBH);
+		selectZxxwDetail();
+	}else{
+		$("#jlbh").val("");
+		}
+}
+
+function onloadTree() {
+	var url ="/gui_o2o/back/TreeCheckbox.jsp?sqlID=com.jlsoft.o2o.tree.sql.viewDQXX01Tree3&backStr=&treeCxjb=1&level=3";
+	setFrameTree(url);
+}
+function setFrameTree(url){
+	 //路径
+	 $("#detailsResultTree").attr("src",url);
+}
+function selectZxxwDetail(){
+	 	var baseUrl="";
+		var jlbh=$("#jlbh").val();
+		var gsid=user.ZCXX01;
+		var url=baseUrl+"/Xxgl/selectZxxwDetail.action?jlbh="+jlbh+"&gsid="+gsid;
+		var rData = visitService(url);//RdATA 为JSON
+		if(rData!=undefined&&rData!=""){
+			var xwList=rData.xwDetailList;
+			editor.html(xwList[0].context);
+			$("#title").val(xwList[0].title);
+			$("#code").empty();	
+			$("#code").append(
+			  		'<option value='+xwList[0].LXCODE+'>'+xwList[0].LXNAME+'</option>'
+			  	);	
+			}
+}
+
+//修改信息
+function update(){
+	getValues();
+	var baseUrl="";
+	var jlbh=$("#jlbh").val();
+	var title=$("#title").val();
+	var codea=$("#code").val();
+	var context=$("#context").val();
+	var XmlData1 = $("#form1").formToJson();
+	
+	if(title.length == 0){
+		alert("请输入咨讯标题");
+		return;
+	}
+	if(codea.value==""){
+		  alert("请选择资讯类型");
+		  return;
+		}
+	if(XmlData1[0].context.length==0){
+		  alert("请输入正文内容");
+		  return;
+		}
+	if(XmlData1[0].context.length>2000){
+	  alert("正文内容不能超过2000个字符！");
+	  return;
+	}
+	
+	XmlData1[0].context =escape(XmlData1[0].context);
+	XmlData1[0].gsid = user.ZCXX01;
+	var XmlData=JSON.stringify(XmlData1);
+	var r = confirm('确认更新信息吗？');
+	if(r==true){
+		   var xwDetail=baseUrl+"/Xxgl/updateZxxw.action?XmlData="+XmlData;
+		   var data=visitService(xwDetail);
+		   if(data.STATE==1){
+		   alert("操作成功!");
+		   parent.execBackFun("aaa");
+			parent.$("#ajaxGrid").remove();
+			   }else if(data.STATE==0){
+				   alert("操作失败!");
+				   }
+	   }
+	   else return;
+}
+
+//删除信息
+function del(){
+   var r = confirm('确认删除信息吗？');
+   if(r==true){
+	   var jlbh=$("#jlbh").val();
+	   var baseUrl="";
+	   var XmlData1 = $("#form1").formToJson();
+		XmlData1[0].gsid = user.ZCXX01;
+	   var XmlData=JSON.stringify(XmlData1);
+	   var xwDetail=baseUrl+"/Xxgl/delZxxw.action?XmlData="+XmlData;
+	   var data=visitService(xwDetail);
+	   if(data.STATE==1){
+		   alert("更新成功!");
+		   parent.$("#mainResult")[0].contentWindow.queryclick();
+			   }else if(data.STATE==0){
+				   alert("更新失败!");
+				   }
+   }
+   else return;
+}
+
+//获得kindeditor中的信息
+function getValues() {
+   // 取得HTML内容
+   var html = editor.html();
+   // 同步数据后可以直接取得textarea的value
+   editor.sync();
+}
+
+</script>
+</html>
+

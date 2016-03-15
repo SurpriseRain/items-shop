@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link type="text/css" rel="stylesheet" href="/customer/sydjt/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link href="/customer/sydjt/css/default.css" type="text/css" rel="stylesheet">
+<link href="/customer/sydjt/css/style.css" type="text/css" rel="stylesheet">
+<!--<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>-->
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/dtree.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.qxgl.sql.oper_qxgl.selectuserlist','QryType':'Report','dataType':'Json','yhzh01':$('#yhzh01').val(),'gsmc':$('#gsmc').val()}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+.btn_2{
+    background-color: #2f80eb;
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 200px;
+}
+.yangshi{
+  border: 1px solid #e4e4e4;
+    float: left;
+    height: 446px;
+    margin-left: 48px;
+    /* margin-top: 31px; */
+    padding-left: 21px;
+    padding-top: 29px;
+    /*width: 46%;*/
+    overflow-y:scroll;
+    
+}
+.yangshi .btn_2{
+	position:relative;
+	left:50%;
+	margin-left:-100px;
+}
+</style>
+</head>
+<body>
+<div class="w12 merch_main">
+	<ul class="w12 merch_breadcrumb">
+		<li><i class="fa fa-home"></i><span>首页</span></li>
+		<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+		<li><span>基础管理</span></li>
+		<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+		<li><b>用户列表</b></li>
+	</ul>
+	<div class="w12 user_content">
+		<div class="w12 user_page_tab">
+			<dl class="w03 public_form">
+				<dt class="w05">
+					<label class="w12">用户账号：</label>
+				</dt>
+				<dd class="w07">
+					<input type="text" id="yhzh01" name="yhzh01" value=""/>
+				</dd>
+			</dl>
+			<dl class="w03 public_form">
+				<dt class="w05">
+					<label class="w12">公司名称：</label>
+				</dt>
+				<dd class="w07">
+					<input type="text" id="gsmc" name="gsmc" value=""/>
+				</dd>
+			</dl>
+			<span class="w01">
+				<input type="button" value="查询" class="jl_btn btn_red" onclick="query()"/>
+			</span>
+		</div>
+		<div class="w12 user_page_main center">
+			<div class="w06">
+				<div jl jlid="DefStaPer" 	id="lb" newclos="4" rowClick="" multiPage="true"  url="/jlquery/selecto2o.action" 
+				columnsArr="[
+				{'property':'PERSON_ID','header':'用户名称','type':'lable','width':'80px'},
+				{'property':'ZCXX02','header':'公司名称','type':'lable','width':'200px'},
+				{'property':'PERSON_ID','header':'操作','type':'qxgl','width':'150px'}]" >
+				<!-- 引用   tableGridList.js  绑定 编辑和保存 事件 -->
+				</div>
+			</div>
+			<div id="right" class="yangshi w05">
+			 <p>左边点击，编辑显示用户菜单权限</p><br/>	 
+		</div>
+	</div>
+</div> 
+<script type="text/javascript">
+var person_id="";
+var d = new dTree('d');
+<!-- 根据用户账号，显示当前用户账号的菜单权限 -->
+function  edit(obj){
+	
+	d = new dTree('d');
+	person_id=obj;
+	d.add(0,-1, "菜单列表 ");
+	var pid = 0;
+	var btn = "";
+	var url="/Oper_CDQX/selectPersonMenu.action";
+	var searchMap={};
+	var searchlist=[];
+	//获取值
+	searchMap["person_id"]=person_id;
+	searchlist.push(searchMap);
+	url=url+"?XmlData="+JSON.stringify(searchlist);
+	var returnData=visitService(url);
+	var resultList = returnData.spfllist;
+	$(resultList).each(function(index,FL01){
+			var typecode=FL01.FLCODE;
+			var typename=FL01.FLNAME;
+			var pid=FL01.FATHERCODE;
+			var pname=FL01.FATHERNAME;
+			var cd = FL01.cd;
+			if(pid==0){
+				btn = "<a href='javascript:void(0)'>"+typename+"</a>";
+			}else{
+				if(cd == ""||cd==null){
+					if(typename == "定义菜单权限"){
+						btn = "<a href='javascript:void(0)'>"+typename+" <input type='checkbox' hidden name='menucheckbox'   value='"+typecode+"' style='float:none'><b style='color: #e4e4e4;'><b style='color: #CEC5C5;'>←不可修改</b></b></a>";
+					}else{
+					btn = "<a href='javascript:void(0)'>"+typename+" <input type='checkbox' name='menucheckbox'   value='"+typecode+"' style='float:none'> </a>";
+					//btn = "<a href='javascript:void(0)'><div class='w10'>"+typename+"</div><div class='w02'><input type='checkbox' name='menucheckbox' checked='checked'  value='"+typecode+"'></div> </a>";
+					}
+				}else{
+					if(typename == "定义菜单权限"){
+						btn = "<a href='javascript:void(0)'>"+typename+" <input type='checkbox' hidden name='menucheckbox' checked='checked' value='"+typecode+"' style='float:none'><b style='color: #e4e4e4;'><b style='color: #CEC5C5;'>←不可修改</b></b></a>";
+					}else{
+					btn = "<a href='javascript:void(0)'>"+typename+" <input type='checkbox' name='menucheckbox' checked='checked'  value='"+typecode+"' style='float:none'> </a>";
+					//btn = "<a href='javascript:void(0)'><div class='w10'>"+typename+"</div><div class='w02'><input type='checkbox' name='menucheckbox' checked='checked'  value='"+typecode+"'></div> </a>";
+					}
+				}
+			}
+			d.add(typecode,pid,btn);
+		});
+		$("#right").html(d.toString()+"<input class='btn_2' onclick='save()' type='button' value='授权修改'/>");
+}
+<!-- 授权当前用户账号的菜单权限  --	
+	function save(){	
+		//获取选择账号对应的菜单权限
+		obj = document.getElementsByName("menucheckbox");
+		var check_val = "";
+		for(k in obj){
+			if(obj[k].checked)
+				if(check_val=="")
+				{
+					check_val=check_val+obj[k].value;
+				}else
+				{
+					check_val=check_val+","+obj[k].value;
+				}		
+		}
+		 var XmlData=[{'person_id':person_id,'check_val':check_val}];
+ 		 var url="/Oper_CDQX/saveUserQXFP.action?XmlData="+JSON.stringify(XmlData);
+		  $.ajax( {
+				type : "POST", // 请求方式
+				async : false, // true表示异步 false表示同步
+				url : encodeURI(url),
+				data : {XmlData:XmlData},
+				success : function(data) {
+					alert("保存成功!");
+				}
+			}); 
+	}	
+</script>
+</div>
+</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function init() {
+    var divs = $("div[jl]");
+    for (var i = 0; i < divs.length; i++) {
+        eval($(divs[i]).attr('jlid') + ".init(" + $(divs[i]).attr('id') + ");");
+    }
+}
+function query(){
+  	init();
+	var divs = $("div[jl]");
+	for (var i = 0; i < divs.length; i++) {
+        //alert($(divs[i]).attr('id'));
+        eval($(divs[i]).attr('jlid') + ".init(" + $(divs[i]).attr('id') + ");");
+    }
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+</script>

@@ -1,0 +1,61 @@
+<script type="text/javascript" src="/customer/qfy/js/ui.js"></script>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/ui.css" />
+<style style="text/css">
+	#footer{
+  margin-top: 20px;
+}
+.f-container{
+  width: 1200px;
+  margin: 0 auto;
+  background-color: #f9f8f8;
+  border-top: 1px solid #ddd;
+}
+#qfy-copyright p{
+  text-align: center;
+  height: 60px;
+  line-height: 60px;
+  font-size: 14px;
+}
+#qfy-copyright{
+  border-top: 1px solid #EDEBEC;
+}
+
+.w1190 #sn-bd{
+  width: 1200px;
+}
+
+.w1190 #site-nav .sn-container,.w1190 #header .headerCon,#header .headerLayout {
+  width: 1200px;
+}
+#qfy-ensure{
+	text-align:center;
+}
+.w1190 .headerSearch{
+  width: 480px!important;
+}
+</style>
+<div id="footer">
+        <div class="f-container">
+            <div id="qfy-ensure">
+                <img src="/customer/sydjt/images/ensure.png" alt=""/>
+            </div>
+            <div id="qfy-copyright">
+                <p>
+                    鄂ICP备15014434&nbsp;|&nbsp;&nbsp;&nbsp;武汉吉力伟科技有限公司&nbsp;&nbsp;&nbsp;&nbsp;
+                </p>
+            </div>
+        </div>
+        
+        <div id="cusService">联系客服</div>
+		<div id="cusService_main">
+		  <div class="title"></div>
+		  <div class="qq_list">
+		   <a title="亲~点击联系我吧！" href="http://p.qiao.baidu.com//im/index?siteid=7326370&ucid=11053228"><img src="/customer/sydjt/images/boy_qq.png"  /><span>大家庭客服一</span></a>
+		    <a title="亲~点击联系我吧！" href="http://p.qiao.baidu.com//im/index?siteid=7326370&ucid=11053228"><img src="/customer/sydjt/images/girl_qq.png" /><span>大家庭客服二</span></a>
+		    <a title="亲~点击联系我吧！" href="http://p.qiao.baidu.com//im/index?siteid=7326370&ucid=11053228"><img src="/customer/sydjt/images/boy_qq.png" /><span>大家庭客服三</span></a>
+		  </div>
+		  <!-- <div class="tel_list">400-888-8888</div>-->
+		  <img src="/customer/sydjt/images/wnfu.jpg" style="margin:10px 0 10px 10px;">
+		</div>
+
+    </div>

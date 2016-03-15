@@ -1,0 +1,28 @@
+/***
+distribution_time寮�
+***/
+a{ cursor:pointer;}
+.distribution_time{border:1px solid #e4e4e4;text-align: left;}
+.distribution_time .distribution_title{ text-indent:20px;width:100%; height:40px; line-height:40px; background-color:#f2f2f2;}
+/*.distribution_time .distribution_title a{ cursor:pointer; text-indent:0; float:right; height:25px; line-height:25px; width:25px; text-align:center;color:#aaa; font-size:18px; font-weight:bold; margin:7px;}
+.distribution_time .distribution_title a:hover{ border-radius:50%; background-color:#fff;}*/
+.distribution_time .distribution_btn{ width:100%; height:40px; line-height:40px; margin:10px 0;}
+.distribution_time .distribution_btn a.btn_link{ font-size:14px; color:#333; margin-left:20px; display:inline-block; width:110px; height:33px; line-height:33px; text-align:center; border-style:solid; border-width:1px; border-color:#e4e4e4;}
+.distribution_time .distribution_btn a.btn_active{ border-color:#e40000; border-width:2px; text-align:center;}
+.distribution_time .distribution_btn a.btn_active em{position:relative; z-index:1; top:18px; bottom:0; right:0; float:right; height:15px; width:15px; background:url(../images/xuan.png) no-repeat;}
+.distribution_time table{height:auto; margin:15px 20px 10px; border:1px solid #e4e4e4; border-collapse:collapse ; }
+.distribution_time table tr{ border:1px solid #eee; height:40px;  font-size:14px;}
+.distribution_time table tr td{ border:1px solid #eee; width:35px;text-align:center;}
+.distribution_time table tr td span{ display:inline-block; width:100%; height:20px; line-height:20px;}
+.distribution_time table tr td label{ display:inline-block; width:100%; height:20px; line-height:20px;}
+.distribution_time table tr td a{color:#7abd54;  cursor:pointer; display:inline-block; padding:6px 10px;}
+.distribution_time table tr td a:hover{ background-color:#f5f5f5; color:#333; border-radius:3px;}
+.distribution_time table tr td a.active{ background-color:#7abd54; color:#fff; border-radius:3px;}
+.distribution_time table tr.title td{ color:#000;}
+.distribution_time table tr.title td.no1{width:100px;}
+.distribution_time p{ margin:0 20px; padding:0 0 10px; font-size:12px; word-wrap:break-word; line-height:30px;}
+.distribution_time .distribution_bottom{ width:100%; text-align:center;}
+.distribution_time .distribution_bottom a{ display:inline-block; width:60px; height:28px; line-height:28px; border:1px solid #e4e4e4; border-bottom:2px solid #d5d5d5; margin:0 10px;}
+/***
+distribution_time缁撴潫
+***/

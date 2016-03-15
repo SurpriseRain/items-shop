@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0" />
+<title>汽后服云 - 账户注册</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/app/css/public.css" />
+<script type="text/javascript" src="/customer/qfy/app/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/app/js/public.js"></script>
+<script type="text/javascript" src="/customer/qfy/app/common/common.js"></script>
+<script type="text/javascript" src="/customer/qfy/app/js/loAndRe.js"></script>
+
+</head>
+<body>
+<div id="ajaxGried">
+  <div class="ajaxGried_bk">
+    <div class="ajaxGried_main"></div>
+  </div>
+</div>
+<div id="header">
+  <h2>汽后服云注册</h2>
+  <a>分享</a>
+</div>
+<div class="login_main reg_main">
+  <div class="login_name_pwd login_name">
+    <span class="lx"></span>
+    <select id="">
+      <option>请选择身份</option>
+      <option>生产厂家</option>
+      <option>维修企业</option>
+      <option>经销企业</option>
+      <option>个人用户</option>
+    </select>
+  </div>
+  <div class="login_name_pwd login_name"><span></span><input id="userName" placeholder="请输入用户名" /></div>
+  <div class="login_name_pwd login_name"><span class="pwd"></span><input id="userPwd" type="password" placeholder="请输入密码" /><label class="eyes_close"></label></div>
+  <div class="login_name_pwd login_pwd"><span class="pwd"></span><input id="qruserPwd" type="password" placeholder="确认密码" /><label class="eyes_close"></label></div>
+</div>
+<div class="bot" onclick="userRegister();"><a class="esc">免费注册</a></div> 
+<div class="clear"></div>  
+<div class="reg_fpwd"><a href="fastReg.html" class="reg">微信登录</a><a href="login.html" class="fpwd">已有账号，去登录</a></div> 
+</body>
+</html>

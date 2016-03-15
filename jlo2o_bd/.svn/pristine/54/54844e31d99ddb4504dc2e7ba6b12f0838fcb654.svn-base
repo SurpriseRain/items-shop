@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化活动种类
+$(document).ready(function(){
+	var url = "/WDHD/selectActivityType.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.hdlxList).each(function(index,val){
+	    	$("#hdlx").append("<option value='"+val.ActivityTypeId+"'>"+val.ActivityTypeName+"</option>");
+	     });
+	}
+});
+//初始化活动状态
+$(document).ready(function(){
+	var url = "/WDHD/selectActivityProduct.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.spList).each(function(index,val){
+	    	$("#spstate").append("<option value='"+val.State+"'>"+val.temp+"</option>");
+	     });
+	}
+});
+//初始化所属品种
+$(document).ready(function(){
+	var url = "/WDHD/selectSPFL.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.spList).each(function(index,val){
+	    	$("#spfl").append("<option value='"+val.spfl01+"'>"+val.spfl02+"</option>");
+	     });
+	}
+	
+	$(".check").on("click",function(){
+		  subSelectAll();
+	  });
+});
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var ZCXX01 = usercookie.ZCXX01;
+  var ACTIVITYID = $.getUrlParam("ACTIVITYID");
+  var hdlx = $("#hdlx").val();
+  var hdzt = $("#HDSTATE").val();
+  var spfl = $("#spfl").val();
+  var hdmc =$("#hdmc").val();
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL.select_ALLSP','QryType':'Report','dataType':'Json','hdmc':hdmc,'ZCXX01':ZCXX01,'ACTIVITYTYPEID':hdlx,'ACTIVITYSTATE':hdzt,'SPFL':spfl,'ACTIVITYID':ACTIVITYID}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+} 
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<style>
+	.activeqx{float:left;background:red;width:auto;}
+	table.list_table tr td{ margin:0px; padding:0px 0px 0px 10px; position:relative;text-align: center;}
+</style>
+</head>
+<body>
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:100%;">
+	    	<span>活动种类：</span>
+		   	<select id="hdlx" name="ActivityType" >
+		    	<option value="">全部</option>
+			</select>
+	    	<span>状态：</span>
+		    <script type="text/javascript">
+					document.write(showStateHtml('HDSTATE','HDSTATE'));
+			</script>
+			<span>活动名称：</span>
+			<input type="text" id="hdmc" name="hdmc"  size="20" class="text"/>
+			<!-- <span>所属品类：</span>
+			<select id="spfl" name="Spfl" style="width: 150px;" >
+				<option value="">请选择</option>
+			</select> -->
+		    <a href="javascript:void(0);" onclick="tcbm()"  class="bot Short seach_bot" style="float:right;margin-right: 5px;width: 80px" >退出报名</a>
+		     <a href="javascript:void(0);" onclick="query()" class="bot Short seach_bot" style="float:right ;margin-right:20px" >查询</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[		{'property':'ActivityShopId','header':'全选','type':'wdhds','width':'60px'},
+							{'property':'SPXX01','header':'商品编码','type':'hidden','width':'0px','id':'SPXX01'},
+							{'property':'ACTIVITYNAME','header':'活动名称','type':'lable','width':'75px','id':'ActivityName'},
+							{'property':'SPXX04','header':'报名商品','type':'lable','width':'75px','id':'SPXX04'},
+							{'property':'SPFL02','header':'所属品类','type':'lable','width':'75px','id':'SPFL02'},
+							{'property':'SPJGB05','header':'商品价格','type':'lable','width':'60px','id':'SPJGB05'},
+							{'property':'ACTIVITYNUMBER','header':'参加数量','type':'lable','width':'60px','id':'ACTIVITYNUMBER'},
+							{'property':'TEMP','header':'是否包邮','type':'lable','width':'60px','id':'TEMP'},
+							{'property':'PRODUCTSTATE','header':'审核状态','type':'number','width':'75px','id':'PRODUCTSTATE'},
+							{'property':'ActivityViews','header':'审批意见','type':'lable','width':'75px','id':'ActivityViews'}]"
+		>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+//查询
+function query(){
+	init();
+}
+
+function subSelectAll(){
+	var chsub = $("input[name='check']").length; //获取check的个数  
+    var checkedsub = $("input[name='check']:checked").length; //获取选中的check的个数  
+    if (checkedsub == chsub) {  
+        $("#selAll").attr("checked", true);
+    } else {
+    	$("#selAll").attr("checked", false);
+    }
+}
+
+function pageGridChangeFunc(){
+	$(".check").on("click",function(){
+		subSelectAll();
+	 });
+}
+
+function tcbm(){
+	var flag = true;
+	var activityShopIds = [];
+	var spxx01s = [];
+	
+	if($("input:checkbox[name=check]:checked").length < 1){
+		alert("请选择数据");
+		return false;
+	}else if(confirm("确定要退出报名？")){
+		$("input:checkbox[name=check]:checked").each(function(i){  
+	    	var activityShopId = $(this).attr("id");
+	    	var state = $(this).parents("tr").find("#PRODUCTSTATE_code").val();
+	    	var spxx01 = $(this).parents("tr").find("#SPXX01").val();
+	    	if(state != 0){
+	    		alert("只有商品状态为申请的商品才能退出活动");
+	    		flag = false;
+	    		return false;
+	    	}
+	    	activityShopIds.push(activityShopId);
+	    	spxx01s.push(spxx01);
+	    });
+		//
+		if(flag){
+	    	var XmlData = {};
+			XmlData["sqlid"]="com.jlsoft.o2o.hdgl.sql.Oper_HDGL.update_state";
+			XmlData["QryType"]="Report";
+			
+	    	for(var i=0;i<activityShopIds.length;i++){
+	    		var dataArr = [];
+	    		XmlData["activityShopId"]=activityShopIds[i];
+	    		XmlData["spxx01"]=spxx01s[i];
+	    		dataArr.push(XmlData);
+	    		visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+	    	}
+	    	init();
+	    }
+	}
+}
+</script>

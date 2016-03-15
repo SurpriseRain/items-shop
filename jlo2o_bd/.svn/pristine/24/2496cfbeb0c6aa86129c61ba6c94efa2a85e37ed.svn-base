@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+function initData(){
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["sqlid"]="com.jlsoft.o2o.product.sql.showXMlist.select_XMlist";
+	XmlData["XMMC"]=$("#XMMC").val();
+	XmlData["QryType"]="Report";
+	dataArr.push(XmlData);
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<div id="curPosition">
+    	<a href="#">我是卖家</a>
+    	<span>></span>
+    	<a href="#">商品中心</a>
+    	<span>></span>
+    	<b>出售中的商品</b>
+	</div>
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+ 	
+ <ul id="screening">
+   <li style="width:822px;">
+   	<span>项目名称</span>
+	<input type="text" name="XMMC" id="XMMC" value=""/>
+	<a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+	<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="newXX()">新增</a>
+   </li>
+</ul>
+<div class="clera"></div>
+ 
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4"  multiPage="true" height="1500" url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'XMBH','header':'产品代码','type':'hidden'},
+{'property':'XMMC','header':'名称','type':'lable','width':'250px'},
+{'property':'XMBH','header':'操作','type':'xmcz','width':'80px'}]" 
+>
+</div>
+
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+})
+
+function backFun(){
+	 init();
+}
+function newXX(){
+	parent.ajaxGrid('/customer/qfy/back/spgl/xm_item.html');
+}
+//删除
+function del(x){
+ 	var MyCookie = $.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	var XmlData=[{"XMBH":x}];
+	XmlData["ZCXX01"]=usercookie.ZCXX01;
+	var json={"XMBH":x};
+	var url="/MyGoods/XmDel.action?XmlData="+JSON.stringify(json);
+	var rData=visitService(url);
+	if(rData.STATE=="1"){
+		alert("操作成功!");
+		backFun();
+	}else{
+		alert("操作失败!");
+	}
+}
+
+//编辑
+function edit(x){
+	parent.ajaxGrid('/customer/qfy/back/spgl/xm_item.html?XMBH='+x);
+}
+</script>

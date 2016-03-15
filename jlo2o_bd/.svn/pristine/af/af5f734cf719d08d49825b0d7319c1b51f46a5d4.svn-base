@@ -1,0 +1,1132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云注册页面</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/reg-main.css" />
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script> 
+<script type="text/javascript" src="/js/edlg.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/reg.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script language="javascript"  src="http://webapi.amap.com/maps?v=1.3&key=b2992a19dfcee083c3e8647b38db8420"></script>
+<script type="text/javascript" src="/js/amap.js"></script>
+<style>
+.yhzc{
+    color: #000;
+    display: inline-block;
+    font-size: 26px;
+}
+
+</style>
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user=JSON.parse(MyCookie);
+var rydm = user.XTCZY01;
+var zcxx01=user.ZCXX01;
+var gslx = user.GSLX;
+if (gslx == null || gslx == undefined) {
+	gslx = user.LX;
+}
+var phone = user.ZCXX06;
+var zcgs01 = user.ZCGS01;
+$(document).ready(function(){
+	if (zcgs01 == 2 && gslx ==44 ) {
+		location.href="/customer/qfy/register/registerPerfectDBWX.html";
+	}
+     setTimeout(function(){
+	    	 dlgShow({content:"确定继续完善用户信息吗？",yesFn:function(){
+			 
+				 },noFn:function(){
+					 var uinfo = $.cookie('userInfo');
+						var usercookie = JSON.parse(uinfo);
+						usercookie.ZCXX02 = null;
+						 $.cookie('userInfo',JSON.stringify(usercookie),{
+							path : '/'
+						}); 
+					 location.href="/customer/qfy/index.html";
+				 }
+			 });
+      }, 1000);
+     
+	//初始地图
+	mapInit();
+	$("#footer").load("/customer/qfy/foot.html");
+	$("#phone").val(phone);
+	$("#user_name").val(rydm);
+	// 判断公司类型 44是维修企业 43是生产企业 42是经销企业
+	if(gslx == 44){
+		$(".dp_tp").html("我的头像");
+		$("#qyck").remove();
+		$("#cssbm").remove();
+		$(".dp_name").remove();
+		$("#jx_tp").remove();
+	}else{
+		$("#xs").remove();
+	}
+	if(gslx == 43){
+		$(".dp_tp").html("店铺LOGO");
+		$("#wzbm").remove();
+		$("#jx_tp").remove();
+	}
+	if(gslx == 42){
+		$(".dp_tp").html("店铺LOGO");
+		$("#wzbm").remove();
+	}
+	//加载地址信息
+	showDQXX("QY");
+	if(navigator.userAgent.indexOf("MSIE")>0){   
+	    //待优化
+	    if(navigator.userAgent.indexOf("MSIE 8.0")>0)  
+	    {  
+	    	$("#provinceQY").css("padding-bottom","10px");
+	    	$("#cityQY").css("padding-bottom","10px");
+	        $("#countryQY").css("padding-bottom","10px");
+	    } else{
+	    	$("#countryQY").css("padding-bottom","0px");
+	        $("#cityQY").css("padding-bottom","0px");
+	    	$("#provinceQY").css("padding-bottom","0px");
+	    }
+	}
+	//var width = $("#provinceQY").width()+$("#cityQY").width()+$("#countryQY").width()+$("#streetQY").width()+28;
+	$("#QYdzdetail").css("width","222px");
+});
+
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index,e){
+  	if(index==0){
+  	    var num=0;
+  	    var dqjb=1;
+    	var xmlData=[];
+      	var json={};
+        json.qydm=num;
+    	json.dqjb=dqjb;
+      	xmlData.push(json);
+      	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+      	ajaxQ({
+      		"url":url,
+      		"callback":function(data){
+      			var dqxx = data.mapList;
+      			 $(dqxx).each(function(i,dqxxjson){
+      		  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+      		  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+      		  	  });	
+      		  	  $(e).bind("change",function(inx){
+      		  		setVal(e,"#city"+id,2);
+      		  		var con="<option value='0'>请选择</option>";
+      		  		$("#countryQY").html(con).val(0);
+      		  	  });
+      		  	}  			
+      		});
+      }
+  	 if(index==1){
+	   	  $(this).bind("change",function(inx){
+	   		setVal(this,"#country"+id,3);
+	   	  });	
+	   	}
+      if(index==2){
+	   	  $(this).bind("change",function(inx){
+	   		setVal(this,"#street"+id,4);
+	   	  });	
+	   	}
+   });
+}
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();  	
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	ajaxQ({
+  		"url":url,
+  		"callback":function(data){
+  			var list = data.mapList;
+  			$(list).each(function(i,json){
+  		  		if(i==0){
+  		  	 		$(objaft).empty();
+  		  	  		$(objaft).append("<option value='0'>请选择</option>");
+  		    	}
+  		  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  		  		//var width = $("#provinceQY").width()+$("#cityQY").width()+$("#countryQY").width()+$("#streetQY").width()+28;
+		  		//$("#QYdzdetail").css("width", width+"px");
+  		  	});
+  		}
+  	});
+}
+
+</script>
+<body>
+	<!-- head开始 -->
+
+	<!-----公共部门开始---->
+	<div id="header">
+	  <div class="header_main">
+	    <a class="logo" href="/customer/qfy/index.html" target="_parent"><img src="/customer/qfy/images/logo.png" /></a>
+	    <!------------------流程------------------>
+	    <div class="tecPro">
+	      	<div class="userLc">
+	      	<div class="userlcMain">
+	        	<div class="userlcCase"><a class="fxlc_yz">1.创建账户</a></div>
+	        	<div class="userlcCase"><span>→</span></div>
+	        	<div class="userlcCase"><a class="fxlc_zz">2.填写信息</a></div>
+	        	<div class="userlcCase"><span>→</span></div>
+	        	<div class="userlcCase"><a class="fxlc_wz">3.后台审核</a></div>
+	        	<div class="userlcCase"><span>→</span></div>
+	        	<div class="userlcCase"><a class="fxlc_wz">4.注册成功</a></div>
+	      	</div>
+	    </div>
+	  </div>
+	  </div>
+	</div>
+	<!-- head结束 -->
+	<!-- 中间录入部分开始 -->
+	<div class="clera"></div>
+	<form name="form1" id="form1" action="" method="post" enctype="multipart/form-data">
+	<div id="main">
+  		<ul class="userName">
+    		<li class="title">2.填写信息</li>
+  		</ul>
+  		<ul class="userName userInfo" id="user_sccj">
+    		<li><h3>基本信息</h3></li>
+    		<li class="line"></li>
+    		
+    		<li>
+    			<span class="dp_tp">店铺LOGO</span>
+    			<div class="bt">*</div>
+    			<input type="file" id="dp_logo" name="dp_logo" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px;" value=""/>
+    			<div class="dp_logo"></div>
+    		</li>
+    		<li>
+    			<span>用户名</span>
+    			<div class="bt">*</div>
+    				<input type="text" class="text foce" id="user_name" name="user_name" value=""  disabled="disabled"/>
+    			<!-- <div class="tishi"></div> -->
+    		</li>
+    		<li class="dp_name">
+    			<span>店铺名称</span>
+    			<div class="bt">*</div>
+    				<input type="text" class="text foce" id="ZCXX70" name="ZCXX70" value="" onblur="checkedNull('ZCXX70')" />
+    			<div class="ZCXX70"></div> 
+    		</li>
+    		<li>
+    			<span>企业名称</span>
+    			<div class="bt">*</div>
+    				<input type="text" class="text foce" id="qymc" name="qymc" value="" onfocusTitle="adfadf" onblur="qymc1()" />
+    			  <div class="qymc"></div>  
+    		</li>
+   			<li>
+    			<span>地址</span>
+    			<div class="bt">*</div>
+    			<select name="QYdz01" id="provinceQY" class="bankbox width100">
+                 	<option value="0">请选择</option>
+                </select>
+                <select name="QYdz02" id="cityQY" class="bankbox width100">
+                	<option value="0">请选择</option>
+                </select>
+                <select name="QYdz03" id="countryQY" class="bankbox width100">
+                 	<option value="0">请选择</option>
+                </select><br /><br /><br />
+                <!-- <select name="QYdz04" id="streetQY" class="bankbox width100">
+                 	<option value="0">请选择</option>
+                </select> -->
+    			<input type="text" class="text foce" id="QYdzdetail" name="QYdzdetail" value="" onblur="searchByBtn()" style="margin-top:2px;margin-left:170px;"/>
+    			<div class="QYdzdetail"></div>
+    			<input type="hidden"  id="Longitude" name="Longitude" value="" />
+    			<input type="hidden"  id="Latitude" name="Latitude" value="" />
+    		</li>
+    		 
+    		<!-- <li id="qyck">
+    			<span>企业仓库</span>
+    			<div class="bt">*</div>
+				<label><input type="radio" class="qyck" name="qyck" value="0" checked="checked" />代管</label>
+    			<label><input type="radio" class="qyck" name="qyck" value="1" />自管</label>
+    		</li> -->
+    		
+    		<li>
+    			<span>联系人</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text foce" id="lxr" name="lxr" value="" onblur="checkedNull('lxr')"/>
+    			<div class="lxr"></div>
+    		</li>
+    		
+    		<li>
+    			<span>手机</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text foce"  id="phone" name="phone" value=""  disabled="disabled"/>
+    		</li>
+    		
+    		<li>
+    			<span>邮箱</span>
+    			<div class="bt">*</div>
+    			<input type="text" class="text foce" id="email" name="email" value="" onblur="mail()"/>
+    			<div class="email"></div>
+    			<!-- <p>请输入正确格式：1605239188@qq.com<p> -->
+    		</li>
+    		<li>
+    			<span>QQ号</span>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="ZCXX57" name="ZCXX57" value="" />
+    		</li>
+    		<li>
+    			<span>微信</span>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="ZCXX67" name="ZCXX67" value="" />
+    		</li>
+    		<li><h3>企业基本信息</h3></li>
+    		<li class="line"></li>
+    		<li>
+    			<span>法人身份证正面</span><div class="bt" >*</div>
+    			<input type="file" id="fssfzzm_1" name="fssfzzm_1" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px; " value=""/>
+    			<div class="fssfzzm_1"></div>
+    		</li>
+    		<li>
+    			<span>法人身份证反面</span><div class="bt" >*</div>
+    			<input type="file" id="fssfzfm_2" name="fssfzfm_2" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px;" value=""/>
+    			<div class="fssfzfm_2"></div>
+    		</li>
+    		<li>
+    			<span>营业执照号</span><div class="bt" >*</div>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="yyzzfb_code"  value="" onblur="checkedNull('yyzzfb_code')"/>
+    			<div class="yyzzfb_code"></div>
+    		</li>
+    		<li>
+    			<span>营业执照图片</span><div class="bt" >*</div>
+    			<input type="file" id="yyzzfb_3" name="yyzzfb_3" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px;" value=""/>
+    			<div class="yyzzfb_3"></div>
+    		</li>
+    		<li>
+    			<span>组织机构代码证号</span><div class="bt" >*</div>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="zzjg_code"  value="" onblur="checkedNull('zzjg_code')"/>
+    			<div class="zzjg_code"></div>
+    		</li>
+    		<li>
+    			<span>组织机构代码证图片</span><div class="bt" >*</div>
+    			<input type="file" id="zzjg_4" name="zzjg_4" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px;" value=""/>
+    			<div class="zzjg_4"></div>
+    		</li>
+    		<li>
+    			<span>税务登记证号</span><div class="bt" >*</div>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="swdj_code" name="ZCXX57" value="" onblur="checkedNull('swdj_code')"/>
+    			<div class="swdj_code"></div>
+    		</li>
+    		<li>
+    			<span>税务登记证图片</span><div class="bt" >*</div>
+    			<input type="file" id="swdj_5" name="swdj_5" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px;" value=""/>
+    			<div class="swdj_5"></div>
+    		</li>
+    		<li>
+    			<span>开户银行许可证号</span><div class="bt" >*</div>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="khyh_code" name="ZCXX57" value="" onblur="checkedNull('khyh_code')" />
+    			<div class="khyh_code"></div>
+    		</li>
+    		<li>
+    			<span>开户银行许可证图片</span><div class="bt" >*</div>
+    			<input type="file" id="khyh_6" name="khyh_6" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px; " value=""/>
+    			<div class="khyh_6"></div>
+    		</li>
+    		<li>
+    			<span>一般纳税人证明</span><div class="bt" >*</div>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="ybnsr_code"  value="" onblur="checkedNull('ybnsr_code')" />
+    			<div class="ybnsr_code"></div>
+    		</li>
+    		<li>
+    			<span>一般纳税人证明图片</span><div class="bt" >*</div>
+    			<input type="file" id="ybnsr_7" name="ybnsr_7" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px; " value=""/>
+    			<div class="ybnsr_7"></div>
+    		</li>
+    		<li>
+    			<span>结算户账户名称</span><div class="bt" >*</div>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="GSYHK09" name="GSYHK09" value="" onblur="checkedNull('GSYHK09')" />
+    			<div class="GSYHK09"></div>
+    		</li>
+    		<li>
+    			<span>结算户开户行</span><div class="bt" >*</div>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="GSYHK03" name="GSYHK03" value="" onblur="checkedNull('GSYHK03')" />
+    			<div class="GSYHK03"></div>
+    		</li>
+    		<li>
+    			<span>结算户账号</span><div class="bt" >*</div>
+    			<div class="bt">&nbsp;</div>
+    			<input type="text" class="text foce" id="GSYHK02" name="GSYHK02" value="" onblur="checkedNull('GSYHK02')" />
+    			<div class="GSYHK02"></div>
+    		</li>
+    		
+    		
+    		<li><h3>行业认证</h3></li>
+    		<li class="line"></li>
+    		<!-- <li id="wzbm">
+    			<span>企业位置编码</span>
+    			<div class="bt" >*</div>
+    				<input type="text" class="text foce" id="WZM" name="WZM" value=""  />
+    		</li> -->
+    		<li id="cssbm">
+    			<span>厂商识别码</span>
+    			<div class="bt ssbm" >*</div>
+    				<input type="text" class="text foce" id="SBM" name="SBM" value=""  onblur="checkedSbm()"/>
+    				<div class="SBM"></div>
+    		</li>
+    		<!-- <li>
+    			<span>行业监管码</span>
+    			<div class="bt" id="xs"></div>
+    				<input type="text" class="text foce" id="WZM" name="WZM" value=""  />
+    		</li> -->
+			<!-- <li id="jx_tp">
+    			<span>经销商授权</span>
+    			<div class="bt" >*</div>
+    			<input type="file" id="jxlogo_8" name="jxlogo_8" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" style="float: left;height: 30px;border: 1px solid #ccc;width: 220px; " value=""/>
+    		</li> -->
+    		<li>
+    			<span>&nbsp;</span>
+    			<a class="reg_bot" href="#" name="tijiao" onclick="perfectSave()">下一步</a>
+    		</li>
+  		</ul>
+	</div>
+	</form>
+	<!-- 中间录入部分结束 -->
+	<div class="clear"></div>
+	<!-- foot开始 -->
+	<div id="footer" class="clearfix mt20">
+	</div>
+	<!-- foot结束 -->
+</body>
+<script type="text/javascript">
+
+function checkedNull(id){
+	if ($("#"+id).val().length == 0 || $("#"+id).val() == "") {
+		tse(""+id,"请输入"+$("#"+id).siblings('span').text());
+		return false;
+	}else{
+		ts(""+id);
+	}
+}
+
+function qymc1(){
+	if($("#qymc").val().length == 0){
+		tse("qymc","请输入企业名称");
+		return false;
+	}else if (!selectAdd()) {
+		tse("qymc","企业名称已注册!");
+	}else{
+		ts("qymc");
+	}
+}
+
+function mail(){
+	if($("#email").val().length == 0){
+		tse("email","请输入邮箱地址");
+		return false;
+	}else{
+		if(!checkEmail()){
+			tse("email","请输入正确邮箱地址");
+		}else if(!selectEmail()){
+			tse("email","该邮箱已被注册");
+		}else{
+			ts("email");
+		}
+	}
+}
+
+
+function checkedSbm(){
+	if($("#SBM").val().length == 0){
+		tse("SBM","请输入厂商识别码");
+		return false;
+	}else if($("#SBM").val().length != '8' && $("#SBM").val().length != '9'){
+		tse("SBM","请输入8或9位的识别码");
+		return false;
+		//alert("请输入8或9位的识别码");
+	}else{
+		 if(!wzmabca()){
+			tse("SBM","该识别码已注册");
+			return false;
+		}else{
+			ts("SBM");
+		}
+	}
+}
+
+//判断输入项是否合法
+function checkNull(){
+	if($("#dp_logo").val() == undefined || $("#dp_logo").val()==""){
+		tse("dp_logo","请上传"+$(".dp_tp").text());
+		//alert("请上传"+$(".dp_tp").text());
+		
+		return false;
+	}else{
+		if(!dp_logo($(".dp_tp").text())){
+			tse("dp_logo",$(".dp_tp").text()+"图片大小需小于1M");
+			
+			return false;
+		}else{
+			ts("dp_logo");
+			boo = true;
+		}
+	}
+	if ($("#ZCXX70").val().length == 0 || $("#ZCXX70").val() == "") {
+		tse("ZCXX70","请输入店铺名称");
+		
+		return false;
+	}
+	if($("#qymc").val().length == 0){
+		tse("qymc","请输入企业名称");
+		//alert("请输入企业名称");
+		
+		return false;
+	}else{
+		if(!selectAdd()){
+			tse("qymc","该企业名称已注册");
+			
+			return false;
+		}
+	}
+	
+	if (!searchByBtn()) {
+		return false;
+	}
+
+	if($("#lxr").val().length == 0){
+		tse("lxr","请输入联系人");
+		//alert("请输入联系人");
+		return false;
+	}
+	 
+	/* if($("#lxdh").val().length == 0){
+		alert("请输入联系电话");
+		return false;
+	}else{
+		if(!checkTel()){
+			return false;
+		}
+	} */
+	if($("#email").val().length == 0){
+		tse("email","请输入邮箱");
+		//alert("请输入邮箱");
+		
+		return false;
+	}else{
+		if(!checkEmail()){
+			tse("email","请输入正确的邮箱");
+			
+			return false;
+		}else if(!selectEmail()){
+			tse("email","该邮箱已被注册");
+			return false;
+		}
+	}
+	if($("#fssfzzm_1").val() == undefined || $("#fssfzzm_1").val()==""){
+		tse("fssfzzm_1","请上传法人身份证正面");
+		//alert("请上传法人身份证正面");
+		
+		return false;
+	}else{
+		if(!sfzzm()){
+			tse("fssfzzm_1","身份证大小需小于1M");
+			return false;
+		}else{
+			ts("fssfzzm_1");
+			boo = true;
+		}
+	}
+	if($("#fssfzfm_2").val() == undefined || $("#fssfzfm_2").val()==""){
+		tse("fssfzfm_2","请上传法人身份证反面");
+		return false;
+	}else{
+		if(!sfzfm()){
+			tse("fssfzfm_2","身份证大小需小于1M");
+			return false;
+		}else{
+			ts("fssfzfm_2");
+			boo = true;
+		}
+	}
+	if($("#yyzzfb_code").val() == ""){
+		tse("yyzzfb_code","营业执照号不能为空");
+		return false;
+	}
+	if($("#yyzzfb_3").val() == undefined || $("#yyzzfb_3").val()==""){
+		tse("yyzzfb_3","请上传营业执照");
+		return false;
+	}else{
+		if(!yyzz()){
+			tse("yyzzfb_3","请上传营业执照");
+			return false;
+		}else{
+			ts("yyzzfb_3");
+			boo = true;
+		}
+	}
+	//组织机构验证
+	if($("#zzjg_code").val() == ""){
+		tse("zzjg_code","组织机构代码证号不能为空");
+		//alert("组织机构号不能为空");
+		return false;
+	}
+	if($("#zzjg_4").val() == undefined || $("#zzjg_4").val()==""){
+		tse("zzjg_4","请上传组织机构代码证图片");
+		//alert("请上传组织机构证件照");
+		
+		return false;
+	}else{
+		if(!zzjg()){
+			tse("zzjg_4","组织机构代码证图片大小需小于1M");
+			
+			return false;
+		}else{
+			ts("zzjg_4");
+			boo = true;
+		}
+	}
+	
+	if($("#swdj_code").val() == ""){
+		tse("swdj_code","税务登记号不能为空");
+		//alert("税务登记号不能为空");
+		
+		return false;
+	}
+	if($("#swdj_5").val() == undefined || $("#swdj_5").val()==""){
+		tse("swdj_5","请上传税务登记证图片");
+		//alert("请上传税务登记证件照");
+		
+		return false;
+	}else{
+		if(!swdj()){
+			tse("swdj_5","税务登记证图片大小需小于1M");
+			
+			return false;
+		}else{
+			ts("swdj_5");
+			boo = true;
+		}
+	}
+	
+	if($("#khyh_code").val() == ""){
+		tse("khyh_code","开户银行许可证号不能为空");
+		
+		return false;
+	}
+	if($("#khyh_6").val() == undefined || $("#khyh_6").val()==""){
+		tse("khyh_6","请上传开户银行许可证图片");
+		
+		return false;
+	}else{
+		if(!khyh()){
+			tse("khyh_6","开户银行许可证图片大小需小于1M");
+			
+			return false;
+		}else{
+			ts("khyh_6");
+			boo = true;
+		}
+	}
+	
+	if($("#ybnsr_code").val() == ""){
+		tse("ybnsr_code","一般纳税人证明不能为空");
+		
+		return false;
+	}
+	if($("#ybnsr_7").val() == undefined || $("#ybnsr_7").val()==""){
+		tse("ybnsr_7","请上传一般纳税人证明图片");
+		
+		return false;
+	}else{
+		if(!ybnsr()){
+			tse("ybnsr_7","一般纳税人证明大小需小于1M");
+			
+			return false;
+		}else{
+			ts("ybnsr_7");
+			boo = true;
+		}
+	}
+	
+	if($("#GSYHK09").val() == ""){
+		tse("GSYHK09","请输入结算户账户名称");
+		
+		return false;
+	}
+	if($("#GSYHK03").val() == ""){
+		tse("GSYHK03","请输入结算户开户行");
+		
+		return false;
+	}
+	if($("#GSYHK02").val() == ""){
+		tse("GSYHK02","请输入结算户账号");
+		
+		return false;
+	}
+	
+	
+	/* if(gslx==42){
+		if($("#jxlogo_8").val() == undefined || $("#jxlogo_8").val()==""){
+			alert("请上传经销商授权证件照");
+			return false;
+		}else{
+			if(!jxlogo()){
+				return false;
+			}
+		}
+	} */
+	
+	if($("#SBM").val().length == 0){
+		tse("SBM","请输入厂商识别码");
+		return false;
+	}else if($("#SBM").val().length != '8' && $("#SBM").val().length != '9'){
+		tse("SBM","请输入8或9位的识别码");
+		return false;
+		//alert("请输入8或9位的识别码");
+	}else{
+		 if(!wzmabca()){
+			tse("SBM","该识别码已注册");
+			return false;
+		}else{
+			ts("SBM");
+		}
+	}
+	return true;
+}
+function jxlogo(){
+	 var i=document.getElementById("jxlogo_8").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert("经销商授权证件照大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function ybnsr(){
+	 var i=document.getElementById("ybnsr_7").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert("一般纳税人证件照大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function khyh(){
+	 var i=document.getElementById("khyh_6").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert("开户银行许可证图片大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function checkPhone(){
+	var isMobile=/^1\d{10}$/; //手机号码验证规则
+	if(!isMobile.test($("#phone").val())){
+		return false;
+		alert("请正确填写手机号码,例如:13415764179");
+	}else{
+		return true;
+	}
+}
+function swdj(){
+	 var i=document.getElementById("swdj_5").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert("税务登记证件图片大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function zzjg(){
+	 var i=document.getElementById("zzjg_4").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert("组织机构图片大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function dp_logo(obj){
+	 var i=document.getElementById("dp_logo").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert(obj+"图片大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function sfzzm(){
+	 var i=document.getElementById("fssfzzm_1").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert("身份证图片大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function sfzfm(){
+	 var i=document.getElementById("fssfzfm_2").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert("身份证图片大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function yyzz(){
+	 var i=document.getElementById("yyzzfb_3").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		return false;
+		alert("营业执照图片大小要在1M以下");
+	}else{
+		return true;
+	}
+}
+function wzmabc(){
+	if($("#WZM").val().length<13){
+		return false;
+		alert("请输入13位的位置码");
+	}else{
+		return true;
+	}
+}
+
+function wzmabca(){
+	var a = $("#SBM").val().length;
+	var XmlData=[];
+	var sbm = $("#SBM").val();
+	XmlData.sbm=sbm;
+	var url="/Register/selectSMB.action?sbm="+sbm;
+	var data = visitService(url);
+		if(data.state=="success"){
+				return true;
+			}else{
+				return false;
+				//alert("识别码重复!");
+			}
+}
+/* $("#phone").blur(function(){
+	if($("#phone").val().length == 0){
+		tse("phone","请输入手机号码");
+		return false;
+	}else{
+		if(!checkPhone()){
+			return false;
+		}
+	}
+  }); */
+function checkTel(){
+	var isPhone=/^((0\d{2,3}))?(\d{7,8})(-(\d{3,}))?$/;   //座机验证规则
+	if(!isPhone.test($("#lxdh").val())){
+		return false;
+		alert("请正确填写联系电话,例如:0104816048");
+	}else{
+		return true;
+	}
+}
+
+function checkEmail(){
+		var email=/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+		if(!email.test($("#email").val())){
+			return false;
+			alert("请正确输入邮箱地址");
+		}else{
+			return true;
+		}
+}
+
+function selectEmail(){
+	if ($("#email").val().length != 0) {
+		var email = $("#email").val();
+		var url="/Register/selectEmail.action?email="+email;
+		var data = visitService(url);
+			if(data.state=="success"){
+					return true;
+				}else{
+					return false;
+					alert("该邮箱已注册!");
+			}
+	}else{
+		return false;
+	}
+}
+
+function selectAdd(){
+	if ($("#qymc").val().length != 0) {
+		var address = $.trim($("#qymc").val());
+		var url="/Register/selectAddress.action?address="+address;
+		var data = visitService(url);
+			if(data.state=="success"){
+					return true;
+				}else{
+					return false;
+					alert("该企业名称已存在!");
+			}
+	}else{
+		return false;
+	}
+}
+
+/* function checkedAddress(){
+	var province = $("#provinceQY").val();
+	if (province == '990000' || province == '820000' || province == '810000' || province =='710000'){
+		alert("暂不支持港澳台及海外地区");
+		return false;
+	}
+	if($("#provinceQY").val() == "0"){
+		alert("请选择您的省份");
+		return false;
+	}
+	if ($("#cityQY").val() == "0") {
+		alert("请选择您的城市");
+		return false;
+	}
+	if ($("#countryQY").val() == "0") {
+		alert("请选择您的城区");
+		return false;
+	}
+	if ($("#QYdzdetail").val() == "") {
+		alert ("请输入您的详细地址");
+		return false;
+	}
+	return true;
+} */
+
+
+//注册完善方法
+function perfectSave(){
+	/* if (!checkedAddress()) {
+		return false;
+	} */
+	var flag = checkNull();
+	if(flag){
+	/* if($("#Longitude").val()==""){
+   		//alert("电子地图无法定位您的地址,请您更换详细地址！");
+   		tse("QYdzdetail","电子地图无法定位您的地址,请您更换详细地址！");
+   		return false;
+   	} */
+		//弹出遮罩层
+		openWait();
+		//修改注册信息
+	 	var XmlData = {};
+	 	XmlData["SJLY"] = "0";
+	 	XmlData["ZCXX02"]=$("#qymc").val();
+	 	XmlData["ZCXX03"]=$("#lxr").val();
+	 	XmlData["ZCXX06"]=$("#phone").val();
+	 	XmlData["ZCXX09"]=$("#email").val();
+	 	XmlData["ZCXX67"]=$("#ZCXX67").val();
+	 	XmlData["XTCZY01"]=rydm;
+	 	XmlData["ZCXX01"]=zcxx01;
+	 	XmlData["WZM"]=$("#WZM").val();
+	 	XmlData["ZCXX57"]=$("#ZCXX57").val();
+	 	XmlData["USER_NAME"]=$("#user_name").val();
+	 	XmlData["GSYHK02"]=$("#GSYHK02").val();
+	 	XmlData["GSYHK03"]=$("#GSYHK03").val();
+	 	XmlData["GSYHK09"]=$("#GSYHK09").val();
+	 	XmlData["GSLX"]=gslx;
+	 	//拼接地址
+	 	var ZCXX07="";  //地址编码
+	   	var ZCXX08="";  //中文地址
+	   	if($("#provinceQY").val() != "0"){
+		  	ZCXX07=$("#provinceQY").val();
+		  	ZCXX08=ZCXX08+$("#provinceQY option:selected").text();
+	   	}
+	   	if($("#cityQY").val() != "0"){
+		  	ZCXX07=$("#cityQY").val();
+		  	ZCXX08=ZCXX08+$("#cityQY option:selected").text();
+	   	}
+	   	if($("#countryQY").val() != "0"){
+	      	ZCXX07=$("#countryQY").val();
+		  	ZCXX08=ZCXX08+$("#countryQY option:selected").text();
+	   	}
+	   	if($("#streetQY").val() != "0"){
+		  	ZCXX08=ZCXX08+$("#streetQY option:selected").text();
+	   	}
+	   	ZCXX08=ZCXX08+$("#QYdzdetail").val();
+	   	
+	   	if ($("#Longitude").val() == "" || $("#Longitude").val() == null || $("#Longitude").val() == undefined ){
+		   	XmlData["Longitude"] = 0;
+		   	XmlData["Latitude"] = 0;
+		}else{
+			XmlData["Longitude"] = $("#Longitude").val();
+		   	XmlData["Latitude"] = $("#Latitude").val();
+		}
+	   	XmlData["ZCXX07"]=ZCXX07;
+	   	XmlData["ZCXX08"]=ZCXX08;
+	   	//拼接图片
+	   	XmlData["yyzzfb_code"]=$("#yyzzfb_code").val();
+	   	XmlData["zzjg_code"]=$("#zzjg_code").val();
+	   	XmlData["swdj_code"]=$("#swdj_code").val();
+	   	XmlData["khyh_code"]=$("#khyh_code").val();
+	   	XmlData["ybnsr_code"]=$("#ybnsr_code").val();
+	   	var fileArray=[];
+	   	fileArray.push("fssfzzm_1");
+	   	fileArray.push("fssfzfm_2");
+	   	fileArray.push("yyzzfb_3");
+	   	fileArray.push("zzjg_4");
+	   	fileArray.push("swdj_5");
+	   	fileArray.push("khyh_6");
+	   	fileArray.push("ybnsr_7");
+		 // 判断公司类型 44是维修企业 43是生产企业 42是经销企业
+	   /* 	if(gslx == 44){
+	   		fileArray.push("dp_logo");
+		} */
+	   	if(gslx == 43){
+	   		fileArray.push("dp_logo");
+	   		XmlData["ZCXX70"]=$("#ZCXX70").val();
+	   		XmlData["sbm"]=$("#SBM").val();
+		}
+	   	if(gslx == 42){
+	   		fileArray.push("dp_logo");
+	   		XmlData["ZCXX70"]=$("#ZCXX70").val();
+	   		XmlData["sbm"]=$("#SBM").val();
+		}
+	   	//与数据库交互
+	   	var url="/Register/updateRegister.action?jmbj=1";
+	   	$.ajaxFileUpload({
+				type:"POST",
+				secureuri:false,
+				fileElementId:fileArray,
+				url:encodeURI(url),
+				data:{"XmlData":escape(JSON.stringify(XmlData))},
+				dataType:"text",
+				success: function(data) { 
+					//关闭遮罩层
+					top.closeWait();
+					
+					var json = jQuery.parseJSON(data);
+					var jsondata = json.data;
+					var data1=jsondata.state;
+					if(data1=="success"){
+	 					//跳转到成功页面
+						url = pubJson.O2OUrl+"/customer/qfy/register/registerPerfect2.html?ZCXX02="+escape($("#qymc").val());
+						window.location.href=url;
+					}else{
+						alert("保存失败!");
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					//关闭遮罩层
+					top.closeWait();
+				// alert(textStatus);
+			    }
+			});
+		//与数据库交互完毕
+	}
+}
+
+//初始地图
+function searchByBtn() {
+	var province = $("#provinceQY").val();
+	if (province == '990000' || province == '820000' || province == '810000' || province =='710000'){
+		
+		return false;
+		tse("QYdzdetail","暂不支持港澳台及海外地区")
+		//alert("暂不支持港澳台及海外地区");
+	}
+	else if($("#provinceQY").val() == "0"){
+		//alert("请选择您的省份");
+		tse("QYdzdetail","请选择您的省份");
+		
+		return false;
+	}
+	else if ($("#cityQY").val() == "0") {
+		tse("QYdzdetail","请选择您的城市");
+		//alert("请选择您的城市");
+		
+		return false;
+	}
+	else if ($("#countryQY").val() == "0") {
+		tse("QYdzdetail","请选择您的城区");
+		//alert("请选择您的城区");
+		
+		return false;
+	}
+	else if ($("#QYdzdetail").val() == "") {
+		tse("QYdzdetail","请输入您的详细地址");
+		//alert ("请输入您的详细地址");
+		
+		return false;
+	}
+	
+	if ($('#cityQY option:selected').val() != '0') {
+		var Code =  $('#cityQY option:selected').val();
+		var url="/oper_qydz/selectCode.action?Code="+Code;
+		var data = visitService(url);
+		if (data.state == "1") {
+			 var cityCode = data.Code;
+		} 
+	}else{
+		tse("address","请选择您的城市");
+	}
+	
+	var address = document.getElementById("QYdzdetail").value;
+	if (undefined != address && "" != address) {
+		//找位置
+		searchPostions(cityCode,address,"show");
+	}
+	
+	if($("#Longitude").val()=="" || $("#Longitude").val() ==undefined ){
+   		//alert("电子地图无法定位您的地址,请您更换详细地址！");
+   		tse("QYdzdetail","电子地图无法定位您的地址,请您更换详细地址！");
+   		return false;
+   	}else{
+		ts("QYdzdetail");
+		return true;
+	}
+};
+function searchPostions(cityCode, address,flag){
+	if(undefined != address && "" != address){
+		AMap.service(["AMap.PlaceSearch"], function() {
+	    var placeSearch;
+	    if(null != cityCode && "" != cityCode){
+	    	placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+	        pageSize: 5,
+	        pageIndex: 1,
+	        city: cityCode, //城市
+	        map: mapObj,
+	        panel: "resultDiv"
+	   	 	});
+	    }else{
+	    	placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+	        pageSize: 5,
+	        pageIndex: 1,
+	        map: mapObj,
+	        panel: "resultDiv"
+	   	 	});
+	    }
+	    //关键字查询
+	    placeSearch.search(address, function(status, result) {
+	    	if(result.info == "OK" && null != result.poiList && result.poiList.count > 0 ){
+	    		var obj = (result.poiList.pois)[0];
+	    		var locat = obj.location;
+	    		$("#Longitude").val(locat.lng);
+	    		$("#Latitude").val(locat.lat);
+	    	}
+	    });
+	  });
+	}
+}
+</script>
+</html>

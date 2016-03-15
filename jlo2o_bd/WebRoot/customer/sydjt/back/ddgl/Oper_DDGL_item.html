@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/backPub.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript">
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+//初始化数据
+function initData(){
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.Srch_OrderItem','QryType':'Report','dataType':'Json','XSDD01':$.getUrlParam('xsdd01')}];
+  return visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+
+//初始查询主表信息
+$(document).ready(function(){
+	var XmlData={"xsdd01":$.getUrlParam('xsdd01')};
+	var url="/OrderFlowManage/getOrderInfo.action?json="+JSON.stringify(XmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(returnVal){
+			$("#span_ddbh").html(returnVal.XSDD01);
+			$("#span_gmgs").html(returnVal.ZCXX02);
+			//$("#span_ddzt").html(showDJZT(returnVal.W_DJZX02));
+			$("#span_ddzt").html(changeColumns["W_DJZX02_"+returnVal.W_DJZX02]);
+			$("#span_ddsl").html(returnVal.XSSL);
+			$("#span_ddje").html(returnVal.XSDD02);
+			$("#span_lxr").html(returnVal.XSDD19);
+			$("#span_lxdh").html(returnVal.XSDD21);
+			$("#span_shdz").html(returnVal.XSDD20);
+			$("#ddzt").val(returnVal.W_DJZX02);
+			if(returnVal.W_DJZX02=="4"){
+				$(".FH").show();
+			}
+			/* $("#fplx").html(eval("changeColumns.FPLX_"+returnVal.xsdd10)); */
+			$("#fplx").html(changeColumns["FPLX_"+returnVal.xsdd10]);
+			$("#fptt").html(returnVal.xsdd11);
+			
+			if($("#fplx").html()==""){
+				$(".hide").hide();
+			}
+		}
+	});
+	
+});
+
+//发货
+function ddfh(){
+	if($("#ddzt").val() == 5){
+		alert("已发货");
+		return;
+	}
+	if($("#ddzt").val() == 4){
+		//判断是否要跟跟物流对接
+        var wlUrl = "/PubService/getZCGSWL.action?ZCXX01="+usercookie.ZCXX01;
+        ajaxQ({
+    		"url" : wlUrl,
+    		"callback" : function(wlReturnData){
+    			if(wlReturnData.CurConf == "1" && wlReturnData.APP_KEY == undefined){
+    	        	alert("请先在安迅物流上注册");
+    	        	return;
+    	        }
+    		}
+    	});
+	    
+		var XmlData={"XSDD01":$.getUrlParam('xsdd01'),"ZCXX01":usercookie.ZCXX01};
+		var url="/OrderFlowManage/updateOrderFH.action?json="+JSON.stringify(XmlData);
+		ajaxQ({
+			"url" : url,
+			"callback" : function(returnVal){
+				if(returnVal.state=="success"){
+					$("#ddzt").val(returnVal.djzt);
+					$("#span_ddzt").html(showDJZT(returnVal.djzt));
+					if(returnVal.TRADE_NO!="null"){
+							//XmlData=[{"XSDD01":$.getUrlParam('xsdd01'),"WIDtrade_no":returnVal.TRADE_NO,"WIDlogistics_name":"国美物流","WIDinvoice_no":$.getUrlParam('xsdd01'),"WIDtransport_type":"EXPRESS"}];
+							//url="/AlipayOnline/alipayQRFH.action?XmlData="+JSON.stringify(XmlData);
+							//var rData = visitServicea(url);
+						
+						alert("发货成功!");
+						parent.execBackFun("aaa");
+						parent.$("#ajaxGrid").remove();		
+					}else{
+						alert("发货失败");
+					}
+				}else{
+					alert("不能发货");
+					return;
+				}}
+		});
+	}else{
+		alert("不能发货");
+		return;
+	}
+
+
+
+
+} 
+</script>
+<script type="text/javascript" src="/control/js/tableGrid.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+</head>
+<body>
+	<div id="curPosition" style="width:100%;">
+    	<a href="#">订单管理</a>
+    	<span>></span>
+    	<a href="#">订单审核</a>
+    	<span>></span>
+    	<b>订单明细</b>
+	</div>
+	<div class="clera"></div> 
+	<div class="center">
+		<table class="show_table">
+		    <tr>
+		    	<td><span>订单编号：</span></td><td  style="width:150px"><label id="span_ddbh" title=""></label></td>
+		    	<td><span>购买企业：</span></td><td><label id="span_gmgs" title=""></label></td>
+		    	<td><span>订单状态：</span></td><td  style="width:150px"><label id="span_ddzt" title=""></label></td>
+		    	<input type="text" id="ddzt" name="ddzt" value="" style="display:none;"/>
+			</tr>
+			<tr>
+		       <td><span>订单数量：</span></td><td  style="width:150px"><label id="span_ddsl" title=""></label></td> 
+		       <td><span>订单金额：</span></td><td><label id="span_ddje" title="" class="pic"></label></td>
+		       <td><span>联系人：</span></td><td><label id="span_lxr" title="" ></label></td>
+		    </tr>
+		    <tr>
+		    	<td><span>联系电话：</span></td><td><label id="span_lxdh" title="" ></label></td>
+		    	<td><span>收货地址：</span></td><td><label id="span_shdz" title="" ></label></td>
+		    </tr>
+		      <tr class="hide">
+		    	<td><span>发票类型：</span></td><td><label id="fplx" title="" ></label></td>
+		    	<td><span>发票抬头：</span></td><td><label id="fptt" title="" ></label></td>
+		    </tr>
+		</table>
+    	<div class="clera"></div>
+
+	    <!-- 展示明细 -->
+		<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="false" url="/jlquery/selecto2o.action"
+		columnsArr="[
+		{'property':'BARCODE','header':'商品条码','type':'lable','width':'100px'},
+		{'property':'SPMC','header':'商品名称','type':'lable','width':'300px'},
+		{'property':'GMJG','header':'单价','type':'lable','width':'100px'},
+		{'property':'GMSL','header':'订单数量','type':'lable','width':'80px'},
+		{'property':'SPJE','header':'小计','type':'lable','width':'100px'}]"
+		>
+		</div>
+		<!-- 展示按钮 -->
+		<div style="text-align:center;margin-left: 400px;"><a href="javascript:void(0);" onclick="ddfh();" class="bot Medium FH" style="text-align:center; display: none;">发货</a></div>
+	</div>
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+</html>

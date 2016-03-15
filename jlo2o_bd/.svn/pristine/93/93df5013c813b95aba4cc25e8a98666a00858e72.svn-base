@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="jlo2o_bd"
+  id="myeclipse.1422933587724"
+  context-root="/jlo2o_bd"
+  j2ee-spec="5.0"
+  archive="jlo2o_bd.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

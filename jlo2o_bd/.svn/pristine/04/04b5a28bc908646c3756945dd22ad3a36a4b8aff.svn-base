@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0, user-scalable=0" />
+<title>汽后服云 - 企业基本信息</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/app/css/public.css" />
+<script type="text/javascript" src="/customer/qfy/app/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+</head>
+<body>
+<div id="header">
+  <a class="fh" href="userCenter.html">返回</a>
+  <h2>企业基本信息</h2>
+  <a href="index2.html">首页</a>
+</div>
+<ul class="userCenter">
+  <li class="img"><a><label>营业执照（正）</label><img src="/customer/qfy/images/qi.png"><b></b></a></li>
+  <li class="img"><a><label>营业执照（反）</label><img src="/customer/qfy/images/qi.png"><b></b></a></li>
+  <li class="img"><a><label>身份证（正）</label><img src="/customer/qfy/images/qi.png"><b></b></a></li>
+  <li class="img"><a><label>身份证（反）</label><img src="/customer/qfy/images/qi.png"><b></b></a></li>
+</ul>
+<ul class="userCenter" style="margin-top:10px;">
+  <li><a><label>手机</label><span>武汉任驰安奔汽车配件销售有限公司</span><b></b></a></li>
+  <li><a><label>电话</label><span class="wws">未填写</span><b></b></a></li>
+  <li><a><label>邮箱</label><span class="wws">未填写</span><b></b></a></li>
+  <li><a><label>地址</label><span class="wws">未完善</span><b></b></a></li>
+</ul>
+</body>
+</html>

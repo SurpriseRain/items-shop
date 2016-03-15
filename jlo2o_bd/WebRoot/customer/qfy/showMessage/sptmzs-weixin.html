@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--删除默认的苹果工具栏和菜单栏-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!--状态栏显示样式-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--禁止了把数字转化为拨号链接-->
+    <meta name="format-detection" content="telephone=no" >
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+
+    <title>商品追溯</title>
+    <style type="text/css">
+        @charset "UTF-8";
+        /* reset start */
+        body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+            margin: 0;
+            padding: 0; }
+
+        body, button, input, select, textarea {
+            font-family: Microsoft YaHei,arial,"\5b8b\4f53";
+            font-size: 1rem;
+            *line-height: 1.5;
+            -ms-overflow-style: scrollbar; }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-size: 100%;
+            font-weight: normal;
+        }
+
+        address, cite, dfn, em, var {
+            font-style: normal; }
+
+        code, kbd, pre, samp {
+            font-family: courier new,courier,monospace; }
+
+        small {
+            font-size: 12px; }
+
+        ul, ol {
+            list-style: none; }
+
+        a {
+            text-decoration: none;
+            color: #000; }
+
+        a:hover {
+            text-decoration: none; }
+
+        a:visited {
+            color: #000; }
+
+        sup {
+            vertical-align: text-top; }
+
+        sub {
+            vertical-align: text-bottom; }
+
+        legend {
+            color: #000; }
+
+        fieldset, img {
+            border: 0; }
+
+        button, input, select, textarea {
+            font-size: 100%; }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0; }
+
+        body{
+            background: #f5f5f5;
+            color: #333;
+            width: 100%;
+        }
+        .header{
+            height: 16rem;
+            background-color: #ff872f;
+            padding: 1rem;
+        }
+        .pro-img{
+            height: 16rem;
+            width: 16rem;
+            background-color: white;
+            margin: 0 auto;
+        }
+        .pro-img img{
+            width: 16rem;
+            height: 16rem;
+        }
+        .pro-title{
+            padding:3rem 0 0 11rem;
+            height: 7rem;
+            font-size: 1.3rem;
+        }
+        .pro-name{
+            font-size: 1.4rem;
+        }
+        .pro-desc{
+            margin-bottom: 1rem;
+            background-color: white;
+            padding: 0 1rem 2rem 1rem;
+        }
+        .pro-desc h1{
+            height: 2.4rem;
+            line-height: 2.4rem;
+            font-size: 1.3rem;
+        }
+        .pro-desc-text{
+            text-indent: 2rem;
+        }
+        .pro-detial{
+            background-color: white;
+            height: 20rem;
+            padding: 0 1rem 2rem 1rem;
+            margin-bottom: 3rem;
+        }
+        .pro-dc-item{
+            position: relative;
+            padding-left: 6rem;
+            line-height: 3rem;
+        }
+        .pro-dc-item span{
+            display: inline-block;
+            line-height: 1rem;
+            margin-left: 1rem;
+            margin-top: 1rem;
+        }
+        .pro-dc-item-label{
+            position: absolute;
+            left: 0;
+            width: 6rem;
+            text-align: right;
+            letter-spacing: .1rem;
+        }
+        .not-find{
+            height: 3rem;
+            width: 20rem;
+            font-size: 2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -10rem;
+            margin-top: -5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="pro-img">
+            <img id="imgUrl" src="" alt=""/>
+        </div>
+        <div class="pro-title">
+            <h1 class="pro-name"></h1>
+            <p class="pro-company"></p>
+        </div>
+    </header>
+    <!--<section class="pro-desc">
+        <h1>商品介绍</h1>
+        <p class="pro-desc-text"></p>
+    </section>-->
+    <section class="pro-detial">
+        <div class="pro-dl-wrap">
+         <div class="pro-dc-item">
+                <label class="pro-dc-item-label">商品名称:</label>
+                <span id="SPXX045"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">商品条码:</label>
+                <span id="barcode2"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">供货方:</label>
+                <span id="ZCXX02"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">供货方地址:</label>
+                <span id="ZCXX08"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">供货方电话:</label>
+                <span id="ZCXX06"></span>
+            </div>
+        </div>
+    </section>
+    <div class="not-find">
+        无法查到该条码信息
+    </div>
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/js/commons.js"></script>
+    <script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+    <script type="text/javascript">
+        (function submit(){
+            var ImgUrl=pubJson.path_sptp,//图片默认路径
+                code = $.getUrlParam('code'),
+                barcode=$.trim(code),
+                url = "";
+            if(!barcode || barcode === ""){
+                notFind();
+            }
+            //获取系统配件基本信息
+            var imgPath = "/customer/qfy/images/msimg.jpg";
+			url="/MyGoods/getBaseSPTP.action?json="+JSON.stringify({"spcm01":barcode});
+			var sptpData=visitService(url);
+			if(sptpData!=null){
+				var tpArr = sptpData.SPTP02.split("\.");
+				imgPath=pubJson.path_sptp+"/sptp/"+sptpData.ZCXX01+"/"+sptpData.SPXX02+"/images/"+tpArr[0]+"_big."+tpArr[1];
+			}
+            //与追溯系统交互
+            url="/MyGoods/GetProduceTraceByUniqueCode.action?XmlData="+JSON.stringify({"produceUniqueCode":barcode});
+            ajaxQ({
+                "url" : url,
+                "callback" : function(rData){
+                    if(typeof rData.result !== "object"){
+                        notFind();
+                    }
+
+                    var state = rData.STATE;
+                    rData = rData.result;
+                    var date=rData.uniqueCode;
+                    if(!date || date === "") {
+                        notFind();
+                    }
+                    if(rData && state=="1"){
+                    	$("#SPXX045").html(rData.name);
+                        $("#barcode2").html(rData.produceBar);
+                        $("#ZCXX02").html(rData.manuFacturer);
+                        $("#ZCXX08").html(rData.manuFacturerAddress);
+                        $("#ZCXX06").html(rData.contactPhoto);
+                        //$("#imgUrl").attr("src",rData.contactPhoto).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+                        $("#imgUrl").attr("src",imgPath).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+                    }
+                },
+                "error":function(){}
+            });
+        })();
+        function notFind(){
+            $(".header").css("display","none");
+            $(".pro-detial").css("display","none");
+            $(".not-find").css("display","block");
+        }
+    </script>
+</body>
+</html>

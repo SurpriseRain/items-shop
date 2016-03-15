@@ -1,0 +1,163 @@
+body{ margin:0 auto; font-size:12px; color:#666; font-family:Arial,Verdana; color:#3c3c3c;}
+ul,li,h1,h2,h3,h4,input{ list-style:none; margin:0px; padding:0px;}
+a{ text-decoration:none; cursor:pointer;}
+.clera{ clear:both;}
+input,select{ outline:none;}
+img{ border:0px;}
+.shop-right-main{ width:830px; margin:20px 0 0 20px;}
+h3.title{ width:100%; height:50px; line-height:50px; font-size:18px; margin:20px 0; text-indent:20px;}
+
+/***********************弹出层样式开始***********************/
+#ajaxGrid{ width:100%; height:1500px; background-color:rgba(1,1,1,0.3); position:fixed; top:0px; left:0px;}
+#ajaxGrid img{ width:850px; left:50%; top:50px; margin-left:-425px; position:absolute;}
+#ajaxGrid .gridMain{ width:850px; height:500px; background-color:#fff; border:3px solid #e4e4e4; margin:0 auto; margin-top:50px; overflow-y:scroll; position:relative;}
+#ajaxGrid .gridClose{ width:30px; height:30px; position:absolute; top:50px; background-color:#fff; border:1px solid #e4e4e4; left:50%; margin-left:426px; font-size:30px; line-height:30px; text-align:center; color:#ff8800;}
+#ajaxGrid .gridClose:hover{ background-color:#ff8800; color:#fff; cursor:pointer;}
+/***********************弹出层样式结束***********************/
+
+
+
+/***********************按钮样式开始***********************/
+a.bot{ padding:0 10px; float:left; height:28px; line-height:28px; background-color:#d45149; color:#fff; font-family:"microsoft yahei"; font-size:15px; width:50px; text-align:center; cursor:pointer; border:1px solid #c76e09; margin:10px 20px;}
+a.Long{ width:200px;}
+a.Medium{ width:100px;}
+a.Short{ width:55px;}
+a.bot:hover{ background-color:#d22d29;}
+/***********************按钮样式开始***********************/
+
+
+
+/***********************当前位置样式开始***********************/
+#curPosition{ width:818px; border:1px solid #e4e4e4; line-height:30px; float:left; padding-left:10px;}
+#curPosition a{ float:left; line-height:30px; color:#004098}
+#curPosition a:hover{ text-decoration:underline;}
+#curPosition span{ float:left; line-height:30px; margin:0 10px; color:#999;}
+#curPosition b{ float:left; color:#3c3c3c;}
+/***********************当前位置样式结束***********************/
+
+
+/***********************搜索栏样式开始***********************/
+ul#screening{ width:828px; margin:10px 0; float:left; background-color:#f5f5f5; border:1px solid #e4e4e4; padding:5px 0;}
+ul#screening li{ float:left; width:890px; margin-left:10px; height:50px; line-height:50px;}
+ul#screening li span{ float:left; line-height:50px; width:100px; text-align:right; margin-right:5px;}
+ul#screening li .checkbox{ width:50px;  margin-right:5px;}
+ul#screening li input{ float:left; max-width:300px; padding:0 5px; height:28px; border:1px solid #ccc; margin:10px 0;width:102px;}
+ul#screening li input.radio{ float:left; width:15px; height:15px; margin:17.5px 0; border:0px;}
+ul#screening li label.radio{ float:left; line-height:50px; margin:0 15px 0 5px;}
+ul#screening li input.checkbox{ float:left; width:15px; height:15px; margin:17.5px 0; border:0px;}
+ul#screening li label.checkbox{ float:left; line-height:50px; margin:0 15px 0 5px;}
+ul#screening li select{ float: left; border: 1px solid #ccc; max-width: 300px; margin: 10px 0px;height:32px; line-height:32px; padding:6px;}
+ul#screening li.bot{ width:100%; height:50px; margin:5px 0;}
+
+/***********************搜索栏样式结束***********************/
+
+
+/***********************分页样式开始***********************/
+#paging{ width:600px; height:40px; margin:20px auto; font-size:14px;}
+#paging .fy{ width:700px; margin:0 auto;}
+#paging .fy a{ float:left; height:38px; line-height:38px; border:1px solid #ccc; padding:0 12px; margin-left:-1px; color:#004098; text-decoration:none;}
+#paging .fy a.xuan{ background-color:#e9e9e9; color:#999;}
+#paging .fy a:hover{ background-color:#e9e9e9; text-decoration:underline;}
+#paging .fy a.xuan:hover{ background-color:#e9e9e9; color:#999; text-decoration:none;}
+#paging .fy b{ float:left; line-height:38px; margin:0 5px;}
+#paging .fy span{ float:left; line-height:38px; margin:0 2px 0 20px;}
+#paging .fy span.tb{ margin-left:2px;}
+#paging .fy input{ float:left; width:40px; height:18px; border:1px solid #ccc; margin:8px 2px 0 2px;}
+#paging .fy a.botton{ height:20px; width:30px; background-color:#ccc; margin:8px 0 0 20px; line-height:20px; text-align:center;}
+/***********************分页样式结束***********************/
+
+
+/***********************样式公共样式开始***********************/
+table{ width:100%; border:1px solid #e4e4e4; border-collapse:collapse; margin-top:10px; float:left; color:#3c3c3c; font-size:12px;}
+table tr{ height:39px; line-height:36px;}
+table tr:hover{ background-color:#f5f5f5;}
+table tr.bot{ height:50px; line-height:50px; width:100%; background-color:#f5f5f5; color:#333; border-top:1px solid #e4e4e4;}
+
+/***********************样式公共样式结束***********************/
+
+
+/***********************单表样式开始***********************/
+table.single_table{ width:100%; border:1px solid #e4e4e4; border-collapse:collapse; margin-top:10px; float:left; color:#3c3c3c;}
+table.single_table tr{ height:50px; line-height:50px;}
+table.single_table tr.title{ height:40px; line-height:40px; width:100%; font-size:15px; font-family:"microsoft yahei"; background-color:#f5f5f5; text-indent:20px; color:#333; border-bottom:1px solid #e4e4e4;}
+table.single_table tr.title td{ width:100%;}
+table.single_table tr.title td b{ float:left;}
+table.single_table tr.title td font{ float:right; font-size:12px; margin-right:10px; position:inherit;}
+table.single_table tr td{ margin:0px; padding:0px; position:relative;}
+table.single_table tr td span{ float:left; width:100px; text-align:right; border:0px;}
+table.single_table tr td span b{color:red;}
+table.single_table tr td div span{width:16px;}
+table.single_table tr td font{ position:absolute; color:#e40000; top:0px; left:0px;}
+
+table.single_table tr td label.cz{ color:#e40000; float:left; margin-left:20px; }
+table.single_table tr td label.bz{ color:#999; margin-left:20px; float:left;}
+table.single_table tr td label.caozuo{ color:#ff8800; font-family:"microsoft yahei"; font-weight:bold; font-size:14px; margin-left:20px; float:left;}
+table.single_table tr td label.caozuo:hover{ text-decoration:underline; cursor:pointer;}
+table.single_table tr:hover td label.caozuo{ display:block;}
+table.single_table tr td label.ts{ color:#e40000; margin-left:20px; float:left;}
+
+table.single_table tr td input{ height:28px; line-height:28px; padding:0 5px; border:1px solid #ccc; float:left; margin:11px 0 11px 15px; color:#3c3c3c; width:250px;}
+table.single_table tr td input.radio{ float:left; width:15px; height:15px; margin-top:17.5px; border:0px;}
+table.single_table tr td label.radio{ float:left; margin-left:5px; color:#3c3c3c;}
+table.single_table tr td input.checkbox{ float:left; width:15px; height:15px; margin-top:17.5px; border:0px;}
+table.single_table tr td label.checkbox{ float:left; margin-left:5px; color:#3c3c3c;}
+table.single_table tr td select{ height:30px; padding:0 0 0 5px; border:1px solid #ccc; float:left; margin:11px 0 11px 15px; max-width:120px; margin-right:5px; color:#3c3c3c;}
+table.single_table tr td img{ float:left; height:30px; margin:10px 0 10px 15px; cursor:pointer;}
+table.single_table tr td img.big{ position:absolute; height:auto; border:2px solid #ccc; top:0px; z-index:9; max-width:650px;}
+/***********************单表样式结束***********************/
+
+
+
+/***********************列表样式开始***********************/
+table.list_table tr.title{ margin:0px; padding:0px; height:40px; line-height:40px; width:100%; text-align:center; font-size:14px; font-family:"microsoft yahei"; background-color:#f5f5f5; color:#3c3c3c; border-bottom:1px solid #e4e4e4; font-weight:bold;}
+table.list_table tr.title font{ font-size:12px;}
+table.list_table tr td{ margin:0px; padding:0px 0px 0px 15px; position:relative;}
+table.list_table tr td a{ cursor:pointer; overflow:hidden; text-overflow: ellipsis;white-space:nowrap;border: 0px solid #999;color: #3c3c3c;width: 100px;text-align: center;margin:5px;height:40px;}
+table.list_table tr td a.sq {border: 1px solid #999;float: left;text-align: center;width: 88px;line-height: 44px;}
+table.list_table tr td input{ float:left; height:28px; border:1px solid #ccc; padding:0px 5px; margin:11px 0; line-height:28px;}
+table.list_table tr td input.checkbox{ float:left; width:15px; height:15px; border:0px; padding:0px; margin:17.5px 0; border:0px;}
+table.list_table tr td label.checkbox{ float:left; margin-left:5px; color:#3c3c3c; margin:0 15px 0 5px;}
+table.list_table tr td input.all{ float:left; margin:17.5px 0 17.5px 10px;}
+
+table.list_table tr td input.span{border:0px; background-color:#fff; padding:0px;text-align:center;}
+table.list_table tr:hover td input.span{ background-color:#f5f5f5; border:0px;}
+
+table.list_table tr td input.radio{ float:left; width:15px; height:15px; border:0px; padding:0px; margin:17.5px 0; border:0px;}
+table.list_table tr td label.radio{ float:left; margin-left:5px; color:#3c3c3c; margin:0 15px 0 5px;}
+table.list_table tr td span.pic{ color:#e40000; font-size:20px; font-weight:bold; font-family:"microsoft yahei";}
+table.list_table tr td a.operation{ color:#ff8800; font-family:"microsoft yahei"; font-weight:bold; font-size:14px; padding-right:10px;}
+table.list_table tr td a.operation:hover{ text-decoration:underline;}
+table.list_table tr td select{ float:left; height:30px; line-height:30px; border:1px solid #ccc; padding:0px 0 0 5px; margin:11px 10px 11px 0;}
+table.list_table tr td img{ float:left; height:30px; margin:10px 10px 10px 0; cursor:pointer;}
+table.list_table tr td img.big{ position:absolute; height:auto; border:2px solid #ccc; top:0px; z-index:9; max-width:650px;}
+/***********************列表样式结束***********************/
+
+
+
+/***********************数据展示列表样式开始***********************/
+table.show_table tr td span{ float:left; width:85px; text-align:right; font-weight:bold;}
+table.show_table tr td label{ width:200px; float:left; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+table.show_table tr td label.pic{ color:#e40000; font-size:20px; font-weight:bold; font-family:"microsoft yahei";}
+/***********************数据展示列表样式结束***********************/
+
+
+/******************************上传品牌选择分类遮罩层调用***************************************/
+.tcc{ position:absolute; width:573px; height:250px; background-color:#fff; left:0px; top:39px; z-index:999; border:1px solid #e4e4e4; box-shadow: 0px 0px 5px #ccc; padding:15px; display:none;}
+.tcc ul{ float:left; width:131px; height:180px; border:1px solid #e4e4e4; padding-right:10px; overflow-y:scroll;}
+.tcc ul li{ float:left; width:120px; height:30px; line-height:30px; border-bottom:1px dotted #e4e4e4; cursor:pointer;}
+.tcc ul li:hover{ background-color:#f5f5f5;}
+.tcc ul li input{ float:left; width:15px; height:15px; min-width:15px; margin:7.5px 0 7.5px 10px; padding:0px; border:0px;}
+.tcc ul li span{ float:left; margin:0px 0px 0px 5px; cursor:pointer; width:90px; padding:0px; text-align:left;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.cz{ width:571px; height:60px; background-color:#f5f5f5; float:left; margin-top:5px; border:1px solid #ff8800; line-height:30px;}
+.cz .yxzbm{ float:left; width:80px; height:30px; line-height:30px;}
+.cz .bm{ float:left; width:400px; height:60px;}
+.cz .bm a{ float:left; border:1px solid #ccc; height:16px; line-height:16px; margin:5px 5px 5px 0; padding:2px 2px 2px 5px;}
+.cz .bm a label{ float:none; padding:0px; font-size:14px;}
+.cz .bm a:hover{ background-color:#ff8800; border:1px solid #ff8800; cursor:pointer; color:#fff;}
+.cz .bm a:hover label{ color:#fff; cursor:pointer;}
+.cz .bm a:hover label:hover{ color:#e40000;}
+.cz a.button{ float:right; width:60px; height:30px; background-color:#ff8800; color:#fff; line-height:30px; margin:15px;font-family: "microsoft yahei";font-size: 15px;text-align: center;}
+.cz a.button:hover{ background-color:#c76e09;}
+
+
+

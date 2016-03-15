@@ -1,0 +1,1319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电器服务云平台首页</title>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/index.css" />
+<style>
+.thistitlea{
+   position: absolute; 
+   z-index: 2;
+   opacity: 2; 
+}
+.abcd{
+ position: absolute; 
+   z-index: 0;
+   opacity: 0;  
+}
+</style>
+</head>
+<body>
+<!-- head开始 -->
+<div id="header"></div>
+<!-- head结束 -->
+<div class="clera"></div>
+<div id="banner_main">
+  <div class="ban_main">
+    <!--------------banner--------------->
+    <div class="banner">
+      <div id="playBox">
+       <div class="pre"></div>
+       <div class="next"></div>
+       <div class="smalltitle">
+        <ul>
+         <li class="thistitle"></li>
+         <li></li>
+         <li></li>
+         <li></li>
+         <li></li>
+        </ul>
+       </div>
+       <ul class="oUlplay" style="position: relative;">
+        <li class="abcd" style="z-index: 1;opacity: 1; "><a href="#" target="_blank"><img src="/customer/sydjt/images/1.jpg" /></a></li>
+        <li class="abcd"><a href="#" target="_blank"><img src="/customer/sydjt/images/2.jpg" /></a></li>
+        <li class="abcd"><a href="#" target="_blank"><img src="/customer/sydjt/images/3.jpg" /></a></li>
+        <li class="abcd"><a href="#" target="_blank"><img src="/customer/sydjt/images/4.jpg" /></a></li>
+        <li class="abcd"><a href="#" target="_blank"><img src="/customer/sydjt/images/5.jpg" /></a></li>
+       </ul>
+      </div>
+    </div>
+    <!--------------新增厂家、企业、供应商--------------->
+      <div class="new_main">
+      <!-- 
+      <b class="xjrsccj"></b>
+        <div class="new_list">
+		  <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd">
+			  <ul class="infoList">
+			  </ul>
+			</div>
+		  </div>        
+        </div>
+       -->
+       <img src="/customer/sydjt/images/t1.png" />
+     </div>
+      <div class="new_main" style="border-left:0px;">
+      <!--  
+        <b class="xjrwcqy"></b>
+        <div class="new_list">
+		  <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd">
+			  <ul class="infoList">
+			  </ul>
+			</div>
+		  </div>        
+        </div>
+        -->
+        <img src="/customer/sydjt/images/t1.png" />
+      </div>
+      <div class="new_main" style="border-left:0px;">
+      <!-- 
+        <b class="xjrjxs"></b>
+        <div class="new_list">
+		  <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd">
+			  <ul class="infoList">
+			  </ul>
+			</div>
+		  </div>        
+        </div>
+      </div>
+       -->
+       <img src="/customer/sydjt/images/t1.png" />
+    </div>
+  </div>
+   <!--------------右侧登录--------------->
+  <div class="login_pinpai">
+    <div class="login">
+      <h3 class="login_bot_xuan">登 录</h3>
+      <h3 class="reg_bot">快速注册</h3>
+      <!-- 登录 -->
+      <ul class="login_main">
+        <li><span title="用户名"></span><input  type="text"  placeholder="请输入用户名" id="login_userName" class="foce" onkeypress="return userName_onkeypress(event)"/></li>
+        <li><span class="pwd" title="密码"></span><input class="foce" type="password" id="XTCZY02" onkeypress="return Password_onkeypress(event)"/></li>
+        <li><a class="forget" href="/customer/sydjt/back/yhgl/zhmm_yhm.html">忘记密码？</a></li>
+        <li class="ts"><b>×</b><label></label></li>
+        <li><a class="login_bot" style="cursor:pointer;">登 录</a></li>
+      </ul>
+      <!-- 快速注册 -->
+      <div class="reg_main" style="display:none;"> 
+          <iframe src="/customer/sydjt/register/registerDB.html" frameborder="0" marginheight="0" marginwidth="0" style="border:0px solid #F0F0F0;width:278px;height:250px;" scrolling="no"></iframe>
+      </div>
+    </div>
+      <!-- 登录后显示会员资料 -->  
+      <div class="user_info">
+        <ul class="user_list">
+          <li class="jbxx">
+            <a class="img"><img src="images/baoma.png" /></a>
+            <div class="text">
+              <h3 style="white-space:normal; height: 50px;"><a></a></h3>
+              <a class="tel" id="in">进入店铺</a>
+              <a class="tel" id="tui">退出</a>
+            </div>
+            <div class="clera"></div>
+          </li>
+          <div class="clera"></div>
+          <li class="dbsi">
+            <a>待审核（<font>0</font>）</a>
+            <a>待支付（<font>0</font>）</a>
+            <a>待发货（<font>0</font>）</a>
+            <a>待确认收货（<font>0</font>）</a>
+            <!--<a>新增评价（<font>0</font>）</a>->
+			<!--<a>待收款（<font>0</font>）</a>-->
+			<a>待评价（<font>0</font>）</a>
+            <a>待退款（<font>0</font>）</a>
+          </li>
+        </ul>
+      </div>  
+     <!-- 新加入品牌 -->
+    <div class="new_pinpai">
+      <b class="xjrpp"></b>
+        <div class="new_list">
+		  <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd">
+			  <ul class="infoList">
+
+			  </ul>
+			</div>
+		  </div>        
+        </div>
+    </div>
+  
+</div>
+<div class="clera"></div>
+<div id="new_pro_list">
+  <!-- 养护快修 -->	
+  <div class="pro_case">
+    <div class="pro_case_title pro_case_yhkx"></div>   
+    <b class="yhkx"></b>
+    <div class="pro_case_main">
+     <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd" id="pro_case">
+			  <ul class="infoList">
+				
+			  </ul>
+			</div>
+		  </div> 
+    </div>
+  </div>
+  <!-- 动力系统 -->
+  <div class="pro_case">
+    <div class="pro_case_title pro_case_dlxt"></div>
+    <b class="dlxt"></b>
+    <div class="pro_case_main">
+     <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd" id="pro_case">
+			  <ul class="infoList">
+
+			  </ul>
+			</div>
+		  </div> 
+    </div>
+  </div>
+  <!-- 底盘悬挂 -->
+  <div class="pro_case">
+    <div class="pro_case_title pro_case_dpxg"></div>
+    <b class="dpxg"></b>
+    <div class="pro_case_main">
+     <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd" id="pro_case">
+			  <ul class="infoList">
+
+			  </ul>
+			</div>
+		  </div> 
+    </div>
+  </div>
+  <!-- 汽车电器 -->
+  <div class="pro_case">
+    <div class="pro_case_title pro_case_qcdq"></div>
+    <b class="qcdq"></b>
+    <div class="pro_case_main">
+     <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd" id="pro_case">
+			  <ul class="infoList">
+
+			  </ul>
+			</div>
+		  </div> 
+    </div>
+  </div>
+  <!--  -->
+  <div class="pro_case">
+    <div class="pro_case_title pro_case_lhbs"></div>
+    <b class="lhbs"></b>
+    <div class="pro_case_main">
+     <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd" id="pro_case">
+			  <ul class="infoList">
+
+			  </ul>
+			</div>
+		  </div> 
+    </div>
+  </div>
+  <!-- 车身部件 -->
+  <div class="pro_case">
+    <div class="pro_case_title pro_case_csbj"></div>
+    <b class="csbj"></b>
+    <div class="pro_case_main">
+     <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd" id="pro_case">
+			  <ul class="infoList">
+
+			  </ul>
+			</div>
+		  </div> 
+    </div>
+  </div>
+  <!-- 美容装饰 -->
+  <div class="pro_case">
+    <div class="pro_case_title pro_case_mrzs"></div>
+    <b class="mrzs"></b>
+    <div class="pro_case_main">
+     <div class="topLoop">
+		    <div class="hd"><ul class="num"><li class="on">1</li><li>2</li><li>3</li></ul></div>
+			<div class="bd" id="pro_case">
+			  <ul class="infoList">
+
+			  </ul>
+			</div>
+		  </div> 
+    </div>
+  </div>
+</div>
+<div class="clera"></div>
+<!-----------------------------广告--------------------------------->
+<div id="hxgg">
+	<a href="#">
+		<img src="/customer/sydjt/images/indexMidGG.png" />
+	</a>
+</div>
+<div class="clera"></div>
+<!-----------------------------楼层--------------------------------->
+<div id="main">
+  <div class="main-left">
+    <!-- 促销 -->
+    <div class="folor">
+      <div class="title">
+        <h2></h2>
+       <!--  <div class="zcd">
+        	<a href="/customer/sydjt/showMessage/gyl-index.html">齿轮油</a>
+        	<span></span><a href="/customer/sydjt/showMessage/gyl-index.html">刹车油</a>
+        	<span></span><a href="/customer/sydjt/showMessage/gyl-index.html">自动变速箱</a>
+        	<span></span><a href="/customer/sydjt/showMessage/gyl-index.html">柴机油</a>
+        	<span></span><a href="/customer/sydjt/showMessage/gyl-index.html">汽机油</a><span></span>
+        </div> -->
+      </div>
+      <div class="clera"></div>
+        <ul class="pro-case">
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img src="/customer/sydjt/images/msimg.jpg" /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img src="/customer/sydjt/images/msimg.jpg" /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg"  /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg" /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+        </ul> 
+     </div>
+     <div class="clera"></div> 
+    <!-- 热卖 -->
+    <div class="folor">
+      <div class="title">
+        <h2></h2>
+        <!--  <div class="zcd"><a href="/customer/sydjt/showMessage/gyl-index.html">齿轮油</a><span></span><a href="/customer/sydjt/showMessage/gyl-index.html">刹车油</a><span></span><a href="/customer/sydjt/showMessage/gyl-index.html">自动变速箱</a><span></span><a href="/customer/sydjt/showMessage/gyl-index.html">柴机油</a><span></span><a href="/customer/sydjt/showMessage/gyl-index.html">汽机油</a><span></span></div>-->
+      </div>
+      <div class="clera"></div>
+        <ul class="pro-case">
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg" /></a>
+	        <div class="pro-name" style="overflow: hidden;text-overflow: ellipsis;"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg"  /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg" /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg" /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+        </ul>
+     </div>
+     <div class="clera"></div>    
+    <!-- 新品 -->
+    <div class="folor">
+      <div class="title">
+        <h2></h2>
+        <!-- <div class="zcd"> <a href="/customer/sydjt/showMessage/gyl-index.html">齿轮油</a><span></span><a href="/customer/sydjt/showMessage/gyl-index.html">刹车油</a><span></span><a href="/customer/sydjt/showMessage/gyl-index.html">自动变速箱</a><span></span><a href="/customer/sydjt/showMessage/gyl-index.html">柴机油</a><span></span><a href="/customer/sydjt/showMessage/gyl-index.html">汽机油</a><span></span></div>-->
+      </div>
+      <div class="clera"></div>
+        <ul class="pro-case">
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg" /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg" /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg"  /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+	       <li>
+	        <div class="txmrz"></div>
+	        <a href="#" class="img"><img  src="/customer/sydjt/images/msimg.jpg"  /></a>
+	        <div class="pro-name"><a href="#"></a></div>
+	        <div class="pro-pic"><span>零售价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp"></a></div>
+	      </li>
+        </ul>
+     </div>
+     <div class="clera"></div> 
+  </div>
+  <!-----------------------------直通车--------------------------------->
+  <div class="main-right">
+    <h2>直通车</h2>
+    <ul id="ztc">
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      <!-- 
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/images/baoma.png" src="../../images/s.gif" /></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+       -->
+      </li>
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      </li>
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      </li>
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      </li>
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      </li>
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      </li>
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      </li>
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      </li>
+      <li>
+      <a href="#">
+      	<img src="/customer/sydjt/images/z1.jpg" />
+      </a>
+      </li>
+      <!-- 
+      <li>
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/carLogo/baoshijie.png" src="../../images/s.gif"/></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/carLogo/benchi.png" src="../../images/s.gif" /></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/carLogo/baoma.png" src="../../images/s.gif" /></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/carLogo/baoshijie.png" src="../../images/s.gif" /></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/carLogo/benchi.png" src="../../images/s.gif" /></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/carLogo/baoma.png" src="../../images/s.gif"  /></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/carLogo/baoshijie.png" src="../../images/s.gif" /></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+      <li>
+        <a href="#" class="img"><img class="lazy" data-original="/customer/sydjt/images/customer/sydjt/images/baoshijie.png" src="../../images/s.gif" /></a>
+        <div href="#" class="text">
+          <a><h4>宝马官方旗舰店</h4></a>
+          <a href="#">宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业宝马专业</a>
+        </div>
+      </li>
+       -->
+    </ul>
+  </div>
+</div>
+<div class="clear"></div>
+<!-- foot开始 -->
+<div id="footer" class="clearfix mt20">
+</div>
+<!-- foot结束 -->
+
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/public.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/index.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/banner.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var imgUrl=pubJson.path_sptp+"/sptp/";
+//获取公用默认图片路径
+//var defaultImgUrl = pubJson.defaultImgUrl;
+var baseUrl = "";	
+var rmssc = "";
+var returnData = null;
+var rememberUrl = $.getUrlParam("rememberUrl");
+$(document).ready(function(){
+
+	showUser();
+	$("#header").load("/customer/sydjt/head-old.jsp?spflShow=true",function(reponse,status){
+		if(status=="success"){
+			$(".sy").css({"color":"#ff8800"});
+		}
+	});
+	$("#footer").load("/customer/sydjt/foot.html");
+	//点击登录
+	$(".user_info").hide();
+	$(".login_bot").click(
+		function(){
+			ok_click();
+	});
+	if(usercookie!=null){
+		$(".login").hide();
+		if(usercookie.LX=="24"){//个人不需要待审核、待收款
+		$(".user_info >.user_list> .dbsi").find("a").eq(0).remove();
+		$(".user_info >.user_list> .dbsi").find("a").eq(5).remove();
+		$(".user_info").show();
+		}else{
+		$(".user_info").show();
+		}
+		selectW_DPXX();
+	}
+	// 登陆后的展示信息
+	selectcompany();
+	// 品牌信息
+	selectpinpai();
+	// 养护快修、动力系统等内容
+	selectpic();
+	//showFLPP();
+	//首页轮播图查询
+	selectPicMainPage();
+	//selectXTPicMainPage();
+
+	//showSPZQ();
+	//showFWZQ();
+	// 直通车
+	//*******暂时屏蔽直通车***********//selectMoreNews();
+	// 查询商品和楼层
+	selectFloorGoods();
+	//selectSrch(usercookie);
+	selectMyCart();
+	//店铺资料点击退出
+	
+})
+
+/**
+*输入帐号密码后按回车关联到登录按钮
+*/	
+function userName_onkeypress(event){   
+    if(event.keyCode==13)   
+    	$("#XTCZY02").focus();   
+}   
+
+function Password_onkeypress(event){  
+    if(event.keyCode==13)  
+    	ok_click();   
+}   
+
+function ok_click(){
+	var username = $.trim($("#login_userName").val());
+	var password = $("#XTCZY02").val();
+	var arr = [];
+	var o = {};
+	o["XTCZY01"] = username;
+	o["XTCZY02"] = password;
+	arr.push(o);
+	var users=arr;
+	var data = visitService("/UserLogin/login.action?XmlData="+JSON.stringify(arr));
+	var loginState = data.state;
+	if (loginState == 1) {
+		alert("用户名有误!");
+		$("#XTCZY01").focus();
+	} else if (loginState == 2) {
+		alert("密码错误!");
+		$("#XTCZY02").focus();
+	} else if (loginState == 3) {
+		var userInfo = data.userInfo;
+		//判断公司名称是否为空，为空跳转到补充数据页面
+		if((userInfo.ZCXX06=="" || userInfo.ZCXX06==null || userInfo.ZCGS01==2) && userInfo.ZCXX56=="0"){
+			registerPerfect(username,userInfo.ZCXX01);
+		}else if(userInfo.ZCGS01==3){
+			//跳转到成功页面
+			var url = pubJson.O2OUrl+"/customer/sydjt/register/registerPerfect2.html?ZCXX02="+escape(userInfo.ZCXX02);
+			window.location.href=url;
+		}else{
+			//存放cookies值
+			if ($("#safeSignCheck").is(":checked")) {
+				if (users != null) {
+					var bool = false;
+					for ( var i = 0; i < users.length; i++) {
+						if (users[i].userName == $("#XTCZY01").val()) {
+							bool = true;
+							users[i].passWord = $("#XTCZY02").val();
+						}
+					}
+					if (bool == false) {
+						var o = {};
+						o.userName = $("#XTCZY01").val();
+						o.passWord = $("#XTCZY02").val();
+						users.push(o);
+					}
+				} else {
+					users = [];
+					var o = {};
+					o.userName = $("#XTCZY01").val();
+					o.passWord = $("#XTCZY02").val();
+					users.push(o);
+				}
+				$.cookie("users", null, {
+					path : '/'
+				});
+				$.cookie("users", JSON.stringify(users), {
+					expires : 90,
+					path : '/'
+				});
+			}else{
+				$.cookie("users", null, {
+				path : '/'
+				});
+			};
+			var updateDate = new Date();
+			updateDate.setTime(updateDate.getTime() + 1 * 24 * 60 * 60* 1000); //超过1天,cookie需要重新更新
+			userInfo.UPDATETIME = updateDate.getTime();
+			$.cookie("userInfo", null, {
+				path : '/'
+			});
+			$.cookie("userInfo", JSON.stringify(userInfo), {
+				expires : 30,
+				path : '/'
+			});
+			//根据不同公司类型，进行跳转
+			if (rememberUrl == "" || rememberUrl == null || rememberUrl == "null") {
+				if(userInfo.LX=="43"||userInfo.LX=="42"){
+					rememberUrl = "/customer/sydjt/back/shop-main.html";
+				}else{
+					rememberUrl = "/customer/sydjt/index.html";
+				}
+				$(".login").hide();
+			    $(".user_info").show();
+				window.location.href = rememberUrl;
+			}
+		}
+	}
+} 
+
+//进入店铺，点击退出
+function showUser(){
+	if(usercookie!=null){
+		//清除cookie
+		$("#tui").attr("style","display:black").attr("href","javascript:void(0)").on("click",function(){
+			$.cookie('userInfo',null,{path:"/"});  
+		$(".login").show();
+		$(".user_info").hide();
+		window.location.href = "/customer/sydjt/index.html";
+		});
+		$("#regist").remove();
+		$("#loginP").html(usercookie.ZCXX02).css("width","100px");
+		$("ul.login").hide();
+		$("div.loginh").show();
+	}else{			
+		$("#head-cat").find("div").remove();
+		$("ul.login").show();
+		$("div.loginh").hide();
+	}
+}
+
+//判断注册用户信息是否完成，不完整调整到补充信息页面
+function registerPerfect(rydm,zcxx01){
+	var url = pubJson.O2OUrl+"/customer/sydjt/register/registerPhone.html?XTCZY01="+rydm+"&ZCXX01="+zcxx01;
+	window.location.href=url;
+}
+
+//登录后显示信息
+function selectcompany() {
+	var functionName = "loadcompany";
+	var XmlData = [{}];
+	var url = baseUrl+"/QFY/selectcompany.action?XmlData="+JSON.stringify(XmlData);
+	visitService1(url,functionName);
+}
+
+function loadcompany(){
+	var data = returnData;
+	$(data.list).each(function(index,newsObj){
+		if(newsObj.lx == "43") {
+			$(".xjrsccj").next().find(".infoList").append("<li style=\"overflow:hidden;text-overflow:ellipsis;\"><a href='/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+newsObj.zcxx01+"&gsmc="+escape(newsObj.zcxx02)+"'>"+newsObj.zcxx02+"</a></li>");
+		}
+		
+		if(newsObj.lx == "44") {
+			$(".xjrwcqy").next().find(".infoList").append("<li style=\"overflow:hidden;text-overflow:ellipsis;\"><a href='/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+newsObj.zcxx01+"&gsmc="+escape(newsObj.zcxx02)+"'>"+newsObj.zcxx02+"</a></li>");
+		}
+		if(newsObj.lx == "42") {
+			$(".xjrjxs").next().find(".infoList").append("<li style=\"overflow:hidden;text-overflow:ellipsis;\"><a href='/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+newsObj.zcxx01+"&gsmc="+escape(newsObj.zcxx02)+"'>"+newsObj.zcxx02+"</a></li>");
+		}
+		
+	});	
+	$(".new_main > .new_list > .topLoop > .hd > .num > li").click(function(){
+		$(this).parent(".num").children("li").removeClass("on");
+		$(this).addClass("on");
+	  	var li_text = $(this).text();
+	  	var pad_height = $(this).parent(".num").parent(".hd").siblings(".bd").children("ul").css("height");
+	 	if(li_text == "1"){
+			$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"0"})  
+	 	}else if(li_text == "2"){
+			$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-125px"})  
+	  	}else if(li_text == "3"){
+			$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-250px"})  
+	  	}
+	})
+}
+
+//显示品牌信息
+function selectpinpai(){
+	var functionName = "loadpinpai";
+	var XmlData = [{}];
+	var url = baseUrl+"/QFY/selectpinpai.action?XmlData="+JSON.stringify(XmlData);
+	visitService1(url,functionName);
+}
+
+function loadpinpai(){
+	var data = returnData;
+	$(data.list).each(function(index,newsObj){
+			$(".xjrpp").next().find(".infoList").append("<li style=\"overflow:hidden;text-overflow:ellipsis;\"><a href='/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+newsObj.zcxx01+"&ppb01="+newsObj.ppb01+"&gsmc="+escape(newsObj.zcxx02)+"'>"+newsObj.ppb02+"</a></li>");
+	});	
+	$(".new_pinpai > .new_list > .topLoop > .hd > .num > li").click(function(){
+	$(this).parent(".num").children("li").removeClass("on");
+	$(this).addClass("on");
+	var li_text = $(this).text();
+	var pad_height = $(this).parent(".num").parent(".hd").siblings(".bd").children("ul").css("height");
+	if(li_text == "1"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"0"})  
+	}else if(li_text == "2"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-150px"})  
+	}else if(li_text == "3"){
+		$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-300px"})  
+	  }
+	})
+}
+
+//显示小图信息
+function selectpic() {
+	var functionName = "loadpic";
+	var XmlData = [{}];
+	var url = baseUrl+"/HomePage/selectpic.action?XmlData="+JSON.stringify(XmlData);
+	visitService1(url,functionName);
+}
+
+//展示养护快修、动力系统等内容
+function loadpic(){
+	var data = returnData;
+	$(data.mapList).each(function(index,newsObj){
+		var picUrl="";
+		if(newsObj.SPTP02==null){//为null时候后面商品不显示了.
+			picUrl='/customer/sydjt/images/msimg.jpg';
+			}else{ 
+			picUrl=imgUrl+newsObj.ZCXX01+"/"+newsObj.SPXX02+"/images/"+newsObj.SPXX02+"_1_big."+(newsObj.SPTP02).split(".")[1];
+				 }   				
+		var spfl05=newsObj.SPFL05;
+		
+		var spxxObj = "<li style=\"overflow:hidden;text-overflow:ellipsis;\"><a href=\"/customer/sydjt/showProduct/product.html?spxx01="+newsObj.SPXX01+"&zcxx01="+newsObj.ZCXX01+"&gsid="+newsObj.ZCXX01+"&gsmc="+escape(newsObj.ZCXX02)+"\">"+ 
+		         				'<img id="img_'+index+'" class="lazy" data-original="'+picUrl+'" src="../../images/s.gif" /><span>'+newsObj.SPXX04+'</span></a></li>';
+		        //加载图片
+		        //$("#img_"+index).attr("src",picUrl).attr("onerror","this.onerror=null;this.src='/customer/sydjt/images/msimg.jpg'");
+		        //$("img").attr("onerror", "this.src='/customer/sydjt/images/msimg.jpg'");    				
+		if(spfl05 == "01"){
+			$(".yhkx").next().find(".infoList").append(spxxObj);
+		} 
+	 	else if(spfl05 == "02"){
+	 		$(".dlxt").next().find(".infoList").append(spxxObj);
+		}
+	 	else if(spfl05 == "03"){
+	 		$(".lhbs").next().find(".infoList").append(spxxObj);
+		}
+	 	else if(spfl05 == "04"){
+	 		$(".dpxg").next().find(".infoList").append(spxxObj);
+		}
+	 	else if(spfl05 == "05"){
+	 		$(".csbj").next().find(".infoList").append(spxxObj);
+		}
+	 	else if(spfl05 == "06"){
+	 		$(".qcdq").next().find(".infoList").append(spxxObj);
+		}else if(spfl05 == "07"){
+	 		$(".mrzs").next().find(".infoList").append(spxxObj);
+		}
+	 });	
+	 
+	  $(".pro_case > .pro_case_main > .topLoop > .hd > .num > li").click(function(){
+		  $(this).parent(".num").children("li").removeClass("on");
+		  $(this).addClass("on");
+		  var li_text = $(this).text();
+		  var pad_height = $(this).parent(".num").parent(".hd").siblings(".bd").children("ul").css("height");
+		  if(li_text == "1"){
+			$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"5px"})  
+		  }else if(li_text == "2"){
+			$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-280px"})  
+		  }else if(li_text == "3"){
+			$(this).parent(".num").parent(".hd").siblings(".bd").children("ul").children("li:first").animate({"margin-top":"-565px"})  
+		  }
+	});
+	
+	$('.pro_case img.lazy').lazyload({
+        event : "scroll",
+        effect : "fadeIn",
+        failure_limit : 10
+        //threshold : -100
+    });
+}
+
+//登录后显示信息
+function selectDPXXLogin() {
+	var functionName = "loadDPXXLogin";
+	var XmlData = [{"HBID":usercookie.ZCXX01}];
+	var url = baseUrl+"/QFY/selectDPXXLogin.action?XmlData="+JSON.stringify(XmlData);
+	visitService1(url,functionName);
+}
+
+function loadDPXXLogin(){
+	var data = returnData;
+	if(data.state==1 && usercookie.ZCXX01!="JL" &&　data.dpmcmap!=null) {
+		var url="/customer/sydjt/showDpxx/shopIndex.html?gsid="+data.dpmcmap.ZCXX01+"&gsmc="+escape(data.dpmcmap.ZCXX02);
+		var imageurl = data.dpmcmap.DPXX03+"/"+data.dpmcmap.DPXX02;
+		$("div.loginh").find("div.name").find("b").html(data.dpmcmap.ZCXX02);
+		$("div.loginh").find("ul.zd").find("span").html(data.ddzsmap.SUM);
+		$("div.loginh").find("div.tx").find("a").attr("href",url).find("img").attr("src",imageurl).attr("onerror","this.onerror=null;this.src='/gui_o2o/sydjt/images/baoma.png'");
+		//$("div.loginh").find("div.tx").find("a").attr("href",url).find("img").attr("src",imageurl).attr("onerror","this.onerror=null;this.src='/gui_o2o/sydjt/images/baoma.png'");
+	}else if (data.state==1 && usercookie.ZCXX01!="JL" &&　data.dpmcmap==null){
+		$("div.loginh").find("div.name").find("b").html(usercookie.ZCXX02);
+		$("div.loginh").find("ul.zd").find("span").html("0");
+	}	
+}
+
+//查询首页1-8图片 
+function selectPicMainPage() {
+	var functionName = "loadPicMainPage";
+	var xmlData=[];
+	var picJson={};
+		picJson.size=4;
+		picJson.gsid="JL";
+		xmlData.push(picJson);
+	var url="/HomePage/selectPictureMainPage.action?XmlData="+JSON.stringify(xmlData);
+	visitService1(url,functionName);							 
+}
+
+function loadPicMainPage(){
+	var	returnVal=returnData;
+	$(returnVal.mapList).each(function(index,pic){
+		var url = pic.URL;
+		var picUrl=pubJson.path_sptp+"/banner/"+pic.ID+"/"+pic.FILENAME;
+		if(url!=null && url!=""){
+		url = url.replace("%3F","?").replace("%26","&").replace("%26","&").replace("%26","&");
+		}
+		if(pic.FILETYPE>=90&&pic.FILETYPE<=94){        //查询首页大图
+		//首页轮播图暂时注释,需要换的时候，除去注释就好/15.3.20/		
+	    $(".oUlplay").find("a").eq(index).attr("href",url).find("img").attr("src",picUrl).attr("onerror", "this.src='/customer/sydjt/images/"+(index+1)+".jpg'");
+	   	//$("img").attr("onerror", "this.src='/customer/sydjt/images/1.jpg'");
+		}
+		/*
+		else if(pic.FILETYPE==95){     //查询 首页旁边 6  图片
+			$("#nav-banner").find("div.nav-rigjt").find("div.ms").eq(0).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		}else if(pic.FILETYPE==96){     //查询 首页旁边 7  图片
+			$("#nav-banner").find("div.nav-rigjt").find("div.ms").eq(1).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		}else if(pic.FILETYPE==97){     //查询 首页尾部8  图片
+		    $("#pptj").find("a").eq(0).attr("href",url).find("img").attr("src",pic.FILEPATH)
+		}
+		*/
+	});
+}
+
+//查询首页9-14滚动小图 
+function selectXTPicMainPage() {
+	var functionName = "loadXTPicMainPage";
+	var xmlData=[];
+	var picJson={};
+	picJson.size=1;
+	xmlData.push(picJson);
+	var url="/HomePage/selectXTPictureMainPage.action?XmlData="+JSON.stringify(xmlData);
+	visitService1(url,functionName);
+}
+
+function loadXTPicMainPage(){
+	var	returnVal=returnData;
+	$(returnVal.mapList).each(function(i,pic){
+		var url = pic.URL;
+	    if(url!=null && url!=""){
+	    	url = url.replace("%3F","?").replace("%26","&");
+	    }
+	    if(pic.FILETYPE==120){
+			$("#slides1").find("li").eq(0).find("a").eq(0).attr("href",url).find("img").attr("src",pic.FILEPATH);
+			$("#slides1").find("li").eq(2).find("a").eq(0).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		} else if(pic.FILETYPE==121){
+			$("#slides1").find("li").eq(0).find("a").eq(1).attr("href",url).find("img").attr("src",pic.FILEPATH);
+			$("#slides1").find("li").eq(2).find("a").eq(1).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		} else if(pic.FILETYPE==122){
+			$("#slides1").find("li").eq(0).find("a").eq(2).attr("href",url).find("img").attr("src",pic.FILEPATH);
+			$("#slides1").find("li").eq(2).find("a").eq(2).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		} else if(pic.FILETYPE==123){
+			$("#slides1").find("li").eq(1).find("a").eq(0).attr("href",url).find("img").attr("src",pic.FILEPATH);
+			$("#slides1").find("li").eq(3).find("a").eq(0).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		}else if(pic.FILETYPE==124){
+			$("#slides1").find("li").eq(1).find("a").eq(1).attr("href",url).find("img").attr("src",pic.FILEPATH);
+			$("#slides1").find("li").eq(3).find("a").eq(1).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		} else if(pic.FILETYPE==125){
+			$("#slides1").find("li").eq(1).find("a").eq(2).attr("href",url).find("img").attr("src",pic.FILEPATH);
+			$("#slides1").find("li").eq(3).find("a").eq(2).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		} else if(pic.FILETYPE==126){
+			$("#pptj").find("a").eq(0).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		} else if(pic.FILETYPE==127){
+			$("#pptj").find("a").eq(1).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		} else if(pic.FILETYPE==128){
+			$("#pptj").find("a").eq(2).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		} else if(pic.FILETYPE==129){
+			$("#pptj").find("a").eq(3).attr("href",url).find("img").attr("src",pic.FILEPATH);
+		}
+	});
+}
+
+//产品专区展示
+function showSPZQ() {
+	var functionName = "loadSPZQ";
+	var url = baseUrl+"/QFY/qfyCPZQ.action";
+	visitService1(url,functionName);
+}
+
+function loadSPZQ(){
+	var list = returnData.list;
+	$(list).each(function(index,FL01){
+		if(index<4) {
+			$("#cpzq").append("<li><div class='flbt'><b>"+FL01.SPFL02+"</b></div><div class='flnr'></div></li>");
+		}
+		$(FL01.list1).each(function(m,FL02){
+			if(m<4){
+				$("#cpzq").children().eq(index).find("div.flnr").append("<a href='/gui_o2o/sydjt/fore/member_shop.html'>"+FL02.SPFL02+"</a>");
+			}
+		});
+	});
+}
+
+//服务专区显示
+function showFWZQ() {
+	var functionName = "loadFWZQ";
+	var url = baseUrl+"/QFY/qfyFWZQ.action";
+	visitService1(url,functionName);
+}
+
+function loadFWZQ(){
+	var list = returnData.list;
+	$(list).each(function(index,FL02){
+		$("#fwzq").children().eq(0).find("div.flnr").append("<a href='/gui_o2o/sydjt/fore/member_shop.html'>"+FL02.SPFL02+"</a>");
+	});
+}
+
+//查询楼层商品	
+function selectFloorGoods() {
+	var functionName = "loadFloorGoods";
+	var xmlData=[];
+	var lcJson={};
+    lcJson.ZTFB01=1;
+    lcJson.HBID="''";
+    if (usercookie!=null) {
+	    lcJson.HBID=usercookie.ZCXX01;
+	}
+    xmlData.push(lcJson);
+	var url="/QFY/selectFloorGoods.action?XmlData="+JSON.stringify(xmlData);
+	visitService1(url,functionName);
+	
+}
+
+function loadFloorGoods(){
+	$(returnData.mapList).each(function(index,lcJson){
+		var flJson = $(".main-left").find("div.folor").eq(index);
+		flJson.find("h2").html(lcJson.LCFL02);
+		//加载楼层分类
+		//$(lcJson.fllx).each(function(j,lxJson){
+		//	flJson.find("div.zcd").append("<a href='#'>"+lxJson.SPFL02+"</a><span></span>");
+		//});
+		flJson.find("div.zcd").append("<a href='/customer/sydjt/showMessage/gyl-index.html'>更多</a>");
+		var spObj = flJson.find("ul.pro-case");
+		//加载楼层商品和图片
+		
+		$(lcJson.lcspfl).each(function(i,spflJson){
+			$(spflJson.lcsp).each(function(j,lcsp){
+				var lcspUrl="";
+				if(lcsp.SPTP02==null){//为null时候后面商品不显示了.
+					lcspUrl="/customer/sydjt/images/msimg.jpg";
+					}else{
+					//楼层商品图片路径
+					lcspUrl=imgUrl+lcsp.ZCXX01+"/"+lcsp.SPXX02+"/images/"+lcsp.SPXX02+"_1_big."+(lcsp.SPTP02).split(".")[1];
+						}
+				//商品图片和链接
+				spObj.find("li").eq(j).find("a").attr("href","/customer/sydjt/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).find("img").addClass("lazy").attr("data-original",lcspUrl).attr("src","../../images/s.gif").attr("onerror","this.onerror=null;this.src='/customer/sydjt/images/msimg.jpg'").attr("title",lcsp.SPMC);
+				//商品名称和链接
+				spObj.find("li").eq(j).find("div.pro-name").find("a").attr("href","/customer/sydjt/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).html(lcsp.SPMC);
+
+				if(usercookie!=null) {
+					if((usercookie.LX=="43"&&usercookie.ZCXX01!=lcsp.ZCXX01)||usercookie.ZCGS01!="4"){
+						spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html("价格不可见");
+						}else{
+						//商品零售价SPJGB02零售价、SPJGB05分销价
+						spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html(accounting.formatMoney(lcsp.SPJGB05));
+						if(usercookie.LX=="24")spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html(accounting.formatMoney(lcsp.SPJGB02));
+							}
+				} else {
+						//spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html("登录可见");未登录显示零售价
+						spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html(accounting.formatMoney(lcsp.SPJGB02));						
+				}
+				//购买链接
+				spObj.find("li").eq(j).find("div.pro-rz").eq(0).find("a.cat").attr("href","/customer/sydjt/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02));
+				//店铺名称和链接
+				spObj.find("li").eq(j).find("div.pro-dp").find("a.dp").attr("href","/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).html(lcsp.ZCXX02);
+
+			});
+		});
+		
+	});
+	$('.main-left img.lazy').lazyload({
+        event : "scroll",
+        effect : "fadeIn",
+        failure_limit : 10
+        //threshold : -100
+    });
+}
+
+//登录后店铺资料
+function selectW_DPXX() {
+	var xmlData=[];
+	var newsJson={};
+	newsJson.ZCXX01=usercookie.ZCXX01;
+	xmlData.push(newsJson);
+	var url="/HomePage/selectW_DPXX.action?XmlData="+JSON.stringify(xmlData);
+	var rData=visitService(url);
+	if(rData.mapList[0]!=undefined&&rData!=""){
+		var imgpath=pubJson.path_sptp+"/dptp/"+rData.mapList[0].DPXX02;
+		$(".user_info").find("img").attr("src",imgpath).attr("onerror","this.onerror=null;this.src='/customer/sydjt/images/nopic.jpg'" );
+	}else{
+		$(".user_info").find("img").attr("src","/customer/sydjt/images/nopic.jpg")
+	}
+	//店铺名称与链接
+	$(".user_info").find(".text").find("h3").find("a").html(usercookie.ZCXX02);
+	var url="/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+usercookie.ZCXX01+"&gsmc="+escape(usercookie.ZCXX02);
+	$("#in").attr("href",url);  
+}
+
+//直通车
+function selectMoreNews() {
+	var functionName = "loadMoreNews";
+	var newsXmlData=[];
+	var newsJson={};
+	newsJson.num=3;
+	newsXmlData.push(newsJson);
+	var url="/HomePage/selectW_DDPX.action?XmlData="+JSON.stringify(newsXmlData);
+	visitService1(url,functionName);
+}
+
+function loadMoreNews(){
+	var newInfoList = returnData.mapList;
+	$(newInfoList).each(function(index,newsObj){
+		var json = {};
+		json.gsid = newsObj.ZCXX01;
+		json.gsmc = newsObj.ZCXX02;
+		if(newInfoList[index]!=undefined){
+			if(index<9){
+				var url="/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+newsObj.ZCXX01+"&gsmc="+escape(newsObj.ZCXX02);
+				$(".main-right").find("ul").find("li").eq(index).find("h4").html(newsObj.ZCXX02);
+				var imgUrl = pubJson.path_sptp+"/dptp/"+newsObj.DPXX02;
+				$("#ztc").find("li").eq(index).find("a").attr("href",url).find("img").addClass("lazy").attr("data-original",imgUrl).attr("src","../../images/s.gif").attr("onerror","this.onerror=null;this.src='/customer/sydjt/images/msimg.jpg'" );
+				$("#ztc").find("li").eq(index).find(".text").find("a").last().attr("href",url).html(newsObj.DPXX01);
+			}
+		}
+	});
+	
+	$('#ztc img.lazy').lazyload({
+        event : "scroll",
+        effect : "fadeIn",
+        failure_limit : 10
+        //threshold : -100
+    });
+}
+
+//搜索功能
+function selectSrch(usercookie){
+ 	$("#search_btn").on("click",function(){
+	 	if($("#tjbh").val()=="cp") {
+		 	if($("#sousuo").val()==null || $("#sousuo").val()=='') {
+				alert("请输入查询内容");
+				return;
+			}
+	 		if($("#sousuo").val()!=rmssc) {
+		 		var spxx04=($("#sousuo").val()).trim();
+		 		location.href="/gui_o2o/sydjt/fore/member_shop.html?SPXX04="+escape(spxx04);
+	 		} else {
+		 		location.href="/gui_o2o/sydjt/fore/member_shop.html?SPXX04="+escape(rmssc);
+	 		}
+		} else if($("#tjbh").val()=="dp") {
+		 	if($("#sousuo").val()==null || $("#sousuo").val()=='') {
+				alert("请输入查询内容");
+				return;
+			}
+			var dpmc = ($("#sousuo").val()).trim();
+			location.href="/gui_o2o/sydjt/fore/member_shop.html?SPXX04="+escape(dpmc);
+		} else if($("#tjbh").val()=="tm") {
+				$("#nxsou").find("li").remove();
+				var tm = ($("#sousuo").val()).trim();
+				var XmlData = [{"BARCODE":tm}];
+		 		var srchUrl=baseUrl+"/MyGoods/SrchGoods.action?XmlData="+JSON.stringify(XmlData);
+		 		var rData=visitService(srchUrl);
+		 		if(rData.STATE=="1"){
+		 			if(rData.goodsMap.JL_State!="接收失败" && rData.ino2o==0){
+		 				var goodsMap=rData.goodsMap;
+		 				var itemName = goodsMap.itemName;
+		 				var itemCode = tm;
+						location.href="/gui_o2o/sydjt/fore/member_shop.html?itemCode="+itemCode+"&itemName="+escape(itemName);
+		 			} else if(rData.goodsMap==null && rData.ino2o==1) {
+		 				location.href="/gui_o2o/sydjt/fore/product.html?spxx01="+rData.spxx.SPXX01+"&zcxx01="+rData.spxx.ZCXX01+"&gsmc="+escape(rData.spxx.ZCXX02);
+		 			}else{
+		 				alert("查询不到符合条件的商品!");
+		 				return;
+		 			}
+		 		}else{
+		 			$("#nxsou").removeClass("lx");
+	 				alert("查询异常!");
+		 			return;
+		 		}			
+		 		
+		} else if ($("#tjbh").val()=="bsm") {
+	 		//搜索企业识别码
+	 		$("#nxsou").find("li").remove();
+			var bsm = ($("#sousuo").val()).trim();
+			var XmlData = [{"BARCODE":bsm}];
+	 		var srchUrl=baseUrl+"/QFYCODE/selectQFYCODE.action?XmlData="+JSON.stringify(XmlData);
+	 		var returnVal=visitService(srchUrl);
+	 		
+	 		if(returnVal.list.length>0 ) {
+	 			var returnVallist = returnVal.list[0];
+	 			alert(returnVallist.firm_name);
+	 		}
+	 		
+		}
+ 	});
+ 	
+ 	$("#head").on("mouseleave",function(){
+ 		$("#nxsou").hide();
+ 		$("#nxsou").empty();
+ 	});
+ 	$("#sousuo").on("focus",function(){
+ 		selectFeeling();
+ 	});
+ 	$("#sousuo").on("keyup",function(){
+ 		selectFeeling();
+ 	});
+}
+
+//搜索触发事件公用方法
+function selectFeeling() {
+		if($("#tjbh").val()=="cp") {
+			var inputText=$("#sousuo").val().trim();
+		if(inputText==null||inputText==''){
+			return false ;
+		}
+		$("#nxsou").find("li").remove();
+		var srchXmlData=[];
+		var srchJson={};
+	 	if(usercookie==null){
+	 		srchJson.GSID="";
+		 	srchJson.USERQY="";
+	 	}else{
+			srchJson.GSID=usercookie.ZCXX01;
+			srchJson.USERQY="";
+			 		
+	 	}
+		srchJson.isSpQyCodeLength="0";
+		srchJson.isFlppqx="0";
+		srchJson.SPNAMELIST=($("#sousuo").val()).trim();
+		srchXmlData.push(srchJson);
+ 		var srchUrl="/PCdisplay/jlquery/selectLenovoSrch.action?XmlData="+JSON.stringify(srchXmlData);
+ 		var returnVal=visitService(srchUrl);
+		if(returnVal.length>0){
+	 		$("#nxsou").show();
+			$("#nxsou").addClass("lx");
+			$(returnVal).each(function(index,srchInfo){
+				if(index < 10) {
+					$("#nxsou").append("<li><a href=/gui_o2o/sydjt/fore/member_shop.html?SPXX04="+escape(srchInfo.SPNAME)+"></a><span></span></li>");
+					$("#nxsou").find("li").eq(index).find("a").html(srchInfo.SPNAME).on("click",function(){
+	 				 	var spname=$(this).html();
+	 				 	$("#sousuo").val(spname);
+	 				 	$(this).parents("ul").removeClass("lx").find("li").remove();	 				 	
+					});
+					$(".logo_search").find("ul li").eq(index).find("span").html();
+				}
+			});
+		}else{
+			$("#nxsou").removeClass("lx");
+		}
+	} else if($("#tjbh").val()=="dp") {
+		$("#nxsou").find("li").remove();
+		var dpmc = ($("#sousuo").val()).trim();
+		var XmlData = [{"dpmc":dpmc}];
+ 		var srchUrl=baseUrl+"/QFY/selectDPSrch.action?XmlData="+JSON.stringify(XmlData);
+ 		var returnVal=visitService(srchUrl);
+ 		var returnVallist = returnVal.list;
+ 		if(returnVallist.length>0){
+	 		$("#nxsou").show();
+			$("#nxsou").addClass("lx");
+			$(returnVallist).each(function(index,srchInfo){
+				if(index < 10) {
+					$("#nxsou").append("<li><a href=/gui_o2o/sydjt/fore/qfy_shop.html?gsid="+srchInfo.ZCXX01+"&gsmc="+escape(srchInfo.ZCXX02)+"></a><span></span></li>");
+					$("#nxsou").find("li").eq(index).find("a").html(srchInfo.ZCXX02).on("click",function(){
+	 				 	var spname=$(this).html();
+	 				 	$("#sousuo").val(spname);
+	 				 	$(this).parents("ul").removeClass("lx").find("li").remove();	 				 	
+					});
+					$(".logo_search").find("ul li").eq(index).find("span").html();
+				}
+			});
+		}else{
+			$("#nxsou").removeClass("lx");
+		}	 		
+	}
+}
+
+ //热门搜索词
+function selectRMSS() {
+	var functionName = "loadRMSS";
+ 	var rmxmlData=[];
+ 	var rmJson={};
+ 	rmJson.NUM=10;
+ 	rmxmlData.push(rmJson);
+ 	var url=baseUrl+"/HomePage/selectRMSS.action?XmlData="+JSON.stringify(rmxmlData);
+	visitService1(url,functionName);
+}
+
+function loadRMSS(){
+ 	var returnVal=returnData;
+ 	if(returnVal.mapList.length>0){
+	 	rmssc = returnVal.mapList[0].RMSSC02; 
+	 	$("#sousuo").val(rmssc);
+	 	$(returnVal.mapList).each(function(index,json){
+	 		 	$(".rm").append("<a href='#'></a>");
+	 		 	var rmjson=$(".rm").find("a").eq(index)
+	 		 	if(index%2==0){
+	 		 		rmjson.addClass("hot");
+	 		 	}
+ 		 		rmjson.attr("href","javascript:void(0)").html(json.RMSSC02).on("click",function(){
+ 		 			//TODO
+ 		 			location.href="/gui_o2o/mz/fore/member_shop.html?r="+Math.random()+"&SPXX04="+escape(json.RMSSC02);
+ 		 		});
+	 	});
+ 	 }
+}
+ 
+//查询购物车
+function selectMyCart() {
+	var functionName = "loadMyCart";
+	var numsum=0;
+	var xmlData=[];
+	var json={};
+    if (usercookie!=null) {
+		json.HBID=usercookie.ZCXX01;
+		xmlData.push(json);
+		var url="/CartManage/qfyselectGwcByHbid.action?XmlData="+JSON.stringify(xmlData);
+		visitService1(url,functionName);
+	}
+}
+
+function loadMyCart(){
+	var as=returnData.GWCLIST;
+	for(var o=0;o<as.length;o++){
+		numsum=as[o].TOTALNUM;
+		numsum++;
+	}
+	$("#gwcsum").empty();
+	$("#gwcsum").append(numsum);
+}
+
+//登录按钮
+function keyLogin(){
+	 //回车键的键值为13
+	if (event.keyCode==13) {	
+	 	document.getElementById("loginbtn").click();  //调用登录按钮的登录事件
+	} 
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<link rel="stylesheet" type="text/css" href="../css/qypublic.css" />
+<link rel="stylesheet" type="text/css" href="../css/products-main.css" />
+<link rel="stylesheet" type="text/css"  href="../css/base.css"  />
+
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/qy_head.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+</head>
+<script type="text/javascript">
+$("#qq").hide();
+/* var city_list = $.cookie("city_list");
+city_list = JSON.parse(city_list);
+$("#city_name").html(city_list[0].city_name);
+$("#city_value").val(city_list[0].city_value); */
+//大区选择
+$(".selectSea > span").focus(function(){
+	  $(this).next().css({"display":"block"});
+})
+
+$(".selectSea").mouseleave(function(){
+	  $(this).children("ul").css({"display":"none"})
+})
+
+$(".selectSea").mouseover(function(){
+	  $(".city_list").css({"display":"block"});
+});
+function select_dqmc(){
+	 var XmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.select_dqmc','dataType':'Json'}];
+	 var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 ajaxQ({
+			"url" : url,//原始url 
+			"callback" : function(rData){
+				var str="";
+				for(var j=0;j<rData.length;j++) {
+					if(rData[j].dqbzm02=="黑龙江省"){
+						var obj =rData[j].dqbzm02.substring(0,3);
+					}else{
+						var obj =rData[j].dqbzm02.substring(0,2);
+					}
+					
+	    			str+="<li id='"+rData[j].dqbzm01+"'>"+obj+"</li>";
+	    		}
+				$(".city_list").html(str);
+				$(".selectSea > ul > li").click(function(){
+						var selectSea_text = $(this).text();
+						$(this).parent("ul").prev().prev().prev().html(selectSea_text);
+						$(this).parent("ul").prev().val($(this).attr("id"));
+						$(this).parent("ul").css({"display":"none"});
+						var city_list = [];
+						var o = {};
+						o.city_value = $(this).attr("id");
+						o.city_name = selectSea_text;
+						city_list.push(o);
+						$.cookie("city_list", JSON.stringify(city_list), {
+							expires : 365, path : '/'
+						});
+				  });
+			}
+		});
+	 
+	 }
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+if(usercookie!=null){
+	selectMyCart(usercookie);
+}
+var baseUrl = "";	
+var rmssc = "";
+var gsmc=unescape($.getUrlParam("gsmc"));
+var gsid = $.getUrlParam("gsid");
+selectGSMC(gsid);
+
+$(document).ready(function(){
+	select_dqmc();
+	showUser();
+	selectPicMainPage();
+	showSpfl();
+	if(usercookie!=null){
+		selectSrch(usercookie);
+	}
+	$("#qyheader").find("h3").html(gsmc);
+	//$("#index").attr("href","/customer/sydjt/showDpxx/shopIndex.html?gsid="+gsid+"&gsmc="+escape(gsmc));
+	$("#all").attr("href","/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+gsid+"&gsmc="+escape(gsmc));
+	$("#conn").attr("href","/customer/sydjt/showMessage/qy-lxwm.html?gsid="+gsid+"&gsmc="+escape(gsmc));	
+});
+
+//顶部
+//检查是否已登录
+function showUser(){
+	if(usercookie!=null){
+		$("#ext").attr("style","display:black").attr("href","javascript:void(0)").on("click",function(){
+			//清除cookie
+			$.cookie('userInfo',null,{path:"/"});  
+			window.location="/customer/sydjt/index.html";
+		});
+		if(usercookie.LX!=21){
+			$("#houtaigl").append('<a class="left no4" href="/customer/sydjt/back/shop-main.html">后台管理</a>');			
+		} 
+		$("#regist").remove();
+		$("#loginP").html(usercookie.ZCXX02).css("width","100px");
+		$("#loginP").attr('href','/customer/sydjt/showDpxx/shopAllGoods.html?gsid='+usercookie.ZCXX01+'&gsmc='+escape(usercookie.ZCXX02));
+		$("ul.login").hide();
+		$("div.loginh").show();
+	}else{			
+		$("#head-cat").find("div").remove();
+		$("ul.login").show();
+		$("div.loginh").hide();
+	}
+}
+
+function selectGSMC(gsid) {
+	var xmlData = [{"gsid":gsid}];
+	var url="/QFY/selectGSMC.action?XmlData="+JSON.stringify(xmlData);
+	var	returnVal=visitService(url);
+	if(returnVal.ZCXX57==""){
+		$("#qq").hide();
+	}else{
+		$("#qq").show();
+		$("#qq").attr("href","http://wpa.qq.com/msgrd?v=3&uin="+returnVal.ZCXX57+"&site=qq&menu=yes");
+	}
+	gsmc = returnVal.ZCXX02;
+	//显示店铺LOGO信息
+	var imgUrl="";
+	if(returnVal.DPTP == null){
+		imgUrl = "/customer/sydjt/images/msimg.jpg";
+		}else{
+		 imgUrl= pubJson.path_sptp+"/dptp/"+returnVal.DPTP;
+			}
+	$("#dpLogo").attr("src",imgUrl).attr("onerror","this.onerror=null;this.src='/customer/sydjt/images/msimg.jpg'" );
+}
+
+//头部图片
+function selectPicMainPage(){
+		var xmlData=[];
+		var picJson={};
+		picJson.size=4;
+		picJson.gsid=gsid;
+		xmlData.push(picJson);
+		var url="/HomePage/selectPictureMainPage.action?XmlData="+JSON.stringify(xmlData);
+		var	returnVal=visitService(url);
+			$(returnVal.mapList).each(function(index,pic){
+				var url = pic.URL;
+				if(url!=null && url!=""){
+				url = url.replace("%3F","?").replace("%26","&");
+				}
+				if(pic.FILETYPE==93){     //微信展示
+					$("#wxtp").find("img").attr("src",pic.FILEPATH);
+				}
+			});
+}
+	
+function showSpfl(){
+	var xmlData=[];
+	var json={};
+		json.gsid=gsid;
+		xmlData.push(json);
+	var url="/HomePage/selectSpfl.action?XmlData="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(returnVal){
+			$(returnVal.mapList).each(function(index,pic){
+				var url="/customer/sydjt/showDpxx/shopAllGoods.html?SPFLCODE="+pic.SPFLCODE+"&gsid="+gsid+"&gsmc="+escape(gsmc);
+				$("#inav-flshow").append("<li><a href="+url+">"+pic.SPFLNAME+"</a></li>");
+			});
+		}
+	});
+}
+function selectSrch(user){
+ 	$(".seabot").on("click",function(){
+	 		var spxx04=($("#sousuo").val()).trim();
+	 		location.href="/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+gsid+"&SPXX04="+escape(spxx04)+"&gsmc="+escape(gsmc);
+ 	});
+ 	$(".seabot").on("mouseleave",function(){
+ 		//$("#nxsou").hide();
+ 		//$("#nxsou").empty();
+ 	});
+ 	//展示
+ }
+//查询购物车
+function selectMyCart(user){
+	var xmlData=[];
+	var json={};
+	json.HBID=user.ZCXX01;
+	json.DQXX01=user.ZCXX07;
+	xmlData.push(json);
+	var url="/CartManage/selectGwcByHbid.action?XmlData="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(data){
+			if(""==data.GWCLIST||null==data.GWCLIST)
+			{
+				$(".shuliang").html(0);
+			}else
+			{
+				$(".shuliang").html(data.GWCLIST[0].TOTALNUM);
+			}
+		}
+	});
+}
+
+</script>
+<body>
+<!-----公共部门开始---->
+<div id="header" style="height:130px; border-bottom:0px;">
+<div class="toper">
+    <div class="top_main">
+      <ul class="top_left">
+        <li class="login"><a>您好,</a></li>
+        <li class="login"><a id="loginP" href="/customer/sydjt/register/login.html">请登录</a></li>
+         <!-- <li class="reg"><a id="regist" href="/customer/sydjt/register/register.html">免费注册</a></li>-->
+        <li class="login"><a href="" class="login" style="display:none;" id="ext">[退出]</a></li>
+        <!-- <li  class="dq">
+	        <div class="selectSea">
+	         配送至:<a></a><span id="city_name"></span><b>[ 更改 ]</b><input id="city_value" type="hidden" value=""/>
+			  <ul class="city_list" style="z-index:1;">
+			    
+			  </ul>
+			</div>
+        </li> -->
+     
+      </ul>
+      <ul class="top_right">
+        <li class="mycenter">
+        	<a onclick="javascript:void(0);" href="/customer/sydjt/back/shop-main.html">个人中心</a>
+<!--        	<span></span>-->
+        	<!-- <div class="mycenter_list">
+        		<a onclick="javascript:void(0);" href="/customer/sydjt/back/shop-main.html">个人中心</a>
+        		<a href="/customer/sydjt/back/shop-main.html?menuId=A001">发布商品</a>
+        		<a hidden>仓库中的商品<font>15</font></a>
+        		<a hidden>申请公益品牌</a>
+        	</div> -->
+        </li>
+        <li class="mycat"><div class="cat-zh"></div><a href="/customer/sydjt/shopping/cart.html">购物车<b class="shuliang">0</b></a><span></span></li>
+        <!--<li><font>|</font></li>
+        <li class="myphone"><a>手机汽服云</a></li>-->
+        <li><font>|</font></li>
+        <li class="kf"><a href="/customer/sydjt/showMessage/index-lxwm.html">联系客服</a></li>
+        <li class="wzdh" hidden><a>网站导航</a><span></span></li>
+      </ul>
+    </div>  
+
+  </div>
+<div class="clera"></div>
+<!--------------------------企业页面头部--------------------------------->
+<div id="qyheader">
+  <div class="head-main">
+    <div class="main-left">
+      <a class="img" href="/customer/sydjt/index.html"><img src="../images/logo.png"/></a>
+      <span class="line"></span>
+      <div class="dpname">
+        <img id="dpLogo" src="../images/baoma.png" class="qy_logo" />
+        <h3></h3>
+        <div class="dpxinxi">
+          <span>服务<b>4.8分</b></span>
+          <span>描述<b>5.0分</b></span>
+          <span>物流<b>4.8分</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="main-right"><input id="sousuo" class="search" placeholder="输入产品名称 / 商品条码都可以直接搜索" /><a class="seabot">搜索</a></div>
+  </div>
+</div>
+</div>
+<div class="clera"></div>
+<!--------公共结束---------->
+<!-----------------------------菜单--------------------------------->
+<div id="qynav">
+  <div class="nav-main">
+    <a href="#" class="qbsp" id="allgoods">全部商品分类</a>
+     <ul id="inav-flshow">
+       </ul>
+<!--    <a href="/customer/sydjt/showDpxx/shopIndex.html" class="xuan" id="index">首页</a>-->
+    <span></span>
+    <a href="/customer/sydjt/showDpxx/shopAllGoods.html" id="all">全部商品</a>
+    <span></span>
+    <a href="#">公司简介</a>
+    <span></span>
+    <a id="conn" href="/customer/sydjt/showMessage/qy-lxwm.html">联系我们</a>
+    <span></span>
+    <a id="qq" href="" title="仅QQ联系" >在线服务</a>
+    
+    <!-- <span></span><label>二维码<div><img src="images/sjewm.png" /></div></label> -->
+  </div>
+</div>
+</body>
+</html>

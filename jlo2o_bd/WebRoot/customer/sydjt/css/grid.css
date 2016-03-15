@@ -1,0 +1,190 @@
+body{
+	font-size: 12px;
+}
+.coolMenu{
+	cursor:hand;
+	font-size:12px;
+	z-index:99999;
+	position: absolute;
+	background-color: threedface;
+}
+.coolMenuItem{
+	cursor:hand;
+	height:18px;
+	padding: 1px;
+	border-top: 1px solid threedhighlight;
+	border-left: 1px solid threedhighlight;
+	border-bottom: 1px solid threeddarkshadow;
+	border-right: 1px solid threeddarkshadow;
+}
+.d-line{
+	display: none;
+	position: absolute;
+	top: expression(this.offsetParent.scrollTop);
+	width: 3px;
+	height: 97%;
+	background-color: #888888;
+}
+
+.main{
+	top: 0px;
+	left: 0px;
+	overflow: auto;
+	width: expression(document.body.clientWidth);
+	height: expression(document.body.clientHeight-30);
+	cursor: default;
+	text-align: left;
+}
+
+/* for left count number */
+.d1{
+	position: relative;
+	height: 20px;
+	width: 50px;
+	vertical-align: top;
+	border-width: 1px;
+	border-style: solid;
+	border-color: threedhighlight threeddarkshadow threeddarkshadow threedhighlight;
+}
+
+.grid-top{
+	display: inline;
+	width: 100px;
+	height: 100%;
+}
+
+.grid-left{
+	position: absolute;
+	top: 0px;
+	left: expression(this.offsetParent.scrollLeft);
+	padding: 20px 0px 0px 0px;
+	z-index: 2;
+}
+
+.grid-top1{
+	position: absolute;
+	white-space: nowrap;
+	top: expression(this.offsetParent.scrollTop);
+	left: 30px;
+	width: 90%;
+	height: 20px;
+	padding: 0px 20px 0px 20px;
+	z-index: 2;
+	vertical-align: middle;
+}
+
+.grid-bottom1{
+	position: absolute;
+	overflow: hidden;
+	top: expression(this.offsetParent.scrollTop);
+	left: expression(this.offsetParent.scrollLeft);
+	height: 20px;
+	z-index: 3;
+}
+
+.d-main{
+	position: absolute;
+	top: 20px;
+	left: 50px;
+}
+
+.grid-row{
+	overflow-y: hidden;
+	white-space: nowrap;
+	width: 100%;
+	height: 20px;
+}
+
+.grid-cell-border{
+	border-bottom: 1px solid #FFFFFF;
+	border-right: 1px solid #FFFFFF;
+}
+
+.grid-cell{
+	background-color: #F0F0F0;
+	display: inline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100px;
+	height: 100%;
+	padding: 0px 5px;
+	line-height: 17px;
+}
+
+.grid-cell1{
+	background-color: #E1E1E1;
+	display: inline;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100px;
+	height: 100%;
+	padding: 0px 5px;
+	line-height: 17px;
+}
+
+.grid-textright{
+	text-align: right;
+}
+
+.grid-resize{
+	position: absolute;
+	overflow: hidden;
+	top: 0px;
+	right: -5px;
+	width: 10px;
+	height: 100%;
+	font-size: 10px;
+	cursor: col-resize;
+}
+
+.grid-cell2{
+	text-align: center;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 100%;
+	height: 100%;
+	padding-top: 3px;
+	border-width: 1px;
+	border-style: solid;
+	border-left: #182D4C;
+	border-right: #7D97B0;
+	border-top: #182D4C;
+	border-bottom: #7D97B0;
+	background-color: #3E6197;
+	color: #EEFDFF;
+}
+
+.row-selected{
+	color: white;
+	background-color: #3E6197;
+}
+
+input.text{
+	height: 20px;
+	border-color: #7f99b2;
+	border-style: solid;
+	border-width: 1px;
+}
+
+input.button{
+	border-left-color: WHITE;
+	border-right-color: BLACK;
+	border-top-color: WHITE;
+	border-bottom-color: BLACK;
+	background-color: #3E6197;
+	color: #EEFDFF;
+	border-width: 1px;
+	border-style: solid;
+}
+
+
+
+
+.arrow {
+	FONT-WEIGHT: normal;
+	FONT-FAMILY: Marlett;
+	LETTER-SPACING: -3px;
+	POSITION: relative;
+	TOP: 2px
+}

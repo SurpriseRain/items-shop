@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品评价</title>
+<META HTTP-EQUIV="pragma" CONTENT="private, no-cache, no-store, proxy-revalidate, no-transform">
+<META HTTP-EQUIV="Cache-Control" CONTENT="private, no-cache, no-store, proxy-revalidate, no-transform">
+<META HTTP-EQUIV="expires" CONTENT="-1">
+<meta name="robots" content="all" />
+<meta name="author" content="天放网科" />
+<meta name="copyright" content="http://www.tfwk.cn" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/index.css" />
+<link href="/customer/sydjt/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/sydjt/css/style.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/defaultPj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/stylePj.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<head>
+ <script type="text/javascript">
+	$(function() {
+		$('.square_ul a').hover(
+				function() {
+					//$(this).addClass('active-square');
+					//$(this).parents('.starasses').find('.s_result_square').css(
+					//		'color', '#c00').html($(this).attr('title'))
+				},
+				function() {
+					//$(this).removeClass('active-square');
+					//$(this).parents('.starasses').find('.s_result_square').css(
+					//		'color', '#333').html('请打分')
+				});
+		//设置一个定时器，为BUTTON点击事件用
+		var timer = null;
+		var number1 = 0;
+		//文本框获得焦点和失去焦点时的事件
+		$('#textarea').focus(
+				function() {
+					if ($(this).val() == '') {
+						$(this).siblings('p').html(
+								'还可以输入<span>140</span>字').css( {
+							'color' : '#999',
+							'cursor' : ''
+						});
+					}
+				}).blur(
+				function() {
+					if ($(this).val() == '') {
+						$(this).css('background-color', 'white').siblings('p')
+								.html('还可输入140字').css( {
+									'color' : '#999',
+									'cursor' : 'pointer'
+								});
+					}
+				});
+		//文本输入时改变
+		$('#textarea').keyup(function() {
+			if (!$(this).val() == '') {
+				$('button').removeClass('dis');
+			} else {
+				$('button').addClass('dis');
+			}
+			//Math函数向上取值
+				var iNum = Math.ceil(getLength($(this).val()) / 2);
+				if (iNum <= 140) {
+					$('#assestxt span').html(140 - iNum).css('color', '');
+				} else {
+					$('#assestxt span').html(iNum - 140).css('color', 'red');
+					$('button').addClass('dis');
+				}
+		});
+
+		//处理输入的内容是文字还是字母的函数
+		function getLength(str) {
+			return String(str).replace(/[^\x00-\xff]/g, 'aa').length;
+		}
+		;
+
+		//绑定按钮事件，当文本框为空时点击背景色会闪动
+		$('.button').click(function() {
+			if ($(this).hasClass('dis')) {
+				clearInterval(timer);
+				timer = setInterval(function() {
+					if (number1 == 4) {
+						clearInterval(timer);
+						number1 = 0;
+					} else {
+						number1++;
+					}
+					if (number1 % 2) {
+						$('#textarea').css('background-color', '#FFD9D9');
+					} else {
+						$('#textarea').css('background-color', '');
+					}
+				}, 200);
+			} else {
+				//alert('已成功发布！');
+				$('#textarea').val('');
+				$(this).addClass('dis');
+				$('#textarea').blur();
+			}
+		});
+	});
+	function setStars(loc, star) {
+		$("#"+loc).val(star);
+		$("#title_"+loc).html($("#"+loc+"_"+star).attr("title"));
+		for (var i = 1; i <= star; i++) {
+			$("#" + loc + "_" + i).attr("class","square-" + i + " " + "active-square");
+		}
+		for(var i = star+1; i <= 5; i++){
+			$("#" + loc + "_" + i).attr("class","square-" + i);
+		}
+	}
+</script>
+
+</head>
+<body>
+<form id="form1" name="form1" action="">
+	<input type="hidden" id="SPXX01" name="SPXX01" value=""/>
+	<input type="hidden" id="XSDD01" name="XSDD01" value=""/>
+	<input type="hidden" id="SPPJ08" name="SPPJ08" value=""/>
+	<input type="hidden" id="SPPJ03" name="SPPJ03" value="5"/>
+	<input type="hidden" id="SPPJ04" name="SPPJ04" value="5"/>
+	<input type="hidden" id="SPPJ05" name="SPPJ05" value="5"/>
+	<input type="hidden" id="SPPJ06" name="SPPJ06" value="5"/>
+	<input type="hidden" id="SPPJ09" name="SPPJ09" value=""/>
+	<input type="hidden" id="SPPJ10" name="SPPJ10" value="1"/>
+	<input type="hidden" id="PJBJ" name="PJBJ" value=""/>
+	<input type="hidden" id="SPPJ11" name="SPPJ11" value=""/>
+	<input type="hidden" id="currPage" name="currPage" value=""/>
+	<input type="hidden" id="ZTID" name="ZTID" value=""/>
+	<input type="hidden" id="ZCXX02" name="ZCXX02" value=""/>
+	<input type="hidden" id="HBID" name="HBID" value=""/>
+	<input type="hidden" id="XTCZY01" name="XTCZY01" value=""/>
+    <div id="star" class="clearfix">
+       <div class="starasses">
+          <span class="s_name" >商品描述相符：</span>
+<!--           <input type="hidden" id="SPPJ03_0" name="SPPJ03" value="SPPJ03"> -->
+          <ul class="square_ul fl" id="testid">
+            <li><a class="square-1" id="SPPJ03_1" title="很差" href="#" onclick="setStars('SPPJ03',1);"></a></li>
+            <li><a class="square-2" id="SPPJ03_2" title="一般" href="#" onclick="setStars('SPPJ03',2);"></a></li>
+            <li><a class="square-3" id="SPPJ03_3" title="好" href="#"  onclick="setStars('SPPJ03',3);"></a></li>
+            <li><a class="square-4" id="SPPJ03_4" title="很好" href="#" onclick="setStars('SPPJ03',4);"></a></li>
+            <li><a class="square-5" id="SPPJ03_5" title="非常好" onclick="setStars('SPPJ03',5);"></a></li>
+          </ul>
+          <span class="s_result_square fl" id="title_SPPJ03">请打分</span>
+        </div>
+       <div class="starasses">
+          <span class="s_name">物流发货速度：</span>
+          <ul class="square_ul fl">
+            <li><a class="square-1" id="SPPJ04_1" title="差" href="#" onclick="setStars('SPPJ04',1);"></a></li>
+            <li><a class="square-2" id="SPPJ04_2" title="一般" href="#" onclick="setStars('SPPJ04',2);"></a></li>
+            <li><a class="square-3" id="SPPJ04_3" title="好" href="#" onclick="setStars('SPPJ04',3);"></a></li>
+            <li><a class="square-4" id="SPPJ04_4" title="很好" href="#" onclick="setStars('SPPJ04',4);"></a></li>
+            <li><a class="square-5" id="SPPJ04_5" title="非常好" href="#" onclick="setStars('SPPJ04',5);"></a></li>
+          </ul>
+          <span class="s_result_square fl" id="title_SPPJ04">请打分</span>
+        </div>
+        <div class="starasses">
+          <span class="s_name">客服服务态度：</span>
+          <ul class="square_ul fl">
+            <li><a class="square-1" id="SPPJ05_1" title="差" href="#" onclick="setStars('SPPJ05',1);"></a></li>
+            <li><a class="square-2" id="SPPJ05_2" title="一般" href="#" onclick="setStars('SPPJ05',2);"></a></li>
+            <li><a class="square-3" id="SPPJ05_3" title="好" href="#" onclick="setStars('SPPJ05',3);"></a></li>
+            <li><a class="square-4" id="SPPJ05_4" title="很好" href="#" onclick="setStars('SPPJ05',4);"></a></li>
+            <li><a class="square-5" id="SPPJ05_5" title="非常好" href="#" onclick="setStars('SPPJ05',5);"></a></li>
+          </ul>
+          <span class="s_result_square fl" id="title_SPPJ05">请打分</span>
+        </div>
+        <div class="starasses">
+          <span class="s_name">配送人员态度：</span>
+          <ul class="square_ul fl">
+            <li><a class="square-1" id="SPPJ06_1" title="差" href="#" onclick="setStars('SPPJ06',1);"></a></li>
+            <li><a class="square-2" id="SPPJ06_2" title="一般" href="#" onclick="setStars('SPPJ06',2);"></a></li>
+            <li><a class="square-3" id="SPPJ06_3" title="好" href="#" onclick="setStars('SPPJ06',3);"></a></li>
+            <li><a class="square-4" id="SPPJ06_4" title="很好" href="#" onclick="setStars('SPPJ06',4);"></a></li>
+            <li><a class="square-5" id="SPPJ06_5" title="非常好" href="#" onclick="setStars('SPPJ06',5);"></a></li>
+          </ul>
+          <span class="s_result_square fl" id="title_SPPJ06">请打分</span>
+        </div>
+      </div>
+      <div id="assestxt">
+          <div class="assleft">评价：</div>
+          <div class="assright">
+              <textarea id="textarea" name="SPPJ07"></textarea>
+              <p><a class="ap">还可输入140字</a></p>
+              <div class="regtxt">
+                ·请您就本次购买对我们的服务进行评价，您的评价将会促进我们更好的为您服务。<br />
+                <!-- ·我们将对您的每次有效评价赠送10个积分。<br /> -->
+                ·订单评价有效期为3个月，超过期限的订单我们将默认为五星评价。
+              </div>
+              <button class="dis button" onclick="fabu();" >发布</button>
+            	
+          </div>
+        </div>
+</form>
+</body>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user = JSON.parse(MyCookie);
+var PJBJ = $.getUrlParam("PJBJ");
+var SPXX01 = $.getUrlParam("SPXX01");
+var XSDD01 = $.getUrlParam("XSDD01");
+var ZTID = $.getUrlParam("ZTID");
+$("#SPXX01").val(SPXX01);
+$("#XSDD01").val(XSDD01);
+$("#SPPJ08").val($.getUrlParam("XSDD04"));
+if(PJBJ>0){
+	$(".button").removeAttr("onclick");
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectSPPJ','dataType':'Json','SPXX01':SPXX01,'XSDD01':XSDD01}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	 var sppj03 = rData[0].sppj03;
+	 var sppj04 = rData[0].sppj04;
+	 var sppj05 = rData[0].sppj05;
+	 var sppj06 = rData[0].sppj06;
+	 setStars("SPPJ03",sppj03);
+	 setStars("SPPJ04",sppj04);
+	 setStars("SPPJ05",sppj05);
+	 setStars("SPPJ06",sppj06);
+	 $("#textarea").val(rData[0].sppj07);
+	 $("#textarea").attr("disabled",true);
+	 $(".button").removeAttr("onclick");
+	 $(".button").hide();
+}
+window.onload = function(){
+	if(MyCookie==null){
+		
+	}else{
+		$("#XTCZY01").val(user.XTCZY01);
+		if(user.LX=='24'){//个人用户
+			$("#ZCXX02").val(user.XTCZY01);
+		}else{
+			$("#ZCXX02").val(user.ZCXX02);
+		}
+		$("#HBID").val(user.ZCXX01);
+		$("#ZTID").val(ZTID);
+	}
+}
+
+
+function fabu() {
+		if ($("#SPPJ03").val() == '') {
+			alert("商品描述相符不能为空！");
+			//$("#SPPJ03").focus();
+			return false;
+		}
+		if ($("#SPPJ04").val() == '') {
+			alert("请评价物流发货速度！");
+			//$("#SPPJ04").focus();
+			return false;
+		}
+		if ($("#SPPJ05").val() == '') {
+			alert("请评价客服服务态度！");
+			//$("#SPPJ05").focus();
+			return false;
+		}
+		if ($("#SPPJ06").val() == '') {
+			alert("请评价配送人员态度！");
+			//$("#SPPJ06").focus();
+			return false;
+		}
+	var XmlData1=$("#form1").formToJson();
+	var XmlData=JSON.stringify(XmlData1);
+	var url="/OrderPj/insertW_SPPJ.action?XmlData="+XmlData+"&t=" + Math.random();
+	$.ajax({
+		type:"post",//请求类型
+		async: false, //同步
+		url:encodeURI(url),
+		dataType:"text",//返回类型
+		success:function(data)//成功处理
+		{
+			//关闭遮罩层
+			top.closeWait();
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			if(data1==1){
+					alert("保存成功!");
+	    			parent.execBackFun("aaa");
+					parent.$("#ajaxGrid").remove();
+			}else{
+				alert("保存失败!");
+			}
+		},
+	});
+			
+}
+	
+</script>
+</html>

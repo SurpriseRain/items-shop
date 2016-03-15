@@ -1,0 +1,63 @@
+package com.jlsoft.o2o.product.service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jlsoft.framework.JLBill;
+import com.jlsoft.framework.dataset.DataSet;
+import com.jlsoft.o2o.interfacepackage.V9.V9BasicData;
+import com.jlsoft.o2o.pub.service.PubService;
+@SuppressWarnings("unused")
+@Controller
+@RequestMapping("/Oper_FLHJ")
+public class Oper_FLHJ extends JLBill{
+	@Autowired
+	private PubService pubService;
+	@Autowired
+	private V9BasicData v9BasicData;
+	
+	public Oper_FLHJ() {
+	}
+	public Oper_FLHJ(JdbcTemplate o2o){
+		this.o2o = o2o;
+	}
+	//NineDragon
+	//查询商品货架（树形结构）
+	@RequestMapping("/selectTotalHJ.action")
+    public Map selectTotalHJ(String XmlData) throws Exception {
+		String sql="";
+			sql ="SELECT CAST(TRIM(H.HJBH) AS CHAR) HJBH,TRIM(H.HJBM) FLCODE,TRIM(H.HJMC) FLNAME,CASE WHEN SJBM IS NULL OR SJBM = '' THEN 0 ELSE TRIM(SJBM) END FATHERCODE,TRIM((SELECT HJMC FROM w_hj WHERE HJBM = H.SJBM)) AS FATHERNAME,MJBJ isend FROM w_hj H WHERE YXBJ = '1' ORDER BY 3 ";	
+		List spfllist = queryForList(o2o,sql);
+    	Map map = new HashMap();
+    	map.put("spfllist", spfllist);
+		return map;
+    }
+	//NineDragon
+		//更新入库货架编号
+		@RequestMapping("/insert_FLHJ.action")
+	    public Map insert_FLHJ(String XmlData) throws Exception {
+			Map map=new HashMap();
+			cds=new DataSet(XmlData);
+			try{
+			//   /Oper_HJBM/insert_FLHJ.action?XmlData=[{"type_id":"010103","hjbh":"19062"}]
+				String sql1="DELETE FROM w_spflhj WHERE spfl01="+cds.getField("type_id", 0)+"";
+				String sql="INSERT INTO w_spflhj(SPFL01,HJBH) VALUES("+cds.getField("type_id", 0)+","+cds.getField("hjbh", 0)+")";
+				Map	row = getRow(sql, null, 0);
+				execSQL(o2o, sql1, row);
+				execSQL(o2o, sql, row);
+				map.put("STATE", "1");
+			} catch (Exception e) {
+				e.printStackTrace();
+				map.put("STATE", "0");
+				throw new Exception("入库失败");
+			}
+			return map;
+		}
+}

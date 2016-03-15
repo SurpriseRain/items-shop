@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 活动报名</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<style>
+	.bmxx{display:block;width:150px;text-align:right;line-height:30px;float:left;}
+	.order_style input[type=text]{width:200px;line-height:30px;margin-left:10px;height:30px;}
+	#hdmc{width: 200px;text-lign:left;font-size:14px;margin-left:20px;font-weight:600;}
+	a.seach_bot{width:auto;padding:0 20px;}
+	ul#screening li span{text-align:none;}
+	.bmsp>li{float:left;font-size:14px;height:40px;line-height:50px;}
+	.clear{clear:botn;}
+	.center{width:828px;height:281px;margin-bottom:20px;overflow-x:hidden;margin-top:-10px;border:1px solid #e4e4e4;margin-top:10px;}
+	.center table{border:1px solid #e4e4e4;margin-top:0px;width:830px;}
+	table.list_table tr td{padding:0 0 0 5px;}
+	</style>
+<script type="text/javascript">
+	// 初始化数据
+	var usercookie;
+	var ActivityId = $.getUrlParam("ActivityId"); //活动ID
+	var activityName = unescape($.getUrlParam("activityName")); // 活动名称
+	var ZCXX01;
+	var producdIds = "";
+
+	function initData(){
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL_SIGN_UP.selectActivitySPFL','dataType':'Json','ActivityId':ActivityId}];
+		var rData = visitGrid("/jlquery/selecto2o.action", JSON.stringify(XmlData));
+		var SPFL01 = [];
+		if(rData.data != undefined){
+			var spfl = rData.data[0].SPFL01;
+			SPFL01 = spfl.split(",");
+		}
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL_SIGN_UP.selectProductList','dataType':'Json','ZCXX01':ZCXX01,'ActivityId':ActivityId,'prodectIds':producdIds,'SPFL01' : SPFL01}];
+		return visitGrid("/jlquery/selecto2o.action", JSON.stringify(XmlData));
+	}
+	
+	//全店商品 
+	function selectAll(){
+		producdIds = "";
+		if ($('#selectCheckbox').attr('checked')) {
+			var MyCookie = $.cookie('userInfo');
+			usercookie = JSON.parse(MyCookie);
+			ZCXX01 = usercookie.ZCXX01;
+			$("#xzsp").css("display","none");
+		}
+		else{
+			ZCXX01 = "";
+			$("#xzsp").css("display","block");
+		}
+		init();
+	}
+	
+	$(document).ready(function(){
+		$("#hdmc").text("活动名称:" + activityName);
+	    init();
+	    $('table').css({'margin-top':'0px','border-top':'none'});
+	});
+	
+	// 查询方法
+	function query(){
+		init();
+		// 查询后给checkbox勾选
+		var $ddh = $("[id^=ddh_]");
+		for(var i = 0; i < $ddh.length; i++){
+			$("#" + $ddh[i].innerHTML).attr("checked",true);
+		}
+	}
+	
+	// 回调方法
+	function backFun(ids){
+	 	queryProductList(ids);
+	}
+	
+	//查询已经选中的商品并显示
+	function queryProductList(ids){
+		var MyCookie = $.cookie('userInfo');
+		usercookie = JSON.parse(MyCookie);
+		ZCXX01 = usercookie.ZCXX01;
+		if(producdIds == ""){
+			producdIds = ids;
+		} else {
+			producdIds = producdIds + "," + ids;
+		}
+		init();
+	}
+	
+	//删除列表行的显示
+	function delShow(id){
+		$("#" + id).remove();
+		$("#selectCheckbox").attr("checked", false);
+		$("#xzsp").css("display", "block");
+	}
+	//显示选择商品
+	function selectProduct(){
+		var obj = $("a[name='delShow']");
+		var chk_value = [];
+		$(obj).each(function(){ 
+			chk_value.push($(this).attr("id")); 
+		});
+		var url = pubJson.O2OUrl+"/customer/qfy/back/hdgl/Oper_SPXZ.html?ActivityId="+ActivityId + "&chkVal=" + chk_value;
+		parent.ajaxGrid(url);
+	}
+	
+	//检查输入商品的数量 
+	function checkMaxNum(obj, num){
+		if($(obj).val() > num){
+			alert("输入数量不能大于库存");
+			$(obj).val(num);
+			return false;
+		}
+	}
+	
+	//汇总
+	function sumProduct(){
+		var dataArr = [];
+		var count = 0;
+		$.each($(".jl"), function(i, n){
+			var pid = $(n).find(".operation").attr("id");
+			var num = $(n).find("[name='kc']").attr("value");
+			var XmlData = {};
+			XmlData["productId"]= pid;
+			XmlData["num"]= num;
+			dataArr.push(XmlData);
+			count = count + 1;
+		});
+		if(count == 0){
+			return 0;
+		}
+		return dataArr;
+	}
+	
+	//检查商品数量
+	function checkProduct(){
+		var count = 1; 
+		var aaaaa = $(".jl");
+		$.each($(".jl"), function(i, n){
+			count = count+1;
+			var num = $(n).find("[name='kc']").attr("value");
+			if($.isNumeric(num)==false || num <= 0){
+				//alert("请输入正确的商品数量");	
+				count = 0;
+				return false;
+			}
+		});
+		return count;
+	}
+	
+	//检查输入的内容
+	function checkSignup(){
+		  
+		  //联系人
+		  var ContactPerson = $('#name').val();
+		  if($.trim(ContactPerson).length == 0){
+		  	alert("请输入联系人");
+		  	return false;
+		  }
+		  //电话
+		  var ContactPhone = $('#phone').val();
+		  if($.trim(ContactPhone).length == 0){
+		  	alert("请输入联系电话");
+		  	return false;
+		  }else{
+			  if (!checkMobile()) {
+					 return true;
+				}			  
+		  }
+		  
+		  //邮箱
+		  var Email = $('#mail').val();
+		  // QQ
+		  var QQ = $('#qq').val();
+		  
+		  if(Email.length == 0){
+				alert("请输入邮箱");
+				return false;
+		  }else{
+			  if (!checkEmail()) {
+				 return true;
+			  }
+		  }
+		  if(checkProduct() == 0){
+		 	alert("库存为0的商品不能进行报名!");
+		 	return false;
+		  }
+		  
+		  var MyCookie = $.cookie('userInfo');
+		  usercookie = JSON.parse(MyCookie);
+		  ZCXX01 = usercookie.ZCXX01;
+		  //活动商品id及数量 数量
+		  var ActivityNumber = sumProduct();
+		  if(ActivityNumber == 0 ){
+		  	alert("请选择商品");
+		  	return false;
+		  }
+
+		  var jsonData =  {'ContactPerson': ContactPerson,'ContactPhone':ContactPhone,'Email':Email,'QQ':QQ,'ActivityId':ActivityId,'ActivityNumber':ActivityNumber,'ZCXX01':ZCXX01};
+		  var url = "/Oper_HDGL/insertActivityBM.action?jsonData=" + JSON.stringify(jsonData);
+		  var returnData = visitService(url);
+		  if(returnData.STATE == "1"){
+		   alert("申请成功!");
+		   window.location.reload(); // 刷新当前页面
+		  } else {
+		   alert("申请失败!");
+		  }
+	}
+	
+	// 检查邮箱
+	function checkEmail(){
+		var email=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+		if(!email.test($("#mail").val())){
+			alert("请正确输入邮箱地址!");
+			return false;
+		}else{
+			return true;
+		} 
+	}
+	
+	// 检查手机号码
+	function checkMobile(){
+		if($('#phone').val().isMobile() || $('#phone').val().isPhone()){
+			return true;
+		}else{
+			alert("请输入正确的手机或座机号码!");
+			return false;
+		}
+	} 
+</script>
+</head>
+<body style="overflow:hidden;height:auto;margin-bottom:20px;">
+<div>
+	<ul id="screening" style="height:50px;width: 827px;" >
+	  <li style="width:818px;">
+	   	<span id="hdmc" style="width:auto;padding:0 20px;font-size:14px;"><!-- 活动名称: --></span>
+	  </li>	
+	</ul>	   	
+</div>
+
+<div class="clera"></div>
+<div class="order_style">
+	<ul style="height:50px;width: 818px;" >
+	  <li style="width:818px;">
+	   	<span class="bmxx">联系人：</span>
+		<input type="text" id="name" name="name" class="text" style="width: 150px;" maxlength="20" size="100" value=""/>
+	   </li>	   
+	</ul>
+	<ul style="height:50px;width:818px;" >
+	  <li>
+	   	<span class="bmxx">联系电话：</span>
+		<input type="text" id="phone" name="phone" class="text" style="width: 150px;" maxlength="20" size="100" value="" onkeyup="value=value.replace(/[^\d]/g,'') " />
+	   </li>	   
+	</ul>
+	<ul style="height:50px;width:818px;" >
+	  <li >
+	   	<span class="bmxx">邮箱：</span>
+		<input type="text" id="mail" name="mail" class="text" style="width: 150px;"  size="100" value="" onblur="checkEmail()"/>
+	   </li>	   
+	</ul>
+	<ul style="height:50px;width:818px;" >
+	  <li>
+	   	<span class="bmxx">QQ：</span>
+		<input type="text" id="qq" name="ghs" class="text" style="width: 150px;" maxlength="20" size="100" value="" onkeyup="value=value.replace(/[^\d]/g,'')"/>
+	   </li>	   
+	</ul>
+	<div class="clera"></div>
+	<div>
+		<ul style="height:50px;width:818px;" class="bmsp" >
+			<li style="font-weight:600;">报名商品</li>
+			<li style="float:left;width:100px;text-align:right;"><input id="selectCheckbox" value="1" type="checkbox" onclick="selectAll();"/>全店商品：</li>
+			<li style="float:left;"><a href="javascript:void(0);" id="xzsp" class="bot Shot seach_bot" onclick="selectProduct();">选择商品</a></li>
+		</ul>
+	</div>
+	
+<!-- 	<div class="order_style">
+		<ul style="height:50px;width:150px;text-align:left;font-size:14px;font-weight:600;">
+			<li >商品列表：</li>
+		</ul>	
+	</div> -->
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb" newclos="6" multiPage="false" url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'spxx01','header':'删除','type':'deleteShow','width':'60px'},
+							{'property':'fl','header':'商品品类','type':'lable','width':'140px'},
+							{'property':'SPXX02','header':'商品图片','type':'img','width':'60px','height':'60px'},
+							{'property':'spmc','header':'商品名称','type':'lable','width':'160px'},
+							{'property':'kc','header':'报名数量','type':'inputNum','width':'100px'},
+							{'property':'sjsj','header':'上架时间','type':'lable','width':'130px'},
+							{'property':'wdhdss','header':'是否包邮','type':'wdhdss','width':'90px'}
+							]">
+		</div>
+		
+	</div>
+   	<div class="clear"></div>
+   	<div>
+	<ul style="height:50px; width: 818px;text-align:center;margin-bottom:20px;">
+	  <li class='centerbm'>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="checkSignup();">报名</a>
+	   </li>
+	</ul>
+
+	</div>	
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=8" />
+	<meta charset="UTF-8" />
+	<meta name="Keywords" content=""> 
+	<meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+	<title>index</title>
+	<link rel="stylesheet" type="text/css" href="../css/home page.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/public.css"/>
+	<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+	<div id="head">
+		
+	</div>
+	<iframe style="width: 100%; height: 1050px;" scrolling="no" frameBorder="no" src="homepage.html" width="100" height="100"></iframe>
+	<div id="footer">
+		
+	</div>
+	</div>
+</body>
+<script src="../js/list.js" type="text/javascript" charset="utf-8"></script>
+<script src="../js/css3.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		/* $.get("footer.html",function(data){
+			$("#footer").html(data);
+		});  */ 
+			$('#head').load('header.html');
+			$("#footer").load("footer.html");
+/* 
+			var url = "/index/html/footer.html";
+    $.get(url, function(result){  
+        $("#footer").html(result);  
+          
+     });   */
+	})
+	
+
+
+
+</script>
+</html>

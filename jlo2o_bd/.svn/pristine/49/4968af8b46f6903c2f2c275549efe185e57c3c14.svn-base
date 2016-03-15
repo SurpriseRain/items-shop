@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+ <head>
+  <title>扫码支付前台demo</title>
+  <meta name="keywords" content="关键字">
+  <meta name="description" content="描述">
+  <meta name="content-type" content="text/html;charset=gbk">
+
+	
+ </head>
+
+ <body>
+	
+	<div align="center" id="qrcode">
+		<p >
+		微信支付成功
+		</p>
+	</div>
+ </body>
+
+
+
+</html>

@@ -1,0 +1,143 @@
+*{
+	
+}
+
+ul,li,ol,li,a{
+	text-decoration: none;
+	list-style: none;
+	font-size: 14px;
+}
+
+#wrap{
+	width: 800px;
+	height: 900px;
+}
+
+#head{
+	width: 100%;
+	height: 40px;
+}
+
+#head ul li{
+	float: left;
+	line-height: 40px;
+	font-size: 14px;
+	margin-left: 3px;
+}
+
+#head ul li a{
+	color: #403f3f;
+}
+
+#head ul li a:hover{
+	color: #ff0000;
+}
+
+#nav{
+	width: 100%;
+	height: 30px;
+}
+
+#nav ul{
+	height: 30px;
+	line-height: 30px;
+}
+
+#nav ul li{
+	color: #403f3f;
+	width: 100px;
+	height: 30px;
+	float: left;
+	text-align: center;
+}
+
+#nav ul li:hover{
+	background: rgb(238, 238, 238);
+	
+}
+
+#nav ul li a{
+	color: #403f3f;
+}
+
+#nav ul li a:hover{
+	color: #fffffff;
+}
+
+#quanx{
+	margin-top: 5px;
+	width: 100%;
+	height: 500px;
+	border: 1px solid #CCCCCC;
+}
+
+#quanx .ipt{
+	margin: 10px;
+	border-bottom: 1px solid #CCCCCC;
+	line-height: 25px;
+}
+
+#quanx span{
+	font-size: 14px;
+	margin-right: 20px;
+}
+
+#quanx .ipt a{
+	color: #403f3f;
+}
+
+.sp{
+	height: 400px;
+}
+
+.sp dl{
+	width: 190px;
+	height: 200px;
+	float: left;
+	margin: auto;
+	margin-left: 10px;
+}
+
+.sp dl p{
+	color: #403f3f;
+}
+
+.sp dl #dx{
+	margin-left: 12px;
+}
+
+.sp dl dt{
+	width: 150px;
+	height: 100px;
+	float: right;
+	margin-right: 20px;
+	margin-bottom: 5px;
+}
+
+.sp dl dt img{
+	width: 150px;
+	height: 100px;
+}
+
+.sp dl dd{
+	width: 100%;
+	height: 30px;
+}
+
+.sp dd input{
+	background: none;
+	border: 1px solid #403f3f;
+	color: #403f3f;
+}
+
+.sp dl dd p{
+	font-size: 12px;
+}
+
+
+#ym{
+	width: 100%;
+	height: 50px;
+	margin-top: 2px;
+	line-height: 50px;
+}

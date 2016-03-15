@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var dataArr = [];
+  var XmlData = {};
+  XmlData["sqlid"]="com.jlsoft.o2o.hdgl.sql.Oper_HDGL.select_NSPSP";
+  XmlData["QryType"]="Report";
+  XmlData["zcxx01"]=usercookie.ZCXX01;
+  XmlData["hdlx"]=$("#hdlx").val();
+  XmlData["spzt"]=$("#spzt").val();
+  XmlData["spmc"]=$("#spmc").val();
+  dataArr.push(XmlData);
+  var data =  visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+  return data;
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/edlg.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+ <ul id="screening" style="width:828px;">
+   <li style="width:830px;">
+   <span>活动种类：</span>
+   	<select id="hdlx"></select>  
+   	<span>商品状态：</span>
+   	<script type="text/javascript">
+		document.write(showStateHtml('PRODUCTSTATE','spzt'));
+	</script>
+	<span>商品名称：</span>
+	<input type="text" id="spmc" name="spmc"  size="20" class="text"/>
+   	<a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+   	<a href="javascript:void(0);" class="bot" style="width:60px;" onClick='leave_hd();'>退出报名</a>
+   </li>
+</ul>
+<div class="clera"></div>
+ 
+<div class="center">
+<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'ActivityShopId','header':'全选','type':'wdhd','width':'40px'},
+							{'property':'SPXX01','header':'商品编码','type':'hidden','width':'5px','id':'SPXX01'},
+							{'property':'ACTIVITYNAME','header':'活动名称','type':'lable','width':'80px','id':'ACTIVITYNAME'},
+							{'property':'SPXX04','header':'报名商品','type':'lable','width':'100px','id':'SPXX04'},
+							{'property':'SPFL02','header':'所属品类','type':'lable','width':'80px','id':'ActivityBudget'},
+							{'property':'SPJGB05','header':'商品价格','type':'lable','width':'60px','id':'ActivityStartTime'},
+							{'property':'ACTIVITYNUMBER','header':'参加数量','type':'lable','width':'60px','id':'ACTIVITYNUMBER'},
+							{'property':'WHETHERTOMAIL','header':'是否包邮','type':'wdhdss','width':'60px','id':'WHETHERTOMAIL'},
+							{'property':'PRODUCTSTATE','header':'商品状态','type':'number','width':'60px'},
+							{'property':'ActivityViews','header':'审批意见','type':'lable','width':'80px','id':'ActivityViews'}]"
+		>
+		</div>
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL.selectA_Type','dataType':'Json'}];
+    var data = visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+    var jsonObj = data.data;
+    var optionstring = "<option value=''>全部</option>";
+    for (var i = 0; i < jsonObj.length; i++) {
+        optionstring += "<option value=\"" + jsonObj[i].ac_id + "\" >" + jsonObj[i].ac_name + "</option>";
+    }
+    $("#hdlx").html(optionstring);
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  });
+  
+  $(".check").on("click",function(){
+	  subSelectAll();
+  });
+  
+})
+
+function subSelectAll(){
+	var chsub = $("input[name='check']").length; //获取check的个数  
+    var checkedsub = $("input[name='check']:checked").length; //获取选中的check的个数  
+    if (checkedsub == chsub) {  
+        $("#selAll").attr("checked", true);
+    } else {
+    	$("#selAll").attr("checked", false);
+    }
+}
+
+function pageGridChangeFunc(){
+	$(".check").on("click",function(){
+		subSelectAll();
+	 });
+}
+
+function leave_hd(){
+	var flag = true;
+	var activityShopIds = [];
+	var spxx01s = [];
+	
+	if($("input:checkbox[name=check]:checked").length < 1){
+		alert("请选择数据");
+		return false;
+	}else if(confirm("确定要退出报名？")){
+		$("input:checkbox[name=check]:checked").each(function(i){  
+	    	var activityShopId = $(this).attr("id");
+	    	var state = $(this).parents("tr").find("#PRODUCTSTATE_code").val();
+	    	var spxx01 = $(this).parents("tr").find("#SPXX01").val();
+	    	if(state != 0){
+	    		alert("只有商品状态为申请的商品才能退出活动");
+	    		flag = false;
+	    		return false;
+	    	}
+	    	activityShopIds.push(activityShopId);
+	    	spxx01s.push(spxx01);
+	    });
+		//
+		if(flag){
+	    	var XmlData = {};
+			XmlData["sqlid"]="com.jlsoft.o2o.hdgl.sql.Oper_HDGL.update_state";
+			XmlData["QryType"]="Report";
+			
+	    	for(var i=0;i<activityShopIds.length;i++){
+	    		var dataArr = [];
+	    		XmlData["activityShopId"]=activityShopIds[i];
+	    		XmlData["spxx01"]=spxx01s[i];
+	    		dataArr.push(XmlData);
+	    		visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+	    	}
+	    	init();
+	    }
+	}
+}
+
+
+
+</script>

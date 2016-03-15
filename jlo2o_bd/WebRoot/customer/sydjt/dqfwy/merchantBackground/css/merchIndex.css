@@ -1,0 +1,135 @@
+/**
+merchHeader
+**/
+body{ background-color:#f5f5f5;}
+.merchHeader{ height:80px; background-color:#fff;}
+.merchHeader .logo{ float:left;}
+.merchHeader .todolist{ float:right; height:50px; margin:15px 0;}
+.merchHeader .merchinfo{ line-height:20px; margin-bottom:5px; float:right;}
+.merchHeader .merchinfo span{ margin-right:20px; color:#999;}
+.merchHeader .merchinfo a{ color:#f97247}
+.merchHeader .todo{ line-height:25px; width:500px; float:right;}
+.merchHeader .todo li{ float:right; margin-left:20px; font-size:14px;}
+.merchHeader .todo li span{ color:#f40;}
+.merchHeader .todo li:hover a{ color:#f97247;}
+
+/**
+merchNav
+**/
+.merchNav{ height:40px; background-color:#f97247;}
+.merchNav li{ float:left; padding:0 20px; line-height:40px; font-size:14px;}
+.merchNav li.xuan{ background-color:#e84d1c;}
+.merchNav li:hover{ background-color:#e84d1c;}
+.merchNav li a{ color:#fff;}
+.merchNav li.back_index{ border:1px solid #fff; float:right; height:25px; line-height:23px; margin:8px 0; border-radius:13px; padding:0 10px;}
+.merchNav li.back_index i{ margin:0 5px 0 0; color:#fff;}
+.merchNav li.back_index:hover{ background-color:#fff;}
+.merchNav li.back_index:hover a{ color:#f97247;}
+.merchNav li.back_index:hover i{ color:#f97247;}
+
+/**
+mercMain
+**/
+.merch_nav{ margin-top:10px;}
+.merch_nav dl{ margin-bottom:10px;}
+.merch_nav dt{ height:35px; line-height:35px;}
+.merch_nav dd{ line-height:25px;}
+.merch_nav dd a{ color:#666;}
+.merch_nav dd a:hover{ color:#e84d1c; text-decoration:underline;}
+.merch_nav dd a.xuan{ color:#e84d1c; text-decoration:underline;}
+
+.merch_main{ margin-top:20px;}
+.merch_breadcrumb{ padding:10px 15px; background-color:#fff;}
+.merch_breadcrumb li span{ color:#666;}
+.merch_breadcrumb li i{ font-size:14px; color:#666; margin-right:5px;}
+.merch_breadcrumb li.jt i{ margin:0px 10px; color:#ccc;}
+
+.merch_seach{ margin-top:10px; background-color:#fff; padding:10px 15px;}
+.merch_seach ul{ line-height:25px; font-size:14px;}
+.merch_seach ul b{ margin:0 5px; color:#e84d1c;}
+.merch_seach li{ margin-right:20px;}
+.merch_seach .order_seach input[type="text"]{ height:25px; border:1px solid #e1e1e1;}
+.merch_seach .order_seach a{ height:25px; line-height:25px; text-align:center; background-color:#f5f5f5; border:1px solid #e1e1e1;}
+
+.merch_content{ margin-top:10px; background-color:#fff; padding:10px 15px;}
+
+.merch_page_tab{ height:40px; line-height:40px; margin-bottom:10px;}
+.merch_page_tab ul li{ margin:10px 20px 10px 0; height:20px; line-height:20px; cursor:pointer;}
+.merch_page_tab ul li:hover{ color:#e84d1c;}
+.merch_page_tab ul li.xuan{ color:#e84d1c; border-bottom:2px solid #e84d1c;}
+
+/**
+发布商品
+**/
+.xzfl{ padding:0 0 0 40px;}
+.xzfl h3{ margin:10px 0 15px 0;}
+.xzfl .xzfl_jt{ height:300px; line-height:300px; text-align:center; font-size:30px; color:#e1e1e1;}
+.xzfl .xzfl_seach{ height:31px; background-color:#f5f5f5; border-bottom:1px solid #e1e1e1;}
+.xzfl .xzfl_seach input[type="text"]{ border:0px; height:30px; background-color:#f5f5f5;}
+.xzfl .xzfl_seach i{ line-height:30px; text-align:center; color:#666;}
+.xzfl .xzfl_main{ border:1px solid #e1e1e1;}
+.xzfl ul{ height:290px; max-height:290px; overflow-y:auto;}
+.xzfl li{ line-height:32px; padding:0 20px; font-size:14px;}
+.xzfl li:hover{ background-color:#f5f5f5; cursor:pointer;}
+.xzfl li.xuan{ background-color:#fceae4;}
+.fljg{ height:50px; line-height:50px; font-size:16px; color:#999;}
+.fljg span{ color:#e84d1c;}
+.fljg i{ margin:0 20px; color:#ccc;}
+.fbsp{ border-top:1px dotted #666; padding-top:20px;}
+.fbsp dl{ margin-bottom:10px;}
+.fbsp dd label{ color:#999; line-height:20px; margin:15px 0 0 15px;}
+.fbsp dd span{ color:#666; line-height:20px; margin:15px 0 0 10px;}
+.fbsp dd span.radio{ line-height:40px; float:left; margin:0 20px 0 5px;}
+.fbsp dd ul{ padding:10px; border:1px solid #e1e1e1; background-color:#f9f9f9;}
+.fbsp dd li{ line-height:30px;}
+.fbsp dd li input[type="checkbox"]{ margin:8px 5px 8px 0;}
+.fbsp dd li em{ float:left; width:20px; height:15px; margin:7px 5px 7px 0; border:1px solid #e1e1e1;}
+.fbsp dd li em.color_01{ background-color:#fff;}
+.fbsp dd li em.color_02{ background-color:red;}
+.fbsp dd li em.color_03{ background-color:#ffff00;}
+.fbsp dd li em.color_04{ background-color:#000;}
+.fbsp dd li em.color_05{ background-color:#009900;}
+.fbsp dd li em.color_06{ background-color:#0099ff;}
+.fbsp dd li em.color_07{ background-color:#aaa;}
+.fbsp dd li em.color_08{ background-color:#330000;}
+.fbsp dd li em.color_09{ background-color:#000099;}
+.fbsp dd li em.color_10{ background-color:#ff0066;}
+.fbsp dd .up_img{ width:100px; height:100px;}
+.fbsp dd .up_img i{ line-height:80px; font-size:40px;}
+.fbsp dd ul.fbsp_ul_img li{ border:1px solid #eee; background-color:#fff; width:100px; height:100px; margin-right:15px; position:relative;}
+.fbsp dd ul.fbsp_ul_img img{ width:90px; height:90px; margin:4px;}
+.fbsp dd ul.fbsp_ul_img i{ text-align:center; line-height:100px; font-size:40px; color:#ccc;}
+.fbsp dd ul.fbsp_ul_img input[type="file"]{ float:left; width:100px; height:100px; position:absolute; z-index:2; top:0px; left:0px; filter:alpha(opacity:0); opacity:0; cursor:pointer;}
+.fbsp dd ul.fbsp_ul_img li:hover{ background-color:#f5f5f5;}
+
+.defclass{ border-left:1px dotted #f97247;}
+.defclass dl{ height:45px; line-height:45px; position:relative; border-bottom:1px solid #eee;}
+.defclass dl:hover{ background-color:#f5f5f5;}
+.defclass dt{ position:absolute;}
+.defclass dt.lj{ width:25px; height:1px; border-bottom:1px dotted #f97247; top:22px; left:0px;}
+.defclass dd.no01{ width:624px;}
+.defclass dd.no02{ width:178px;}
+.defclass dd.no03{ width:178px;}
+.defclass dd.no04{ width:85px;}
+
+.defclass dd i{ float:left; line-height:44px; font-size:18px; width:20px; margin-left:30px; color:#999;}
+.defclass dd input[type="text"]{ height:25px; line-height:23px; margin:10px 0; width:200px; border:1px solid #ccc;}
+.defclass dd select{ height:25px; margin:10px 0; width:120px; border:1px solid #ccc;}
+.defclass dd input[type="button"]{ width:100px; height:25px; line-height:25px; padding:0px; margin:10px 0; font-size:14px;}
+
+.send{ margin-left:50px; width:1019px;}
+.send dl:hover{ background-color:#fceae4;}
+.send dt.line{ width:50px; height:45px; border-bottom:1px solid #eee; left:-50px;}
+.send dd.no01{ width:574px;}
+.send dd.no02{ width:178px;}
+.send dd.no03{ width:178px;}
+.send dd.no04{ width:85px;}
+
+.there{ margin-left:50px; width:969px;}
+.there dl:hover{ background-color:#d6e5fc;}
+.there dt.line{ width:100px; height:45px; border-bottom:1px solid #eee; left:-100px;}
+.there dd.no01{ width:524px;}
+.there dd.no02{ width:178px;}
+.there dd.no03{ width:178px;}
+.there dd.no04{ width:85px;}
+

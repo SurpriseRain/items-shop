@@ -1,0 +1,36 @@
+<div class="w12 user_page_tab">
+  <ul class="w12">
+    <li class="xuan">我的收货地址</li>
+  </ul>
+</div>
+<div class="w12 user_page_main">
+  <div class="w12"><input type="button" value="新增收货地址" class="jl_btn btn_red" onclick="jl_modal_show();" /></div>
+  <div class="w12 user_page_list">
+  	<dl class="w12 public_list user_page_address xuan">
+      <dt class="w12"><h3>李龙威</h3><h3>185*****544</h3><em>默认地址</em><i class="fa fa-trash-o" title="删除地址"></i><i class="fa fa-map-marker" title="设为默认地址"></i><i class="fa fa-pencil-square-o" title="编辑地址" onclick="jl_modal_show();"></i></dt>
+      <dd class="w12">湖北省 - 武汉市 - 江汉区 - 新华路取水楼1611号</dd>
+      <dd class="w12">邮箱：705342460@qq.com</span></dd>
+    </dl>
+  	<dl class="w12 public_list user_page_address">
+      <dt class="w12"><h3>李龙威</h3><h3>185*****544</h3><i class="fa fa-trash-o" title="删除地址"></i><i class="fa fa-map-marker" title="设为默认地址"></i><i class="fa fa-pencil-square-o" title="编辑地址" onclick="jl_modal_show();"></i></dt>
+      <dd class="w12">湖北省 - 武汉市 - 江汉区 - 新华路取水楼1611号</dd>
+      <dd class="w12">邮箱：705342460@qq.com</span></dd>
+    </dl>
+  	<dl class="w12 public_list user_page_address">
+      <dt class="w12"><h3>李龙威</h3><h3>185*****544</h3><i class="fa fa-trash-o" title="删除地址"></i><i class="fa fa-map-marker" title="设为默认地址"></i><i class="fa fa-pencil-square-o" title="编辑地址" onclick="jl_modal_show();"></i></dt>
+      <dd class="w12">湖北省 - 武汉市 - 江汉区 - 新华路取水楼1611号</dd>
+      <dd class="w12">邮箱：705342460@qq.com</span></dd>
+    </dl>
+  </div>
+</div>
+</div>
+
+
+<!----------------------编辑弹出层---------------------------->
+<div class="jl_modal display_none">
+  <div class="jl_modal_hidden" onclick="jl_modal_hidden();"></div>
+  <div class="set_address"></div>
+</div>
+<script type="text/javascript">
+$(".set_address").load("../set_address.html");
+</script>

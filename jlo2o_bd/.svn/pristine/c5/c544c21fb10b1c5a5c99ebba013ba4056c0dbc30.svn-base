@@ -1,0 +1,91 @@
+<script type="text/javascript" src="/customer/qfy/js/ui.js"></script>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/ui.css" />
+<style style="text/css">
+	#footer{
+  margin-top: 20px;
+      clear: both;
+}
+.f-container{
+  width: 1200px;
+  margin: 0 auto;
+  background-color: #f9f8f8;
+  border-top: 1px solid #ddd;
+}
+#qfy-copyright p{
+  text-align: center;
+  height: 60px;
+  line-height: 60px;
+  font-size: 14px;
+    border: 0;
+  background-color: #f9f8f8;
+    padding: 0;
+    width: 1200px;
+}
+#qfy-copyright{
+  border-top: 1px solid #EDEBEC;
+}
+
+.w1190 #sn-bd{
+  width: 1200px;
+}
+
+.w1190 #site-nav .sn-container,.w1190 #header .headerCon,#header .headerLayout {
+  width: 1200px;
+}
+#qfy-copyright p a{
+  margin-right: 30px;
+}
+#qfy-copyright p a:hover{
+  text-decoration: underline;
+  color: $S_scolor;
+}
+#qfy-ensure{
+  text-align: center;
+}
+
+.w1190 .headerSearch{
+  width: 480px!important;
+}
+</style>
+
+<!-- <script type="text/javascript">
+var window_ = $(window).height();
+var foot_ = $("#footer").offset().top;
+if(foot_<window_){
+	$("#footer").css("margin-top",window_-400+"px")
+}
+ 
+</script> -->
+<div id="footer">
+        <div class="f-container">
+            <!-- <div id="qfy-ensure">
+                <img src="/customer/qfy/images/ensure.png" alt=""/>
+            </div> -->
+            <div id="qfy-copyright">
+                <p>
+                    <!-- <a href="http://www.miitbeian.gov.cn/" target="_blank">津ICP备15004769号-1 </a>
+                    天津车福网络科技有限公司 -->
+                    津ICP备15004769号-1
+                </p>
+            </div>
+        </div>
+        
+        <div id="cusService"><div><span></span></div>联系客服</div>
+        <div class="goTop">
+			<div class="go">
+				<span></span>
+				<strong>TOP</strong>
+			</div>
+	 	</div>
+		<div id="cusService_main">
+		  <div class="title"></div>
+		  <div class="qq_list">
+		   <a title="亲~点击联系我吧！" href="http://wpa.qq.com/msgrd?v=3&uin=2871806139&site=qq&menu=yes"><img src="/customer/qfy/images/boy_qq.png"  /><span>汽服云客服一</span></a>
+		    <a title="亲~点击联系我吧！" href="http://wpa.qq.com/msgrd?v=3&uin=3317002791&site=qq&menu=yes"><img src="/customer/qfy/images/girl_qq.png" /><span>汽服云客服二</span></a>
+		    <a title="亲~点击联系我吧！" href="http://wpa.qq.com/msgrd?v=3&uin=2197583960&site=qq&menu=yes"><img src="/customer/qfy/images/boy_qq.png" /><span>汽服云客服三</span></a>
+		  </div>
+		  <!-- <div class="tel_list">400-888-8888</div>-->
+		  <img src="/customer/qfy/images/wnfu.jpg" style="margin:10px 0 10px 10px;">
+		</div>
+
+    </div>

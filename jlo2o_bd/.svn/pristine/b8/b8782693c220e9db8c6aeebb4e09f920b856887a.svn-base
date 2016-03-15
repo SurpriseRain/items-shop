@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.info.sql.Srch_ZXXW','QryType':'Report','dataType':'Json','jlbh':$('#jlbh').val(),'date_s':$('#regdate_str').val(),'date_e':$('#regdate_end').val(),'title':$('#title').val(),'code':$('#code').val()}];
+ /*  var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+  var rData=visitService(url);
+  alert(JSON.stringify(rData)); */
+  var rData= visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+  if(rData[0]!=undefined&&rData[0]!=""){
+	 $("#code").empty();
+ 	 $("#code").append(
+ 		 	 '<option value="">请选择</option>'+
+	  		'<option value='+rData[0].LXCODE+'>'+rData[0].LXNAME+'</option>'
+	  	);
+  	}
+  return rData;
+}
+</script>
+<!--  <script type="text/javascript" src="/control/js/tableGrid.js"></script>
+<script type="text/javascript" src="/js/jquery.kkPages.js"></script>-->
+
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+	    <li><i class="fa fa-home"></i><span>首页</span></li>
+	    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+	    <li><span>信息管理</span></li>
+	    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+	    <li><b>资讯新闻</b></li>
+	</ul>
+	</div>
+	<div class="clera"></div>
+	<div class="w12 user_content">
+	<div class="w12 user_page_main">
+	<div class="w12 user_page_seach">
+	<dl class="w03 public_form">
+		<dt class="w05">
+			<label class="w12">新闻编码：</label>
+		</dt>
+        <dd class="w07">
+        	<input type="text" id="jlbh" name="jlbh" size="20"/>
+        </dd>
+	</dl>
+	<dl class="w09 public_form">
+		<dt class="w03">
+			<label class="w12">资讯标题：</label>
+		</dt>
+        <dd class="w06">
+        	<input type="text" id="title" name="title" value="" size="20" />
+        </dd>
+        <dd class="w03"><input type="button" value="新增" onclick="newXX()" class="jl_btn btn_blue"/></dd>
+	</dl>
+	<dl class="w03 public_form">
+		<dt class="w05">
+			<label class="w12">资讯类型：</label>
+		</dt>
+        <dd class="w06">
+        	<select class="w12" id="code" name="code">
+        		<option value="">请选择</option>
+        	</select>
+        </dd>
+	</dl>
+	<dl class="w09 public_form">
+		<dt class="w03">
+			<label class="w12">发布时间：</label>
+		</dt>
+        <dd class="w06">
+			<input id="regdate_str" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+			<b class="w01 text_center">~</b>
+			<input id="regdate_end" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+        </dd>
+        <dd class="w03"><input type="button" value="查询" onclick="query()" class="jl_btn btn_red"/></dd>
+	</dl>
+	</div>
+	<div class="clera"></div>
+
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'JLBH','header':'信息编号','type':'lable','width':'50px','id':'ZCXX01'},
+							{'property':'TITLE','header':'标题','type':'lable','width':'80px','id':'ZCXX02'},
+							{'property':'FBSJ','header':'发布时间','type':'lable','width':'120px','id':'DPXX01'},
+							{'property':'LXNAME','header':'新闻类型','type':'lable','width':'50px','id':'DPXX02'}]"
+		afterUrl="/customer/qfy/back/xxgl/zxxw/Oper_ZXXW_item.html?JLBH=">
+		</div>
+	</div>
+	</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+function newXX(){
+	parent.ajaxGrid('/customer/qfy/back/xxgl/zxxw/Oper_ZXXW_item.html');
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+</script>

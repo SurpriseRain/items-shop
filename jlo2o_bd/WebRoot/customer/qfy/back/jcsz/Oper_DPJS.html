@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<title>汽服云 - 卖家中心</title>
+<style type="text/css">
+@charset "UTF-8";
+/* reset start */
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+body{
+	overflow-x:hidden;
+	overflow-y:hidden;
+}
+#curPosition {
+    border: 1px solid #e4e4e4;
+    float: left;
+    line-height: 30px;
+    padding-left: 10px;
+    width: 818px;
+   
+}
+#curPosition a {
+    color: #ff4a00;
+    float: left;
+    line-height: 30px;
+    font-size:14px;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+#curPosition b {
+    color: #3c3c3c;
+    float: left;
+    font-weight:550;
+    font-size:12px;:
+    line-height:30px;
+    margin-left:5px;
+   
+}
+#curPosition>span{
+
+	color:#ccc;
+	float:left;
+	display:block;
+	line-height:30px;
+	height:30px;
+	font-size:14px;
+	margin-left:5px;
+
+}
+.msg-menu{
+	width:820px;
+	
+	
+	
+	
+	
+}
+.msg-menu ul{
+	width:100%;
+	height:180px;
+
+	
+	
+}
+.msg-menu ul li{
+float:left;
+list-style:none;
+font-size:14px;
+height:30px;
+line-height:30px;
+width:100%;
+margin:10px 0;
+
+	
+}
+.msg-menu ul li h3{
+	width:200px;
+	height:30px;
+	float:left;
+	text-indent:100px;
+	font-size:14px;
+	font-weight:600;
+	
+}
+.msg-menu ul li p{
+	height:30px;
+	line-height:30px;
+	font-size:14px;
+	
+	
+}
+#shurujine{
+	width:50px;
+	line-height:20px;
+}
+.fplb_Title{
+	font-size: 14px;
+	width:100px;
+	color:#000;
+	font-weight:600;
+	height:20px;
+	line-height:20px;
+	float:left;
+	text-indent:10px;
+	
+
+}
+.msg-xt{
+width:100%;
+float:left;
+}
+.msg-xt h4{
+	font-size:14px;
+	height:40px;
+	line-height:40px;
+	margin-top:20px;
+	text-indent:10px;
+	
+}
+.msg-sp{
+	width:100%;
+	clear:both;
+	position:relative;
+	text-align:center;
+	
+}
+#save,#cancel{
+	width:100px;
+	height:34px;
+	text-align:center;
+	border:none;
+	background:#F80;
+	cursor:pointer;
+	color:#fff;
+	font-weight:600;
+	font-size:16px;
+	margin:20px 0 20px -30px;
+
+}
+
+
+ul#pdb-info {
+    border: 1px solid #e4e4e4;
+    float: left;
+    margin: 10px 0;
+    /* padding-left: 10px; */
+    width: 818px;
+    background:#f9f9f9;
+}
+
+
+</style>
+</head>
+<body>
+<form id="form1" name="form1">
+<input type="hidden" id="ZCXX01" name="ZCXX01" value="0"/>
+	<!-- <div id="curPosition">
+		<a href="#">用户管理</a>
+		<span >></span>
+		<b>企业介绍</b>
+	</div> -->
+	<ul id="pdb-info">
+	<div id="zong" ><!--总div  -->
+		<div class="msg-menu" ><!-- checkbox选中div -->
+			<div class="msg-xt"><!--输入服务说明 -->
+				<!-- <h4 class="dpfwsm"></h4> -->
+			<!--富文本框  -->
+			<!-- <span class="name">店铺服务说明：</span> -->
+			<input type="hidden" id="gsid" name="ZCXX01" value=""/>
+      		<div id="JKDiv_spym" style="width:670px; height:300px;  margin:20px 0 0 30px;clear:both;">
+      			<textarea id="spjs" name="spjs" style="width:760px; height:300px; float:left; margin:13px 0 0 6px; max-width:750px;" ></textarea>
+      		</div> 
+			</div>
+			<div class="msg-sp"><!--确定按钮div  -->
+			<span><input type="button" id="save" value="确认" /></span>
+			<span style="margin-left:50px"><input type="button" id="cancel" value="清空" /></span>
+			</div>
+		</div>
+	</div>
+	</ul>
+	</form>
+	<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<!-- <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script> -->
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type='text/javascript' src="/js/jquery.foggle.min.js"></script>
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/commons.js" ></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/plugins/code/prettify.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+<script>
+var MyCookie = $.cookie('userInfo');
+	if(MyCookie==null){
+		alert("亲，您还未登录！");
+		location.href="/gui_o2o/qfy/fore/index.html";
+	}
+var user = JSON.parse(MyCookie);
+var editor1;
+var gsid=user.ZCXX01;
+var path = "dpdetail/"+gsid+"/images/";
+//上传图片存放路径
+var hbid=user.XTCZY01;
+KindEditor.ready(function(K) {
+	 editor1 = K.create('textarea[name="spjs"]', {
+		cssPath : '/keditor/plugins/code/prettify.css',
+		uploadJson : '/servlet/TpUploadServlet?filename='+path + '&filetype=dptp',//上传图片方法，在TpUploadServlet里
+		fileManagerJson : '/fileManageServlet?filename='+path,
+		allowFileManager : true,
+		afterCreate : function() {
+			var self = this;
+			K.ctrl(document, 13, function() {
+				self.sync();
+				document.forms['form0'].submit();
+			});
+			K.ctrl(self.edit.doc, 13, function() {
+				self.sync();
+				document.forms['form0'].submit();
+			});
+		}
+	});
+	prettyPrint();
+	
+});
+   $(function(){
+	 $("#save").on("click",function(){
+		okclick();
+    });
+     $("#cancel").on("click",function(){
+		editor1.html("");
+    });
+	
+    $("#ZCXX01").val(gsid);
+	 var url = "/ReadHTML/getHTMLSpdpBody.action?ZCXX01="+gsid;
+     var rBody = visitService(url);
+     if(rBody != undefined && rBody != ""){
+    	if(rBody.STATE == "1"){
+		    $("#spjs").val(rBody.SPJS);  //给商品参数编辑框赋值
+    	}
+    }
+ });
+//获得kindeditor中的信息
+function getValues() {
+   // 取得HTML内容
+   var html1 = editor1.html();
+   // 同步数据后可以直接取得textarea的value
+   editor1.sync();
+}
+//新增保存
+function okclick(){
+        //发布商品具体赋值
+		getValues();
+		var XmlData1 = $("#form1").formToJson();
+		var spjs = escape(XmlData1[0].spjs);
+		var ZCXX01 = $("#ZCXX01").val();
+		XmlData1[0].spjs ="";
+		var XmlData=escape(JSON.stringify(XmlData1));
+		var val="/MyGoods/createHtml.action?ZCXX01="+ZCXX01;
+		var r = confirm('确认保存信息吗？');
+		if(r==true){
+		     //弹出遮罩层
+		     top.openWait();
+			$.ajaxFileUpload({
+				type:"POST",
+				secureuri:false,
+				url:encodeURI(val),//encodeURI避免中文乱码
+				dataType:"text",
+				data:{"spjs":spjs,"XmlData":XmlData},
+				success: function(data) { 
+				//关闭遮罩层
+				top.closeWait();
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				//(jsondata.STATE);
+				//if(data1==1){
+					alert("保存成功!");
+				//}else{
+				//	alert("保存失败!");
+				//}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					//关闭遮罩层
+					top.closeWait();
+			    }
+			});
+		}
+		else return;
+}
+</script>
+</body>
+</html>

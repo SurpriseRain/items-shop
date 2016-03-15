@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电器服务云 - 店铺首页</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/qypublic.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/head.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/qy_head.js"></script>
+</head>
+<script type="text/javascript">
+var gsid=unescape($.getUrlParam("gsid"));
+$(document).ready(function(){
+	$("#header").load("/customer/sydjt/showDpxx/shopHead.html?ss="+Math.random());
+	$("#footer").load("/customer/sydjt/foot.html");
+	selectDPInfo(gsid);
+})
+function selectDPInfo(gsid) {
+	var xmlData = [{"gsid":gsid}];
+	var url="/UserInfo/selectDPInfo.action?XmlData="+JSON.stringify(xmlData);
+	var	returnVal=visitService(url);
+	$(returnVal.list).each(function(i,val){
+		var ZCXX02="";
+		if(val.ZCXX02!=null){
+			ZCXX02=val.ZCXX02;
+			}
+		var ZCXX08="";
+		if(val.ZCXX02!=null){
+			ZCXX08=val.ZCXX08;
+			}
+		var ZCXX06="";
+		if(val.ZCXX06!=null){
+			ZCXX06=val.ZCXX06;
+			}
+		var ZCXX09="";
+		if(val.ZCXX09!=null){
+			ZCXX09=val.ZCXX09;
+			}
+		$("#sj-lxwm").append("<span class='beijing'>"+ZCXX02+"</span>"+
+				"<span>地址："+ZCXX08+"</span>"+
+				"<span>电话："+ZCXX06+"</span>"+
+				"<span>邮箱："+ZCXX09+"</span>"
+				);
+	});
+	
+}
+</script>
+<body>
+<!-----公共部门开始---->
+<div id="header"></div>
+<div class="clera"></div>
+
+<div id="sj-lxwm">
+<span class="women">联系我们（Contact us）</span>
+</div>
+
+<div class="clera"></div>
+<div id="footer"></div>
+</body>
+</html>

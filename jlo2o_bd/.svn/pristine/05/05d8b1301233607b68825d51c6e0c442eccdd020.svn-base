@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title id="title">确认支付结果</title>
+<META HTTP-EQUIV="pragma" CONTENT="private, no-cache, no-store, proxy-revalidate, no-transform">
+<META HTTP-EQUIV="Cache-Control" CONTENT="private, no-cache, no-store, proxy-revalidate, no-transform">
+<META HTTP-EQUIV="expires" CONTENT="-1">
+<meta name="Author" content="明珠集成" />  
+<meta name="Copyright" content="" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/default.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/style.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript">
+var user=JSON.parse($.cookie("userInfo"));
+$(document).ready(function(){
+	
+	$("#header").load("/customer/qfy/head.jsp");
+	$("#footer").load("/customer/qfy/foot.html");
+	
+	if(user==null){
+		location.href="index.html";
+	}
+
+	var xsdd01=$.getUrlParam("xsdd01");
+	var ztid=$.getUrlParam("ztid");
+	//var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.queryMyOrder","HBID":usercookie.ZCXX01,"ZTID":ztid}];
+	//var url ="/queryMyOrder/jlquery/queryMyOrder.action?XmlData="+JSON.stringify(XmlData);
+	//visitService(url);
+	$("#pic2>a").attr("href","/customer/qfy/back/shop-main.html");
+	$("#pic3").find("a").attr("href","/customer/qfy/back/shop-main.html");
+
+});
+</script>
+</head>
+<body>
+<div id="header">
+</div>
+
+<div id="main" class="w980 clearfix">
+	<div class="cart">
+	<div class="cart_top">
+		<h2>我的购物车</h2>
+		<div class="cartcurrent mt20">
+			<ul class="carttitlist">
+				<li class="current">
+				<strong></strong>
+				<span>1.我的购物车</span>
+				</li>
+				<li class="current">
+				<strong></strong>
+				<span>2.确认订单信息</span>
+				</li>
+				<li class="current">
+				<strong></strong>
+				<span>3.确认付款</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>4.等待收货</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>完成订单</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<br class="clear"/>
+	<!-- con -->
+         <div class="cartbox mt10clearfix">
+               <div align="center">
+                    <h3 style="margin-top:30px; padding-bottom:10px; font-size:25px; color:#333; font-weight:100;">确认结果：<span style="margin-left:20px; color:red; font-size:15px; font-family:'Arial Black', Gadget, sans-serif"></span></h3>
+		    		 <form id="form1" name="form1" action="">
+						<div id="choosepay">
+    	   				<div id="pic2" > <a href=""><img src="../images/zftc2.jpg" width="200"  height="42" /></a></div>
+    					<div id="pic3" > <a href=""><img src="../images/zftc3.jpg"  width="200" height="41" /></a></div>
+		  				</div>
+   				 	</form>
+  			</div>
+</div>
+</div>
+
+<div id="footer" class="clearfix mt20">
+</div>
+</body>
+</html>

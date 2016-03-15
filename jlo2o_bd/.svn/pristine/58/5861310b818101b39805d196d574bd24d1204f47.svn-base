@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCKDMX" language="groovy" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ckdh" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT B.SPXX01,C.SPXX02,(SELECT SPGL24 FROM W_SPGL WHERE ZCXX01=A.ZCXX01 AND SPXX01=B.SPXX01) CJZBM,
+C.SPXX04,(SELECT BARCODE FROM W_GOODS WHERE SPXX01=B.SPXX01) BARCODE,B.CKSL
+FROM W_CKD A,W_CKDITEM B,W_SPXX C WHERE A.CKDH=B.CKDH AND B.SPXX01=C.SPXX01 AND A.CKDH=$P{ckdh}]]>
+	</queryString>
+	<field name="SPXX01" class="java.math.BigDecimal"/>
+	<field name="SPXX02" class="java.lang.String"/>
+	<field name="CJZBM" class="java.lang.String"/>
+	<field name="SPXX04" class="java.lang.String"/>
+	<field name="BARCODE" class="java.lang.String"/>
+	<field name="CKSL" class="java.lang.Integer"/>
+	<variable name="ckslSum" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{CKSL}.intValue()]]></variableExpression>
+	</variable>
+	<variable name="index" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$V{index}.valueOf(1)]]></variableExpression>
+		<initialValueExpression><![CDATA[1]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<textField>
+				<reportElement x="55" y="0" width="100" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CJZBM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="198" y="0" width="100" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BARCODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="335" y="0" width="100" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SPXX04}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="483" y="0" width="100" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CKSL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="2" y="0" width="40" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{index}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

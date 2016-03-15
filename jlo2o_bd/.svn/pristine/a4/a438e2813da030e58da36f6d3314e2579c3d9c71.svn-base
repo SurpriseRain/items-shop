@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<!--<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />-->
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+//初始化数据
+function initData(){
+  var dataArr = [];
+  var XmlData = {};
+  XmlData["sqlid"]="com.jlsoft.o2o.user.sql.selectW_ZCGS";
+  XmlData["QryType"]="Report";
+  XmlData["sjly"]=$("#sjly").val();
+  XmlData["dpzt"]=$("#dpzt").val();
+  XmlData["date_s"]=$("#date_s").val();
+  XmlData["date_e"]=$("#date_e").val();
+  dataArr.push(XmlData);
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">用户管理</a>
+    	<span>></span>
+    	<b>APP注册审核</b>
+	</div> -->
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+ 	
+ <ul id="screening">
+   <li style="width:830px;">
+    <span>注册状态：</span>
+	<script type="text/javascript">
+	document.write(showStateHtml("ZCGS01","dpzt"));
+	var role = usercookie.Role;
+	if(role==1){
+		$("#dpzt").val(3);
+	}
+	if(role==2){
+		$("#dpzt").val(3);
+		$("#dpzt option[value='']").remove();
+		$("#dpzt option[value='2']").remove();
+		$("#dpzt option[value='4']").remove();
+		$("#dpzt option[value='5']").remove();
+	}
+	if(role==3){
+		$("#dpzt").val(6);
+		$("#dpzt option[value='']").remove();
+		$("#dpzt option[value='2']").remove();
+		$("#dpzt option[value='3']").remove();
+		$("#dpzt option[value='7']").remove();
+	}
+	if(role == 4){
+		$("#dpzt").val(4);
+		$("#dpzt option[value='']").remove();
+		$("#dpzt option[value='2']").remove();
+		$("#dpzt option[value='3']").remove();
+		$("#dpzt option[value='6']").remove();
+		$("#dpzt option[value='7']").remove();
+	}
+	</script>
+     
+   	<span>注册时间：</span>
+	<input id="date_s" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+	<span class="z" style="width:20px;">~</span>
+	<input id="date_e" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+   </li>
+   <li>
+   	   <span>数据来源：</span>
+   	   <select id="sjly" name="sjly" style="width:150px;">
+   	   		<option value=""></option>
+			<option value="0">	PC注册</option>
+			<option value="1">APP注册</option>
+			<option value="2">初始导入</option>
+   	   </select>
+   	   <a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+   </li>
+</ul>
+<div class="clera"></div>
+ 
+ <div class="center">
+	<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="true"  url="/jlquery/selecto2o.action" 
+	columnsArr="[
+	{'property':'ZCXX01','header':'公司代码','type':'hidden'},
+	{'property':'XTCZY01','header':'用户名','type':'lable','width':'100px'},
+	{'property':'ZCXX02','header':'公司名称','type':'lable','width':'200px'},
+	{'property':'LX','header':'公司类型','type':'lable','width':'100px'},
+	{'property':'ZCXX06','header':'手机号码','type':'lable','width':'80px'},
+	{'property':'ZCGS01','header':'状态','type':'number','width':'60px'},
+	{'property':'ZCXX56','header':'数据来源','type':'number','width':'80px'},
+	{'property':'ZCXX01','header':'操作','type':'user_sh','width':'60px'}]" 
+	>
+	</div>
+</div>
+ 
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+})
+function backFun(){
+	 init();
+}
+function edit(obj,id){
+	if(usercookie.Role==4){
+		parent.ajaxGrid('/customer/qfy/back/yhgl/shop_Basinfo.html?ZCXX01='+obj);
+	}else{
+		parent.ajaxGrid('/customer/qfy/back/yhgl/user_item.html?ZCXX01='+obj);
+	}
+}
+</script>

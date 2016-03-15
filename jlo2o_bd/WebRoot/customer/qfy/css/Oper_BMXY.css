@@ -1,0 +1,55 @@
+*{margin: 0 auto;}
+h1,ul,li,ol,p,a,b,span{list-style: none;text-decoration: none;font-size: 12px;cursor: pointer;}
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {margin: 0;padding: 0; }
+body, button, input, select, textarea {font: 12px/1.5 Microsoft YaHei,arial,"\5b8b\4f53";*line-height: 1.5;-ms-overflow-style: scrollbar; }
+h1, h2, h3, h4, h5, h6 {font-size: 100%; }
+address, cite, dfn, em, var {font-style: normal; }
+code, kbd, pre, samp {font-family: courier new,courier,monospace; }small {font-size: 12px; }
+ul, ol {list-style: none; }
+a {text-decoration: none;color: #000; }
+a:hover {text-decoration: none; }
+a:visited {color: #000; }
+#wrap{width: 100%;height: auto;}
+#header{width: 100%;height: 50px;background: #f2f2f2;margin: 0 auto;}
+#header ul{margin: 0 auto;float: left;line-height: 50px;}
+#header ul li{float: left;}
+#header ul:nth-child(1){margin-left: 90px;}
+#header ul:nth-child(2){float: right;margin-right: 105px;}
+#header ul:nth-child(2) li{margin-left: 10px;}
+#logo{width: 91.25%;height: 110px;margin: 0 auto;}
+#logo .pic{width: 20.6%;height: 111px;float: left;}
+#logo .search{width: 48%;height: 82px;float: left;margin: 0 6.8% 0 6.8%;}
+#logo .pic,#logo .search{margin-top: 20px;}
+#logo .pic img{width: 185px;height: 71px;}
+#logo .mygwc{width: 12.3%;height: 50px;margin-top: 45px;float: right;}
+.search ul li{float: left;width: 50px;height: 25px;line-height: 25px;text-align: center;font-size: 12px;margin-top: 3px;}
+.search ul li:hover{background: #ff6700;}
+.search ul li:hover a{color: #fff;font-size: 12px;}
+#logo input{margin-top: 8px;}
+#logo input:nth-child(3){margin-left: -150px;width: 70%;height: 40px;border: 2px solid #FF6700;}
+#logo input:nth-child(4){width: 100px;height: 44px;background: #FF6700;border: none;color: #fff;margin-left: -4px;}
+#nav{width: 100%;height: 52px;background: #ff6700;}
+#nav ul li{width: 90px;height: 52px;line-height: 52px;text-align: center;float: left;}
+#nav ul{text-align: center;font-size: 14px;margin-left: 21.5%;}
+#nav ul li a{color: #fff;}
+
+#main_text{width: 100%;height: auto;}
+#main_text #main_list{width: 12%;height: auto;float: left;margin-left: 5%;}
+#main_list ul li,#main_list ul li p{border: 1px solid #545454;}
+#main_list ul li a,#main_list ul li p{width: 100%;height: 30px;line-height: 30px;background: #ccc;display: block;text-align: center;}
+#main_list ul li p{background: #fff;width: 99%;}
+#main{width: 69%;height: auto;margin: 0 auto;margin-left: 20%;padding: 20px;}
+#main h1{font-size: 16px;text-align: center;margin: 20px 0 10px 0;}
+#main p{text-align: center;line-height: 20px;border: 1px solid #ccc;}
+#btm{width: 80%;height: auto;margin: 0 auto; margin-left: 20%;}
+#btm .inpbtn1,#btm .inpbtn2{width: 100px;height: 28px;line-height: 28px;text-align: center;margin-top: 20px;}
+#btm .fx{margin-top: 10px;}
+#btm .inpbtn1{margin-left: 25%;margin-right: 150px;}
+#footer{width: 100%;height: 150px;background: #F9F8F8; border-top: 1px solid #e2e2e2;margin-top: 55px;}
+#footer dl{width: 160px;height: 45px;border-right: 1px solid #ccc;margin-left: 15px;margin-top: 20px;}
+#footer dl:nth-child(1){margin-left: 15%; margin-left: 20%\9;}
+#footer dl:nth-child(6){border: none;}
+#footer dl dt img{width: 45px;height: 37px;}
+#footer dl,#footer dl dt,#footer dl dd{float: left;}
+#footer dl dd{line-height: 40px;margin-left: 10px;font-weight: bold;}
+#footer p{width: 100%;height: 50px;border-top: 1px solid #e2e2e2;margin-top: 90px;text-align: center;line-height: 60px;}

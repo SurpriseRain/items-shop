@@ -1,0 +1,217 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link rel="stylesheet" href="/customer/qfy/css/activeCom.css"/>
+<link rel="stylesheet" href="/customer/qfy/css/activeHD.css"/>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+	
+	var spflList = null;
+	var spfl02 = "";
+	//查询所有的产品分类
+	 $(document).ready(function(){
+		var url = "/WDHD/select_SPFL.action";
+		var rData = visitService(url);
+		if(rData != undefined && rData != ""){
+			spflList = rData.spflList;
+		}
+	});
+	//查询所有活动
+	$(document).ready(function(){
+	var url = "/WDHD/select_BMZX.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		var ActivityTypeId = "";
+		var count =1;
+		 $(rData.bmzxList).each(function(index,val){
+		 	if(count==1){
+		 		ActivityTypeId = val.ActivityTypeId;
+			 	$(".activeBMTitle").append("\
+			 		<h4 id="+val.ActivityTypeId+">"+val.ActivityTypeName+"</h4>\
+			 		<ul class='activeSP' id='activeSP"+val.ActivityTypeId+"'>\
+			 			<div class='clear'></div>\
+			 		</ul>\
+			 		<ul class='activeBMSPAllOne' id='activeBMSPAllOne"+val.ActivityTypeId+"'>\
+			 			<div class='clear'></div>\
+			 		</ul>\
+			 		<div class='activeshow'>\
+			 			<button class='activeshow1' id='activeshow"+val.ActivityTypeId+"' onclick='gengduo("+val.ActivityTypeId+")'>更多</button>\
+			 			<div class='clear'></div>\
+			 		</div>");
+		 	}
+		 	if(val.ActivityTypeId != ActivityTypeId){
+		 		$(".activeBMTitle").append("\
+		 			<h4 id="+val.ActivityTypeId+">"+val.ActivityTypeName+"</h4>\
+		 			<ul class='activeSP' id='activeSP"+val.ActivityTypeId+"'>\
+		 				<div class='clear'></div>\
+		 			</ul>\
+		 			<ul class='activeBMSPAllOne' id='activeBMSPAllOne"+val.ActivityTypeId+"'>\
+		 				<div class='clear'></div>\
+		 			</ul>\
+		 			<div class='activeshow'>\
+		 			<button class='activeshow1' id='activeshow"+val.ActivityTypeId+"' onclick='gengduo("+val.ActivityTypeId+")'>更多</button>\
+		 			<div class='clear'></div>\
+		 			</div>");
+		 	}
+		 	count++;
+			ActivityTypeId = val.ActivityTypeId;
+	     });
+		 
+	     var flag = false;
+	     var  bmzxList = rData.bmzxList;
+	     var  h4list  = new Array();
+	     $(".activeBMTitle h4").each(function(){
+	     	h4list.push($(this));
+	     });
+	     var number = 1;
+	     var ActivityTypeId1 = "";
+	     for(var i=0;i<bmzxList.length;i++){
+	     	if(ActivityTypeId1!=bmzxList[i].ActivityTypeId){
+	     		number = 1;
+			}
+			for(var j=0;j<h4list.length;j++){
+			 	if($(h4list[j]).attr("id")==bmzxList[i].ActivityTypeId){
+			 		if(bmzxList[i].SPFL01!=null&&bmzxList[i].SPFL01!=""){
+				 		getflmc(bmzxList[i].SPFL01);
+				 		spfl02 = spfl02.substring(0,spfl02.length-1);
+				 	}
+			 		if(number<=3){
+						$("#activeSP"+bmzxList[i].ActivityTypeId).append("<li><h4>活动名称：<span id='activityName_" + bmzxList[i].ActivityId + "'>"+bmzxList[i].ActivityName+"</span></h4><ul><li class='activepl'>参加活动品类：<span id='activity_" + bmzxList[i].ActivityId + "'>"+spfl02+"</span></li><li>活动开始时间：<span>"+bmzxList[i].ActivityStartTime+"</span></li><li>活动结束时间：<span>"+bmzxList[i].ActivityEndTime+"</span></li><li>报名时间：<span>"+bmzxList[i].EnrollStartTime+"</span></li></ul><div class='activeXH'><a href='#' onclick='detail(\""+bmzxList[i].ActivityId+"\",\"" + bmzxList[i].ActivityName + "\")'>详情</a><a href='javascript:void(0);' onclick='hdzx(\""+bmzxList[i].ActivityId+"\",\"" + bmzxList[i].ActivityName + "\")'>活动报名</a></div></li>");
+					}else{
+						$("#activeBMSPAllOne"+bmzxList[i].ActivityTypeId).append("<li><h4>活动名称：<span id='activityName_" + bmzxList[i].ActivityId + "'>"+bmzxList[i].ActivityName+"</span></h4><ul><li class='activepl'>参加活动品类：<span id='activity_"+bmzxList[i].ActivityId +"'>"+spfl02+"</span></li><li>活动开始时间：<span>"+bmzxList[i].ActivityStartTime+"</span></li><li>活动结束时间：<span>"+bmzxList[i].ActivityEndTime+"</span></li><li>报名时间：<span>"+bmzxList[i].EnrollStartTime+"</span></li></ul><div class='activeXH'><a href='#' onclick='detail(\""+bmzxList[i].ActivityId+"\",\"" + bmzxList[i].ActivityName + "\")'>详情</a><a href='#' onclick='hdzx(\""+bmzxList[i].ActivityId+"\",\"" + bmzxList[i].ActivityName + "\")'>活动报名</a></div></li>");
+					}
+			 	}
+			 	var activeName=$("#activityName_" + bmzxList[i].ActivityId).text();
+			 	if(activeName.length>=14){
+			 		var activeName0 = activeName.substring(0,12);
+					var activeName1 = activeName0+'...';
+					$("#activityName_" + bmzxList[i].ActivityId).html(activeName1);		
+			 	}
+			 	$("#activityName_" + bmzxList[i].ActivityId).attr('title',activeName);
+			 	var activeStr=$("#activity_" + bmzxList[i].ActivityId).text();
+				if(activeStr.length>=16){
+					var activeStr0 = activeStr.substring(0,14);
+					var activeStr1 = activeStr0+'...';
+					$("#activity_" + bmzxList[i].ActivityId).html(activeStr1);
+					
+				}
+				$("#activity_" + bmzxList[i].ActivityId).attr('title',activeStr);
+	 		}
+	 		number++;
+			ActivityTypeId1 = bmzxList[i].ActivityTypeId;
+		}
+	}
+	//取得分类名称
+	function getflmc(spfl01){
+		var spfl01s = spfl01.split(",");
+		var flag = false;
+		spfl02 = "";
+		for(var j=0;j<spflList.length;j++){
+			for(var i=0;i<spfl01s.length;i++){
+				if(spfl01s[i]==spflList[j].spfl01){
+					spfl02 += spflList[j].spfl02+",";
+				}
+			}
+		}
+	} 
+	
+});
+//活动报名
+function hdzx(obj,hdmc){
+	var ActivityId = obj;
+	location.href="/customer/qfy/back/hdgl/Activityxy.html?ActivityId="+ActivityId + "&hdmc=" + escape(hdmc);
+		
+}
+//详情
+function detail(obj,hdmc){
+	var ActivityId = obj;
+	location.href="/customer/qfy/back/hdgl/ActivityxyDetail.html?ActivityId="+ActivityId + "&hdmc=" + escape(hdmc);
+		
+}
+//更多
+function gengduo(obj){
+	var ActivityTypeId = obj;
+	if($('#activeBMSPAllOne'+ActivityTypeId).is(':hidden')){
+			$('#activeBMSPAllOne'+ActivityTypeId).show();
+			$('#activeshow'+ActivityTypeId).text('收起').css({'background':'url(/images/activetp.png) -2px -43px no-repeat','width':'100px'});
+			var outIframe = window.parent.document.getElementById('centerFrame');
+			var outMain = window.parent.document.getElementById('shop-main');
+			var outHeight = parseInt($(outIframe).height());
+			var objForm = $("div.activeBMZX");
+			var formHeight = parseInt(objForm.height());//919
+			var outHeight = parseInt($(outIframe).height());
+			var newHeight = outHeight + 40;
+			if(outMain>objForm){
+				changeHeight(outIframe,0);
+				changeHeight(outMain,0);
+			}else{
+			
+				changeHeight(outIframe,0);//小于可能有问题
+				changeHeight(outMain,0);
+			}
+				/* alert('hah');
+				console.log(outMain);
+				console.log(outHeight);
+			
+			changeHeight(outIframe,0);
+			changeHeight(outMain,0); */
+	}else{
+		
+		$('#activeBMSPAllOne'+ActivityTypeId).hide();
+		$('#activeshow'+ActivityTypeId).text('更多').css({'background':'url(/images/activetp.png) -2px -1px no-repeat','width':'100px'});
+		var outIframe = window.parent.document.getElementById('centerFrame');
+		var outMain = window.parent.document.getElementById('shop-main');
+		var outLeft=window.parent.document.getElementById('shopLeft');
+		var objForm = $("div.activeBMZX");
+		var outLeftHeight=parseInt($(outLeft).height());
+		var formHeight = parseInt(objForm.height());
+		var outHeight = parseInt($(outIframe).height());
+		var HeightEnd=outHeight-outLeftHeight;
+		/* var heightEnd=formHeight-outHeight -50; */
+		changeHeightAll(outIframe,outLeftHeight);
+		changeHeightAll(outMain,outLeftHeight);
+	} 
+}
+function changeHeight(obj,addHeight){
+	var NewHeight = parseInt(obj.style.height) + addHeight;
+	obj.style.height = NewHeight + 'px';
+}
+function changeHeightAll(obj,addHeight){
+	obj.style.height =addHeight + 'px';
+}
+
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<div class="activeBMZX">
+		<div class="activeBMTitle">
+		</div>
+		<div class="clear"></div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+// 查询
+function query(){
+	init();
+}
+
+</script>

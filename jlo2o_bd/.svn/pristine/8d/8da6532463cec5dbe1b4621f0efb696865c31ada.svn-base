@@ -1,0 +1,223 @@
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery.Paging.js"></script>
+
+<div class="content">
+<div class="row">
+  <div class="w02 pro_list_left">
+	<h3>推广商品</h3>
+	<ul class="w12"><!--推广商品截点--></ul>
+  </div>
+  <div class="w10 pro_info_middle">
+  	<div class="w12 shopxx">
+  	<ul class="w12">
+    	<li class="selected" name="xq"><a>商品详情</a></li>
+        <li name="ggcs"><a>规格参数</a></li>
+        <li name="bzqd"><a>包装清单</a></li>
+        <li name="pj"><a>累计评价</a></li>
+    </ul>
+    <div class="w12 info" id="frameContent">
+<!--    <iframe frameborder="0" src="" width="100%" id="frameContent" marginheight="0" marginwidth="0" name="frameContent" height="100%" ></iframe>-->
+      <!-- <div class="w12 parameter">
+    	<p>品牌名称：<a>Apple/苹果</a><a class="btn_radius"><i class="fa fa-heart"></i>关注</a></p>
+        <h4>产品参数：<a>更多参数<i class="fa  fa-chevron-circle-right"></i></a></h4>
+        <dl>
+        	<dd>产品名称：Apple/苹果 iPhone 6</dd>
+            <dd>CPU型号:A8</dd>
+            <dd>Apple型号:iPhone 6</dd>
+            <dd>机身颜色:银色 深空灰色 金色</dd>
+            <dd>运行内存RAM:1GB</dd>
+            <dd>机身内存:16GB 64GB 128GB</dd>
+            <dd>网络模式:单卡多模</dd>
+            <dd>电池容量:1810mAh</dd>
+        </dl>
+      </div>
+      <div class="w12 info_img">
+        <img src="../images/banner01.jpg" />
+        <img src="../images/banner01.jpg" />
+        <img src="../images/banner01.jpg" />
+        <img src="../images/banner01.jpg" />
+        <img src="../images/banner01.jpg" />
+      </div>-->
+    </div>
+    
+    </div>
+   <div class="pro_con"></div>
+  </div>
+  
+  <div class="w02 md_hidden pro_info_right display_none">
+  	<ol>
+    	<li><a class="xuan"><i class="fa fa-arrow-circle-left"></i>电器服务云</a></li>
+        <li><a><i class="fa fa-arrow-circle-left"></i>商品详情</a></li>
+        <li><a><i class="fa fa-arrow-circle-left"></i>店铺服务详情</a></li>
+        <li><a><i class="fa fa-arrow-circle-left"></i>常见问题</a></li>
+    </ol>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+$(".pro_con").load("/customer/sydjt/showProduct/product_con.html");
+
+//初始化：当前商品的客户咨询信息
+function initData(){
+	if(user==null){
+		$(".liuyan").remove();
+	}else{
+		//公司类型
+		var hf = user.LX;
+		if(hf != '24'){
+			$(".liuyan").remove();
+			$(".fbzx").remove();
+			$(".remLen").remove();
+		}
+	}
+	
+	//当前商品
+	var SPXX01=JL.getUrlParam('spxx01');
+	//接收者 ID
+	var jszid=JL.getUrlParam('zcxx01');
+	//查询总数量
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.message.sql.Oper_YHZX.Oper_YHZX_sum','QryType':'Report','dataType':'Json','SPXX01':SPXX01,'jszid':jszid}];
+	var rumData = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	var rowNum = rumData[0].COUNT;
+	
+	//查询所有的留言信息
+	var xmlData=[{'SPXX01':SPXX01,'jszid':jszid}];
+	var url = "/message/jlquery/selectAllGoods.action?XmlData="+JSON.stringify(xmlData);
+	$.ajax({
+	    type: "GET",  //请求方式
+	    url:encodeURI(url),
+	    success: function(data){
+	    	if (data != null){
+		        try{
+		        	var json = jQuery.parseJSON(data);
+		        	//展示数据
+		            showSPXX(json.data);
+		          	//返回文件名
+		            fileName =  json.fileName;
+		    		$('.pager').kkPages({ 
+		    	 	   PagesClass:'div.item', //需要分页的元素
+		    	 	   RowNum:rowNum,
+		    	 	   FileName:fileName,
+		    	 	   PagesMth:pubJson.PagesMth, //每页显示个数 
+		    	 	   PagesNavMth:pubJson.PagesNavMth //显示导航个数
+		    	 	});
+		        }catch(e){
+		          return;
+		        } 
+		      }
+	    },
+    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+        }
+	});
+}
+
+function setSPZXHtml(data){
+	var str = "";
+	str += '<div class="w12 item">'+
+	    '<div class="user w12">'+
+	      '<span class="w02 font_grey">用户名：'+data.zcxx02+'</span>'+
+	      '<span class="w10 font_grey">'+data.MessageCreateTime+'</span>'+
+	    '</div>'+
+	    '<div class="user w12">'+
+	      '<span class="w01">咨询内容：</span>'+
+	      '<span class="w11">'+data.content+'</span>'+
+	    '</div>';
+
+	if(data.Reply.length>0){
+		str+='<div class="user w12">'+
+	      '<span class="w01 font_red">客服回复：</span>'+
+			'<span class="w09 font_red">'+data.Reply+'</span>'+
+			'</div>';
+	}else{
+		
+	}
+	str += '</div>';
+	return str;
+}
+
+//展示数据
+function showSPXX(rData0){
+	var u=rData0;
+	if(rData0.length > 0){
+	var spObj = $("#user_list_LY");
+	spObj.empty();
+	var str="";
+	for(var i=0;i<u.length;i++){
+		str += setSPZXHtml(u[i]);
+	}
+	$("#user_list_LY").html(str);
+	}else{}
+}
+
+//当前用户进行回复留言
+function okclick(){
+	//发布的消息
+	var fbzc=document.getElementById("fbzx");
+	var spvalue=fbzc.value;
+	if(spvalue == ""){
+		document.getElementById('remLen').innerHTML = '<b style="float:right;">咨询内容不能为空！！！</b>';
+		return false;
+	}else{
+	//接收者 ID
+	var jszid=$.getUrlParam('zcxx01');
+	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	//发送者 ID
+	var fszid = userCookie.ZCXX01;
+	var XmlData1 = $("#form1").formToJson();
+	//状态  0创建 1 已查看 2删除
+	var MessageState = 0;
+
+	//当前商品的ID
+	var SPXX01=$.getUrlParam('spxx01');
+	//信息类型
+	var MessageType = 1;
+	//新增用户咨询
+ 	var json={"fszid":fszid,"jszid":jszid,"spvalue":spvalue,"MessageState":MessageState,"SPXX01":SPXX01,"MessageType":MessageType};
+	var url="/YHZX/insert_YHZX.action?XmlData="+JSON.stringify(json);
+	visitSvcAsync(url,function(rData){
+		if(rData.STATE=="1"){
+			var str = setSPZXHtml({"zcxx02":userCookie["ZCXX02"],"content":spvalue,"Reply":"","MessageCreateTime":getNowFormatDate()});
+			$("#user_list_LY").prepend(str);
+			if($("#user_list_LY").find(".item").length > 8){
+			$(".item:last").fadeOut(500);
+			}else{}
+		}else{
+		}
+	});
+	} 
+}
+
+function getNowFormatDate() {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+    return currentdate;
+}
+
+var maxLen = 200;	//定义用户可以输入的最多字数
+function checkMaxInput(obj) {
+	var val = obj.value,
+		len = val.length;
+	if (len > maxLen){	//如果输入的字数超过了限制
+		val = obj.value.substring(0, maxLen);	//就去掉多余的字
+		$('#fbzx').text(val);
+	}
+	else{
+		document.getElementById('remLen').innerHTML = '<b style="float:right;">还可以输入' + (maxLen - obj.value.length) + '个字</b>';//计算并显示剩余字数
+		$('#fbzx').attr('value',val);
+	}
+}
+</script>

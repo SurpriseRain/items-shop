@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="">
+    <meta name="Keywords" content="汽车零配件同质配件、零配件同质配件、汽车零配件、同质配件、汽服云、汽后服云、中国汽车维修协会">
+    <title>电器服务云平台首页</title>
+    <link rel="stylesheet" type="text/css" href="/customer/sydjt/css/index-08.css">
+</head>
+<body>
+    <div id="qfyPage" class="w1190">
+        <!--页头导航-->
+        <div id="site-nav">
+            <div id="sn-bd">
+                <div class="sn-container">
+                <div style="line-height: 32px;float:left;">
+                	<a href="javascript:void(0);" onclick="SetHome(this,'http://localhost:8088');">设为首页</a>
+					&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="javascript:void(0);" onclick="AddFavorite('我的网站',location.href)">收藏本站</a>
+                </div>
+                    <!--城市选择-->
+                    <div id="sn-citybar">
+                        <!--默认城市-->
+                        <div class="city-locate">
+                            <span>配送至&nbsp;:</span>&nbsp;
+                            <a id="city_name" class="current-city">辽宁</a>
+                            <b class="arrow"></b>
+                            <div id="city-wrapper">
+                                <ul id="city-list" class="city_list" data-read="0">
+									
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--快捷菜单-->
+                    <ul class="sn-quick-menu">
+                        <li class="login-info">
+                            <!--登录信息-->
+                            <a class="l-login" href="/customer/sydjt/register/login.html">您好，请登录&nbsp;&nbsp;</a>
+                            <a class="l-login login-reg" href="/customer/sydjt/register/loginzc.html">免费注册</a>
+                        </li>
+                        <li class="login-ext">
+                            <a class="l-ext" id="login-name" href="/customer/sydjt/register/login.html"></a>
+                            <a class="l-ext" id="login-ext" href="javascript:void(0);">&nbsp;&nbsp;[退出]</a>
+                        </li>
+                        <li class="spacer">|</li>
+                        <li>
+                            <a href="###">商城首页</a></li>
+                        <li class="spacer">|</li>
+                        <li>
+                            <a href="/customer/sydjt/register/login.html" id="u-home">个人中心</a></li>
+                        <li class="spacer">|</li>
+                        <!-- <li>
+                            <a href="###">服务中心</a></li>
+                             -->
+                    </ul>
+                </div>
+            </div>
+            <div style="display: none;">
+                <input type="hidden" id="city_value"/>
+                <input type="hidden" id="search-t" value="cp">
+            </div>
+        </div>
+        <!--页头-->
+        <div id="header">
+            <div class="headerLayout">
+                <div class="headerCon">
+                    <!--logo-->
+                    <h1 id="qfyLogo">
+                        <span class="qlogo">
+                            <a href="###"><img src="/customer/sydjt/images/logo.png" alt="" height="85"/></a>
+                        </span>
+
+                    </h1>
+                    <div class="header-extra">
+                        <!--我的购物车-->
+                        <div class="header-mycart">
+                            <div class="cw-icon">
+                                <i class="icon-cart"></i>
+                                <i class="ci-right">&gt;</i><i class="ci-count" id="shopping-amount">0</i>
+                                <a target="_blank" href="/customer/sydjt/shopping/cart.html">我的购物车</a>
+                            </div>
+
+                        </div>
+                        <!--搜索-->
+                        <div id="qfySearch" class="headerSearch">
+                            <div class="search-type">
+                                <ul id="seach_tj" class="search-tj">
+                                    <li class="bg-ff3c3c">产品</li>
+<!--                                    <li>OEM</li>-->
+                                    <li>商品条码</li>
+                                </ul>
+                            </div>
+                            <form class="qSearch-form clearfix" name="searchTop" action="">
+                                <div class="qSearch-input clearfix">
+                                    <div class="s-combobox-input-wrap">
+                                        <input type="text" name="q" autocomplete="off" id="mq" class="s-combobox-input" placeholder="输入产品名称、商品条码等都可以直接搜索">
+                                        <!-- <label for="mq" class="s-combobox-placeholder"></label> -->
+                                    </div>
+                                    <button type="submit" id="search">搜索</button>
+                                </div>
+                            </form>
+                            <!--热门搜索-->
+                            <!-- <ul class="hot-query">
+                                <li>热门搜索:</li>
+                                <li><a href="###">机油</a>
+                                    </li>
+                                <li><a href="###">机滤</a>
+                                    </li>
+                                <li><a href="###">刹车片</a>
+                                    </li>
+                            </ul> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--内容-->
+        <div id="content">
+            <!--内容导航-->
+            <div class="moudle">
+                <div class="fp-main-nav">
+                    <div class="main-container">
+                        <ul class="main-nav-ctn">
+                            <li><a href="/customer/sydjt/index.html">首页</a></li>
+                            <li><a href="#">政策法规</a></li>
+                            <li><a href="#">统一编码</a></li>
+                            <li><a href="#">群体品牌</a></li>
+                            <li><a href="#">商品追朔</a></li>
+                            <li><a href="#">配件商城</a></li>
+                            <li><a href="#">增值服务</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--菜单栏目-->
+            <div class="fp-category-menu">
+                <div class="moudle">
+                    <div class="category-nav-container">
+                        <div class="category-menu-nav">
+                            <!--<h2 class="menu-title">全部配件分类</h2>-->
+                            <ul class="menu-nav-container" id="menu-nav">
+                                <li class="category-item" data-index="2">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">大家电</a></h2>
+                                            <span class="ci-leaf">
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=010101&amp;f3_name=%u5BB6%u7528">家用</a>
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=011001&amp;f3_name=%u53A8%u536B">厨卫</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="3">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">小家电</a></h2>
+                                            <span class="ci-leaf">
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=041212&amp;f3_name=%u751F%u6D3B%u7535%u5668">生活电器</a>
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=050301&amp;f3_name=%u4E2A%u4EBA%u62A4%u7406">个人护理</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="4">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">个人电器</a></h2>
+                                            <span class="ci-leaf">
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=080201&amp;f3_name=%u624B%u673A">手机</a>
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=090401&amp;f3_name=%u6570%u7801">数码</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!--<li class="category-item" data-index="5">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">汽车电器</a></h2>
+                                            <span class="ci-leaf">
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=070101&amp;f3_name=%u7A7A%u8C03%u6CF5">空调</a>
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=160918&amp;f3_name=%u5E95%u76D8%u7EBF%u675F">底盘线束</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="6">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">离合变速</a></h2>
+                                            <span class="ci-leaf">
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=100201&amp;f3_name=%u79BB%u5408%u5668%u538B%u76D8">离合器压盘</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="7">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">车身部件</a></h2>
+                                            <span class="ci-leaf">
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=130101&amp;f3_name=%u4EEA%u8868%u53F0%u58F3">仪表台壳</a>
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=130125&amp;f3_name=%u70B9%u70DF%u5668">点烟器</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="8">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">美容装饰</a></h2>
+                                            <span class="ci-leaf">
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=190101&amp;f3_name=%u6C7D%u8F66%u5750%u57AB">汽车坐垫</a>
+                                                <a href="/customer/sydjt/showProduct/member_shop.html?f3_id=200501&amp;f3_name=%u73BB%u7483%u8D34%u819C">玻璃贴膜</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>-->
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="category-menu-content">
+                    <div class="j_CategoryMenuPannel">
+                        <div class="moudle">
+                            <div class="category-market-slide">
+                                <div class="market-slide-content">
+                                    <!--轮播图-->
+                                    <div id="cms-box" class="cms_box">
+                                        
+                                    </div>
+                                    <div id="cmsControl" class="cms_control">
+                                    </div>
+                                    <!--<img src="images/xm.jpg" alt=""/>-->
+                                </div>
+                                <!--小圆点-->
+                                <p id="cmsNav" class="cms_nav"></p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--楼层区-->
+            <div class="main-container" id="J_FloorContainer">
+                <!--同质配件-->
+                <div class="floor-item">
+                    <div class="floor-container">
+                        <!--标题-->
+                        <div class="floor-hd">
+                            <h2 class="title">新品上市</h2>
+                            <div class="more">
+                                <a class="more-link" href="/customer/sydjt/showProduct/member_shop_n.html" target="_blank">
+                                    查看全部<i class="iconfont"></i></a>
+                            </div>
+                        </div>
+                        <!--列表-->
+                        <div id="fl-tz" class="floor-content fl-bt-first">
+                            <div class="grid-col-2 grid-col">
+                                <a id="fl-link01" class="fl-1-goods" href="/customer/sydjt/showProduct/member_shop_n.html">
+                                	<img src="" data-src="/customer/sydjt/images/ad.jpg" class="la" />
+                                </a>
+                            </div>
+                            <div id="fl-tz-grid" class="grid-col-1 grid-col">
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="floor-item">
+                    <div class="floor-container">
+                        <!--标题-->
+                        <div class="floor-hd">
+                            <h2 class="title fl-title-second">热销商品</h2>
+                            <div class="more">
+                                <a class="more-link" href="/customer/sydjt/showProduct/member_shop_n.html" target="_blank">
+                                    查看全部<i class="iconfont"></i></a>
+                            </div>
+                        </div>
+                        <!--列表-->
+                        <div id="fl-qp" class="floor-content fl-bt-second">
+                            <!----> <div class="grid-col-3 grid-col">
+                                <a id="fl-link02" class="grid-row-2" href="">
+	                                
+                                </a>
+                                <a id="fl-link03" class="fl-gr-m-m0 grid-row-2" href="">
+                                	
+                                </a>
+                            </div> 
+                            <div id="fl-qp-grid" class="grid-col-4 grid-col">
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <div class="floor-item">
+                    <div class="floor-container">
+                        <!--列表
+                        <div class="floor-last fl-bt-last">
+                            <div id="fl-last" class="grid-item fc-second">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>-->
+            </div>
+            <!--楼层下横条广告-->
+            <div class="main-container">
+                <div class="floor-ad-banner">
+                    <a href="javascript:void(0);"><img src="../../images/s.gif" data-src="/customer/sydjt/images/indexMidGG.png" class="la" alt=""/></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--页脚-->
+    <div id="footer">
+        <!--七天无理由退货-->
+        <!--<div id="qfy-ensure"></div>
+        <div id="qfy-decs"></div>
+        <div id="qfy-copyright"></div>-->
+        <div class="f-container">
+            <div id="qfy-ensure">
+                <img src="/customer/sydjt/images/ensure.png" alt=""/>
+            </div>
+            <div id="qfy-copyright">
+                <p>
+                    鄂ICP备15014434&nbsp;|&nbsp;&nbsp;&nbsp;武汉吉力伟科技有限公司&nbsp;&nbsp;&nbsp;&nbsp;
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <!--右侧工具栏-->
+    <div id="J_QFYbar">
+        <div></div>
+    </div>
+    
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-powerSwitch.js"></script>
+    <script type="text/javascript" src="/js/underscore-min.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+	<!--<script type="text/javascript" src="/customer/sydjt/js/public.js"></script>
+	<script type="text/javascript" src="/customer/sydjt/js/index.js"></script>
+	<script type="text/javascript" src="/customer/sydjt/js/banner.js"></script>
+	<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+    -->
+    <script type="text/javascript" src="/customer/sydjt/js/index-08.js"></script>
+    <!--车型分类-->
+    <script type="text/template" id="m-tpl-1">
+        <%_.each(mapList, function(item,index) {%>
+            <li>
+                <a href="<%= item.href %>">
+                    <img src="<%= item.src + "/" + (index + 1) +".png" %>" alt="" width="40" height="40"/>
+                    <span><%= item.name%></span>
+                </a>
+            </li>
+        <%});%>
+    </script>
+    <!--维修-->
+    <script type="text/template" id="m-tpl-8">
+        <%_.each(mapList, function(item,index) {%>
+            <li>
+                <a href="<%= item.href %>">
+                    <img src="<%= item.src + "/" + (index + 1) + ".png"%>" alt="" width="40" height="40"/>
+                    <span><%= item.name%></span>
+                </a>
+            </li>
+        <%});%>
+    </script>
+    <!--配送至-->
+    <script type="text/template" id="m-tpl-2">
+        <%_.each(mapList, function(item) {%>
+			<% if(item.dqbzm02 !== "黑龙江省") {%>
+            	<li id="<%= item.dqbzm01%>">
+                	<a href="javascript:void(0);"><%= item.dqbzm02.substring(0,2)%></a>
+            	</li>
+			<% } else { %>
+				<li id="<%= item.dqbzm01%>">
+                	<a href="javascript:void(0);"><%= item.dqbzm02.replace("省","")%></a>
+            	</li>
+			<% } %>
+        <%});%>
+    </script>
+    <!--焦点图-->
+    <script type="text/template" id="m-tpl-3">
+        <%_.each(mapList, function(item,index) {%>
+            <% if(index === 0) {%>
+                <div id="cmsSlide<%= (index + 1)%>" class="cms_slide cms_explain">
+                    <a href="<%= item.URL%>"><img src="/jlsoft/banner/JL/<%= item.FILENAME%>" alt=""></a>
+                </div>
+            <% } else { %>
+                <div id="cmsSlide<%= (index + 1)%>" class="cms_slide cms_hidden">
+                    <a href="<%= item.URL%>"><img data-src="/jlsoft/banner/JL/<%= item.FILENAME%>" alt=""></a>
+                </div>
+            <% } %>
+        <%});%>
+    </script>
+    <script type="text/template" id="m-tpl-6">
+        <%_.each(mapList, function(item,index) {%>
+            <% if(index === 0) {%>
+                <a href="javascript:" class="on" data-rel="cmsSlide<%= (index+1)%>"><%= (index+1)%></a>
+            <% } else { %>
+                <a href="javascript:" data-rel="cmsSlide<%= (index+1)%>"><%= (index+1)%></a>
+            <% } %>
+        <%});%>
+    </script>
+    <!--楼层一-->
+    <script type="text/template" id="m-tpl-4">
+        <%_.each(mapList, function(item,index) {%>
+			<% if(index === 2 || index === 5) {%>
+            <li style="border-right: 0;"><a class="" href="<%= item.href%>" target="_blank">
+				<div class="good-info">
+					<p class="good-name" title="<%= item.gname%>"><%= item.shortGName%></p>
+    				<p class="good-company" title="<%= item.cname%>"><%= item.shortCName%></p>
+    				<p class="good-price">￥:<%= item.SPJGB05%></p>
+  				</div>
+				<img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/></a></li>
+			<% } else { %>
+				<li><a class="" href="<%= item.href%>" target="_blank">
+				<div class="good-info">
+					<p class="good-name" title="<%= item.gname%>"><%= item.shortGName%></p>
+    				<p class="good-company" title="<%= item.cname%>"><%= item.shortCName%></p>
+    				<p class="good-price">￥:<%= item.SPJGB05%></p>
+  				</div>
+				<img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/></a></li>
+			<% } %>
+        <%});%>
+    </script>
+    <!--楼层二-->
+    <script type="text/template" id="m-tpl-5">
+        <%_.each(mapList, function(item,index) {%>
+            <% if(index < 4) {%>
+                <li class="fl-gr-m-bl10"><a href="<%= item.href%>" target="_blank">
+				<img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/>
+				<div class="good-info">
+					<p class="good-name" title="<%= item.gname%>"><%= item.shortGName%></p>
+    				<p class="good-company" title="<%= item.cname%>"><%= item.shortCName%></p>
+    				<p class="good-price">￥:<%= item.SPJGB05%></p>
+  				</div>
+				</a></li>
+            <% } else { %>
+                <li class="fl-gr-m-l10"><a href="<%= item.href%>" target="_blank">
+				<img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/>
+				<div class="good-info">
+					<p class="good-name" title="<%= item.gname%>"><%= item.shortGName%></p>
+    				<p class="good-company" title="<%= item.cname%>"><%= item.shortCName%></p>
+    				<p class="good-price">￥:<%= item.SPJGB05%></p>
+  				</div>
+				</a></li>
+            <% } %>
+        <%});%>
+    </script>
+	<!--直通车-->
+    <script type="text/template" id="m-tpl-7">
+        <%_.each(mapList, function(item,index) {%>
+			<% if(index < 5) {%>
+            	<a href="###" class="grid-col-51"><img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/></a>
+			<% } else { %>
+				<a href="###" class="grid-col-51" style="border-right:0;"><img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/></a>
+			<% } %>
+        <%});%>
+    </script>	
+    <script type="text/javascript"> var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://"); document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F22c1b20cf637674ac6553600936872f4' type='text/javascript'%3E%3C/script%3E")) </script>
+</body>
+</html>

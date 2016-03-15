@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.user.sql.MyCollection">
+	<!--查询所有收藏商品的数量 -->
+	<select id="select_SCSP_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) AS COUNT 
+	FROM  owncollect a,W_SPJGB b ,W_SPXX c,W_SPTP d
+	WHERE   a.CollectInfo=b.spxx01
+	AND c.spxx01=a.CollectInfo
+	AND d.spxx01=a.CollectInfo
+	AND a.zcxx01=#{ZCXX01}
+	AND a.CollectTYPE=0
+	AND d.sptp01=1
+	</select>
+	<!--所有收藏商品的信息 -->
+	<select id="selectAllSCSP" parameterType="map" resultType="java.util.Map">
+	SELECT a.Id,a.ZCXX01,a.CollectInfo,b.zcxx01 gsid,b.spjgb05,c.spxx01,c.spxx04,c.spxx02,d.sptp02,d.sptp01,e.zcxx02 FROM owncollect a,W_SPJGB b ,W_SPXX c,W_SPTP d,w_zcxx e
+	WHERE   a.CollectInfo=b.spxx01
+	AND c.spxx01=a.CollectInfo
+	AND d.spxx01=a.CollectInfo
+	AND a.zcxx01=#{ZCXX01}
+	AND b.zcxx01=e.zcxx01
+	AND a.CollectTYPE=0
+	AND d.sptp01=1
+	ORDER BY a.id DESC
+	</select>
+	<!--查询所有收藏店铺的数量 -->
+	<select id="select_SCDP_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) AS COUNT 
+	FROM owncollect a ,w_zcxx b,W_DPXX c
+	WHERE a.zcxx01=#{ZCXX01}
+	AND a.CollectInfo=b.zcxx01
+	AND c.zcxx01=a.CollectInfo
+	AND a.CollectTYPE=1
+	ORDER BY a.id DESC
+	</select>
+	<!--所有收藏店铺的信息 -->
+	<select id="selectAllSCDP" parameterType="map" resultType="java.util.Map">
+	SELECT a.id,a.zcxx01,a.CollectInfo,b.zcxx02,c.dpxx02,c.dpxx03,b.zcxx27
+	FROM owncollect a ,w_zcxx b,W_DPXX c
+	WHERE a.zcxx01=#{ZCXX01}
+	AND a.CollectInfo=b.zcxx01
+	AND c.zcxx01=a.CollectInfo
+	AND a.CollectTYPE=1
+	ORDER BY a.id DESC
+	</select>
+	<!--查询收藏店铺的店铺名字 -->
+	<select id="select_SCDP_mz" parameterType="map" resultType="java.util.Map">
+	SELECT a.id,a.zcxx01,a.CollectInfo,b.zcxx02,c.dpxx03
+	FROM owncollect a ,w_zcxx b,W_DPXX c
+	WHERE
+	 a.CollectInfo=b.zcxx01
+	AND c.zcxx01=a.CollectInfo
+	AND a.CollectTYPE=1
+	AND a.id=#{id}
+	</select>
+	<!--查询所有收藏品牌的数量 -->
+	<select id="select_SCPP_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) AS COUNT 
+	FROM owncollect a ,w_pptp b
+	WHERE
+	a.zcxx01=#{ZCXX01}
+	AND a.CollectInfo=b.ppb01
+	AND a.CollectTYPE=2
+	AND b.pptp01=0
+	</select>
+	<!--查询所有收藏品牌的信息 -->
+	<select id="selectAllSCPP" parameterType="map" resultType="java.util.Map">
+	SELECT a.id,a.CollectInfo,b.ppb01,b.PPTP03,b.pptp02
+	FROM owncollect a ,w_pptp b
+	WHERE
+	a.zcxx01=#{ZCXX01}
+	AND a.CollectInfo=b.ppb01
+	AND a.CollectTYPE=2
+	AND b.pptp01=0
+	</select>
+</mapper>

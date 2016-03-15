@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<style>
+a.bot {
+    float: right;
+}
+</style>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+function initData(){
+	//初始化数据
+ 	var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL.select_SPHD','QryType':'Report','dataType':'Json','hdlx':$('#hdlx').val(),'spzt':$('#spzt').val(),'hdmc':$('#hdmc').val()}];
+  	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+
+// 新增活动管理
+function newhdgl(){
+	location.href = "/customer/qfy/back/hdgl/Oper_CJHD.html";
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:818px;">
+	   		<span>活动类型：</span>
+       		<select id="hdlx" name="hdlx" style="width: 95px;" >
+	       		<option value="">全部</option>
+			</select>
+			<span>审批状态：</span>
+	    	<script type="text/javascript">
+				document.write(showStateHtml('ACTIVITYSTATE','spzt'));
+			</script>
+			<span>活动名称：</span>
+			<input type="text" id="hdmc" style="width:163px;" name="hdmc"  size="20" class="text"/>
+		</li>
+		<li>
+			<a href="javascript:void(0);" class="bot Shot seach_bot" id="newhdgl" onclick="newhdgl()">新增</a>
+			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+	    </li>
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+						{'property':'ACTIVITYID','header':'活动编号','type':'lable','width':'120px'},
+						{'property':'ACTIVITYTYPENAME','header':'活动种类','type':'lable','width':'60px'},
+						{'property':'ACTIVITYNAME','header':'审批名称','type':'lable','width':'120px'},
+						{'property':'ACTIVITYBUDGET','header':'活动预算','type':'lable','width':'90px'},
+						{'property':'ACTIVITYSTARTTIME','header':'活动开始时间','type':'lable','width':'120px'},
+						{'property':'ACTIVITYENDTIME','header':'活动结束时间','type':'lable','width':'120px'},
+						{'property':'ACTIVITYSTATE','header':'活动状态','type':'number','width':'120px'}]"
+		afterUrl="/customer/qfy/back/hdgl/Oper_SPHD.html"
+		>
+		</div>
+	</div>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+$(document).ready(function(){
+	//初始化活动种类
+	var url = "/Oper_HDGL/select_NHDZL.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.hdzlList).each(function(index,val){
+	    	$("#hdlx").append("<option value='"+val.ActivityTypeId+"'>"+val.ActivityTypeName+"</option>");
+	     });
+	}
+	var role = usercookie.Role;
+	if(role == 2){
+		$("#newhdgl").remove();
+	}
+});
+</script>
+</body>
+</html>

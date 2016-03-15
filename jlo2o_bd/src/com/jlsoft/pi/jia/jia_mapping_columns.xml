@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    <JLConfig id="JIA.HYXX_Request">  <!--请求-->
+        <FIELD attrname="CARDNUM" target="cardNum"/> <!--会员卡号-->
+        <FIELD attrname="TYPE" target="type"/> <!--会员卡类型-->
+    </JLConfig>
+    
+    <JLConfig id="JIA.HYXX_Response">   <!--应答-->
+        <FIELD attrname="userId" target="USERID"/> <!--用户ID-->
+        <FIELD attrname="loginName" target="LONGINNAME"/> <!--登陆名称-->
+        <FIELD attrname="mobile" target="MOBILE"/>  <!--手机号码--> 
+<!--        <FIELD attrname="cardStatus" target="STATURS"/> 卡状态0：未激活，1：激活，2：绑定，3：解绑，4：挂失 -->
+    </JLConfig>
+
+    <JLConfig id="JIA.TGXX_Request"> <!--请求-->
+        <FIELD attrname="AREAFLAG" target="areaflag"/> <!--分站名称-->
+<!--        <FIELD attrname="TIMES" target="times"> 
+            <Convertor className="com.jlsoft.pi.jia.convertor.DataToStrConvertor"/>
+            <Convertor className="com.jlsoft.pi.jia.convertor.StrToDateConvertor"/>
+            <Convertor className="com.jlsoft.framework.pi.convertor.date.DateToTimeStampConvertor"/>
+        </FIELD>-->
+    </JLConfig>
+    
+    <JLConfig id="JIA.TGXX_Response"> <!--应答-->
+        <FIELD attrname="actId" target="ACTID"/> <!--活动ID-->
+        <FIELD attrname="name" target="ACTNAME"/> <!--活动名称-->
+        <FIELD attrname="tel" target="TEL"/> <!--活动电话-->
+        <FIELD attrname="type" target="TYPE"/> <!---->
+        <FIELD attrname="channelId" target="CHANNELID"/> <!---->
+        <FIELD attrname="channelName" target="CHANNELNAME"/> <!---->
+        <FIELD attrname="startDate" target="STARTDATE"> <!--开始日期-->
+            <Convertor className="com.jlsoft.framework.pi.convertor.date.TimeStampToDateConvertor"/>
+            <Convertor className="com.jlsoft.pi.jia.convertor.DataToStrConvertor"/>
+        </FIELD>
+        <FIELD attrname="endDate" target="ENDDATE"> <!--结束日期-->
+            <Convertor className="com.jlsoft.framework.pi.convertor.date.TimeStampToDateConvertor"/>
+            <Convertor className="com.jlsoft.pi.jia.convertor.DataToStrConvertor"/>
+        </FIELD>
+        <FIELD attrname="areaflag" target="AREAFLAG"/> <!--分站名称-->
+        <FIELD attrname="delFlag" target="DELFLAG"/> <!--删除标记-->
+<!--        <FIELD attrname="openTime" target="OPENTIEM"/> 开始时间 -->
+        <FIELD attrname="qjpay_rate" target="PJQAY_RATE"/> <!---->  
+    </JLConfig>
+    
+    <JLConfig id="JIA.Order_Request"> <!--请求-->
+        <FIELD attrname="APPID" target="appid"/> <!---->
+        <FIELD attrname="ACTID" target="actId"/> <!--活动ID-->
+        <FIELD attrname="ACTNAME" target="actName"/> <!--活动名称-->
+        <FIELD attrname="AREA" target="areaflag"/> <!--分站名称-->
+        <FIELD attrname="CHANNELID" target="channelId"/> <!---->
+        <FIELD attrname="DISCOUNTONTHOUSAND" target="discountOnThousand"/> <!---->
+        <FIELD attrname="JIFENRATE" target="jifenRate"/> <!---->
+        <FIELD attrname="SHOPID" target="shopId"/> <!---->  
+        <FIELD attrname="SHOPNAME" target="shopName"/> <!---->
+        <FIELD attrname="AUTOCANCELTIME" target="autoCancelTime"/> <!---->
+        <FIELD attrname="NOTE" target="userComment"/> <!---->
+        <FIELD attrname="MOBILE" target="userMobile"/> <!---->  
+        <FIELD attrname="USERNAME" target="userName"/> 
+        <FIELD attrname="TELEPHONE" target="telephone"/> 
+        <FIELD attrname="USERADDRESS" target="useraddress"/> 
+        <FIELD attrname="AMOUNTTYPE" target="amounttype"/> <!--0 订金单，1 全款单--> 
+        <FIELD attrname="INPUTAMOUNT" target="inputAmount"/> <!----> 
+        <FIELD attrname="ORDERGROUPID" target="ordergroupId"/> <!--纸质订单号--> 
+        <FIELD attrname="DYFP" target="saleNames"/> <!--打印内容：商品编码 商品名称 数量 单价 金额-->
+        <!--
+        {DYFP:[{"SPID":"000001","SPNAME":"手机","SL":"1","DJ":"1999","JE":"1999"},{"SPID":"000002","SPNAME":"手机","SL":"1","DJ":"1999","JE":"1999"}]} 
+        -->
+    </JLConfig>
+    
+    <JLConfig id="JIA.OldTgOrder_Request"> <!--请求-->
+        <FIELD attrname="APPID" target="appid"/> <!---->
+        <FIELD attrname="ACTID" target="actId"/> <!--活动ID-->
+        <FIELD attrname="ACTNAME" target="actName"/> <!--活动名称-->
+        <FIELD attrname="AREA" target="areaflag"/> <!--分站名称-->
+        <FIELD attrname="CHANNELID" target="channelId"/> <!---->
+        <FIELD attrname="DISCOUNTONTHOUSAND" target="discountOnThousand"/> <!---->
+        <FIELD attrname="JIFENRATE" target="jifenRate"/> <!---->
+        <FIELD attrname="SHOPID" target="shopId"/> <!---->  
+        <FIELD attrname="SHOPNAME" target="shopName"/> <!---->
+        <FIELD attrname="NOTE" target="userComment"/> <!---->
+        <FIELD attrname="MOBILE" target="userMobile"/> <!---->  
+        <FIELD attrname="USERNAME" target="userName"/> 
+        <FIELD attrname="TELEPHONE" target="telephone"/> 
+        <FIELD attrname="USERADDRESS" target="useraddress"/> 
+        <FIELD attrname="AMOUNTTYPE" target="amounttype"/> <!--0 订金单，1 全款单--> 
+        <FIELD attrname="INPUTAMOUNT" target="inputAmount"/> <!---->  
+        <FIELD attrname="CZY" target="adminName"/> <!--操作人名称-->  
+        <FIELD attrname="DYFP" target="saleNames"/> <!--打印内容：商品编码 商品名称 数量 单价 金额-->
+    </JLConfig>    
+    
+    <JLConfig id="JIA.Order_Response"> <!--应答-->
+        <FIELD attrname="ordergroupId" target="ORDERGROUPID"/> <!--订单号-->
+        <FIELD attrname="orderId" target="ORDERID"/> <!--订单id-->
+    </JLConfig>   
+    
+    <JLConfig id="JIA.UpdateOrder_Request"> <!--请求-->
+        <FIELD attrname="APPID" target="appid"/> <!--应用id-->
+        <FIELD attrname="ORDERID" target="id"/> <!--订单ID-->
+        <FIELD attrname="SHOPID" target="shopId"/> 
+        <FIELD attrname="INPUTAMOUNT" target="price"/> <!---->  
+        <FIELD attrname="DYFP" target="saleNames"/> <!--打印内容：商品编码 商品名称 数量 单价 金额-->
+    </JLConfig>
+    
+    <JLConfig id="JIA.UpdateOrder_Response"> <!--应答-->
+        <FIELD attrname="ordergroupId" target="ORDERGROUPID"/> <!--订单号-->
+        <FIELD attrname="orderId" target="ORDERID"/> <!--订单id-->
+    </JLConfig>       
+    
+    <JLConfig id="JIA.OrderStatus_Request"> <!--请求-->
+        <FIELD attrname="ORDERID" target="orderGroupId"/> <!--订单号-->
+        <FIELD attrname="ORDERGROUPID" target="orderGroupNo"/> <!--订单id-->
+    </JLConfig>
+
+    <JLConfig id="JIA.OrderStatus_Response"> <!--应答-->
+        <FIELD attrname="pre_order_fee" target="DINGJINAMOUNT"/> <!--预约金金额-->
+        <FIELD attrname="totalAmount" target="TOTALAMOUNT"/> <!----> 
+        <FIELD attrname="r_final_amount" target="NEEDPAYAMOUNT"/> <!--待支付金额-->
+        <FIELD attrname="processStatus_id" target="STATUS"/> <!--订单状态-->
+        <FIELD attrname="attribute" target="TYPE"/> <!--订单类型：2商城订单，3和4是团购订单-->
+    </JLConfig>   
+    
+    <JLConfig id="JIA.PreOrderStatus_Response"> <!--应答-->
+        <FIELD attrname="id" target="ORDERID"/> <!--订单ID-->
+        <FIELD attrname="orderGroup_id" target="ORDERGROUPID"/> <!--订单号-->
+        <FIELD attrname="pre_order_fee" target="DINGJINAMOUNT"/> <!--预约金金额-->
+        <FIELD attrname="act_id" target="ACTID"/> <!--活动ID-->
+        <FIELD attrname="act_name" target="ACTNAME"/> <!--活动名称-->
+        <FIELD attrname="substation" target="AREAFLAG"/> <!--分站名称-->
+        <FIELD attrname="userAddress" target="ADDRESS"/> <!--客户地址-->
+        <FIELD attrname="user_mobile" target="MOBILE"/> <!--客户手机-->
+        <FIELD attrname="user_name" target="USERNAME"/> <!--客户姓名-->
+    </JLConfig>      
+    
+    <JLConfig id="JIA.OrderDeliver_Request"> <!--请求-->
+        <FIELD attrname="APPID" target="appid"/> <!--应用id-->
+        <FIELD attrname="SHOPID" target="shopId"/> 
+        <FIELD attrname="ORDERGROUPID" target="ordergroupId"/> <!--订单号-->
+        <FIELD attrname="SENDTYPE" target="sendType"/> <!--物流类型:快递(1),物流(2),EMS(3),平邮(4)-->
+    </JLConfig>
+    
+    <JLConfig id="JIA.LSDGITEM_Print"> 
+        <FIELD attrname="SPXX02" target="SPID"/> <!--商品编码-->
+        <FIELD attrname="SPXX04" target="SPNAME"/> <!--商品名称-->
+        <FIELD attrname="LSDGI05" target="SL"/> <!--数量-->
+        <FIELD attrname="LSDGI02" target="DJ"/> <!--单价-->
+        <FIELD attrname="LSDGI06" target="JE"/> <!--金额-->
+    </JLConfig>
+    
+    <JLConfig id="JIA.LSDITEM_Print"> 
+        <FIELD attrname="SPXX02" target="SPID"/> <!--商品编码-->
+        <FIELD attrname="SPXX04" target="SPNAME"/> <!--商品名称-->
+        <FIELD attrname="LSDI05" target="SL"/> <!--数量-->
+        <FIELD attrname="LSDI02" target="DJ"/> <!--单价-->
+        <FIELD attrname="LSDI06" target="JE"/> <!--金额-->
+    </JLConfig>    
+    
+<!--    <JLConfig id="JIA._Request"> 请求
+
+    </JLConfig>
+    
+    <JLConfig id="JIA._Response"> 应答
+
+    </JLConfig>   -->
+    
+</root>

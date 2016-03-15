@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 --产品发货 </title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<style>
+	ul#screening li input.text1{
+		border:none;
+		background:#f4f4f4;
+		
+	}
+	ul#screening li input.XZCK{height:20px;margin:15px 0;width:50px;}
+	ul#screening li span.xzckContent{width:auto;}
+	
+	
+</style>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var user = JSON.parse(MyCookie);
+var gsid=user.ZCXX01;
+var gslx = user.LX;
+var xtczy01=user.XTCZY01;
+var ZCXX01 = user.ZCXX01;
+var returnData = "";
+var barcode = "";
+$(document).ready(function(){
+	//查询选择的仓库
+	//selectW_dqck();
+	if(gslx == 42){
+		$(".STCK").remove();
+	}
+});
+//查询收货仓库信息
+var dqckList = [];
+function selectW_dqck(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.selectW_GSCKXZ','QryType':'Report','dataType':'Json','ZCXX01': gsid, 'BARCODE' : barcode}];
+	var returnVal = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	if(returnVal != undefined && returnVal != "" && returnVal.length > 0){
+		$("#SHCK").empty();
+		$("#SHCK").append('<option value="">请选择</option>');
+		$(returnVal).each(function(index,val){
+			$("#SHCK").append('<option value="'+val.CK01+'" class="' + val.TYPE + '">'+val.CK02+'</option>');
+			dqckList.push(val.CK01 + "," + val.TYPE + "," + val.GSXX01);
+		});
+	} else {
+		$("#SHCK").empty();
+		$("#SHCK").append('<option value="nock">没有实体仓库</option>');
+	}
+}
+//扫码操作
+function userName_onkeypress(event,obj){ 
+ 	if(event.keyCode==13){
+ 		dqckList = [];
+ 		var code = $(obj).val();
+ 		if(code==""){
+ 			alert("数据不能为空");
+ 			return false;
+ 		}
+ 		var XmlData = [{"code":code,"zcxx01":ZCXX01,"xtczy01":xtczy01,"ckqymc":$("#SHCK").find("option:selected").html(),"ckqydm":$("#SHCK").find("option:selected").val()}];
+ 		var url="/XmlUploadProduct/getSPCM.action?XmlData="+JSON.stringify(XmlData);
+		var returnVal= visitService(url);
+		if(returnVal.CKDITEM!=undefined&&returnVal.CKDITEM!="undefined" && returnVal.CKDITEM!=null){
+			returnData = returnVal;
+		}
+		$("#spcm").empty();
+		clearData();
+		barcode = "";
+		$(".XZCK").attr("disabled", false);
+		$("#SHCK").attr("disabled", false);
+		if(returnVal.cmlist!=null){
+			barcode = returnVal.cmlist[0].barcode;
+			selectW_dqck();
+			$("#spcm").append("<ul id='screening'></ul>");
+			 $(returnVal.cmlist).each(function(x,obj){
+			 	if(x==0){
+				  $("#spcm ul").append("<li style='width:830px;'><span>产品名称：</span><input type='text' id='spmc' name='ppbh' readonly='readonly' value='"+obj.spxx04+"'class='text1' style='width:280px;'/><span>装箱时间：</span><input type='text' id='zxsj' name='ppbh' readonly='readonly' value='"+obj.drrq+"' size='20' class='text1' style='width:120px;'/></li>")
+			 	}
+			 	$("#spcm ul").append("<li><span>串码：</span><input type='text' id='pCode' readonly='readonly' name='ppbh' value='"+obj.curCode+"' class='text1' style='width:280px;'/><span>层级：</span><input type='text' id='cj' readonly='readonly' name='ppbh' value="+obj.packLevel+" class='text1' style='width:120px;'/></li>")
+			});
+			$("#spcm ul").append("<a href='javascript:void(0);' id='makeCode' class='bot Shot seach_bot' onclick='okck();' style='display:block;width:100px'>确认出库</a>");
+		}else{
+			alert("数据不存在");
+			return false;
+		}
+    }	
+}
+
+//确认出库
+function okck() {
+	var $xzck = $("input[name='XZCK']:checked");
+	var SHCK = $("#SHCK").val();
+	if(SHCK == null || SHCK == "null"){
+		SHCK = "";
+	}
+	if($xzck.length == 0){
+		alert("请选择出库仓库类型!");
+		return false;
+	} else {
+		if($xzck.val() == 1 && SHCK == ""){
+			alert("请选择出库实体仓库!");
+			return false;
+		}
+		if($xzck.val() == 1 && SHCK == "nock"){
+			alert("没有实体仓库可以选择!请关联安迅仓库或添加区域服务商!");
+			return false;
+		}
+	}
+	var CKTYPE = $("#SHCK").find("option:selected").attr("class");
+	var CKR = xtczy01;
+	var XmlData={"SHCK":SHCK,"CKR":CKR,"CKDLX":"1","CKD":returnData,"flaghcl":"flaghcl","CKLX" : $xzck.val(), "CKTYPE" : CKTYPE};
+	var url = "/Oper_CKD/insertW_CKD.action";
+	ajaxQ({
+		"type" :"POST",
+		"url" : url,
+		"data" : {"XmlData":JSON.stringify(XmlData)},
+		"callback" : function(data) {
+			rData = data;
+			top.closeWait();
+			if (rData == undefined || rData == '') {
+				alert("操作失败!");
+				return false;
+			}
+			if (rData.STATE == "1") {
+				if(rData.returnlist!="undefined"&&rData.returnlist!=null){
+					alert("串码" + rData.returnlist+"已经出库");
+					return false;
+				}
+				$("#makeCode").removeAttr("onclick");
+				$("#makeCode").css({"background":"#ccc","border":"1px solid #ccc"});
+				alert("操作成功，出库单号是：" + rData.CKDH);
+				$("#CKDH").val(rData.CKDH);
+				$("#spcm ul").append("<a href='javascript:void(0);' id='printCode' class='bot Shot seach_bot' onclick='print();' style='display:block;width:100px;'>打印随货行联</a>");
+				$(".sure").css({
+					"display" : "none"
+				});
+				$(".print").css({
+					"display" : "block"
+				});
+				$(".XZCK").attr("disabled", true);
+				$("#SHCK").attr("disabled", true);
+			} 
+			//modify 2015.12.02. 增加后台返回的状态处理
+			else if(rData.STATE == "0" || rData.state=="error"){
+				alert("操作失败!");
+				return false;
+			}
+			else if (rData.STATE == "undefined" || rData.STATE == "") {
+				alert("操作失败!");
+				return false;
+			}
+		}
+	});
+	
+}
+//打印
+function print(){
+	//------------打印最后一步
+	var CKDH = $("#CKDH").val();
+	if(CKDH==""){
+		alert("请先点击确认出库生成出库单");
+		return false;
+	}
+	var url = "/PubPrtDocument?prtType=ckd&ckdh=" + CKDH;
+	window.open(url);
+	$("#printCode").removeAttr("onclick");
+	$("#printCode").css({"background":"#ccc","border":"1px solid #ccc"});
+}
+
+	//单选按钮 20151216
+	function radioCheck(){
+		if(barcode == ""){
+			alert("请输入商品串码信息!");
+			$("input[name='XZCK']:checked").removeAttr("checked");
+			return false;
+		}
+		var ckVal = $("input[name='XZCK']:checked").val();
+		if(ckVal == 1){
+			$("#SHCK").css("display", "block");
+		} else {
+			$("#SHCK").css("display", "none");
+			$("#SHCK").val("");
+			// 20160107 Qijy 确认功能
+			if(dqckList.length > 0){
+				var jsonData = [{"ZCXX01" : gsid, "BARCODE" : barcode, "XZCK" : ckVal, "CKLIST" : dqckList}];
+				var ckUrl = "/Oper_CKD/selectQYCK.action?jsonData=" + JSON.stringify(jsonData);
+				var ckData = visitService(ckUrl);
+				if(ckData.STATE == "2"){
+					alert("此商品不能入该仓库,该仓库销售区域与实体仓库区域重叠,请重新选择仓库!");
+					clearData();
+					return false;
+				}
+			}
+		} 
+	}
+	
+	// 清空数据
+	function clearData(){
+		$(".XZCK").removeAttr("checked");
+		$("#SHCK").css("display", "none");
+		$("#SHCK").val("");
+	}
+</script>
+</head>
+<body>
+	<div class="clera"></div>
+	<input type="hidden" id="CKDH" name="CKDH" value="" class="text"/>
+	<input type="hidden" id="ZCXX01" name="ZCXX01" value="" class="text"/>
+	<input type="hidden" id="CKR" name="CKR" value="" class="text"/>
+	<ul id="screening">
+		<li style="width:830px;">
+		   	<span>收货人：</span>
+			<input type="text" id="shr" name="shr"  value="" size="20" class="text" style='width:200px;'/>
+			<span style="margin-left:100px;">联系电话：</span>
+			<input type="text" id="lxdh" name="lxdh" value="" size="20" class="text" style='width:200px;'/>
+	   	</li>
+	   	<li style="width:830px;">
+		   	<span>扫码：</span>
+			<input type="text" id="code" onkeypress="return userName_onkeypress(event,this)" name="ppbh" value="" size="20" class="text" style='width:600px;'/>
+	   	</li>
+		<li style="width:830px;">
+			<span>收货仓库：</span>
+	  		<span class="xzckContent"><input type="radio" name="XZCK" class="XZCK" value="0" onclick="radioCheck();" />自有仓库</span>
+	  		<span class="xzckContent STCK"><input type="radio" name="XZCK" class="XZCK STCK" value="1" onclick="radioCheck();" />实体仓库</span>
+			<select id="SHCK" name="SHCK" style="width:auto;display: none;margin-left:20px;">
+	        </select>
+	    </li>  
+	</ul>
+	<div id='spcm'>
+	<div>
+</body>
+</html>

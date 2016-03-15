@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.message.sql.Oper_YHZX">
+	<!--查询服务套餐列表 -->
+	<select id="Oper_YHZX" parameterType="map" resultType="map">
+		SELECT
+		b.Reply,a.zcxx02,b.content, DATE_FORMAT(b.MessageCreateTime, '%Y-%m-%d %k:%i:%s') MessageCreateTime
+		FROM w_zcxx a,usermessage b WHERE b.AssociateProduceId=#{SPXX01} 
+		 AND b.ReceiveUserId=#{jszid} AND A.ZCXX01=B.SendUserId
+		ORDER BY Id DESC
+	</select>
+	<!-- 查询总列表 -->
+	<select id="Oper_YHZX_sum" parameterType="map" resultType="map">
+		SELECT COUNT(1) as COUNT FROM w_zcxx a,usermessage b WHERE b.AssociateProduceId=#{SPXX01} 
+		 AND b.ReceiveUserId=#{jszid} AND A.ZCXX01=B.SendUserId
+		ORDER BY Id DESC
+	</select>
+	<!-- 查询所有的咨询留言 -->
+	<select id="selectAllGoods" parameterType="Map" resultType="java.util.Map" >
+		SELECT
+		b.Reply,a.zcxx02,b.content, DATE_FORMAT(b.MessageCreateTime, '%Y-%m-%d %k:%i:%s') MessageCreateTime
+		FROM w_zcxx a,usermessage b WHERE b.AssociateProduceId=#{SPXX01} 
+		 AND b.ReceiveUserId=#{jszid} AND A.ZCXX01=B.SendUserId
+		ORDER BY Id DESC
+	</select>
+</mapper>

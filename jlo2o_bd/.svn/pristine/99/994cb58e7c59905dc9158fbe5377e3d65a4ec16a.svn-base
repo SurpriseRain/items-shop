@@ -1,0 +1,22 @@
+body{ margin:0 auto; font-size:12px; color:#666;}
+div[jlid="splist_1"] ul,li,h2,h3,h4,input{ list-style:none; margin:0px; padding:0px;}
+a{ text-decoration:none;}
+.clera{ clear:both;}
+
+
+
+ div[jlid="splist_1"] ul.pro-case{ width:950px; margin:0 auto;}
+ div[jlid="splist_1"] ul.pro-case li{ float:left; width:220px; height:420px; border:1px solid #eee; margin:20px 0 0 20px;position:relative;}
+ div[jlid="splist_1"] ul.pro-case li:hover{ border-color:#3061ef;}
+ div[jlid="splist_1"] ul.pro-case li a.img{ width:220px; height:220px; float:left; margin-bottom:5px;}
+ div[jlid="splist_1"] ul.pro-case li a.img img{ width:220px; height:220px; border:0px;}
+ div[jlid="splist_1"] ul.pro-case li .pro-pic{ width:210px; height:25px; margin:0 0 0 10px; float:left;}
+ div[jlid="splist_1"] ul.pro-case li .pro-pic span{ float:left; line-height:23px; color:#999;}
+ div[jlid="splist_1"] ul.pro-case li .pro-pic b{ float:left; font-size:16px; color:#da271c; font-family:"microsoft yahei"; font-weight:bold;}
+
+ div[jlid="splist_1"] ul.pro-case li .pro-name{ width:200px; height:45px; margin:5px 10px 0 10px; float:left;}
+ div[jlid="splist_1"] ul.pro-case li .pro-name a{ color:#3c3c3c; line-height:18px;}
+ div[jlid="splist_1"] ul.pro-case li .pro-name a:hover{ color:#3061ef; text-decoration:underline;}
+ div[jlid="splist_1"] ul.pro-case li .pro-car{ width:200px; height:30px; float:left; margin:10px 10px 0 10px;position:absolute;bottom:5px;}
+ div[jlid="splist_1"] ul.pro-case li .pro-car a.car{ width:200px; float:left; line-height:30px; color:#FFF; text-align:center; background:#09C;}
+ div[jlid="splist_1"] ul.pro-case li .pro-car a.car:hover{ background:#03F; color:#FFF;}

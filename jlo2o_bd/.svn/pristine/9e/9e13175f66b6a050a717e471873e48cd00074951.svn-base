@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jlsoft.o2o.info.show">
+	
+    <!--  根据查询条件查询车型     -->
+    <select id="selectCX" parameterType="Map" resultType="java.util.Map">
+       		SELECT 
+					MOBILE_MODLE_ID, 
+       			    BRAND, 
+       			    MOBILE_MODLE, 
+       			    CAR 
+       			FROM w_automobile
+       			WHERE 1=1
+       		<if test="BRAND!=''">AND BRAND = #{BRAND}</if>
+       		<if test="CAR_TYPE!=''">AND CAR_TYPE = #{CAR_TYPE}</if>
+       		<if test="CAR!=''">AND CAR = #{CAR}</if>
+       		<if test="MODEL!=''">AND MOBILE_MODLE LIKE CONCAT('%',#{MODEL},'%')</if>
+      	 	ORDER BY MOBILE_MODLE_ID
+    </select> 
+    
+    <select id="selectCX_sum" parameterType="Map" resultType="java.util.Map">
+       		select count(1) as COUNT 
+       		FROM
+       		 (SELECT 
+					MOBILE_MODLE_ID, 
+       			    BRAND, 
+       			    MOBILE_MODLE, 
+       			    CAR 
+       			FROM w_automobile
+       			WHERE 1=1
+       		<if test="BRAND!=''">AND BRAND = #{BRAND}</if>
+       		<if test="CAR_TYPE!=''">AND CAR_TYPE = #{CAR_TYPE}</if>
+       		<if test="CAR!=''">AND CAR = #{CAR}</if>
+       		<if test="MODEL!=''">AND MOBILE_MODLE LIKE CONCAT('%',#{MODEL},'%')</if>
+      	 	ORDER BY MOBILE_MODLE_ID
+      	 	)t
+    </select> 
+    
+    <!--  显示一级车型分类 -->
+    <select id="selectCXFL01" parameterType="Map" resultType="java.util.Map">
+       		 SELECT DISTINCT brand,mnemoniccode FROM W_AUTOMOBILE 
+  			  where 1=1
+    		<if test="BRAND!=''">AND BRAND like concat(#{BRAND},'%')</if>
+    		ORDER BY MNEMONICCODE
+    </select> 
+    
+    <!--  显示二级车型分类 -->
+    <select id="selectCXFL02" parameterType="Map" resultType="java.util.Map">
+   		SELECT DISTINCT CAR_TYPE FROM W_AUTOMOBILE where 1=1
+   		<if test="BRAND!=''">AND BRAND like concat(#{BRAND},'%')</if>
+   		<if test="CAR_TYPE!=''">AND CAR_TYPE like concat(#{CAR_TYPE},'%') </if>
+   		 ORDER BY CAR_TYPE
+    </select> 
+    
+    <!--  显示三级车型分类 -->
+    <select id="selectCXFL03" parameterType="Map" resultType="java.util.Map">
+    	SELECT DISTINCT CAR_ID,CAR FROM W_AUTOMOBILE where 1=1
+       		<if test="BRAND!=''">AND BRAND like concat(#{BRAND},'%')</if>
+   			<if test="CAR_TYPE!=''">AND CAR_TYPE like concat(#{CAR_TYPE},'%') </if>
+   			<if test="CAR!=''">AND CAR  like concat(#{CAR},'%')</if>
+   	 	ORDER BY CAR
+    </select> 
+    
+    <!--  根据ID查询当前车型信息     -->
+    <select id="selectCXBYID" parameterType="Map" resultType="java.util.Map">
+       		SELECT
+				BRAND, 						<!-- 品牌 -->
+				CAR,						<!-- 车系 -->
+				MOBILE_MODLE,				<!-- 车型 -->
+				MOBILE_MODLE_YEAR,			<!-- 年款 -->
+				MOBILE_DISPLACEMENT,		<!-- 排量 -->
+				MOBILE_TRANSMISSION_TYPE,	<!-- 发动机类型 -->
+				CXTP02 AS CXTP
+			FROM
+				W_AUTOMOBILE A
+			LEFT JOIN W_CXTP C
+			ON A.MOBILE_MODLE_ID = C.MOBILE_MODLE_ID
+			WHERE
+				1 = 1
+			AND A.MOBILE_MODLE_ID = #{MOBILE_MODLE_ID}
+    </select> 
+    
+</mapper>
+  

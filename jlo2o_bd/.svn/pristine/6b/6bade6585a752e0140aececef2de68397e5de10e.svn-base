@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/plugins/code/prettify.js"></script>
+<style>
+.nav_top ul{
+list-style-type: none;
+	margin: 0 auto;
+	width: 575px;
+	height: 355px;
+	 margin-top:30px;
+}
+.zpnr{
+  font-size: 18px;
+    height: 30px;
+    letter-spacing: 2px;
+}
+.nav_top ul textarea{
+border: 1px solid #e4e4e4;
+    height: 299px;
+    width: 491px;
+}
+.sub_nav{
+    background: #ff4a00 none repeat scroll 0 0;
+    border: 0 none;
+    color: #fff;
+    display: block;
+    font-size: 20px;
+    height: 46px;
+    margin-left: 170px;
+    margin-top: 34px;
+    text-decoration: none;
+    width: 184px;
+}
+.sub_nav span{
+    color: #fff;
+    font-size: 30px;
+    margin-left: 62px;
+    margin-top: 53px;
+    text-decoration: none;
+
+}
+</style>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var gsid = usercookie.ZCXX01;
+var path = "spdetail/" + gsid + "/images/";
+var hbid = usercookie.XTCZY01;
+KindEditor.ready(function(K) {
+	 editor1 = K.create('textarea[name="RecruitInfo"]', {
+		cssPath : '/keditor/plugins/code/prettify.css',
+		uploadJson : '/servlet/TpUploadServlet?filename=' + path,//上传图片方法，在TpUploadServlet里
+		fileManagerJson : '/fileManageServlet?filename=' + path,
+		allowFileManager : true,
+		afterCreate : function() {
+			var self = this;
+			K.ctrl(document, 13, function() {
+				self.sync();
+				document.forms['form0'].submit();
+			});
+			K.ctrl(self.edit.doc, 13, function() {
+				self.sync();
+				document.forms['form0'].submit();
+			});
+		}
+	});
+	prettyPrint();
+	
+});
+
+//获得kindeditor中的信息
+function getValues() {
+  // 取得HTML内容
+  var html1 = editor1.html();
+  // 同步数据后可以直接取得textarea的value
+  editor1.sync();
+}
+
+function saveRecruit(){
+	$("#wxcdm").val(usercookie.ZCXX01);
+	getValues();
+	
+	var flag = confirm('确认保存信息吗？');
+	
+	if(flag){
+		var jsonData = $("#form0").formToJson();
+		var url = "/RepairDemand/insert_Recruit.action?jsonData=" + JSON.stringify(jsonData);
+		var rData = visitService(url);
+		if(rData.STATE == "1"){
+			alert("保存成功!");
+			var rememberUrl = "/customer/qfy/index.html";
+			parent.location.href = rememberUrl;
+		} else {
+			alert("保存失败!");
+		}
+	} else {
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+	<form id="form0" action="" method="post">
+		<input type="hidden" id="wxcdm" value="" name="PublisherId" />
+		<div class="nav_top">
+		<ul>
+			<li>
+				<span class="zpnr">招聘内容：</span>
+			</li>
+			<li>
+		      	<div id="JKDiv_spym" >
+		      		<textarea id="spjs" name="RecruitInfo" ></textarea>
+		      	</div>
+			</li>
+			<li>
+				<div>
+					<a href="#" id="fbzp" onclick="saveRecruit()" class="sub_nav"><span>发布</span></a>
+				</div>
+			</li>
+		</ul>
+		</div>
+	</form>
+</body>
+</html>

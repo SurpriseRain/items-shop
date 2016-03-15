@@ -1,0 +1,69 @@
+<div class="content">
+<div class="row">
+  <div class="w01 user_nav"></div>
+  <div class="w11 merch_main"></div>
+  <div class="w11 user_content">
+    <div class="w09 user_main"></div>
+    <div class="w03 user_service"></div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+$(".user_nav").load("user_nav.html");
+$(".user_main").load("个人中心首页.html");
+$(".user_service").load("user_service.html");
+$(".my_pjsd").load("my_pjsd.html");
+$(".merch_main").load("merch_main.html");
+$(document).on("click","#my_thh_infor",function(){
+       $(".user_content").load("my_thh_infor.html");
+  })
+$(document).on("click","#SQTHH",function(){
+       $(".user_content").load("my_thh_main.html");
+  })
+})
+$(document).on("click","#my_pjsd",function(){
+       $(".user_content").load("my_pjsd.html");
+  })
+
+$(document).on("click",".user_nav > dl > dd > a",function(){
+	var nav_text = $(this).text();
+	$(".user_nav > dl > dd > a").removeClass("xuan");
+	$(this).addClass("xuan");
+	if(nav_text == "采购订单"){
+       $(".user_content").load("采购订单.html");
+	  }else if(nav_text == "销售订单"){
+       $(".user_content").load("销售订单.html");
+	  }else if(nav_text == "账户信息"){
+       $(".user_content").load("账户信息.html");
+	  }else if(nav_text == "收货地址"){
+       $(".user_content").load("收货地址.html");
+	  }else if(nav_text == "评价管理"){
+       $(".user_content").load("评价管理.html");
+	  }else if(nav_text == "返修/退换货"){
+       $(".user_content").load("返修退换货.html");
+	  }else if(nav_text == "账户安全"){
+       $(".user_content").load("账户安全.html");
+	  }else if(nav_text == "发布商品"){
+		 $(".user_content").load("发布商品01.html");
+	  }else if(nav_text == "出售中的商品"){
+		 $(".user_content").load("出售中的商品.html");
+	  }else if(nav_text == "仓库中的商品"){
+		 $(".user_content").load("仓库中的商品.html");
+	  }else if(nav_text == "退货单"){
+		 $(".user_content").load("退货单.html");
+	  }else if(nav_text == "退款单"){
+		 $(".user_content").load("退款单.html");
+	  }else if(nav_text == "商品评价管理"){
+		 $(".user_content").load("merch_pj_list.html");
+	  }else if(nav_text == "新闻管理"){
+		 $(".user_content").load("new_list.html");
+	  }else if(nav_text == "新闻发布"){
+		 $(".user_content").load("new_rele.html");
+	  }else if(nav_text == "首页楼层"){
+		 $(".user_content").load("homefloor.html");
+	  }else if(nav_text == "推广"){
+		 $(".user_content").load("extension.html");
+	  }
+  })
+</script>

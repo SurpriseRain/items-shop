@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<link rel="stylesheet" type="text/css" href="../css/carSs.css" />
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/openbox.js"></script>
+<script type="text/javascript" src="../js/jq.Slide.js"></script>
+<script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../js/pubJson.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+<script type="text/javascript" src="../js/public1.js"></script>
+<script type="text/javascript" src="../js/jquery.bxslider2.min.js"></script>
+<script type="text/javascript" src="../js/scripts.js"></script>
+<script type="text/javascript" src="../js/accounting.min.js"></script>
+<title>品牌-车型-车型搜索</title>
+</head>
+<body>
+<input type="hidden" id="code" value=""/>
+<div id="zhezhao">
+  <div class="zhezhao-xt">
+    <div class="zhezhao-main">
+      <div class="zhezhao-title">
+        <b id="carname" class="tl"></b>
+        
+        <select id="listone" onchange="TJselect()">
+        	<option>全部年款</option>
+        </select>
+        
+        <select id="listtwo" onchange="TJselect()">
+        	<option>全部车型排量</option>
+        </select>
+        
+        <select id="listthree" onchange="TJselect()">
+        	<option>全部变速箱类型</option>
+        </select>
+       
+        <div class="fy" id="shuliang">
+            <b class="clorange">共<span id="TOTAL">0</span>件</b>
+            <span class="fl" id="page"></span>
+            <span class="fr">
+               <a onclick="pageUp()" class="prev">上一页</a>
+               <select name="PAGING" id="PAGING" onchange="PAGING(this)"></select>
+               <a onclick="pageDown()" class="next">下一页</a>
+            </span>
+            <a class="close">×</a>
+          </div>
+
+          <ul class="zhezhao-case" id="zhezhaocase"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="header">
+</div>
+
+<div class="clera"></div>
+
+<div id="sxtj">
+  <a href="#" class="xuan">按首字母A~Z查找</a>
+</div>
+
+<div id="sxtjxx" class="sxtjxx">
+  <div class="xxtitle">
+  <a href="#">全部：</a>
+  <div id="CarOne">
+  </div>
+  </div>
+</div>
+
+<div id="mains">
+</div>
+<div class="clera"></div>
+<div id="footer"></div>
+</body>
+<script type="text/javascript">
+var baseUrl="";
+var fileName="";
+var pagesize="20";
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+
+var car_id=$.getUrlParam("car_id");
+var ORIGIN_COUNTRY_ID =$.getUrlParam("ORIGIN_COUNTRY_ID");
+
+$(document).ready(function(){
+	$("#header").load("/customer/qfy/head-08.jsp");
+	$("#footer").load("/customer/qfy/foot-08.html");
+	
+	var height = $(window).height();
+	$("#zhezhao").css({"height":height});
+	
+	$(".zhezhao-title > .fy > .close").click(function(){
+		$("#zhezhao").css({"display":"none"}); 
+	})
+	
+	$(window).scroll(function(){
+
+	   if($(window).scrollTop()>250){
+	   $("#sxtjxx").removeClass("sxtjxx");
+       $("#sxtjxx").addClass("sxtjxx-bian");
+	  }else if($(window).scrollTop()<250){
+	   $("#sxtjxx").removeClass("sxtjxx-bian");
+       $("#sxtjxx").addClass("sxtjxx"); 
+	  }
+		  
+   });
+   selectqfylist();//页面加载时  一二三四级分类显示
+   //根据展示分类找到锚点所在
+   srchMao(car_id);
+});
+
+//找到锚点所在地
+function srchMao(car_id){
+	if($("#mao_"+car_id) != "undefined"){
+	    scrollOffset($("#mao_"+car_id).offset());
+	}else{
+		setTimeout("srchMao("+car_id+")",1000);
+	}
+}
+
+function selectqfylist(){	
+	var fkqgSpUrl="/showGoods/qfylist.action";
+	var rData0 = visitService(fkqgSpUrl);
+	var OneShow = rData0.qfylist;
+	
+	for(var i=0; i<OneShow.length;i++){
+		//显示一级分类 		
+		$("#mains").append('<div class="flower" id="flower'+i+'">'+
+						  '<div class="fltitle"><a class="zm" name="mao'+OneShow[i].MNEMONICCODE+'">'+OneShow[i].MNEMONICCODE+'</a></div>'+
+						  '<div class="clera"></div>'+
+						  '</div>');
+		
+		$("#CarOne").append('<a class="zm" href="#mao'+OneShow[i].MNEMONICCODE+'"  >'+OneShow[i].MNEMONICCODE+'</a>');
+
+		$("#CarOne > a").click(function(){
+             $("#CarOne > a").removeClass("zmxuan");
+             $(this).addClass("zmxuan");
+		});		
+				    
+		for(var j=0;j<OneShow[i].PPFL02list.length;j++){
+			//显示2级分类
+			$("#flower"+i).append('<div id="mao_'+OneShow[i].PPFL02list[j].BRAND_ID+'" class="flmain">'+
+									  '<div class="flmain-left">'+
+									  		'<img src="/customer/qfy/images/mycar/'+OneShow[i].PPFL02list[j].BRANDPY+'_'+OneShow[i].PPFL02list[j].BRAND_ID+'.png" /><div class="text">'+OneShow[i].PPFL02list[j].BRAND+'</div> '+
+									  '</div>'+
+									  '<ul  class="flmain-right" id="right'+i+j+'">'+
+									  '</ul>'+
+   								  '</div>');
+			
+			for(var k=0;k<OneShow[i].PPFL02list[j].PPFL03list.length;k++){
+				//显示3级分类
+				$("#right"+i+j).append('<li>'+
+					                  '<b>'+OneShow[i].PPFL02list[j].PPFL03list[k].CAR_TYPE+'</b>'+
+					                  '<div id="car'+j+i+k+'"></div>'+
+					                  '</li>');	
+
+				for(var n=0;n<OneShow[i].PPFL02list[j].PPFL03list[k].PPFL04list.length;n++){
+					//显示4级分类
+					var name=OneShow[i].PPFL02list[j].PPFL03list[k].PPFL04list[n].CAR;
+					var code=OneShow[i].PPFL02list[j].PPFL03list[k].PPFL04list[n].CAR_ID;
+					$("#car"+j+i+k).append('<a onclick="itemcar('+code+',\''+name+'\''+',\''+OneShow[i].PPFL02list[j].PPFL03list[k].CAR_TYPE+'\')">'+name+'</a>');	
+				}
+			}
+		}						
+	}
+}
+
+function itemcar(code,name,CAR_TYPE){
+	$("#carname").empty();
+	$("#carname").append(name);
+	$("#carname").attr("title",name);
+	$("#code").val(code);
+	$("#zhezhao").css({"display":"block"}); 
+	
+	showselectTJ(code);  //查询  弹框页面的筛选条件   ,必须在showcaritem(code)之前调用
+	showcaritem(code,CAR_TYPE);  //弹框的页面展示 
+}
+
+//弹框的页面展示 
+function showcaritem(code,CAR_TYPE){
+	
+	var MOBILE_MODLE_YEAR=$("#listone").val();
+	if(MOBILE_MODLE_YEAR=="全部年款"){
+		MOBILE_MODLE_YEAR="";
+	}
+	var MOBILE_DISPLACEMENT=$("#listtwo").val();
+	if(MOBILE_DISPLACEMENT=="全部车型排量"){
+		MOBILE_DISPLACEMENT="";
+	}
+	var MOBILE_TRANSMISSION_TYPE=$("#listthree").val();
+	if(MOBILE_TRANSMISSION_TYPE=="全部变速箱类型"){
+		MOBILE_TRANSMISSION_TYPE="";
+	}
+	var para=[{"CAR_ID":code,"MOBILE_MODLE_YEAR":MOBILE_MODLE_YEAR,"MOBILE_DISPLACEMENT":MOBILE_DISPLACEMENT,"MOBILE_TRANSMISSION_TYPE":MOBILE_TRANSMISSION_TYPE}];
+	
+	var url=baseUrl+"/QFYdisplay/jlquery/qfylistitem.action?XmlData="+JSON.stringify(para);
+	var rData0 = "";
+	$.ajax({
+	    type: "GET",  //请求方式
+	    async: false,   //true表示异步 false表示同步
+	    url:encodeURI(url),
+	    data:{},
+	    success: function(data){
+	      if (data != null){
+	        try{
+	          var json = jQuery.parseJSON(data);
+	          rData0 = json.data;
+	          fileName = json.fileName;
+	        }catch(e){
+	          return;
+	        }
+	      }
+	    },
+    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+        }
+	  });
+
+	$("#zhezhaocase").empty();
+	var item = rData0;
+ 	var solr = pubJson.Solr;
+    var searchUrl = "";
+	if(solr == "1"){
+		searchUrl = pubJson.O2OUrl + "/customer/qfy/showProduct/member_shop_s.html";
+	} else {
+		searchUrl = pubJson.O2OUrl + "/customer/qfy/showProduct/member_shop_n.html";
+	}
+	for(var m=0; m<item.length;m++){	
+		$("#zhezhaocase").append("<li><a href='" + searchUrl + "?chexing_id="+item[m].MOBILE_MODLE_ID+"&&chexing_name="+escape(item[m].MOBILE_MODLE)+"'>"+item[m].MOBILE_MODLE+"</a></li>");
+	}
+	if(item.length>pagesize){
+		for(i=pagesize;i<item.length;i++){
+			$("#zhezhaocase").find("li").eq(i).hide();
+		}
+	}
+	else{
+		
+	}
+	loadPages();
+}
+
+//查询  弹框页面的筛选条件   
+function showselectTJ(code){
+	
+	var para=[{"CAR_ID":code}];
+	var fkqgSpUrl="/showGoods/qfySelectTJ.action?XmlData="+JSON.stringify(para);
+	var rData0 = visitService(fkqgSpUrl);
+	var listone = rData0.qfySelectTJ1;   //查询 全部年款 
+	$("#listone").empty();
+	$("#listone").append('<option>全部年款</option>');
+	for(var y=0;y<listone.length;y++){
+		$("#listone").append('<option>'+listone[y].MOBILE_MODLE_YEAR+'</option>');
+	}
+
+	var listtwo = rData0.qfySelectTJ2;   //查询 全部车型排量 
+	$("#listtwo").empty();
+	$("#listtwo").append('<option>全部车型排量</option>');
+	for(var j=0;j<listtwo.length;j++){
+		$("#listtwo").append('<option>'+listtwo[j].MOBILE_DISPLACEMENT+'</option>');
+	}
+
+	var listthree = rData0.qfySelectTJ3;  //查询全部变速箱类型 
+	$("#listthree").empty();
+	$("#listthree").append('<option>全部变速箱类型</option>');
+	for(var l=0;l<listthree.length;l++){
+		$("#listthree").append('<option>'+listthree[l].MOBILE_TRANSMISSION_TYPE+'</option>');
+	}
+}
+
+
+//弹框页面 根据筛选条件 查询  内容
+function TJselect(){
+	var codez=$("#code").val();
+	showcaritem(codez);
+}
+
+function loadPages(){
+	var MOBILE_MODLE_YEAR=$("#listone").val();
+	if(MOBILE_MODLE_YEAR=="全部年款"){
+		MOBILE_MODLE_YEAR="";
+	}
+	var MOBILE_DISPLACEMENT=$("#listtwo").val();
+	if(MOBILE_DISPLACEMENT=="全部车型排量"){
+		MOBILE_DISPLACEMENT="";
+	}
+	var MOBILE_TRANSMISSION_TYPE=$("#listthree").val();
+	if(MOBILE_TRANSMISSION_TYPE=="全部变速箱类型"){
+		MOBILE_TRANSMISSION_TYPE="";
+	}
+	var codes=$("#code").val();
+	var para=[{"CAR_ID":codes,"MOBILE_MODLE_YEAR":MOBILE_MODLE_YEAR,"MOBILE_DISPLACEMENT":MOBILE_DISPLACEMENT,"MOBILE_TRANSMISSION_TYPE":MOBILE_TRANSMISSION_TYPE}];
+	
+	var url = baseUrl+"/QFYdisplay/jlquery/qfylistitemsum.action?XmlData="+JSON.stringify(para);
+	var orderSum = visitService(url)[0].SUM;		
+	$("#TOTAL").empty();
+	$("#TOTAL").append(orderSum);			
+	totalPage=Math.ceil(orderSum/pagesize);	
+	$("#page").empty();
+	$("#page").append("<b class='clorange'>1/"+totalPage+"</b>");	
+	$("#PAGING").empty();
+	for(var i=1;i<=totalPage;i++){
+		$("#PAGING").append("<option value='"+i+"'>"+i+"</option>");
+	}
+}	
+
+function loadMoreOrder(liPages){
+	var url="/GridPageDataServlet?pages="+liPages+"&fileName="+fileName;
+	var item = "";
+	
+	$.ajax({
+	    type: "GET",  //请求方式
+	   // dataType: "JSON",
+	    async: false,   //true表示异步 false表示同步
+	    url:encodeURI(url),
+	    data:{},
+	    success: function(data){
+	      if (data != null){
+	        try{
+	        	item = jQuery.parseJSON(data);
+	        }catch(e){
+	        	alert("获取");
+	          return;
+	        }
+	      }
+	    },
+    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+        }
+	  });
+	  $("#zhezhaocase").empty();
+	  for(var m=0; m<item.length;m++){	
+		 $("#zhezhaocase").append('<li><a href="#">'+item[m].MOBILE_MODLE+'</a></li>');
+	  }
+}
+
+function PAGING(page){
+	var pages=page.value;
+	$("#page").empty();
+	$("#page").append("<b class='clorange'>"+pages+"/"+totalPage+"</b>");
+	//loadMoreOrder(pages);
+	$("#zhezhaocase").find("li").hide();
+	for(i=pagesize*(pages-1);i<pagesize*pages;i++){
+		$("#zhezhaocase").find("li").eq(i).show();
+	}
+}
+
+function pageUp(){
+	if($("#PAGING").val()==1||$("#PAGING").val()==null){
+		alert("已是首页");
+		return;
+	}else{
+		var pageUp=$("#PAGING").val()*1-1;
+		$("#PAGING").val(pageUp);
+		$("#page").empty();
+		$("#page").append("<b class='clorange'>"+pageUp+"/"+totalPage+"</b>");
+
+		//loadMoreOrder(pageUp);
+		$("#zhezhaocase").find("li").hide();
+		for(i=pagesize*(pageUp-1);i<pagesize*pageUp;i++){
+			$("#zhezhaocase").find("li").eq(i).show();
+		}
+	}
+}
+
+function pageDown(){
+	if($("#PAGING").val()==totalPage){
+		alert("已是最后一页");
+		return;
+	}else{
+		var pageDown=$("#PAGING").val()*1+1;
+		$("#PAGING").val(pageDown);
+		$("#page").empty();
+		$("#page").append("<b class='clorange'>"+pageDown+"/"+totalPage+"</b>");
+		//loadMoreOrder(pageDown);
+		$("#zhezhaocase").find("li").hide();
+		for(i=pagesize*(pageDown-1);i<pagesize*pageDown;i++){
+			$("#zhezhaocase").find("li").eq(i).show();
+		}
+	}
+}
+</script>
+</html>

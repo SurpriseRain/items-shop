@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 找回密码 - 成功</title>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/zhmm-main.css" />
+</head>
+<script type="text/javascript">
+var username = unescape($.getUrlParam("userName"));
+$(document).ready(function(){
+	$("#um").html(username);
+})
+</script>
+<body>
+<!-----公共部门开始---->
+<div id="header">
+  <div class="header_main">
+    <a class="logo"><img src="/customer/qfy/images/zhmm-logo.png" /></a>
+    <!------------------流程------------------>
+    <div class="tecPro">
+      <div class="userLc">
+      <div class="userlcMain">
+        <div class="userlcCase"><a class="fxlc_wz">1.填写手机号</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">2.修改密码</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_zz">3.成功</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+<div class="clera"></div>
+<div id="main">
+  <ul class="userName">
+    <li class="shenhe">
+      <div class="shenheimg"></div>
+      <div class="shenhe_wh">恭喜&nbsp;&nbsp;<b id="um"></b>&nbsp;&nbsp;修改密码成功！！！</div>
+      <div class="shenhe_wh shenhe_ts">你可以<a href="/customer/qfy/index.html">[ 返回首页 ]</a> <a href="/customer/qfy/showMessage/index-lxwm.html">[ 联系我们 ]</a></div>
+
+    </li>
+  </ul>
+</div>
+
+</body>
+</html>

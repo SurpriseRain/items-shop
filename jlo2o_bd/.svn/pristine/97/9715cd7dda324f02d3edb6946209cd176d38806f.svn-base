@@ -1,0 +1,103 @@
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+
+<script type="text/javascript" src="/customer/sydjt/js/columns/columns_carlist.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+
+<script type="text/javascript" src="/control/js/list_thh.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var THZT=JL.getParam('THZT');
+var TYPE=JL.getParam('TYPE');
+function initData(){
+	if(THZT == "" || THZT == null){
+		$("#th").addClass("xuan");
+		$("#th_item").removeClass("xuan");
+		$(".fxthh").css({"display":"none"});
+		$(".sqsh").css({"display":"block"});
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_XSDD','QryType':'Report','dataType':'Json','HBID':userCookie.ZCXX01,"ZTID":"","FLAG":"6","SPMC":$("#SPMC").val()}];
+		return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	}else{
+		$("#th").removeClass("xuan");
+		$("#th_item").addClass("xuan");
+	  	$(".sqsh").css({"display":"none"});
+		$(".fxthh").css({"display":"block"});	
+		 var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.return.good.selectSYXTTHD','QryType':'Report','dataType':'Json','ZTID':usercookie.ZCXX01,"SPMC":$("#SPMC").val(),'THZT':THZT,'TYPE':TYPE}];
+		 return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	}
+}
+</script>
+<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+    <li><i class="fa fa-home"></i><span>首页</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>订单管理</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><b>返修/退换货</b></li>
+</ul>
+</div>
+<div class="w12 user_content">
+  <div class="w12 user_page_tab">
+    <ul class="w09"><li id="th" class="xuan" onclick="changeIframeSize('/customer/sydjt/back/ddgl/my_thh.html?menuId=A408','#centerFrame')">可退换货订单</li><li id="th_item" onclick="changeIframeSize('/customer/sydjt/back/ddgl/my_thh.html?THZT=0,3&TYPE=2&menuId=A404','#centerFrame')">返修/退换货记录</li></ul>
+    <div class="w03 order_seach"><input name="SPMC" id="SPMC" type="text" class="w10" placeholder="商品名称可搜索" /><a class="w02"><i class="fa fa-search"></i></a></div>
+  </div>
+  
+<!--  <div class="w12 user_page_main" id="DSPPJ">-->
+	<div class="w12 user_page_main">
+  <dl class="w12 public_table_title sqsh">
+      <dd class="w08">商品信息</dd>
+      <dd class="w04">操作</dd>
+  </dl>
+  <dl class="w12 public_table_title fxthh">
+      <dd class="w02">返修/退换货编号</dd><dd class="w02">订单编号</dd><dd class="w03">商品名称</dd><dd class="w02">申请时间<!-- <select class="w12"><option>申请时间</option><option>最近三个月</option><option>三个月以前</option></select> --></dd><dd class="w02">状态<!-- <select class="w12"><option>全部状态</option><option>处理中</option><option>已完成</option></select> --></dd><dd class="w01">操作</dd>
+  </dl>
+<!--      <dl class="w12">-->
+<!--      	<dt class="w01">-->
+<!--      		<a href="#">-->
+<!--            	<img src="../images/sp.jpg" class="w01" />-->
+<!--            </a>-->
+<!--        </dt>-->
+<!--       <dd class="w07">-->
+<!--       	<a href="#">商品名称商品商品名称商品名称商品名称商品名称商品名称名称商品名称商品名称商品名称</a>-->
+<!--       	<h4 class="font_grey">购买时间：2015-07-17</h4>-->
+<!--        </dd>    -->
+<!--      <dd class="w04"><input type="button" value="申请退换货" class="jl_btn btn_red" id="SQTHH" onclick="changeIframeSize('/customer/sydjt/back/ddgl/my_thh_main.html?THZT=0,3&TYPE=2','#centerFrame')"/></dd>-->
+<!--    </dl>-->
+	  <div class="center">
+	  <div jl jlid="DefStaPer" id="carlist_htd" newclos="4" multiPage="true" emtype="htd" LX="1" url="/getcarlist_htd.do" newline="" before_reply="" after_reply=""></div>
+	  </div>   
+	</div> 
+<!--	</div>-->
+</div>  
+<!--  <div class="w12 merch_list user_page_th fxthh">-->
+<!--    <dl class="w12 merch_title">-->
+<!--      <dd class="w02">返修/退换货编号</span><dd class="w02">订单编号</dd><dd class="w03">商品名称</dd><dd class="w02"><select class="w12"><option>申请时间</option><option>最近三个月</option><option>三个月以前</option></select></dd><dd class="w02"><select class="w12"><option>全部状态</option><option>处理中</option><option>已完成</option></select></dd><dd class="w01">操作</dd>-->
+<!--      </dl>-->
+<!--      <dl class="w12">-->
+<!--      <dd class="w02"><span class="w12">1234567899888</span></dd>-->
+<!--      <dd class="w02"><span class="w12">67899888</span></dd>-->
+<!--      <dd class="w03"><a class="w12" href="#">Apple iPhone 6 (A1586) 16GB 金色 移动联通电信4G手机</a></dd>-->
+<!--      <dd class="w02">-->
+<!--      	<span class="w12">2015-11-10</span>-->
+<!--      </dd>-->
+<!--      <dd class="w02">-->
+<!--      	<span class="w12">取消服务单</span>-->
+<!--      </dd>-->
+<!--      <dd class="w01">-->
+<!--       <a class="cz">删除</a><a class="cz" id="my_thh_infor">查看</a>-->
+<!--      </dd>  -->
+<!--    </dl>-->
+<!--   </div>-->
+
+  
+  <script type="text/javascript" src="/control/js/o2o.js"></script>

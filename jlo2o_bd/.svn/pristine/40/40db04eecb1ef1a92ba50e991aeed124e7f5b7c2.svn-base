@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.c2b.sql.mapservice.selectXQUser','QryType':'Report','dataType':'Json',"serviceUserId":usercookie.ZCXX01}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">需求管理</a>
+    	<span>></span>
+	</div> -->
+	<div class="clera"></div>
+	
+<div class="center">
+	<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" multiPage="true"  url="/jlquery/selecto2o.action" 
+	columnsArr="[{'property':'ReallyName','header':'联系人','type':'lable','width':'70px'},
+				{'property':'Phone','header':'电话','type':'lable','width':'80px'},
+				{'property':'XQZT','header':'需求状态','type':'fwzt','width':'110px'},
+				{'property':'CarNumber','header':'车牌号','type':'lable','width':'80px'},
+				{'property':'CarBrand','header':'车型','type':'lable','width':'80px'},
+				{'property':'QuotedPrice','header':'报价','type':'lable','width':'60px'},
+				{'property':'JDZT','header':'接单状态','type':'jdzt','width':'110px'},
+				{'property':'DemandDescription','header':'描述','type':'lable','width':'100px'},
+				{'property':'Id','header':'操作','type':'edit','width':'60px'}]"
+	afterUrl="">
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+function edit(obj){
+	location.href="/customer/qfy/c2b/Oper_XQ_item.html?ID="+obj;
+}
+</script>

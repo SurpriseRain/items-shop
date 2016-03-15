@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>MyActivity</title>
+	<link rel="stylesheet" type="text/css" href="../css/Oper_wdhd.css"/>
+</head>
+<body>
+	<div id="wrap">
+		<div id="header">
+			<ul>
+				<li>送至：天津</li>
+			</ul>
+			<ul>
+				<li>请登录</li>
+				<li>|</li>
+				<li>商城首页</li>
+				<li>|</li>
+				<li>个人中心</li>
+				<li>|</li>
+				<li>手机版</li>
+				<li>|</li>
+				<li>服务中心：18519109250</li>
+			</ul>
+		</div>
+		
+		<div id="logo">
+			<div class="pic">
+				<img src="../img/logo.png"/>
+			</div>
+			<div class="search">
+				<ul>
+					<li><a href="">产品</a></li>
+					<li><a href="">OEM</a></li>
+					<li><a href="">商品条码</a></li>
+				</ul></br>
+				<input type="text" name="" id="" placeholder="输入产品名称可直接搜索" />
+				<input type="button" name="" id="" value="搜 索" />
+			</div>
+			<div class="mygwc">
+				
+			</div>
+		</div>
+		
+		<div id="nav">
+			<ul>
+				<li><a href="">首页</a></li>
+				<li><a href="">政策法规</a></li>
+				<li><a href="">同质配件</a></li>
+				<li><a href="">放心品牌</a></li>
+				<li><a href="">统一编码</a></li>
+				<li><a href="">商品追溯</a></li>
+				<li><a href="">配件商城</a></li>
+				<li><a href="">增值服务</a></li>
+			</ul>
+		</div>
+		
+			<div id="main_text">
+				<div id="main_list">
+					<ul>
+						<li><a href="">商品管理</a>
+							<p>店铺商品分类管理</p>
+							<p>商标管理</p>
+							<p>商品发布</p>
+							<p>商品管理</p>
+						</li>
+						<li><a href="">商品管理</a>
+							<p>销售订单</p>
+							<p>发票管理</p>
+						</li>
+						<li><a href="">活动管理</a>
+							<p>活动报名</p>
+							<p>我的活动</p>
+							<p>参加活动商品</p>
+						</li>
+					</ul>
+				</div>
+				<div id="main">
+				<ul>
+					<li><a href="">活动管理</a></li>
+					<li>></li>
+					<li><a href="">我的活动</a></li>
+				</ul>
+				<h1>我的活动</h1>
+				<div id="act">
+					<span>活动种类
+					<select name="">
+						<option value="">请选择</option>
+						<option value="">满减</option>
+						<option value="">直降</option>
+						<option value="">折扣</option>
+						<option value="">反劵</option>
+						<option value="">团购</option>
+						<option value="">秒杀</option>
+						<option value="">限时抢购</option>
+					</select>
+					</span>
+					<span>活动状态
+					<select name="">
+						<option value="">待审核</option>
+						<option value="">已通过</option>
+						<option value="">未审核</option>
+					</select>
+					</span>
+					<span>活动时间&nbsp;&nbsp;
+						从 <input type="datetime-local" name="" id="" value="" />
+						到 &nbsp;&nbsp;&nbsp;<input type="datetime-local" name="" id="" value="" />
+					</span>
+				</br>
+					<input type="button" name="" class="cx" id="" value="查询" />
+				</div>
+			</div>
+			
+			<div id="table">
+				<table border="" cellspacing="" cellpadding="">
+					<tr><th>活动编号</th><th>活动类型</th><th>活动名称</th><th>活动状态</th><th>活动开始时间</th><th>活动结束时间</th><th>参加商品</th></tr>
+					<tr><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+					<tr><td>2</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+					<tr><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+					<tr><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+					<tr><td>5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+					<tr><td>6</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+					<tr><td>7</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+					
+				</table>
+				<div id="ym">
+					
+				</div>
+			</div>
+		
+			</div>
+		
+		<div id="footer">
+			
+			<dl>
+				<dt><img src="../img/foot1.png"/></dt>
+				<dd>先行支配</dd>
+			</dl>
+			<dl>
+				<dt><img src="../img/foot2.png"/></dt>
+				<dd>七日无理由退换货</dd>
+			</dl>
+			<dl>
+				<dt><img src="../img/foot3.png"/></dt>
+				<dd>同质配件保证</dd>
+			</dl>
+			<dl>
+				<dt><img src="../img/foot4.png"/></dt>
+				<dd>零加售</dd>
+			</dl>
+			<dl>
+				<dt><img src="../img/foot5.png"/></dt>
+				<dd>专业服务</dd>
+			</dl>
+			<dl>
+				<dt><img src="../img/foot6.png"/></dt>
+				<dd>专业物流</dd>
+			</dl>
+			<p>联系电话：1851910250 | 1851910250 24小时为您服务</p>
+		</div>
+		
+	</div>
+</body>
+</html>

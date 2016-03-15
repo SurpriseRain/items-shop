@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>汽福云-服务商信息</title>
+<link type="text/css" rel="stylesheet"href="/customer/qfy/css/backPub.css"  />
+<link type="text/css" rel="stylesheet"href="/customer/qfy/css/ytd_fws.css"  />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/FlList.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script>
+<!-- <style>
+	#centerFrame{scrcoll:no}
+</style> -->
+
+</head>
+<body>
+	<form id="form1" name="form1" action="" method="post">
+		
+	    <input type="hidden" id="HBID" name="HBID" value=""/>
+	    <input type="hidden" id="ZTID" name="ZTID" value=""/>
+	    <input type="hidden" id="LX" name="LX" value=""/>
+		<ul class="fwsxx">
+			<li>
+			
+				<div class="addzt" style="text-align: center;font-size: 26px;font-family: microsoft yahei;color:#ff8800;font-weight: bold;"></div>
+			</li>
+			<li>
+				<span>服务商名称：</span>
+				<input type="text" id="fwsmc" readonly="readonly"/>
+			</li>
+			<li>
+				<span>联系人：</span>
+				<input type="text" id="lxr" readonly="readonly" />
+			</li>
+			<li>
+				<span>联系电话：</span>
+				<input type="text" id="lxdh" readonly="readonly" />
+			</li>
+			<li>
+				<span class="bmwz">别名简称：</span>
+	   			<input type="text" name="ALIAS" id="ALIAS" readonly="readonly" class="bmwz"  style="margin-top:10px;"/>
+	   			<div class="bmts bmwz"></div>
+	   			<div class="clear"></div>
+			</li>
+			<li class="yxdy">
+				<span>授权地域：</span>
+				<textarea rows="4" cols="40" id="yxdy" readonly="readonly"></textarea>
+			</li>
+			<li class="sqdy" style="display: none;">
+				<span class="sqdy1">授权地域：</span>
+	   			<div class="btx">*</div>
+	   			<select name="QYdz01" id="provinceQY" class="bankbox width100">
+                 	<option value="0">请选择</option>
+                </select>
+                <select name="QYdz02" id="cityQY" class="bankbox width100">
+                	<option value="0">请选择</option>
+                </select>
+                <a href="javascript:void(0);"  onclick="addQY();" class="bot Medium bot_sty">添 加</a>
+                <a href="javascript:void(0);"  onclick="checkPP();" class="bot Medium bot_sty">确 定</a>
+                <span style="color: #ccc;width:171px;font-size:13px;padding:0;margin-left:5px;float:left;">点击添加按钮可继续添加区域</span>
+                <span style="color: #ccc;font-size:13px;padding:0;margin-left:5px;float:left;width:120px;">确定按钮可选择品牌</span>
+	   			<div class="qyts"></div>
+	   			<div class="clear"></div>
+			</li>
+			<li class="yxpp">
+				<span>授权品牌：</span>
+				<textarea rows="4" cols="40" id="yxpp" readonly="readonly"></textarea>
+			</li>
+			<li class="sqpp" style="display: none;">
+				<span>授权品牌：</span>
+	   		<span class="btx1" style="width: 40px;left: 112px;">*</span>
+	   			<div id="ppmc_div" class="ppmc_div"></div>
+			 	<input id="ppxx" name="ppxx" type="hidden" />
+	   			<div class="ppts"></div>
+	   			<div class="clear"></div>
+			</li>
+			<li>
+				<span class="sqwz0">授权期至：</span>
+	   			<input id="ENDTIME" name="ENDTIME" readonly="readonly" type="text" onchange="checkDate(this.value, 'yxqts')" style="width: 160px;height: 25px;margin-top:13px;" class="Wdate sqwz0"/> 
+	     		<div class="yxqts sqwz0"></div>
+	     		<div class="clear"></div>
+			</li>
+			<li>
+				<div class="fwswz">
+	       			<a style="margin: 10px 20px 0 80px;display: block;" href="javascript:void(0);" onclick="edit();" class="bot Medium dis" id="edit" >编辑</a>
+		         	<a style="margin: 10px 20px 0 80px;display: none;" href="javascript:void(0);" onclick="okclick();" class="bot Medium dis" id="save" >保存</a>
+		         	<a style="margin: 10px 20px 0 80px;display: block;" href="javascript:void(0);" onclick="goback();" class="bot Medium" id="back" >返回</a>
+		         	<div class="clear"></div>
+		        </div>
+			</li>
+		</ul>
+	  	<div class="clera"></div>
+	</form>
+</body>
+<script type="text/javascript">
+var o = document.forms[0];
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var gsid = usercookie.ZCXX01;
+var hbid = unescape($.getUrlParam("HBID"))
+var ppid = [];
+var dqid = [];
+var pvid = [];
+var cityStr;
+var yxpp; // 已选品牌
+function query(){
+	var XmlData=[{"ZTID" : gsid, "HBID" : hbid, "sqlid":"com.jlsoft.o2o.qxgl.sql.oper_fwsgl.selectGSGXList","dataType":"Json"}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData != undefined && rData != ""){
+		$("#fwsmc").val(rData[0].ZCXX02);
+		var FWSZT = rData[0].FWSZT;
+		var s = "";
+		var t = '可进行部分内容编辑<br /><lable class="LayColor">别名简称、授权地域、授权品牌、授权有效期可进行编辑</lable>';
+		if(FWSZT == "0"){
+			s = '待确认状态';
+			$("#edit").remove();
+		} else if(FWSZT == "1"){
+			s = '服务中状态,';
+			var SQZT = unescape($.getUrlParam("SQZT"));
+			if(SQZT == "4"){
+				s +='但已过期,';
+			}
+			s += t;
+		} else if(FWSZT == "2"){
+			s = '已拒绝状态,' + t;
+		} else if(FWSZT == "3"){
+			s = '终止服务状态,' + t;
+		} else if(FWSZT == "4"){
+			s = '已过期状态,' + t;
+		}
+		$(".addzt").html(s);
+		$("#lxr").val(rData[0].ZCXX03);
+		$("#lxdh").val(rData[0].ZCXX06);
+		$("#ALIAS").val(rData[0].ALIAS);
+		
+		var yxdytemp = null;
+		for(var i = 0; i < rData.length; i++){
+			if(yxdytemp == null || yxdytemp == ""){
+				yxdytemp = rData[i].DQBZM02;
+			}
+			else{
+				yxdytemp = yxdytemp + "," + rData[i].DQBZM02;
+			}
+			// 存放地区的数组
+			dqid.push(rData[i].DQBZM01);
+			pvid.push(rData[i].PROVBZM);
+		}
+		$("#yxdy").val(yxdytemp);
+		$("#yxdy").attr("title", yxdytemp);
+		//$("#yxdy").val(rData[0].DQBZM02);
+		//$("#yxdy").attr("title", rData[0].DQBZM02);
+		$("#yxpp").val(rData[0].PPB02);
+		$("#yxpp").attr("title", rData[0].PPB02);
+		$("#ENDTIME").val(rData[0].ENDTIME);
+		// 存放品牌的数组
+		ppid = rData[0].PPB01.split(",");
+		
+	}
+}
+
+// 保存
+function okclick(){
+	var flag = checkNull();
+	if(!flag){
+		return false;
+	}
+	var ppList = $("#ppxx").val().split(",");
+	var cityList = cityStr.split(",");
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.qxgl.sql.oper_fwsgl.selectFWSPPZT','dataType':'Json',"ZTID" : gsid, "HBID" : hbid, "ppList" : ppList, "cityList" : cityList}];
+  	var rData = visitService("/jlquery/selecto2o.action?XmlData=" + JSON.stringify(XmlData));
+	if(rData[0].COUNT > 0){
+		alert("有品牌已经授权该区域经销商不能重复授权!");
+		return false;
+	}
+	
+	var jsonData1 = $("#form1").formToJson();	
+	jsonData1[0].DQBM = cityStr;
+	var jsonData = escape(JSON.stringify(jsonData1));
+	var val = "/Oper_FWSGL/updateFWSGLXX.action";
+	var r = confirm('确认更新信息吗？');
+	if(r == true){
+		//弹出遮罩层
+		top.openWait();
+		$.ajax({
+			type:"POST",
+			async: false, //同步
+			url:encodeURI(val),//encodeURI避免中文乱码
+			data:{"jsonData":jsonData},
+			dataType:"text",
+			success: function(data) { 
+				//关闭遮罩层
+				top.closeWait();
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1 = jsondata.STATE;
+				if(data1 == 1){
+					alert("更新成功!");
+					window.location.href = "/customer/qfy/back/qxgl/Oper_FWSGL.html";
+				} else {
+					alert("更新失败!");
+				}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				//关闭遮罩层
+				top.closeWait();
+			}
+		});
+	}
+	else return;
+}
+
+$(document).ready(function(){
+	query();
+	showDQXX("QY");
+	$("#ZTID").val(gsid);
+	$("#HBID").val(hbid);
+});
+
+// 编辑
+function edit(){
+	var yxdq = $("#yxdy").val().split(",");
+	for(var i = 0; i < yxdq.length; i++){
+		var s = "<div id='" + dqid[i] + "' class='ysCity'>";
+		s += "<input type='hidden' id='proVal_" + pvid[i] + "' value='" + pvid[i] + "'>";
+		s += "<input type='hidden' id='cityId" + dqid[i] + "' value='" + dqid[i] + "'>";
+		s += "<span class='dyxx'>" + yxdq[i] + "</span>";
+		s += "<a href='javascript:void(0);'  onclick='deleteQY(\"" + dqid[i] + "\");' class='bot Medium bot_sty'>删 除</a>";
+		s += "</div>"
+		$(".sqdy").append(s);
+	}
+	yxpp = $("#yxpp").val().split(",");
+	var sbm = "";
+	for (var j = 0; j < yxpp.length; j++) {
+		sbm = sbm + '<li><input name="ppc" type="checkbox" onclick="changePPID()" checked="checked" class="bm_r" value="' + ppid[j] + '"/>'
+			+ '<span>' + yxpp[j] + '</span></li>';
+	}
+	$("#ppmc_div").append(sbm);
+	$(".sqpp").css("display", "block");
+	$("#ALIAS").attr("readonly", false).attr("onblur", "checkNullLength(this.value, 'bmts');");
+	$("#ENDTIME").attr("onclick", "WdatePicker();");
+	$("#ENDTIME").attr("readonly", false);
+	$(".yxdy").remove();
+	$(".yxpp").remove();
+	$(".sqdy").css("display", "block");
+	$("#save").css("display", "block");
+	$("#edit").remove();
+}
+
+//品牌名称
+function checkPP(){
+	if(!checkCity()){
+		return false;
+	}
+	clearTS();
+	var cityList = cityStr.split(",");
+  	var XmlData=[{'sqlid':'com.jlsoft.o2o.qxgl.sql.oper_fwsgl.selectGSPPXX','QryType':'Report','dataType':'Json',"ZTID" : gsid, "HBID" : hbid, "cityList" : cityList}];
+  	var rData = visitService("/jlquery/selecto2o.action?XmlData=" + JSON.stringify(XmlData));
+  	$("#ppmc_div").empty();
+	$("#ppmc_div").append(showPP(rData));
+	var $ppc = $(".bm_r");
+	for(var i = 0; i < $ppc.length; i++){
+		for(var j = 0; j < ppid.length; j++){
+			if($ppc[i].value == ppid[j]){
+				$ppc[i].checked = true;
+			}
+		}
+	}
+	$(".sqpp").css("display", "block");
+}
+
+// 显示品牌
+function showPP(data) {
+	var sbm = '';
+	if(data.length > 0){
+		for ( var i = 0; i < data.length; i++) {
+			sbm = sbm + '<li><input name="ppc" type="checkbox" onclick="changePPID()" class="bm_r" value="' + data[i].PPB01 + '"/>'
+				+ '<span>' + data[i].PPB02 + '</span></li>';
+		}
+	} else {
+		sbm = '<li><span>没有可以选择的品牌</span></li>';
+	}
+	return sbm;
+}
+
+// 获取PPID
+function changePPID(){
+	var $ppc = $(".bm_r");
+	ppid = [];
+	for(var i = 0; i < $ppc.length; i++){
+		if($ppc[i].checked){
+			ppid.push($ppc[i].value);
+		}
+	}
+}
+
+// 返回
+function goback() {
+	window.location.href = "/customer/qfy/back/qxgl/Oper_FWSGL.html";
+}
+
+// 为空判断
+function checkNull(){
+
+	if(o.ALIAS.value == ""){
+		tse("bmts","请填写服务商别名！");
+		$("#ALIAS").focus();
+		return false;
+	}
+	if(!checkCity()){
+		return false;
+	}
+	
+	if($(".sqpp").css("display") == "none"){
+		tse("qyts", "请点击确定选择品牌信息!");
+		return false;
+	}
+	
+	var ppcStr="";
+	var ppc=$("input[name='ppc']:checked").each(function(o){
+		if("" == ppcStr){
+			ppcStr = $(this).val();
+		} else {
+			ppcStr = ppcStr + "," + $(this).val();
+		}
+	});
+	
+	if(ppcStr == ""){
+		tse("ppts","请选择所属分类！");
+		return false;
+	} else {
+		$("#ppxx").val(ppcStr);
+		ts("ppts");
+	}
+	
+	if($("#ENDTIME").val().length == 0){
+		tse("yxqts","请选择有效期！");
+		return false;
+	} else {
+		if(!checkDate($("#ENDTIME").val(), "yxqts")){
+			return false;
+		}
+	}
+	return true;
+}
+
+// 给cityStr 赋值
+function checkCity(){
+	var $cityId = $("input[id^='cityId']");
+	var cityLength = $cityId.length;
+	if(cityLength == 0){
+		tse("qyts", "请点击添加选择区域!");
+		return false;
+	}
+	cityStr = "";
+	for(var i = 0; i < $cityId.length; i++){
+		if(i == 0){
+			cityStr = $cityId[i].value;
+		} else {
+			cityStr = cityStr + "," + $cityId[i].value;
+		}
+	}
+	return true;
+}
+
+// 检查值改变
+function checkDate(val, cls){
+	var chDate = val;  
+	var now = new Date();  
+	var nowDate =  now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(); 
+	var d1 = new Date(chDate.replace(/\-/g, "\/"));  
+	var d2 = new Date(nowDate.replace(/\-/g, "\/")); 
+	if(d1 > d2){
+		ts(cls);
+		return true;
+	} else {
+		tse(cls, "日期不能小于当前日期");
+		return false;
+	}
+}
+
+// 加载地址信息
+function showDQXX(id){
+  $("#province" + id).parent().children("select").each(function(index,e){
+  	if(index == 0){
+  	    var num = 0;
+  	    var dqjb = 1;
+    	var xmlData = [];
+      	var json = {};
+        json.qydm = num;
+    	json.dqjb = dqjb;
+    	json.FWSGL = 1;
+      	xmlData.push(json);
+      	var url = "/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+      	ajaxQ({
+      		"url":url,
+      		"callback":function(data){
+      			var dqxx = data.mapList;
+      			 $(dqxx).each(function(i,dqxxjson){
+      		  		$("#province" + id).append("<option>" + dqxxjson.DQXX02 + "</option>");
+      		  		$("#province" + id).find("option").eq(i + 1).val(dqxxjson.DQXX01);
+      		  	  });
+      		  	  $(e).bind("change",function(inx){
+      		  		setVal(e,"#city" + id,2);
+      		  	  });
+      		  	}  			
+      		});
+      	}
+   });
+}
+
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num = $(objnow).find("option:selected").val();  	
+  	var xmlData=[];
+  	var json = {};
+    json.qydm = num;
+	json.dqjb = dqjb;
+	json.FWSGL = 1;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	ajaxQ({
+  		"url":url,
+  		"callback":function(data){
+  			var list = data.mapList;
+  			if(list.length == 0){
+  				$(objaft).empty();
+  				$(objaft).append("<option value='1'>没有可选区域</option>");
+  			} else {
+  				json.FWSGL = "";
+  				url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  				var rData = visitService(url);
+  				var cityLength = rData.mapList.length;
+	  			
+	  			$(list).each(function(i,json){
+	  		  		if(i == 0){
+	  		  	 		$(objaft).empty();
+	  		  			if(list.length == cityLength){
+		  		  	  		$(objaft).append("<option value='0'>全境</option>");
+	  		  			} else {
+	  		  			$(objaft).append("<option value='2'>请选择</option>");
+	  		  			}
+	  		    	}
+	  		  		$(objaft).append("<option>" + json.DQXX02 + "</option>");
+	  		  		$(objaft).find("option").eq(i + 1).val(json.DQXX01);
+	  		  	});
+  			}
+		}
+  	});
+}
+
+//添加区域
+function addQY(){
+	var proVal = $("#provinceQY").val();
+	var cityId = $("#cityQY").val();
+	clearTS();
+	var qymc = "";
+	if(proVal == 0){
+		tse("qyts", "请选择省份!");
+		return false;
+	} else if(cityId == 0){
+		var $pro_ = $("input[id^='proVal_']")
+		for(var i = 0; i < $pro_.length; i++){
+			if($pro_[i].value == proVal){
+				tse("qyts", "您已选择该区域!");
+				return false;
+			}
+		}
+		cityId = proVal;
+		qymc = $("#provinceQY").find("option:selected").text();
+	} else if(cityId == 1){
+		tse("qyts", "该区域不可被选择!");
+		return false;
+	} else if(cityId == 2){
+		tse("qyts", "该选择城市!");
+		return false;
+	} else if(proVal != 0 && cityId != 0){
+		qymc = $("#provinceQY").find("option:selected").text() + $("#cityQY").find("option:selected").text();
+		if(cityId == $("#" + cityId).attr("id") || proVal == $("#" + proVal).attr("id")){
+			tse("qyts", "您已选择该区域!");
+			return false;
+		}
+	} 
+	var $pro_ = $("input[id^='proVal_']")
+	for(var i = 0; i < $pro_.length; i++){
+		if($pro_[i].value == proVal && cityId == $("#" + proVal).attr("id")){
+			tse("qyts", "您已选择该区域!");
+			return false;
+		}
+	}
+	var s = "<div id='" + cityId + "' class='ysCity'>";
+	s += "<input type='hidden' id='proVal_" + proVal + "' value='" + proVal + "'>";
+	s += "<input type='hidden' id='cityId" + cityId + "' value='" + cityId + "'>";
+	s += "<span class='dyxx'>" + qymc + "</span>";
+	s += "<a href='javascript:void(0);'  onclick='deleteQY(\"" + cityId + "\");' class='bot Medium bot_sty'>删 除</a>";
+	s += "<div style='clear:both;'></div></div>"
+	$(".sqdy").append(s);
+	$(".sqpp").css("display","none");
+}
+
+// 删除区域
+function deleteQY(cid){
+	$("#" + cid).remove();
+	$(".sqpp").css("display","none");
+	ppid = [];
+	/* if($(".ysCity").length == 0){
+		$(".sqpp").css("display","none");
+		ppid = [];
+	} */
+	clearTS();
+}
+
+// 清楚内容
+function clearTS(){
+	$(".qyts").empty();
+	$(".ppts").empty();
+}
+
+//提示
+function checkNullLength(val, cls){
+	if($.trim(val).length > 0){
+		ts(cls);
+	} else {
+		tse(cls, "不能为空!");
+	}
+}
+</script>
+</html>

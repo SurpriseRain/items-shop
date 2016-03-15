@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var ZCXX01 =usercookie.ZCXX01;
+  var XmlData=[{'sqlid':'com.jlsoft.c2b.service.sql.oper_fwcx.select_fwcx','QryType':'Report','dataType':'Json','ZCXX01':ZCXX01,'fwmc':$('#fwmc').val()}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">商品管理</a>
+    	<span>></span>
+    	<b>服务套餐列表</b>
+	</div> -->
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:818px;">
+	   	<span>服务名称：</span>
+		<input type="text" id="fwmc" name="fwmc"  size="20" class="text"/>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="save()">新增</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[		{'property':'id','header':'产品代码','type':'hidden'},
+							{'property':'ServiceName','header':'服务名称','type':'lable','width':'180px','id':'ServiceName'},
+							{'property':'OriginalPrice','header':'原价格','type':'lable','width':'180px','id':'OriginalPrice'},
+							{'property':'CurrentPrice','header':'现价格','type':'lable','width':'180px','id':'CurrentPrice'},
+							{'property':'Status','header':'操作','type':'fwcz','width':'180px','id':'Status'}]"
+		>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+function save(){
+	parent.ajaxGrid('/customer/qfy/c2b/Oper_FWSP.html');
+}
+//上架
+function sj(x){
+	var MyCookie = $.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	var XmlData=[{"id":x}];
+	var json={"id":x};
+	var url="/FWSP/update_FWTC.action?XmlData="+JSON.stringify(json);
+	visitSvcAsync(url,function(rData){
+		if(rData.STATE=="1"){
+			alert("操作成功!");
+			backFun();
+		}else{
+			alert("操作失败!");
+		}
+	});}
+//编辑
+function edit(x){
+		location.href="/customer/qfy/c2b/Oper_FWSP_item.html?id="+x;
+}
+</script>

@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Author" content="汽服云集成" />  
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/control/js/dtree.js"></script>
+<title>商品分类管理</title>
+<style type="text/css">
+#main {
+height: 800px;
+}
+#left {
+    border-left: 1px solid #e4e4e4;
+    float: left;
+    height: 100%;
+    overflow: auto;
+    padding-top: 10px;
+    width: 49%;
+}
+#right {
+float: right;
+display:"inline";
+width: 50%;
+}
+ul.dqbd{ width:auto; padding-left:10px; margin:10px 0; border:1px solid #e4e4e4; float:left;}
+ul.dqbd li{ line-height:50px; width:auto; position:relative; float:left;}
+ul.dqbd li span.name{ float:left; margin-left:15px; width:100px; text-align:right; color:#3c3c3c;}
+ul.dqbd li input{ border:1px solid #aaa; height:25px; line-height:25px; font-family:"microsoft yahei"; font-size:14px; padding-left:5px; float:left; margin:12px 0 0 10px;}
+ul.dqbd li input.sptm{ width:200px;}
+ul.dqbd li input.spmc{ width:500px;}
+ul.dqbd li input.spsl{ width:60px;}
+ul.dqbd li input.lsj{ width:100px; color:#e40000;}
+ul.dqbd li input.spgg-rl{ width:60px;}
+ul.dqbd li select{ margin:0px; padding:0px; border:1px solid #aaa; height:27px; line-height:27px; float:left; margin:12px 0 0 10px; font-family:"microsoft yahei"; font-size:14px;}
+ul.dqbd li select.cd{ margin-right:5px; width:150px;}
+ul.dqbd li select.ge{ width:100px;}
+ul.dqbd li select.cx{ width:150px;}
+ul.dqbd li label{ margin:0 0 0 5px; float:left;}
+ul.dqbd li .btx{ float:left; margin-right:5px; line-height:50px; color:#e40000; position:absolute; left:112px;}
+ul.dqbd li .tishi{ float:left; margin-left:20px; line-height:50px; color:#999;}
+ul.dqbd li .tishi font{ color:#090; font-weight:bold; margin:0 5px;}
+ul.dqbd li .spge{}
+ul.dqbd li a.qr:hover{ background-color:#1a47cc;}
+.qr_2 {
+    background-color: #2f80eb;
+    color: #fff;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    margin: 30px 0 30px 10px;
+    text-align: center;
+    width: 200px;
+}
+#curPosition {
+    border: 1px solid #e4e4e4;
+    float: left;
+    line-height: 30px;
+    padding-left: 10px;
+    width: 98%;
+}
+#curPosition a {
+    color: #004098;
+    float: left;
+    line-height: 30px;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+</style>
+<script type="text/javascript">
+//获取商品编号，回填货架信息
+var SPXX01 = $.getUrlParam("SPXX01");
+//选择货架位置，返回货架编码
+function updatetype(hjbh,pid,isend){
+	parent.window.setVal3IFrame(SPXX01,hjbh);
+	parent.window.hideAjaxGrid();
+}
+</script>
+</head>
+<body>
+<div id="main">
+ <div id="curPosition">
+    <a href="#">商品管理</a>
+    <span>></span>
+    <b>商品入库货架选择</b>
+  </div>
+	<div class="clera"></div>
+<div id="left">
+	<div style="display:none" height="50px"><span class="name">类型名称：</span></div>
+	<div id="left_content">
+		<script type="text/javascript">
+				var d = new dTree('d');
+				d.add(0,-1, "货架");
+				var pid = 0;
+				var btn = "";
+				var url="/Oper_FLHJ/selectTotalHJ.action";
+				var search_type_name=$.getUrlParam("search_type_name");
+				if(search_type_name==null){
+					var searchMap={};
+					var searchlist=[];
+					searchMap["search_type_name"]=search_type_name;
+					searchlist.push(searchMap);
+					url=url+"?XmlData="+JSON.stringify(searchlist);
+				}else{
+				}
+				var returnData=visitService(url);
+				var resultList = returnData.spfllist;
+				 $(resultList).each(function(index,FL01){
+					var typecode=FL01.FLCODE;
+					var typename=FL01.FLNAME;
+					var hjbh=FL01.HJBH;
+					var pid=FL01.FATHERCODE;
+					var pname=FL01.FATHERNAME;
+					var isend=FL01.isend;
+					if(pid==""){
+						pid=0;
+					}
+					if(pid==0){
+						btn = "<a style='color: blue' onclick=\"updatetype('"+hjbh+"','"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\" >"+typename+"</a>";
+					}else{
+						if(isend=="1"){
+							btn = "<a style='color: blue' onclick=\"updatetype('"+hjbh+"','"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\" >"+typename+"</a>";
+
+						}else{
+							btn = "<a style='color: blue' onclick=\"updatetype('"+hjbh+"','"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\" >"+typename+"</a>";
+						}
+					}
+					d.add(typecode,pid,btn);
+				});
+				$("#left_content").html(d.toString())
+			</script>
+	</div>
+</div>
+</div>
+</body>
+</html>

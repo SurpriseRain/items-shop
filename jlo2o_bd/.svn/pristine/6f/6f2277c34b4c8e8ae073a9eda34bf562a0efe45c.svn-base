@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据活动种类
+$(document).ready(function(){
+	var url = "/WDHD/selectActivityType.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.hdlxList).each(function(index,val){
+	    	$("#hdlx").append("<option value='"+val.ActivityTypeId+"'>"+val.ActivityTypeName+"</option>");
+	     });
+	}
+});
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var ZCXX01 = usercookie.ZCXX01;
+  var hdlx = $("#hdlx").val();
+  var hdzt = $("#HDSTATE").val();
+  var date_s = $("#date_s").val();
+  var date_e = $("#date_e").val();
+  var hdmc =$("#hdmc").val();
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL.select_MyActivity','QryType':'Report','dataType':'Json','hdmc':hdmc,'ZCXX01':ZCXX01,'ACTIVITYTYPEID':hdlx,'ACTIVITYSTATE':hdzt,'ACTIVITYSTARTTIME':date_s,'ACTIVITYENDTIME':date_e}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<style>
+ul#screening li{height:auto;}
+</style>
+</head>
+<body>
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:100%;">
+	    	<span>活动种类：</span>
+		   	<select id="hdlx" name="ActivityType" style="width: 85px;" >
+		    	<option value="">全部</option>
+			</select>
+	    	<span>活动状态：</span>
+	       		<script type="text/javascript">
+					document.write(showStateHtml('HDSTATE','HDSTATE'));
+				</script>
+			<span>活动名称：</span>
+			<input type="text" id="hdmc" name="hdmc"  size="20" class="text"/>
+	   </li>
+	   <li>
+		   	<span>订单时间：</span>
+			<input id="date_s" name="ActivityStartTime" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+		   	<span class="z" style="width:10px;">~</span>
+		    <input id="date_e" name="ActivityEndTime" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+		    <a href="javascript:void(0);" onclick="query()" class="bot Short  seach_bot" style="margin:10px;">查询</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[		{'property':'ACTIVITYID','header':'活动编号','type':'lable','width':'100px','id':'ActivityId'},
+							{'property':'ACTIVITYTYPENAME','header':'活动种类','type':'lable','width':'100px','id':'ActivityTypeName'},
+							{'property':'ACTIVITYNAME','header':'活动名称','type':'lable','width':'100px','id':'ActivityName'},
+							{'property':'TEMP','header':'活动状态','type':'lable','width':'80px','id':'Temp'},
+							{'property':'ACTIVITYSTARTTIME','header':'活动开始时间','type':'lable','width':'100px','id':'ActivityStartTime'},
+							{'property':'ACTIVITYENDTIME','header':'活动结束时间','type':'lable','width':'100px','id':'ActivityEndTime'},
+							{'property':'Status','header':'参加商品','type':'MyActivityCjsp','width':'80px','id':'Status'}
+				]"
+		>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+// 查询
+function query(){
+	init();
+}
+//列表
+function MyActivityCjsp(x){
+		location.href="/customer/qfy/back/hdgl/Srch_TCBM.html?ACTIVITYID="+x;
+}
+</script>

@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电器服务云 - 找回密码 - 填写用户名</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/zhmm-main.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/reg.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+</head>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$(".reg_bot").click(function(){
+		var realCaptcha= $("#realCaptcha").val().toLowerCase();
+		var userYzm= $("#userYzm").val().toLowerCase();
+		if(userYzm==""||realCaptcha==""){
+			alert("验证码不能为空");
+			return;
+		}
+		if(userYzm!=realCaptcha){
+			alert("验证码输入不正确");
+			return;
+		}
+		if(realCaptcha==""){
+			alert("验证码不能为空");
+			return;
+		}
+		var uesrNameyx = $("#uesrNameyx").val();
+		if(uesrNameyx==""){
+			alert("登陆账号或邮箱不能为空");
+			return;
+		}
+		var arr = [];
+		var o = {};
+		o["NameOrEmail"] = $.trim(uesrNameyx);
+		arr.push(o);
+		var data = visitService("/ForgetPwd/findUserByNameOrEmail.action?XmlData="+JSON.stringify(arr));
+		if(data.mapList == null || data.mapList == ""){
+			alert("用户名或邮箱不存在！");
+			$("#uesrNameyx").focus();
+		}
+		else{
+			$(data.mapList).each(function(index,newsObj){
+			var arr2 = [];
+			var p = {};
+			p["zcxx01"] = newsObj.ZCXX01;
+			p["username"] = newsObj.PERSON_ID;
+			p["email"] = newsObj.ZCXX09;
+			arr2.push(p);
+			/***邮箱找回暂时注释
+			var data = visitService("/ForgetPwd/sendEmail.action?XmlData="+JSON.stringify(arr2));
+			***/
+			$(".reg_bot").attr("href","zhmm_yzsf.html");//?zcxx01="+escape(newsObj.ZCXX01)+"&um="+escape(newsObj.PERSON_ID)+"&tel="+escape(newsObj.ZCXX06)+"&email="+escape(newsObj.ZCXX09));
+			//var flagInfo=[{"flag":"true","zcxx01":escape(newsObj.ZCXX01),"um":escape(newsObj.PERSON_ID),"tel":escape(newsObj.ZCXX06),"email":escape(newsObj.ZCXX09)}];
+			var flagInfo = [];
+		    var o = {};
+		    o.flag = "true";
+		    o.zcxx01 = escape(newsObj.ZCXX01);
+		    o.um = escape(newsObj.PERSON_ID);
+		    o.tel = escape(newsObj.ZCXX06);
+		    o.email = escape(newsObj.ZCXX09);
+		    flagInfo.push(o);
+			$.cookie("flagInfo", null, {
+				path : '/'
+			});
+			$.cookie("flagInfo", JSON.stringify(flagInfo), {
+				expires : 5,
+				path : '/'
+			});
+			});
+		}
+	});
+	refreshCaptchaImage();
+})
+function refreshCaptchaImage(){
+	$("#realCaptcha").val("");
+	$("#yzmimg").attr("src","/servlet/CaptchaOutput?font=Helvetica&&fontsize=22&&min-width=150&&padding-x=5&&padding-y=5&&random="+Math.random());
+}
+function setCaptchaText(){
+	var data = visitService("/UserLogin/searchCaptcha.action");
+	var captchaText=data.captchaText;  
+	$("#realCaptcha").val(captchaText);
+}
+</script>
+<body>
+<!-----公共部门开始---->
+<div id="header">
+  <div class="header_main">
+    <a class="logo" href="/customer/sydjt/index.html" ><img src="/customer/sydjt/images/zhmm-logo.png" /></a>
+    <!------------------流程------------------>
+    <div class="tecPro">
+      <div class="userLc">
+      <div class="userlcMain">
+        <div class="userlcCase"><a class="fxlc_zz">1.填写用户名</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">2.验证身份</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">3.修改密码</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">4.成功</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+<div class="clera"></div>
+<div id="main">
+  <ul class="userName">
+    <li class="title">您正在使用"找回密码"功能，请完成以下操作：</li>
+   
+    <li><span>登陆账号</span><input type="text" class="text foce" placeholder="请输入用户名\手机号\电子邮箱" id="uesrNameyx" focusOn="请输入用户名\手机号\电子邮箱" /><div class="tishi"></div></li>
+   
+    <li><span>验证码</span><input class="text yzm foce" id="userYzm" /><!-- mg src="/customer/sydjt/images/logo01.png" class="yzmimg"/--><img id="yzmimg"  onload="setCaptchaText()" class="yzmimg" src=""   border="0" ><input type="hidden" id="realCaptcha" value=""><a class="sxyzm"  title="刷新验证码" onclick="javascript:refreshCaptchaImage()">刷新</a><div class="tishi"></div></li>
+    <li><span>&nbsp;</span><a class="reg_bot">下一步</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

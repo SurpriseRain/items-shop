@@ -1,0 +1,105 @@
+<!-- <link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/userIndex.css" />
+<script type="text/javascript" src="/customer/sydjt/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/form/js/currentLog.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+
+<script type="text/javascript" src="/customer/sydjt/js/json.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/ui-back.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+
+<script type="text/javascript" src="/customer/sydjt/js/menu-new.js"></script> -->
+<div class="content">
+<div class="row">
+  <div class="w01 user_nav"></div>
+  <div class="w11" id="centerFrame" name="centerFrame">
+    <div class="w12 user_main" id="centerFrame_case" name="centerFrame_case"></div>
+    <div class="w03 user_service">
+	</div>
+  </div>
+  <iframe id="centerFrame_ifram" name="centerFrame_ifram" src="" frameborder="0" marginheight="0" class="right-main" scrolling="auto"  style="border:0px; height:auto; width:91.66666667%; display:none;"></iframe>
+</div>
+</div>
+
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+
+$("#centerFrame_ifram").load(function(){
+		var $this = $(this);
+		var mainOffSetHeight = $this.contents().find('body')[0].offsetHeight;
+		var mainScrollHeight = $this.contents().find('body')[0].scrollHeight;
+		var mainheight = mainOffSetHeight > mainScrollHeight ? mainOffSetHeight : mainScrollHeight;
+		var contentDocument = $this[0].contentDocument.children;
+		var doc = null;
+		if(typeof contentDocument !== "undefined"){
+			doc = contentDocument[0];
+		}else{
+			doc = $this[0].contentWindow.document;
+		}
+
+		var contentHeight = $(doc).height();
+		if(contentHeight < mainheight){
+			mainheight = contentHeight;
+		}
+		setFooterPosition(mainheight);
+		return;
+	});
+
+
+function setFooterPosition(mainheight){
+	var leftHeight = $(".shop-left-nav").height();
+	if(leftHeight<500){
+		leftHeight = 500;
+	}
+	if(leftHeight>mainheight){
+		mainheight = leftHeight;
+	}
+	
+	$("#centerFrame_ifram").height(mainheight);
+	//$("#shop-main").height(mainheight);
+}
+
+$(document).ready(function(){
+$(".user_nav").load("user_nav.html",function(){
+		var menuId=$.getUrlParam("menuId");	
+		menu.init(userCookie.XTCZY01);
+		//配置最终跳转URL路径页面
+		var url = "";
+	if(userCookie==null){			
+		location.href="/customer/sydjt/register/login.html";
+	}else{
+		if(userCookie.LX=="24"){
+			//url="/customer/sydjt/back/ddgl/myorder.html?menuId=A403";
+			url="/customer/sydjt/back/user_main.html?menuId=B001"
+			changeIframeSize(url,"#centerFrame_case");
+		}else{
+			url="/customer/sydjt/back/ddgl/Oper_DDGL.html?menuId=A401";
+			changeIframeSize(url,"#centerFrame");
+		}
+	}	
+		});
+//$(".user_case").load("user_main.html");
+//$(".user_service").load("user_service.html");
+
+/*$(document).on("click",".user_nav > dl > dd > a",function(){
+	var nav_text = $(this).text();
+	if(nav_text == "我的订单"){
+       $(".user_main").load("my_order.html");
+	  }else if(nav_text == "个人信息"){
+       $(".user_main").load("my_infor.html");
+	  }else if(nav_text == "收货地址"){
+       $(".user_main").load("my_address.html");
+	  }
+  })*/
+})
+</script>
+
+
+

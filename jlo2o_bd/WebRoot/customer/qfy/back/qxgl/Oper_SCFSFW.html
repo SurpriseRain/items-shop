@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPubxg.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Basinfo.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script> 
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/amap.js"></script>
+<style>
+#zhezhao{
+ background:#fff;
+    height: 40%;
+    left: 28%;
+  position: fixed;
+    top: 13px;
+    width: 35%;
+    z-index: 2147483647;
+    border:1px solid #e4e4e4;
+
+}
+#zhezhao ul{
+margin-top:30px;
+margin-left:35px;
+}
+
+#zhezhao li{
+height:53px;
+width:100%;
+margin-left:20px;
+
+}
+#zhezhao li span{
+}
+#zhezhao li input{
+border:1px solid #e4e4e4;
+width:212px;
+height:32px;
+}
+.yzm{
+ background: #ff4a00 none repeat scroll 0 0;
+    border: 1px solid #e4e4e4;
+    display: inline-block;
+    height: 33px;
+    margin-left: 10px;
+    width: 79px;
+}
+.yzm span{
+color:#fff;
+font-size:12px;
+margin-left:10px;
+margin-top:8px;
+display: inline-block;
+}
+.yzm b{
+color:#fff;
+font-size:12px;
+margin-left:26px;
+margin-top:8px;
+display: inline-block;
+}
+.shzt{
+color:red;
+font-size:18px;
+}
+.bhyj{
+margin-left:15px;
+}
+.xs label:hover,.cc label:hover{
+	text-decoration:underline;
+}
+.con{width: 829px;height: auto;border: 1px solid #e3e3e3;float:left;margin:10px 0;padding:10px 0;}
+	/*.aa{height: auto;border: 1px solid #ccc;float: left;}*/
+	.con>span{display: block;width: 198px;height: auto;line-height: 40px;float: left;text-align:center;}
+	.aa{float: left;width: 629px;
+	border:none;}
+	.aa>li{float: left;line-height: 30px;padding: 0 20px;}
+	.lx{width:100px;}
+	 .aa li label.caozuo{color: red;font-weight: 200;font-size: 12px;margin-left: 20px;cursor:pointer;}
+	 .sfwz{display:block;width:120px;text-align:center;}
+	 .sfys{border:1px solid #e3e3e3;border-top:none;}
+	.clear{clear: both;}
+	.ziti{ color: #ff8800;font-weight: bold;}
+</style>
+</head>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<input type="hidden" value="" id="ZCXX01" name="ZCXX01" />
+	<input type="hidden" value="" id="ZCGS01" name="ZCGS01"/>
+	<table class="single_table">
+		<tr class="title">
+			<td colspan="2"><b>辐射区域 </b></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">添加区域：</span></td>
+			<td class="add1" ><select id="provinceQY" class="dy" title="">
+				<option value="0">请选择</option></select> 
+				<select id="cityQY"><option value="0">请选择</option></select>
+				<label class="caozuo" onclick="tj()">添加</label>
+				<div class="tishi"></div>
+			</td>
+		</tr>
+	</table>
+
+	<!-- 存数据 -->
+	<table class="con">
+	</table>
+	
+		<table class="single_tables">
+		<tr class="bot">
+			<td colspan="2"><a style="margin-left: 193px;" class="bot Medium" id="baocun" onclick="ok()">保存</a></td>
+			<td colspan="2"><a style="margin-left: 193px;" class="bot Medium" id="baocun" onClick="javascript :history.go(-1);">返回</a></td>
+		</tr>
+	</table>
+	
+</form>
+<!---------------------底部--------------------->
+<script type="text/javascript">
+
+//初始化数据
+$(document).ready(function(){
+	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	//加载地址信息
+	showDQXX("QY");
+	//初始化数据
+	var zcxx01=userCookie.ZCXX01;
+	// 安迅和生产企业 默认为0
+	var dqckType = "0";
+	if(userCookie.LX == "42"){
+		dqckType = "1";
+	}
+	var json = {"zcxx01":zcxx01,"type":0, "dqckType" : dqckType};//type0表示虚拟仓库
+	var url = "/UserInfo/select_QYFGFW.action?XmlData=" + JSON.stringify(json);
+	var returnData=visitService(url);
+	var u =returnData.resultList;
+	
+	if(u[0].dqbzm01 == null){
+	}else{
+		for (var i = 0; i < u.length; i++) {
+			//添加
+			if(u[i].SF == null){
+				$(".single_table").append(" <tr   id='"+u[i].dqbzm01+"'> <td style='width: 150px;'><span style='width: 145px;'>区域：</span></td> 	<td style='width: 550px;'><input value='"+u[i].SJ+"'   class='lx' name='"+u[i].dqbzm01+"' readonly='readonly' style='width: 300px;' /> <label class='caozuo finalDo' onclick='cle("+u[i].dqbzm01+");'>[X]</label><div class='tishis'></div></td></tr>");
+			}else{
+				//截取大区编码设置为id
+				var isf =u[i].dqbzm01.substring(0,2);
+				//判断id是否存在
+				if($('#'+isf+'').length>0){
+					//存在,添加
+					$('#'+isf+'').append("<li id='"+u[i].dqbzm01+"' class='"+isf+"b'><input value='"+u[i].SJ+"' class='lx' name='"+u[i].dqbzm01+"' readonly='readonly'><label class='caozuo finalDo' onclick='cle("+u[i].dqbzm01+","+isf+");'>[X]</label></li>");
+				}else{
+					  $(".con").append(" <tr class='sfys' id='"+isf+"s' ><td><span class='sfwz' >"+u[i].SF+"</span></td><td><ul class='aa' id='"+isf+"'> <li id='"+u[i].dqbzm01+"' class='"+isf+"b'><input value='"+u[i].SJ+"' class='lx' name='"+u[i].dqbzm01+"' readonly='readonly'><label class='caozuo finalDo' onclick='cle("+u[i].dqbzm01+","+isf+");'>[X]</label></li></ul></td></tr> ");
+				}
+			}
+		}
+	}
+	//初始化 之前数据的样式
+	ts('tishis');
+});
+
+function ok(){
+	//标示 0 表示有值 1 表示
+	var yjbs = 1 ;
+	//所有的覆盖区域的值
+	$('.lx').each(function(){
+		//获取第一级或者二级值
+		var p = $(this).attr("name")
+			//进入循环表明有值	
+			return yjbs = 0;
+	});
+	if(yjbs == 1 ){
+		tse('tishi','不能为空!');
+		return false;
+	}else{
+		//所有的覆盖区域的值
+		var str = "";
+		$('.lx').each(function(){
+			//获取第一级或者二级值
+			var p = $(this).attr("name")
+			var pp = p.substring(0,2);
+			var vv = $('#'+pp+'s .sfwz').html();
+			//获取对应的value值
+			var v = $(this).val(); 
+			str += p +"-"+vv+""+v+",";
+		});
+	    //去掉最后一个逗号(如果不需要去掉，就不用写)
+	    if (str.length > 0) {
+	        str = str.substr(0, str.length - 1);
+	    }
+	    var MyCookie = $.cookie('userInfo');
+		var userCookie = JSON.parse(MyCookie);
+		var zcxx01=userCookie.ZCXX01;
+		var LX = userCookie.LX;
+		if(LX == 42){
+			//经销企业品牌未入驻时：自行分配的销售区域 type 字段为1
+			type = 1;
+			
+		}else{
+			//生产企业为 0;
+			type = 0;
+		}
+		//用于后台java类进行判断是物流还是生产、经销企业
+		var lx = 0; //1表示物流  0 表示其它
+		var t = 0;//1表示实体仓库 0 表示虚拟仓库
+	    var XmlData=[{"array":str},{"zcxx01":zcxx01},{"type":type},{"lx":lx},{"t":t}];
+	    var url="/Oper_FSFW/insert_SCFSFW.action?XmlData="+JSON.stringify(XmlData);
+	    var rData=visitService(url);
+	    if(rData.STATE==0){
+	        alert("操作成功!");
+	        window.location.href='/customer/qfy/back/yhgl/shop_Basinfo.html';
+	        }else{
+	        	alert("操作失败!");
+	        }
+	}
+}
+function tse(className,txt){
+	$('.' + className).html('<label class="errTs">'+txt+'</label>');
+	var $tsxx=$(className + 'label');
+	$tsxx.removeClass();
+	$tsxx.addClass('errTs');
+	$('.' + className).css({'width':'auto','margin-top':'10px'});
+}
+//添加按钮
+function tj(){
+	//一级不能为空
+	var sf = $("#provinceQY").val();
+	if(sf == 0){
+		tse('tishi','请选择省份/市级!');
+		return false;
+	}else{
+		ts('tishi');
+	}
+	//省份
+	var sfm = $("#provinceQY").find("option:selected").text();
+	//标示 0 表示存在 1 表示不存在
+	//判断 选择了省份，就不能选择省份下面的市级
+	var yjbs = 1;
+	//所有的覆盖区域的值
+	$('.lx').each(function(){
+		//获取第一级或者二级值
+		var p = $(this).attr("name")
+		if(sf == p){
+			return yjbs = 0;
+		}
+	});
+	if(yjbs == 0){
+		//alert("选择的市级单位已有上级");
+		tse('tishi','已选择对应的省份辐射区域!');
+	}else{
+		//市级
+		var sjm = $("#cityQY").find("option:selected").text();
+		var sj = $("#cityQY").val();
+		if(sjm == "区域已被物流覆盖"){
+			tse('tishi','该省已被物流区域覆盖，无需选择');
+			return false;
+		}else if(sjm=="请选择"){
+			tse('tishi','不能选择全省覆盖');
+			return false;
+		}
+		//标识符 1：没有重复  0表示重复了
+		var pd = 1;
+		if(sj == 0){
+			//表示只选择的省级
+			var vlm = sfm;
+			var vl=sf; 
+			//所有的覆盖区域的值
+			$('.lx').each(function(){
+				//获取第一级或者二级值
+				var p = $(this).attr("name")
+				if(vl == p){
+					
+					return pd = 0;
+				}
+			});
+		}else{
+			//表示选择的是市级
+			var vlm = sfm + sjm ;
+			var vl=sj;
+			//所有的覆盖区域的值
+			$('.lx').each(function(){
+				//获取第一级或者二级值
+				var p = $(this).attr("name")
+				if(vl == p){
+					
+					return pd = 0;
+				}
+			});
+		}
+		if(pd ==0){
+			tse('tishi','选择的辐射范围重复!');
+			
+		}else{
+			//添加
+			//截取大区编码设置为id
+			var isf =vl.substring(0,2);
+			//判断id是否存在
+			if($('#'+isf+'').length>0){
+				//存在说明已辐射到市级，不再允许添加省级单位了
+				var vl_s = vl.substring(2, 6);
+				if(vl_s == 000){
+					tse('tishi','已辐射到市级单位了,请删除后再辐射全省');
+					return false;
+				}else {
+					//存在,添加
+					$('#'+isf+'').append("<li id='"+vl+"' class='"+isf+"b'><input value='"+sjm+"' class='lx' name='"+vl+"' readonly='readonly'><label class='caozuo finalDo' onclick='cle("+vl+","+isf+");'>[X]</label></li>");
+				}
+			}else{
+				//判断是否选择的是全省
+				var isfs =vl.substring(2,6);
+				if(isfs == 0000){
+					//选择的是全省
+					 $(".con").append(" <tr class='sfys' id='"+isf+"s' ><td><span class='sfwz' >"+sfm+"</span></td><td><ul class='aa' id='"+isf+"'> <li id='"+vl+"' class='"+isf+"b'><input value='全省' class='lx' name='"+vl+"' readonly='readonly'><label class='caozuo finalDo' onclick='cle("+vl+","+isf+");'>[X]</label></li></ul></td></tr> ");
+				}else{
+					  $(".con").append(" <tr class='sfys' id='"+isf+"s' ><td><span class='sfwz' >"+sfm+"</span></td><td><ul class='aa' id='"+isf+"'> <li id='"+vl+"' class='"+isf+"b'><input value='"+sjm+"' class='lx' name='"+vl+"' readonly='readonly'><label class='caozuo finalDo' onclick='cle("+vl+","+isf+");'>[X]</label></li></ul></td></tr> ");
+						
+				}
+				
+			}
+		}
+		
+	}
+}
+//删除
+function cle(obj,isf){
+	$("#"+obj+"").remove();
+	if($('.'+isf+'b').length>0){
+	}else{
+		$("#"+isf+"s").remove();
+	}
+}
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  	  });	
+  	}
+    if(index==1){
+  	  var dqjb=2;
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  	  });	
+  	}
+    if(index==2){
+	   	  $(this).bind("change",function(inx){
+	   		setVal(this,"#street"+id,4);
+	   	  });	
+	   	}
+  });
+}
+
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+	//json.FWSGL = 1;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	
+  	if(list.length == 0){
+		$(objaft).empty();
+		$(objaft).append("<option value='1'>区域已被物流覆盖</option>");
+	}else{
+	  		var xmlData=[];
+	  		var json={};
+	    	json.qydm=num;
+			json.dqjb=dqjb;
+			json.FWSGL = "";
+	  		xmlData.push(json);
+			url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+			var rData = visitService(url);
+			var cityLength = rData.mapList.length;
+			
+			$(list).each(function(i,json){
+		  		if(i == 0){
+		  	 		$(objaft).empty();
+		  			if(list.length == cityLength){
+  		  	  		$(objaft).append("<option value='0'>全省</option>");
+		  			} else {
+		  			$(objaft).append("<option value='2'>请选择</option>");
+		  			}
+		    	}
+		  		$(objaft).append("<option>" + json.DQXX02 + "</option>");
+		  		$(objaft).find("option").eq(i + 1).val(json.DQXX01);
+		  	});
+	}
+}
+</script>
+</body>
+</html>

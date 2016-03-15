@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.QFYproduct">
+	
+  	<select id="qfylistitem" parameterType="Map" resultType="java.util.Map">
+		SELECT DISTINCT MOBILE_MODLE, MOBILE_MODLE_ID<!-- , TYPE_CODE --> FROM W_AUTOMOBILE 
+		WHERE CAR_ID=#{CAR_ID}
+		<if test="MOBILE_MODLE_YEAR!=''">
+			AND MOBILE_MODLE_YEAR=#{MOBILE_MODLE_YEAR}
+		</if>
+		<if test="MOBILE_DISPLACEMENT!=''">
+			AND MOBILE_DISPLACEMENT = #{MOBILE_DISPLACEMENT}
+		</if>
+		<if test="MOBILE_TRANSMISSION_TYPE!=''">
+			AND MOBILE_TRANSMISSION_TYPE = #{MOBILE_TRANSMISSION_TYPE}
+		</if>
+	</select>
+		
+	<select id="qfylistitemsum" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) SUM FROM (
+			SELECT DISTINCT MOBILE_MODLE, MOBILE_MODLE_ID<!-- , TYPE_CODE --> FROM W_AUTOMOBILE 
+			WHERE CAR_ID=#{CAR_ID}
+			<if test="MOBILE_MODLE_YEAR!=''">
+				AND MOBILE_MODLE_YEAR=#{MOBILE_MODLE_YEAR}
+			</if>
+			<if test="MOBILE_DISPLACEMENT!=''">
+				AND MOBILE_DISPLACEMENT = #{MOBILE_DISPLACEMENT}
+			</if>
+			<if test="MOBILE_TRANSMISSION_TYPE!=''">
+				AND MOBILE_TRANSMISSION_TYPE = #{MOBILE_TRANSMISSION_TYPE}
+			</if>
+	) AS TOTAL	
+	</select>
+	
+</mapper>
+  

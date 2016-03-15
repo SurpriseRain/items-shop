@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.message.sql.Oper_XiaoXiGL">
+	<!--查询系统消息总数量 -->
+	<select id="select_XTXX_sum" parameterType="map" resultType="java.util.Map">
+		SELECT COUNT(1) as COUNT FROM usermessage WHERE ReceiveUserId=#{ZCXX01} AND MessageType=0
+		ORDER BY Id DESC
+	</select>
+	<!--咨询-卖家消息总数量 -->
+	<select id="select_ZXXX_sum" parameterType="map" resultType="java.util.Map">
+		SELECT COUNT(1) as COUNT FROM usermessage WHERE ReceiveUserId=#{ZCXX01} AND MessageType=1
+		ORDER BY Id DESC
+	</select>
+	<!--咨询-买家消息总数量 -->
+	<select id="select_ZXXX_maijia_sum" parameterType="map" resultType="java.util.Map">
+		SELECT COUNT(1) AS COUNT FROM usermessage WHERE SendUserId=#{ZCXX01} AND MessageType=1
+		ORDER BY Id DESC
+	</select>
+	<!--所有系统-消息-查询 -->
+	<select id="selectAllXT" parameterType="map" resultType="java.util.Map">
+		SELECT
+		id,SendUserId,ReceiveUserId,Title,Content,DATE_FORMAT(MessageCreateTime,'%Y-%m-%d %k:%i:%s')
+		MessageCreateTime,MessageState,MessageType
+		FROM usermessage
+		WHERE
+		ReceiveUserId=#{ZCXX01}
+		AND MessageType=0
+	</select>
+	<!--所有-卖家-咨询消息-查询 -->
+	<select id="selectAllZX" parameterType="map" resultType="java.util.Map">
+		SELECT
+		a.MessageType,
+		a.Reply,
+		a.id,
+		a.Content,
+		a.SendUserId,
+		a.ReceiveUserId,
+		a.AssociateProduceId,
+		c.zcxx03,
+		b.barcode,
+		b.spxx04,
+		DATE_FORMAT(
+		a.MessageCreateTime,'%Y-%m-%d %k:%i:%s') MessageCreateTime
+		FROM
+		usermessage a,
+		w_goods b,
+		w_zcxx c
+		WHERE
+		a.SendUserId = c.zcxx01
+		AND b.SPXX01 = a.AssociateProduceId
+		AND a.MessageType=1
+		AND
+		(a.SendUserId = #{ZCXX01} OR a.ReceiveUserId = #{ZCXX01})
+		ORDER BY Id DESC
+	</select>
+	<!--所有-买家-咨询消息-查询 -->
+	<select id="selectAllZX_maijia" parameterType="map" resultType="java.util.Map">
+	SELECT 
+	b.spxx04,b.barcode,c.spjgb01,d.zcxx03,
+	a.id,a.SendUserId,a.title,a.content,a.AssociateProduceId,a.MessageState,a.MessageType, a.Reply,
+	DATE_FORMAT(
+		a.MessageCreateTime,'%Y-%m-%d %k:%i:%s') MessageCreateTime
+	FROM 
+	usermessage a,w_goods b,w_spjgb c,w_zcxx d
+	WHERE 
+	SendUserId=#{ZCXX01} 
+	AND a.SendUserId = d.zcxx01
+	AND MessageType=1
+	AND b.SPXX01 = a.AssociateProduceId
+	AND c.spxx01=a.AssociateProduceId
+	</select>
+
+	<!--单条系统消息-查询 -->
+	<select id="selectByid_xt" parameterType="map" resultType="java.util.Map">
+		SELECT
+		id,SendUserId,ReceiveUserId,Title,Content,DATE_FORMAT(MessageCreateTime,'%Y-%m-%d %k:%i:%s')
+		MessageCreateTime,MessageState,MessageType FROM usermessage
+		WHERE id=#{id}
+	</select>
+	<!--单条咨询消息-查询 -->
+	<select id="selectByid_zx" parameterType="map" resultType="java.util.Map">
+		SELECT
+		a.id,a.Reply,f.spjgb05,e.barcode,e.spxx04,a.Reply,d.lx,b.zcxx02,b.zcxx03,a.Reply,a.SendUserId,a.ReceiveUserId,a.AssociateProduceId,DATE_FORMAT(a.MessageCreateTime,'%Y-%m-%d%k:%i:%s')
+		MessageCreateTime,a.Content FROM usermessage a,w_zcxx b,w_gslx
+		d,w_goods e,w_spjgb f
+		WHERE
+		b.zcxx01= a.SendUserId
+		AND a.SendUserId=d.gsid
+		AND a.SendUserId=d.gsid
+		AND f.spxx01=a.AssociateProduceId
+		AND a.id=#{id}
+		AND e.SPXX01 = a.AssociateProduceId
+	</select>
+<!-- ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss -->
+	<!--消息信息-查询 -->
+	<select id="Srch_XTXiaoXi_sum" parameterType="map" resultType="java.util.Map">
+		SELECT COUNT(1) as COUNT
+		FROM usermessage WHERE ReceiveUserId=#{ZCXX01}
+	</select>
+
+	<!--咨询消息信息-查询 -->
+	<select id="Srch_XiaoXi" parameterType="map" resultType="java.util.Map">
+		SELECT
+		a.id,
+		a.SendUserId,
+		a.ReceiveUserId,
+		a.AssociateProduceId,
+		c.zcxx03,
+		b.barcode,
+		b.spxx04,
+		DATE_FORMAT(
+		a.MessageCreateTime,'%Y-%m-%d
+		%k:%i:%s') MessageCreateTime
+		FROM
+		usermessage a,
+		w_goods b,
+		w_zcxx c
+		WHERE
+		a.SendUserId = c.zcxx01
+		AND b.SPXX01 = a.AssociateProduceId
+		AND
+		(a.SendUserId = #{ZCXX01} OR a.ReceiveUserId = #{ZCXX01})
+		<if test="W_DJZX02!='' and W_DJZX02!=null">
+			AND MessageState = #{W_DJZX02}
+		</if>
+		<if test="sptm!='' and sptm!=null">
+			AND barcode = #{sptm}
+		</if>
+		ORDER BY Id DESC
+	</select>
+
+	<!--咨询消息信息-查询 -->
+	<select id="Srch_XiaoXi_sum" parameterType="map" resultType="java.util.Map">
+		SELECT COUNT(1) as COUNT FROM
+		usermessage a,
+		w_goods b,
+		w_zcxx c
+		WHERE
+		a.SendUserId = c.zcxx01
+		AND b.SPXX01 = a.AssociateProduceId
+		AND
+		(a.SendUserId = #{ZCXX01} OR a.ReceiveUserId = #{ZCXX01})
+		<if test="W_DJZX02!='' and W_DJZX02!=null">
+			AND MessageState = #{W_DJZX02}
+		</if>
+		<if test="sptm!='' and sptm!=null">
+			AND barcode = #{sptm}
+		</if>
+		ORDER BY Id DESC
+	</select>
+	<!--回复- -->
+	<select id="Srch_XiaoXiGL" parameterType="map" resultType="java.util.Map">
+		SELECT
+		e.barcode,e.spxx04,a.Reply,d.lx,b.zcxx02,b.zcxx03,a.SendUserId,a.ReceiveUserId,a.AssociateProduceId,DATE_FORMAT(a.MessageCreateTime,'%Y-%m-%d%k:%i:%s')
+		MessageCreateTime,a.Content FROM usermessage a,w_zcxx b,w_gslx
+		d,w_goods e
+		WHERE
+		b.zcxx01= a.SendUserId
+		AND a.SendUserId=d.gsid
+		AND
+		a.id=#{id}
+		AND e.SPXX01 = a.AssociateProduceId
+		AND
+		a.AssociateProduceId=#{AssociateProduceId}
+	</select>
+	<!--系统消息- -->
+	<select id="Srch_XXiaoXi" parameterType="map" resultType="java.util.Map">
+		SELECT
+		id,ReceiveUserId,DATE_FORMAT(MessageCreateTime,'%Y-%m-%d %k:%i:%s')
+		MessageCreateTime,Content FROM usermessage WHERE
+		id=#{id}
+	</select>
+</mapper>

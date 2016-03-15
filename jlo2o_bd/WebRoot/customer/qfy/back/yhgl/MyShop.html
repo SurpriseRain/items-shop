@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shangpin.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/pinpai_MyCollection.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/dianpu.css" />
+<title>汽服云</title>
+<style>
+.navselect{background:rgb(238, 238, 238);color:#fff};
+</style>
+</head>
+<body>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.pagecommon.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/control/js/tuidan_carlist.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<div id="wrap">
+		<!-- <div id="head">
+			<ul>
+				<li><a href="" style='color: rgb(241, 10, 10); font-size: 15px;'>收藏中心</a></li>
+				<li>></li>
+				<li><a href="" style='color: #1B1A1A; font-size: 15px;'>收藏的产品</a></li>
+			</ul>
+		</div> -->
+		
+		<div id="nav">
+			<ul>
+				<li><a href="/customer/qfy/back/yhgl/MyCollection.html">收藏的商品</a></li>
+				<li><a href="/customer/qfy/back/yhgl/MyDrand.html">收藏的店铺</a></li>
+				<li class="navselect"><a href="/customer/qfy/back/yhgl/MyShop.html">收藏的品牌</a></li>
+			</ul>
+		</div>
+		
+		<div id="quanx">
+			<div class="ipt">
+				<input type="checkbox" name="" id="qx" value="" class="rdo_checked_all"/><span>全选</span>
+				<a href="" class="btn_delValue">取消关注</a>
+			</div>
+			
+			<div class="sp" id="pp">
+				
+			</div>
+			
+			<div id="ym"></div>
+			
+		</div>
+		
+		
+	</div>
+<script type="text/javascript">
+$(function() {
+	$(document).ready(function(){
+		$('#nav li').on('click',function(){
+			$('#nav li').removeClass('navSelect');
+			$(this).addClass('navSelect');
+		})
+	})
+	var MyCookie = $.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	var u = usercookie.ZCXX01;
+	var hf = usercookie.LX;
+	//查询收藏店铺的总数量
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.MyCollection.select_SCPP_sum','QryType':'Report','dataType':'Json','ZCXX01':u}];
+	var rumData = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	var rowNum = rumData[0].COUNT;
+	//查询所有收藏商品的信息
+	var xmlData = [{'ZCXX01': u}];
+	var url = "/message/jlquery/selectAllSCPP.action?XmlData="
+		+ JSON.stringify(xmlData);
+	$.ajax({
+		type : "GET", //请求方式
+		url : encodeURI(url),
+		//async:false,
+		success : function(data) {
+		 	if (data != null) {
+				try {
+					var json = jQuery.parseJSON(data);
+				 	//展示数据
+					showSCPP(json.data);
+					//返回文件名
+					fileName =  json.fileName;
+					$('#ym').kkPages({ 
+					   PagesClass:'li.jl', //需要分页的元素
+					   RowNum:rowNum,
+					   FileName:fileName,
+					   PagesMth:pubJson.PagesMth, //每页显示个数 
+					   PagesNavMth:pubJson.PagesNavMth, //显示导航个数
+					   callback:function(pageData){
+						   showSCPP(pageData);
+						   showDel();
+						}
+					});
+				} catch (e) {
+					return;
+				}
+			} 
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest
+					+ "+" + errorThrown);
+		}
+	});
+});
+//展示收藏店铺数据
+function showSCPP(rData0) {
+	var u = rData0;
+	var spObj = $("#pp");
+	spObj.empty();
+	var str = "";
+	for (var i = 0; i < u.length; i++) {
+		str += setSCPPHtml(u[i]);
+	}
+	spObj.html(str);
+}
+//收藏店铺数据-拼接的方法
+function setSCPPHtml(data) {
+	var dpurl="/customer/qfy/showDpxx/shopAllGoods.html?gsid="+data.CollectInfo+"&gsmc="+escape(data.zcxx02);
+	//显示店铺LOGO信息
+	var imgUrl="";
+	if(data.pptp02 == null){
+		imgUrl = "/customer/qfy/images/msimga.png";
+		}else{
+	 	imgUrl= pubJson.path_sptp+"/pptp/"+data.pptp02;
+		}
+	var defaultDpxxImgUrl = "/customer/qfy/images/cptpzq.png";
+	var str = "";
+	str += "<dl>";
+	str += "<input type='checkbox' name='nos' onclick='sleAll()' id='' value='"+ data.id + "' />";
+	str+="<dt><img src='"+ imgUrl + "'  onerror='this.onerror=null;this.src=\""+ defaultDpxxImgUrl +"\" '  ></dt>";
+	str += "</dd>";
+	str += "</dl>";
+	return str;
+}
+$(function(){
+    /*-----全选-----*/
+    $('.rdo_checked_all').click(function(){
+        var is_checked=$('.rdo_checked_all').attr('checked');
+        if(is_checked=="checked"){
+            $('input[name=nos]').attr('checked',true);
+        }
+        else{
+           $('input[name=nos]').attr('checked',false);          
+        }
+      });
+    /*----------删除-------*/
+    $('.btn_delValue').click(function(){
+        var array = new Array(); //用于保存 选中的那一条数据的ID   
+        var flag; //判断是否一个未选   
+        $("input[name='nos']:checkbox").each(function() { //遍历
+                    if ($(this).attr("checked")) { //判断是否选中    
+                        flag = true; //只要有一个被选择 设置为 true  
+                    }  
+                })  
+        if (flag) {  
+            $("input[name='nos']:checkbox").each(function() { //遍历 
+                        if ($(this).attr("checked")) { //判断是否选中    
+                            var id = $(this).val()
+                            var xmlData =  {'id' : id} ;
+                            var url = "/YHZX/deleteSCSP.action?XmlData="+ JSON.stringify(xmlData);
+                        	$.ajax({
+                        	       type : "GET", //请求方式
+                        	       url : encodeURI(url),
+                        	       success : function(data) {
+                        	    	
+                        	       //刷新 
+                        	      location.reload();
+                        	       },
+                        	       });
+                        }
+                    })  
+            
+        } else {  
+            alert("请至少选择一个品牌");  
+        }  
+    }); 
+});
+
+function sleAll(){
+	var chsub = $("input[name='nos']").length; //获取check的个数  
+    var checkedsub = $("input[name='nos']:checked").length; //获取选中的check的个数  
+    if (checkedsub == chsub) {  
+        $(".rdo_checked_all").attr("checked", true);
+    } else {
+    	$(".rdo_checked_all").attr("checked", false);
+    }
+}
+function showDel(){
+	$(".rdo_checked_all").attr("checked", false);
+}
+</script>
+</body>
+</html>

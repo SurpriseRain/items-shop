@@ -1,0 +1,209 @@
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public1.js"></script>
+<div id="toper">
+  <div class="top_main">
+      <ul class="top_left">
+      	<li class="login"><a >您好,</a></li>
+        <li class="login"><a id="loginP" href="/customer/qfy/register/login.html">请登录</a></li>
+        <li class="reg" id="regist"><a href="/customer/qfy/register/register.html">免费注册</a></li>
+        <li class="login"><a href="" class="login" style="display:none;" id="ext">[退出]</a></li>
+<!--        <li class="dq">-->
+<!--          <a>武汉</a><span>[ 更改 ]</span>-->
+<!--          <div class="city">-->
+<!--            <div class="hotcity"><label>热门城市</label><a href="#">北京</a><a href="#">天津</a><a href="#">上海</a><a href="#">深圳</a><a href="#">广州</a><a href="#">武汉</a></div>-->
+<!--            <div class="hotcity xzcity"><b class="xuan">ABCD</b><b>EFGH</b><b>IJKL</b><b>MNOP</b><b>QRET</b><b>UWXYZ</b></div>-->
+<!--            <div class="city_main">-->
+<!--              <a>澳门</a><a>澳门</a><a>澳门</a><a>澳门</a><a>澳门</a><a>澳门</a><a>澳门</a><a>澳门</a><a>澳门</a>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </li>-->
+<!--        <li class="gz" hidden><a>关注汽服云</a></li>-->
+      </ul>
+    <div id="houtaigl" style="float: left;margin-right: 20px;padding-left: 16px;"></div>
+    <div class="topright">
+      <a href="#">我的汽服云</a>
+      <a href="/customer/qfy/showMessage/bzsc.html">帮助手册</a>
+      <a href="/customer/qfy/showMessage/index-lxwm.html">联系客服</a>
+    </div>
+  </div>
+</div>
+<div class="clera"></div>
+<div id="header">
+ <div id="head">
+  <div class="logo">
+  	 <a href="/customer/qfy/index.html" class="img"><img src="/customer/qfy/images/shop-logoa.png"/></a>
+  </div>
+  <div class="search">
+     <div class="tj"><a class="xuan" id="tj01">产品</a><a id="tj02">OE码</a><a id="tj03">商品条码</a></div>
+    <div class="nr">
+      <input type="hidden" value="cp" id="tjbh">
+      <input id="sousuo" placeholder="输入产品名称 / 商品条码都可以直接搜索" />
+      <a class="seabot">搜 索</a>
+      <ul class="lx">
+        <li><a href="#">风衣风衣风衣风衣风衣风衣</a><span>约12000个结果</span></li>
+        <li><a href="#">风衣风衣风衣风衣风衣风衣</a><span>约12000个结果</span></li>
+        <li><a href="#">风衣风衣风衣风衣风衣风衣</a><span>约12000个结果</span></li>
+        <li><a href="#">风衣风衣风衣风衣风衣风衣</a><span>约12000个结果</span></li>
+        <li><a href="#">风衣风衣风衣风衣风衣风衣</a><span>约12000个结果</span></li>
+      </ul>
+    </div> 
+  </div>
+  </div>
+</div>
+<div class="clera"></div>
+<!-- PCRM代办 开始 -->
+<div id="pcrm" class="pcrm"></div>
+<!-- PCRM代办 结束-->
+<div class="clera"></div>
+<div id="gyl-nav">
+  <a class="nav xuan" href="#">我的后台</a>
+  <!-- 此处功能为开发，暂时屏蔽 2015.2.14
+  <a class="nav" href="/customer/qfy/remind.html">账号管理</a>
+  <a class="nav" href="/customer/qfy/remind.html">消息中心</a>
+    -->
+</div>
+<div class="clera"></div>
+
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+$(document).ready(function(){
+	showUser();
+	selectSrch(usercookie);
+	//$("#pcrm").load("/form/pcrm.html");
+});
+
+//点击步骤行为切换页面
+function changePage(gzlbh,xwbh,ywdh,rzbh){
+	currentXw="xwmc_"+xwbh;
+	$(".libottom > a").removeClass("xuan");	
+	$("#"+currentXw).addClass("xuan");
+	$("#centerFrame").contents().find("#stepActionBar").contents().find("#"+currentXw).click();
+}
+
+//检查是否已登录
+function showUser(){
+	if(usercookie!=null){
+		$("#ext").attr("style","display:black").attr("href","javascript:void(0)").on("click",function(){
+			//清除cookie
+			$.cookie('userInfo',null,{path:"/"});  
+			window.location="/customer/qfy/index.html";
+		});
+		//if(usercookie.LX!=21){
+		//	$("#houtaigl").append('<a class="left no4" href="/customer/back/Main.jsp">后台管理</a>');			
+		//} 
+		$("#regist").remove();
+		$("#loginP").html(usercookie.ZCXX02).css("width","100px");
+		$("#loginP").attr('href','/customer/qfy/showDpxx/shopAllGoods.html?gsid='+usercookie.ZCXX01+'&gsmc='+escape(usercookie.ZCXX02));
+		$("ul.login").hide();
+	}else{			
+		location.href="/customer/qfy/index.html";
+	}
+}
+
+//搜索功能
+function selectSrch(usercookie){
+ 	$(".seabot").click(function(){
+	 	if($("#tjbh").val()=="cp") {
+		 	if($("#sousuo").val()==null || $("#sousuo").val()=='') {
+				alert("请输入查询内容");
+				return;
+			}
+		 	var spxx04=($("#sousuo").val()).trim();
+		 	location.href="/customer/qfy/showDpxx/shopAllGoods.html?gsid="+usercookie.ZCXX01+"&SPXX04="+escape(spxx04)+"&gsmc="+escape(usercookie.ZCXX02);
+	 		/* if($("#sousuo").val()!=rmssc) {
+		 		var spxx04=($("#sousuo").val()).trim();
+		 		location.href="/gui_o2o/qfy/fore/member_shop.html?SPXX04="+escape(spxx04);
+	 		} else {
+		 		location.href="/gui_o2o/qfy/fore/member_shop.html?SPXX04="+escape(rmssc);
+	 		} */
+		} else if($("#tjbh").val()=="dp") {
+		 	if($("#sousuo").val()==null || $("#sousuo").val()=='') {
+				alert("请输入查询内容");
+				return;
+			}
+			var dpmc = ($("#sousuo").val()).trim();
+			location.href="/customer/qfy/showProduct/member_shop.html?SPXX04="+escape(dpmc);
+		} else if($("#tjbh").val()=="tm") {
+					if($("#sousuo").val()==null || $("#sousuo").val()=='') {
+						alert("请输入查询内容");
+						return;
+					}
+					var sptm = ($("#sousuo").val()).trim();
+					var url="/QFY/selectSPXXbySPTM.action?sptm="+sptm;
+					var data=visitService(url);
+					if(data.STATE == 1 && data.data.ZCXX01 == usercookie.ZCXX01){
+						data=data.data;
+						location.href="/customer/qfy/showProduct/product.html?spxx01="+data.SPXX01+"&zcxx01="+data.ZCXX01+"&gsid="+data.ZCXX01+"&gsmc="+escape(data.ZCXX02);
+					
+					}else{
+						alert("该条码商品暂无！");
+					}
+								
+				/* $("#nxsou").find("li").remove();
+				var tm = ($("#sousuo").val()).trim();
+				var XmlData = [{"BARCODE":tm}];
+		 		var srchUrl=baseUrl+"/MyGoods/SrchGoods.action?XmlData="+JSON.stringify(XmlData);
+		 		var rData=visitService(srchUrl);
+		 		if(rData.STATE=="1"){
+		 			if(rData.goodsMap.JL_State!="接收失败" && rData.ino2o==0){
+		 				var goodsMap=rData.goodsMap;
+		 				var itemName = goodsMap.itemName;
+		 				var itemCode = tm;
+						location.href="/gui_o2o/qfy/fore/member_shop.html?itemCode="+itemCode+"&itemName="+escape(itemName);
+		 			} else if(rData.goodsMap==null && rData.ino2o==1) {
+		 				location.href="/gui_o2o/qfy/fore/product.html?spxx01="+rData.spxx.SPXX01+"&zcxx01="+rData.spxx.ZCXX01+"&gsmc="+escape(rData.spxx.ZCXX02);
+		 			}else{
+		 				alert("查询不到符合条件的商品!");
+		 				return;
+		 			}
+		 		}else{
+		 			$("#nxsou").removeClass("lx");
+	 				alert("查询异常!");
+		 			return;
+		 		}	 */		
+		} else if ($("#tjbh").val()=="bsm") {
+	 		//搜索企业识别码
+	 		$("#nxsou").find("li").remove();
+			var bsm = ($("#sousuo").val()).trim();
+			var XmlData = [{"BARCODE":bsm}];
+	 		var srchUrl=baseUrl+"/QFYCODE/selectQFYCODE.action?XmlData="+JSON.stringify(XmlData);
+	 		var returnVal=visitService(srchUrl);
+	 		
+	 		if(returnVal.list.length>0 ) {
+	 			var returnVallist = returnVal.list[0];
+	 			alert(returnVallist.firm_name);
+	 		}
+	 		
+		} else if ($("#tjbh").val()=="oe") {
+			if($("#sousuo").val()==null || $("#sousuo").val()=='') {
+				alert("请输入查询内容");
+				return;
+			}
+			var oe = ($("#sousuo").val()).trim();
+			var url="/QFY/selectSPXXbyOE.action?oe="+oe;
+			var data=visitService(url);
+			if(data.STATE == 1 && data.data.ZCXX01 == usercookie.ZCXX01){
+				data=data.data;
+				location.href="/customer/qfy/showProduct/product.html?spxx01="+data.SPXX01+"&zcxx01="+data.ZCXX01+"&gsid="+data.ZCXX01+"&gsmc="+escape(data.ZCXX02);
+			}else{
+				alert("该OE码商品暂无！");
+			}
+		}
+ 	});
+	$("#sousuo").on("click",function(){
+ 	});
+ 	/*
+ 	$("#head").on("mouseleave",function(){
+ 		$("#nxsou").hide();
+ 		$("#nxsou").empty();
+ 	});
+ 	$("#sousuo").on("focus",function(){
+ 		selectFeeling();
+ 	});
+ 	$("#sousuo").on("keyup",function(){
+ 		selectFeeling();
+ 	});
+ 	*/
+}
+</script>

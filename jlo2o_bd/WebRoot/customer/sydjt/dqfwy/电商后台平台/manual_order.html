@@ -1,0 +1,35 @@
+<div class="content">
+<div class="row">
+  <ul>
+    <li class="w12 xuan"><i class="w02 fa fa-home"></i><a class="w10">导航图</a></li>
+    <li class="w12"><i class="w02 fa fa-upload"></i><a class="w10">下载订单</a></li>
+    <li class="w12"><i class="w02 fa fa-sign-in"></i><a class="w10">订单导入</a></li>
+    <li class="w12"><i class="w02 fa fa-pencil-square-o"></i><a class="w10">手工开单</a></li>
+    <li class="w12"><i class="w02 fa fa-eye"></i><a class="w10">订单审核</a></li>
+    <li class="w12"><i class="w02 fa fa-truck"></i><a class="w10">订单发货</a></li>
+  </ul>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("ul > li").click(function(){
+	$("ul > li").removeClass("xuan");
+	$(this).addClass("xuan");
+	var nav_a = $(this).children("a").text();
+	if(nav_a == "导航图"){
+	  $(".main").load("nav_chart.html");
+	}else if(nav_a == "下载订单"){
+	  $(".main").load("download_order.html");
+	}else if(nav_a == "订单导入"){
+	  $(".main").load("import_order.html");
+	}else if(nav_a == "手工开单"){
+	  $(".main").load("manual_order.html");
+	}else if(nav_a == "订单审核"){
+	  $(".main").load("examine_order.html");
+	}else if(nav_a == "订单发货"){
+	  $(".main").load("deliver_goods.html");
+	}
+   })
+	
+});
+</script>

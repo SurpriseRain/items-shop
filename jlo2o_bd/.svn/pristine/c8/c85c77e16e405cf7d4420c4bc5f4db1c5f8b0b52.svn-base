@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+// 初始化数据
+// 用于点击查询使用，点开页面不显示车型信息
+var i = 0;
+function initData(){
+	if(i > 0){
+		var MyCookie = $.cookie('userInfo');
+		var usercookie = JSON.parse(MyCookie);
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.info.show.selectCX','dataType':'Json','BRAND':$("#car1 option:selected").val(),'CAR_TYPE':$("#car2 option:selected").val(),'CAR':$("#car3 option:selected").val(),'MODEL':$("#car4").val()}];
+		var rData = visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData)); 
+		if(rData.data != undefined && rData.data != ""){
+			return rData;
+		} else {
+			alert("没有数据！");
+			$(".list_table").html("");
+			$(".Pagination").html("");
+			return false;
+		} 
+	}
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">基础管理</a>
+    	<span>></span>
+    	<b>车型图片</b>
+	</div> -->
+	<ul id="screening" style="height:100px" >
+	  <li style="width:830px;">
+		<span>品牌：</span>
+		<select id="car1" name="car1" style="width: 160px;" onchange="showPPCX()" >
+		    <option value="">请选择</option>
+		</select>
+	   	<span>车系：</span>
+		<select id="car2" name="car2" style="width: 160px;" onchange="showCX()">
+		    <option value="">请选择</option>
+		</select>
+		<span>车型：</span>
+		<select id="car3" name="car3" style="width: 160px;" >
+		    <option value="">请选择</option>
+		</select>
+	   	<span>特定车型：</span>
+		<input type="text" id="car4" name="car4" class="text" style="width: 160px;" size="100"/>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+	   </li>	   
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'MOBILE_MODLE_ID','header':'车型编码','type':'lable','width':'80px','id':'MOBILE_MODLE_ID'},
+							{'property':'BRAND','header':'品牌','type':'lable','width':'80px'},
+							{'property':'CAR','header':'车系','type':'lable','width':'160px'},
+							{'property':'MOBILE_MODLE','header':'车型','type':'lable','width':'100%'}]"
+          afterUrl="/customer/qfy/back/jcsz/Oper_CXTP_item.html?MOBILE_MODLE_ID=">
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	showCXPP();
+});
+// 查询方法
+function query(){
+	i = 1;
+	init();
+}
+// 回调方法
+function backFun(){
+ 	init();
+}
+// 查询品牌
+function showCXPP(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.info.show.selectCXFL01','dataType':'Json', 'BRAND':$("#car1 option:selected").val()}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData != undefined && rData != ""){
+	    $(rData).each(function(index,val){
+	    	
+	    	$("#car1").append("<option value='"+val.brand+"'>"+val.brand+"</option>");
+	    });
+	}
+}
+// 查询车系
+function showPPCX(){
+	var brand = $("#car1 option:selected").val();
+	$("#car2").empty();
+	$("#car2").append("<option value=''>请选择</option>");
+	$("#car3").empty();
+	$("#car3").append("<option value=''>请选择</option>");
+	if(brand == "" || brand == null){
+		return false;
+	}
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.info.show.selectCXFL02','dataType':'Json', 'BRAND':brand, 'CAR_TYPE':$("#car2 option:selected").val()}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData != undefined && rData != ""){
+	    $(rData).each(function(index,val){
+	    	$("#car2").append("<option value='"+val.CAR_TYPE+"'>"+val.CAR_TYPE+"</option>");
+	    });
+	 }
+}
+// 查询车型
+function showCX(){
+	var brand = $("#car1 option:selected").val();
+	var carType = $("#car2 option:selected").val();
+	$("#car3").empty();
+	$("#car3").append("<option value=''>请选择</option>");
+	if(carType == "" || carType == null){
+		return false;
+	}
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.info.show.selectCXFL03','dataType':'Json', 'BRAND':brand, 'CAR_TYPE':carType, 'CAR':$("#car3 option:selected").val()}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData != undefined && rData != ""){
+	    $(rData).each(function(index,val){
+	    	$("#car3").append("<option value='"+val.CAR+"'>"+val.CAR+"</option>");
+	    });
+	 }
+}
+</script>

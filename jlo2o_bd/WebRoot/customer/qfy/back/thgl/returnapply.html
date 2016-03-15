@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript">
+//初始化数据
+var XSDD01 = $.getUrlParam('XSDD01');
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+function initData(){
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["sqlid"]="com.jlsoft.o2o.sql.order.queryOrderItem_a";
+	XmlData["XSDD01"]=XSDD01;
+	dataArr.push(XmlData);
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+<!-- <div id="list-main">
+	<div class="dqlc">
+    	<a  class="dqlc-a" href="#">订单管理</a>
+    	<span>></span>
+    	<a class="dqlc-a" href="#">我的订单</a>
+    	<span>></span>
+    	<a class="dqlc-a" href="#">订单:</a>
+    	<a class="dqlc-a" id="ddbha"href="#"></a>
+    	<span>></span>
+    	<b class="dqlc-b">退货/退款</b></div>
+
+	</div> -->
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+<div class="clera"></div>
+ 
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4"  multiPage="true" height="1500" url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'SPXX01','header':'产品代码','type':'hidden'},
+{'property':'SPXX02','header':' ','type':'img','width':'50px'},
+{'property':'SPMC','header':'商品信息','type':'lable','width':'250px'},
+{'property':'XSDDI02','header':'单价（元）','type':'lable','width':'80px'},
+{'property':'XSDDI05','header':'购买数量','type':'lable','width':'80px'},
+{'property':'THSL','header':'已退数量','type':'lable','width':'80px'},
+{'property':'SPXX01','header':'','type':'thcz','width':'80px'}]" 
+>
+</div>
+ </div>
+  </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var obj = parent.$("#contentMD").offset();
+parent.scrollOffset(obj);
+$(document).ready(function(){
+  $("#ddbha").text(XSDD01);
+  $("#cx").hide();
+})
+
+function backFun(){
+	 init();
+}
+//退货描述
+function edit(x,gmsl,thsl){
+	location.href="/customer/qfy/back/thgl/th-aq.html?SPXX01="+x+"&XSDD01="+XSDD01+"&GMSL="+gmsl+"&THSL="+thsl;
+}
+</script>

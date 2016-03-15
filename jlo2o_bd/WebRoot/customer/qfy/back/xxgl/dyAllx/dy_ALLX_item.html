@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <link rel="stylesheet" type="text/css" href="/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+ <script type="text/javascript" src="/js/ext-base.js"></script>
+ <script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+
+</head>
+
+<body leftmargin="0" topmargin="0" rightmargin="0" scroll="auto">
+ <html:errors/>
+ <form id="form1" name="form1" method="post" enctype="multipart/form-data">
+  <input type="hidden" id="allx" name="allx" value=""/>
+    <div id="curPosition" style="width:98.5%">
+    <a href="#">信息管理</a>
+    <span>></span>
+    <a href="#">案例类型</a>
+    <span>></span>
+    <b>案例类型明细</b>
+  	</div>
+   <table class="single_table">
+    <tr>
+     <td class="lable_10">案例类型</td>
+     <td>
+      <input type="text" id="lxname" name="lxname" value=""/><font color="red">*</font>
+     </td>
+   	 <td class="lable_10">查看权限</td>
+   	 <td>
+   	 	<select style="width: 153px" id="ckqx" name="ckqx" >
+   	 		<option id="ckqx_2" value="-1" >所有</option>
+			<option id="ckqx_0"  value="0" >供货商</option>
+			<option id="ckqx_1"  value="1" >客户</option>
+		 </select><font color="red">*</font>
+   	 </td>
+     <td>
+     <a href="javascript:void(0);" class="bot Shot " onclick="okclick();">保存</a>
+     <a href="javascript:void(0);" class="bot Shot " onclick="delclick();">删除</a>
+     </td>
+   </tr>
+   
+  </table>
+  </form>
+</body>
+<script type="text/javascript">
+var ALLX=null;
+var i=0;
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	ALLX = rowObj.find("#ALLX").val();
+	$("#allx").val(ALLX);
+	$("#lxname").val(rowObj.find("#LXNAME").val());
+	i=1;
+}
+</script>
+<script type="text/javascript">
+var o = document.forms[0];
+//提交或修改信息类型
+function okclick(){
+  if($("#lxname").val() == ""){
+     alert("案例类型不能为空");
+     return false;
+  }
+  else{
+	  var baseUrl="";
+	  var XmlData1 = $("#form1").formToJson();
+	  var XmlData=JSON.stringify(XmlData1);
+	  var url=baseUrl+"/Xxgl/insertW_ALLX.action?XmlData="+XmlData;
+	  var data=visitService(url);
+	   if(data.STATE=='1'){
+		   alert("操作成功!");
+		   parent.execBackFun("aaa");
+			parent.$("#ajaxGrid").remove();
+			   }else if(data.STATE=='0'){
+				   alert("操作失败!");
+				   }
+  }
+}
+//删除信息
+function delclick(){
+   var r = confirm('确认删除信息吗？');
+   if(r==true){
+	   var baseUrl="";
+	   var XmlData1 = $("#form1").formToJson();
+	   var XmlData=JSON.stringify(XmlData1);
+	   var alDetail=baseUrl+"/Xxgl/deleteW_ALLX.action?XmlData="+XmlData;
+	   var data=visitService(alDetail);
+	   if(data.STATE=='1'){
+		   alert("操作成功!");
+		   parent.execBackFun("aaa");
+			parent.$("#ajaxGrid").remove();
+			   }else if(data.STATE=='0'){
+				   alert("操作失败!");
+				   }
+   }
+   else return;
+}
+
+
+
+</script>
+</html>
+

@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电器服务云平台--卖家店铺</title>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<link rel="stylesheet" type="text/css" href="../css/qypublic.css" />
+<link rel="stylesheet" type="text/css" href="../css/qy_allgoodsfl.css" />
+<link rel="stylesheet" type="text/css" href="../css/products-main.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/head.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript" src="/js/jquery.Paging.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var DQXX01="120100";
+var imgUrl=pubJson.path_sptp+"/sptp/";//图片默认路径
+//获取公用默认图片路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+var baseUrl = "";	
+var rmssc = "";
+var pagesize="10";//分页
+var fileName="";
+var gsmc=unescape($.getUrlParam("gsmc"));
+var ppb01=unescape($.getUrlParam("ppb01"));
+if(ppb01=="null"||ppb01==undefined||ppb01==null){
+	ppb01=""; 
+}
+var gsid=$.getUrlParam("gsid");
+var SPFLCODE=$.getUrlParam("SPFLCODE");
+if(SPFLCODE==null||SPFLCODE==undefined){
+	SPFLCODE=""; 
+}
+var SPNAMELIST;
+var SPNAMELISTS=$.getUrlParam("SPXX04");
+if(SPNAMELISTS==null ||　SPNAMELISTS==undefined){
+	SPNAMELIST = "";
+}else{
+	var aaaa=SPNAMELISTS.split(" ").length;
+	for(var i=0;i<aaaa;i++){
+	    SPNAMELISTS = SPNAMELISTS.replace(" ","");	
+    }
+	    SPNAMELIST =SPNAMELISTS;
+}
+var sppx=3;
+$(document).ready(function(){
+	$("#shopHead").load("/customer/sydjt/showDpxx/shopHead.html?ss="+Math.random());	
+	$("#footer").load("/customer/sydjt/foot.html");	
+	selectSpecialGoods();//展示新品
+    $(".sx-left a").each(function(index){
+    	$(this).click(function(){
+    		addrssid = $(this).attr("id");
+    		id = addrssid.replace('shubiao','');
+    		//if($("#shubiao"+id).is(":checked")) {
+    			$(".sx-left a").removeClass('current');
+    			$("#shubiao"+id).addClass('current');
+    			sppx=id;
+    			selectSpecialGoods();
+    		//}
+    	});
+    	});
+});
+
+//商品展示
+function selectSpecialGoods(){
+	var xmlData=[];
+	var spJson={};
+		spJson.SPFLCODE=SPFLCODE;
+		spJson.gsid=gsid;
+		spJson.SPNAMELIST=SPNAMELIST;
+		spJson.pagesize="10";
+		spJson.sppx=sppx;
+		spJson.PPB01=ppb01;
+		spJson.DQXX01=DQXX01;
+		var url="";
+		xmlData.push(spJson);
+
+		//查询总数量
+		var sumUrl = "/PCdisplay/jlquery/selectAllGoodsSUM.action?XmlData="+JSON.stringify(xmlData);
+		ajaxQ({
+			"url" : sumUrl,
+			"callback" : function(rumData){
+				var rowNum=rumData[0].SUM;
+				
+				url="/PCdisplay/jlquery/selectAllGoods.action?XmlData="+JSON.stringify(xmlData);
+				var rData0 = "";
+					$.ajax({
+				    type: "GET",  //请求方式
+				    url:encodeURI(url),
+				    data:{},
+				    success: function(data){
+				      if (data != null){
+				        try{
+				          var json = jQuery.parseJSON(data);
+				          rData0 = json.data;
+				        //展示数据
+				           showSPXX(rData0);
+				          fileName = json.fileName;
+				  	    $(".Pagination").remove();
+					    $('.center').kkPages({ 
+				 	 	   PagesClass:'li.jl', //需要分页的元素
+				 	 	   RowNum:rowNum,
+				 	 	   FileName:fileName,
+				 	 	   PagesMth:'8', //每页显示个数 
+				 	 	   PagesNavMth:pubJson.PagesNavMth //显示导航个数
+				 	 	});
+						$.getScript("/js/jquery.kkPages.js",function(){}) ;
+				        }catch(e){
+				          return;
+				        }
+				      }
+				    },
+			    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+				    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+			        }
+				  });
+				
+			}
+		});
+		/* var rumData=visitService(sumUrl); 
+		var rowNum=rumData[0].SUM;
+		
+		url="/PCdisplay/jlquery/selectAllGoods.action?XmlData="+JSON.stringify(xmlData);
+		var rData0 = "";
+			$.ajax({
+		    type: "GET",  //请求方式
+		    url:encodeURI(url),
+		    data:{},
+		    success: function(data){
+		      if (data != null){
+		        try{
+		          var json = jQuery.parseJSON(data);
+		          rData0 = json.data;
+		        //展示数据
+		           showSPXX(rData0);
+		          fileName = json.fileName;
+		  	    $(".Pagination").remove();
+			    $('.center').kkPages({ 
+		 	 	   PagesClass:'li.jl', //需要分页的元素
+		 	 	   RowNum:rowNum,
+		 	 	   FileName:fileName,
+		 	 	   PagesMth:'8', //每页显示个数 
+		 	 	   PagesNavMth:pubJson.PagesNavMth //显示导航个数
+		 	 	});
+				$.getScript("/js/jquery.kkPages.js",function(){}) ;
+		        }catch(e){
+		          return;
+		        }
+		      }
+		    },
+	    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+		    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+	        }
+		  }); */
+		
+}
+//展示数据
+function showSPXX(rData0){
+	var returnVal=rData0;
+	var spObj = $(".pro-case");
+	spObj.empty();
+	$(returnVal).each(function(j,lcsp){
+		spObj.append('<li class="jl"><a class="img"><img src=""/></a><div class="pro-name"><a href=""></a></div><div class="pro-pic"><span>会员价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp" href=""></a><a class="dq"></a></div></li>');
+
+		//楼层商品图片路径
+		var lcspUrl=imgUrl+lcsp.ZCXX01+"/"+lcsp.SPXX02+"/images/"+lcsp.SPXX02+"_1_big."+lcsp.SPTP02;
+		//商品图片和链接
+		spObj.find("li").eq(j).find("a").first().attr("href","/customer/sydjt/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).find("img").attr("src",lcspUrl).attr("onerror","this.onerror=null;this.src='"+defaultImgUrl+"'");
+		//商品名称和链接
+		spObj.find("li").eq(j).find("div.pro-name").find("a").attr("href","/customer/sydjt/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).html(lcsp.SPXX04);
+
+		if(usercookie!=null) {
+		  	  if(usercookie.LX=="43"&&usercookie.ZCXX01!=lcsp.ZCXX01){
+		  			spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html("价格不可见");
+					}else{
+						//商品零售价
+						
+	if(usercookie.LX=="24"){spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html(accounting.formatMoney(lcsp.SPJGB02));
+						}else{
+spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html(accounting.formatMoney(lcsp.SPJGB05));
+						}
+						}
+		} else {
+			//spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html("登录可见");
+			spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html(accounting.formatMoney(lcsp.SPJGB02));
+		}
+		//购买链接
+		spObj.find("li").eq(j).find("div.pro-rz").eq(0).find("a.cat").attr("href","/customer/sydjt/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02));
+		//店铺名称和链接
+		spObj.find("li").eq(j).find("div.pro-dp").find("a.dp").attr("href","/customer/sydjt/showDpxx/shopAllGoods.html?gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).html(lcsp.ZCXX02);
+	});
+}
+function selectKhspjg(SPXX01){
+	var xmlData=[];
+	var spJson={};
+		spJson.SPXX01=SPXX01;
+		spJson.ZCXX01=gsid;//ZTID
+	
+		spJson.hbid=usercookie.ZCXX01;
+		
+		xmlData.push(spJson);
+		var url="/HomePage/selectKhspjg.action?XmlData="+JSON.stringify(xmlData);
+		var rData=visitService(url);
+		return rData.map[0].KHSPJGI01;
+}
+
+</script>
+<!-----公共部门开始---->
+<div id="shopHead"></div>
+</div>
+<div class="clera"></div>
+<!-----------------------------楼层--------主页面开始------------------------->
+<div id="pro-min">
+      <div class="pro-sx">
+      <div class="sx-left">
+  		<a id="shubiao2" title="点击月销量从高到低" class="jiangxu px2">综合</a>
+        <a id="shubiao1" title="点击月销量从高到低" class="jiangxu px1">销量</a>
+        <a id="shubiao3" title="点击价格从高到低" class="jiangxu px3">价格</a>
+        <a id="shubiao4" title="点击价格从低到高" class="shenxu px4">价格</a>
+<!--        <a class="dq"><span>地区:</span><input value="请选择" disabled="disabled" /></a>        -->
+      </div>
+    </div>
+    <div class="clera"></div>
+    <div class="center" jl jlid="splist_1" id="z1" url="/getSpxx.do" >
+ 		<ul class="pro-case" id="xpsj"></ul>
+ 	    <div class="clera"></div>
+ 	</div>
+</div>
+
+<div class="clera"></div>
+<div id="footer"></div>
+</body>
+</html>

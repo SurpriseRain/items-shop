@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中国汽服云平台</title>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<link rel="stylesheet" type="text/css" href="../css/products.css" />
+<link rel="stylesheet" type="text/css" href="../css/carSs.css" />
+<link rel="stylesheet" type="text/css" href="../css/menu.css" />
+<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/openbox.js"></script>
+<script type="text/javascript" src="../js/jq.Slide.js"></script>
+<script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../js/jquery.bxslider2.min.js"></script>
+<script type="text/javascript" src="../js/scripts.js"></script>
+<script type="text/javascript" src="../js/accounting.min.js"></script>
+<script type="text/javascript" src="../js/lrtk.js"></script>
+<script type="text/javascript" src="../js/carSs.js"></script>
+<script type="text/javascript" src="../js/pubJson.js"></script>
+<script type="text/javascript" src="/control/js/tableGridListNoPage.js"></script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<style>
+body{ margin:0 auto;}
+.main_text{ width:1200px; margin:0 auto; font-size:12px; font-family:"microsoft yahei";}
+.main_text span.title{ float:left; width:100%; height:50px; line-height:50px;}
+.main_text ul{ float:left; width:1200px;}
+.main_text p{ float:left; width:1158px; border:1px solid #f9d2a3; background-color:#faf3ea; padding:20px; font-size:16px; line-height:35px; margin:0px;}
+.main_text p span{ float:left; width:600px;}
+.main_text p img{ float:right; border:1px solid #e4e4e4;}
+.clear{ clear:both;}
+ul,li{ list-style:none; padding:0px; margin:0px;}
+.main_text ul{ margin-top:10px;}
+.main_text ul li{ float:left; width:100%;}
+.main_text ul span{ float:left; font-size:20px; height:50px; line-height:50px; color:#999; width:100%;}
+.main_text ul input{ float:left; width:300px; height:40px; border:1px solid #ccc; padding:0 5px; margin:0 10px 0 0;}
+.bot{ float:right; width:80px; height:30px; font-size:15px; border:1px solid #c76e09; background-color:#ff8800; text-align:center; color:#fff; font-family:"microsoft yahei"; box-shadow:0px 0px 2px #ccc; text-shadow: 0px 0 1px #666; margin:0px 92px 0px 0px;}
+.bot:hover{ cursor:pointer; background-color:#c76e09;}
+.main_text ul#ul0{ float:left; width:100%; height:200px; line-height:200px; font-size:50px; text-align:center; color:#ccc; display:none;}
+
+.main_text .pro{ float:left; width:1198px; border:1px solid #ccc; margin:20px 0;}
+.main_text .pro .pro_left{ float:left; width:499px; border-right:1px solid #ccc; height:auto;}
+.main_text .pro .pro_left img{display:block;width:280px; height:280px; background-color:#fff;margin-top: 20px;margin-left:100px;}
+.main_text .pro .pro_right{ float:right; width:698px; height:550px;}
+.main_text .pro .pro_right ul{ f.main_text .pro .pro_leftloat:left; width:100%; margin:0px;}
+.main_text .pro .pro_right ul li{ float:left; width:90%; margin:0 5%; line-height:50px; border-bottom:1px solid #e4e4e4; font-size:14px; color:#666;}
+.main_text .pro .pro_right ul li lable{ color:#3c3c3c; font-weight:bold;}
+#lei_left{float: left;  height:auto; margin: 3px;width: 488px;}
+#lei_left ul{ margin-top: 13px; padding-left: 30px;}
+#lei_left ul li{height:auto;width: 430px;line-height:30px;border-bottom: 1px solid #ccc; float: none;}
+#image{float: left; height: 325px; margin: 3px;width: 488px;}
+.list_table {   border: 1px solid #e4e4e4;border-collapse: collapse;color: #3c3c3c;float: left;font-size: 12px;margin:5px auto;width: 100%;}
+.pro-right_a{ width:673px; height:450px;margin:50px auto;}
+.titlea td{    margin: 0; padding: 0 0 0 15px;}
+.titlea{ background-color: #f5f5f5;border-bottom: 1px solid #e4e4e4;color: #3c3c3c;font-family: "microsoft yahei";font-size: 14px;font-weight: bold;height: 40px;line-height: 40px;margin: 0; padding: 0;text-align: center; width: 100%;}
+.yangshi{  height: 39px; line-height: 36px;}
+.pro-right_b { height: 5px;margin: 50px auto; width: 673px;}
+.main_text .sm{width:100%;height:30px;line-height:30px;margin-top:5px;}
+.main_text .sm span{float:right;width:290px;height:30px;line-height:30p;cursor:pointer;border:1px solid #f9d2a3;text-align:center;box-shadow:0 0 5px #f9d2a3;color:#ff8800;text-indent:12px;}
+</style>
+<script type="text/javascript">
+var ImgUrl=pubJson.path_sptp;//图片默认路径
+$(document).ready(function(){
+	$("#ul0").hide();
+	$(".pro").hide();
+	//加载头和尾 
+	$("#header").load("/customer/qfy/head-08.jsp?ss="+Math.random(),function(reponse,status){
+		if(status=="success"){
+		$(".sptms").css({"color":"#ff8800"});
+		}
+	});
+	$("#footer").load("/customer/qfy/foot-08.html?ss="+Math.random());	
+})
+/* function chaxun(){
+	submit()
+} */
+
+function getKey()  
+{  
+    if(event.keyCode==13){  
+    	submit(); 
+    }     
+}  
+
+function submit(){
+	var barcode=$.trim($("#barcode").val());
+	var XmlData;
+	var url;
+	if(barcode!=""){
+		var imgPath = "/customer/qfy/images/msimg.jpg";
+		url="/MyGoods/getBaseSPTP.action?json="+JSON.stringify({"spcm01":barcode});
+		ajaxQ({
+               "url" : url,
+               "callback" : function(rData){
+               if(typeof rData.result !== "object" || rData.STATE !== "1"){
+	   				   $("#spxh01").html(rData.spxh01);//商品型号
+	   				   $("#SPXX045").html(rData.spxx04);//商品名称
+	                   $("#barcode2").html(rData.barcode);//编码
+	                   $("#ZCXX02").html(rData.zcxx02);//生产企业
+	                   $("#ZCXX08").html(rData.zcxx08);//地址
+	                   $("#ZCXX06").html(rData.ZCXX55);//电话  
+	                   $('#ZCXX03').html(rData.spcm03);//批次号
+	                   $('#ZCXX04').html(rData.spcm04);//序列号
+	                   $('#ZCXX10').html(rData.cksj);//出库时间
+                    }
+               },
+               "error":function(){}
+           }); 
+		 var str=barcode.split(')');
+         if(str.length-1==2){
+       	   		notXlh();
+         }else{
+           		Xlh();
+         } 
+		url="/MyGoods/GetProduceTraceByUniqueCode.action?XmlData="+JSON.stringify({"produceUniqueCode":barcode});
+		var rData=visitService(url);
+		var state = rData.STATE;
+		rData = rData.result;
+		var date=rData.uniqueCode;
+		if(barcode!=date){
+			$("#ul0").show();
+			$(".pro").hide();
+		}else{
+			if(rData && state=="1"){
+				/* $("#barcode2").text(rData.produceBar);
+				$("#ZCXX02").text(rData.manuFacturer);
+				$("#ZCXX08").text(rData.manuFacturerAddress);
+				$("#ZCXX06").text(rData.contactPhoto);*/
+			    $("#imgUrl").attr("src",rData.imgPath); 
+				
+				var data = rData.produceEvents;
+				if(data.length<=0){
+					return;
+				}
+				$("#SPXX045").text(rData.name);
+				var str="<table class='list_table'><tr class='titlea' style='text-align:left;'><td>日期</td><td>状态</td><td>单位</td></tr>";
+				for(var i=0;i<data.length;i++) {
+							str+='<tr class="yangshi"><td style="color:red;">'+data[i].eventTime+'</td>';
+							str+='<td>'+data[i].eventName+'</td>';
+							str+='<td>'+data[i].sponsor+'</td></tr>';
+				 }
+				str+='</table>'
+				$("#ul0").hide();
+				$(".pro").show();
+				$(".pro-right_a").html(str);		
+		  }
+	   }
+	 }else{
+		 alert("请输入商品串码");
+	 }
+}
+</script>
+</head>
+<body>
+<!--------------------------------头部-------------------------------------->
+<div id="header">
+</div>
+<div class="clera"></div>
+<div class="main_text" >
+<span class="title">客户专区 >  条码追溯  > 商品详情</span>
+<p><span>说明：条码追溯是汽服云平台配合打假保优而开放的社会公众查询平台，目前仅限本平台内流通的商品查询。通过输入商品外包装上的商品条码就能追溯到商品的流通信息。<br />
+操作说明：用汽服云官方APP扫一扫商品的二维码，可查看商品的详细信息；或者在下面的查询条件里输入商品的串码查看商品的详细信息。<br />
+
+<span style="color:red;">查询条件</span>
+<input id="barcode" name="barcode" placeholder="请输入串码号" onkeyup="getKey(event)" style="width:400px;height: 30px;border: 1px solid #ccc;"/>
+<input type="submit" value="查询" onclick="submit();" class="bot"/>
+
+</span><img src="/customer/qfy/images/erm.jpg" />
+<span class="sm"><span>扫一扫，试一试（上方为示例图片）</span></span>
+</p>
+<div class="clear"></div>
+<ul>
+</ul>
+<ul id="ul0"><li>无法查到该条码信息</li></ul>
+<div class="pro">
+	<div class="pro_left" >
+		<div id="lei_left">
+			<ul id="ul1">
+			<li>商品条码：<a id="description"><lable id="barcode2" name="barcode2" ></lable></a></li>
+		    <li>商品名称：<lable id="SPXX045" name="SPXX045" ></lable></li>
+			<li>供货方：<lable id="ZCXX02" name="ZCXX02" > </lable></li>
+			<li>供货方地址：<lable id="ZCXX08" name="ZCXX08" ></lable></li>
+			<li>供货方电话：<lable id="ZCXX06" name="ZCXX06" /></lable> </li>
+			<li>批次号：<lable id="ZCXX03" name="ZCXX03" ></lable></li>
+			<li class="pro-dc-xlh" >序列号：<lable id="ZCXX04" name="ZCXX04" ></lable></li>
+			<li class="pro-dc-time" >出库时间：<lable id="ZCXX10" name="ZCXX10" ></lable></li>
+			</ul>
+			<div id="image">
+				<img id="imgUrl" src="" />
+			</div>
+		</div>
+		
+	</div>
+	<div class="pro_right">
+		<div class="pro-right_a">
+			<h2 id="SPXX045" name="SPXX045" style="text-align: center;"></h2>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div id="footer"></div>
+<script type="text/javascript">
+      function notXlh(){
+      	$('.pro-dc-xlh').css({"display":"none"});
+      	$('.logistics-wrap').css({"display":"none"});
+      	$('.pro-dc-time').css({'display':'block'});
+      }
+      function Xlh(){
+      	$('.pro-dc-xlh').css({"display":"block"});
+      	$('.logistics-wrap').css({"display":"block"});
+      	$('.pro-dc-time').css({'display':'none'});
+      }
+      
+ </script>
+</body>
+</html>

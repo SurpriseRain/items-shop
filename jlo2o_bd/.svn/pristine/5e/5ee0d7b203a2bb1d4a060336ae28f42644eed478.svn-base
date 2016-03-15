@@ -1,0 +1,290 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"	href="/css/ext-all.css" />
+<link type="text/css" rel="stylesheet"	href="/customer/qfy/css/header-min.css" />
+<link type="text/css" rel="StyleSheet"	href="/css/jquery.autocomplete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript"	src="/js/ext-base.js"></script>
+<script type="text/javascript"	src="/js/ext-all.js"></script>
+<script type="text/javascript"	src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript"	src="/js/jquery-1.7.2.js"></script>
+<script type="text/javascript"	src="/js/json2.js"></script>
+<script type="text/javascript"	src="/js/commons.js"></script>
+<script type="text/javascript"	src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript"	src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript"	src="/js/jquery.cookie.js"></script>
+<script type="text/javascript"	src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<title>首页展示图片编辑</title>
+<style type="text/css">
+a{
+	background-color: #ff8800;
+    border: 1px solid #c76e09;
+    color: #ffffff;
+    cursor: pointer;
+    float: left;
+    font-family: "microsoft yahei";
+    font-size: 15px;
+    height: 28px;
+    line-height: 28px;
+    margin: 10px 20px;
+    padding: 0 10px;
+    text-align: center;
+    width: 50px;
+}
+a:hover{
+	background-color: #c76e09;
+}
+.title{
+	width: 100%; 
+	height: 30px;
+	background-color: #f9f9f9; 
+	border: 1px solid #eeeeee;
+	padding-left:15px;
+	line-height: 30px;
+}
+#file05_1{
+	width: 100%;
+	padding:15px;
+}
+#file05_1 input{
+	width: 90%;
+	height:30px;
+	line-height:30px;
+}
+
+</style>
+
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var defaultImgUrl = pubJson.defaultImgUrl;
+var file05;
+function initData(){
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["sqlid"]="com.jlsoft.o2o.sql.mjck.select_eidt";
+	XmlData["dataType"]="Json";
+    XmlData["id"]=$("#id").val();
+	dataArr.push(XmlData);
+	var rData = visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+	var data = rData.data;
+	$("#file05").val(data[0].file05);
+	file05 = data[0].file05;
+}
+ 
+</script>
+
+</head>
+<body>
+	<div class="title">
+	   首页展示图片编辑
+	</div>
+	<form id="form" name="form" action="" method="post">
+	<input type="hidden" id="id" name="id" value=""/>
+	<input type="hidden" id="file01" name="file01" value=""/>
+	<div id="divLib" class="divLib" style="width: 100%;padding:15px;">
+	   上传图片：<input type="file" class='addphoto' id="file0" name="photoscount">
+	</div>
+	<div id="file05_1" style="">
+	    链接地址：<input type="text" id="file05" name="file05" />
+	</div>
+	
+	<div style="width: 100%;">
+		<a onclick="save_tp()">保存</a><a onclick="cancel()">取消</a>
+	</div>
+	</form>
+</body>
+
+<script type="text/javascript" charset="UTF-8">
+
+$(document).ready(function(){
+	$("#file01").val(usercookie.ZCXX01);
+	var id=$.getUrlParam("id");
+	$("#id").val(id);
+	if(id!=null){
+		initData();
+	}
+});
+
+//取消操作
+function cancel(){
+	parent.$("#ajaxGrid").remove();
+}
+
+//保存方法
+var inp = true;
+function save_tp(){
+	if($("#id").val()!=""){
+		update_tp();
+	}else{
+		insert_tp();
+	}
+}
+//新增
+function insert_tp(){
+	// 判断是否有没选择的文件上传框
+	var inp = true;
+	$("input[id='file0']").each(function(){
+		if($(this).val() == ""){
+			inp = false;	
+		}
+	});
+	// 标识如果有没添加图片的文本框就提示
+	if(!inp){
+		alert("请上传图片信息!");
+		return false;
+	}
+	// 判断每个文件大小是否超过2M
+	$("input[id='file0']").each(function(){
+		var id = $(this).attr("id");
+		if(!fileSize(id)){
+			inp = false;
+		} 
+	});
+	// 如果大于2M 则会提示
+	if(!inp){
+		alert("上传的图片大小要在2M以下");
+		return false;
+	}
+	// 获取数据
+	var XmlData1 = $("#form").formToJson();
+	var XmlData = escape(JSON.stringify(XmlData1));
+	var fileArray = [];
+	var arr=$("input[name='photoscount']");
+	for(var i = 0; i < arr.length; i++){
+		var arrs=$("input[class='addphoto']:eq(" + i + ")");
+		if(arrs.attr("value") != "" && arrs.attr("value") != undefined){
+		    fileArray.push(arrs.attr("id"));
+		}
+	}
+	// 确认操作
+	var r = false;
+	if(fileArray.length == 0){
+		r = confirm('没有任何操作,确认操作?');
+	} else {
+		r = confirm('确认操作？');
+	}
+	// 执行上传
+	var url="/Oper_LBT/insertLBT.action";
+	if(r == true){
+		//弹出遮罩层
+		 //top.openWait();
+		$.ajaxFileUpload({
+			type:"POST",
+			secureuri:false,
+			fileElementId:fileArray,
+			url:encodeURI(url),//encodeURI避免中文乱码
+			dataType:"text",
+			data:{"XmlData":XmlData},
+			success: function(data) { 
+				//关闭遮罩层
+				top.closeWait();
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				if(data1 == 1){
+					alert("保存成功!");
+					//关闭遮罩层
+					parent.execBackFun("aa");
+					parent.$("#ajaxGrid").remove();
+					}else{
+						alert("保存失败!");
+					}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				//关闭遮罩层
+				//top.closeWait();
+				alert(textStatus);
+		    }
+		});
+	}
+	else return;
+}
+
+// 更新
+function update_tp(){
+	// 判断每个文件大小是否超过2M
+	$("input[id='file0']").each(function(){
+		var id = $(this).attr("id");
+		if(!fileSize(id)){
+			inp = false;
+		} 
+	});
+	// 如果大于2M 则会提示
+	if(!inp){
+		alert("上传的图片大小要在2M以下");
+		return false;
+	}
+	// 获取数据
+	var XmlData1 = $("#form").formToJson();
+	var XmlData = escape(JSON.stringify(XmlData1));
+	var fileArray = [];
+	if($("#file0").val()!=""){
+		var arr=$("input[name='photoscount']");
+		for(var i = 0; i < arr.length; i++){
+			var arrs=$("input[class='addphoto']:eq(" + i + ")");
+			if(arrs.attr("value") != "" && arrs.attr("value") != undefined){
+			    fileArray.push(arrs.attr("id"));
+			}
+		}
+	}
+	// 确认操作
+	var r = false;
+	if(fileArray.length == 0 && file05 == XmlData1[0].file05){
+		r = confirm('没有任何操作,确认操作?');
+	} else {
+		r = confirm('确认操作？');
+	}
+	// 执行上传
+	var url="/Oper_LBT/updateLBT.action";
+	if(r == true){
+		//弹出遮罩层
+		 //top.openWait();
+		$.ajaxFileUpload({
+			type:"POST",
+			secureuri:false,
+			fileElementId:fileArray,
+			url:encodeURI(url),//encodeURI避免中文乱码
+			dataType:"text",
+			data:{"XmlData":XmlData},
+			success: function(data) { 
+				//关闭遮罩层
+				top.closeWait();
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				if(data1 == 1){
+					alert("保存成功!");
+					//关闭遮罩层
+					parent.execBackFun("aa");
+					parent.$("#ajaxGrid").remove();
+					}else{
+						alert("保存失败!");
+					}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				//关闭遮罩层
+				//top.closeWait();
+				alert(textStatus);
+		    }
+		});
+	}
+	else return;
+}
+
+// 文件大小限制
+function fileSize(id){
+	var i=$("#" + id).size;
+	var limit = 2*1024*1024;
+	if(i > limit){
+		return false;
+	}
+	return true;
+} 
+
+</script>
+</html>

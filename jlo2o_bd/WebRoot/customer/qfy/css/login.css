@@ -1,0 +1,32 @@
+body{ margin:0 auto; font-size:12px; color:#666; font-family:Arial,Verdana;}
+ul,li,h2,h3,h4,input{ list-style:none; margin:0px; padding:0px;}
+a{ text-decoration:none; cursor:pointer;}
+.clera{ clear:both;}
+#main{ width:1100px; height:600px; margin:0 auto;}
+
+#main .logo{ width:1100px; height:95px; margin-top:20px;}
+#main .logo a img{ border: 0 none; float: left; }
+#main .login{ width:1100px; height:450px; margin:30px 0 0 0;}
+#main .login .login-left{ width:550px; height:350px; float:left;}
+#main .login .login-left a img{ width:550px; height:350px; border:0px;}
+#main .login .login-right{ width:470px; height:auto; float:right; border:2px solid #eee; border-top-color:#ff4a00;}
+#main .login .login-right ul.login-k{ border-right: 1px dashed #e4e4e4;float: left;height: 290px;margin: 56px 0 10px;width: 300px;}
+#main .login .login-right ul.login-k li{   height: 54px;line-height: 50px;padding-left: 30px;width: 270px;}
+#main .login .login-right ul.login-k li h2{ font-family:"microsoft yahei"; color:#3c3c3c; line-height:40px;font-size: 16px;}
+#main .login .login-right ul.login-k li.ts{ height:30px; line-height:30px; width:235px; border:1px solid #f9d2a3; background-color:#faf3ea; color:#ee0e0e; margin:0 0 10px 30px; padding:0px; display:none;}
+#main .login .login-right ul.login-k li.ts b{ float:left; width:16px; height:16px; background-color:#ee0e0e; color:#fff; border-radius:50%; line-height:16px; text-align:center; margin:7px; font-weight:100; font-size:14px;}
+#main .login .login-right ul.login-k li.ts label{ float:left; line-height:30px;}
+#main .login .login-right ul.login-k li span{ float:left; width:40px; height:40px; background:url(../images/index_login_ico.png) #aaa;}
+#main .login .login-right ul.login-k li span.pwd{ background-position:0 -40px;}
+#main .login .login-right ul.login-k li input.text{ font-size:11px;padding-left:5px; height:38px; width:190px; border:1px solid #e4e4e4; float:left;line-height:38px;}
+#main .login .login-right ul.login-k li input.checkbox{ float:left; margin:19px 2px 0 0;}
+#main .login .login-right ul.login-k li label{ float:left;}
+#main .login .login-right ul.login-k li a.wj{ float:right; margin-right:16px; text-decoration:none; color:#ff8800}
+#main .login .login-right ul.login-k li a.wj:hover{ text-decoration:underline;}
+#main .login .login-right ul.login-k li a.zc{ float:none;}
+#main .login .login-right ul.login-k li a.loginbotton{ float:left; width:235px; height:35px; line-height:35px; font-size:15px; border:1px solid #c76e09; background-color:#ff8800; text-align:center; color:#fff; font-family:"microsoft yahei"; box-shadow:0px 0px 2px #ccc; margin-top:10px;text-shadow: 0px 0 1px #666}
+#main .login .login-right ul.login-k li a.loginbotton:hover{ background-color:#ee8800;}
+
+#main .login .login-right .login-ewm{ width:145px; height:350px; float:right;}
+#main .login .login-right .login-ewm img{ width:120px; margin-top:45px;}
+

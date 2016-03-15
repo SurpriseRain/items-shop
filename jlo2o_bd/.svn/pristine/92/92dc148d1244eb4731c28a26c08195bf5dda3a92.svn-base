@@ -1,0 +1,29 @@
+	@charset "UTF-8";
+/* reset start */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {margin: 0;padding: 0;}
+body, button, input, select, textarea {font: 12px/1.5 Microsoft YaHei,arial,"\5b8b\4f53";*line-height: 1.5;-ms-overflow-style: scrollbar;}
+h1, h2, h3, h4, h5, h6 {font-size: 100%;}
+address, cite, dfn, em, var {font-style: normal;}
+code, kbd, pre, samp {font-family: courier new,courier,monospace;}
+small {font-size: 12px; }
+ul, ol {list-style: none;}
+a {text-decoration: none;color: #000;}
+a:hover {text-decoration: none;}
+a:visited {color: #000;}
+sup {vertical-align: text-top;}
+sub {vertical-align: text-bottom;}
+legend {color: #000;}
+fieldset, img {border: 0;}
+button, input, select, textarea {font-size: 100%;}
+table {border-collapse: collapse;border-spacing: 0;}
+/* reset start */
+/* 蓝色主题 开始*/
+/* 主题颜色 ff3c3c*/
+/* 公共基色 */
+/* 导航条 */
+/* 楼层 20ac9d*/
+/* 联系客服 */
+/* 蓝色主题 结束*/
+.container{font: 12px/1.5 Microsoft YaHei,arial,"宋体";width: 828px;height:auto;border: 1px solid #e4e4e4;margin-top: 10px;}
+.container a.btn{width:auto;height:30px;line-height:30px;padding:0 20px;background:#ff8800;color:#fff;cursor:pointer;}
+.clear{clear:both;}

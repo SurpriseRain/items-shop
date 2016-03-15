@@ -1,0 +1,680 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 买家中心 -下单成功</title>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+
+<style>
+#pay{ width:1200px; margin:20px auto; font-family:"microsoft yahei";}
+.clear{ clear:both;}
+#pay h3{ width:90%; height:40px; line-height:40px; float:left; color:#999; margin:0px; padding:0px;font-size:18px;margin-left:100px;}
+#pay .pay_main{ float:left; width:84%; border-bottom:1px solid #ccc; padding:5px 0 40px 0; margin-bottom:20px;margin-left: 100px;}
+#pay .pay_main span{ float:left; width:80px; height:80px; border-radius:50%; background-color:#0C6; color:#fff; font-size:50px; line-height:80px; text-align:center;}
+#pay .pay_main .text{ float:left; width:900px; height:20px; margin: 20px 20px;}
+#pay .pay_main .text h4{ float:left; width:100%; height:40px; line-height:40px; margin:0px 0 10px 0; padding:0px; font-size:25px; color:#3c3c3c;}
+#pay .pay_main .text label{ float:left; font-size:14px; color:#444; margin-right:20px; line-height:30px;}
+a.bot{ padding:0 10px; float:left; height:40px; line-height:40px; background-color:#ff4a00; color:#fff; font-family:"microsoft yahei"; font-size:18px; width:150px; text-align:center; cursor:pointer; border:1px solid #c76e09; margin:0 0 20px 0;margin-left:100px;}
+#pay .pay_main .gf{ float:left; padding:10px 6px; border:#CCC 1px solid; margin-right:20px;}
+#pay .pay_main .gf input{ float:left; margin-top:20px; margin-right:5px; }
+#pay .pay_main .gf img{ float:left; width:200px; height:60px;}
+#pay .pay_main .con-top1{width:100%;height:20px;line-height:20px;float:left;}
+#pay .pay_main .con-top{width: 1080px;height: 20px;}
+#pay .pay_main #container{width: 1080px;height: auto;margin: 0 auto;}
+#pay .pay_main #container h4,#pay .pay_main .con-top1 h4 {float: left;height: 20px;line-height: 20px;}
+#pay .pay_main #container input [type="radio"],#pay .pay_main .con-top1 input[type="radio"]{float: left;height: 20px;line-height: 20px;border: none;opacity: 0.6;cursor: pointer;-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";filter: alpha(opacity=60);}
+#pay .pay_main #container span,#pay .pay_main .con-top1 span{display: block;float: left;height: 20px;line-height: 20px;background:none;width:auto;font-size:14px;}
+#pay .pay_main .con-left{float: left;width: 400px;border: 1px solid #e9e9e9;}
+#pay .pay_main .con-left li{width: 400px;height: 30px;line-height: 30px;border: 1px solid #e9e9e9;text-align: center;color:#000;font-weight: 600;font-size:14px;}
+#pay #container .con-left span{display: block;float: left;width: 80px;height: 30px;line-height: 30px;text-align: center;font-size: 12px;background-color: #f1f1f1;font-weight: 400;color:#000;border-radius:0;}
+#pay .pay_main .con-right{width: 48%;float: left;margin-left:20px;}
+#pay .pay_main .con-right span{display: inline-block;font-size: 14px;color: red;font-weight: 600;width: 100%;}
+#pay .pay_main .con-right p{width: 100%;height: auto;font-size: 14px;float:left;}
+#pay .pay_main #conTable {font-size: 14px;height: 20px;line-height: 20px;float:left;}
+#pay .pay_main #conTable input{font-size: 14px;height: 20px;line-height: 20px;}
+#pay .pay_main #conTable span{display:block;width:20px;height: 20px;line-height: 20px;color:red;font-size: 14px;font-weight: 900;text-align:center;}
+#pay .pay_main #conTable em{height: 20px;line-height: 20px;color:red;font-size: 12px;font-weight: 900;margin-right:10px;}
+ #pay .pay_main #conTable h5{width:auto;height:20px;line-height:20px;text-align:left;margin-left:10px;font-size:12px;}
+ #conTable tr td h3{float:right;position:relative;font-size:14px;height:20px;line-height:20px;color:#000;text-align:right;}
+#pay .pay_main #conTable td{height:20px;line-height;border:none;width:130px;float:left;padding:5px 5px;}
+#pay .pay_main #conTable tr{border:none;}
+#pay .pay_main .con-arr{width: 100%; height:30px;float:left;}
+#pay .pay_main .tg,#pay .pay_main .fh{width: 80px;height: 40px;line-height: 40px;text-align: center;border: none;border: 1px solid #999;cursor: pointer;background: #e25d04;color: #fff;margin:5px 0 0 20px;}
+#pay .pay_main .conMain{display:none}
+#pay .conEbc #conTable{width:1000px;margin:0 auto;}
+#pay .conEbc{display:none;width:1000px;height:auto;margin:0 auto;clear:both;}
+div.conEbc{display:block;width:100%;height:30px;line-height:30px;font-size:14px;font:Arial;}
+.conEbc .con1{width:140px;height:30px;line-height:30px;}
+.conEbc h3{text-align:left;width:80px;height:30px;line-height:30px;}
+.conEbc em{color:red;margin-right:10px;}
+#pay .conEbc .con2{width:450px;height:30px;line-height:30px;text-align:left;}
+#pay .conEbc .con2>input{height:25px;line-height:20px;width:800px;border:none;outline:none;}
+.clear{clear:both;}
+
+
+</style>
+</head>
+<script type="text/javascript">
+var baseUrl="";
+//获取公用默认图片路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+var user=JSON.parse($.cookie("userInfo"));
+var lx = user.LX;
+var ddze=$.getUrlParam("zfje");
+var zcxx01=user.ZCXX01;
+var JYDH=$.getUrlParam("JYDH");
+var zfje=$.getUrlParam("zfje");
+var ztid="";
+var dzbh=$.getUrlParam("dzbh");
+var orderIds="";
+var type = $.getUrlParam("type");
+var show = $.getUrlParam("show");
+
+$(document).ready(function(){
+	$("#header").load("/customer/qfy/head-08.jsp");
+	$("#footer").load("/customer/qfy/foot-08.html");
+	$("#XSDD01").html(JYDH);
+
+	//显示买家信息
+	var xmlData={};
+	xmlData["JYDH"]=JYDH;
+	var url="/OrderFlowManage/getOrderMessage.action?json="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(returnVal){
+			var str='<label style="margin-left: 15px;">共'+returnVal.DDLIST.length+'笔订单</label></br>';
+			$(returnVal.DDLIST).each(function(index,ddjson){
+				str+='<label style="margin-left: 60px;">订单'+(index+1)+'：<b>'+ddjson.XSDD01+'</b></label>';
+				orderIds += ddjson.XSDD01 +','; //add 20151020 拼接订单号
+				/*if(ddjson.XSDD50 == 0){				
+					$("#bankType").hide();
+					$("#container").hide();
+				}*/
+				});
+			//处理订单号	
+			if(orderIds.length > 0){
+				orderIds = orderIds.substring(0, orderIds.length-1);
+			}
+			$("#ddlist").append(str);
+			$("#money").html("￥"+zfje);
+			
+			payOnline();
+		}
+	});
+	
+
+	//加载地址信息
+	showDQXX("QY");
+	$("#amount1").html("￥"+zfje);
+	if(navigator.userAgent.indexOf("MSIE")>0)  
+	{   
+	    //待优化
+	    if(navigator.userAgent.indexOf("MSIE 8.0")>0)  
+	    {
+	    	$("#provinceQY").css("padding-bottom","10px");
+	    	$("#cityQY").css("padding-bottom","10px");
+	        $("#countryQY").css("padding-bottom","10px");
+	    } else{	
+	    	$("#countryQY").css("padding-bottom","0px");
+	        $("#cityQY").css("padding-bottom","0px");
+	    	$("#provinceQY").css("padding-bottom","0px");
+	    }
+	}	
+});
+
+//配送地址
+function query_city(){
+  alert($("#city_name").text()+$("#city_value").val());
+}
+//点击立即支付
+function payOnline(){
+	//支付方式选择
+	var skfsArr=[];
+	$(".ljzf").attr("disabled",false);
+	$(".ljzf").on("click",function(){
+	    $(".pay_main").find("input[name='payment']").each(function(index){
+		    if($(this).is(":checked")){
+				var json={};
+				var SKLIST=[];
+				json.ZHBJ=2;
+				json.JYDH=JYDH;
+				var jsonItem={};
+				jsonItem.SKFS=$(this).val();//收款方式:支付宝支付6  银联支付8，微信支付9，ebc支付
+				jsonItem.ZFJE=zfje;
+				SKLIST.push(jsonItem);
+				json.SKLIST=SKLIST;
+				skfsArr.push(json);
+				//savePayment(json); -- 换成从后台调用
+			 }
+		});
+	    var payment=$("input[name='payment']:checked").val();
+		if(payment==undefined){
+		  alert("请选择支付方式！");
+		  return;
+		}
+		$(".ljzf").attr("disabled",true);
+		var xmlData=[];
+		var json={};
+		json.payment=payment;//支付类型
+		json.JYDH=JYDH;//订单号
+		json.AMOUNT=zfje;//订单总金额
+		json.ZTID=ztid;//主体公司
+		json.HBID=user.ZCXX01;//伙伴
+		json.LX=user.LX;//用户类型
+		/**物流信息**/
+		json.logistics_type="EXPRESS";//物流类型
+		json.logistics_fee="0.00";//物流费用
+		json.logistics_payment="SELLER_PAY";//物流支付方式
+		/**收货信息**/
+		//var addressList = queryADRESS();
+		//json.WIDreceive_name=addressList[0].SHRMC;//"张三";//收货人姓名
+		//json.WIDreceive_address=addressList[0].ADDRESS;//"北京市海淀区";//收货人地址
+		//json.WIDreceive_zip=addressList[0].YZBM;//"123456";//收货人邮编
+		//json.WIDreceive_phone=addressList[0].GDDH;//"0571-88158090";//收货人电话号码(固定电话)
+		//json.WIDreceive_mobile=addressList[0].MOBILE;//"13312341234";//收货人手机号码
+		xmlData.push(json);
+		//window.location.href="/customer/qfy/shopping/ABCWait.html?r="+Math.random()+"&xsdd01="+JYDH+"&ztid="+ztid;
+		if(payment == "6"){
+		    //淘宝支付
+			window.open("/AlipayOnline/payOnline.action?r="+Math.random()+"&XmlData="+JSON.stringify(xmlData)+"&skfsArr="+JSON.stringify(skfsArr),"_self");
+		}else if(payment == "8"){
+			//银联支付 -- 收款方式未加
+			//modify 2015.11.18. 修改银联支付的处理方法与支付宝的处理相同
+			window.open("/UnionpayOnline/payOnline.action?r="+Math.random()+"&XmlData="+JSON.stringify(xmlData)+"&skfsArr="+JSON.stringify(skfsArr),"_self");
+			/*
+			var url="/OrderFlowManage/insertOrderPayway.action?XmlData="+JSON.stringify(skfsArr);
+			ajaxQ({
+				"url" : url,
+				"callback" : function(returnVal){
+	    			if(returnVal.STATE=="1"){
+	    				var url = "/customer/qfy/shopping/unionpaySend.jsp?r="+Math.random()+"&OrderAmount="+zfje+"&JYDH="+JYDH;
+	    				window.open(url,"_self");
+	    			}else if(returnVal.STATE=="0"){
+	    				alert(returnVal.ERROR);
+	    			}
+				}
+			});*/
+		}else if(payment == "7"){
+			//铜根源支付
+			var jsonTgy={};
+			jsonTgy.ORDER_NO=JYDH;//订单号
+			window.open("http://192.168.1.110:8088/TGYInterface/TradeDate.action?r="+Math.random()+"&json="+JSON.stringify(jsonTgy),"_self");
+		}else if(payment == "9"){
+			window.open("/customer/qfy/weixin/weixin_scan_pay.html?r="+Math.random()+"&XmlData="+JSON.stringify(xmlData)+"&skfsArr="+JSON.stringify(skfsArr)+"&JYDH="+JYDH+"&zfje="+zfje,"_self");
+		}else if(payment == "11"){
+			var otherParams = "";
+			if(user.LX==44){
+				if(!checkInfo('#YHKH','银行卡号不能为空'))
+					return false;
+				if(!checkInfo('#YHMC','用户名称不能为空'))
+					return false;
+				if(!checkInfo('#WYKHH','网银客户号不能为空'))
+					return false;
+
+				otherParams="&yhkh="+$.trim($('#YHKH').val())+"&yhmc="+$.trim($('#YHMC').val())+"&wykhh="+$.trim($('#WYKHH').val());
+			}else{
+				$(".con1 h3 em").css('display','none'); 
+			} 
+			//ebc钱包支付
+			window.open("/EbcController/payOnline.action?r="+Math.random()+"&XmlData="+JSON.stringify(xmlData)+"&skfsArr="+JSON.stringify(skfsArr)+otherParams,"_self");
+		}
+	});
+}
+
+//保存收款方式
+function savePayment(json){
+	var xmlData=[];
+	xmlData.push(json);
+    var url="/OrderFlowManage/insertOrderPayway.action?XmlData="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(returnVal){
+			var returnVal=visitService(url);
+	    	if(returnVal.STATE=='1'){
+	    		return returnVal;
+	    	}else if(returnVal.STATE=='0'){
+	    		alert(returnVal.ERROR);
+	    		return false;
+	    	}
+		}
+	});
+}
+
+//查询收货地址
+/* function queryADRESS(){
+  var xmlData=[];
+  var json={};
+	  json.ZCXX01=user.ZCXX01;
+	  json.DZBH=dzbh;
+   xmlData.push(json);
+   var url="/CartManage/selectAddressInfo.action?XmlData="+JSON.stringify(xmlData);
+   var spList=visitService(url).ADDRESSLIST;
+   return spList;
+} */
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index,e){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+    	var xmlData=[];
+      	var json={};
+        json.qydm=num;
+    	json.dqjb=dqjb;
+      	xmlData.push(json);
+      	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+      	ajaxQ({
+      		"url":url,
+      		"callback":function(data){
+      			var dqxx = data.mapList;
+      			 $(dqxx).each(function(i,dqxxjson){
+      		  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+      		  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+      		  	  });		 
+      		  	  $(e).bind("change",function(inx){
+      		  		setVal(e,"#city"+id,2);
+      		  		var con="<option value='0'>请选择</option>";
+      		  		$("#countryQY").html(con).val(0);
+      		  		var width = $("#main").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-260;
+      		  		$("#QYdzdetail").css("width", 200+"px");
+      		  	  });	
+      		  	}  			
+      		});
+      	}
+  	else{
+	  	  $(e).bind("change",function(inx){
+	  		setVal(this,"#country"+id,3);
+	  		var width = $("#main").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-260;
+	  		$("#QYdzdetail").css("width", 200+"px"); 
+	  	  });	
+	  	}	
+   });
+}
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();  	
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	ajaxQ({
+  		"url":url,
+  		"callback":function(data){
+  			var list = data.mapList;
+  			$(list).each(function(i,json){
+  		  		if(i==0){
+  		  	 		$(objaft).empty();
+  		  	  		$(objaft).append("<option value='0'>请选择</option>");
+  		    	}
+  		  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  		  	});
+  		}
+  	});
+}
+</script>
+<body>
+<a id="windowOpen_" style="display:none;" target="_blank"></a>
+<!-- head开始 -->
+<div id="header"></div>
+<!-- head结束 -->
+<!-- 中间展示开始 -->
+<div style="width:1200px; margin:-19px auto;">
+<div id="pay">
+<h3>确定订单</h3>
+<div class="pay_main">
+  <!-- <span>√</span> -->
+  <div id="ddlist">
+  	
+  </div>
+  <div class="text">
+    <h4>订单提交成功，总金额：<font style="color:#F00;" id="money" calss="hong"></font>元</h4>
+  </div>
+</div>
+<div id="payFontDiv"><h3 id="payFont">选择支付方式</h3></div>
+<div class="pay_main">
+ <div id="alipayDiv" class="gf" style="display:none;"> <input name="payment" type="radio" value="6" checked="checked" /><img src="/customer/qfy/images/zhifubao.gif" /></div>
+ <!--<div class="gf"> <input name="payment" type="radio" value="7" /><img src="/customer/qfy/images/tgy.png" /></div>-->
+  <div id="unionpayDiv" class="gf" style="display:none;"> <input name="payment" type="radio" value="8" /><img src="/customer/qfy/images/yl.gif" /></div>
+  <div id="wechatpayDiv" class="gf" style="display:none;"> <input name="payment" type="radio" value="9" /><img src="/images/weixin/pay.jpg" /></div>
+  <div id="ebcpayDiv" class="gf" > <input name="payment" type="radio" value="11" /><img src="/customer/qfy/images/ebc.png" /></div>
+  <div id="bankType" class="con-top1">
+	 <input type="radio" name="payment" id="payment1" value="10"><h4>线下转账：请将款项汇入以下信息</h4><span style="color:#999;">(请到银行柜台操作转账)</span>
+  </div>
+  <div class="clear"></div>
+  <div id="container" style="clear:both;">		
+		<!-- <div  class="con-top">
+	 			<input type="radio" name="payment" id="payment1" value="10"><h4>请将款项汇入一下信息</h4><span style="color:#999;">(请到银行柜台操作转账)</span>
+	 	</div> -->
+	
+	 	<div class="con-left">
+	 		<ul>
+	 			<li><span>户名:</span>天津车福网络科技有限公司</li>
+	 			<li><span>纳税人识别号:</span>120115328602785</li>
+	 			<li><span>开户行:</span>招商银行北京分行中关村支行</li>
+	 			<li><span>开户行账号:</span>110916249210666</li>
+	 		</ul>
+
+	 	</div>
+	 	<div class="con-right">
+	 		<span>重要提示：</span>
+	 		<p>1.顾客在转账时请务必将订单号填写到用途或备注中，柜台存款请将订单号写到汇款用途中，以便您的订单及时得到确认<br/>2.汇款完毕后，请务必到‘个人中心-我的订单’中填写付款确认信息<br/>3.请在8小时内完成付款，否则订单将自动取消
+	 		</p>
+
+	 	</div>
+	 	<div class="conMain">
+	 	<table id="conTable" style="margin:0;padding:0;">
+	 		<tr>
+	 			<td><h3><em>*</em>付款金额:</h3></td>
+	 			<td><h5 id="amount1"></h5></td>
+	 		</tr>
+	 		<tr>
+	 			<td><h3><em>*</em>交易地址:</h3></td>
+	 			<td style="width:400px;text-align:left;">
+	    			<select name="QYdz01" id="provinceQY" class="bankbox" style="width:120px;">
+	                 	<option value="0">请选择</option>
+	                </select>
+	                <select name="QYdz02" id="cityQY" class="bankbox width100" style="width:120px;">
+	                	<option value="0">请选择</option>
+	                </select>
+	                <select name="QYdz03" id="countryQY" class="bankbox width100" style="width:120px;">
+	                 	<option value="0">请选择</option>
+	                </select>
+	 			</td>
+	 		</tr>
+	 		<tr>
+	 			<td><h3><em>*</em>汇款日期:</h3></td>
+	 			<td><input id="HKRQ" name="HKRQ" type="text" maxlength="20"  class="Wdate" onfocus="WdatePicker({skin:'whyGreen',maxDate:'%y-%M-%d'})" onClick="WdatePicker()" onchange="checkDate(this.value)"></td>
+	 		</tr>
+	 		<tr>
+	 			<td><h3><em>*</em>汇款人姓名:</h3></td>
+	 			<td><input id="HKR" name="HKR" type="text" maxlength="20"></td>
+	 		</tr>
+	 		<tr>
+	 			<td><h3><em>*</em>交易流水号:</h3></td>
+	 			<td><input id="JYLSH" name="JYLSH" type="text" maxlength="30" onblur="checkJylsh();"></td>
+	 		</tr>
+	 		<tr>
+	 			<td><h3><em>*</em>交易行名:</h3></td>
+	 			<td><input id="JYYH" name="JYYH" type="text" maxlength="30"></td>
+	 		</tr>
+	 		<tr>
+	 			<td><h3>汇款备注:</h3></td>
+	 			<td><input id="HKBZ" name="HKBZ" type="text" maxlength="40" size="80"></td>
+	 			<td><strong style="float:left;width:100px;margin-left:440px;height:20px;line-height:20px;">限40个字以内</strong></td>
+	 		</tr>
+	 		
+	 	</table>
+	 		  
+	 		<!-- <textarea name="" id="pay_area" cols="80" rows="6" style="float:left;margin-top:10px;"></textarea> -->
+			<div class="con-arr">
+				<input type="button" onclick="saveJydInfo();" value="确认付款" class="tg">
+			</div>
+	 		
+	 	</div>
+	</div>
+</div>
+
+	 	<div class="conEbc">
+	 		<table id="conTable" style="padding:0;border:none;">
+		 		<tr>
+		 			<td class="con1"><h3><em>*</em>银行卡号:</h3></td>
+		 			<td class="con2"><input id="YHKH" name="YHKH" type="text" onkeyup="value=value.replace(/[^\d]/g,'')"  onblur="checkInfo('#YHKH','银行卡号不能为空');" maxlength="20"></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="con1"><h3><em>*</em>开户名称:</h3></td>
+		 			<td class="con2"><input id="YHMC" name="YHMC" type="text" onblur="checkInfo('#YHMC','开户名称不能为空');" maxlength="20"></td>
+		 		</tr>
+		 		<tr>
+		 			<td class="con1"><h3><em>*</em>网银客户号:</h3></td>
+		 			<td class="con2"><input id="WYKHH" name="WYKHH" type="text" onblur="checkInfo('#WYKHH','网银客户号不能为空');" maxlength="20"></td>
+		 		</tr>
+	 		</table>
+	 		<div class="clear"></div>
+	 	</div>
+
+  <div id="payDiv"><a class="bot ljzf">立即支付</a></div>
+  <div id="backDiv"><a class="bot" onclick="back();">确  定</a></div>
+</div>
+
+<!-- 
+	<div id="first">
+		<img src="/customer/qfy/images/gou.png" class="gou" />
+		<span class="jiacu"><b class="cg">订单:<a href="#" id="XSDD01">DD1111111</a>提交成功！订单总价</b><b class="hong">￥406.00</b></span>
+		<span>&bull;&nbsp;收货地址：<b id="shdz">背景朝阳区三环以内中关村南大街6号中电信息大厦1508</b></span>
+		<span>&bull;&nbsp;收&nbsp;&nbsp;货&nbsp;&nbsp;人：<b id="shr">王智勇 139******7636</b></span>
+	</div>
+	<div id="first">
+		<b class="xz">选择支付方式并付款</b>
+		<div class="xuanze">
+			<input class="zhifu" name="payment" type="radio" value="6" checked="checked"/>
+			<img src="/customer/qfy/images/zhifubao.png" />
+			<input class="zhifu" name="payment" type="radio" value="8"/>
+			银联支付
+		</div>
+	</div>
+	<a class="ljzf">立即支付</a>
+	 -->
+</div>
+<!-- 中间展示结束 -->
+<!-- foot开始 -->
+<div id="footer" class="clearfix mt20">
+</div>
+<!-- foot结束 -->
+<script type="text/javascript">
+$(document).ready(function(){
+
+ 	if(show == "0" && type == "1"){
+		//隐藏在线支付部分
+		$("#payDiv").hide();
+		$("#alipayDiv").hide();
+		$("#unionpayDiv").hide();
+		$("#wechatpayDiv").hide();
+		$("#ebcpayDiv").hide();
+		//隐藏线下支付		
+		$("#bankType").hide();	
+		$(".conMain").hide();			
+		$("#payFont").html("转账信息");
+		//返回按钮显示
+		$("#backDiv").show();		
+		return;	
+ 	}
+ 	
+ 	$("#backDiv").hide();
+	//线下支付时，设置显示状态
+	if(type == "1"){
+		$("#payment1").attr("checked","checked"); 
+		$('.conMain').show();		
+		$("#container").show();
+		//隐藏在线支付部分
+		$("#payDiv").hide();
+		$("#alipayDiv").hide();
+		$("#unionpayDiv").hide();
+		$("#wechatpayDiv").hide();
+		$("#ebcpayDiv").hide();
+	}
+	else{
+		//显示在线支付
+		$("#alipayDiv").show();
+		$("#unionpayDiv").show();
+		$("#wechatpayDiv").show();
+		//隐藏线下支付
+		$("#bankType").hide();	
+		$("#container").hide();		
+		
+	}
+	$('input:radio').on('click',function(){
+	 if($('input:radio[name="payment"]:checked').val()=='10'){
+		$('.conMain').show();
+		$("#payDiv").hide();
+		$("#container").show();
+	}else if($('input:radio[name="payment"]:checked').val()=='11'){
+		if(lx==44){
+			$('.conEbc').show();
+		}else{
+			$('.conEbc').hide();
+		}
+	}else{
+		$('.conMain').hide();
+		$('.conEbc').hide();
+		$("#payDiv").show();
+		$("#container").hide();
+	}
+		
+	})	
+})
+
+
+function checkDate(val){
+	var chDate = val;  
+	var now = new Date();  
+	var nowDate =  now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate(); 
+	var d1 = new Date(chDate.replace(/\-/g, "\/"));  
+	var d2 = new Date(nowDate.replace(/\-/g, "\/")); 
+	if(d1 <= d2){
+		return true;
+	} else {
+		alert("汇款日期应该在"+nowDate+"或之前");
+		return false;
+	}
+}
+
+//判断输入项是否合法
+function checkNull(){
+	if($("#provinceQY").val() == "0"){
+		alert("请选择交易地址");
+		return false;
+	}
+	var province = $("#provinceQY").val();
+	if(province!="990000"){
+		if($("#cityQY").val() == "0"){
+			alert("请选择交易地址");
+			return false;
+		}
+		if($("#countryQY").val() == "0"){
+			alert("请选择交易地址");
+			return false;
+		}
+	}
+	if(province!="820000"){
+		if($("#cityQY").val() == "0"){
+			alert("请选择交易地址");
+			return false;
+		}
+		if($("#countryQY").val() == "0"){
+			alert("请选择交易地址");
+			return false;
+		}
+	}
+	if($("#HKRQ").val().length == 0){
+		alert("请选择汇款日期");
+		$("#HKRQ").focus();
+		return false;
+	}else if(!checkDate($("#HKRQ").val())){
+		return false;
+	}
+	if($("#HKR").val().length == 0){
+		alert("请输入汇款人姓名");
+		$("#HKR").focus();
+		return false;
+	}
+	if($("#JYLSH").val().length == 0){
+		alert("请输入交易流水号");
+		$("#JYLSH").focus();
+		return false;
+	}
+	if($("#JYYH").val().length == 0){
+		alert("请输入交易行名");
+		$("#JYYH").focus();
+		return false;
+	}
+	return true;
+}
+function saveJydInfo(){
+	var flag = checkNull();
+	if(flag){
+		//修改注册信息
+	 	var XmlData = {};
+	 	XmlData["HKRQ"]=$("#HKRQ").val();
+	 	XmlData["HKR"]=$("#HKR").val();
+	 	XmlData["JYLSH"]=$("#JYLSH").val();
+	 	XmlData["JYYH"]=$("#JYYH").val();
+	 	XmlData["HKBZ"]=$("#HKBZ").val();
+	 	XmlData["orderIds"]=orderIds;
+	 	
+	 	//拼接地址
+	 	var ZCXX07="";  //地址编码
+	   	var ZCXX08="";  //中文地址
+	   	if($("#provinceQY").val() != "0"){
+		  	ZCXX07=$("#provinceQY").val();
+		  	ZCXX08=ZCXX08+$("#provinceQY option:selected").text();
+	   	}
+	   	if($("#cityQY").val() != "0"){
+		  	ZCXX07=$("#cityQY").val();
+		  	ZCXX08=ZCXX08+$("#cityQY option:selected").text();
+	   	}
+	   	if($("#countryQY").val() != "0"){
+	      	ZCXX07=$("#countryQY").val();
+		  	ZCXX08=ZCXX08+$("#countryQY option:selected").text();
+	   	}
+	   //	ZCXX08=ZCXX08+$("#QYdzdetail").val();
+	   	
+	   	XmlData["JYDZ"]=ZCXX08;
+
+	   	//与数据库交互
+	   	var url="/OrderFlowManage/updateJydInfo.action";
+	   	ajaxQ({
+		"url" : encodeURI(url),
+		"data":{"XmlData":escape(JSON.stringify(XmlData))},
+		"callback" : function(data){
+					var data1=data.state;
+					if(data1=="success"){
+						//alert("转账信息提交成功!");
+						if(confirm("转账信息提交成功!")){
+							window.location.href="/customer/qfy/back/shop-main.html?menuId=A303";
+						}
+					}else if(data1 =="jylsh_err"){
+						alert("交易流水号重复，请重新输入。");
+						$("#JYLSH").focus();
+					}
+					else{
+						alert("保存失败!");
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(textStatus);
+			    }
+			});
+		//与数据库交互完毕
+	}
+}
+function checkJylsh(){
+	if($("#JYLSH").val().length == 0){
+		alert("请输入交易流水号");
+		$("#JYLSH").focus();
+		return false;
+	}
+}
+function checkInfo(selectName,alertMessage){
+	if($(selectName).val().length == 0 || $.trim($(selectName).val())==''){
+		dlgShow({content:alertMessage});
+		return false;
+	}
+	return true;
+}
+
+function back(){
+	window.location.href="/customer/qfy/back/shop-main.html?menuId=A303";
+}
+</script>
+</body>
+</html>

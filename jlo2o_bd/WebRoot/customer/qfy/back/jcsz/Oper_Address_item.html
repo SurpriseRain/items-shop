@@ -1,0 +1,432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云</title>
+<meta name="Author" content="汽服云集成" />  
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/default.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+<style>
+.cart_list_top{margin-right:24px; margin-left:24px; text-align:right; background:#fff;clear:both;}
+.affirm_pass_top_p{height:60px; line-height:60px; border-bottom:2px solid #e4e4e4; color:#ff4a00; font-size:14px; margin-right:24px; margin-left:24px;}
+#modifyadd, #invoice_open{background:#fff;}
+</style>
+</head>
+<body>
+
+
+<div id="main" class="w980 clearfix">
+	<div class="cart">
+	<br class="clear"/>
+	<div class="car_remaining mt10" id="tanchuang"   >
+		<form id="form1" action="" >
+                 <div class="affirm_pass">
+               <div id="sjps" >       
+					<div id="modifyadd">
+						<table style=" float: none;" width="100%" border="0" cellspacing="0" cellpadding="4" class="myreger registab mt20">
+		                    <tbody>
+		                      <input type="hidden" name="dzbh" id="textfield8" value=""/>
+                              <tr>
+                              
+                                <td width="10%"><span style="color:red; font-size:12px; padding:0px; margin:0px;">*</span>地&nbsp;&nbsp;址：</td>
+                                <td colspan="2" style="text-align: left;">
+                                  <select name="province" id="selects" class="bankbox" style="width:100px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none;"><option value="-1">请选择</option></select>
+                                  <select name="city" id="select2" class="bankbox " style="width:100px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none;"><option>请选择</option></select>
+                                  <select name="county" id="select3" class="bankbox" style="width:100px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none;"><option>请选择</option></select>
+                                  <select name="county" id="select4" class="bankbox" style="width:100px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none;"><option>请选择</option></select>
+                                  <input type="text" name="otherdz" id="textfield1" class="regbox" value="请填写准确的收货地址" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;"/>
+								</td>
+                              </tr>
+                              <tr>
+                                <td><span style="color:red; font-size:12px; padding:0px; margin:0px;">*</span><span style="letter-spacing:7px;">收货</span>人：</td>
+                                <td colspan="2" style="text-align: left;"><input type="text" name="shrmc" id="textfield2" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;"/>
+                                   <!-- <input type="radio" name="radio" id="radio" value="0" style="padding:0px; margin:0 6px; vertical-align:middle;"/>先生<input type="radio" name="radio" id="radio2" value="1" style="padding:0px; margin:0 6px; vertical-align:middle;">女士 -->
+								</td>
+                              </tr>
+                              <tr>
+                                <td>&nbsp;&nbsp;固定电话：</td>
+                                <td colspan="2" style="text-align: left;">
+								    <input type="text" name="gddh" id="textfield3" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;" />
+								    <span style="color:red; font-size:12px; padding:0px; margin:0px;">&nbsp;</span>
+								     请正确填写电话号码,例如:03178861463
+								</td>
+                                <!--  td class="ft12"></td> -->
+                              </tr>
+                              <tr>
+                                <td><span style="color:red; font-size:12px; padding:0px; margin:0px;">*</span>手机号码：</td>
+                                <td colspan="2" style="text-align: left;">
+								    <input type="text" name="sjhm" id="textfield4" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;">
+								     <span style="color:red; font-size:12px; padding:0px; margin:0px;">&nbsp;</span>
+								    请正确填写手机号码,例如:13415764179 
+								</td>
+                                <!-- td class="ft12"></td> -->
+                              </tr>
+                              <tr>
+                                <td>&nbsp;&nbsp;<span style="letter-spacing:28px;">邮</span>编：</td>
+                                <td colspan="2" style="text-align: left;"><input type="text" name="yzbm" id="textfield5" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;">
+								</td>
+                              </tr>
+                                                            <tr>
+                                <td style="display:none">&nbsp;&nbsp;<span style="letter-spacing:28px; display:none;">编</span>号：</td>
+                                <td colspan="2" style=" display:none; text-align: left;"><input type="text" name="id_bh" id="id_bh"   class="regbox" style=" display:none; width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;">
+								</td>
+                              </tr>
+                              <tr>
+                                <td><span style="color:red; font-size:12px; padding:0px; margin:0px;">&nbsp;</span>&nbsp;<span style="letter-spacing:28px;">邮</span>箱：</td>
+                                <td style="text-align: left;"><input type="text" name="email" id="textfield7" class="regbox" style="width:252px; height:25px; line-height:25px; padding:0 6px; margin:0px; border:none; border:1px solid #666;" />
+								   <span style="color:red; font-size:12px; padding:0px; margin:0px;">&nbsp;</span>
+								   用来接收订单提醒邮件，便于您及时了解订单状态！
+								</td>
+                              </tr>
+                              <tr>
+                                <td colspan = "2" style="text-align: left;"> <input type="button" name="button2" id="changebtnok" value="确定" class="btn  btn_samller btn_blue ml10 fr" />
+                               <input type="button" style="display:none" name="button2" id="changebtnno" value="删除" class="btn  btn_samller btn_hui fr" />
+                               <input type="button" style="display:none" name="button2" id="morendizhi" value="设置默认" class="btn  btn_samller btn_hui fr" />
+                           </td>
+                              </tr>
+                            </tbody>
+                          </table>
+					</div>
+					</div>
+                 </div>
+						
+</div>
+</div>
+</div>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/edlg.min.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user=JSON.parse($.cookie("userInfo"));
+function openUrlInit(rowObj){
+		//地址编号
+		dzbh = rowObj.find("#DZBH").val();
+		//地址类型
+		dzlx = rowObj.find("#DZLX").val();
+		initData();
+}
+//点击当前行进来的
+function initData(){
+	$("#modifyadd").show();
+	showDQXX();
+	$("#changebtnno").show();
+	$("#morendizhi").show();
+	var json={};
+	var xmlData=[];
+	json.DZBH=dzbh;
+	json.ZCXX01=user.ZCXX01;
+	xmlData.push(json);
+	var url="/CartManage/selectAddressInfo.action?XmlData="+JSON.stringify(xmlData);
+	var dzList=visitService(url);
+	var dzxx =dzList.ADDRESSLIST[0];
+	//联系人
+	$("#textfield2").val(dzxx.SHRMC);
+	//固定电话
+	$("#textfield3").val(dzxx.GDDH);
+	//手机号码
+	$("#textfield4").val(dzxx.MOBILE);
+	//邮编
+	$("#textfield5").val(dzxx.YZBM);
+	//邮箱
+	$("#textfield7").val(dzxx.EMAIL);
+	//id
+	$("#textfield8").val(dzxx.DZBH);
+} 
+//新增进来的
+$(document).ready(function(){
+	$("#modifyadd").show();
+	showDQXX();
+});
+//删除地址
+$("#changebtnno").click(function(){
+  var DZBH = dzbh;
+	 dlgShow({content:"确定删除?",yesFn:function(){
+		 var xmlData=[];
+		 var json={};
+			 json.DZBH=DZBH;
+			 xmlData.push(json);
+		 var url="/oper_shdz/deleteDz.action?XmlData="+JSON.stringify(xmlData);
+		 var returnVal=visitService(url);
+		if(returnVal.STATE =="success"){
+				alert("删除成功!");
+			    parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+		}else{
+			alert("删除失败!");
+		    parent.execBackFun("aaa");
+			parent.$("#ajaxGrid").remove();
+		}	
+	 },noFn:function(){
+		 
+	 }
+	 });
+})
+		//设置默认地址
+	 $("#morendizhi").click(function(){
+	   	 var xmlData=[];
+		 var json={};
+			 json.ZCXX01=user.ZCXX01;
+			 json.DZBH=dzbh;
+			 json.dzlx=dzlx
+			 xmlData.push(json);
+		if(dzlx == "送货地址"){
+			//送货地址 
+			 var url="/oper_shdz/updateDzmj.action?XmlData="+JSON.stringify(xmlData);
+			 var returnVal=visitService(url);
+				if(returnVal.STATE =="success"){
+				  dlgShow({content:"设置默认地址成功"});
+				    parent.execBackFun("aaa");
+					parent.$("#ajaxGrid").remove();
+				}else{
+					dlgShow({content:"设置默认地址失败"});
+				}
+		}else{
+		 var url="/oper_shdz/updateDz.action?XmlData="+JSON.stringify(xmlData);
+		 var returnVal=visitService(url);
+			if(returnVal.STATE =="success"){
+				alert("设置默认地址成功!");
+			    parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+			}else{
+				alert("设置默认地址失败!");
+			    parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+			}
+		}
+	 })
+	 
+	//显示大区信息
+function showDQXX(){
+	var xmlData=[];
+  	var json={};
+  	var url="/oper_qydz/qryDQ.action?XmlData="+xmlData;
+  	$("#modifyadd").find("select").each(function(index){
+  			if(index==0){
+  				var num=0;
+  				var dqjb=1;
+  				var dqxx=dqxxList(num,dqjb);
+  				$(dqxx).each(function(i,dqxxjson){
+  					$("#selects").append("<option>"+dqxxjson.DQXX02+"</option>");
+  					$("#selects").find("option").eq(i+1).val(dqxxjson.DQXX01);
+  				});	
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select2",2);
+  					var con="<option value='0'>请选择</option>";
+					$("#select3").html(con).val(0);
+  				});	
+  			}
+  			if(index==1){
+  				var dqjb=3;
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select3",dqjb);
+  				});	
+  			}
+  			if(index==2){
+  				var dqjb=4;
+  				$(this).on("change",function(inx){
+  					setVal(this,"#select4",dqjb);
+  				});	
+  			}
+  	});
+}
+/*限制添加收货地址*/
+  function dqxxList(num,dqjb){
+  			var xmlData=[];
+		  	var json={};
+			  	json.qydm=num;
+			  	json.dqjb=dqjb;
+			  	xmlData.push(json);
+		  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+		  	var data=visitService(url);
+		  	return data.mapList;
+  }
+  
+  function setVal(objnow,objaft,dqjb){
+	   var num=$(objnow).find("option:selected").val();
+	   if(num==09||num==01||num==02||num==22){
+		    $("#select2").hide();		    
+		
+		    dqjb=dqjb+1;
+		    num=num+'01';    
+		    var list=dqxxList(num,dqjb);
+		  	$(list).each(function(i,json){
+		  		if(i==0){
+		  			$("#select3").empty();
+		  			$("#select3").append("<option value='0'>请选择</option>");
+		  		}
+		  		$("#select3").append("<option>"+json.DQXX02+"</option>");
+		  		$("#select3").find("option").eq(i+1).val(json.DQXX01);
+		  	});
+	   }else{
+		    $("#select2").show();
+		    var list=dqxxList(num,dqjb);
+		  	$(list).each(function(i,json){
+		  		if(i==0){
+		  			$(objaft).empty();
+		  			$(objaft).append("<option value='0'>请选择</option>");
+		  		}
+		  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+		  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+		  	});
+	   }
+}
+  //保存地址
+  	$("#changebtnok").one("click",function(){
+		    $("#modifyadd").addClass("displayblock");
+			var province="";
+			var city="";
+			var county="";
+			var street="";
+			var dzbh=dzbh;
+			$("#selects").find("option").each(function(){
+					if($(this).is(":selected")){
+						province=$(this).val();
+					}
+			});
+			$("#select2").find("option").each(function(){
+					if($(this).is(":selected")){
+						city=$(this).val();
+					}
+			});
+			$("#select3").find("option").each(function(){
+					if($(this).is(":selected")){
+						county=$(this).val();
+					}
+			});
+			$("#select4").find("option").each(function(){
+				if($(this).is(":selected")){
+					street=$(this).val();
+				}
+			});
+			if(province=="-1"||city=="0"||county=="0"){
+				//alert("请认真填写收货地址！");
+				dlgShow({content:"请认真填写收货地址"});
+				return false;
+			}
+			var shrmc=$("#textfield2").val();
+			var otherdz=$("#textfield1").val();
+			var gddh=$("#textfield3").val();
+			var sjhm=$("#textfield4").val();
+			var yzbm=$("#textfield5").val();
+			var mark=$("input[name='default']:checked").val()==undefined?"0":"1";
+			var email=$("#textfield7").val();
+			var dzbh=$("#textfield8").val();
+			var DZLX = $.getUrlParam('DZLX');
+			if(checkDzxx(shrmc,otherdz,sjhm,gddh,yzbm,email)==false) {
+				return;
+			}
+			var xmlData=[];
+			var json={};
+			json.province=province;
+			json.city=city;
+			json.county=county;
+			json.street=street;
+			json.shrmc=shrmc;
+			json.otherdz=otherdz;
+			json.sjhm=sjhm;
+			json.yzbm=yzbm;
+			json.gddh=gddh;
+			json.mark=mark;
+			json.email=email;
+			json.dzbm=dzbh;
+			json.zcxx01=user.ZCXX01;
+			json.DZLX=DZLX;
+			if(json.dzbm == ""){
+				//新增
+				json.wldw01=user.ZCXX01;
+				xmlData.push(json);
+				var url="/oper_shdz/insertshdz.action?XmlData="+JSON.stringify(xmlData);
+				
+			}else{
+				//修改
+				xmlData.push(json);
+				var url="/oper_shdz/updateXGSCDZ_mj.action?XmlData="+JSON.stringify(xmlData);
+				
+			}
+			/* //修改
+			if($("#djbj").val()=="0"){
+				xmlData.push(json);
+				var url="/oper_shdz/updateshdz.action?XmlData="+JSON.stringify(xmlData);
+	
+			} */
+	
+			ajaxQ({
+				"url" : url,//原始url 
+				"callback" : function(returnVal){
+					if(returnVal.status =="success"){
+						alert("添加成功!");
+					    parent.execBackFun("aaa");
+						parent.$("#ajaxGrid").remove();
+					}else if(returnVal.STATE == 1){
+					      alert("添加成功!");
+					         parent.execBackFun("aaa");
+					      parent.$("#ajaxGrid").remove();
+					}
+				}
+			});
+			
+	});
+  //验证规则
+  function checkDzxx(shrmc,otherdz,sjhm,gddh,yzbm,email) {
+	if(otherdz==""||otherdz==null) {
+		//alert("请详细填写收货地址！");
+		dlgShow({content:"请详细填写收货地址"});
+		return false;
+	}
+	if(shrmc==""||shrmc==null) {
+		//alert("请填写收货人！");
+		dlgShow({content:"请填写收货人"});
+		return false;
+	}
+	if(sjhm==""){
+		//alert("请填写手机号！");
+		dlgShow({content:"请填写手机号"});
+		return false;
+	} 
+	var sjhmReg=/(^13\d{9}$)|(^14)[5,7]\d{8}$|(^15[0,1,2,3,5,6,7,8,9]\d{8}$)|(^17)[6,7,8]\d{8}$|(^18\d{9}$)/g;
+	if(sjhm!=""&&!sjhmReg.test(sjhm)) { 
+		//alert("请填写正确的手机号码！");
+		dlgShow({content:"请填写正确的手机号码"});
+		return false;
+	}	
+	
+	var gddhReg =/^((0?1[358]\d{9})|((0(10|2[1-3]|[3-9]\d{2}))?[1-9]\d{6,7}))$/;
+	if(gddh!=""){
+		if(gddh!=""&&!gddhReg.test(gddh)){
+		    //alert("固定电话中只能输入数字！");
+		    dlgShow({content:"固定电话中只能输入数字"});
+			return false;
+		}
+	}
+	
+	/* if(yzbm==""){
+		alert("请填写邮政编码！");
+		return false;
+	} */
+	var yzbmReg=/^[1-9][0-9]{5}$/;
+	if(yzbm!=""){
+		if(yzbm!=""&&!yzbmReg.test(yzbm)){
+		    //alert("请填写正确的邮政编码！");
+		    dlgShow({content:"请填写正确的邮政编码"});
+			return false;
+		}
+	}
+	
+	var emailReg=/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/
+	if(email!=""&&!emailReg.test(email)){
+	    //alert("邮箱格式不正确！例如 weixing@163.com");
+	    dlgShow({content:"邮箱格式不正确！例如 weixing@163.com"});
+		return false;
+	}
+	return true;
+}
+</script>
+</body>
+</html>

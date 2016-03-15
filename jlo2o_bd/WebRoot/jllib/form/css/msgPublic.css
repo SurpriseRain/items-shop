@@ -1,0 +1,107 @@
+body{ margin:0 auto; size:12px; padding:0px; font-family:"microsoft yahei"; background-color:#f9f9f9; font-size:12px;) no-repeat;background-attachment:fixed;}
+ul,li{ margin:0px; padding:0px;list-style:none;}
+	  
+/**********************选项卡开始*******************/
+ul.contontList{ width:1000px; height:35px; border-bottom:1px solid #666; margin-bottom:10px;}
+ul.contontList li{ float:left; line-height:35px; height:35px; margin-left:10px; padding:0 10px; cursor:pointer;}
+ul.contontList li a{ float:left; font-size:13px; width:66px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+ul.contontList li span{ float:right; width:13px; height:13px; line-height:12px; border:1px solid #ccc; margin:9px 0 10px 10px; text-align:center; border-radius:5px; display:none;}
+ul.contontList li.xuan{ line-height:32px; height:34px; background-color:#fff; margin-top:-1px; border-left:1px solid #666; border-right:1px solid #666; border-top:3px solid #666;}
+ul.contontList li.xuan a{ color:#ff8800;}
+ul.contontList li.xuan span{display:block; border:1px solid #ff8800; color:#ff8800;}
+ul.center_li li a{ float:left; width:100px; text-align:center;}
+ul.todoList li .todoTitle font.hui{ float:left; width:550px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#CCC;}
+ul.todoList li.title h4{ float:left; width:74px; height:60px; line-height:60px; margin:0px 20px 0 0; padding:0px;}
+ul.zk{ width:90%; margin-left:5%; float:left; border:#000 1px dashed; padding-bottom:20px; color:#777; display: none; border-radius:15px; margin-top:20px; margin-bottom:20px;}
+ul.zk font{ float:left; width:80%; margin-left:10%; line-height:40px;text-indent:2em;font-family:"microsoft yahei"; color:#000;}
+ul.zk font.title{ float:left; width:80%; margin-left:10%; text-align:center; font-weight:bold;font-family:"microsoft yahei";}
+ul.todoList li.sq:nth-child(4){ background-color:#fff;}
+ul.todoList li.sq:nth-child(8){ background-color:#fff;}
+
+.contont{ width:1000px; min-height:1000px; background-color:#fff; border:1px solid #c4c4c4; padding:0 0 49px 0;}
+
+.cz{ width:1000px; height:50px; position:fixed; z-index:999; bottom:0px; background-color:#fff; border-top:1px solid #ccc;}
+.shang{ width:1000px; height:50px; bottom:0px; background-color:#fff; border-top:1px solid #ccc;}
+.cz .qx{ float:left; height:24px; margin:12px 0;}
+.cz .qx input{ width:14px; height:14px; margin:5px 5px 5px 20px; float:left;}
+.cz .qx span{ float:left; height:24px; line-height:24px;}
+
+.grid{ width:100%; float:left; background-color:rgba(1,1,1,0.1); top:0px; left:0px; position:absolute; z-index: 999; height:2000px; display:none;}
+.grid_main{ width:320px; height:400px;; background-color:#fff; top:100px; left:510px; position:absolute; border-radius:3px; overflow:hidden; overflow-y:scroll; z-index: 9999;display:none; box-shadow:6px 6px 6px #292929;}
+.grid_main label.tj{ float:left; margin:10px 0 0 40px; width:100px; height:30px; background-color:#aaa; line-height:30px; text-align:center;}
+.grid_main label.xuan{ background-color:#ff8800; color:#fff;}
+.grid_main input.seach{ float:left; width:280px; height:30px; margin:10px 0 0 10px; border:1px solid #ccc;}
+.grid_main ul.BM{ width:320px; margin-top:10px; padding-bottom:0px;}
+.grid_main ul.BM li{ float:left; padding:0px; width:100%; line-height:25px; border-bottom:1px dashed #e4e4e4; padding-bottom:5px;cursor:pointer;font-size:14px; padding-left:10px; }
+.grid_main ul.BM li span{ float:right; width:13px; height:13px; line-height:12px; border:1px solid #ccc; margin:10px 38px 10px 0; text-align:center; border-radius:5px; cursor:pointer;}
+.grid_main ul.BM li:nth-child(even){ background:#f5f5f5;} 
+.grid_main ul.BM li:hover span{ background:#fff;}
+.grid_bot{ width:310px; height:50px; background-color:#eee; float:left; position:absolute; bottom:20px;z-index:9999;}
+.grid_bot a{ width:100px; height:30px; line-height:30px; margin:10px 0 0 20px; border:0px;}
+.grid_main ul.BM ul.bm{ width:100%; display:none; float:left;}
+.grid_main ul.BM ul.bm li{ float:left;height:30px; padding-left:20px; font-size:9px;}
+
+/***********************按钮样式开始***********************/
+.bot{ padding:0 10px; float:left; height:26px; line-height:24px; background-color:#ff8800; color:#fff; font-family:"microsoft yahei"; font-size:14px; width:50px; text-align:center; cursor:pointer; border:1px solid #c76e09; margin:12px 0 12px 20px; outline:none;}
+.Long{ width:200px;}
+.Medium{ width:100px;}
+.Short{ width:50px;}
+.bot:hover{ background-color:#c76e09;}
+.none{ background-color:#ccc; cursor:auto; border:1px solid #bbb;}
+.none:hover{ background-color:#ccc;}
+
+/**********************搜索导航*******************/ 
+ul.todoList{ float:left; width:1000px;}
+ul.todoList li{ float:left; width:1000px; height:40px; line-height:40px; border-bottom:1px solid #eee;}
+ul.todoList li input{ float:left; width:14px; height:14px; margin:13px 20px; padding:0px; border:1px solid #aaa;}
+ul.todoList li span.userName{ float:left; width:80px;}
+ul.todoList li label.time{ float:right; color:#999; width:140px;}
+ul.todoList li .todoTitle{ float:left; width:710px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#666; }
+ul.todoList li .todoTitle font{ float:left; margin-right:20px;}
+
+ul.todoList li .todoTitle font.hui{ float:left; width:550px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#CCC;}
+ul.todoList li.title{ height:60px;}
+ul.todoList li.title h3{ float:left; width:74px; height:60px; line-height:60px; margin:0px 20px; padding:0px; font-size:16px; color:#999;}
+ul.todoList li.title h4{ float:left; width:74px; height:60px; line-height:60px; margin:0px 20px 0 0; padding:0px;}
+ul.todoList li.title input.seach{ width:270px; height:26px; margin:0px; padding:0px 5px; border:1px solid #aaa; outline:none; margin:16px 0 16px 20px;}
+ul.todoList li.title .todoFy{ float:right; margin-right:18px;}
+ul.todoList li.title .todoFy span{line-height:60px; color:#333; margin-left:5px;}
+ul.todoList li.title .todoFy a{ color:#666; margin-left:5px;}
+ul.todoList li.title .todoFy a:hover{ cursor:pointer; color:#ff8800; text-decoration:underline;}
+ul.todoList li.title .todoFy input{ float:none; margin:0px 0px 0px 5px; padding:1px 5px; text-align:center; width:20px;}
+ul.todoList li:nth-child(even){ background-color:#f9f9f9;}
+ul.todoList li:nth-child(odd){ background-color:#fff;}
+ul.todoList li.sq:nth-child(4){ background-color:#fff;}
+ul.todoList li.sq:nth-child(8){ background-color:#fff;}
+ul.todoList li:hover{ background-color:#f1f1f1; cursor:pointer;}
+ul.todoList li:hover span.userName{ color:#ff8800; font-size:14px;}
+ul.todoList li:hover label.time{ color:#ff8800;}
+ul.todoList li:hover .todoTitle{ color:#ff8800; font-size:14px;}
+
+/**********************************展示消息CSS***********************************/
+div.grid_msg{margin: 0px 10px;}
+div.grid_msg li{width:980px;height:40px;background-color:#f5f5f5;}
+div.grid_msg li.title{ height:35px; line-height:35px; border-top:2px solid #e4e4e4; background-color:#f5f5f5; color:#3c3c3c; font-size:14px; font-family:"microsoft yahei"; font-weight:bold;}
+div.grid_msg li:HOVER{ background-color:#f5f5f5; }
+div.grid_msg li.title span{float:left; width: 25%;text-align: center;}
+div.grid_msg li.msgContent span{float:left; width: 25%;text-align: center;text-overflow:ellipsis;overflow:hidden;}
+/**********************************展示消息CSS***********************************/
+
+/**********************************岗位控件CSS***********************************/
+ .statusWidgetDiv{ position:absolute; width:573px; height:250px; background-color:#fff; left:0px; top:39px; z-index:999; border:1px solid #e4e4e4; box-shadow: 0px 0px 5px #ccc; padding:15px; display:none;}
+ .statusWidgetDiv ul{ float:left; width:511px; height:180px; border:1px solid #e4e4e4; padding-right:10px; overflow-y:scroll;}
+ .statusWidgetDiv ul li{ float:left; width:120px; height:30px; line-height:30px; border-bottom:1px dotted #e4e4e4; cursor:pointer;}
+ .statusWidgetDiv ul li:hover{ background-color:#f5f5f5;}
+ .statusWidgetDiv ul li input{ float:left; width:15px; height:15px; min-width:15px; margin:7.5px 0 7.5px 10px; padding:0px; border:0px;}
+ .statusWidgetDiv ul li span{ float:left; margin:0px 0px 0px 5px; cursor:pointer; padding:0px;}
+ .czStatus{ width:571px; height:60px; background-color:#f5f5f5; float:left; margin-top:5px; border:1px solid #ff8800; line-height:30px;}
+ .czStatus .valid{ float:left; width:80px; height:30px; line-height:30px;}
+ .czStatus .validStatus{ float:left; width:400px; height:60px;}
+ .czStatus .validStatus a{ float:left; border:1px solid #ccc; height:16px; line-height:16px; margin:5px 5px 5px 0; padding:2px 2px 2px 5px;}
+ .czStatus .validStatus a label{ float:none; padding:0px; font-size:14px;}
+ .czStatus .validStatus a:hover{ background-color:#ff8800; border:1px solid #ff8800; cursor:pointer; color:#fff;}
+ .czStatus .validStatus a:hover label{ color:#fff; cursor:pointer;}
+ .czStatus .validStatus a:hover label:hover{ color:#e40000;}
+ .czStatus a.bot{ float:right; width:60px; height:30px; background-color:#ff8800; color:#fff; line-height:30px; margin:15px;}
+ .czStatus a.bot:hover{ background-color:rgb(47, 128, 235);}
+/**********************************岗位控件CSS***********************************/

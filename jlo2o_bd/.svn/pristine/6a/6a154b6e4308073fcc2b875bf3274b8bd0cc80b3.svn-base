@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+	//隐藏意见的div
+	var div = document.getElementById("meizhi");
+	div.style.display = "none";
+	//初始化数据
+	var MyCookie = $.cookie('userInfo');
+  	var usercookie = JSON.parse(MyCookie);
+  	var activityId = $.getUrlParam("activityId");
+ 	var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL.select_NSPSP','QryType':'Report','dataType':'Json','activityId':activityId,'hdlx':$('#hdlx').val(),'spzt':$('#spzt').val(),'dpmc':$('#dpmc').val(),'spmc':$('#spmc').val()}];
+  	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<style>
+	table tr{line-height:20px;}
+	table{margin-top:0px;width:100%;}
+	ul#screening{width:829px;}
+	ul#screening li{width:828px;}
+	.center{overflow:hidden;}
+	#curPosition{margin-bottom:10px;}
+	table.list_table tr td{position:static;}
+	.activezzcontent{width:100%;height:1000px;background:#000;opacity:0.6;filter:alpha(opacity=60);position:relative;z-indent:9999;}
+	.activezz{display:none;position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:940px;z-indent:8888;}
+	#meizhi{position:absolute;top:50%;left:50%;margin-left:-150px;margin-top:-100px;z-indent:10000;background:#fff;border:2px solid #e4e4e4;width:300px;height:200px;}
+	#meizhi .Shot{text-align:center;}
+	.activezz h3{width:100%;height:30px;line-height:30px;text-align:center;background:#eee;}
+	.remLen{color:red;display:block;width:100%;line-height:28px;text-align:right;width:269px;}
+	a.btn1{background:#6a6a6a;padding:0 20px;font-size:12px;}
+	a.btn2{background:#ff4a00;padding:0 20px;font-size:12px;}
+	.jz{width:266px;margin:0px auto;text-align:center;}
+	.clear{clear:both;}
+</style>
+</head>
+<body>
+	<div class="center">
+		<table class="show_table">
+		    <tr>
+		    	<td><span>活动名称：</span></td><td><label id="hdmc" title=""></label></td>
+		    	<td><span>活动预算：</span></td><td><label id="hdys" title=""></label></td>
+			</tr>
+			<tr>
+		       <td><span style="width:100px;">活动开始时间：</span></td><td><label id="hdks" title=""></label></td>
+		       <td><span style="width:100px;">活动结束时间：</span></td><td><label id="hdjs" title="" ></label></td>
+		    </tr>
+		    <tr>
+		    	<td><span style="width:100px;">报名开始时间：</span></td><td><label id="bmks" title="" ></label></td>
+		    	<td><span style="width:100px;">报名结束时间：</span></td><td><label id="bmjs" title="" ></label></td>
+		    </tr>
+		    <tr>
+		    	<td colspan="1"><span style="width:100px;" >活动商品类型：</span></td>
+		    	<td colspan="3" id="hdspzl">
+				<textarea cols="70" rows="3" class="lsj" id="yxfl_name" readonly="readonly" ></textarea>
+				<input type="hidden" id="yxfl" name="SPFL01"/>
+		    	</td>
+		    </tr>
+		    
+		    <tr>
+		    	<td colspan="4"><span style="width:100px;">活动满减规则：</span></td>
+		    	
+		    </tr>
+		    <tr>
+		    	<td></td>
+			    <td colspan="3">
+			    	<div id="pjmjgz"></div>
+			    </td>
+		     	
+		    </tr>
+		</table>
+<ul id="screening">
+	   <li style="width:825px;">
+	   		<tr>
+       		<td style="width:150px;"><span>活动类型：</span></td>
+       		<td style="width:550px;"><font></font>
+	       		<select id="hdlx" name="hdlx" style="width: 100px;" >
+	       		<option value="">全部</option>
+				</select>
+			</td>
+     	</tr>
+	   	<tr>
+       		<td style="width:150px;"><span>审批状态：</span></td>
+       		<td style="width:550px;"><font></font>
+	       		<select id="spzt" name="spzt" style="width: 110px;" >
+	       			<option value="">全部</option>
+			    	<option value="0">申请中</option>
+			    	<option value="1">审核通过</option>
+			    	<option value="2">审核驳回</option>
+				</select>
+			</td>
+     	</tr>
+		<span>商品名称：</span>
+		<input type="text" id="spmc" name="spmc"  size="20" class="text"/>
+     	</li>
+     	<li>
+	   	<span>店铺名称：</span>
+		<input type="text" id="dpmc" name="dpmc"  size="20" class="text"/>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+     	<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="shtg()">通过</a>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="bhyj()">驳回</a>
+	   </li>
+	</ul>
+	<div class="activezz">
+	<div class="activezzcontent"></div>
+	<div class="zz"></div>
+	<div style="display:none" id="meizhi">
+		<h3>审批意见</h3>
+		<textarea cols="100" rows="10" id="fbzx"  onkeyup="checkMaxInput(this)" onKeyDown="checkMaxInput(this)" style="height: 70px; width: 231px;margin-left:32px;margin-top:14px;" ></textarea><span id="remLen"  class="remLen" style="color: red;">还可以输入50个字</span>
+		<div class="jz">
+		<a href="javascript:void(0);" class="bot Shot seach_bot btn1" id="save_yj">确定</a>
+		<a href="javascript:void(0);" class="bot Shot seach_bot btn2" id="save_qx">取消</a>
+		<div class="clear"></div>
+		</div>
+	</div>
+	</div>
+
+		<div class="clera"><input type="hidden" id="audit_jydh" value=""/></div>
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'ActivityShopId','header':'全选','type':'wdhds','width':'40px'},
+							{'property':'SPXX01','header':'商品编码','type':'hidden','width':'30px','id':'SPXX01'},
+							{'property':'ACTIVITYNAME','header':'活动名称','type':'lable','width':'55px','id':'ACTIVITYNAME'},
+							{'property':'SPXX04','header':'商品名称','type':'hdtz','width':'40px','id':'SPXX04'},
+							{'property':'ZCXX02','header':'所属店铺','type':'lable','width':'80px','id':'ZCXX02'},
+							{'property':'SPFL02','header':'所属品类','type':'lable','width':'55px','id':'ActivityBudget'},
+							{'property':'SPJGB05','header':'商品价格','type':'lable','width':'55px','id':'ActivityStartTime'},
+							{'property':'ACTIVITYNUMBER','header':'参加数量','type':'lable','width':'55px','id':'ACTIVITYNUMBER'},
+							{'property':'WHETHERTOMAIL','header':'是否包邮','type':'wdhdss','width':'55px','id':'WHETHERTOMAIL'},
+							{'property':'PRODUCTSTATE','header':'状态','type':'number','width':'50px','id':'PRODUCTSTATE'}]"
+		>
+		</div>
+	</div>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+$(document).ready(function(){
+	//初始化活动种类
+	var url = "/Oper_HDGL/select_NHDZL.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.hdzlList).each(function(index,val){
+	    	$("#hdlx").append("<option value='"+val.ActivityTypeId+"'>"+val.ActivityTypeName+"</option>");
+	     });
+	}
+	//全选问题
+	  $(".check").on("click",function(){
+		  subSelectAll();
+	  });
+	});
+//全选问题
+function subSelectAll(){
+	var chsub = $("input[name='check']").length; //获取check的个数  
+    var checkedsub = $("input[name='check']:checked").length; //获取选中的check的个数  
+    if (checkedsub == chsub) {  
+        $("#selAll").attr("checked", true);
+    } else {
+    	$("#selAll").attr("checked", false);
+    }
+}
+//全选问题
+function pageGridChangeFunc(){
+	$(".check").on("click",function(){
+		subSelectAll();
+	 });
+}
+$(document).ready(function(){
+	//初始话活动种类的信息
+  	var activityId = $.getUrlParam("activityId");
+	var jsonData = [{"ACTIVITYID":activityId}];
+	var url = "/Oper_HDGL/selectSPHD.action?jsonData=" + JSON.stringify(jsonData);
+	var returnData = visitService(url);
+		// 活动名称
+		var ActivityName = returnData.spfllist[0].ACTIVITYNAME;
+		$("#hdmc").text(ActivityName);
+		// 活动预算金额
+		var ActivityBudget = returnData.spfllist[0].ACTIVITYBUDGET;
+		$("#hdys").text(ActivityBudget + "元");
+		// 活动商品品类
+		$("#yxfl_name").val(returnData.spfllist[0].SPFL02);
+		// 活动开始时间
+		var ActivityStartTime = returnData.spfllist[0].ACTIVITYSTARTTIME;
+		$("#hdks").text(ActivityStartTime);
+		// 活动结束时间
+		var ActivityEndTime = returnData.spfllist[0].ACTIVITYENDTIME;
+		$("#hdjs").text(ActivityEndTime);
+		// 报名开始时间
+		var EnrollStartTime = returnData.spfllist[0].ENROLLSTARTTIME;
+		$("#bmks").text(EnrollStartTime);
+		// 报名结束时间
+		var EnrollEndTime = returnData.spfllist[0].ENROLLENDTIME;
+		$("#bmjs").text(EnrollEndTime);
+ 		// 满减规则
+ 		$(returnData.spfllist).each(function(i, val){
+	    	$("#pjmjgz").append("<p>满&nbsp;&nbsp;<em>" + val.ACTIVITYFULLPRICE + "&nbsp;&nbsp;</em>元&nbsp;&nbsp;减&nbsp;&nbsp;<em>" + val.ACTIVITYOFFPRICE + "&nbsp;&nbsp;</em>元</p>");
+	    });
+	});
+function shtg(){
+	var s = 0 ;
+	$("input:checkbox[name=check]:checked").each(function(i){  
+        var ActivityShopId = $(this).attr("id");  
+        var SPXX01 = $(this).parents("tr").find("#SPXX01").val();
+		   //通过审核或者驳回后不能操作
+        var xmlData =  {'ActivityShopId' : ActivityShopId,'SPXX01':SPXX01} ;
+        var url = "/Oper_HDGL/select_SHBH.action?XmlData=" + JSON.stringify(xmlData);
+		  var returnData=visitService(url);
+		  var state = returnData.hdlist[0].State;
+		  if(state == 1){
+			  return s = s+ state;
+		  }
+		  else if(state == 2){
+			  return s = s+ state;
+		  }else if(s==0){
+			  return s = s+ state;
+		  }
+		
+	});   
+	if(s == 0){
+	     $("input:checkbox[name=check]:checked").each(function(i){  
+	          var ActivityShopId = $(this).attr("id");  
+	          var SPXX01 = $(this).parents("tr").find("#SPXX01").val();
+	          var xmlData =  {'ActivityShopId' : ActivityShopId,'SPXX01':SPXX01} ;
+	          var url = "/Oper_HDGL/updateByid_HDSP.action?XmlData="
+					+ JSON.stringify(xmlData);
+	          $.ajax({
+	 			type : "GET", //请求方式
+	 			url : encodeURI(url),
+	 			success : function(data) {
+	 				query();
+	 			},
+	 		});
+	    }); 
+		    var faplb = [];//定义一个数组    
+		    $('input[name="check"]:checked').each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数    
+		    	faplb.push($(this).val());//将选中的值添加到数组chk_value中    
+		    });
+			 if(faplb != ""){
+				 alert("审核成功");
+			 }else{
+				 alert("请选择需要审核的商品");
+			 }
+	}else{
+		alert("选中的商品已经通过审核/驳回,无需重复操作,请重新选择"); 
+	}
+	}
+//驳回意见的显示
+function bhyj(){
+    var faplb = [];//定义一个数组    
+    $('input[name="check"]:checked').each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数    
+    	faplb.push($(this).val());//将选中的值添加到数组chk_value中    
+    });
+	 if(faplb != ""){
+			$("#meizhi").show();
+			$('.activezz').show()
+	 }else{
+		 alert("请选择商品");
+	 }
+}
+$(document).ready(function(){
+	$("#save_yj").on('click',function(){
+		//驳回意见
+		var fbzc=document.getElementById("fbzx");
+		var activityProductViews=fbzc.value;
+		shbh(activityProductViews);
+		$('.activezz').hide();
+		});
+	$("#save_qx").on('click',function(){
+		//取消
+		//隐藏意见的div
+		var div = document.getElementById("meizhi");
+		div.style.display = "none";
+		$('.activezz').hide();
+		});
+	
+});
+//审核驳回
+function shbh(activityProductViews){
+	var s = 0 ;
+	$("input:checkbox[name=check]:checked").each(function(i){  
+        var ActivityShopId = $(this).attr("id");  
+        var SPXX01 = $(this).parents("tr").find("#SPXX01").val();
+		   //通过审核或者驳回后不能操作
+        var xmlData =  {'ActivityShopId' : ActivityShopId,'SPXX01':SPXX01} ;
+        var url = "/Oper_HDGL/select_SHBH.action?XmlData=" + JSON.stringify(xmlData);
+		  var returnData=visitService(url);
+		  var state = returnData.hdlist[0].State;
+		  if(state == 1){
+			  return s = s+ state;
+		  }
+		  else if(state == 2){
+			  return s = s+ state;
+		  }else if(s==0){
+			  return s = s+ state;
+		  }
+		
+	});  
+	if(s == 0){
+	    $("input:checkbox[name=check]:checked").each(function(i){  
+	          var ActivityShopId = $(this).attr("id");  
+	          var SPXX01 = $(this).parents("tr").find("#SPXX01").val();
+	          var xmlData =  {'ActivityShopId' : ActivityShopId,'SPXX01':SPXX01,'activityProductViews':activityProductViews} ;
+	          var url = "/Oper_HDGL/updateByid_HDSP_BH.action?XmlData="
+					+ JSON.stringify(xmlData);
+	         $.ajax({
+				type : "GET", //请求方式
+				url : encodeURI(url),
+				success : function(data) {
+					query();
+				},
+			});
+	   });  
+	    var faplb = [];//定义一个数组    
+	    $('input[name="check"]:checked').each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数    
+	    	faplb.push($(this).val());//将选中的值添加到数组chk_value中    
+	    });
+		 if(faplb != ""){
+			 alert("操作成功");
+		 }else{
+			 alert("请选择商品");
+		 }
+	}else{
+		alert("选中的商品已经通过审核/驳回,无需重复操作,请重新选择"); 
+	}
+	}
+var maxLen = 50;	//定义用户可以输入的最多字数
+function checkMaxInput(obj) {
+	var val = obj.value,
+		len = val.length;
+	if (len > maxLen){	//如果输入的字数超过了限制
+		val = obj.value.substring(0, maxLen);	//就去掉多余的字
+		$('#fbzx').attr('value',val);
+	}
+	else{
+		document.getElementById('remLen').innerHTML = '还可以输入' + (maxLen - obj.value.length) + '个字';//计算并显示剩余字数
+	}
+}
+</script>
+</body>
+</html>

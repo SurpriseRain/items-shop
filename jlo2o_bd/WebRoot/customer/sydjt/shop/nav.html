@@ -1,0 +1,75 @@
+<div class="w12 shop_nav">
+<div class="content">
+<div class="row">
+  <div id="pro_nav_main">
+  <div class="w02 pro_nav">
+    <h3>全部商品分类</h3><i class="fa fa-chevron-down"></i>
+  </div> 
+  <div class="w02 pro_nav_main">
+    <div class="w02 pro_nav_list"><!--一级菜单截点--></div>
+  </div>
+  </div>
+  <ul class="w10 lg_w10 md_w09 title_nav">
+    <li><a href="javascript:void();" id="index">首页</a></li>
+    <li><a href="javascript:void();" id="all">全部商品</a></li>
+    <li><a>联系我们</a></li>
+  </ul>
+
+</div>
+</div>
+</div>
+<script type="text/javascript">
+function showAllGoods(){
+	$(".banner").empty();
+	$(".shop_floor").empty();
+	$(".shop_list").load("shopAllGoods.html");
+}
+
+$(document).ready(function(){
+	showSpfl();
+	var html_title = $("title").text();
+	if(html_title == "电器服务云平台"){
+		$(".pro_nav > i").attr("class","fa fa-chevron-down display_none");
+	}else{
+		$(".pro_nav > i").attr("class","fa fa-chevron-down display_block");
+		$(".pro_nav_main").attr("class","w12 pro_nav_main display_none");
+        $("#pro_nav_main").mouseover(function(){
+          $(".pro_nav > i").attr("class","fa fa-chevron-up display_block");
+	      $(".pro_nav_main").attr("class","w12 pro_nav_main display_block");
+       })
+        $("#pro_nav_main").mouseleave(function(){
+	     $(".pro_nav > i").attr("class","fa fa-chevron-down display_block");
+     	 $(".pro_nav_main").attr("class","w12 pro_nav_main display_none");
+      })
+	}
+	
+    $(".pro_nav_list > dl").mouseover(function(){
+		$(".pro_nav_main").attr("class","w12 pro_nav_main");
+		$(".pro_nav_list > dl").removeClass("xuan");
+		$(this).addClass("xuan");
+		$(".pro_nav_case").attr("class","w10 lg_w10 md_w02 pro_nav_case display_block");
+    });
+    $(".pro_nav_main").mouseleave(function(){
+		$(".pro_nav_main").attr("class","w02 pro_nav_main");
+		$(".pro_nav_list > dl").removeClass("xuan");
+		$(".pro_nav_case").attr("class","w10 lg_w10 md_w02 pro_nav_case display_none");
+  	});
+
+});
+function showSpfl(){
+	var xmlData=[];
+	var json={};
+		json.gsid=gsid;
+		xmlData.push(json);
+	var url="/HomePage/selectSpfl.action?XmlData="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(returnVal){
+			$(returnVal.mapList).each(function(index,pic){
+				var url="/customer/sydjt/shop/shopAllGoods.html?SPFLCODE="+pic.SPFLCODE+"&gsid="+gsid+"&gsmc="+escape(gsmc);
+				$(".pro_nav_list").append("<dl class=\"w12\"><dd class=\"w12\"><a href="+url+">"+pic.SPFLNAME+"</a></dd></dl>");
+			});
+		}
+	});
+}
+</script>

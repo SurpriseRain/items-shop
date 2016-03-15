@@ -1,0 +1,48 @@
+<div class="w12 s_title"><h3>手机</h3><em>商品筛选</em>共<span>1845</span>个商品。</div>
+        <div class="w12 s_main">
+        <dl class="w12">
+          <dt class="w01">品牌：</dt>
+          <dd class="w09">
+            <ul class="s_brand_title"><li class="xuan">全部品牌</li><li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li><li>G</li><li>H</li><li>I</li><li>J</li><li>K</li><li>L</li><li>M</li><li>N</li><li>O</li><li>P</li><li>Q</li><li>R</li><li>S</li><li>T</li><li>W</li><li>X</li><li>Y</li><li>Z</li></ul>
+            <div class="w12 s_brand_img"><ul><!--截点--></ul></div>
+            <div class="w12 s_result"><label>当前选择：</label><!--截点--></div>
+            <div class="w12 s_btn"><div class="s_btn_main"><input type="button" class="jl_btn btn_red btn_margin_right" value="确定" /><input type="button" class="jl_btn btn_grey" value="取消" /></div></div>
+          </dd>
+          <dt class="w02">
+            <a class="btn">多选<i class="fa fa-plus"></i></a>
+            <a class="btn more">更多<i class="fa fa-chevron-down"></i></a>
+          </dt>
+        </dl>
+        <dl class="w12">
+          <dt class="w01">价格：</dt>
+          <dd class="w09"><a>0-100</a><a>101-299</a><a>300-999</a><a>1000-9999</a><a>0-100</a><a>101-299</a><a>300-999</a><a>1000-9999</a><input type="text" /> - <input type="text" /><input type="button" class="jl_btn btn_red btn_margin_right" value="确定" /></dd>
+          <dt class="w02"></dt>
+        </dl> 
+        <dl class="w12">
+          <dt class="w01">网络：</dt>
+          <dd class="w09"><a>联通4G</a><a>联通4G</a><a>联通4G</a><a>联通4G</a><a>联通4G</a><a>联通4G</a><a>联通4G</a><a>联通4G</a></dd>
+          <dt class="w02"></dt>
+        </dl> 
+        <dl class="w12">
+          <dt class="w01">热点：</dt>
+          <dd class="w09">
+            <div class="w12 s_brand_text"><!--截点--></div>
+            <div class="w12 s_result"><label>当前选择：</label><!--截点--></div>
+            <div class="w12 s_btn"><div class="s_btn_main"><input type="button" class="jl_btn btn_red btn_margin_right" value="确定" /><input type="button" class="jl_btn btn_grey" value="取消" /></div></div>
+          </dd>
+          <dt class="w02">
+            <a class="btn">多选<i class="fa fa-plus"></i></a>
+            <a class="btn more">更多<i class="fa fa-chevron-down"></i></a>
+          </dt>
+        </dl> 
+        </div>
+<script type="text/javascript">
+$(".paging").load("../分页.html");
+$(document).ready(function(){
+  for(var i=0;i<25;i++){
+  $(".s_brand_img").append('<li><img src="../images/ch.png" /><span>长虹</span><i class="fa fa-check-circle-o"></i></li>');
+   }
+  for(var i=0;i<5;i++){$(".s_result").append('<b><span>长虹</span><i class="fa fa-trash-o" title="删除此条件"></i></b>');}
+  for(var i=0;i<50;i++){$(".s_brand_text").append('<a><input type="checkbox" /><span>老人机</span></a>');}      
+})
+</script>

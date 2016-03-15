@@ -1,0 +1,277 @@
+1、校验会员卡接口
+http://192.168.100.161:10005/userCard/check
+请求参数：
+{
+  "cardNum":"012332294999937",//卡号
+  "type":1//固定 1
+}
+返回值：
+{
+		"costTime":156,
+		"msg":"ok",
+	    "result":{ “userId”:1000345,
+	            “loginName”:”usern293”,
+	            “mobile”:”1300002511”
+	           },
+		"statusCode":"200"
+}
+返回值详解：
+costTime	Long	响应时间
+msg	String	返回状态信息
+statusCode	String	返回状态 200是会员卡有效
+userId	int	绑定用户ID
+loginName	String	绑定用户名
+mobile	String	绑定手机号
+cardStatus	Int	卡状态0：未激活，1：激活，2：绑定，3：解绑，4：挂失
+
+
+2、查询团购信息
+http://tg.jia.com/services/rest/call/jia_orders/getActionsByAreaflag?areaflag=shanghai
+请求参数：
+areaflag 必填 分站名称
+times int 默认当天
+返回值：
+{
+    "status": 0,
+    "result": [
+        {
+            "actId": 22846,//id
+            "name": "展厅日常6月30日至7月4日",//名称
+            "tel": "4006607700",//电话
+            "type": 5,//类型
+            "channelId": 1,//通道id
+            "channelName": "建材",//通道名称
+            "startDate": 1404082800,//开始时间
+            "endDate": 1404468000,//结束时间
+            "address": "",//地址
+            "areaflag": "shanghai",//地区标识
+            "delFlag": 1,//
+            "openTime": null,
+            "proCategory": null,
+            "memo": null,
+            "qjpay_rate": 100//钱包折扣率
+        }
+    ]
+}
+
+
+
+3、下钱包订单接口(钱包)
+dingdan.api.tg.local/gatewayofflineorder/saveOfflineOrder.htm
+请求参数：
+{
+"appid": "210",//已分配 今杰专用
+"actId": "15571",//活动id 必填
+"actName": "5月26日齐家网255届综合建材盛典",//活动名称 必填
+"areaflag": "shanghai",//地区标识 必填
+"channelId": "1",//通道id 必填
+"discountOnThousand": "5",//折扣率 必填
+值为0-99
+ex:   3代表97折
+       5代表95折
+     10代表90折
+"jifenRate": "50",//团购活动积分率 必填
+"shopId": 52,//店铺id 必填
+"shopName": "欧龙漆",//店铺名 必填
+"autoCancelTime": "2013-12-25 23:59:59",//自动取消订单时间 必填
+"userComment": "#其它备注详见纸质订单#",//用户要求备注
+"userMobile": "13300002222",//用户注册手机号（会员卡接口会返回手机号、非会员卡用户提供） 必填
+"userName": "李先森",//用户名字
+"telephone":"13300002222",//用户联系电话
+"useraddress":"上海市浦东新区张江路621号",//用户收货地址
+"amounttype":0,//0 订金单，1 全款单。
+"inputAmount":10000,//订单金额（单位：分） amounttype为1时必填
+"dingjinAmount":5000,//订金金额（单位：分）amounttype为0时必填
+"ordergroupId":"8000215652303"//纸质订单号,由齐家分配，必填
+}
+
+下钱包订单接口(非钱包)
+http://dingdan.api.tg.local/gatewayofflineorder/saveOldTgOrder.htm
+请求参数：
+{
+  "actId":"10539",
+  "actName":"7月26号建材大型活动",
+  "amounttype":"1",               //1:全款单，0:订金单
+  "appid":"210",		  //分配给今杰的AppID
+  "areaflag":"shanghai",
+  "channelId":"1",
+  "inputAmount":11111100,         //全款单必填 全款金额(分)
+  "dingjinAmount":10000,	  //订金单必填 订金金额(分) 
+  "shopId":"4",
+  "jifenRate":50,		  //积分率 有团购活动接口中取
+  "shopName":"西蒙专卖店",
+  "userComment":"详见纸质订单",
+  "userMobile":"13764647895",	  //签到手机号
+  "userName":"111",		  //联系人姓名
+  "telphone":"13814385438",       //联系人手机号 (可选)
+  "useraddress":"111",		  //联系地址
+  "adminId":2183,		  //操作人ID
+  "adminName":"tgAdmin"		  //操作人名称
+}
+
+
+
+4、获取订单状态和详情
+请求参数：
+{
+"orderGroupId": "",//订单号
+"orderGroupNo": ""//订单id(二取一)
+}
+响应值：
+{
+    "statusCode": ,
+    "msg": "",
+    "costTime": ,
+  "result" : {
+                "addTime": "",
+                "orderId": "",
+                "orderGroupNo": "",
+                "attribute": ,
+                "dingjinAmount": "",
+                "creditsFee": "",
+                "discount": "",
+                "totalAmount": "",
+                "needPayAmount": "",
+                "userAddress": "",
+                "shopName": "",
+                "shopId": "",
+                "status": "",
+                "actId": "",
+                "actName": "",
+                "tuidingAddTime": "",
+                "tuidingReson": "",
+                "tuidingStatus": "",
+                "tuidingEndTime": ""
+            }
+}
+响应值详解：
+statusCode 状态码，200成功
+msg 状态码对应信息
+result 返回结果
+addTime 下单时间(unix时间戳)
+orderId 订单ID
+orderGroupNo 纸质订单号
+attribute 订单类型（2商城订单，3和4是团购订单）
+dingjinAmount	预约金金额
+creditsFee	积分抵扣
+discount	优惠金额
+totalAmount 订单总金额
+rFinalAmount	还需支付
+userAddress	收货人信息
+tuidingAddTime	退订发起时间(unix时间戳)
+tuidingEndTime	退订完成时间(unix时间戳)
+tuidingReason	退订原因
+tuidingStatusId	退订状态
+1   ==> 待商家同意/预约退订
+2   ==> 商家拒绝退款
+4   ==> 待商家退货确认
+5   ==> 银行处理中/已退订订金待领
+6   ==> 退款完成/退订完成
+7   ==> 退款取消/退订取消
+8   ==> 退款失败/退订失败
+shopName 店铺名称
+shopId 店铺ID
+statusId 订单状态
+20  ==> 待支付定金'
+21  ==> 待填写支付金额'
+41  ==> 待支付'
+51  ==> 待发货'
+71  ==> 待收货确认
+91  ==> 订单完成
+100 ==> 订单关闭
+actId 活动ID
+actName 活动名称
+
+
+5、修改尾款
+http://dingdan.api.tg.local/gatewayorder/updateOrderPrice.htm
+参数：
+{
+    "appid": 201,
+    "id": "2347280",
+    "price": 48000,
+    "shopId": "4144"
+}
+appid	必需	应用id
+id	必需	订单ID
+price	必需	订单金额（包含订金）
+shopId	必需	店铺ID
+返回：
+{
+    "statusCode": 200,
+    "msg": "ok",
+    "costTime": 41
+}
+
+
+6、发货接口（非钱包）
+http://dingdan.api.tg.local/gatewayofflineorder/updateOffShipitem.htm
+请求参数：
+{
+    "appid": "201",
+    "ordergroupId": "0515100203614",
+    "shopId": "6457",
+    "adminId": 6000108,
+    "adminName": "dongdongflying",
+    "ip": "10.10.20.158"
+}
+appid	必填	应用id，待分配
+shopId	必填	店铺id
+ordergroupId	必填	订单编号
+adminId	可选	操作人id
+adminName	可选	操作人名称
+ip	可选	操作机器IP
+响应值：
+{
+    "statusCode": 200,
+    "msg": "ok",
+    "result": "success",
+    "costTime": 10
+}
+
+7、发货接口（钱包）
+http://dingdan.api.tg.local/gatewayorder/sellerShippment.htm
+请求参数：
+{
+    "appid": 201,
+    "shopId": 64457018,
+    "orderGroupId": 162524,
+    "sendType": 1
+}
+appid	必需	应用id
+orderGroupId	必需	订单ID
+shopId	必需	店铺ID
+sendType	必需	物流类型
+快递(1),物流(2),EMS(3),平邮(4)
+
+响应值：
+{
+    "statusCode": 200,
+    "msg": "ok",
+    "costTime": 41
+}
+statusCode	String	返回状态
+msg	String	返回状态信息
+costTime	Long	响应时间
+
+8、提交完工接口
+http://dingdan.api.tg.local/gatewayorder/sellerInstall.htm
+请求参数：
+{
+    "appid": 201,
+    "shopId": 64457018,
+    "orderGroupId": 162524
+}
+appid	必需	应用id
+orderGroupId	必需	订单ID
+shopId	必需	店铺ID
+
+响应值：
+{
+    "statusCode": 200,
+    "msg": "ok",
+    "costTime": 41
+}
+statusCode	String	返回状态
+msg	String	返回状态信息
+costTime	Long	响应时间

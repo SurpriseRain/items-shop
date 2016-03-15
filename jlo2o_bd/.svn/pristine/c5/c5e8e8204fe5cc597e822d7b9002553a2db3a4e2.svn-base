@@ -1,0 +1,9 @@
+ul#mian li{ width:1000px; height:44px; float:left; margin:0 0 20px 20px; border:1px solid #ccc; border-radius:3px; border-color:#52a0e8;}
+ul#mian li .libottom{ width:1000px; height:44px; position:absolute;background-color:#52a0e8;overflow-y:auto;}
+ul#mian li .libottom a{ border:1px solid #fff; color:#fff; margin-top:7px; float:left; margin-left:15px; width:100px; height:30px; text-align:center; line-height:30px; text-decoration:none; border-radius:5px; font-family:"microsoft yahei"; font-size:13px;}
+/***ul#mian li .libottom a:hover{ background-color:#fff; color:#333; border:1px solid #3583cc; background:url(../images/bottom-bg.png) repeat-x; box-shadow: 0px 1px 5px #3583cc;}
+****/
+ul#mian li .libottom a.yige{ margin-left:75px;}
+ul#mian li .libottom a.xuan{background-color:#fff; color:#333; border:1px solid #3583cc; background:url(../images/bottom-bg.png) repeat-x; box-shadow: 0px 1px 5px #3583cc;}
+
+ul#mian li.first{ margin-left:0px;} 

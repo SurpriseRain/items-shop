@@ -1,0 +1,475 @@
+<div class="w12 forgetPwd" id="zhmm_yhm" style="display: block;">
+      <div class="w06 ml_w03 techProcess">
+        <div class="w12 jdt"></div>
+        <ul class="w12">
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>1</dd></dl>
+            <span class="w12">填写用户名</span>
+          </li>
+          <li class="w03">
+            <dl class="w12"><dt></dt><dd>2</dd></dl>
+            <span class="w12 yjzg_tex">验证身份</span>
+          </li>
+          <li class="w03">
+            <dl class="w12"><dt></dt><dd>3</dd></dl>
+            <span class="w12 yjzg_tex">设置密码</span>
+          </li>
+          <li class="w03">
+            <dl class="w12"><dt></dt><dd><i class="fa fa-check"></i></dd></dl>
+            <span class="w12 yjzg_tex">完成</span>
+          </li>
+        </ul>
+  </div>
+      <dl class="w12 public_form">
+        <dt class="w05">输入账户名：</dt>
+        <dd class="w07"><input type="text" class="w04" placeholder="请输入用户名\手机号\电子邮箱" id="uesrNameyx" focusOn="请输入用户名\手机号\电子邮箱" /></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">验证码：</dt>
+        <dd class="w07"><input type="text" class="w02" id="userYzm" /><img id="yzmimg_0"  onload="setCaptchaText(0)" class="yzm" src=""   border="0" ><input type="hidden" id="realCaptcha_0" value=""><a class="sxyzm"  title="刷新验证码" onclick="javascript:refreshCaptchaImage(0)">看不清？换一张</a></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">&nbsp;</dt>
+        <dd class="w07"><input type="button" class="jl_btn btn_red reg_bot" value="提交"></dd>
+      </dl>
+</div>
+
+<div class="w12 forgetPwd" id="zhmm_yzsf" style="display: none;">
+      <div class="w06 ml_w03 techProcess">
+        <div class="w12 jdt"></div>
+        <ul class="w12">
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>1</dd></dl>
+            <span class="w12">填写用户名</span>
+          </li>
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>2</dd></dl>
+            <span class="w12 yjzg_tex">验证身份</span>
+          </li>
+          <li class="w03">
+            <dl class="w12"><dt></dt><dd>3</dd></dl>
+            <span class="w12 yjzg_tex">设置密码</span>
+          </li>
+          <li class="w03">
+            <dl class="w12"><dt></dt><dd><i class="fa fa-check"></i></dd></dl>
+            <span class="w12 yjzg_tex">完成</span>
+          </li>
+        </ul>
+      </div>
+      <dl class="w12 public_form">
+        <dt class="w05">请选择验证身份方式：</dt><dd class="w07">
+        <select class="w03" id="type" name="" onchange="selectVerifyType(this.options[this.options.selectedIndex].value);">
+		<option value="sj" selected >已验证手机</option>
+        <option value="yx">已验证邮箱</option>
+    	</select></dd>
+      </dl>
+      <div  id="sj">
+      <dl class="w12 public_form">
+        <dt class="w05">昵称：</dt>
+        <dd class="w07" id="uname"></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">已验证手机：</dt>
+        <dd class="w07" id="tel"></dd>
+        <input type="hidden" class="text pwd" id="smsYzm" value="0"/>
+		<input type="hidden" class="text pwd" id="smsFlag" value="0"/>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">请填写手机校验码：</dt>
+        <dd class="w07"><input id="mesflag" type="text" class="w02" /><input id="yzsj" onclick="sendPhone()" type="button" class="jl_btn btn_grey" value="获取短信校验" /></dd>
+      </dl>
+      </div>
+      <div id="yx" style="display: none;">
+      <dl class="w12 public_form">
+        <dt class="w05">昵称：</dt>
+        <dd class="w07" id="uname2"></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">已验证邮箱：</dt>
+        <dd class="w07" id="email"></dd>
+      </dl>
+      </div>
+      <dl class="w12 public_form">
+        <dt class="w05">&nbsp;</dt>
+        <dd class="w07"><input type="button" class="jl_btn btn_red reg_bot2" value="提交"></dd>
+      </dl>
+</div>
+
+<div class="w12 forgetPwd" id="zhmm_xgmm" style="display: none;">
+      <div class="w06 ml_w03 techProcess">
+        <div class="w12 jdt"></div>
+        <ul class="w12">
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>1</dd></dl>
+            <span class="w12">填写用户名</span>
+          </li>
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>2</dd></dl>
+            <span class="w12 yjzg_tex">验证身份</span>
+          </li>
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>3</dd></dl>
+            <span class="w12 yjzg_tex">设置密码</span>
+          </li>
+          <li class="w03">
+            <dl class="w12"><dt></dt><dd><i class="fa fa-check"></i></dd></dl>
+            <span class="w12 yjzg_tex">完成</span>
+          </li>
+        </ul>
+      </div>
+<!--      <dl class="w12 public_form">-->
+<!--        <dt class="w05">历史收货人姓名：</dt>-->
+<!--        <dd class="w07"><input type="text" class="w03" /></dd>-->
+<!--      </dl>-->
+      <dl class="w12 public_form">
+        <dt class="w05">新登录密码：</dt>
+        <dd class="w07"><input id="userPwd" type="password" class="w03" /></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">确认新密码：</dt>
+        <dd class="w07"><input id="userPwdwd" type="password" class="w03" /></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">&nbsp;</dt>
+        <dd class="w07"><input type="button" class="jl_btn btn_red reg_bot3" value="提交"></dd>
+      </dl>
+</div>
+
+<div class="w12 forgetPwd" id="zhmm_cg" style="display: none;">
+      <div class="w06 ml_w03 techProcess">
+        <div class="w12 jdt"></div>
+        <ul class="w12">
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>1</dd></dl>
+            <span class="w12">填写用户名</span>
+          </li>
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>2</dd></dl>
+            <span class="w12 yjzg_tex">验证身份</span>
+          </li>
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd>3</dd></dl>
+            <span class="w12 yjzg_tex">设置密码</span>
+          </li>
+          <li class="w03 yjzg">
+            <dl class="w12"><dt></dt><dd><i class="fa fa-check"></i></dd></dl>
+            <span class="w12 yjzg_tex">完成</span>
+          </li>
+        </ul>
+      </div>
+  <dl class="w12 public_form">
+        <dt class="w05"><i class="fa fa-check-circle success"></i></dt>
+        <dd class="w07"><h3 class="success">修改密码成功，<a href="/customer/sydjt/index.html">返回首页</a></h3></dd>
+  </dl>
+</div>
+
+
+<script type="text/javascript">
+var zhmm={};
+zhmm.alert = function(id,text){
+	$("#"+id).parent().append('<label class="error_msg">'+text+'</label>');
+}
+
+$(document).ready(function(){
+	$(".reg_bot").click(function(){
+		$("#zhmm_yhm").find("label").remove();
+		var realCaptcha= $("#realCaptcha_0").val().toLowerCase();
+		var userYzm= $("#userYzm").val().toLowerCase();
+		var uesrNameyx = $("#uesrNameyx").val();
+		if(uesrNameyx==""){
+			//alert("登陆账号或邮箱不能为空");
+			$("#uesrNameyx").parent().append('<label class="error_msg">账户名不能为空！</label>');
+			return;
+		}
+		if(userYzm==""||realCaptcha==""){
+			//alert("验证码不能为空");
+			$("#userYzm").parent().append('<label class="error_msg">验证码不能为空！</label>');
+			return;
+		}
+		if(userYzm!=realCaptcha){
+			//alert("验证码输入不正确");
+			$("#userYzm").parent().append('<label class="error_msg">验证码输入不正确！</label>');
+			return;
+		}
+		var arr = [];
+		var o = {};
+		o["NameOrEmail"] = $.trim(uesrNameyx);
+		arr.push(o);
+		var data = visitService("/ForgetPwd/findUserByNameOrEmail.action?XmlData="+JSON.stringify(arr));
+		if(data.mapList == null || data.mapList == ""){
+			//alert("用户名或邮箱不存在！");
+			$("#uesrNameyx").parent().append('<label class="error_msg">账户名不存在！</label>');
+			$("#uesrNameyx").focus();
+		}
+		else{
+			$(data.mapList).each(function(index,newsObj){
+			var arr2 = [];
+			var p = {};
+			p["zcxx01"] = newsObj.ZCXX01;
+			p["username"] = newsObj.PERSON_ID;
+			p["email"] = newsObj.ZCXX09;
+			arr2.push(p);
+			/***邮箱找回暂时注释
+			var data = visitService("/ForgetPwd/sendEmail.action?XmlData="+JSON.stringify(arr2));
+			***/
+			//$(".reg_bot").attr("href","zhmm_yzsf.html");//?zcxx01="+escape(newsObj.ZCXX01)+"&um="+escape(newsObj.PERSON_ID)+"&tel="+escape(newsObj.ZCXX06)+"&email="+escape(newsObj.ZCXX09));
+			//var flagInfo=[{"flag":"true","zcxx01":escape(newsObj.ZCXX01),"um":escape(newsObj.PERSON_ID),"tel":escape(newsObj.ZCXX06),"email":escape(newsObj.ZCXX09)}];
+			var flagInfo = [];
+		    var o = {};
+		    o.flag = "true";
+		    o.zcxx01 = escape(newsObj.ZCXX01);
+		    o.um = escape(newsObj.PERSON_ID);
+		    o.tel = escape(newsObj.ZCXX06);
+		    o.email = escape(newsObj.ZCXX09);
+		    flagInfo.push(o);
+			$.cookie("flagInfo", null, {
+				path : '/'
+			});
+			$.cookie("flagInfo", JSON.stringify(flagInfo), {
+				expires : 5,
+				path : '/'
+			});
+			});
+
+			$("#zhmm_yhm").hide();
+			$("#zhmm_yzsf").show();
+			yzsf();
+		}
+	});
+	refreshCaptchaImage(0);
+
+	
+})
+function refreshCaptchaImage(i){
+	$("#realCaptcha_"+i).val("");
+	$("#yzmimg_"+i).attr("src","/servlet/CaptchaOutput?font=Helvetica&&fontsize=22&&min-width=150&&padding-x=5&&padding-y=5&&random="+Math.random());
+}
+function setCaptchaText(i){
+	var data = visitService("/UserLogin/searchCaptcha.action");
+	var captchaText=data.captchaText;  
+	$("#realCaptcha_"+i).val(captchaText);
+}
+
+/******************验证身份*******************/
+var um="";
+var tel="";
+var zcxx01="";
+var email="";
+var flag=1;//验证身份方式：手机1，邮箱0
+
+//验证发送时间/s
+var count = 60;
+//验证码失效时间/s
+var outCount = 120;
+
+function yzsf(){
+
+	var finfo = $.cookie('flagInfo');
+	var flagCookies = JSON.parse(finfo);
+	if(flagCookies !=null){
+	if(flagCookies[0].flag=="true"){
+		zcxx01 = flagCookies[0].zcxx01;
+		um = flagCookies[0].um;
+		tel = flagCookies[0].tel;
+		email = flagCookies[0].email;
+		$.cookie("flagInfo", null, {
+			path : '/'
+		});}
+	}else{
+		//location.href="/customer/sydjt/index.html";
+	}
+	
+	$("#uname").html(um);
+	$("#uname2").html(um);
+	$("#tel").html(tel.substring(0,3)+"****"+tel.substring(8,11));
+	$("#email").html(email.substring(0,1)+"****"+email.substring(email.length-8,email.length));
+
+	//refreshCaptchaImage();
+	$(".reg_bot2").click(function(){
+	$("#zhmm_yzsf").find("label").remove();
+	if(flag=="1"){
+		if($("#mesflag").val()==""){
+			//alert("短信验证码不能为空");
+			zhmm.alert("mesflag","短信验证码不能为空!");
+			//$(".reg_bot2").attr("onclick","perfectSave()");
+			return false;
+		}
+		if($("#smsYzm").val()!=$("#mesflag").val()){
+			//alert("短信验证码错误");
+			zhmm.alert("mesflag","短信验证码错误!");
+			//$(".reg_bot").attr("onclick","perfectSave()");
+			return false;
+		}else{
+			//location.href="zhmm_xgmm.html";//?userName="+escape($.getUrlParam("um"));
+			var flagInfo=[{"flag":"true","userName":um}];
+			$.cookie("flagInfo", null, {
+				path : '/'
+			});
+			$.cookie("flagInfo", JSON.stringify(flagInfo), {
+				expires : 5,
+				path : '/'
+			});
+			$("#zhmm_yzsf").hide()
+			$("#zhmm_xgmm").show();
+			xgmm();
+		}
+	}else{
+		var arr2 = [];
+		var p = {};
+		p["zcxx01"] = zcxx01;
+		p["username"] = um;
+		p["email"] = email;
+		p["flag"] = "true";
+		arr2.push(p);
+		var data = visitService("/ForgetPwd/sendEmail.action?XmlData="+JSON.stringify(arr2));
+		if(data["state"]==1){
+			$.cookie("flagInfo", null, {
+				path : '/'
+			});
+			$.cookie("flagInfo", JSON.stringify(arr2), {
+				expires : 5,
+				path : '/'
+			});
+			location.href="zhmm_yzyx.html"
+			}
+		else{
+			alert("发送邮件失败，请重试！")
+			}
+	}
+		
+		
+	});
+
+}
+
+function selectVerifyType(str){
+	if(str=="sj"){
+		flag=1;
+		$("#yx").attr("style","display: none;");
+		$("#sj").attr("style","display: block;");
+	}else{
+		flag=0;
+		$("#sj").attr("style","display: none;");
+		$("#yx").attr("style","display: block;");
+	}
+	
+}
+
+function GetNumber(){
+	$("#yzsj").val(count+"秒后可重发");
+	outCount--;
+	if(outCount > 0&&count==0) {
+		setTimeout(GetNumber, 1000);
+	}else if(outCount==0){
+		$("#smsYzm").val(0);
+	}
+	if(count > 0) {
+	    count--;
+		setTimeout(GetNumber, 1000);
+	}else{
+		$("#yzsj").val("获取短信校验");
+		$("#yzsj").attr("onclick","sendPhone()");
+		//$(".yzsj").attr("style","color: #000;");		
+	}
+}
+
+function sendPhone(){
+	//删除单击事件
+    $("#yzsj").removeAttr("onclick");
+	//验证发送时间/s
+	count = 60;
+	//验证码失效时间/s
+	outCount = 120;
+	//短信失效时间清0
+    $("#smsYzm").val(0);
+	$("#smsFlag").val(0);
+
+    //随机验证码
+	var yzm1=parseInt(Math.random()*10);
+	var yzm2=parseInt(Math.random()*10);
+	var yzm3=parseInt(Math.random()*10);
+	var yzm4=parseInt(Math.random()*10);
+	var shjyzm = yzm1+""+yzm2+""+yzm3+""+yzm4;
+	$("#smsYzm").val(shjyzm);
+	var json={};
+	json.SJHM=tel;	json.FSNR="您好，验证码为"+$("#smsYzm").val()+"（兴隆客服绝不会索要此验证码，切勿告知他人），请在页面中输入以完成验证,有效时间2分钟。"//有问题请致电400-6-6-5500转7
+	json.DJLX=8;
+	json.YWDH="";
+	json.ZCXX01=zcxx01;
+
+	if($("#smsFlag").val()==0){
+		//$("#yzsj").attr("style","color: #999;");
+		GetNumber();
+	}else{
+		$("#yzsj").attr("onclick","sendPhone()");
+	}
+	if($("#smsYzm").val()>0&&$("#smsFlag").val()==0){
+    var url="/Register/insertSms.action?XmlData="+JSON.stringify(json);
+    visitService(url);
+  }
+}
+
+/*******************修改密码***********************/
+
+
+//var username = unescape($.getUrlParam("userName"));
+var username = "";
+function xgmm(){
+
+	var Flaginfo = $.cookie('flagInfo');
+	var flagInfo = JSON.parse(Flaginfo);
+	if(flagInfo!=null){
+	if(flagInfo[0].flag=="true"){
+		username = flagInfo[0].userName;
+		$.cookie("flagInfo", null, {
+			path : '/'
+		});}
+	}else{
+		//location.href="/customer/sydjt/index.html";
+	}
+	
+	$(".reg_bot3").click(function(){
+		$("#zhmm_xgmm").find("label").remove();
+		if(checkPassword()){
+		var password = $("#userPwd").val();
+		var password2 = $("#userPwdwd").val();
+		if (password != password2) {
+			//alert("两次输入的密码不一致!");
+			zhmm.alert("userPwdwd","两次输入的密码不一致!");
+			$("#userPwdwd").focus();
+		}
+		else{
+			var arr = [];
+			var o = {};
+			o["XTCZY01"] = $.trim(username);
+			o["XTCZY02"] = password;
+			arr.push(o);
+			var data = visitService("/UserLogin/updatePwd.action?XmlData="+JSON.stringify(arr));
+			if(data["state"]==1){
+				//$(".reg_bot").attr("href","zhmm_cg.html?userName="+escape(username));
+				$("#zhmm_xgmm").hide();
+				$("#zhmm_cg").show();
+			}
+			else{
+				//alert("修改密码失败！请重试。。。");
+				$(".reg_bot3").parent().append('<label class="error_msg">修改密码失败！请重试。。。</label>');
+			}
+		}
+		}else{
+			return false;}
+	});
+}
+
+function checkPassword(){
+  	var password=$("#userPwd").val();
+  	var str=/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/;
+	if(str.test(password)){
+		return true;
+	}else{
+		//alert("密码需为至少6位的数字字母组合！");
+		zhmm.alert("userPwd","密码需为至少6位的数字字母组合！");
+		$("#userPwd").focus();
+		return false;
+	}
+}
+</script>

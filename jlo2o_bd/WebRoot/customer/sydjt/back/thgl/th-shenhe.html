@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>退货审核</title>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/css/userIndex.css">
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/columns_carlist.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var THDH = JL.getParam('THDH');
+var TYPE = JL.getParam('TYPE');
+var THZT = JL.getParam('THZT');
+var imgUrl=pubJson.path_sptp+"/sptp/";//图片默认路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+var pay_method="";
+function initData(){
+	 var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.return.good.queryReturnGood','QryType':'Report','dataType':'Json','THDH':THDH}];
+	 var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 var rData=visitService(url);//alert(JSON.stringify(rData))
+	 if(TYPE == "1"){
+		 $("#BZ").attr("disabled",true);
+	 }
+	 if(TYPE == "2"){
+		 if(rData[0].THZT=="0"){
+			 $(".button_2").show();
+			 $(".button_3").show();
+		 }else if(rData[0].THZT=="2"){
+			 $(".button_6").show();
+			 $(".button_7").show();
+			 $("#BZ").attr("disabled",true);
+		 }
+	 }
+	 /*if(TYPE == "3"){
+		 if(THZT=="6" || THZT=="7"){
+			 $(".button_6").hide();
+			 $(".button_7").hide();
+			 $("#BZ").attr("disabled",true);
+		 }else if(THZT=="4"){
+			 $(".button_6").show();
+			 $(".button_7").show();
+			 $("#BZ").attr("disabled",true);
+		 }
+	 }*/
+	 var button_6 = $(".button_6").attr("style");
+	 var button_7 = $(".button_7").attr("style");
+	 if(button_6=="display: none;"||button_7=="display: none;"){
+		 var str='<dt class="w02">退货状态：</dt><dd class="w10">'+eval("changeColumns.THZT_"+rData[0].THZT)+'</dd>';
+		 $(".czjg").html(str);
+	 }
+	 if(rData[0].WLLX==0){
+		  $("#thfs2").hide();
+	  }else{
+		  $("#thfs").hide();
+	  }
+	  pay_method=rData[0].skfs;	
+	  $("#ddh").append(THDH);
+	  $("#THSL").val(rData[0].SPSL);
+	  $("#count").html(rData[0].XSDDI05);
+	  $("#goodsname").html(rData[0].SPXX04)
+	  $(".user_name").val(rData[0].LXR);
+	  $("#user_tel").val(rData[0].LXDH);
+	  $("#QYdzdetail").val(rData[0].XXDZ);
+	  $("#provinceQY").val(rData[0].PROVINCE);
+	  $("#wtms").val(rData[0].BZ);//申请退货描述
+	  $("#BZ").val(rData[0].SHYJ);//卖家意见
+	  $("#imgs").attr("src", imgUrl+rData[0].ZTID+"/"+rData[0].SPXX02+"/images/"+rData[0].SPXX02+"_1_small."+rData[0].SPTP02);
+	  $("input[type='radio'][name='THLX']").get(rData[0].THLX).checked = true;
+	  $("input[type='radio'][name='WLLX']").get(rData[0].WLLX).checked = true;
+	  
+	  $("#LXRS").val(rData[0].hy01);
+	  $("#LXDHS").val(rData[0].hy02);
+	  $("#QYdzdetails").val(rData[0].hy03);
+	  
+	  var str="";
+	  var result = rData[0].SPLIST;
+	  str+='<dt class="w02">图片信息</dt><dd class="w10">';
+	  for(var i=0; i<result.length;i++){
+		  str+='<div class="up_img"><img  src="'+pubJson.path_sptp+'/thdtp/'+result[i].TPMC+'"/></div>';
+		} 
+	  str+='</dd>';
+	  $(".photos").append(str);
+	  var thpz=document.getElementsByName("thpzs");
+	  var arr=[];
+	  if(rData[0].THPZ.length>1){
+		 arr=rData[0].THPZ.split("#");
+		 for(var i=0;i<arr.length;i++){
+		  if(arr[i]==thpz[i].value){
+			  thpz[i].checked=true;
+		  }
+		 }
+	  }else{
+		  thpz[rData[0].THPZ].checked=true;
+	  }
+	  var list=dqxxList(rData[0].PROVINCE,2);
+	  	$(list).each(function(i,json){
+	  		if(i==0){
+	  	 		$("#cityQY").empty();
+	  	  		$("#cityQY").append("<option value='0'>请选择</option>");
+	    	}
+	  		$("#cityQY").append("<option>"+json.DQXX02+"</option>");
+	  		$("#cityQY").find("option").eq(i+1).val(json.DQXX01);
+	  	});
+	  	$("#cityQY").val(rData[0].CITY);
+	  	
+	  var list=dqxxList(rData[0].CITY,3);
+	  	$(list).each(function(i,json){
+	  		if(i==0){
+	  	 		$("#countryQY").empty();
+	  	  		$("#countryQY").append("<option value='0'>请选择</option>");
+	    	}
+	  		$("#countryQY").append("<option>"+json.DQXX02+"</option>");
+	  		$("#countryQY").find("option").eq(i+1).val(json.DQXX01);
+	  	});
+	  	$("#countryQY").val(rData[0].COUNTY);
+	  	 
+	  
+	  $("img").error(function() {
+      	$(this).attr("src", defaultImgUrl);
+      });
+	  
+	  $("input[type='radio']").attr("disabled",true);
+	  $("input[type='checkbox']").attr("disabled",true);
+	  $("input[type='text']").attr("disabled",true);
+	  $("input[id='mq']").removeAttr("disabled");
+	  $(".disabled").attr("disabled",true);
+	  
+}
+
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+<div class="w12 merch_main">
+<ul class="w12 merch_breadcrumb">
+    <li><i class="fa fa-home"></i><span>首页</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>订单管理</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><b>退货审核</b></li>
+	<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+	<li><b id="ddh" href="#" class="dqlc-a">退货单号：</b></li>
+</ul>
+<div class="w12 user_content">
+		
+<form id="form1" name="form1">
+	<div class="w12 user_page_main">
+	<div class="w12">
+		<dl class="w12 public_table_title">
+			<dd class="w02">商品图片</dd>
+			<dd class="w06">商品信息</dd>
+			<dd class="w02">赠品信息</dd>
+			<dd class="w02">购买数量</dd>
+		</dl>
+		<div class="w12">
+			<dl class="w12 public_table_main">
+				<dt class="w02"><a><img id="imgs" src="../images/sp.jpg"></a></dt>
+				<dd class="w06"><a class="w10" id="goodsname"></a></dd>
+				<dd class="w02"><span>-</span></dd>
+				<dd class="w02"><span id="count">1999</span></dd>
+			</dl>
+		</div>
+    </div>
+	<div class="w12 user_page_title"><h3>退货单据明细</h3></div>
+	<div class="w12 user_page_infor">
+	<dl class="w12 public_form czjg" ></dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>退货类型：</dt>
+		<dd class="w10">
+			<input type="radio"   name="THLX"  value="0"/><span>退货</span>
+			<input type="radio"  name="THLX"   value="1"/><span>换货</span>
+		</dd>
+	</dl>
+    <dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>退货数量：</dt>
+		<dd class="w10">
+			<input type="text" value=""  class="w01" id="THSL" name="THSL" />
+			<input type="hidden" value="" id="goodslist"/>
+			<input type="hidden" value="" id="xsddi02" name="SPJG"/>
+			<input type="hidden" value="" id="THJE" name="THJE"/>
+			<input type="hidden" value="" id="XSDD01" name="XSDD01"/>
+			<input type="hidden" value="" id="SPXX01" name="SPXX01"/>
+		</dd>
+    </dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>退货凭证：</dt>
+		<dd class="w10">
+			<input type="checkbox" name="thpzs" class="w01" value="0"/><span>购物发票</span>
+			<input type="checkbox" name="thpzs" class="w01"  value="1"/><span>第三方检测报告</span>
+		</dd>
+    </dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>问题描述：</dt>
+		<dd class="w10"><textarea name="BZ" id="wtms" class="w08" disabled="disabled"></textarea></textarea></dd>
+	</dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>退货方式：</dt>
+		<dd class="w10">
+			<input type="radio" name="WLLX"  value="0"/><span>上门取件</span>
+			<input type="radio" name="WLLX"  value="1"/><span>送货至自提点</span>
+			<input type="radio" name="WLLX"  value="2"/><span>快递至电器服云</span>
+		</dd>
+    </dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>地址：</dt>
+		<dd class="w10">       		
+			<select name="PROVINCE" id="provinceQY" class="w02" disabled="disabled">
+				<option value="0">请选择</option>
+			</select>
+			<select name="CITY" id="cityQY" class="w01" disabled="disabled">
+    			<option value="0">请选择</option>
+			</select>
+			<select name="COUNTY" id="countryQY" class="w01" disabled="disabled">
+     			<option value="0">请选择</option>
+			</select>
+			<input type="text" class="w06" id="QYdzdetail" name="XXDZ" value="" />
+		</dd>
+    </dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>联系人：</dt>
+		<dd class="w10">
+			<input type="text" class="w03 user_name"  name="LXR" value=""/>
+		</dd>
+    </dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>联系电话：</dt>
+		<dd class="w10">
+		<input type="text" class="w03" id="user_tel" name="LXDH" value="" />
+		</dd>
+	</dl>
+	<div id="thfs2">
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>地址：</dt>
+		<dd class="w10">
+			<input  disabled="disabled" type="text" class="w03" id="QYdzdetails" name="XXDZS" value="" />
+		</dd>
+	</dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>联系人：</dt>
+		<dd class="w10">
+			<input disabled="disabled" type="text" class="w03" id="LXRS" name="LXRS" value="" />
+		</dd>
+	</dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>联系电话：</dt>
+		<dd class="w10">
+			<input type="text" disabled="disabled" class="w03" id="LXDHS" name="LXDHS" value="" />
+		</dd>
+	</dl>
+   </div>
+	<dl class="w12 public_form photos"  name="photoscount">
+	</dl>
+	<dl class="w12 public_form">
+		<dt class="w02"><em class="font_red">*</em>卖家意见：</dt>
+		<dd class="w10">
+			<textarea name="BZ"  id="BZ" class="w08" placeholder="卖家填写回复意见，仅限500字内！"></textarea>
+		</dd>
+	</dl>
+	<dl class="w12">
+		<dt class="w02">&nbsp;</dt>
+		<dd class="w10">
+			<input type="button" class="jl_btn btn_red button_2 ml_w02" value="同意" onclick="okclick('10')" style="display: none;">
+			<input type="button" class="jl_btn btn_red button_3 ml_w02" value="不同意" onclick="okclick('3')" style="display: none;">
+			<!--<input type="button" class="jl_btn btn_red button_4" value="收货后退款" onclick="okclick('4')">
+			<input type="button" class="jl_btn btn_red button_5" value="不同意" onclick="okclick('5')">-->
+			<input type="button" class="jl_btn btn_red button_6 ml_w02" value="审核" onclick="okclick('6')" style="display: none;">
+			<input type="button" class="jl_btn btn_red button_7 ml_w02" value="驳回" onclick="okclick('7')" style="display: none;">
+		</dd>
+	</dl>
+	</div>
+	</div>
+</form>
+<div>
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+$(document).ready(function(){
+	showDQXX("QY");
+	initData();
+	
+});
+ //加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  		var con="<option value='0'>请选择</option>";
+  		$("#countryQY").html(con).val(0);
+  	  });	
+  	}
+    if(index==1){
+  	  var dqjb=2;
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  	  });	
+  	}	 			
+  });
+} 
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	$(list).each(function(i,json){
+  		if(i==0){
+  	 		$(objaft).empty();
+  	  		$(objaft).append("<option value='0'>请选择</option>");
+    	}
+  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  	});
+}
+
+function okclick(obj){
+	if(pay_method=="8"){
+		//判断是否要跟跟物流对接
+		if(obj == "2"){
+			var wlUrl = "/PubService/getZCGSWL.action?ZCXX01="+usercookie.ZCXX01;
+	        var wlReturnData = visitService(wlUrl);
+	        if(wlReturnData.CurConf == "1" && wlReturnData.APP_KEY == undefined){
+	        	alert("请先在安迅物流上注册");
+	        	return;
+	        }
+		}
+		
+		if($("#BZ").val().length == 0){
+			alert("请输入审核意见！");
+			return false;
+		}
+		var SHYJ = $("#BZ").val();
+		var THLX = $("input[type='radio'][name='THLX']:checked").val();
+		var XmlData=[{"THLX":THLX,"THZT":obj,"SHYJ":SHYJ,"THDH":THDH,"ZCXX01":usercookie.ZCXX01}];
+		alert(JSON.stringify(XmlData));
+		return false;
+		var url="/Oper_THD/update_SHYJ_SYXL.action?XmlData="+JSON.stringify(XmlData);
+		var rData=visitService(url);
+		if(rData.STATE==1){
+			alert("操作成功!");
+			location.href="/customer/sydjt/back/ddgl/tuidan.html?THZT=0,3&TYPE=2";
+		}else if(rData.STATE==2){
+			alert("操作成功!");
+			location.href="/customer/sydjt/back/ddgl/tuidan.html?THZT=2,5,10&TYPE=2";
+		}else if(rData.STATE==3){
+			alert("操作成功!");
+			location.href="/customer/sydjt/back/thgl/tdcwsh.html?TYPE=3";
+		}else{
+				alert("操作失败!");
+			} 
+	}else{
+	  alert("请选择银联支付方式");
+	}
+	
+}
+
+</script>
+</html>

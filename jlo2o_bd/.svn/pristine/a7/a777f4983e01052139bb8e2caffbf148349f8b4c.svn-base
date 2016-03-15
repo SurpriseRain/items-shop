@@ -1,0 +1,19 @@
+<div class="w12 user_page_tab">
+  <ul class="w09">
+    <li class="xuan">可退换货订单</li>
+    <li>返修/退换货记录</li>
+  </ul>
+  <div class="w03 order_seach"><input type="text" class="w10" placeholder="订单号/商品名称可搜索" /><a class="w02"><i class="fa fa-search"></i></a></div>
+  </div>
+<div class="w12 user_page_main">
+    <dl class="w12 public_table_title">
+      <dd class="w08">商品信息</dd>
+      <dd class="w04">评价状态</dd>
+    </dl>
+    <dl class="w12 public_table_main">
+      <dt class="w01"><a href="#"><img src="../images/sp.jpg" /></a></dt>
+      <dd class="w07"><a href="../proItem/proItem.html" class="w12">商品名称商品商品名称商品名称商品名称商品名称商品名称名称商品名称商品名称商品名称</a><label class="w12">购买时间：2015-07-17</label></dd>
+      <dd class="w04"><input type="button" value="申请退换货" class="jl_btn btn_red" id="SQTHH"/></dd>
+    </dl>
+  </div>    
+</div>

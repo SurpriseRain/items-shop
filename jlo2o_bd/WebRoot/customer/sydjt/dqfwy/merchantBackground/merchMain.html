@@ -1,0 +1,42 @@
+<div class="content">
+<div class="row">
+  <div class="w01 merch_nav"></div>
+  <div class="w11 merch_main"></div>
+</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+$(".merch_nav").load("merch_nav.html");
+$(".merch_main").load("merch_main.html");
+$(".merch_content").load("salegoods_list.html");
+$(document).on("click",".merch_nav > dl > dd > a",function(){
+     var merch_nav_text = $(this).text();
+	 $(".merch_nav > dl > dd > a").removeClass("xuan");
+	 $(this).addClass("xuan");
+	  if(merch_nav_text == "发布商品"){
+		 $(".merch_content").load("releasegoods.html");
+	  }else if(merch_nav_text == "出售中的商品"){
+		 $(".merch_content").load("salegoods_list.html");
+	  }else if(merch_nav_text == "仓库中的商品"){
+		 $(".merch_content").load("waregoods_list.html");
+	  }else if(merch_nav_text == "定义分类"){
+		 $(".merch_content").load("defclass.html");
+	  }else if(merch_nav_text == "我的订单"){
+		 $(".merch_content").load("myorder_list.html");
+	  }else if(merch_nav_text == "退货单"){
+		 $(".merch_content").load("return_list.html");
+	  }else if(merch_nav_text == "退款单"){
+		 $(".merch_content").load("refund_list.html");
+	  }else if(merch_nav_text == "商品评价管理"){
+		 $(".merch_content").load("merch_pj_list.html");
+	  }
+  })
+$(document).on("click","#releasegoods_sx",function(){
+	 $(".merch_content").load("releasegoods_sx.html");
+  })
+  $(document).on("click",".refund_list_xx",function(){
+	 $(".merch_content").load("refund_list_xx.html");
+  })
+  
+})
+</script>

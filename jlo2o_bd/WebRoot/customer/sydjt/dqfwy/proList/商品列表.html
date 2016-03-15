@@ -1,0 +1,43 @@
+<div class="w12 jl_filter">
+            	<div class=" w12 fore1">
+					<dl class="w08 md_w07">
+                    	<dt>排序：</dt>
+                        <dd class="xuan"><a>综合<i class="fa  fa-arrow-down" title="从高到低"></i></a></dd>
+                        <dd class=""><a>销量<i class="fa  fa-arrow-down" title="从高到低"></i></a></dd>
+                        <dd class=""><a>价格</a><b><i class="fa fa-caret-up" title="从高到低"></i><i class="fa fa-caret-down" title="从低到高"></i></b></dd>
+                        <dd class=""><a>新品</a></dd> 
+                    </dl>
+					<dl class="w02 md_w03">
+                        <dd><a><i class="fa fa-th-large"></i>大图</a></dd>
+                        <dd><a><i class="fa fa-th"></i>列表</a></dd>   
+                    </dl>
+					<div class="w02 md_w02 fy">
+                    	<span class="text"><em>1</em>/100</span>
+                        <a class="prev"><i class="fa  fa-angle-left"></i></a>
+                        <a class="prev next" title="使用方向键右键也可翻到下一页哦！"><i class="fa fa-angle-right"></i></a>
+                    </div>
+				</div>
+            </div>
+<ul class="w12 pro_list pro_list_img"><!--产品列表截点(大图)--></ul>
+<ul class="w12 pro_list pro_list_text"><!--产品列表截点（列表）--></ul>
+<div class="w12 paging"><!---分页---></div>
+<script type="text/javascript">
+$(".paging").load("../分页.html");
+$(document).ready(function(){
+  for(var i=0;i<25;i++){
+  $(".pro_list_img").append('<li class="w03 cd_w20 lg_w03 md_w04">'
+	                       +'<div class="w12 pro_img"><a href="../proItem/proItem.html"><img src="'+proInfo[0].proImg+'"/></a></div>'
+	                       +'<div class="w12"><div class="w12 pro_pic"><i class="fa fa-rmb"></i>'+proInfo[0].proPic+'</div>'
+						   +'<div class="w12 pro_name"><a href="../proItem/proItem.html">'+proInfo[0].proName+'</a></div>'
+						   +'<div class="w12 pro_rew">已有<em>8645</em>人评价</div></div>'
+						   +'</li>');
+  $(".pro_list_text").append('<li class="w04 cd_w03 lg_w04 md_w06">'
+	                       +'<div class="w03 pro_img"><a href="../proItem/proItem.html"><img src="'+proInfo[0].proImg+'"/></a></div>'
+	                       +'<div class="w09"><div class="w12 pro_pic"><i class="fa fa-rmb"></i>'+proInfo[0].proPic+'</div>'
+						   +'<div class="w12 pro_name"><a href="../proItem/proItem.html">'+proInfo[0].proName+'</a></div>'
+						   +'<div class="w12 pro_rew">已有<em>8645</em>人评价</div></div>'
+						   +'</li>');
+   }
+   
+})
+</script>

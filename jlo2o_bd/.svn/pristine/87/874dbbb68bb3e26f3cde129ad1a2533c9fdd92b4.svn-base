@@ -1,0 +1,67 @@
+body{ margin:0 auto; font-size:12px; color:#666;font-family: Verdana,"΢���ź�","HelveticaNeue","Helvetica Neue",Arial,sans-serif;}
+ul,li,h2,h3,h4,input{ list-style:none; margin:0px; padding:0px;}
+a{ text-decoration:none;}
+.clera{ clear:both;}
+a:hover {color:#fd7789;text-decoration:underline;}
+
+.order_style{padding-left: 50px;}
+.order_styles{padding-left: 35px;}
+.details{width: 80px; height: 25px;border: 1px solid #5898EE;border-radius: 5px;font-size: 15px;text-align: center;background-color: #F3F3F3;margin-top: 2px;}
+.car_body{height:auto; margin:0 auto; margin-top:1px; width: 99.8%;}
+
+.car_body .car_top{  background-color: #ffbe93;
+    border: 1px solid #919191;
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    width: 99.8%;}
+.car_body .car_top div{ float:left; margin-left:3px;}
+.car_body .car_top .car_checkbox{ margin-top:15px;}
+.car_body .car_top .shanchu{ height:25px;float:right; margin-top:5px;}
+
+.car_body .car_top .shanchu img{ float:right;height:25px; width:25px;}
+
+.car_body .car_item{float:left; min-height:136px; max-height:180px; width:99.8%;background-color:#FFF;border:1px solid #919191; overflow: auto;}
+
+.car_body .fgx{ width:100%; height:1px;border-bottom: dashed 1px #919191; margin-top:0px;}
+.car_body .car_item  .goodz{height:auto;float:left; }
+.car_body .car_item  .goodz_name{ min-height:100px; max-height:170px;  float:left;text-align:left;width: 530px;overflow: auto;}
+.car_body .car_item  .goods_style{padding-left: 80px;margin-top: 22px;}
+.car_body .car_item  .jg{width: 80px; margin: 30px auto;margin-left: 20px;}
+.car_body .car_item  .goodz_name .wz a{ float:left;  width:500px; height:80px; line-height:20px; overflow:hidden; }
+
+.car_body .car_item .goodz .je{float:left; font-size:15px;} 
+.car_body .car_item .goodz div{ line-height:25px;}
+
+.car_body .car_item .jg  div{height:30px;} 
+.car_body .car_item .jg  div font{ color:#F00; font-size:15px;} 
+.car_body .car_item .jg  div .scx{ text-decoration:line-through;} 
+
+ .car_body .car_item .cz_button{float:right;margin-right:0px; margin-top:10px; width:80px; margin-right:10px;}
+ .car_body .car_item .cz_button .button{width:100px; margin-top:30px; height:40px; line-height:40px; background-color:#f18700;color:#FFF; font-size:20px; font-weight:700; border-radius:5px;}
+ .car_body .car_item .cz_button .buttonPj{width: 50px; margin-top: 10px; height: 30px; line-height: 30px; background-color: #ff4a00;color:#FFF; font-size: 12px; font-weight:500; border-radius: 5px;}
+ 
+ .car_body .car_item .cz_button .operation{ display:none;width:120px;height:100px;background-color:#008c7e;z-index:99999 ;border-radius:6px;}
+ .car_body .car_item .cz_button .operation a{ float:left; width:120px;height:30px; line-height:30px;color:#FFF; font-size:14px;}
+ .car_body .car_item .cz_button .operation a:hover{ text-decoration:underline;}
+ .imgsize{width: 75px;height: 77px;float: left;border:1px solid #919191;margin: 3px;}
+ .detailss a{ font-size: 14px;color:#ff4a00;}
+ .accounts{margin-right:12px; margin-top:-3px; text-align:center; background-color:#ff4a00; font-size:18px; float: right; width:80px; height:26px;border-radius:5px; border: 1px solid #ff3c3c; color: #ffffff;}
+ .thstyle{font-size: 13px; color:#ff4a00;margin-top:20px;}
+ .thstyle a:hover {color:#ff4a00;text-decoration:underline;}
+ .thstyle a{color:#ff4a00;}
+/*****************���ﳵҳ�����*****************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
+

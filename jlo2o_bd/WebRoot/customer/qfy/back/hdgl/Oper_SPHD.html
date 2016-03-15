@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 活动审核</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/activeCom.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/activeHD.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/edlg.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+</head>
+<body>
+	<form action="">
+	<div class="activeSH activeSHWT">
+		<h4>活动审核</h4>
+		<ul>
+			<li>
+				<label for="activename">活动名称:</label>
+				<span id="hdmc"></span>
+			</li>
+			<h3>活动规则</h3>
+			<li>
+				<label>活动预算:</label>
+				<span id="hdys"></span>
+			</li>
+			<li>
+				<div class="activeStyle">
+					<label for="">商品品类:</label>
+					<ul>
+						<li id="spfl">
+						    <textarea cols="70" rows="3" class="lsj" id="yxfl_name" readonly="readonly" ></textarea>
+						    <input type="hidden" id="yxfl" name="SPFL01"/>
+					    </li>
+				    </ul>
+				</div>
+			</li>
+			<li>
+				<label for="">活动时间:</label>
+				<span>从<input type="text" readonly='readonly' style="width: 140px;" id="hdks"></input>到<input type="text" readonly='readonly' style="width: 140px;" id="hdjs" value=""></input></span>
+			</li>
+			<li>
+				<label for="">报名时间:</label>
+				<span>从<input type="text" readonly='readonly' style="width: 140px;" id="bmks"></input>到<input type="text" readonly='readonly' style="width: 140px;" id="bmjs"></input></span>
+			</li>
+			<li>
+				<div class='activeGZ'>
+					<label for="">满减规则:</label>
+					<!-- <ul id="mjgz">
+					
+					</ul> -->
+					<p id="mjgz">
+						
+					</p>
+				</div>
+			</li>
+			<li>
+				<label for="">财务意见:</label>
+				<textarea cols="70" rows="5" id="cwyj" disabled="disabled"  onkeyup="checkMaxInput(this)" onKeyDown="checkMaxInput(this)" ></textarea><font id="remLen"  class="remLen">还可以输入50个字</font>
+			</li>
+			<li class="activeSHArr">
+				<p>
+				<input class="activitySH" style="display: none" type="submit" value="审核通过" onclick="okclick_yes();" />
+				<input class="activitySH" style="display: none" type="submit" value="审核未通过" onclick="okclick_no()" />
+				<input class="activityGB" style="display: none" type="submit" value="关闭活动" onclick="okclick_close()" />
+				</p>
+			</li>
+		</ul>
+	<div class="clear"></div>
+	</div>
+	</form>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var role = usercookie.Role;
+var activityId = "";
+function openUrlInit(rowObj){
+	activityId = rowObj.find("#ACTIVITYID").val();
+	var jsonData = [{"ACTIVITYID":activityId}];
+	var url = "/Oper_HDGL/selectSPHD.action?jsonData=" + JSON.stringify(jsonData);
+	var returnData = visitService(url);
+	if(returnData.STATE == "1"){
+		// 活动名称
+ 		var ActivityName = returnData.spfllist[0].ACTIVITYNAME;
+ 		$("#hdmc").text(ActivityName);
+ 		// 活动预算金额
+ 		var ActivityBudget = returnData.spfllist[0].ACTIVITYBUDGET;
+ 		$("#hdys").text(ActivityBudget + "元");
+ 		// 活动商品品类
+ 		$("#yxfl_name").val(returnData.spfllist[0].SPFL02);
+ 		// 活动开始时间
+ 		var ActivityStartTime = returnData.spfllist[0].ACTIVITYSTARTTIME;
+ 		$("#hdks").val(ActivityStartTime);
+ 		// 活动结束时间
+ 		var ActivityEndTime = returnData.spfllist[0].ACTIVITYENDTIME;
+ 		$("#hdjs").val(ActivityEndTime);
+ 		// 报名开始时间
+ 		var EnrollStartTime = returnData.spfllist[0].ENROLLSTARTTIME;
+ 		$("#bmks").val(EnrollStartTime);
+ 		// 报名结束时间
+ 		var EnrollEndTime = returnData.spfllist[0].ENROLLENDTIME;
+ 		$("#bmjs").val(EnrollEndTime);
+ 		// 财务意见
+ 		$("#cwyj").val(returnData.spfllist[0].ACTIVITYVIEWS);
+ 		// 满减规则
+ 		$(returnData.spfllist).each(function(i, val){
+	    	$("#mjgz").append("<li><span>满<input type='text' readonly='readonly' value='" + val.ACTIVITYFULLPRICE + "' />元&nbsp;&nbsp;减<input type='text' readonly='readonly' value='" + val.ACTIVITYOFFPRICE + "' />元</span></li>");
+	    });
+ 		
+ 		if(role != 6){
+ 			var activityState = returnData.spfllist[0].ACTIVITYSTATE;
+ 	 		if(activityState == "0"){
+ 	 			$("#cwyj").attr("disabled", false);
+ 	 			$(".activitySH").attr("style","display:block;");
+ 	 		} else if(activityState == "1"){
+ 	 			$(".activityGB").attr("style","display:block;");
+ 	 		}
+ 		}
+	}
+}
+//审核yes
+function okclick_yes(){
+	var cwyj = $("#cwyj").val();
+	var jsonData = [{"ACTIVITYID":activityId,"ACTIVITYVIEWS":cwyj,"ACTIVITYSTATE":"1"}];
+	var url = "/Oper_HDGL/updateActivitySHByID.action?jsonData=" + JSON.stringify(jsonData);
+	$.ajax({
+		type:"POST",//请求类型
+		async: false, //同步
+		url:encodeURI(url),
+		dataType:"text",//返回类型
+		success:function(data)//成功处理
+		{
+			//关闭遮罩层
+			top.closeWait();
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			if(data1==1){
+					alert("审核成功!");
+					parent.execBackFun("aaa");
+					parent.$("#ajaxGrid").remove();
+			}else{
+				alert("审核失败!");
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+        	alert("失败");
+        }
+	});
+}
+//审核No
+function okclick_no(){
+	var cwyj = $("#cwyj").val();
+	var jsonData = [{"ACTIVITYID":activityId,"ACTIVITYVIEWS":cwyj,"ACTIVITYSTATE":"3"}];
+	var url = "/Oper_HDGL/updateActivitySHByID.action?jsonData=" + JSON.stringify(jsonData);
+	$.ajax( {
+		type : "POST", // 请求方式
+		async : false, // true表示异步 false表示同步
+		url : encodeURI(url),
+		data : {jsonData:jsonData},
+		success : function(data) {
+			alert("审批成功!");
+		    parent.execBackFun("aaa");
+			parent.$("#ajaxGrid").remove();
+		}
+	}); 	
+}
+
+// 关闭活动
+function okclick_close(){
+	var jsonData = [{"ACTIVITYID":activityId}];
+	var url = "/Oper_HDGL/updateActivityForState.action?jsonData=" + JSON.stringify(jsonData);
+	$.ajax({
+		type:"POST",//请求类型
+		async: false, //同步
+		url:encodeURI(url),
+		dataType:"text",//返回类型
+		success:function(data)//成功处理
+		{
+			//关闭遮罩层
+			top.closeWait();
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			if(data1==1){
+				alert("关闭成功!");
+				parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+			}else{
+				alert("关闭失败!");
+			}
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+        	alert("失败");
+        }
+	});
+}
+
+// 定义用户可以输入的最多字数
+var maxLen = 50;	
+function checkMaxInput(obj) {
+	var val = obj.value,
+		len = val.length;
+	if (len > maxLen){	// 如果输入的字数超过了限制
+		val = obj.value.substring(0, maxLen);	// 就去掉多余的字
+		$('#cwyj').attr('value',val);
+	}
+	else{
+		document.getElementById('remLen').innerHTML = '还可以输入' + (maxLen - obj.value.length) + '个字';//计算并显示剩余字数
+	}
+}
+</script>
+</body>
+</html>

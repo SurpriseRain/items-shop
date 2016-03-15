@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.selectW_GSYHK','QryType':'Report','ZCXX01':usercookie.ZCXX01}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition" >
+    	<a href="#">用户管理</a>
+    	<span>></span>
+    	<b>公司银行卡</b>
+	</div> -->
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+ 		<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:830px;">
+			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="insertYhk()">新增</a>
+			<!--  <a href="javascript:void(0);" class="bot Shot seach_bot" onclick="">查询</a>-->
+	   </li>
+	</ul>
+ 
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4" rowClick="open" multiPage="true" height="1500" url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'GSYHK01','header':'编号','type':'lable','width':'30px'},
+{'property':'GSYHK02','header':'银行卡号','type':'lable','width':'150px'},
+{'property':'GSYHK03','header':'开户行','type':'lable','width':'150px'},
+{'property':'GSYHK04','header':'开户省','type':'lable','width':'70px'},
+{'property':'GSYHK05','header':'开户市','type':'lable','width':'70px'},
+{'property':'GSYHK09','header':'支行名称','type':'lable','width':'70px'},
+{'property':'GSYHK06','header':'联系人','type':'lable','width':'80px'},
+{'property':'GSYHK11','header':'状态','type':'number','width':'50px'}]" 
+afterUrl="/customer/qfy/back/yhgl/Oper_BankCard_item.html?GSYHK01="
+>
+</div>
+
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+})
+function backFun(){
+	 init();
+}
+function update(GSYHK01){
+	var XmlData=[{"GSYHK01":GSYHK01}];
+	var url="/UserInfo/updateYHKBJ.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData.STATE=="1"){
+		alert("操作成功!");
+		init();
+		}else{
+			alert("操作失败!");
+			}
+}
+function insertYhk(){
+	parent.ajaxGrid('/customer/qfy/back/yhgl/Oper_BankCard_item.html');
+}
+function del(GSYHK01){
+	var XmlData=[{"GSYHK01":GSYHK01}];
+	var url="/UserInfo/deleteW_GSYHK.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData.STATE=="1"){
+		alert("操作成功!");
+		init();
+		}else{
+			alert("操作失败!");
+			}
+}
+</script>

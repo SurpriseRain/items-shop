@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!--删除默认的苹果工具栏和菜单栏-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!--状态栏显示样式-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--禁止了把数字转化为拨号链接-->
+    <meta name="format-detection" content="telephone=no" >
+    <!-- UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <title>商品追溯</title>
+    <style type="text/css">
+        @charset "UTF-8";
+        /* reset start */
+        body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {margin: 0;padding: 0; }
+        body, button, input, select, textarea {font-family: Microsoft YaHei,arial,"\5b8b\4f53";font-size: 1rem;*line-height: 1.5;-ms-overflow-style: scrollbar; }
+        h1, h2, h3, h4, h5, h6 {font-size: 100%;font-weight: normal;}
+        address, cite, dfn, em, var {font-style: normal; }
+        code, kbd, pre, samp {font-family: courier new,courier,monospace; }
+        small {font-size: 12px; }
+        ul, ol {list-style: none; }
+        a {text-decoration: none;color: #000; }
+        a:hover {text-decoration: none; }
+        a:visited {color: #000; }
+        sup {vertical-align: text-top; }
+        sub {vertical-align: text-bottom; }
+        legend {color: #000; }
+        fieldset, img {border: 0; }
+        button, input, select, textarea {font-size: 100%; }
+        table {border-collapse: collapse;border-spacing: 0; }
+        body{background: #f5f5f5;color: #333;width: 100%;}
+        .header{height: 16rem;background-color: #ff872f;padding: 1rem;}
+        .pro-img{height: 16rem;width: 16rem;background-color: white;margin: 0 auto;}
+        .pro-img img{width: 16rem;height: 16rem;}
+        .pro-title{padding:3rem 0 0 11rem;height: 7rem;font-size: 1.3rem;}
+        .pro-name{font-size: 1.4rem;}
+        .pro-desc{margin-bottom: 1rem;background-color: white;padding: 0 1rem 2rem 1rem;}
+        .pro-desc h1{height: 2.4rem;line-height: 2.4rem;font-size: 1.3rem;}
+        .pro-desc-text{text-indent: 2rem;}
+        .pro-detial{background-color: white;height: auto;padding: 0 1rem 2rem 1rem;margin-bottom: 1rem;}
+        .pro-dc-item{position: relative;padding-left: 6rem;line-height: 3rem;}
+        .pro-dc-item span{display: inline-block;line-height: 1rem;margin-left: 1rem;margin-top: 1rem;}
+        .pro-dc-item-label{position: absolute;left: 0;width: 6rem;text-align: right;letter-spacing: .1rem;}
+        .not-find{height: 3rem;width: 20rem;font-size: 2rem;position: absolute;top: 50%;left: 50%;margin-left: -10rem;margin-top: -5rem;display: none;}
+        .logistics-wrap,.logistics-sycx{background-color: white;padding: 0 1rem 2rem 1rem;margin-bottom: 3rem;}
+        .logistics-wrap h1,.logistics-sycx h4{height: 2.6rem;line-height: 2.6rem;font-size: 1.2rem;border-bottom: 1px solid #ddd;}
+	    .logi-list{padding: 1rem 0 0 .5rem;}
+	    .logi-list li{height: auto;border-left: 1px solid #ddd;position: relative;line-height: 1.8rem;}
+	    .logi-list li::before{content: '';border: .3rem solid #fff;background-color: #d9d9d9;display: inline-block;width: .5rem;height: .5rem;border-radius: 1rem;margin-left: -.5rem;margin-right: .5rem;}
+	    .logi-list li:first-child::before{content: '';border: .3rem solid #fff;background-color: #ff6700;;display: inline-block;width: 1rem;height: 1rem;border-radius: 1rem;margin-left: -.8rem;margin-right: .5rem;}
+	    .logi-list li:first-child{color: #ff6700;}
+	    .logi-list .text{display: inline-block;height: 2rem;line-height:2rem;/*  position: absolute;top: 0; */margin:-2rem 1rem 0;}
+	    .logi-list .date{margin-left: 1.4rem;display: block;height:2rem;line-height:2rem;}
+	    .logi-list.text{text-align:left;text-indent:.5rem;}
+ 		.btnAll{float:right;height:2rem;line-height:2rem;border:1px solid #e4e4e4;background:#ff6700;color:#fff;cursor:pointer;padding:0 1rem;position:relative;top:-2.5rem;}
+    	.logi-sycx li{font-size: .5rem;margin-left:.5rem;margin-right:.5rem;padding:1rem 1rem .5rem .5rem}
+    	.logi-sycx{border:1px solid #ddd;}
+   		.logistics-sycx h4{border-bottom:none;}
+    	.logi-height{height:11rem;overflow:hidden;}
+    	.clearfix:after{content:'.';display:block;height:0;visibility:hidden;clear:both;zoom:1;}
+    	.logistics-sycx{display:none;margin-bottom:1rem;};
+    		    
+    </style>
+    <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/js/commons.js"></script>
+    <script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="pro-img">
+            <img id="imgUrl" src="" alt=""/>
+        </div>
+        <div class="pro-title">
+            <h1 class="pro-name"></h1>
+            <p class="pro-company"></p>
+        </div>
+    </header>
+    <section class="pro-detial">
+        <div class="pro-dl-wrap">
+         <div class="pro-dc-item">
+                <label class="pro-dc-item-label">商品名称:</label>
+                <span id="SPXX045"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">商品条码:</label>
+                <span id="barcode2"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">OEM码:</label>
+                <span id="SPGLLJH01"></span>
+            </div>            
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">批次号:</label>
+                <span id="ZCXX03"></span>
+            </div>
+            <div class="pro-dc-item pro-dc-xlh">
+                <label class="pro-dc-item-label">序列号:</label>
+                <span id="ZCXX04"></span>
+            </div>
+            <div class="pro-dc-item pro-dc-time">
+                <label class="pro-dc-item-label">出库时间:</label>
+                <span id="ZCXX10"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">供货方:</label>
+                <span id="ZCXX02"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">供货方地址:</label>
+                <span id="ZCXX08"></span>
+            </div>
+            <div class="pro-dc-item">
+                <label class="pro-dc-item-label">供货方电话:</label>
+                <span id="ZCXX06"></span>
+            </div>
+        </div>
+    </section>
+
+	<section class='logistics-sycx'>
+     <div class="logistics clearfix">
+      <h4>适用车型：</h4>
+      <buttom class="btnAll">更多</buttom>
+	      <ul class="logi-sycx logi-height" id="logi-syshow">
+	       <li>上海大众</li>
+	       <li>上海大众</li>
+	       <li>上海大众</li>
+	       <li>上海大众</li>
+	       <li>上海大众</li>
+	       <li>上海大众</li>
+	      </ul>
+     </div>
+    </section>    
+    <section class="logistics-wrap">
+    	<div class="logistics">
+    		<header>
+    			<h1>物流跟踪</h1>
+    		</header>
+    		<ul id="logi1" class="logi-list">
+    			<li id="a_4" style="display:none">
+    			</li>
+    			<li id="a_3" style="display:none">
+    			</li>
+    			<li id="a_2" style="display:none" >
+    			</li>
+    			 <li id='a_1' style="display:none">
+    			</li>
+    			 <li id='a_0' style="display:none">
+    			</li>
+    		</ul>
+    	</div>
+    </section>
+    <div class="not-find">
+        无法查到该条码信息
+    </div>
+    
+    <script type="text/javascript">
+        (function (){
+            var ImgUrl=pubJson.path_sptp,//图片默认路径
+                code = $.getUrlParam('code'),
+                barcode=$.trim(code),
+                url = "";
+            if(!barcode || barcode === ""){
+                notFind();
+            }
+            if(barcode.length ==13){
+            	url="/MyGoods/getBaseSPTP.action?json="+JSON.stringify({"spcm01":barcode});
+    			var rData=visitService(url);
+    			if(rData !=undefined){
+    				if(rData.result !== "object" || rData.STATE !== "1"){
+    					$("#spxh01").html(rData.spxh01);//商品型号
+    					$("#SPXX045").html(rData.spxx04);//商品名称
+    	                $("#barcode2").html(rData.barcode);//编码
+    	                $("#ZCXX02").html(rData.zcxx02);//生产企业
+    	                $("#ZCXX08").html(rData.zcxx08);//地址
+    	                $("#ZCXX06").html(rData.ZCXX55);//电话  
+    	                $('#ZCXX03').html(rData.spcm03);//批次号
+    	                $('#ZCXX04').html(rData.spcm04);//序列号
+    	                $('#ZCXX10').html(rData.cksj);//出库时间
+    	                $('#SPGLLJH01').html(rData.SPGLLJH01);//OEM码
+    	                $("#imgUrl").attr("src",rData.imgPath);
+    	              	//适用车系
+    	    			selcx (rData);
+                        $('.logistics-sycx').show();//显示
+            }}}
+            
+            //获取系统配件基本信息
+            var imgPath = "/customer/qfy/images/msimg.jpg";
+			url="/MyGoods/getBaseSPTP.action?json="+JSON.stringify({"spcm01":barcode});
+			ajaxQ({
+                "url" : url,
+                "callback" : function(rData){
+                  if(typeof rData.result !== "object" || rData.STATE !== "1"){
+                	var tpArr = rData.SPTP02.split("\.");
+                	imgPath=pubJson.path_sptp+"/sptp/"+rData.ZCXX01+"/"+rData.SPXX02+"/images/"+rData.SPXX02+"_"+rData.SPTP01+"_big."+tpArr[1];
+    				$("#imgUrl").attr("src",imgPath).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+    				$("#spxh01").html(rData.spxh01);//商品型号
+    				$("#spcm03").html(rData.spcm03);//商品批号
+    				/*-----------------------------------  */
+    				 $("#SPXX045").html(rData.spxx04);//商品名称
+                    $("#barcode2").html(rData.barcode);//编码
+                    $("#ZCXX02").html(rData.zcxx02);//生产企业
+                    $("#ZCXX08").html(rData.zcxx08);//地址
+                    $("#ZCXX06").html(rData.ZCXX55);//电话  
+                    $('#ZCXX03').html(rData.spcm03);//批次号
+                    $('#ZCXX04').html(rData.spcm04);//序列号
+                    $('#ZCXX10').html(rData.cksj);//出库时间
+                    $('#SPGLLJH01').html(rData.SPGLLJH01);//OEM码
+                  	//适用车系
+	    			selcx (rData);
+                    $('.logistics-sycx').show();//显示
+                     }
+                },
+                "error":function(){}
+            });
+			var flag = "";
+			var str=barcode.split(')');
+            if(str.length-1==2){
+             	flag = "no";
+         	   notXlh();
+             }else{
+             	flag = "yes";
+             	Xlh();
+             } 
+             //超过2个括号才走这个方法
+			if(flag=="yes"){
+				//与追溯系统交互
+	            url="/MyGoods/GetProduceTraceByUniqueCode.action?XmlData="+JSON.stringify({"produceUniqueCode":barcode});
+	            ajaxQ({
+	                "url" : url,
+	                "callback" : function(rData){
+	                    if(typeof rData.result !== "object" || rData.STATE !== "1"){
+	                    	//该串码没有信息，查询条码信息
+	                    	//判断该串码 是否正确的格式
+							var ture = barcode.substring(0, 4);
+							if(ture == "(01)"){
+								var  bcode = barcode.substring(5, 18);
+								if(""== bcode ){
+									notProduce();
+								}else{
+									url="/MyGoods/getBaseSPTP.action?json="+JSON.stringify({"spcm01":bcode});
+									var rData=visitService(url);
+									if(rData !=undefined){
+										if(rData.result !== "object" || rData.STATE !== "1"){
+											$("#spxh01").html(rData.spxh01);//商品型号
+											$("#SPXX045").html(rData.spxx04);//商品名称
+							                $("#barcode2").html(rData.barcode);//编码
+							                $("#ZCXX02").html(rData.zcxx02);//生产企业
+							                $("#ZCXX08").html(rData.zcxx08);//地址
+							                $("#ZCXX06").html(rData.ZCXX55);//电话  
+							                $('#ZCXX03').html(rData.spcm03);//批次号
+							                $('#ZCXX04').html(rData.spcm04);//序列号
+							                $('#ZCXX10').html(rData.cksj);//出库时间
+							                $('#SPGLLJH01').html(rData.SPGLLJH01);//OEM码
+							                $("#imgUrl").attr("src",rData.imgPath).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+											//隐藏追溯页面
+							                notProduce();
+							              	//适用车系
+							    			selcx (rData);
+						                    $('.logistics-sycx').show();//显示
+											
+										}else{
+											notProduce();	
+										}
+										}
+								}
+							}else{
+								notProduce();
+							}
+	                    }else{
+						    var resultData = rData.result;
+						}
+	                    var proEvents = rData.result.produceEvents;
+	                    var len = proEvents.length;
+	                    var	proEvent = null;
+                    	var proHtml0 = "";
+                    	var proHtml1 = "";
+                    	var proHtml2 = "";
+                    	var proHtml3 = "";
+                    	var proHtml4 = "";
+	                     for(var i = 0; i < len; i++){
+	                    	proEvent = proEvents[i];
+	                    	var s = proEvent.eventType;
+	                    	
+	                    	//判断循环次序
+	                    	if(s==0){
+		                    	proHtml0 = '<span class="text1">' +proEvent["eventName"]+'</span><br /><span class="text">'+ '【'+ proEvent["sponsor"] +'】</span><time class="date">'+proEvent["eventTime"]+'</time>';
+	                    		$("#a_0").show();
+	                    	}
+	                    	if(s==1){
+		                    	proHtml1 = '<span class="text1">' +proEvent["eventName"]+'</span><br /><span class="text">'+ '【'+ proEvent["sponsor"] +'】</span><time class="date">'+proEvent["eventTime"]+'</time>';
+	                    		$("#a_1").show();
+	                    	}
+	                    	if(s==2){
+		                    	proHtml2 = '<span class="text1">' +proEvent["eventName"]+'</span><br /><span class="text">'+ '【'+ proEvent["sponsor"] +'】</span><time class="date">'+proEvent["eventTime"]+'</time>';
+	                    		$("#a_2").show();
+	                    	}	
+	                    	if(s==3){
+		                    	proHtml3 = '<span class="text1">' +proEvent["eventName"]+'</span><br /><span class="text">'+ '【'+ proEvent["sponsor"] +'】</span><time class="date">'+proEvent["eventTime"]+'</time>';
+	                    		$("#a_3").show();
+	                    	}
+	                    	if(s==4){
+		                    	proHtml4 = '<span class="text1">' +proEvent["eventName"]+'</span><br /><span class="text">'+ '【'+ proEvent["sponsor"] +'】</span><time class="date">'+proEvent["eventTime"]+'</time>';
+	                    		$("#a_4").show();
+	                    	}
+	                    }
+	                    $("#a_3").append(proHtml3);
+	                    $("#a_4").append(proHtml4);
+						$("#a_2").append(proHtml2);
+						$("#a_1").append(proHtml1);
+						$("#a_0").append(proHtml0);
+						//判断样式
+						var ys=$('.logi-list li');
+						var count=0;
+						ys.each(function(){
+							if($(this).is(':visible')){
+								count++;
+							}
+							if(count==1){
+								$(this).css({'color':'#ff6700'});
+							}
+						});
+						
+						//适用车系
+		    			selcx (rData);
+	                    $('.logistics-sycx').show();//显示
+	                },
+	                "error":function(){}
+	            });
+			}else{
+				return false;
+			}
+	        })();
+			
+            //与追溯系统交互jieshu
+     
+        
+        function notFind(){
+            $(".header").css("display","none");
+            $(".pro-detial").css("display","none");
+            $(".not-find").css("display","block");
+            $(".logistics-wrap").css("display","none");
+        } 
+        function notProduce(){
+            $(".logistics-wrap").css("display","none");        	
+        }
+        function notXlh(){
+        	$('.pro-dc-xlh').css({"display":"none"});
+        	$('.logistics-wrap').css({"display":"none"});
+        	$('.pro-dc-time').css({'display':'block'});
+        }
+        function Xlh(){
+        	$('.pro-dc-xlh').css({"display":"block"});
+        	$('.logistics-wrap').css({"display":"block"});
+        	$('.pro-dc-time').css({'display':'none'});
+        }
+		function selcx (rData){
+    		//适用车系
+			var XmlData=[];
+			var json={};
+			json.SPXX01=rData.SPXX01;
+			json.ZCXX01=rData.ZCXX01;
+			XmlData.push(json);
+			var url="/QFY/selectW_SPCX.action?XmlData="+JSON.stringify(XmlData);
+			var returnData=visitService(url);
+			if(returnData!=undefined&&returnData!=""){
+				 var spcxJson=returnData.lists;
+				 if(spcxJson[0]!=undefined){
+				 var str="";
+				 var strs ="";
+				 $(spcxJson).each(function(i,spcxlist){
+					$(spcxlist.cxlist).each(function(j,cxlist){
+						var astr=cxlist.TYPE;
+						if(astr.length>=25){
+							var astr1=astr.substring(0,23)+'...';
+							str+="<li 'title='"+astr+"'>"+astr1+"</li>"
+						} else {
+							str+="<li >"+astr+"</li>"
+						}
+					 });
+			 			strs+="<h4>"+spcxlist.BrandName+"</h4>"+str+"";
+					 });
+				 		$(".logi-sycx").html(strs);
+				 
+				}else{
+					$(".logi-sycx").html("<li><h4 class='tpcx'>通配车系</h4></li>");
+					$('.btnAll').css({'background':'#e4e4e4'});
+					$('.logi-height').css({'height':'auto'});
+					$('.btnAll').unbind('click');
+				
+				}
+			}
+    	  
+      }
+        $(function(){
+            $('.btnAll').on('click',function(){
+             if($(this).text()=='更多'){
+              $('.logi-height').css({'height':'auto'});
+              $(this).text('收起')
+             }else{
+            	$('.logi-height').css({'height':'11rem'});
+            
+            	 $(this).text('更多')
+             }
+            })
+           })		
+		
+		
+    </script>
+</body>
+</html>

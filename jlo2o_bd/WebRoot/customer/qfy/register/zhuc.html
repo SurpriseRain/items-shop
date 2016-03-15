@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>注册基础信息录入</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/form/js/form2.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<style type="text/css">
+ul.reg_info {
+	float: left;
+	width: 230px;
+	height: 223px;
+	margin: 0px 0;
+	position: relative;
+}
+
+ul.reg_info li {
+	float: left;
+	margin-bottom: 10px;
+}
+
+ul.reg_info li.ts {
+	float: left;
+	width: 216px;
+	border: 1px solid #f9d2a3;
+	background-color: #faf3ea;
+	color: #ee0e0e;
+	min-height: 30px;
+	line-height: 30px;
+	position: absolute;
+	top: 153px;
+	display: none;
+}
+
+ul.reg_info li.ts b {
+	float: left;
+	width: 16px;
+	height: 16px;
+	background-color: #ee0e0e;
+	color: #fff;
+	border-radius: 50%;
+	line-height: 16px;
+	text-align: center;
+	margin: 7px;
+	font-weight: 100;
+	font-size: 14px;
+}
+
+ul.reg_info li span {
+	float: left;
+	width: 37px;
+	height: 37px;
+	background-color: #000;
+	background: url(../images/index_login_ico.png) #a1a1a1;
+	background-position: -1.5px -2.5px;
+	cursor: pointer;
+}
+
+ul.reg_info li span.pwd {
+	background-position: -1.5px -42.5px
+}
+
+ul.reg_info li span.zhlx {
+	background-position: -1.5px -83.5px
+}
+
+ul.reg_info li span:hover {
+	background-color: #888;
+}
+
+ul.reg_info li select {
+	float: left;
+	width: 181px;
+	border: 1px solid #e4e4e4;
+	height: 37px;
+	padding: 0 0 0 5px;
+	color: #666;
+}
+
+ul.reg_info li select:hover {
+	border-color: #a1a1a1;
+}
+
+ul.reg_info li input.text {
+	float: left;
+	width: 169px;
+	border: 1px solid #e4e4e4;
+	height: 35px;
+	padding: 0 5px;
+	color: #666;
+}
+
+ul.reg_info li input.text:hover {
+	border-color: #a1a1a1;
+}
+
+ul.reg_info li input.checkbox {
+	float: left;
+	border: 1px solid #e4e4e4;
+	margin: 2px 10px 0 0;
+	color: #666;
+	padding: 0px;
+}
+
+ul.reg_info li label {
+	float: left;
+	width: 160px;
+}
+
+ul.reg_info li label a.xy {
+	margin-left: 5px;
+	color: #ff8800;
+}
+
+ul.reg_info li label a.xy:hover {
+	text-decoration: underline;
+}
+
+ul.reg_info li a.reg_bot_yes {
+	float: left;
+	width: 214px;
+	height: 35px;
+	line-height: 35px;
+	font-size: 15px;
+	border: 1px solid #c76e09;
+	background-color: #ff8800;
+	text-align: center;
+	color: #fff;
+	font-family: "microsoft yahei";
+	box-shadow: 0px 0px 2px #ccc;
+	margin-top: 10px;
+	text-shadow: 0px 0 1px #666
+}
+
+ul.reg_info li a.reg_bot_yes:hover {
+	background-color: #ee8800;
+}
+
+ul.reg_info li a.reg_bot_no {
+	float: left;
+	width: 214px;
+	height: 35px;
+	line-height: 35px;
+	font-size: 15px;
+	border: 1px solid #aaa;
+	background-color: #ccc;
+	text-align: center;
+	color: #fff;
+	font-family: "microsoft yahei";
+	box-shadow: 0px 0px 2px #ccc;
+	margin-top: 10px;
+	text-shadow: 0px 0 1px #666
+}
+</style>
+</head>
+<body>
+		<ul class="reg_info">
+			<li class="ts">
+				<b>×</b><label></label>
+			</li>
+			<li>
+				<span title="选择身份" class="zhlx"></span>
+				<select id="gslx" name="gslx">
+					<option value="">选择身份</option>
+					<option value="43">生产厂家</option>
+					<option value="44">维修企业</option>
+					<option value="42">经销企业</option>
+					<!-- <option>个人用户</option> -->
+				</select>
+			<li>
+				<span title="登录帐号"></span>
+				<input class="text" id="username" name="username" type="text" placeholder="请输入登录帐号" id="reg_userName"  onKeyUp="value=value.replace(/[^\w\.\/]/ig,'')" onblur="checkOperator()"/>
+			</li>
+			<li>
+				<span class="pwd" title="登录密码"></span>
+				<input id="a1" class="text"  onKeyUp="value=value.replace(/[^\w\.\/]/ig,'')" onblur="checkPassword()" type="password" placeholder="请输入登录密码，6-20位" />
+				<input type="text" id="password" name="password" style="display: none;" />
+			</li>
+			<li>
+				<span class="pwd" title="确认密码"></span>
+				<input id="a2" class="text" onblur="checkRepassword()" type="password" placeholder="确认密码" />
+				<input type="text" id="repassword" name="repassword" style="display: none;" />
+			</li>
+			<li onclick="register()">
+				<a class="reg_bot_yes" style="cursor:pointer;">立即注册</a>
+			</li>
+		</ul>
+</body>
+<script type="text/javascript">
+function checkPassword(){
+  	var password=$("#a1").val();
+	$("#password").val(password);
+}
+
+//判断两次密码是否相同
+function checkRepassword(){
+	var password=$("#a1").val();
+  	var repassword=$("#a2").val();
+  	if(password != repassword){
+  		alert("两次输入密码不同");
+  		return true;
+  	}
+  	$("#repassword").val(repassword);
+}
+
+//判断用户名是否存在
+function checkOperator(){
+	if($("#username").val().length > 0){
+		var XmlData = {};
+		XmlData["RYDM"]=$("#username").val();
+		var url = pubJson.PcrmUrl+"/operatorAction/checkOperator.do?XmlData="+JSON.stringify(XmlData);
+		var returnVal = visitService(url);
+		if(returnVal != "undefined"){
+			if(returnVal.num == "1"){
+				alert("用户已存在!");
+				$("#username").val("");
+				return false;
+			}else{
+				return true;
+			}
+		}
+	}
+}
+
+//判断输入项是否合法
+function checkNull(){
+    var flag = true;
+	if($("#gslx").val().length == 0){
+		alert("请选择身份");
+		flag=false;
+	}
+	if($("#username").val().length == 0){
+		alert("请输入用户名");
+		flag=false;
+	}
+	if($("#password").val().length == 0){
+		alert("请输入密码");
+		flag=false;
+	}
+	return flag;
+}
+
+//注册方法
+function register(){
+	var flag = checkNull();
+	if(flag == true){
+		//将值存入cookies
+		var userInfo = {};
+		userInfo["XTCZY01"] = $("#username").val();
+		userInfo["XTCZY02"] = $("#password").val();
+		userInfo["ZCXX02"] = $("#username").val();
+		userInfo["GSLX"] = $("#gslx").val();
+		userInfo["SJLY"] = "0";
+		userInfo["ZCGS01"]="2";
+		$.cookie("userInfo", null, {
+			path : '/'
+		});
+		$.cookie("userInfo", JSON.stringify(userInfo), {
+			expires : 30,
+			path : '/'
+		});
+		//弹出遮罩层
+		top.openWait();
+		//PCRM生成新的账号
+		var url = pubJson.PcrmUrl+"/operatorAction/addOperator.do?XmlData="+JSON.stringify(userInfo);
+		var returnVal = visitService(url);
+		if(returnVal == "undefined"){
+			alert("流程生成账号失败");
+			return;
+		}
+		//生成O2O账号数据
+		url = pubJson.O2OUrl+"/Register/insertQuickRegister.action?XmlData="+JSON.stringify(userInfo);
+		returnVal = visitService(url);
+		if(returnVal == "undefined"){
+			alert("汽服云生成账号失败");
+			return;
+		}
+		//表单保存
+		save();
+	}
+}
+
+//表单保存成功执行
+function formSaveSuccess(rydm){
+	//关闭遮罩层
+	top.closeWait();
+	
+	var url=pubJson.PcrmUrl+"/document/getDBSY.do?XmlData={\"PI_USERNAME\":\""+rydm+"\",\"TJRYMC\":\""+rydm+"\",\"JKLX\":\"5\"}";
+	var returnVal = visitService(url);
+	if(returnVal != "undefined"){
+		var data=returnVal.resultList;
+		if(data[0].BZBH == 2 && data[0].XMBH==9){
+			var url=pubJson.O2OUrl+"/form/stepAction.html?XMBH="+data[0].XMBH+"&GZLBH="+data[0].GZLBH+"&BZBH="+data[0].BZBH+"&RZBH="+data[0].RZBH+"&rydm="+rydm;
+			window.open(url,"_parent");	
+		}
+	}
+}
+</script>
+</html>

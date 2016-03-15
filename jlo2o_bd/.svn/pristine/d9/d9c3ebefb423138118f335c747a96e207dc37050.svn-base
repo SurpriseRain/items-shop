@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.sql.address">
+	<select id="selectAddress" parameterType="Map" resultType="java.util.Map">
+		SELECT
+		CASE W.MARK WHEN 1 THEN '默认' WHEN 0 THEN '非默认' END MARK,
+		CASE W.DZLX WHEN 1 THEN '送货地址' WHEN 0 THEN '收货地址' END DZLX,
+		W.DZBH,W.WLDW01,W.SHRMC,W.SJHM,W.GDDH,W.EMAIL,W.YZBM,
+		CONCAT((SELECT Q.dqbzm02 FROM dqbzm Q WHERE Q.dqbzm01 = W.PROVINCE),
+		(SELECT Q.dqbzm02 FROM dqbzm Q WHERE Q.dqbzm01 = W.city) ,
+		(SELECT Q.dqbzm02 FROM dqbzm Q WHERE Q.dqbzm01 = W.county),
+		(SELECT Q.dqbzm02 FROM dqbzm Q WHERE Q.dqbzm01 = W.STREET) )DZ,
+		W.otherdz
+		FROM W_SHDZWH W
+		WHERE W.WLDW01 = #{ZCXX01}
+		ORDER BY W.DZLX DESC
+	</select>
+	<select id="selectAddress_sum" parameterType="Map" resultType="java.util.Map">
+		select count(1) COUNT FROM W_SHDZWH W
+		WHERE W.WLDW01 = #{ZCXX01}
+		ORDER BY W.DZLX DESC
+	</select>
+</mapper>

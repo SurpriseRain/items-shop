@@ -1,0 +1,31 @@
+<div class="w10">
+  	<div class="w12 parameter">
+    	<p>品牌名称：<a>Apple/苹果</a><a class="btn_radius"><i class="fa fa-heart"></i>关注</a></p>
+        <h4>产品参数：<a>更多参数<i class="fa  fa-chevron-circle-right"></i></a></h4>
+        <dl>
+        	<dd>产品名称：Apple/苹果 iPhone 6</dd>
+            <dd>CPU型号:A8</dd>
+            <dd>Apple型号:iPhone 6</dd>
+            <dd>机身颜色:银色 深空灰色 金色</dd>
+            <dd>运行内存RAM:1GB</dd>
+            <dd>机身内存:16GB 64GB 128GB</dd>
+            <dd>网络模式:单卡多模</dd>
+            <dd>电池容量:1810mAh</dd>
+        </dl>
+     </div>
+     <div class="w12 info_img">
+        <img src="../images/banner01.jpg" />
+        <img src="../images/banner01.jpg" />
+        <img src="../images/banner01.jpg" />
+        <img src="../images/banner01.jpg" />
+        <img src="../images/banner01.jpg" />
+	</div>
+</div>
+<div class="w02 md_hidden pro_info_right">
+  <ol>
+    <li><a class="xuan"><i class="fa fa-arrow-circle-left"></i>电器服务云</a></li>
+    <li><a><i class="fa fa-arrow-circle-left"></i>商品详情</a></li>
+    <li><a><i class="fa fa-arrow-circle-left"></i>店铺服务详情</a></li>
+    <li><a><i class="fa fa-arrow-circle-left"></i>常见问题</a></li>
+  </ol>
+</div>

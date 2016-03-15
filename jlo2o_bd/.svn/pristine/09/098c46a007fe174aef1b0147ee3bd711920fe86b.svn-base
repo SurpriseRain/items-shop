@@ -1,0 +1,660 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="汽服云平台是一个服务于汽车后市场的综合性,专业化的汽配行业垂直运营服务平台.致力于成为汽车维修行业的整合解决方案,兼具B2B网上商城功能.车主可以享受一站式综合服务的互联网云生态系统,内容包括'一个电商平台+三个体系+一朵云+N项综合增值服务',这将是'互联网+汽配产业'的终极模式,其核心基础是同质配件和认证编码可追溯体系.是汽车维修企业实现转型升级的'好帮手'">
+    <meta name="Keywords" content="汽车配件;汽车保养;汽服云;同质配件;汽车用品网上商城;中国汽车配件网">
+    <title>汽车配件|同质配件|汽车用品网上商城|汽服云平台</title>
+    <link rel="stylesheet" type="text/css" href="/customer/qfy/css/index-08.min.css?v=015915231009">
+	<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+</head>
+<body>
+    <div id="qfyPage" class="w1190">
+        <!--页头导航-->
+        <div id="site-nav">
+            <div id="sn-bd">
+                <div class="sn-container">
+                    <!--城市选择-->
+                    <div id="sn-citybar">
+                        <!--默认城市-->
+                        <div class="city-locate">
+                            <span>送至&nbsp;:</span>&nbsp;
+                            <a id="city_name" class="current-city">天津</a>
+                            <b class="arrow"></b>
+                            <div id="city-wrapper">
+                                <ul id="city-list" class="city_list" data-read="0">
+									
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--快捷菜单-->
+                    <ul class="sn-quick-menu">
+                        <li class="login-info">
+                            <!--登录信息-->
+                            <a class="l-login" href="/customer/qfy/register/login.html?type=1">您好，请登录</a>
+                            <a class="l-login login-reg" href="/customer/qfy/register/loginzc.html">免费注册</a>
+                        </li>
+                        <li class="login-ext">
+                            <a class="l-ext" id="login-name" href=""></a>
+                            <a class="l-ext" id="login-ext" href="javascript:void(0);">&nbsp;&nbsp;[退出]</a>
+                        </li>
+                        <li class="spacer">|</li>
+                        <li>
+                            <a href="/customer/qfy/index.html">商城首页</a></li>
+                        <li class="spacer">|</li>
+                        <li>
+                            <a href="/customer/qfy/register/login.html" id="u-home">个人中心</a></li>
+                        <!-- <li class="spacer">|</li>
+                        <li class="sn-mobile"><a href="javascript:void(0);">手机版</a></li> -->
+                        <li class="spacer">|</li>
+                        <li class="sn-serv"><a href="javascript:void(0);">服务中心：18519109250</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="display: none;">
+                <input type="hidden" id="city_value"/>
+                <input type="hidden" id="search-t" value="cp">
+            </div>
+        </div>
+        <!--页头-->
+        <div id="header">
+            <div class="headerLayout">
+                <div class="headerCon">
+                    <!--logo-->
+                    <h1 id="qfyLogo">
+                        <span class="qlogo">
+                            <a href="/customer/qfy/index.html"><img src="/customer/qfy/images/logo.png" alt="汽福云logo" height="85" width="auto"/></a>
+                        </span>
+
+                    </h1>
+                    <div class="header-extra">
+                        <!--我的购物车-->
+                        <div class="header-mycart">
+                            <div class="cw-icon">
+                                <i class="icon-cart"></i>
+                                <i class="ci-right">&gt;</i><i class="ci-count" id="shopping-amount">0</i>
+                                <a href="/customer/qfy/shopping/cart.html">我的购物车</a>
+                            </div>
+
+                        </div>
+                        <!--搜索-->
+                        <div id="qfySearch" class="headerSearch">
+                            <div class="search-type">
+                                <ul id="seach_tj" class="search-tj">
+                                    <li class="bg-ff3c3c">产品</li>
+                                    <li>OEM</li>
+                                    <li>商品条码</li>
+                                </ul>
+                            </div>
+                            <form class="qSearch-form clearfix" name="searchTop" action="">
+                                <div class="qSearch-input clearfix">
+                                    <div class="s-combobox-input-wrap">
+                                        <input type="text" name="q" autocomplete="off" id="mq" class="s-combobox-input" placeholder="输入产品名称可以直接搜索">
+                                    </div>
+                                    <button type="submit" id="search">搜索</button>
+                                </div>
+                            </form>
+                            <!--热门搜索-->
+                            <!-- <ul class="hot-query">
+                                <li>热门搜索:</li>
+                                <li><a href="###">机油</a>
+                                    </li>
+                                <li><a href="###">机滤</a>
+                                    </li>
+                                <li><a href="###">刹车片</a>
+                                    </li>
+                            </ul> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--内容-->
+        <div id="content">
+            <!--内容导航-->
+            <div class="moudle">
+                <div class="fp-main-nav">
+                    <div class="main-container">
+                        <ul class="main-nav-ctn">
+                            <li><a href="/customer/qfy/index.html">首页</a></li>
+                            <li><a href="http://news.motorsc.com/">政策法规</a></li>
+                            <li><a href="/customer/qfy/showMessage/index-tzpj.html">同质配件</a></li>
+                            <li><a href="/customer/qfy/showMessage/index-fxpp.html">放心品牌</a></li>                            
+                            <li><a href="/customer/qfy/showMessage/bm-index.html">统一编码</a></li>
+                            <!-- <li><a href="/customer/qfy/showMessage/pbd-index.html">公益品牌</a></li> -->
+                            <li><a href="/customer/qfy/showMessage/sptmzs.html">商品追朔</a></li>
+                            <!-- <li><a href="/customer/qfy/showProduct/member_shop_n.html">配件商城</a></li> -->
+                            <li><a id="pjsc" href="javascript:void(0);">配件商城</a></li>
+                            <li><a href="/customer/qfy/showMessage/index-zzfw.html">增值服务</a></li>
+                            <li><a href="javascript:void(0);" id="reqPub" style="display:none">发布需求</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--菜单栏目-->
+            <div class="fp-category-menu">
+                <div class="moudle">
+                    <div class="category-nav-container">
+                        <div class="category-menu-nav">
+                            <!--<h2 class="menu-title">全部配件分类</h2>-->
+                            <ul class="menu-nav-container" id="menu-nav">
+                                <li class="category-item" data-index="1">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">车型分类</a></h2>
+                                        <span class="ci-leaf">
+                                            <a href="/customer/qfy/showProduct/carSs.html?car_id=52&amp;&amp;ORIGIN_COUNTRY_ID=1">宝马</a>
+                                            <a href="/customer/qfy/showProduct/carSs.html?car_id=49&amp;&amp;ORIGIN_COUNTRY_ID=1">大众</a>
+                                            <a href="/customer/qfy/showProduct/carSs.html?car_id=51&amp;&amp;ORIGIN_COUNTRY_ID=1">奥迪</a>
+                                            <a href="/customer/qfy/showProduct/carSs.html?car_id=48&amp;&amp;ORIGIN_COUNTRY_ID=1">奔驰</a>
+                                        </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel" style="overflow-y:auto;">
+                                            <ul id="cx" class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+									            <li data-qcty="美国品牌">
+									                <a href="javascript:void(0);">
+									                    <img src="/customer/qfy/images/menu-icon/m-00/1.png" alt="" width="40" height="40">
+									                    <span>美国品牌</span>
+									                </a>
+									                <div class="cxcx-pannel" data-cny="0">
+									                	<div style="position:relative;">
+									                		<span style="  position: absolute;  top: 230px;  left: 50%;  display: block;  width: 60px;  height: 30px;  line-height: 30px;  margin-left: -45px;  margin-top: -15px;">加载中...</span>
+									                	</div>
+									                	
+									                </div>
+									            </li>
+									        
+									            <li data-qcty="中国品牌">
+									                <a href="javascript:void(0);">
+									                    <img src="/customer/qfy/images/menu-icon/m-00/2.png" alt="" width="40" height="40">
+									                    <span>中国品牌</span>
+									                </a>
+									                <div class="cxcx-pannel">
+									                	<div style="position:relative;">
+									                		<span style="  position: absolute;  top: 230px;  left: 50%;  display: block;  width: 60px;  height: 30px;  line-height: 30px;  margin-left: -45px;  margin-top: -15px;">加载中...</span>
+									                	</div>
+									                </div>
+									            </li>
+									        
+									            <li data-qcty="德国品牌">
+									                <a href="javascript:void(0);">
+									                    <img src="/customer/qfy/images/menu-icon/m-00/3.png" alt="" width="40" height="40">
+									                    <span>德国品牌</span>
+									                </a>
+									                <div class="cxcx-pannel">
+									                	<div style="position:relative;">
+									                		<span style="  position: absolute;  top: 230px;  left: 50%;  display: block;  width: 60px;  height: 30px;  line-height: 30px;  margin-left: -45px;  margin-top: -15px;">加载中...</span>
+									                	</div>
+									                </div>
+									            </li>
+									        
+									            <li data-qcty="日本品牌">
+									                <a href="javascript:void(0);">
+									                    <img src="/customer/qfy/images/menu-icon/m-00/4.png" alt="" width="40" height="40">
+									                    <span>日本品牌</span>
+									                </a>
+									                <div class="cxcx-pannel">
+									                	<div style="position:relative;">
+									                		<span style="  position: absolute;  top: 230px;  left: 50%;  display: block;  width: 60px;  height: 30px;  line-height: 30px;  margin-left: -45px;  margin-top: -15px;">加载中...</span>
+									                	</div>
+									                </div>
+									            </li>
+									        
+									            <li data-qcty="欧洲品牌">
+									                <a href="javascript:void(0);">
+									                    <img src="/customer/qfy/images/menu-icon/m-00/5.png" alt="" width="40" height="40">
+									                    <span>欧洲品牌</span>
+									                </a>
+									                <div class="cxcx-pannel">
+									                	<div style="position:relative;">
+									                		<span style="  position: absolute;  top: 230px;  left: 50%;  display: block;  width: 60px;  height: 30px;  line-height: 30px;  margin-left: -45px;  margin-top: -15px;">加载中...</span>
+									                	</div>
+									                </div>
+									            </li>
+									        
+									            <li data-qcty="韩国品牌">
+									                <a href="javascript:void(0);">
+									                    <img src="/customer/qfy/images/menu-icon/m-00/6.png" alt="" width="40" height="40">
+									                    <span>韩国品牌</span>
+									                </a>
+									                <div class="cxcx-pannel">
+									                	<div style="position:relative;">
+									                		<span style="  position: absolute;  top: 230px;  left: 50%;  display: block;  width: 60px;  height: 30px;  line-height: 30px;  margin-left: -45px;  margin-top: -15px;">加载中...</span>
+									                	</div>
+									                </div>
+									            </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li class="category-item" data-index="2">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">养护快修</a></h2>
+                                            <span class="ci-leaf">
+                                                <a id="jy" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=010101&amp;f3_name=%u673A%u6CB9">机油</a>
+                                                <a id="bls" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=011001&amp;f3_name=%u73BB%u7483%u6C34">玻璃水</a>
+                                                <a id="hhs" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=031001&amp;f3_name=%u706B%u82B1%u585E">火花塞</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="3">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">动力系统</a></h2>
+                                            <span class="ci-leaf">
+                                                <a id="pqgzc" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=041212&amp;f3_name=%u6392%u6C14%u7BA1%u603B%u6210">排气管总成</a>
+                                                <a id="ryb" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=050301&amp;f3_name=%u71C3%u6CB9%u6CF5">燃油泵</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="4">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">底盘悬挂</a></h2>
+                                            <span class="ci-leaf">
+                                                <a id="fxp" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=080201&amp;f3_name=%u65B9%u5411%u76D8">方向盘</a>
+                                                <a id="zczdq" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=090401&amp;f3_name=%u9A7B%u8F66%u5236%u52A8%u5668">驻车制动器</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="5">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">汽车电器</a></h2>
+                                            <span class="ci-leaf">
+                                                <a id="kt" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=070101&amp;f3_name=%u7A7A%u8C03%u6CF5">空调</a>
+                                                <a id="dpxs" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=160918&amp;f3_name=%u5E95%u76D8%u7EBF%u675F">底盘线束</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="6">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">离合变速</a></h2>
+                                            <span class="ci-leaf">
+                                                <a id="lhqyp" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=100201&amp;f3_name=%u79BB%u5408%u5668%u538B%u76D8">离合器压盘</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="7">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">车身部件</a></h2>
+                                            <span class="ci-leaf">
+                                                <a id="ybtk" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=130101&amp;f3_name=%u4EEA%u8868%u53F0%u58F3">仪表台壳</a>
+                                                <a id="dyq" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=130125&amp;f3_name=%u70B9%u70DF%u5668">点烟器</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="category-item" data-index="8">
+                                    <div class="category-pannel">
+                                        <div class="ci-title">
+                                            <h2><a class="title" href="javascript:void(0);">美容装饰</a></h2>
+                                            <span class="ci-leaf">
+                                                <a id="qczd" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=190101&amp;f3_name=%u6C7D%u8F66%u5750%u57AB">汽车坐垫</a>
+                                                <a id="bltm" href="/customer/qfy/showProduct/member_shop_n.html?f3_id=200501&amp;f3_name=%u73BB%u7483%u8D34%u819C">玻璃贴膜</a>
+                                            </span>
+                                            <i>></i>
+                                        </div>
+
+                                        <div class="ci-pannel">
+                                            <ul class="ci-pannel-list ci-pannel-col ci-pannel-col-1">
+                                                
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="category-menu-content">
+                    <div class="j_CategoryMenuPannel">
+                        <div class="moudle">
+                            <div class="category-market-slide">
+								<div class="market-news">
+									<div class="news-user-req">
+										<div style="  width: 100%; height: 35px; background-color: #FCFCFC;"><h2><i class="nu-icon-user"></i>最新车主需求</h2></div>
+										<div class="news-pannel">
+											<ul id="news-user-list"></ul>
+											<a id="news-user-more" href="/customer/qfy/register/login.html?type=1" target="_blank">进入明细>></a>
+										</div>
+									</div>
+									<div class="news-part-req">
+										<div style="width: 100%; height: 35px; background-color: #FCFCFC;"><h2><i class="nu-icon-part"></i>最新维修厂需求</h2></div>
+										<div class="news-pannel np-1">
+											<ul id="news-part-list"></ul>
+											<a id="news-part-more" href="/customer/qfy/register/login.html?type=1" target="_blank">进入明细>></a>
+										</div>
+									</div>
+								</div>
+                                <div class="market-slide-content">
+                                    <!--轮播图-->
+                                    <div id="cms-box" class="cms_box">
+                                        
+                                    </div>
+                                    <div id="cmsControl" class="cms_control">
+                                    </div>
+                                    <!--<img src="images/xm.jpg" alt=""/>-->
+                                </div>
+                                <!--小圆点-->
+                                <p id="cmsNav" class="cms_nav"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--楼层区-->
+            <div class="main-container" id="J_FloorContainer">
+                <!--同质配件-->
+                <div class="floor-item">
+                    <div class="floor-container">
+                        <!--标题-->
+                        <div class="floor-hd">
+                            <h2 class="title"><!-- 同质配件 -->1楼</h2>
+                            <div class="more" style="display:none;">
+                                <a class="more-link" href="" target="_blank">更多>></a>
+                            </div>
+                        </div>
+                        <!--列表-->
+                        <div id="fl-tz" class="floor-content fl-bt-first">
+                            <div class="grid-col-2 grid-col">
+                                <a id="fl-link01" class="fl-1-goods" href="/customer/qfy/showProduct/product.html?spxx01=591&zcxx01=0023&gsid=0023&gsmc=%u534E%u6C7D%u7FBD%u60A6%uFF08%u5317%u4EAC%uFF09%u6C7D%u8F66%u670D%u52A1%u6709%u9650%u516C%u53F8">
+                                	<img src="../../images/s.gif" data-src="/customer/qfy/images/ad.jpg" class="la" />
+                                </a>
+                            </div>
+                            <div id="fl-tz-grid" class="grid-col-1 grid-col">
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+				
+                <div class="floor-item">
+                    <div class="floor-container">
+                        <div class="floor-hd">
+                            <h2 class="title fl-title-second"><!--放心汽配-->2楼</h2>
+                            <div class="more fl-qp-more" style="display:none;">
+                                <a class="more-link" href="javascript:void(0);" target="_blank">更多>></a>
+                            </div>
+                        </div>
+                        <div id="fl-qp" class="floor-content fl-bt-second">
+                            <div class="grid-col-3 grid-col">
+                                <a id="fl-link02" class="grid-row-2" href="" target="_blank">
+	                                
+                                </a>
+                                <a id="fl-link03" class="fl-gr-m-m0 grid-row-2" href="" target="_blank">
+                                	
+                                </a>
+                            </div>
+                            <div id="fl-qp-grid" class="grid-col-4 grid-col">
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+				  
+                <!--放心汽修-->
+          <!--       <div class="floor-item">
+                    <div class="floor-container">
+                        标题
+                        <div class="floor-hd">
+                            <h2 class="title">放心汽修3楼</h2>
+                            <div class="more" style="display:none;">
+                                <a class="more-link" href="" target="_blank">更多>></a>
+                            </div>
+                        </div>
+                        列表
+                        <div id="fl-fxqx" class="floor-content fl-bt-first">
+                            <div class="grid-col-2 grid-col">
+                                <a id="fl-link04" class="fl-1-goods" href="http://www.motorsc.com/customer/qfy/c2b/product_FWSP.html?id=3">
+                                	<img src="../../images/s.gif" data-src="/customer/qfy/images/fxqx.png" class="la" />
+                                </a>
+                            </div>
+                            <div id="fl-fxqx-grid" class="grid-col-1 grid-col">
+                                <ul></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> -->
+            </div>
+            <!--楼层下横条广告-->
+            <!-- <div class="main-container">
+                <div class="floor-ad-banner">
+                    <a href="javascript:void(0);"><img src="../../images/s.gif" data-src="/customer/qfy/images/indexMidGG.png" class="la" alt=""/></a>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <!--页脚-->
+    <div id="footer">
+        <!--七天无理由退货-->
+        <!--<div id="qfy-ensure"></div>
+        <div id="qfy-decs"></div>
+        <div id="qfy-copyright"></div>-->
+        <div class="f-container">
+            <!-- <div id="qfy-ensure">
+                <img src="/customer/qfy/images/ensure.png" alt=""/>
+            </div> -->
+            <div id="qfy-copyright">
+                <p>
+                    <!-- <a href="http://www.miitbeian.gov.cn/" target="_blank">津ICP备15004769号-1 </a>
+                    天津车福网络科技有限公司 -->
+                    津ICP备15004769号-1
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <!--右侧工具栏-->
+    <div id="J_QFYbar">
+        <div></div>
+    </div>
+    <!-- 联系客服 -->
+    <div id="cusService"><div><span></span></div>联系客服</div>
+    <!-- 返回顶部 -->
+	<div class="goTop">
+		<div class="go">
+			<span></span>
+			<strong>TOP</strong>
+		</div>
+	</div>
+	<div id="cusService_main">
+	  <div class="title"></div>
+	  <div class="qq_list">
+	   <a title="亲~点击联系我吧！" href="http://wpa.qq.com/msgrd?v=3&uin=2871806139&site=qq&menu=yes"><img src="/customer/qfy/images/boy_qq.png"  /><span>汽服云客服一</span></a>
+	    <a title="亲~点击联系我吧！" href="http://wpa.qq.com/msgrd?v=3&uin=3317002791&site=qq&menu=yes"><img src="/customer/qfy/images/girl_qq.png" /><span>汽服云客服二</span></a>
+	    <a title="亲~点击联系我吧！" href="http://wpa.qq.com/msgrd?v=3&uin=2197583960&site=qq&menu=yes"><img src="/customer/qfy/images/boy_qq.png" /><span>汽服云客服三</span></a>
+	  </div>
+	  <img src="/customer/qfy/images/wnfu.jpg" style="display:width:208px;heightL:auto;margin:10px 0 10px 5px;">
+	</div>
+	
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.lazyload.min.js"></script>
+    <script type="text/javascript" src="/js/jqpswitch.min.js"></script>
+    <script type="text/javascript" src="/js/underscore-min.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+    <script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+    <script type="text/javascript" src="/customer/qfy/js/index-08.js?v=015915231009"></script>
+	<script type="text/javascript" src="/js/edlg.min.js"></script>
+    
+    <script type="text/javascript" >
+    var MyCookie =$.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	var role;
+    $(document).ready(function(){
+		/* 是否启用搜索引擎 */
+        var solr = pubJson.Solr;
+        var searchUrl = "";
+    	if(solr == "1"){
+    		searchUrl = pubJson.O2OUrl + "/customer/qfy/showProduct/member_shop_s.html";
+    	} else {
+    		searchUrl = pubJson.O2OUrl + "/customer/qfy/showProduct/member_shop_n.html";
+    	}
+    	$("#pjsc").attr("href", searchUrl);
+    	$("#jy").attr("href", searchUrl + "?f3_id=010101&f3_name=%u673A%u6CB9");
+    	$("#bls").attr("href", searchUrl + "?f3_id=011001&f3_name=%u73BB%u7483%u6C34");
+    	$("#hhs").attr("href", searchUrl + "?f3_id=031001&f3_name=%u706B%u82B1%u585E");
+    	$("#pqgzc").attr("href", searchUrl + "?f3_id=041212&f3_name=%u6392%u6C14%u7BA1%u603B%u6210");
+    	$("#ryb").attr("href", searchUrl + "?f3_id=050301&f3_name=%u71C3%u6CB9%u6CF5");
+    	$("#fxp").attr("href", searchUrl + "?f3_id=080201&f3_name=%u65B9%u5411%u76D8");
+    	$("#zczdq").attr("href", searchUrl + "?f3_id=090401&f3_name=%u9A7B%u8F66%u5236%u52A8%u5668");
+    	$("#kt").attr("href", searchUrl + "?f3_id=070101&f3_name=%u7A7A%u8C03%u6CF5");
+    	$("#dpxs").attr("href", searchUrl + "?f3_id=160918&f3_name=%u5E95%u76D8%u7EBF%u675F");
+    	$("#lhqyp").attr("href", searchUrl + "?f3_id=100201&f3_name=%u79BB%u5408%u5668%u538B%u76D8");
+    	$("#ybtk").attr("href", searchUrl + "?f3_id=130101&f3_name=%u4EEA%u8868%u53F0%u58F3");
+    	$("#dyq").attr("href", searchUrl + "?f3_id=130125&f3_name=%u70B9%u70DF%u5668");
+    	$("#qczd").attr("href", searchUrl + "?f3_id=190101&f3_name=%u6C7D%u8F66%u5750%u57AB");
+    	$("#bltm").attr("href", searchUrl + "?f3_id=200501&f3_name=%u73BB%u7483%u8D34%u819C");
+    	if (MyCookie != undefined || usercookie != null) {
+	   		var lx;
+	   		var ZCXX02;
+	   	 	role = usercookie.Role;
+	   		if(usercookie.ZCXX02==null || usercookie.ZCXX02==undefined){
+    			ZCXX02 = "游客";
+    		}else{
+    			ZCXX02 = usercookie.ZCXX02;
+    		}
+		   		$("#login-name").text("您好，"+ZCXX02);
+	    		if (usercookie.LX != null || usercookie.LX != undefined) {
+					lx = usercookie.LX
+				}else{
+					lx = usercookie.GSLX;
+				}
+		   			if (lx == 44 && usercookie.ZCGS01 ==2) {
+		   				$("#reqPub").hide();
+		   				$("#u-home").hide();
+		   				$("#login-name").attr('href',"/customer/qfy/register/registerPerfectDBWX.html");
+		   			}else if((lx == 43 && usercookie.ZCGS01 == 3) || (lx == 42 && usercookie.ZCGS01 == 3) ){
+		   				$("#u-home").hide();
+		   				$("#login-name").attr('href',"/customer/qfy/back/shop-main.html");
+		   			}else if((lx == 43 && usercookie.ZCGS01 == 2) || (lx == 42 && usercookie.ZCGS01 == 2) ){
+		   				$("#u-home").hide();
+		   				$("#login-name").attr('href',"/customer/qfy/register/registerPerfectDB.html");
+		   			}else if( usercookie.ZCGS01 == 2  || usercookie.ZCGS01 == 3 || usercookie.ZCGS01 == 5 || usercookie.ZCGS01 == 6 || usercookie.ZCGS01 == 7 ){
+		   				$("#u-home").hide();
+		   				$("#reqPub").hide();
+		   			} 
+		   			else if(lx == 44 && usercookie.ZCGS01 ==4){
+		   				$("#reqPub").css({"display":"block"});
+		   			}
+    }
+    });
+    $("#login-name").click(function(){
+	if (MyCookie != undefined || usercookie != null) {
+		var lx;
+		if (usercookie.LX != null || usercookie.LX != undefined) {
+			lx = usercookie.LX
+		}else{
+			lx = usercookie.GSLX;
+		}
+		if (lx == 44 && usercookie.ZCGS01 == 2) {
+			$("#login-name").attr('href',"/customer/qfy/register/registerPerfectDBWX.html");
+		}/* else if(lx == 24 && usercookie.Address == null){
+			$("#login-name").attr('href',"/customer/qfy/c2b/CarOwnerRegist.html");
+		} */
+		else if(lx == 24){
+			$("#login-name").attr('href',"#");
+		}
+	}
+});
+   /*  $("#u-home").click(function(){
+	   	if (MyCookie != undefined || usercookie != null) {
+	   		var lx = usercookie.LX;
+	   			if (lx == 44 && usercookie.ZCGS01 ==2) {
+	   				$("#u-home").remove();
+	   				$("#login-name").attr('href',"/customer/qfy/register/registerPerfectDBWX.html");
+	   			}else if(lx == 44 && usercookie.ZCGS01 ==3){
+	   				$("#u-home").attr('href',"/customer/qfy/back/yhgl/shop_Basinfo.html");
+	   			} 
+	   		}
+    }); */
+    /** 次数统计
+	var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cspan id='cnzz_stat_icon_1256019189'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/z_stat.php%3Fid%3D1256019189%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));
+	*/
+	</script>
+    <script type="text/template"id="m-tpl-9"><%_.each(mapList,function(item,index){%><a href="<%= item.href%>"><img src="<%= item.src %>"alt=""width="40"height="40"><span><%=item.name%></span></a><%});%></script><script type="text/template"id="m-tpl-8"><%_.each(mapList,function(item,index){%><li><a href="<%= item.href %>"><img src="<%= item.src + "/" + (index + 1) + ".png"%>"alt=""width="40"height="40"/><span><%=item.name%></span></a></li><%});%></script><script type="text/template"id="m-tpl-2"><%_.each(mapList,function(item){%><%if(item.dqbzm02!=="黑龙江省"){%><li id="<%= item.dqbzm01%>"><a href="javascript:void(0);"><%=item.dqbzm02.substring(0,2)%></a></li><%}else{%><li id="<%= item.dqbzm01%>"><a href="javascript:void(0);"><%=item.dqbzm02.replace("省","")%></a></li><%}%><%});%></script><script type="text/template"id="m-tpl-3"><%_.each(mapList,function(item,index){%><%if(index===0){%><div id="cmsSlide<%= (index + 1)%>"class="cms_slide cms_explain"><a href="<%= item.URL%>"><img src="/jlsoft/banner/JL/<%= item.FILENAME%>"alt=""></a></div><%}else{%><div id="cmsSlide<%= (index + 1)%>"class="cms_slide cms_hidden"><a href="<%= item.URL%>"><img data-src="/jlsoft/banner/JL/<%= item.FILENAME%>"alt=""></a></div><%}%><%});%></script><script type="text/template"id="m-tpl-6"><%_.each(mapList,function(item,index){%><%if(index===0){%><a href="javascript:"class="on"data-rel="cmsSlide<%= (index+1)%>"><%=(index+1)%></a><%}else{%><a href="javascript:"data-rel="cmsSlide<%= (index+1)%>"><%=(index+1)%></a><%}%><%});%></script><script type="text/template"id="m-tpl-4"><%_.each(mapList,function(item,index){%><%if(index===2||index===5){%><li style="border-right: 0;"><a class=""href="<%= item.href%>"target="_blank"><div class="good-info"><p class="good-name"title="<%= item.gname%>"><%=item.shortGName%></p><p class="good-company"title="<%= item.cname%>"><%=item.shortCName%></p><p class="good-price"><%=item.price%></p></div><img src="../../images/s.gif"data-src="<%= item.src%>"class="la"alt=""/></a><%=item.icon%></li><%}else{%><li><a class=""href="<%= item.href%>"target="_blank"><div class="good-info"><p class="good-name"title="<%= item.gname%>"><%=item.shortGName%></p><p class="good-company"title="<%= item.cname%>"><%=item.shortCName%></p><p class="good-price"><%=item.price%></p></div><img src="../../images/s.gif"data-src="<%= item.src%>"class="la"alt=""/></a><%=item.icon%></li><%}%><%});%></script><script type="text/template"id="m-tpl-5"><%_.each(mapList,function(item,index){%><%if(index<4){%><li class="fl-gr-m-bl10"><a href="<%= item.href%>"target="_blank"><img src="../../images/s.gif"data-src="<%= item.src%>"class="la"alt=""/><div class="good-info"><p class="good-name"title="<%= item.gname%>"><%=item.shortGName%></p><p class="good-company"title="<%= item.cname%>"><%=item.shortCName%></p><p class="good-price"><%=item.price%></p></div></a><%=item.icon%></li><%}else{%><li class="fl-gr-m-l10"><a href="<%= item.href%>"target="_blank"><img src="../../images/s.gif"data-src="<%= item.src%>"class="la"alt=""/><div class="good-info"><p class="good-name"title="<%= item.gname%>"><%=item.shortGName%></p><p class="good-company"title="<%= item.cname%>"><%=item.shortCName%></p><p class="good-price"><%=item.price%></p></div></a><%=item.icon%></li><%}%><%});%></script><script type="text/template"id="m-tpl-7"><%_.each(mapList,function(item,index){%><%if(index<4){%><a href="###"class="grid-col-51"><img src="../../images/s.gif"data-src="<%= item.src%>"class="la"alt=""/></a><%}else{%><a href="###"class="grid-col-51"style="margin: 0;"><img src="../../images/s.gif"data-src="<%= item.src%>"class="la"alt=""/></a><%}%><%});%></script><script type="text/template"id="m-tpl-10"><%_.each(mapList,function(item,index){%><li><i class="news-icon <%= item.classStr %>"></i><span class="news-name-1"title="<%= item.rName %>"><%=item.name%></span></li><%});%></script><script type="text/template"id="m-tpl-11"><%_.each(mapList,function(item,index){%><li><i class="news-icon news-icon-user <%= item.classStr %>"><%=item.typeStr%></i><span class="news-name-2"title="<%= item.rName %>"><%=item.name%></span><span class="news-phone-2"title="<%= item.rPhone %>"><%=item.phone%></span><i class="news-icon news-icon-quick"></i></li><%});%></script>    
+    <script>
+		var _hmt = _hmt || [];
+		(function() {
+		  var hm = document.createElement("script");
+		  hm.src = "//hm.baidu.com/hm.js?e68ecf8aab7ee68a3adb85faa3ac997c";
+		  var s = document.getElementsByTagName("script")[0]; 
+		  s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</body>
+</html>

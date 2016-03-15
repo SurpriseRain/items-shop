@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>电器服务云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/qfy_order.css" />
+<script type="text/javascript" src="/customer/sydjt/js/columns/columns_carlist.js"></script>
+<link type="text/css" rel="stylesheet" href="/customer/sydjt/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+
+<script type="text/javascript">
+//初始化数据
+var a = 0;
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+function initData(){
+	 a++;
+	 loadInfos();
+	 var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectMyGHS","dataType":"Json","HBID":usercookie.ZCXX01}];
+	 var url ="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 var rData0 = visitService(url);
+	 for(var i=0;i<rData0.length; i++){
+	 var sz=rData0[i];
+		 $("#ZTID").append('<option value="'+sz.ZTID+'">'+sz.ZTMC+'</option>');
+	 }
+	 if(a==1){
+	  $("#FLAG").attr("value",$.getUrlParam('FLAG'));
+	 }
+	 var zt = $("#FLAG").val();
+	 var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_XSDD','QryType':'Report','dataType':'Json','HBID':usercookie.ZCXX01,"ZTID":$("#ZTID").val(),"FLAG":zt,"SPMC":$("#SPMC").val()}];
+	 return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+function loadInfos(){
+	$("#wust").empty();
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"1",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM1 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"2",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM2 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"3",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM3 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"4",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM4 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"5",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM5 = visitService(url)[0].SUM;
+	var	XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":usercookie.ZCXX01,"W_DJZX02":"6",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM6 = visitService(url)[0].SUM;
+    $("#wust").append('我的订单'+
+              '<span class="myorder_link" >'+
+                	/*'<a href="myorder.html?FLAG=1">待审核订单('+SUM1+')</a>'+*/
+                    /*'<a href="myorder.html?FLAG=2">未通过审核('+SUM2+')</a>'+*/
+                    '<a href="myorder.html?FLAG=3">待支付订单('+SUM3+')</a>'+
+                    '<a href="myorder.html?FLAG=4">待发货订单('+SUM4+')</a>'+
+                    '<a href="myorder.html?FLAG=5">待收货订单('+SUM5+')</a>'+
+					'<a href="myorder.html?FLAG=6">待评价订单('+SUM6+')</a>'+
+                '</span>'
+                );
+}
+</script>
+<script type="text/javascript" src="/control/js/carlist.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+
+<!--script type="text/javascript" src="/js/jquery.kkPages.js"></script-->
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+<div class="dqlc"><a href="#" class="dqlc-a">订单管理</a> > <a href="/customer/sydjt/back/ddgl/myorder.html?menuId=A403" class="dqlc-a">我的订单</a></div>
+<div class="car_remaining">
+	<div class="affirm_in"  >
+		<h3 class="affirmtit clearfix"  id="wust" >
+			
+		</h3>
+	  <p class="mt10" id="wusts" >
+	   	订单筛选：
+	      <select name="ZTID" id="ZTID" class="bankbox" style="display:none">
+	      <option value="">请选择</option>
+	    </select>
+	    <select name="FLAG" id="FLAG" class="bankbox">
+	      <option value="">全部订单</option>
+	      <option value="3">待支付订单</option>
+	      <option value="4">待发货订单</option>
+	      <option value="5">待收货订单</option>
+		  <option value="6">待评价订单</option>
+	    </select> 
+	    商品名称：
+	    <input type="text" name="SPMC" id="SPMC" class="regbox">
+	<input type="submit" name="button2" id="changebtn2" value="搜索" class="btn  btn_samller displayinh ml10" onclick="init()">
+	</p>
+	</div>
+	<div class="affirm_in"    style="background-color: #E5F0FB; border-top: 1px solid #919191;height: 20px;">
+		<div><span style=" font-size:16px; float: left;" >
+		<input class="selectall" type="checkbox" style="margin-left:-16px; margin-right: 6px;"  />全选</span>
+	  <a id="accout" class="accounts" >去结算</a></div>
+	</div>
+</div>
+<div class="center">       
+<div jl jlid="DefStaPer" id="carlist_htd" newclos="4" multiPage="true" emtype="htd" url="/getcarlist_htd.do" newline="" before_reply="" after_reply=""></div>
+</div>
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function toCart(DZBH,W_DJZX02,XSDD02,ZTID,XSDD01){
+	if(W_DJZX02==3){
+		window.open("/customer/sydjt/shopping/cartSuccess.html?xsdd01="+XSDD01+"&zfje="+XSDD02+"&ztid="+ZTID+"&dzbh="+DZBH);
+	}else if(W_DJZX02==5){
+	if(!confirm('此订单货物已收到!?')){return;};
+		var XmlData=[{"XSDD01":XSDD01}];
+		var url = "/OrderFlowManage/OkMyOrder.action?XmlData="+JSON.stringify(XmlData);
+		var state = visitService(url).STATE;
+		if(state==1) {
+			$("#wust").empty();
+			init();
+		} else {
+			alert("确认收货失败");
+			return;
+		}
+	}
+}
+function toSPPJ(W_DJZX02,XSDD04,ZTID,SPXX01,XSDD01){
+	parent.ajaxGrid('/customer/sydjt/back/ddgl/myhtd_assess_open.html?XSDD04='+XSDD04+'&SPXX01='+SPXX01+'&XSDD01='+XSDD01);
+}
+//执行回调方法
+function backFun(parameters){
+	init();
+}
+</script>
+</html>

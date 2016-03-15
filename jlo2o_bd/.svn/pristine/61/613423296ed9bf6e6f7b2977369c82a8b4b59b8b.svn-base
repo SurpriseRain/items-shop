@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+//初始化数据
+function initData(){
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.info.sql.selectW_PPXX_simple','QryType':'Report','rowClick':'true','dataType':'Json','ZCXX01':usercookie.ZCXX01,'ppbh':$('#ppbh').val(),'pptitle':$('#pptitle').val(),'state':$('#state').val()}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+  var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+  var rData = visitService(url);
+  return rData;
+  // 20151201 齐俊宇 BEGIN
+ /*  if(rData!=undefined&&rData!=""){
+	 $("#code").empty();
+ 	 $("#code").append(
+ 		 	 '<option value="">请选择</option>'+
+	  		'<option value='+rData[0].LXCODE+'>'+rData[0].LXNAME+'</option>'
+	  	);
+  	}
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+
+  if($("#STATE").val()!="通过"){
+  } */
+//20151201 齐俊宇 END
+}
+</script>
+<!-- <script type="text/javascript" src="/control/js/tableGrid.js"></script>
+<script type="text/javascript" src="/js/jquery.kkPages.js"></script> -->
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">我是卖家</a>
+    	<span>></span>
+    	<a href="#">商品管理</a>
+    	<span>></span>
+    	<b>品牌上传</b>
+	</div> -->
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:830px;">
+	   	<span>品牌编号：</span>
+		<input type="text" id="ppbh" name="ppbh" value="" size="20" class="text" />
+
+	   	<span>品牌名称：</span>
+		<input type="text" id="pptitle" name="pptitle" value="" size="20" class="text"/>
+
+	     <span>审核状态：</span>
+	     	<script type="text/javascript">
+				document.write(showStateHtml('PPQXZT','state','0'));
+			</script>
+	   </li>
+	   <li style="width:250px;">
+			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="newXX()">新增</a>
+			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+	
+<div class="center">
+	<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4"  multiPage="true"  url="/jlquery/selecto2o.action" 
+	columnsArr="[{'property':'PPBH','header':'品牌编号','type':'lable','width':'100px'},
+						{'property':'PPNAME','header':'品牌名称','type':'lable','width':'200px'},
+						{'property':'ENDTIME','header':'有效期至','type':'lable','width':'140px'},
+						{'property':'PPQXZT','header':'状态','type':'number','width':'100px'},
+						{'property':'PPBH','header':'操作','type':'ppcz','width':'100px'}]"
+	>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+function newXX(){
+	window.location.href = '/customer/qfy/back/spgl/Oper_PPSC_item.html';
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+//发布时间
+var regdate_str = new Ext.form.DateField({
+	applyTo: "regdate_str",
+	format:"Y-m-d",
+	timePicker: true
+	});
+
+var regdate_end = new Ext.form.DateField({
+	applyTo: "regdate_end",
+	format:"Y-m-d",
+	timePicker: true
+	});
+
+// 品牌查看
+function check(ppbh, ppzt){
+	window.location.href = "/customer/qfy/back/spgl/Oper_PPSH_item.html?PPBH=" + escape(ppbh) + "&PPZT=" + escape(ppzt);
+}
+
+// 品牌停用 启用
+function changeState(pid, zt){
+	var jsonData = [{"PPID" : pid, "STATE" : zt, "GSID" : usercookie.ZCXX01}]
+	var url = "/Oper_PPGL/updateW_PPQXZT.action?jsonData=" + JSON.stringify(jsonData);
+	var rData = visitService(url);
+	if(rData.STATE == "1"){
+		alert("操作成功!");
+	}
+	window.location.reload();
+}
+
+</script>

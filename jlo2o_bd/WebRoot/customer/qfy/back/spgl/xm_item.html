@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/css/multiSelectTree.css" />
+<link rel="stylesheet" type="text/css" href="/css/ext-all.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type='text/javascript' src="/js/jquery.foggle.min.js"></script>
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/commons.js" ></script>
+<script type="text/javascript" src="/customer/qfy/js/openbox.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/menu.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/plugins/code/prettify.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+<script type="text/javascript" src="/customer/qfy/js/shop-Delete.js"></script>
+<script type="text/javascript" src="/js/multiSelectTree.js"></script>
+<script type="text/javascript" src="/js/ext-tree-jl.js"></script>
+<script type="text/javascript" src="/js/ext-multree-jl.js"></script>
+</head>
+
+<script>
+var MyCookie = $.cookie('userInfo');
+if(MyCookie==null){
+	alert("亲，您还未登录！");
+	location.href="/gui_o2o/qfy/fore/index.html";
+}
+var user = JSON.parse(MyCookie);
+
+
+var XMBH = $.getUrlParam('XMBH');
+$(document).ready(function(){
+	onloadTree();
+	
+	$("#sureclick").on("click",function(){
+		okclick();
+	});
+	if(XMBH==null)
+	{
+	}else
+	{
+		backFun2(XMBH)
+	}
+})
+
+var NodeID;
+function backFun2(XMBH){
+	 	var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.showXMlist.select_XM','QryType':'Report','dataType':'Json','XMBH':XMBH}];
+		var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	    var rData=visitService(url);
+	   if(rData!=undefined&&rData!=""){
+			$("#XMBH").val(rData[0].XMBH);
+			$("#XMMC").val(rData[0].XMMC);
+			//expand();
+			NodeID = new Array();
+			for(var i=0; i<rData.length; i++) {
+				NodeID[i]=rData[i].SPFL01;		
+			}
+			$("#detailsResultTree").load(function(){
+				$("#detailsResultTree")[0].contentWindow.expandAll();
+				expand();
+			});
+	 }
+}
+
+function onloadTree() {
+	var url ="/TreeCheckbox.jsp?sqlID=com.jlsoft.o2o.pub.tree.sql.SpbjSpflTree&backStr=&treeCxjb=1&level=3";
+	setFrameTree(url);
+}
+
+function setFrameTree(url){
+	 //路径
+	 $("#detailsResultTree").attr("src",url);
+}
+
+//新增保存
+function okclick(){
+		if($("#XMMC").val().length == 0){
+			alert("请输入项目名称");
+			return false;
+		}
+		var XmlData1 = $("#form1").formToJson();
+		var spfl01 = $("#detailsResultTree")[0].contentWindow.clickEvent();
+		XmlData1[0].SPFL01=spfl01;
+		
+		if(XMBH==null)
+		{
+			
+		}
+		else
+		{
+			XmlData1[0].XMBH=XMBH;
+		}
+		var XmlData=escape(JSON.stringify(XmlData1));
+		var val="/MyGoods/XmAdd.action";
+		var r = confirm('确认更新信息吗？');
+		if(r==true){
+			//弹出遮罩层
+			 top.openWait();
+			$.ajaxFileUpload({
+				type:"POST",
+				secureuri:false,
+				url:encodeURI(val),//encodeURI避免中文乱码
+				dataType:"text",
+				data:{"XmlData":XmlData},
+				success: function(data) { 
+					//关闭遮罩层
+					top.closeWait();
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				//alert(jsondata.STATE);
+				if(data1==1){
+					alert("保存成功!");
+					parent.execBackFun("aaa");
+					parent.$("#ajaxGrid").remove();
+					//location.reload();
+					}else{
+					alert("保存失败!");
+						}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					//关闭遮罩层
+					top.closeWait();
+					alert(textStatus);
+			    }
+			});
+		}
+		else return;
+}
+
+//加载所有节点
+function expand(){
+	if(NodeID.length > 0){
+		var flag = true;
+		var existState = "";
+		for(var i=0;i<NodeID.length;i++){
+			existState = $("#detailsResultTree")[0].contentWindow.checkNodeExist(NodeID[i]);
+			if(existState == undefined || existState == "undefined"){
+				flag = false;
+				break;
+			}
+		}
+		if(flag){
+			$("#detailsResultTree")[0].contentWindow.checkNode(NodeID);	
+		}else{
+			waitFun(NodeID);
+		}
+	}
+}
+
+function waitFun(NodeID){
+	setTimeout("expand()", 3000)
+}
+//检测维护项目是否重复
+function checkData(){
+	var XMMC=$("#XMMC").val();
+	var XMBH=$("#XMBH").val();
+	if(XMMC==""){
+		alert("项目名称不能为空！");
+		}else{
+			if(XMBH==""||XMBH==null)
+			{
+				var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.showXMlist.select_XMMC','QryType':'Report','dataType':'Json','XMMC':XMMC}];
+				var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+			    var rData=visitService(url);
+			    if(rData!=undefined&&rData!=""){
+					if(rData[0].COUNT>=1){
+						alert("项目名称已存在！");
+						$("#XMMC").val("");
+						}
+				    }
+			}
+			else
+			{
+				var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.showXMlist.select_XMMC','QryType':'Report','dataType':'Json','XMMC':XMMC,"XMBH":XMBH}];
+				var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+			    var rData=visitService(url);
+			    if(rData!=undefined&&rData!=""){
+					if(rData[0].COUNT>=1){
+						alert("项目名称已存在！");
+						$("#XMMC").val("");
+						}
+				    }
+			}
+	}
+}
+</script>
+
+<body>
+<!-----公共部门开始---->
+<form id="form1" name="form1">
+<input type="hidden" id="SPFL01" name="SPFL01" value=""/>
+<input type="hidden" id="XMBH" name="XMBH" value=""/>
+<!-- 编码中心回传隐藏数据 -->
+<input type="hidden" id="dtbj" name="dtbj" value="2"/>  <!-- 大厅标记默认为2, -->
+<!-- 
+<input type="hidden" id="spsxid" name="spsxid" />
+<input type="hidden" id="spsxz" name="spsxz" />
+ -->
+<input type="hidden" name="file05" value="15" />
+
+<!-- 中间开始 -->
+  <div class="dqlc"><a href="#" class="dqlc-a">我是卖家</a> > <a href="#" class="dqlc-a">商品管理</a> > <b class="dqlc-b">项目维护</b></div>
+  <!-- <div class="dqtb">
+    您最近使用的类目：<select><option>请选择</option><option>举升车门/尾门/行李箱盖</option><option>轮胎</option></select>
+  </div> -->
+
+  <ul class="dqbd" style="display: block">
+    <li><h2><font></font></h2></li>
+	<li><span class="name">项目名称：</span><div class="btx">*</div><input class="spmc" name="XMMC" value="" id="XMMC"  onchange="checkData();"/></li>
+    <li>
+      <div class="sycx" style="display: block">
+      		<fieldset>
+				<iframe id="detailsResultTree" name="detailsResultTree" frameborder="0" marginheight="0" marginwidth="0" width="100%"  height="400px" scrolling="auto"
+						 	src=""></iframe>
+			</fieldset>
+      </div>
+    </li>
+<li><span class="name">&nbsp;</span><a href="#" class="qr" id="sureclick">保存</a></li>    
+  </ul>
+<div class="clear"></div>
+<!---------------------底部--------------------->
+</form>
+</body>
+</html>

@@ -1,0 +1,105 @@
+/***
+商品条件检索界面
+***/
+.selector{ border-top:1px solid #e1e1e1;}
+.selector .s_title{ border-bottom:1px solid #e1e1e1; background-color:#f9f9f9; line-height:34px;}
+.selector .s_title h3{ color:#e84d1c; float:none; margin:0 10px;}
+.selector .s_title em{ margin:0 20px;}
+.selector .s_title span{ margin:0 5px; color:#e84d1c;}
+
+.selector .s_main{}
+.s_main dl{ padding:8px 10px; line-height:25px; border-bottom:1px solid #e1e1e1;}
+.s_main dl.bian{}
+.s_main dl.xuan{ border:2px solid #edd28b;}
+.s_main dd a{ color:#005aa0; margin-right:30px;}
+.s_main dd a:hover{ color:#e84d1c;}
+.s_main dd input[type="text"]{ float:none; padding:2px 0px; width:50px; margin:0px; font-size:12px;}
+.s_main dd input[type="button"]{ padding:4px 12px; font-size:12px; margin:0px 0px 0px 10px; float:none;}
+.s_main dt a.btn{ border:1px solid #e1e1e1; line-height:22px; padding:0px 10px; margin:0 0 0 10px; float:right;}
+.s_main dt a.btn i{ margin-left:5px;}
+.s_main dt a.btn:hover{ color:#e84d1c; border:1px solid #e84d1c;}
+.s_main dt a.xuan{ color:#e84d1c; border:1px solid #e84d1c;}
+
+dl dd .s_brand_title{ display:none;}
+dl dd .s_brand_title li{ padding:0px 8px; margin:5px 0; border:1px solid #fff; cursor:pointer;}
+dl dd .s_brand_title li.xuan{ border:1px solid #e84d1c; color:#e84d1c;}
+dl dd .s_brand_img{ height:94px; overflow:hidden; padding:5px 0;}
+dl dd .s_brand_text{ height:25px; overflow:hidden;}
+dl dd .s_brand_text a input[type="checkbox"]{ float:left; margin:6px 5px 6px 0; display:none;}
+dl dd .s_brand_text a span{ float:left;}
+dl dd .s_brand_img li{ width:120px; height:45px; padding:10px; border:1px solid #eee; margin:0 -1px -1px 0; position:relative; cursor:pointer;}
+dl dd .s_brand_img li img{ width:100px; height:25px;}
+dl dd .s_brand_img li span{ position:absolute; top:0px; left:0px; width:100%; height:100%; text-align:center; line-height:45px; display:none; background-color:#fff; z-index:2;}
+dl dd .s_brand_img li i{ position:absolute; right:0px; bottom:0px; z-index:3; font-size:15px; color:#e84d1c; display:none;}
+dl dd .s_brand_img li:hover{ z-index:1; border:2px solid #e84d1c; box-shadow:0px 0px 3px #aaa;}
+dl dd .s_brand_img li:hover span{ display:block; color:#e84d1c;}
+dl dd .s_brand_img li.xuan{ z-index:1; border:2px solid #e84d1c; box-shadow:0px 0px 3px #aaa;}
+dl dd .s_brand_img li.xuan span{ display:block;}
+dl dd .s_brand_img li.xuan i{ display:block;}
+dl dd .s_result{ display:none; margin-top:10px;}
+dl dd .s_result label{ float:left;}
+dl dd .s_result b{ border:1px solid #e84d1c; height:22px; line-height:22px; margin-right:20px;}
+dl dd .s_result b span{ float:left; margin:0 10px;}
+dl dd .s_result b i{ width:20px; height:20px; text-align:center; line-height:20px; font-size:14px; margin:0px; padding:0px; float:right; background-color:#e84d1c; color:#fff;}
+dl dd .s_result b i:hover{ cursor:pointer; background-color:#cb3302;}
+dl dd .s_btn{ display:none; height:30px; margin:5px 0; position:relative;}
+dl dd .s_btn .s_btn_main{ width:140px; position:absolute; left:50%; margin-left:-70px; top:5px;}
+dl dd .s_btn input[type="button"]:first-child{ margin-right:10px;}
+
+dl.bian dd .s_brand_title{ display:block;}
+dl.bian dd .s_brand_img{ max-height:138px; height:auto !important; overflow-y:auto;}
+dl.bian dd .s_brand_text{ max-height:100px; height:auto !important; overflow-y:auto;}
+dl.xuan dd .s_btn{ display:block;}
+dl.xuan dd .s_brand_text a input[type="checkbox"]{ display:block;}
+dl.xuan dd .s_result{ display:block;}
+
+
+
+.main{ position:relative; margin-top:10px;}
+.pro_list_left{min-height:1000px; min-width:200px; max-width:200px; border:1px solid #e1e1e1; position:absolute; top:0; left:0;}
+.pro_list_left h3{ width:100%; line-height:40px; text-indent:10px;}
+.pro_list_left ul{ padding:0 10px;}
+.pro_list_left ul li{ margin-bottom:10px;}
+.pro_list_left ul li p{ word-wrap:break-word;}
+.pro_list_left ul li b{ margin:5px 0;color:#e84d1c; font-size:16px; font-weight:bold;}
+.pro_list_left ul li b i{ font-size:18px; margin-right:5px;}
+.pro_list_left ul li .p_review a{ color:#005aa0;}
+.pro_list_left ul li img{ width:100%; height:auto; margin:10px auto;}
+
+.pro_list_right{min-height:990px; padding-left:210px;}
+.jl_filter{ border-top:1px solid #e1e1e1; border-bottom:1px solid #e1e1e1; }
+.fore1{ background-color:#f1f1f1; padding:6px 10px; line-height:26px;}
+.fore1 dl dd{ height:24px; line-height:24px; border:1px solid #e1e1e1; background-color:#fff; padding:0 5px; margin-right:10px;}
+.fore1 dl dd:hover a{ color:#e84d1c;}
+.fore1 dl:first-child dd a i{ margin-left:5px;}
+.fore1 dl dd a i{ margin-right:5px;}
+.fore1 dl dd b{ float:right; width:12px; height:20px; margin:1px 0 0 5px;}
+.fore1 dl dd b i{ float:left; width:12px; font-size:14px; height:10px; margin:0px; padding:0px; text-align:center; line-height:10px; cursor:pointer;}
+.fore1 dl dd.xuan{border: 1px solid #e84d1c; background-color:#e84d1c;}
+.fore1 dl dd.xuan a{ color:#fff;}
+.fore1 dl dd.xuan b i{ color:#fff;}
+
+.fore1 .fy{ text-align:right; line-height:24px;}
+.fore1 .fy span.text{ margin-right:10px;}
+.fore1 .fy span.text em{ font-weight:bold; color:#e84d1c;}
+.fore1 .fy a.prev{height:24px;padding:0 10px;border-radius: 3px;background: #fff; border:1px solid #CECBCE; background-color:#f5f5f5; color:#999;}
+.fore1 .fy a.next{color:#666;}
+
+.fore1 .fy a i{ text-align:center; font-size:16px;}
+
+ul.pro_list li{ margin-top:15px; border:1px solid #fff;}
+ul.pro_list li:hover{ border:1px solid #e9e9e9; box-shadow:0 0 5px #eee; cursor:pointer;}
+ul.pro_list li .pro_img img{ margin:10px auto; width:100%;}
+ul.pro_list li .pro_pic{color:#e84d1c; font-size:20px; font-weight:bold;}
+ul.pro_list li .pro_pic i{ font-size:18px; margin-right:5px;}
+ul.pro_list li .pro_name{ height:35px; overflow:hidden; margin:8px 0;}
+ul.pro_list li .pro_name a:hover{ color:#e84d1c; text-decoration:underline;}
+ul.pro_list li .pro_rew{ color:#999;}
+ul.pro_list li .pro_rew em{ color:#005aa0; font-weight:700;}
+
+ul.pro_list_img li{ padding:20px 10px;}
+
+ul.pro_list_text li{ padding:10px;}
+ul.pro_list_text li .pro_img img{ margin:0; width:100%;}
+ul.pro_list_text li .pro_name{ margin:0px;}
+

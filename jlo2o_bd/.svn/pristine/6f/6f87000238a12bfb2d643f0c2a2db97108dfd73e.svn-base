@@ -1,0 +1,169 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+function initData(){
+	var ckdh = $("#ckdh").val();
+	if(ckdh==""){
+		ckdh="1s";
+	}
+	$("#screening").css("width", "auto");
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.mjrk.selectCKDSP','QryType':'Report','dataType':'Json','CKDH':ckdh,'GSLX':usercookie.LX,'ZCXX01':usercookie.ZCXX01,'XTCZY01':usercookie.XTCZY01}];
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	
+}
+
+function userName_onkeypress(event){  
+   	if(event.keyCode==13){
+   		var ckdh = $("#ckdh").val();
+   		if(ckdh==""){
+			return false;
+		}
+		var dataArr = [];
+		var XmlData = {};
+		XmlData["sqlid"]="com.jlsoft.o2o.sql.mjrk.selectCKD";
+		XmlData["dataType"]="Json";
+		XmlData["CKDH"]=ckdh;
+		XmlData["ZCXX01"]=usercookie.ZCXX01;
+		XmlData["GSLX"]=usercookie.LX;
+		dataArr.push(XmlData);
+		var returnVal=visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+		if(returnVal.data!=""){
+			$(".zhedie").show();
+		}else{
+			alert("单号不存在！");
+			$("#ckdh").val("");
+			$(".zhedie").hide();
+			return false;
+		}
+		$("#CKDHA").html(returnVal.data[0].CKDH);
+		$("#ZCXX02").html(returnVal.data[0].ZCXX02);
+		$("#CK02").html(returnVal.data[0].CK02);
+		$("#CKR").html(returnVal.data[0].CKR);
+		$("#CKSJ").html(returnVal.data[0].CKSJ);
+		init();
+   	}
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js?d=1"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<style>
+.yangshi{
+    display:inline-block;
+    background-color: #ff8800;
+    border: 1px solid #c76e09;
+    color: #fff;
+    cursor: pointer;
+    float: left;
+    font-family: "microsoft yahei";
+    font-size: 15px;
+    height: 28px;
+    line-height: 28px;
+    margin: 10px 20px;
+    padding: 0 10px;
+    text-align: center;
+    width: 70px;
+  }
+</style>
+</head>
+<body>
+	<!-- <div id="curPosition" style="width:98.5%;">
+    	<a href="#">库房管理</a>
+    	<span>></span>
+    	<a href="#">配件入库</a>
+	</div> -->
+	<div class="clera"></div> 
+	<ul id="screening" style="width:825px;">
+    <li style="width:800px;">
+    <span>出库单号</span>
+	<input type="text" placeholder="请输入或扫码获取单号" id="ckdh" value=""  onkeypress="return userName_onkeypress(event)" style="width:180px;"/>
+	<a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+   </li>
+</ul>
+	<div class="clera"></div> 
+	<div  class="zhedie" style="display:none;">
+		<table class="show_table">
+		    <tr>
+		    	<td><span>订单编号：</span></td><td><label id="CKDHA" title=""></label></td>
+		    	<td><span>供应商：</span></td><td><label id="ZCXX02" title=""></label></td>
+		    	<td><span>仓库名称：</span></td><td><label id="CK02" title=""></label></td>
+			</tr>
+			<tr>
+			   <td><span>操作人：</span></td><td><label id="CKR" title=""></label></td>
+		       <td><span>操作时间：</span></td><td><label id="CKSJ" title="" ></label></td>
+		       <td colspan="2"><a id="saoma" name="saoma" class="yangshi">扫码/导入</a></td>
+		    </tr>
+		</table>
+    	<div class="clera"></div>
+		<div class="center">
+	    <!-- 展示明细 -->
+			<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="true" url="/jlquery/selecto2o.action"
+			columnsArr="[
+			{'property':'BARCODE','header':'商品编码','type':'lable','width':'100px'},
+			{'property':'spxx04','header':'商品名称','type':'lable','width':'230px'},
+			{'property':'spfl02','header':'品类','type':'lable','width':'80px'},
+			{'property':'spfl02','header':'货位','type':'lable','width':'80px'},
+			{'property':'CKSL','header':'订单数量','type':'lable','width':'60px'},
+			{'property':'RKSL','header':'入库数量','type':'lable','width':'60px'},
+			{'property':'ZTSL','header':'在途数量','type':'lable','width':'60px'}]"
+			>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+	  $(".seach_bot").on('click',function(){
+			var ckdh = $("#ckdh").val();
+			if(ckdh==""){
+				return false;
+			}
+			var dataArr = [];
+			var XmlData = {};
+			XmlData["sqlid"]="com.jlsoft.o2o.sql.mjrk.selectCKD";
+			XmlData["dataType"]="Json";
+			XmlData["CKDH"]=ckdh;
+			XmlData["ZCXX01"]=usercookie.ZCXX01;
+			XmlData["GSLX"]=usercookie.LX;
+			dataArr.push(XmlData);
+			var returnVal=visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+			if(returnVal.data!=""){
+				$(".zhedie").show();
+			}else{
+				alert("单号不存在！");
+				$("#ckdh").val("");
+				$(".zhedie").hide();
+				return false;
+			}
+			$("#CKDHA").html(returnVal.data[0].CKDH);
+			$("#ZCXX02").html(returnVal.data[0].ZCXX02);
+			$("#CK02").html(returnVal.data[0].CK02);
+			$("#CKR").html(returnVal.data[0].CKR);
+			$("#CKSJ").html(returnVal.data[0].CKSJ);
+			init();
+	  });
+});
+function backFun(){
+	 init();
+}
+$("#saoma").click(function(){
+	location.href="/customer/qfy/back/ckgl/BarCode.html?CKDH="+$("#ckdh").val();
+});
+</script>

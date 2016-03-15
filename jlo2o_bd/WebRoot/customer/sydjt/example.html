@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<title>示例</title>
+</head>
+<script type="text/javascript">
+//公共方法
+$.defAjax= function(url, successfn) {
+     $.ajax({
+         type: "POST",
+         data: "",
+          async: false, 
+         url: encodeURI(url),
+         dataType: "JSON",
+         success: function(d){
+             successfn(d);
+         },
+         error: function(e){
+             
+         }
+     });
+ };
+ 
+ function f1(){
+ 	var url = "/Test/getSPXXList.action";
+ 	$.defAjax(url,function(data){
+ 		var jsonData = data.data.spxx;
+ 		alert(jsonData[0].SPXX04);
+    })
+ }
+</script>
+<body>
+	<input type="button" name="aa" value="tijiao" onclick="f1()"/>
+	<table id="tab"></table>
+</body>
+</html>

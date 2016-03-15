@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心 - 上传配件串码</title>
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript"  src="/js/jquery.foggle.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/openbox.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/tablekj.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user = JSON.parse(MyCookie);
+var gsid=user.ZCXX01;
+
+//初始化数据
+var DJBH=-1;
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.XmlUploadProduct.selectW_SPCMBZ','QryType':'Report','dataType':'Json','ZCXX01':usercookie.ZCXX01,"DJBH":DJBH}];
+  var returnVal = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+  return returnVal;
+}
+
+$(document).ready(function(){
+	var xmlType = $.getUrlParam("xmlType");
+	//点击上传按钮
+	$("#sure").on("click",function(){
+	   var XmlData=[{"gsid":gsid,"xmlType":xmlType}];
+	   var url = "/XmlUploadProduct/insertXmlUpload.action";
+	   var fileArray=[];
+	   $("#files").find("input").each(function(){
+		  fileArray.push($(this).attr("id"));
+	   });
+	   if(confirm('确认提交资料吗？')==true){
+	     //弹出遮罩层
+	     top.openWait();
+	     
+		 $.ajaxFileUpload({
+			type:"POST",
+  			url:"/XmlUploadProduct/insertXmlUpload.action?XmlData="+JSON.stringify(XmlData),
+  			secureuri:false,
+  			fileElementId:fileArray,
+  			dataType: 'text',
+  			success:function(data){
+  				//关闭遮罩层
+				top.closeWait();
+  			  	var jsonData= jQuery.parseJSON(data).data;
+  			 	 if(jsonData.state == 1) {
+	  			  	alert("上传成功！");
+	  			  	//查询已经上传XML的串码明细
+	  			  	DJBH=jsonData.DJBH;
+	  			  	init();
+  			     } else if (jsonData.state == 0){
+	  			 	 alert("您还未绑定行业管理码，请完善资料！");
+  			  	  } else {
+  					 alert("上传失败，请重试或联系运营人员！");
+  			  	  }  
+  				},
+  				error: function(XMLHttpRequest, textStatus, errorThrown) {
+  					//关闭遮罩层
+					top.closeWait();
+					alert(textStatus);
+			    },
+  			});
+	   }else return;
+	});
+});
+
+function upload() {
+	var xmlurl = $(".pldr").val();
+	var  XmlData1 = [{"xmlurl":xmlurl}];
+	var XmlData=JSON.stringify(XmlData1);
+
+	var url="/XmlUploadProduct/insertXmlUpload.action?XmlData="+XmlData;
+	var rData=visitService(url);
+}
+
+$(function(){
+    $(".nloption").foggle({
+        acceptVal:"subscribe",
+        targetClass:"nlSupplier"
+    });
+});
+
+//获取附件名称
+function getFileName() {
+	var box=window.$.jBox.getBox();
+	var oldfile=$(box).find("input[name='pic']");
+	var num=$(box).find("input[name='idFile']").val();
+	$(box).find("input[name='idFile']").val("");
+	var id="file"+num;
+	$("#files").find("#"+id).remove();
+	$("#files").append(oldfile);
+	$("#files").find("input[name='pic']").attr("id",id).attr("name","files").removeClass("browbtn");
+	var path = $("#files").find("#"+id).val();
+	if(path!=""){
+		var filename = "";
+		var pos1 = path.lastIndexOf('/');
+		var pos2 = path.lastIndexOf('\\');
+		var pos = Math.max(pos1, pos2);
+		if (pos < 0) {
+			filename = path;
+		} else {
+			filename = path.substring(pos + 1);
+		}
+		$("#filename" + num).html(filename).addClass("photook");
+	}else{
+		alert("请上传XML文件!");
+		return;
+	}
+	window.jBox.close();
+	$("body").css("overflow","auto");
+}
+
+//取消附件上传
+function removeFile(obj){
+	var fileNameId=$(obj).find("span.photook").attr("id");
+	var num=fileNameId.replace("filename","");
+	//alert(num);
+	$("#files").find("#file"+num).remove();
+	$("#"+fileNameId).text("");
+	$("#"+fileNameId).removeClass("photook");
+}
+
+function photo_open(obj){
+	var id=$(obj).attr("id");
+	$("input[name='idFile']").val(id);
+    jBox('id:photo_open', {showIcon: 'jbox-title-icon' });
+}
+</script>
+<body>
+<div id="photo_open">
+    <div class="cart_ok" >
+        <h3 class="cart_opentit">上传</h3>
+        <div class="modbox">
+        	<input id="idFile" type="file" name="pic" class="browbtn" value="1" />
+        	<input type="hidden" name="idFile" value="" />
+        	<p class="">上传文件格式仅限于XML<br/>如果文件较大请耐心等待上传时间</p>
+        	<input type="button" name="button4" id="button4" onclick="getFileName();" value="上传" class="modalInput fl" />
+        	<input type="button" name="button5" id="button5" value="取消" class="jbox-close closebtn fl" />
+        	<br class="clear"/>
+    	</div>
+    </div>
+</div>
+<div id="files"  class="clear"></div>
+
+<div id="shop-main">
+ <div class="shop-right-main">
+  <div class="dqlc"><a href="#">外部数据导入</a> > <b class="dqlc-b">厂家串码包装导入</b></div>
+  <div class="dqtb">
+     <label>XML文件导入：</label>
+     <input type="button" value="上传" id="01" onclick="photo_open(this);" class="modalInput pldr" />
+	  <div class="photoupok" style="float:left; width:300px; height:25px; margin:-2px 0 0 -15px; border:1px solid #e4e4e4;">
+	    <span class="photook" id="filename01" style=" color:#3c3c3c; font-size:12px; margin-left:5px; padding-left:0px; text-indent:5px; line-height:25px;"></span>
+      </div>
+     <input type="button" id="sure" value="确定" class="bot" />
+  </div>  
+  </div>
+</div>
+<div class="clear"></div>
+
+<!-- 展示导入数据开始 -->
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="false"  url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'BARCODE','header':'条码','type':'lable','width':'100px'},
+{'property':'SPXX04','header':'配件名称','type':'lable','width':'100px'},
+{'property':'CURCODE','header':'当前串码','type':'lable','width':'130px'},
+{'property':'PARENTCODE','header':'父节点串码','type':'lable','width':'130px'},
+{'property':'PACKLEVEL','header':'包装级别','type':'lable','width':'50px'}]"
+afterUrl=""
+>
+</div>
+<!-- 展示导入数据结束 -->
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+</html>

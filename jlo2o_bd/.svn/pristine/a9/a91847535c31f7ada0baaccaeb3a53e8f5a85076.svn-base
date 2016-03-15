@@ -1,0 +1,377 @@
+#pro-min .pro-right {
+	width: 230px;
+	float: left;
+	margin-left: 10px;
+}
+
+#pro-min .pro-right h2 {
+	float: left;
+	width: 230px;
+	color: #222;
+	font-family: "microsoft yahei";
+	font-size: 20px;
+	text-indent: 20px;
+	margin: 15px 0;
+}
+
+#pro-min .pro-right ul#ztc {
+	width: 229px;
+	border: 1px solid #eee;
+	float: left;
+}
+
+#pro-min .pro-right ul#ztc li {
+	border-top: 1px solid #eee;
+	margin-top: -1px;
+	background-color: #fff;
+	float: left;
+	width: 229px;
+	position: relative;
+}
+
+#pro-min .pro-right ul#ztc li a.img {
+	float: left;
+	width: 90px;
+	height: 90px;
+	margin: 18px 5px 18px 10px;
+}
+
+#pro-min .pro-right ul#ztc li a.img img {
+	width: 90px;
+	height: 90px;
+	border: 0px;
+}
+
+#pro-min .pro-right ul#ztc li div.text {
+	float: left;
+	width: 120px;
+	height: 90px;
+	margin: 18px 0;
+}
+
+#pro-min .pro-right ul#ztc li div.text h4 {
+	margin: 0px;
+	padding: 0px;
+	float: left;
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+	color: #3c3c3c;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#pro-min .pro-right ul#ztc li div.text a {
+	color: #6c6c6c;
+	line-height: 18px;
+	float: left;
+	width: 120px;
+}
+
+.listBOX li.first {
+	margin: 0;
+	width: 88vw;
+	height:26vh;
+	background-color:#fdfdfd;
+}
+
+.listBOX li {
+	border: 1px solid #eeeeee;
+	float: left;
+	position: relative;
+	width: 948px;
+}
+
+.listBOX li .list{
+	border-right: 2px solid #eeeeee;
+    float: left;
+    height: 165px;
+    margin: 1vw;
+    width: 190px;
+    margin: 0;
+}
+
+.listBOX li a.img {
+	width: 150px;
+	height: 130px;
+	float: left;
+	margin:20px;
+}
+
+.listBOX li a.img img {
+	width: 136px;
+	height: 136px;
+	border: 0px;
+}
+
+.listBOX li .pro-pic {
+	width: 166px;
+	margin: 30px 20px 0 40px;
+	float: left;
+}
+
+.listBOX li .pro-pic span {
+	float: left;
+	line-height: 23px;
+	color: #999;
+}
+
+.listBOX li .pro-pic b {
+	float: left;
+	font-size: 16px;
+	color: #da271c;
+	font-family: "microsoft yahei";
+	font-weight: bold;
+	width: 100px;
+}
+
+.listBOX li .pro-pic span.sl {
+	float: left;
+	font-size: 16px;
+	line-height: 15px;
+	margin-top: 32px;
+	margin-left: -128px;
+}
+
+.listBOX li .pro-pic span.sl label.sz {
+	color: #e40000;
+	font-size: 20px;
+}
+
+.listBOX li .pro-pic span.sl b {
+	float: left;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	color: #666;
+	font-size: 16px;
+	background-color: #e1e1e1;
+	line-height: 20px;
+	margin-top: 5px;
+}
+
+.listBOX li .pro-pic span.sl input.sr {
+	width: 60px;
+	height: 20px;
+	color: #e40000;
+	border: 1px solid #e4e4e4;
+	text-align: center;
+	float: left;
+	margin: 4px 5px 0;
+	font-size: 14px;
+}
+
+.listBOX li a.zjgm {
+	float: left;
+	background: #F99410;
+	color: #fff;
+	width: 90px;
+	line-height: 30px;
+	border: #F30 1px solid;
+	text-align: center;
+	margin-top: 66px;
+	margin-bottom: 10px;
+	margin-left: 10px;
+	border-radius:4px;
+}
+
+.listBOX li a.jrsc {
+	float: left;
+	background: #C40001;
+	color: #FFF;
+	width: 90px;
+	line-height: 30px;
+	text-align: center;
+	border: #F30 1px solid;
+	margin-left: 10px;
+	margin-top:66px;
+	border-radius:4px;
+}
+
+.listBOX li .pro-name {
+	width: 33vw;
+	float: left;
+	height: 25vh;
+}
+
+.listBOX li .pro-name a {
+	color: #3c3c3c;
+	line-height: 30px;
+}
+
+#more {
+	color: red;
+	line-height: 16px;
+	margin-top:-20px;
+}
+
+.listBOX li .pro-name a:hover {
+	color: #2f80eb;
+	text-decoration: underline;
+}
+
+.listBOX li .pro-name label.spdm {
+	float: left;
+	width: 100%;
+	color: #3c3c3c;
+	margin-bottom: 5px;
+}
+
+.listBOX li .pro-name label.sycx {
+	float: left;
+	width: 80%;
+	line-height: 30px;
+}
+
+.listBOX li .pro-name a.gd {
+	float: right;
+	width: 30%;
+}
+
+.listBOX li .pro-dp {
+	width: 200px;
+	height: 30px;
+	float: left;
+	margin: 10px 10px 0 10px;
+}
+
+.listBOX li .pro-dp a.dp {
+	width: 145px;
+	float: left;
+	height: 30px;
+	color: #999;
+}
+
+.listBOX li .pro-dp a.dq {
+	float: right;
+	width: 50px;
+	height: 30px;
+	margin-right: 5px;
+	color: #999;
+}
+
+.label_size {
+	color: #aaaaaa;
+	font-family: "microsoft yahei";
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 16px;
+	margin-left: 5px;
+}
+
+.dqxz {
+	float: left;
+	width: 72vw;
+	height: 18px;
+	margin-top: 10px;
+}
+
+.dqxz span {
+	float: left;
+	border: 1px dotted #aaa;
+	height: 22px;
+	line-height: 20px;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+.dqxz span:hover {
+	border: 1px dotted #ff8800;
+	color: #ff8800;
+}
+
+.dqxz span.xuan {
+	border: 1px dotted #ff8800;
+	color: #ff8800;
+}
+
+.dqxz span font {
+	margin-left: 10px;
+	font-size: 14px;
+}
+
+.dqxz label {
+	float: left;
+	line-height: 22px;
+	margin: 0 15px;
+}
+
+.tj_center {
+	width: 650px;
+	float: left;
+	min-height: 80px;
+}
+table{margin: 0px;width:300px;}
+.btn{display:inline;}
+.btn_samller{margin-left: 15px;}
+
+.zjll{
+	height: 380px;
+	width: 1200px;
+	margin:0 auto;
+	margin-bottom: 5vh;
+	border:1px solid #eeeeee;
+	border-top:1px solid #BFBFBF;
+}
+
+.llcx{
+	border-right:1px solid #eeeeee;
+	height: 380px;
+	width: 400px;
+	float: left;
+}
+.llcx_1{
+	border: 1px solid #eeeeee;
+    font-size: 18px;
+    margin: 20px;
+    padding: 6px;
+    position: absolute;
+}
+.llcx_2{
+	border: 1px solid #eeeeee;
+    font-size: 18px;
+    margin: 20px 20px 20px 280px;
+    padding: 6px;
+    position: absolute;
+}
+.llcx_3{
+	height: 260px;
+	width: 400px;
+	background:url(../images/xiaoche.png) no-repeat;
+	background-size:70% 100%;
+	background-position:center;
+}
+.llsp{
+	float: left;
+	font-size:18px;
+}
+.llsp_1{
+	border: 1px solid #eeeeee;
+    font-size: 18px;
+    margin: 20px 20px 20px 20px;
+    padding: 6px;
+    position: absolute;
+}
+.llsp_2{
+	height: 270px;
+	width: 797px;
+	background:url(../images/xiaoren.png) no-repeat;
+	background-size:100% 100%;
+	background-position:center;
+}
+.zjll_hover{
+	background-color: #FFECE6;
+	border:1px solid #FC8684;
+}
+#sycx_zhezhao{
+	width:100%; 
+	height:100vh; 
+	background-color:rgba(1,1,1,0.3); 
+	position:fixed; 
+	display:none;
+	z-index:99999;
+}
+.title_right_2{
+	background-color: #ff0000; border: 1px solid #ff0000; color: #ffffff;float: right;font-size: 1.5em; height: 4vh;line-height: 4vh;text-align: center;width: 4vw;
+}

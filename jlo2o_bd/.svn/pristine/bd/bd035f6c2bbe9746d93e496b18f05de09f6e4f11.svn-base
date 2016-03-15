@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='GBK' ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+    
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+
+    <appender name="FILE-DEBUG" class="org.apache.log4j.FileAppender">
+        <param name="Append" value="false"/>
+        <param name="file" value="jllog.log"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%7r] %6p - %30.30c - %m \n"/>
+        </layout>
+    </appender>
+    
+    <root>   
+        <level value="INFO" />    
+        <appender-ref ref="STDOUT" />   
+        <appender-ref ref="FILE-DEBUG" /> 
+    </root>
+    
+ 	 <logger name="org.springframework.jdbc.core.JdbcTemplate">  
+        <level value="DEBUG"/>  
+    </logger> 
+    <logger name="com.ibatis" additivity="true">    
+        <level value="DEBUG" />  
+    </logger>
+    <logger name="java.sql.Connection">    
+        <level value="DEBUG" />   
+    </logger>
+    <logger name="java.sql.Statement">    
+        <level value="DEBUG" />   
+    </logger>
+    <logger name="java.sql.PreparedStatement">    
+        <level value="DEBUG" /> 
+    </logger>
+
+</log4j:configuration>

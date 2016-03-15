@@ -1,0 +1,452 @@
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+
+<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+    <li><i class="fa fa-home"></i><span>首页</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>订单管理</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>返修/退换货</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><b>退换货明细</b></li>
+</ul>
+</div>
+
+<!--<div class="w12 user_page_title"><h3>退换货原因</h3></div>-->
+<div class="w12 user_content">
+<div class="w12 user_page_main">
+<!--  <div class="w12 user_page_table user_page_th">-->
+<!--  <div class="w12 merch_list">-->
+  	<dl class="w12 public_table_title">
+      <dd class="w06">商品名称</dd><dd class="w03">赠品数量</dd><dd class="w02">购买数量</dd><dd class="w01">已退数量</dd>
+    </dl>
+    <dl class="w12 public_table_main">
+      <dt class="w01">
+      	<a href="#" class="w03"><img id="imgs" src="../images/sp.jpg" /></a>
+      </dt>
+      <dd class="w05">
+        <a href="#" class="w12 name" >Apple iPhone 6 (A1586) 16GB 金色 移动联通电信4G手机</a>
+<!--        <h4 class="w12">[赠品]高清双面手机保护贴 高清双面手机保护膜 高清双面手机保护套1个</h4>-->
+      </dd>
+      <dd class="w03">
+       <span class="w12">-</span>
+      </dd>
+      <dd class="w02">
+       <span id="count" class="w12">-</span>
+      </dd>
+      <dd class="w01">
+      	<span id="count_YT" class="w12">2</span>
+      </dd> 
+    </dl>
+<!--    </div>-->
+<!--    <label class="w10 wxts" id="wxts">*温馨提示：本次售后服务将由 电器服务云平台 沈阳大家庭 为您提供</label>-->
+    <form id="form1" name="form1">
+    <input type="hidden" value="" id="goodslist"/>
+    <input type="hidden" value="" id="xsddi02" name="SPJG"/>
+    <input type="hidden" value="" id="THJE" name="THJE"/>
+    <input type="hidden" value="" id="XSDD01" name="XSDD01"/>
+    <input type="hidden" value="" id="SPXX01" name="SPXX01"/>
+    <div class="tijiao w12 detaInfo detaInfo_block">
+    	<dl class="w12 public_form">
+        <dt class="w02"><em>*</em>退货类型：</dt>
+        <dd class="w10">
+    		<input type="radio" checked="checked" name="THLX" value="0"/><span>退货</span>
+    		<input type="radio" name="THLX"  value="1"/><span>换货</span>
+    	</dd>
+    	</dl>
+         <dl class="w12 public_form">
+            <dt class="w02"><em>*</em>提交数量：</dt>
+        	<dd class="w10">
+        	<div class="number"><i class="fa fa-plus" onclick="jia()"></i><input type="text" id="goods_total" value="1" name="THSL" onblur="jia_goods()" /><i class="fa fa-minus" onclick="jian()"></i></div>
+<!--            	<a onclick="jian()">-</a><input type="text" class="w01" value="1" name="THSL" onblur="jia_goods()"/><a onclick="jia()">+</a>-->
+            </dd>
+        </dl>
+        <dl class="w12 public_form">
+        	<dt class="w02"><em>*</em>退货凭证：</dt>
+        	<dd class="w10">
+		    <input type="checkbox" checked="checked" name="thpzs" value="0"/>
+		    <span>购物发票</span>
+		    <input type="checkbox" name="thpzs" value="1"/>
+		    <span>第三方检测报告</span>
+		    <input type="hidden" name="THPZ" id="THPZ" value=""/>
+		    </dd>
+    	</dl>
+        <dl class="w12 public_form">
+            <dt class="w02"><em>*</em>问题描述：</dt>
+        	<dd class="w10">
+            	<textarea name="BZ" id="wtms" class="w09" placeholder="请您如实填写申请原因及商品情况，字数在500字内。" />
+            </dd>
+        </dl>
+        <dl class="w12 public_form"><dt class="w02"><em>*</em>退货方式：</dt>
+        <dd class="w10">
+		    <input onclick="tuihuo(1)" type="radio" id="WLLX1" checked="checked" name="WLLX" value="0"/><span>上门取件</span>
+		    <input onclick="tuihuo(2)" type="radio" id="WLLX2" name="WLLX" value="1"/><span>送货至自提点</span>
+		    <input onclick="tuihuo(3)" type="radio" id="WLLX3" name="WLLX" value="2"/><span>快递至兴隆大家庭</span>
+    	</dd>
+    	</dl>
+	<div id="thfs">
+		<dl id="dzs" class="w12 public_form">
+		<dt class="w02"><em>*</em>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</dt>
+		<dd class="w10">
+		<select name="PROVINCE" id="provinceQY" >
+	     	<option value="0">请选择</option>
+	    </select>
+	    <select name="CITY" id="cityQY" >
+	    	<option value="0">请选择</option>
+	    </select>
+	    <select name="COUNTY" id="countryQY" >
+	     	<option value="0">请选择</option>
+	    </select>
+		<input type="text" class="text" id="QYdzdetail" name="XXDZ" value="" />
+		</dd>
+		</dl>
+	   <dl class="w12 public_form">
+	   <dt class="w02"><em>*</em>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</dt>
+	   <dd class="w10"><input type="text" class="text user_name"  name="LXR" value="" /></dd>   
+	   <dl class="w12 public_form">
+	   <dt class="w02"><em>*</em>联系电话：</dt>
+	   <dd class="w10"><input type="text" class="text" id="user_tel" name="LXDH" value="" /></dd>
+	   </dl>
+   </div>
+   <div id="thfs2" style="display: none;">
+		<dl id="dzs" class="w12 public_form">
+		<dt class="w02"><em>*</em>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</dt>
+		<dd class="w10"><input style="width: 360px;" disabled="disabled" type="text" class="text" id="QYdzdetails" name="XXDZS" value="" /></dd>
+		</dl>
+	   <dl class="w12 public_form">
+	   <dt class="w02"><em>*</em>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</dt>
+	   <dd class="w10"><input disabled="disabled" type="text" class="text" id="LXRS" name="LXRS" value="" /></dd>
+	   </dl>   
+	   <dl class="w12 public_form">
+	   <dt class="w02"><em>*</em>联系电话：</dt>
+	   <dd class="w10"><input type="text" disabled="disabled" class="text" id="LXDHS" name="LXDHS" value="" /></dd>
+	   </dl>
+   </div>
+        <dl class="w12 public_form">
+        	
+                <dt class="w02"><em>*</em>图片信息：</dt>
+            	<a style="float:left;" onclick="addphoto()">+</a>
+            	<div id="photoscount">
+            	<div class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="/customer/sydjt/images/sccg.png" style="display: none;" /><input type="file" title="上传图片" id="file01" name="file01" class="addphoto w10" onChange="upload('file01')" /></div>
+<!--            	<input type="file" id="file01" name="file01" class="addphoto w10"/>-->
+            </div>
+        </dl>
+        <dl class="w12 public_form">
+ 				<dt class="w02">&nbsp;</dt>
+                <dd class="w10">为了帮助我们更好的解决问题，请您上传图片</dd>
+                </dl>
+         <dl class="w12 public_form">
+                <dt class="w02">&nbsp;</dt>
+                <dd class="w10">最多可上传5张图片，每张图片大小不超过5M，支持bmp,gif,jpg,png,jpeg格式文件</dd>
+        </dl>
+        <dl class="w12 public_form">
+ 			<dt class="w02">&nbsp;</dt>
+		    <dd class="w10"><input type="button" onclick="okclick()" value="提交" class="jl_btn btn_red w02"></dd>
+		</dl>
+	</div>
+	</form>
+<!--  </div>-->
+</div>
+</div>
+
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var XSDD01 = JL.getParam('XSDD01');
+var SPXX01 = JL.getParam('SPXX01');
+var GMSL = JL.getParam('GMSL');
+var THSL = JL.getParam('THSL');
+var imgUrl=pubJson.path_sptp+"/sptp/";//图片默认路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+function initData(){
+	 var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.return.good.queryXsddInfo','QryType':'Report','dataType':'Json','spxx01':SPXX01,"xsdd01":XSDD01}];
+	 var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 var rData=visitService(url);
+	  $("#ddh").append(XSDD01);
+	  $("#XSDD01").val(XSDD01);
+	  $("#SPXX01").val(SPXX01);
+	  if(rData!=undefined&&rData!=""){
+		  $(".user_name").val(rData[0].xsdd19);
+		  $("#user_tel").val(rData[0].xsdd21);
+		  $(".name").html(rData[0].spxx04);
+		  $("#imgs").attr("src", imgUrl+rData[0].ztid+"/"+rData[0].spxx02+"/images/"+rData[0].spxx02+"_1_small."+rData[0].SPTP02);
+		  $("#count").html(rData[0].xsddi05);
+		  $("#count_YT").html(THSL);
+		  $("#goodslist").val(rData[0].xsddi05);
+		  $("#provinceQY").val(rData[0].province);
+		  $("#QYdzdetail").val(rData[0].otherdz);
+		  $("#xsddi02").val(rData[0].xsddi02);
+		  $("#THJE").val(rData[0].xsddi02);
+		  $("#LXRS").val(rData[0].hy01);
+		  $("#LXDHS").val(rData[0].hy02);
+		  $("#QYdzdetails").val(rData[0].hy03);
+		  if(rData[0].province!=""){
+			  var list=dqxxList(rData[0].province,2);
+			  	$(list).each(function(i,json){
+			  		if(i==0){
+			  	 		$("#cityQY").empty();
+			  	  		$("#cityQY").append("<option value='0'>请选择</option>");
+			    	}
+			  		$("#cityQY").append("<option>"+json.DQXX02+"</option>");
+			  		$("#cityQY").find("option").eq(i+1).val(json.DQXX01);
+			  	});
+			  	$("#cityQY").val(rData[0].city);
+			  	
+			   var list=dqxxList(rData[0].city,3);
+			  	$(list).each(function(i,json){
+			  		if(i==0){
+			  	 		$("#countryQY").empty();
+			  	  		$("#countryQY").append("<option value='0'>请选择</option>");
+			    	}
+			  		$("#countryQY").append("<option>"+json.DQXX02+"</option>");
+			  		$("#countryQY").find("option").eq(i+1).val(json.DQXX01);
+				  	var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-200;
+				  	$("#QYdzdetail").css("width", width+"px");
+			  	});
+			  	$("#countryQY").val(rData[0].county);
+		  }
+		  
+	  }
+	  
+	  $("img").error(function() {
+      	$(this).attr("src", defaultImgUrl);
+      });
+}
+
+$(document).ready(function(){
+	showDQXX("QY");
+	initData();
+	$("#QYdzdetail").css("width", "130px");
+});
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  		var con="<option value='0'>请选择</option>";
+  		$("#countryQY").html(con).val(0);
+  		var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-200;
+  		$("#QYdzdetail").css("width", width+"px");
+  	  });	
+  	}
+    if(index==1){
+  	  var dqjb=2;
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  		var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-200;
+  		$("#QYdzdetail").css("width", width+"px"); 
+  	  });	
+  	}	 			
+  });
+}
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	$(list).each(function(i,json){
+  		if(i==0){
+  	 		$(objaft).empty();
+  	  		$(objaft).append("<option value='0'>请选择</option>");
+    	}
+  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  	});
+}
+
+var a = 1;
+function addphoto(){
+	
+	var arr=$("div[class='up_img']");
+	if(arr.length <= 4){
+		a++;
+		var str = "";
+		//str+='<div class="w11 photolist'+a+'" name="photoscount">';
+		//str+='<span>图片信息：</span>';
+		str+='<a style="float:left;" onclick="delectphoto('+a+')">×</a>';
+		//str+='<input type="file" id="file0'+a+'" name="file0'+a+'" class="addphoto w10" value=""/></li>';
+		str+='<div id="photolist'+a+'" class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="/customer/sydjt/images/sccg.png" style="display: none;"><input type="file" title="上传图片" id="file0'+a+'" name="file0'+a+'" class="addphoto w10" onChange="upload(\'file0'+a+'\')" /></div>';
+		//str+='</div>';
+		$("#photoscount").append(str);
+	}else{
+		//alert("最多上传5张图片！");
+	}
+	
+}
+function delectphoto(obj){
+	$("#photolist"+obj).remove();
+}
+function upload(id){
+	$("#"+id).parent().find("i").remove();
+	$("#"+id).parent().find("img").show();
+	addphoto();
+}
+
+function tuihuo(obj){
+	$("#WLLX"+obj).attr("checked",true);
+	if(obj=="1"){
+		$("#thfs").show();
+		$("#thfs2").hide();
+	}else{
+		$("#thfs").hide();
+		$("#thfs2").show();
+	}
+}
+
+function jian(){
+    //商品数量
+	var goods = $("#goods_total").val();
+	//商品单价
+	var money = $("#xsddi02").val();
+	goods--;
+	var money_total = goods*money;
+	if(goods==0){
+		$("#goods_total").val(1);
+		//商品总价
+		$("#THJE").val(money);
+	}else{
+		$("#goods_total").val(goods);
+		$("#THJE").val(money_total);
+	}
+	
+}
+function jia(){
+	//商品单价
+	var money = $("#xsddi02").val();
+	//本次订单可退的总数量
+	var counts = GMSL - THSL;
+	var goods = $("#goods_total").val();
+		goods++;
+	if(parseInt(goods) <= parseInt(counts)){
+		var money_total = goods*money;
+		$("#goods_total").val(goods);
+		$("#THJE").val(money_total);
+	}else{
+		alert("退货数量不能超过("+counts+"个)！");
+		$("#goods_total").val(counts);
+		$("#THJE").val(counts*money);
+	}
+}
+function jia_goods(){
+	//商品单价
+	var money = $("#xsddi02").val();
+	//本次订单可退的总数量
+	var counts = GMSL - THSL;
+	var goods = $("#goods_total").val();
+	if(parseInt(goods) <= parseInt(counts)){
+		var money_total = goods*money;
+		$("#goods_total").val(goods);
+		$("#THJE").val(money_total);
+	}else{
+		alert("退货数量不能超过("+counts+"个)！");
+		$("#goods_total").val(counts);
+		$("#THJE").val(counts*money);
+	}
+}
+
+//提交保存
+function okclick(){
+	
+	if($("#wtms").val().length == 0){
+		alert("请输入退货问题描述！");
+		return false;
+	}
+	if($("#WLLX1").is(":checked")){
+		if($("#provinceQY").val() == 0 || $("#cityQY").val() == 0 ||$("#countryQY").val() == 0 || $("#QYdzdetail").val().length == 0){
+			alert("请填写详细地址");
+			return false;
+		}
+	}
+	
+	if($(".user_name").val().length == 0){
+		alert("请输入联系人");
+		return false;
+	}
+	if($("#user_tel").val().length == 0){
+		alert("请输入联系电话");
+		return false;
+	}
+	if($("#file01").val().length == 0){
+		alert("请上传商品图片信息");
+		return false;
+	} 
+	var arr=$("input[name='thpzs']");
+	var thpz = "";
+	for(i=0;i<arr.length;i++){
+		if(arr[i].checked){
+			if(i==0){
+				thpz+=arr[i].value;
+			}else{
+				thpz+="#"+arr[i].value;
+			}
+			$("#THPZ").val(thpz);
+	      }
+	}
+	var XmlData1 = $("#form1").formToJson();
+	var spjs = escape(XmlData1[0].spjs);
+	var spcs = escape(XmlData1[0].spcs);
+	XmlData1[0].spjs ="";
+	XmlData1[0].spcs ="";
+	var XmlData=escape(JSON.stringify(XmlData1));
+
+	var fileArray=[];
+	var arr=$("div[class='up_img']");
+	for(var i=0;i<arr.length;i++){
+		var arrs=$("input[class='addphoto w10']:eq("+i+")");
+	    fileArray.push(arrs.attr("id"));
+	}
+	var val="/Oper_THD/insert_THD_SYXL.action";
+	var r = confirm('确认操作？');
+	if(r==true){
+		//弹出遮罩层
+		 top.openWait();
+		$.ajaxFileUpload({
+			type:"POST",
+			secureuri:false,
+				fileElementId:fileArray,
+			url:encodeURI(val),//encodeURI避免中文乱码
+			dataType:"text",
+			data:{"spjs":spjs,"spcs":spcs,"XmlData":XmlData},
+			success: function(data) { 
+				//关闭遮罩层
+				top.closeWait();
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			//alert(jsondata.STATE);
+			if(data1==1){
+				alert("保存成功!");
+				//location.href="/customer/sydjt/back/thgl/th-sphf.html";
+				changeIframeSize('/customer/sydjt/back/ddgl/my_thh.html?THZT=0,3&TYPE=2&menuId=A404','#centerFrame');
+				}else{
+				alert("保存失败!");
+					}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				//关闭遮罩层
+				top.closeWait();
+				alert(textStatus);
+		    }
+		});
+	}
+	else return;
+}
+</script>

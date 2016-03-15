@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jlsoft.o2o.show">
+	
+	<!--  品牌分类     -->
+  	<select id="select_ppblist" parameterType="Map" resultType="java.util.Map">
+	SELECT * FROM (SELECT DISTINCT P.PPB01 PPBCODE,
+	P.PPB02 PPBNAME,#{spflcode} FL02CODE,
+	<!-- 如果用户未登录系统不检测用户分类品牌权限 -->
+	<if test="usergsid==''"> '1' STATE</if>
+	<if test="usergsid!=''">
+		CASE
+		WHEN (SELECT COUNT(*)
+		FROM W_EXTENDRAL R
+		WHERE R.PPBCODE = P.PPB01
+		AND R.SPFLCODE LIKE #{spflcode}||'%'
+		AND R.STATE = 8
+		AND R.USERGSID = #{usergsid}) > 0 THEN
+		'1'
+		ELSE
+		'0'
+		END STATE
+   </if>
+	FROM PPB P, W_SPXXGL S
+	WHERE S.PPB01 = P.PPB01
+	AND S.SPFL01 LIKE #{spflcode}||'%'
+	ORDER BY P.PPB01)
+	ORDER BY STATE DESC
+	</select>
+		
+	<select id="getSupplierList" parameterType="Map" resultType="java.util.Map">
+  	SELECT W.ZTID ZTID, Z.ZCXX02 GSMC
+	  from W_GSGX W, W_ZCXX Z
+	 WHERE W.ZTID = Z.ZCXX01
+	   and W.HBID = #{HBID}
+	 <if test="ZTID!=''">AND W.ZTID=#{ZTID}</if>
+    </select>
+    
+    <select id="selectPPBCODE" parameterType="Map" resultType="java.util.Map">
+	SELECT DISTINCT S.PPB01 PPBCODE,S.PPB02 PPBNAME
+ 	 FROM W_SPGL G, W_SPXX S
+		WHERE S.SPXX01 = G.SPXX01
+		AND G.ZCXX01 = #{ZTID}
+		<if test="PPBCODE!=''">AND S.PPB01 = #{PPBCODE}</if>
+	</select>
+   		 
+	<select id="selectSPFlPP" parameterType="Map" resultType="java.util.Map">
+       SELECT DISTINCT  S.PPB01 PPBCODE,
+		                S.PPB02 PPBNAME,
+		                SUBSTR(S.SPFL01, 1, 4) SPFLCODE,
+		                (SELECT L.SPFL02
+		                   FROM SPFL L
+		                  WHERE L.SPFL01 = SUBSTR(S.SPFL01, 1, 4)) SPFLNAME,
+		                IFNULL((SELECT E.FLPP02
+		                      FROM W_FLPPQX E
+		                     WHERE E.HBID = #{HBID}
+		                       AND E.ZTID = #{ZTID}
+		                       AND E.SPFL01 = SUBSTR(S.SPFL01, 1, 4)
+		                       AND E.PPB01 = S.PPB01
+		                       LIMIT 1),
+		                    0) STATE,
+		                CASE IFNULL((SELECT E.FLPP02
+		                       FROM W_FLPPQX E
+		                      WHERE E.HBID = #{HBID}
+		                        AND E.ZTID = #{ZTID}
+		                        AND E.SPFL01 = SUBSTR(S.SPFL01, 1, 4)
+		                        AND E.PPB01 = S.PPB01
+		                        LIMIT 1),
+		                     0)
+		                  WHEN 0 THEN
+		                   '未申请'
+		                  WHEN 1 THEN
+		                   '待审核'
+		                  WHEN 2 THEN
+		                   '等待运营分配'
+		                  WHEN 3 THEN
+		                   '新供货商审核'
+		                  WHEN 4 THEN
+		                   '原供货商确认'
+		                  WHEN 5 THEN
+		                   '运营终审'
+		                  WHEN 7 THEN
+		                   '审核不通过'
+		                  WHEN 8 THEN
+		                   '完成'
+		                  WHEN 9 THEN
+		                   '已取消'
+		                END STATENAME,
+		                #{HBID} HBID,
+		                #{ZTID} ZTID
+		  FROM W_SPGL G, W_SPXX S
+		 WHERE S.SPXX01 = G.SPXX01
+		   AND G.ZCXX01 = #{ZTID}
+       		<if test="PPBNAME!=''">AND S.PPB02 LIKE '%'||#{PPBNAME}||'%'</if>
+       		<if test="SPFLNAME!=''">AND SUBSTR(S.SPFL01,1,4) IN (SELECT F.SPFL01 FROM SPFL F WHERE F.SPFL02 LIKE '%'||#{SPFLNAME}||'%')</if>
+       		<if test="PPBCODE!=''">AND S.PPB01 = #{PPBCODE}</if>
+       		<if test="SPFLCODE!=''">AND SUBSTR(S.SPFL01,1,4) = #{SPFLCODE}</if>
+       ORDER BY STATE DESC 	
+    </select> 
+    <!--  根据查询条件查询车型     -->
+    <select id="selectCX" parameterType="Map" resultType="java.util.Map">
+       		SELECT MOBILE_MODLE_ID,mobile_modle from w_automobile where 1=1
+       		<if test="BRAND!=''">AND BRAND = #{BRAND}</if>
+       		<if test="CAR_TYPE!=''">AND CAR_TYPE = #{CAR_TYPE}</if>
+       		<if test="CAR!=''">AND CAR = #{CAR}</if>
+       		<if test="MODEL!=''">AND mobile_modle LIKE CONCAT('%',#{MODEL},'%')</if>
+       ORDER BY w_automobile.mobile_modle_id
+    </select> 
+        <!--  显示一级车型分类 -->
+    <select id="selectCXFL01" parameterType="Map" resultType="java.util.Map">
+       		 SELECT DISTINCT brand,mnemoniccode FROM W_AUTOMOBILE 
+  			  where 1=1
+    		<if test="BRAND!=''">AND BRAND like concat(#{BRAND},'%')</if>
+    		ORDER BY MNEMONICCODE
+    </select> 
+      <!--  显示二级车型分类 -->
+    <select id="selectCXFL02" parameterType="Map" resultType="java.util.Map">
+   		SELECT DISTINCT CAR_TYPE FROM W_AUTOMOBILE where 1=1
+   		<if test="BRAND!=''">AND BRAND like concat(#{BRAND},'%')</if>
+   		<if test="CAR_TYPE!=''">AND CAR_TYPE like concat(#{CAR_TYPE},'%') </if>
+   		 ORDER BY CAR_TYPE
+    </select> 
+      <!--  显示三级车型分类 -->
+    <select id="selectCXFL03" parameterType="Map" resultType="java.util.Map">
+    	SELECT DISTINCT CAR_ID,CAR FROM W_AUTOMOBILE where 1=1
+       		<if test="BRAND!=''">AND BRAND like concat(#{BRAND},'%')</if>
+   			<if test="CAR_TYPE!=''">AND CAR_TYPE like concat(#{CAR_TYPE},'%') </if>
+   			<if test="CAR!=''">AND CAR  like concat(#{CAR},'%')</if>
+   	 ORDER BY CAR
+    </select> 
+</mapper>
+  

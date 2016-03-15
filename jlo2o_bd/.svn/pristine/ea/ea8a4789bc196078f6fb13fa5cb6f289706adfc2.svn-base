@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 服务企业信息</title>
+<link type="text/css" rel="stylesheet"href="/customer/qfy/css/backPub.css"  />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script> 
+<style type="text/css">
+.bm_r{widht:5px; float:left;}
+#flmc_div{float: left;}
+#flmc_div li{float: left;}
+#flmc_div li input{width: 20px;}
+#flmc_div li span{width: 70px; text-align: left;margin: 0px;float: none;}
+#abcdef span{height:200px;}
+table.single_table tr td .jrx{position:static;} 
+.sqdy{margin-left:14px;}
+</style>
+</head>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<div class="clera"></div>
+    <!-- <input type="hidden" name="role" value=""/>
+    <input type="hidden" id="HBID" name="HBID" value=""/>
+    <input type="hidden" id="PPB01" name="PPB01" value=""/>
+    <input type="hidden" id="PPTP01" name="PPTP01" value="1"/> -->
+    <input type="hidden" id="DQBM" name="DQBM" value=""/>
+	<table class="single_table">
+		<tr>
+	       <td style="width:100px;"><span>厂商名称：</span></td>
+	       <td style="width:550px;"> <input  type="text" name="csmc" class="csmc" value="" id="csmc"  size="34" readonly="readonly" />
+	       </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>状态：</span></td>
+	       <td style="width:550px;"> <input  type="text" name="zt" class="zt" value="" id="zt"  size="34" readonly="readonly" />
+	       </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>联系人：</span></td>
+	       <td style="width:550px;"> <input  type="lxr" name="lxr" class="lxr" value="" id="lxr"  size="34" readonly="readonly" /> 
+	       </td>
+	     </tr>
+		<tr>
+	       <td style="width:100px;"><span>电话：</span></td>
+	       <td style="width:550px;"> <input  type="phone" name="phone" class="phone" value="" id="phone"  size="34" readonly="readonly" /> 
+	       </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>授权品牌：</span></td>
+	       <td style="width:550px;"> <input  type="text" name="sqpp" class="sqpp" value="" id="sqpp"  size="34" readonly="readonly" /> 
+	       </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>授权地域：</span></td>
+	       <td style="width:550px;"> <textarea  type="text" name="sqdy" class="sqdy" id="sqdy"   readonly="readonly" cols='33' rows="3" /></textarea> 
+	       </td>
+	     </tr>
+	      <tr>
+	       <td style="width:100px;"><span>授权截止日期：</span></td>
+	       <td style="width:550px;"> <input  type="text" name="jzrq" value="" id="jzrq"  size="34" readonly="readonly"  /> 
+	       <div class="jzrq"></div>
+	       </td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>审核意见：</span></td>
+	       <td style="width:550px;"><textarea id="spyj" class="ppcz" style="float: left;margin: 11px 0 11px 15px; border:1px solid #fff; min-width: 250px;max-width: 300px;min-height: 100px;" readonly="readonly" placeholder="驳回需输入意见"></textarea>
+	       <div class="spyj"></div>
+	       </td>
+	     </tr>
+	     <tr class="bot">
+	       <td colspan="3">
+	         <a id="yes" style="margin: 10px 20px 0 80px;display: none;" href="javascript:void(0);" onclick="okclick(1);" class="bot Medium" style="display: block;">同意</a>
+	         <a id="no" style="margin: 10px 20px 0 80px;display: none;" href="javascript:void(0);" onclick="okclick(2);" class="bot Medium" style="display: block;">驳回</a>
+	         <a style="margin: 10px 20px 0 80px;" href="javascript:void(0);" onclick="goback();" class="bot Medium" style="display: block;">返回</a>
+	       </td>
+	      </tr>    
+	</table>
+	<div class="clera"></div>
+</form>
+</body>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var hbid = usercookie.ZCXX01;
+var ztid= $.getUrlParam('ZTID');
+var zt= $.getUrlParam('ZT');
+var dqbm = null;
+query();
+function query(){
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.qxgl.sql.oper_fwsgl.selectQYDetails","dataType":"Json","ZTID":ztid,"HBID":hbid}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var data=visitService(url);
+	if(data!=undefined&&data!=""){
+		$("#csmc").val(data[0].ZCXX02);
+		$("#zt").val(data[0].STATE);
+		$("#lxr").val(data[0].ZCXX03);
+		$("#phone").val(data[0].ZCXX06);
+		$("#sqpp").val(data[0].PPMC);
+		$("#sqdy").val(data[0].DQMC);
+		$("#jzrq").val(data[0].ENDTIME);
+		dqbm = data[0].DQBM;
+			if (zt=="0"){
+				$("#yes").css({'display':'block'});
+				$("#no").css({'display':'block'});
+				$("#spyj").attr("readonly",false);
+					}else{
+					$("#spyj").val(data[0].Notes);
+				}
+		/* if(data[0].ss == "0"){
+			$("#yes").css({'display':'block'});
+			$("#no").css({'display':'block'});
+		}else {
+			$("#spyj").val(data[0].Notes);
+		} */
+	}
+}
+
+
+function okclick(a){
+	var spyj = null;
+	var state = a;
+	if ( state == "2") {
+		if ($("#spyj").val() == "" || $("#spyj").val().length == 0) {
+			tse('spyj',"驳回需要填写驳回原因");
+			return false;
+		}else{
+			ts('spyj');
+			var spyj = $("#spyj").val();
+	 	}
+	}else if ($("#spyj").val() != "" || $("#spyj").val().length != 0) {
+		    spyj = $("#spyj").val();
+	} 
+	var XmlData=[{"ZTID":ztid,"STATE":state,"SPYJ":spyj,"HBID":hbid,"DQBM":dqbm}];
+	var url="/Oper_FWQYGL/auditSQPP.action?jsonData="+JSON.stringify(XmlData);
+	var returnVal=visitService(url);
+   	if(returnVal.STATE=='1'){
+   	   	alert("审核成功!");
+   	 location.href="/customer/qfy/back/qxgl/Oper_FWQYGL.html";
+   	}else{
+   	   	alert("审核失败!");
+ 	}
+}
+
+function goback(){
+	location.href="/customer/qfy/back/qxgl/Oper_FWQYGL.html";
+}
+
+</script>
+</html>

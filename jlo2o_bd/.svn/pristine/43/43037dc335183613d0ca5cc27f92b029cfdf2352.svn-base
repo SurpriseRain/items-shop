@@ -1,0 +1,113 @@
+body{ margin:0 auto; font-size:12px;}
+ul,li{ list-style:none; padding:0px; margin:0px; float:left; color:#3c3c3c;}
+.hidden{display:none;}
+/***********************样式公共样式开始***********************/
+.txbd{ width:1000px; float:left; font-family:"microsoft yahei";}
+.txbd h2{ height:60px; line-height:60px; font-size:20px; text-align:center; width:1000px; float:left; border-bottom:1px solid #ccc; padding:0px; margin:0px;}
+.txbd ul{ border-bottom:1px solid #ccc;}
+.txbd .title{ float:left; width:100%; height:30px; min-height:30px; line-height:30px; border-top:1px solid #eee;}
+.txbd .title b{ float:left; margin:0 0 0 30px; color:#999; font-weight:500;}
+.txbd .mst{ color:#f40000;}
+.txbd li{ min-height:50px; line-height:50px; border-top:1px solid #eee; position:relative;}
+
+.txbd li.even{ border-right:1px solid #eee; margin-left:-1px;}
+.txbd li.odd{ text-align:right; font-weight:bold;}
+.txbd li.odd em{ margin-top:10px; line-height:15px; float:right; text-align:right; width:100%; font-style:normal;}
+
+
+.txbd li.grid{ width:100%;}
+.txbd li.grid span.title{ float:left; width:107.32px; text-align:right; font-weight:bold;border-top: 0px}
+
+
+.txbd li.width_9{ width:999px;}
+.txbd li.width_8{ width:888px;}
+.txbd li.width_7{ width:777px;}
+.txbd li.width_6{ width:666px;}
+.txbd li.width_5{ width:555px;}
+.txbd li.width_4{ width:444px;}
+.txbd li.width_3{ width:333px;}
+.txbd li.width_2{ width:222px;}
+.txbd li.width_1{ width:111px;}
+
+
+.txbd li.nig{ width:999px;}
+.txbd li.nig{ width:999px;}
+.txbd li.six{ width:999px;}
+.txbd li.fif{ width:893px;}
+.txbd li.for{ width:553px;}
+.txbd li.thi{ width:665.32px;}
+.txbd li.sen{ width:332.32px;}
+.txbd li.first{ width:386.5px}
+.txbd li.eight{ width:306.5px}
+
+.txbd li .grid{ float:left; border:1px solid #ccc;}
+.txbd li .grid01{width:183px; float:left;}
+.txbd li .grid02{width:504px; margin:0px 10px 10px;}
+.txbd li .grid03{width:860px; margin:0px 10px 10px;}
+.txbd li .grid04{width:978px; margin:0px 10px 10px;}
+
+
+.txbd li span{margin-right: 30px;font-weight:bold;color:#666}
+.txbd li input{ padding:0 5px; float:left; color:#3c3c3c; height:30px; border:1px solid #ccc; margin:9px 10px; width:170px;}
+.txbd li input.lc{float:left; color:#3c3c3c; height:30px; border:1px solid #ccc; width:70px;}
+.txbd li select{ height:32px; padding:0 0 0 5px; border:1px solid #ccc; float:left; margin:9px 0 9px 10px; margin-right:5px; color:#3c3c3c; width:182px;}
+.txbd li textarea{width:838px; height:80px; float:left; padding:5px; margin:10px;}
+.txbd li .fz{ min-width:183px; width:200px; height:50px; line-height:50px; float:left; margin:0 10px; overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.txbd li input.radio{ float:left; width:15px; height:15px; border:0px; padding:0px; margin:17px 0 0 10px;}
+.txbd li label.radio{ float:left; line-height:50px; margin:0 10px 0 5px; color:#3c3c3c; font-size:12px; font-weight:500;}
+.txbd li .range {background-color: #CCC;border-radius: 15px;width: 60px;-webkit-appearance: none;height:15px;float:none;padding:0px;	border:0px;}
+.txbd li .range::-webkit-slider-thumb {-webkit-appearance: none;cursor: default;top: -5px;height: 15px;width: 30px;background: none repeat scroll 0 0 #AAA;border-radius: 15px;-webkit-box-shadow: 0 -1px 1px black inset;}
+
+.txbd li .bot{ padding:0 10px; float:left; height:26px; line-height:24px; background-color:#ff8800; color:#fff; font-family:"microsoft yahei"; font-size:14px; width:50px; text-align:center; cursor:pointer; border:1px solid #c76e09; margin:12px 0 12px 20px; outline:none;}
+.txbd li .Long{ width:200px;}
+.txbd li .Medium{ width:100px;}
+.txbd li .Short{ width:50px;}
+.txbd li .bot:hover{ background-color:#c76e09;}
+.txbd li .none{ background-color:#ccc; cursor:auto; border:1px solid #bbb;}
+.txbd li .none:hover{ background-color:#ccc;}
+
+/***************************************列表表单样式********************************************/
+.txbd li.lan{ width:1000px; text-align: center; font-weight:bold; color:#009;}
+.txbd li.mix{ width:80px;}
+.txbd li.max{ width:560px;}
+ul.fr{ float: right; width:210px; position:fixed;right:-222px; top:205px;z-index:999999; background:#FFF;}
+ul.fr li{ min-height:50px; line-height:50px; border:1px solid #ddd ;}
+ul.fr li.other{ width:210px;}
+ul.fr li.other .chick{ width:70px;float:left;}
+ul.fr li.other .chick:hover{ background:#eee;}
+ul.fr li.other .chick label.add{ width:15px; float:left;cursor:pointer; text-align:right;}
+ul.fr li.other .chick label.num{ width:54px; float:left; border-right:1px solid #eee; text-align:center;cursor:pointer;}
+ul.fr li.other a.nexx{ float:left; width:60px; margin-left:30px; background:#009; color:#FFF; line-height:30px; text-align:center; margin-top:10px; cursor:pointer;}
+/***************************************列表表单样式结束********************************************/
+
+/***************************************无操作列表样式开始********************************************/
+.tableList_fy{ float:left; width:96%; height:50px; margin:10px 2%;}
+.tableList_fy a{ float:left; height:28px; line-height:28px; border:1px solid #ccc; padding:0 10px; margin:10px 10px 10px 0;}
+.tableList_fy span{ float:left; line-height:50px; margin-right:10px;}
+.tableList_fy input{ float:left; width:40px; height:20px; border:1px solid #aaa; margin:14px 10px 14px 0; text-align:center;}
+.tableList_fy a.Fybot{ margin:11px 0; height:26px; background-color:#aaa; color:#fff; border:1px solid #aaa;}
+.tableList_fy a.Fybot:hover{ background-color:#999;}
+
+.tableList_fy a:hover{ background-color:#f1f1f1; cursor:pointer;}
+.tableList_fy a.xuan{ background-color:#ff8800; color:#fff; border:1px solid #ff8800;}
+.tableList_fy a.wu{ background-color:#eee;}
+
+.tableList_fy a.tubiao{ float:right; border:1px solid #c76e09; color:#fff; background:url(../images/tableList_fy_ico.png) no-repeat #ff8800; padding-left:28px; font-size:16px;}
+.tableList_fy a.tubiao:hover{ background-color:#c76e09;}
+
+table.tableList{ width:100%; float:left; border-collapse:collapse; color:#666; font-size:12px; margin-top:10px; overflow:hidden;}
+table.tableList td{ border-right:1px solid #e4e4e4; text-align:center;}
+
+table.tableList thead{ width:1000px; border-bottom:1px solid #ccc; border-top:1px solid #ccc; background-color:#f3f3f3; color:#333; padding:0px; overflow:hidden}
+table.tableList thead td{ height:35px;}
+table.tableList thead td a{ margin-left:5px; color:#00298F; text-decoration:underline; cursor:pointer;}
+table.tableList thead td a.xuan{ color:#e40000;}
+table.tableList thead.xuanfu{ width:1000px; position:fixed; top:0px; background-color:#eee; color:#000;}
+
+table.tableList tbody tr.even{ width:100%; height:36px; border-bottom:1px solid #e4e4e4;}
+table.tableList tbody tr.odd{ width:100%; height:36px; border-bottom:1px solid #e4e4e4; background-color:#f9f9f9;}
+
+table.tableList tbody tr:hover{ background-color:#f1f1f1; color:#ff8800;}
+
+.tableList_qp{ position:absolute; width:100%; background-color:#fff; top:0px; left:0px; z-index:9999999; margin:0px;}
+/***************************************无操作列表样式结束********************************************/

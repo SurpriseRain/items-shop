@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.c2b.sql.takeorder">
+
+	<select id="selectTakeById" parameterType="Map" resultType="java.util.Map">
+		SELECT carowner.ReallyName,carowner.Phone,servicedemand.SceneImagePage,ifnull(carowner.CarNumber,'')CarNumber,ifnull(carowner.CarBrand,'')CarBrand,DATE_FORMAT(servicedemand.ReceiveOrderTime, '%Y-%m-%d %k:%i:%s') ReceiveOrderTime from carowner
+		RIGHT JOIN servicedemand on carowner.Id = servicedemand.UserId
+		where servicedemand.id = #{id}
+	</select>
+	
+	<select id="selectEmployee" parameterType="Map" resultType="java.util.Map">
+		SELECT Id,EmployeeName from employee
+		INNER JOIN w_zcxx on w_zcxx.zcxx01 = employee.organizationId
+		where employee.OrganizationId = (SELECT ServiceUserId from servicedemand where servicedemand.Id = #{id})
+	</select>
+	
+	<!-- 查询 -->
+	<select id="selectServiceItem" parameterType="Map" resultType="java.util.Map">
+		SELECT	Id,MaintainServiceName,Price FROM maintainserviceitem 
+		where OrganizationId=(SELECT ServiceUserId from servicedemand where servicedemand.Id = #{id})
+		<if test="yxid!='' and yxid!=null">
+		  	and Id not in
+		  	<foreach collection="yxid" index="index" item="tag" open="(" separator="," close=")">
+			 	#{tag}
+			</foreach>
+		  	</if>
+	</select>
+	
+	<select id="selectMaterial" parameterType="Map" resultType="java.util.Map">
+		SELECT Id,materialName,SalesPrice from Material
+		where OrganizationId=(SELECT ServiceUserId from servicedemand where servicedemand.Id = #{id})
+		<if test="yxid!='' and yxid!=null">
+		  	and Id not in
+		  	<foreach collection="yxid" index="index" item="tag" open="(" separator="," close=")">
+			 	#{tag}
+			</foreach>
+		  	</if>
+	</select>
+</mapper>

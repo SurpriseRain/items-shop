@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>汽服云 - 找回密码</title>
+	<link rel="stylesheet" type="text/css" href="/customer/qfy/css/zhmm-main.css" />
+	<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+  </head>
+<script type="text/javascript">
+var arr = [];
+var o = {};
+o["username"] = $.getUrlParam("userName");
+o["sxh"] = $.getUrlParam("sxh");
+o["checkcode"] = $.getUrlParam("checkCode");
+arr.push(o);
+$(document).ready(function(){
+	var data = visitService("/ForgetPwd/verifyCheckcode.action?XmlData="+JSON.stringify(arr));
+	if(data.state == 2){
+		location.href="zhmm_xgmm.html?userName="+escape($.getUrlParam("userName"));
+	}
+	else if(data.state == 1){
+		location.href="zhmm_yhm.html";
+		alert("链接错误，请重试！");
+	}
+	else{
+		location.href="zhmm_yhm.html";
+		alert("链接已失效，请重新找回密码！");
+	}
+	
+})
+
+</script>  
+<body>
+<!-----公共部门开始---->
+<div id="header">
+  <div class="header_main">
+    <a class="logo"><img src="/customer/qfy/images/zhmm-logo.png" /></a>
+    <!------------------流程------------------>
+    <div class="tecPro">
+      <div class="userLc">
+      <div class="userlcMain">
+        <div class="userlcCase"><a class="fxlc_wz">1.填写用户名或邮箱</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">2.验证邮箱</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">3.修改密码</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">4.成功</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+<div class="clera"></div>
+<div id="main">
+  <ul class="userName">
+    <li class="title">您正在使用"电子邮箱"验证身份，请稍后...</li>
+  <li class="csyj" style="text-align: center;">
+  <h1>身份审核中，请等待！</h1>
+  <a  class="ljjr" href="/customer/qfy/back/yhgl/zhmm_yhm.html">重新找回密码	</a><a class="ljjr" href="/customer/qfy/register/register.html">注册新的帐号</a>
+  </li>
+
+  </ul>
+</div>
+
+</body>
+</html>

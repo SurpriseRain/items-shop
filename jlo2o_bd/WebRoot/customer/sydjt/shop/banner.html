@@ -1,0 +1,37 @@
+<ul id="cms-box" class="carousel">
+<!--  <li style="background:url('/customer/sydjt/images/banner01.jpg') no-repeat center top"><a href="#"></a></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner02.jpg') no-repeat center top"></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner01.jpg') no-repeat center top"></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner02.jpg') no-repeat center top"></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner01.jpg') no-repeat center top"></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner02.jpg') no-repeat center top"></li>-->
+</ul>
+
+<script type="text/template" id="m-tpl-3">
+        <%_.each(mapList, function(item,index) {%>
+            <% if(index === 0) {%>
+				<li style="background:url('/jlsoft/banner/<%= item.FILENAME%>') no-repeat center top"><a href="<%= item.URL%>"></a></li>
+            <% } else { %>
+				<li style="background:url('/jlsoft/banner/<%= item.FILENAME%>') no-repeat center top"><a href="<%= item.URL%>"></a></li>
+            <% } %>
+        <%});%>
+    </script>
+    
+<script type="text/javascript">
+/* 轮播图 --start-- */
+$(function(){
+    var xmlData=[{"size":4,"gsid":"0000"}];
+    var url="/HomePage/selectPictureMainPage.action?XmlData="+JSON.stringify(xmlData);
+
+    var rData = visitService(url);
+    var str="";
+    $(rData.mapList).each(function(index,item){
+    	str += "<li style=\"background:url(/jlsoft/banner/0000/"+item.FILENAME+") no-repeat center top\"><a href='"+item.URL+"'></a></li>";
+
+    });
+    $("#cms-box").append(str);
+    
+})
+</script>
+
+<script type="text/javascript" src="/customer/sydjt/js/banner.js"></script>

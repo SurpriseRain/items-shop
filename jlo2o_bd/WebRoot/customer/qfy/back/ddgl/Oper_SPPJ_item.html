@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript" src="/control/js/tableGrid.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<style>
+#pingjia ul{
+	width:100%;
+	height:auto;
+	clear:both;
+	position:relative;
+	
+}
+#pingjia ul li h4{
+	height:30px;
+	line-height:30px;
+	font-size:14px;
+	color:#000;
+	text-indent:45px;
+}
+#mjpj{
+	height:auto;
+	line-height:20px;
+	font-size:14px;
+	text-indent:60px;
+	width:700px;
+	margin:0 auto;
+	word-break: break-all;
+	
+}
+
+.pingjia ul li a{
+	position:absolute;
+	left:28%;
+	bottom:0px;
+}
+
+</style>
+</head>
+<body>
+	<div id="curPosition" style="width:99%;">
+    	<a href="#">订单管理</a>
+    	<span>></span>
+    	<a href="#">商品评价管理</a>
+    	<span>></span>
+    	<b>评价明细</b>
+	</div>
+	<div class="clera"></div>	
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="false" url="/jlquery/selecto2o.action"
+		columnsArr="[
+		{'property':'SPXX01','header':'商品编码','type':'lable','width':'100px'},
+		{'property':'SPMC','header':'商品名称','type':'lable','width':'300px'},
+		{'property':'GMJG','header':'订单价格','type':'lable','width':'100px'},
+		{'property':'GMSL','header':'订单数量','type':'lable','width':'80px'},
+		{'property':'SPJE','header':'金额小计','type':'lable','width':'100px'}]"
+		>
+		</div>
+		<div class="pingjia" id="pingjia">
+		<ul >
+			<li><h4>商品评价：</h4></></li>
+			<li id="mjpj"><p>2无序--自动换行</p></li>
+			<li><h4>卖家回复：</h4></></li>
+			<li style='width: 550px;margin-top:20px;' class="hf_pj"><textarea  id='hfnr'onkeyup='checkMaxInput(this)' onKeyDown='checkMaxInput(this)'value='' class='hfnr' name='hfnr' title='' col='4' row='5'style='border: 1px solid #e4e4e4; height: 97px; width: 308px; margin-left: 118px; margin-bottom: 10px;'></textarea><div id='remLen' class='remLen' style='display:none; margin-left: 130px; line-height:20px; color: red;width:120px;text-align:left;'>还剩下200个字</div><label class='bz'></label></li>
+			<li colspan='2'><a style="display:none" style='margin-left: 20px;float:left;' id='huifunr' class='bot Medium btn_' onclick='ok()'>回复</a></li><br>
+		</ul>
+		</div>
+	</div>
+<script type="text/javascript">
+var XSDD01=null;
+var SPXX01=null;
+var i=0;
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	XSDD01 = rowObj.find("#XSDD01").val();
+	SPXX01 = rowObj.find("#SPXX01").val();
+	SPPJ01 = rowObj.find("#SPPJ01").val();
+	i=1;
+	init();
+}
+//初始化数据
+function initData(){
+	var MyCookie = $.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	var u = usercookie.ZCXX01;
+	var hf = usercookie.LX;
+	if(hf!=44 && hf!=24){
+		//----------------卖家----------
+		//买家商品评价赋值
+		//alert("卖家");
+		var json = {"SPPJ01":SPPJ01};
+		var url = "/OrderPj/select_SPPJhf.action?XmlData=" + JSON.stringify(json);
+		var us =returnData=visitService(url);
+		//卖家进行回复过的进行隐藏回复按钮
+		var uus =us.spfllist[0].sppj12;
+		if(uus!=""){
+			//已经回复
+			$('#hfnr').append(uus);
+			$('#hfnr').attr("readonly","readonly");
+		}else{
+			//未回复
+			var a=$("#huifunr");
+			var zi=$(".remLen");
+			a.show();
+			zi.show();
+		}
+		//买家商品评价
+		var uuus=us.spfllist[0].sppj07;
+		if(uuus ==""){
+			$('#mjpj').html("买家未进行评论");
+		}else{
+			//买家商品评价赋值
+			$('#mjpj').html(us.spfllist[0].sppj07);
+		}
+			
+	}else{
+		//------买家-----------
+		//买家商品评价赋值
+		//alert("买家");
+		var json = {"SPPJ01":SPPJ01};
+		var url = "/OrderPj/select_SPPJhf.action?XmlData=" + JSON.stringify(json);
+		var us =returnData=visitService(url);
+		//隐藏回复按钮
+		var a=$(".bot");
+		var zi=$(".remLen");
+		//卖家评论赋值
+		var umj =us.spfllist[0].sppj12;
+		if(umj == ""){
+			$('#hfnr').html("卖家占时未进行回复");
+			$('#hfnr').attr("readonly","readonly");
+			
+		}else{
+			$('#hfnr').html(us.spfllist[0].sppj12);
+			//只读
+			$("#hfnr").attr("readonly","readonly");
+		}
+		//买家商品评价
+		var uuus=us.spfllist[0].sppj07;
+		if(uuus ==""){
+			$('#mjpj').html("买家未进行评论");
+		}else{
+			//买家商品评价赋值
+			$('#mjpj').html(us.spfllist[0].sppj07);
+		}
+	}
+  if(i>0){	
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.Srch_OrderItem','QryType':'Report','dataType':'Json','XSDD01':XSDD01,'SPXX01':SPXX01,'SPPJ01':SPPJ01}];
+  return visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+  }
+  else{}
+}
+var maxLen = 200;	//定义用户可以输入的最多字数
+function checkMaxInput(obj) {
+	var val = obj.value,
+		len = val.length;
+	if (len > maxLen){	//如果输入的字数超过了限制
+		val = obj.value.substring(0, maxLen);	//就去掉多余的字
+		$('#hfnr').attr('value',val);
+	}
+	else{
+		document.getElementById('remLen').innerHTML = '还可以输入' + (maxLen - obj.value.length) + '个字';//计算并显示剩余字数
+	}
+}
+//卖家进行回复
+function ok() {
+	var hfnr = $("#hfnr").val();
+	 //发布的消息
+	var json = {
+		'SPPJ01':SPPJ01,
+		"hfnr":hfnr
+	}; 
+	var url = "/OrderPj/updateByxsdd01.action?XmlData=" + JSON.stringify(json);
+	$.ajax({
+        type : "GET", //请求方式
+        url : encodeURI(url),
+        success : function(data) {
+        	if(data.STATE=1){
+        		alert("发布成功");
+        		parent.$("#ajaxGrid").remove();
+        	}
+         },
+        error : function(XMLHttpRequest, textStatus, errorThrown) {
+        	alert("失败");
+         }
+        });		
+}
+</script>
+</body>
+</html>

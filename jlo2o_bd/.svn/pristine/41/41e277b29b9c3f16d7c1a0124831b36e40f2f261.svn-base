@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.sql.orderInvoice">
+
+	<select id="select_OrderItem" parameterType="Map" resultType="java.util.Map">
+		SELECT DISTINCT A.XSDD01 XSDD01,  
+			   DATE_FORMAT(A.XSDD04, '%Y-%m-%d %h:%m') XSDD04,  
+			   SUM(A.XSDD02) XSDD02, 
+			   C.ZCXX01 ZCXX01,
+			   C.ZCXX02 ZCXX02,  
+			   A.INVOICESTATE INVOICESTATE
+			   FROM  
+			   W_XSDD A,  
+			   W_DJZX B,  
+			   W_ZCXX C
+			   WHERE A.XSDD01 = B.W_DJZX01
+			   AND C.ZCXX01 = A.ZTID  
+			   AND B.W_DJZX02 = '6'
+			   <if test="INVOICESTATE != '' and INVOICESTATE != null"> AND A.INVOICESTATE = #{INVOICESTATE} </if> 
+			   <if test="HBID != '' and HBID != null"> AND A.HBID = #{HBID} </if>
+			   <if test="ZCXX02 != '' and ZCXX02 != null"> AND C.ZCXX02 LIKE CONCAT('%', #{ZCXX02} ,'%')</if>  
+			   GROUP BY XSDD01       
+			   ORDER BY XSDD04 DESC
+	</select>
+	
+	<select id="select_OrderItem_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT COUNT(1) AS COUNT FROM (SELECT DISTINCT A.XSDD01 XSDD01,  
+			   DATE_FORMAT(A.XSDD04, '%Y-%m-%d %h:%m') XSDD04,  
+			   SUM(A.XSDD02) XSDD02, 
+			   C.ZCXX01 ZCXX01,
+			   C.ZCXX02 ZCXX02,  
+			   A.INVOICESTATE INVOICESTATE  
+		   FROM  
+			   W_XSDD A,  
+			   W_DJZX B,  
+			   W_ZCXX C
+		   WHERE A.XSDD01 = B.W_DJZX01
+		   AND C.ZCXX01 = A.ZTID  
+		   AND B.W_DJZX02 = '6'  
+		   <if test="INVOICESTATE != '' and INVOICESTATE != null"> AND A.INVOICESTATE = #{INVOICESTATE} </if> 
+		   <if test="HBID != '' and HBID != null"> AND A.HBID = #{HBID} </if>
+		   <if test="ZCXX02 != '' and ZCXX02 != null"> AND C.ZCXX02 LIKE CONCAT('%', #{ZCXX02} ,'%') </if> 
+		   GROUP BY XSDD01       
+		   ORDER BY XSDD04 DESC 
+		  ) t
+	</select>
+	
+	<select id="sel_fporder" parameterType="map" resultType="map">
+	SELECT 
+		OrderInvoiceId fpbh,
+		DATE_FORMAT(ApplyTime,'%Y-%m-%d %k:%i:%s') applytime, 
+		(select zcxx02 from w_zcgs where zcxx01=ZTID) sName,
+		(select zcxx02 from w_zcgs where zcxx01=HBID) bName,
+		InvoiceType INVOICETYPE,
+		InvoiceState FPZT 
+	FROM OrderInvoice
+	WHERE 1=1 
+ 	 <if test="fpstate != '' and fpstate != null"> AND InvoiceState=#{fpstate}</if>
+ 	 <if test="TYPE == 2 and ZTID != null and ZTID!=''"> AND ZTID=#{ZTID}</if>
+	order by ApplyTime desc
+	</select>
+	
+	<select id="sel_fporder_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT FROM OrderInvoice WHERE 1=1
+ 	 <if test="fpstate != '' and fpstate != null"> AND InvoiceState =#{fpstate}</if>
+ 	 <if test="TYPE == 2 and ZTID != null and ZTID!=''"> AND ZTID=#{ZTID}</if>
+	order by ApplyTime desc
+	</select>
+	
+	<select id="sel_xsdditem" parameterType="map" resultType="map">
+		select 
+			xsdd02,xsdd01,DATE_FORMAT(xsdd04,'%Y-%m-%d %k:%i:%s') xdsj,
+			(select count(1) from w_xsdditem item where item.xsdd01=w_xsdd.xsdd01) cnt
+		from w_xsdd 
+		where
+		xsdd01 in(
+			SELECT 
+				XSDD01 
+			FROM OrderInvoiceItem 
+			WHERE OrderInvoiceId=#{fpbh}
+		)
+	</select>
+	<select id="sel_xsdditem_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT FROM w_xsdd where
+		xsdd01 in(
+			SELECT 
+				XSDD01 
+			FROM OrderInvoiceItem 
+			WHERE OrderInvoiceId=#{fpbh}
+		)
+	</select>
+	<!-- 线下汇款审核 -->
+	<select id="sel_xxhksh" parameterType="map" resultType="map">
+		select b.XSDD01, c.xsdd02, DATE_FORMAT(c.xsdd04,'%Y-%m-%d %T') xsdd04, d.count
+ 		 from w_jyditem b LEFT JOIN w_jyd a on b.jydh = a.jydh
+ 		 left join w_xsdd c on b.xsdd01= c.xsdd01
+ 		 left join (select xsdd01, sum(xsddi05) count from w_xsdditem GROUP BY xsdd01) d on b.xsdd01= d.xsdd01
+ 		 where a.JYLSH=#{JYLSH}
+	</select>
+	<select id="sel_xxhksh_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT FROM w_jyd a, w_jyditem b  WHERE a.JYLSH=#{JYLSH} AND a.jydh =b.jydh
+	</select>
+	
+</mapper>

@@ -1,0 +1,53 @@
+<dl class="w12 public_form">
+  <dt>
+    <h2 class="ts_msg"><i class="fa fa-check"></i>您已成功抢到广告位，请填写您的广告信息</h2>
+  </dt>
+</dl>
+<dl class="w12 public_form">
+  <dt class="w02">
+	<label class="w12">广告图片:</label>
+  </dt>
+  <dd class="w09">
+    <ul class="w12">
+      <li><div class="up_img"><img src="../images/sp.jpg"><input type="file" title="上传图片"></div>
+      </li>
+      <li><div class="up_img"><img src="../images/sp.jpg"><input type="file" title="上传图片"></div>
+      </li>
+      <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><input type="file" title="上传图片"></div>
+      </li>
+      <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><input type="file" title="上传图片"></div>
+      </li>
+      <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><input type="file" title="上传图片"></div>
+      </li>
+      <label class="putong_msg">仅支持jpg、png格式的图片文件，文件必须小于2M</label>
+    </ul>
+  </dd>
+</dl>
+<dl class="w12 public_form">
+  <dt class="w02">
+     <label class="w12">广告链接:</label>
+  </dt>
+  <dd class="w10">
+    <input type="text" class="w03" />
+  </dd>
+</dl>
+<dl class="w12 public_form">
+  <dt class="w02">
+	<label class="w12">广告文字:</label>
+  </dt>
+  <dd class="w10">
+    <input type="text" class="w03" />
+  </dd>
+</dl>
+<dl class="w12 public_form">
+  <dt class="w02">
+     <label class="w12">金额:</label>
+  </dt>
+  <dd class="w10">
+    <span>99999元</span>
+  </dd>
+</dl>
+<dl class="w12 public_form">
+   <dt class="w02">&nbsp;</dt>
+   <dd class="w03"><input type="button" value="确认缴费" class="jl_btn btn_red"/></dd>
+</dl>

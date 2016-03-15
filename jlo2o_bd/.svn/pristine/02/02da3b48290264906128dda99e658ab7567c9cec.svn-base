@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="renderer" content="webkit" />
+<title>汽服云 - 个人中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/form/js/currentLog.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/menu.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+<style>
+	#curPosition{ width:828px; border:1px solid #e4e4e4; line-height:30px; float:left; margin-left:10px;}
+	#curPositiona{ float:left; line-height:30px; color:#ff4a00;margin-left:10px;}
+	#curPosition span{ float:left; line-height:30px; margin:0 10px; color:#999;}
+	.clear{clear:both;}
+</style>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+
+$(document).ready(function(){
+	if(userCookie==null){			
+		location.href="/customer/qfy/register/login.html";
+	}
+	else{
+		var menuId=$.getUrlParam("menuId");
+		$("#shopHead").load("/customer/qfy/head-08.jsp?ss="+Math.random());	
+		if(userCookie.ZCGS01=="3" || userCookie.ZCGS01=="5" || userCookie.ZCGS01=="7" || userCookie.ZCGS01=="6"){
+			menu.writeProperMenu();
+		}else{
+			menu.init(userCookie.XTCZY01);
+		}
+		$("#shop-main").height($("#shopLeft").height());
+		$("#footer").load("/customer/qfy/foot-08.html?ss="+Math.random());
+		//配置最终跳转URL路劲页面
+		var url = "";
+		//直接跳转到菜单配置界面
+		/* if($.getUrlParam("bdPage") != "null" && $.getUrlParam("bdPage") != null){
+			url = pubJson.FormUrl+$.getUrlParam("bdPage")+"?PI_USERNAME="+userCookie.XTCZY01;
+		} */
+		//判断框架内页面加载哪个页面
+		/**
+		if(menuId=="A001"){
+			$("#centerFrame").attr("src","/customer/qfy/back/Oper_SPXX.html?menuId=A001");
+		}else{
+			$("#centerFrame").load(function() { 
+				var mainheight = parseInt($.getUrlParam("height"))+"px";
+    			$("#centerFrame").height(mainheight);
+			}); 
+		}
+		*/
+		if(menuId=="A303"){
+			//add 2015.10.26. 对菜单ID参数为A303的进行处理，针对线下支付成功的跳转效果。
+			$("#centerFrame").attr("src","/customer/qfy/back/ddgl/myorder.html?menuId=A303");
+			changeIframeSize();
+		}
+	}
+})
+</script>
+</head>
+<body>
+<!-- head开始 -->
+<div id="shopHead"></div>
+<!-- head结束 -->
+<!-- 中间开始 -->
+<a id="contentMD"></a>
+<div id="shop-main" style=" min-height:300px;">
+  <!-- 左侧菜单开始 -->
+  <div id="shopLeft">
+  	  <ul class="shop-left-nav">
+  	 </ul>
+  </div>
+  <!-- 左侧菜单结束 -->
+  
+  <div class="shop-right-main">
+  	<div id="curPosition">
+  		<div class="clear"></div>
+    </div>
+  	 <!--<div id="bd_Form"></div>
+  	  --><iframe id="centerFrame" name="centerFrame" src="" frameborder="0" marginheight="0" class="right-main" scrolling="auto" style="border:0px; height:auto;margin-left:10px;"></iframe>
+  </div>
+ 
+</div>
+<div class="clear"></div>
+<!-- 中间结束 -->
+<div id="footer"></div>
+<script type="text/javascript">
+//改变iframe高度
+ function changeIframeSize(){
+	$("#centerFrame").load(function(){
+		var $this = $(this);
+		var mainOffSetHeight = $this.contents().find('body')[0].offsetHeight;
+		var mainScrollHeight = $this.contents().find('body')[0].scrollHeight;
+		var mainheight = mainOffSetHeight > mainScrollHeight ? mainOffSetHeight : mainScrollHeight;
+		var contentDocument = $this[0].contentDocument.children;
+		var doc = null;
+		if(typeof contentDocument !== "undefined"){
+			doc = contentDocument[0];
+		}else{
+			doc = $this[0].contentWindow.document;
+		}
+		
+
+		var contentHeight = $(doc).height();
+		if(contentHeight < mainheight){
+			mainheight = contentHeight -30;
+		
+		}
+		//IE8下出现的兼容性问题，会将Footer遮挡住，下面代码已经解决
+		var DEFAULT_VERSION = "8.0";
+		var ua = navigator.userAgent.toLowerCase();
+		var isIE = ua.indexOf("msie")>-1;
+		var safariVersion;
+		if(isIE){
+		    safariVersion =  ua.match(/msie ([\d.]+)/)[1];
+		    if(safariVersion <= DEFAULT_VERSION ){
+		        $('#footer').css({'margin-top':'35px'});
+		    }else{
+		    	$('#footer').css({'margin-top':'0'});
+		    }
+		}
+		setFooterPosition(mainheight);
+		return;
+	});
+	//首页返回到顶部
+	//scrollOffset($("#contentMD").offset());
+	$("#curPosition").empty();
+	var array = new Array();
+	$(".shop-left-nav").each(function(){
+		array.push($(this).children().find("a"));
+	});
+	for(var i=0;i<array.length;i++){
+		$(array[i]).click(function(){
+			$("#curPosition").empty();
+			var childname = $(this).html();
+			var $childid = $(this).attr("id");
+			var parentid = $childid.substring(0,2);
+			var parentname = $("#cd-"+parentid).find("b").html();
+			if(parentname!=""){
+				$("#curPosition").append("<a href='#' id='curPositiona' >"+parentname+"</a><span>></span><a href='#'>"+childname+"</a><div class='clear'></div>");
+				return;
+			}else{
+				$("#curPosition").append("<a href='#' id='curPositiona' >"+parentname+"</a><span>></span><div class='clear'></div>");
+				return;
+			}
+		});
+	}
+} 
+
+/* function changeIframeSize(){
+	$("#curPosition").empty();
+	var array = new Array();
+	$(".shop-left-nav").each(function(){
+		array.push($(this).children().find("a"));
+	});
+	for(var i=0;i<array.length;i++){
+		$(array[i]).click(function(){
+			$("#curPosition").empty();
+			var childname = $(this).html();
+			var $childid = $(this).attr("id");
+			var parentid = $childid.substring(0,2);
+			var parentname = $("#cd-"+parentid).find("b").html();
+			if(parentname!=""){
+				$("#curPosition").append("<a href='#' id='curPositiona' >"+parentname+"</a><span>></span><a href='#'>"+childname+"</a>");
+				return;
+			}else{
+				$("#curPosition").append("<a href='#' id='curPositiona' >"+parentname+"</a><span>></span>");
+				return;
+			}
+		});
+	}
+		
+} */
+//被动改变iframe高度
+function eventChangeIframeSize(){
+	var mainheight = $("#centerFrame").contents().find("body").height()+30;
+	$("#centerFrame").height(mainheight);
+}
+
+/************Grid调用************/
+function ajaxGrid(url,height){
+	if(height== undefined || height == null){
+		height=2000;
+	}
+   $("body").append('<div style="width:100%; height:1500px; background-color:rgba(1,1,1,0.3);z-index:9999999; position:fixed; top:0px; left:0px;" id="ajaxGrid">'+
+		   '<div style="width:834px; height:500px; background-color:#fff; border:3px solid #e4e4e4; margin:0 auto; margin-top:50px; position:relative;">'+
+		  //'<div style="width:986px; height:486px; margin:7px; background-color:#fff;">'+
+		   '<iframe id="alertDIV" name="alertDIV" src='+url+' style="width:830px ;height:496px"></iframe>'+
+		   //'</div>'+
+		   '</div>'+
+		   '<div style="width:30px; height:30px; position:absolute; top:50px; background-color:#fff; border:1px solid #e4e4e4; left:50%; margin-left:419px; font-size:30px; line-height:30px; text-align:center; color:#ff8800;" id="closeGrid" title="关闭">×</div>'+
+		   '</div>')
+   $("#closeGrid").mouseover(function(){
+	   $(this).css({"background-color":"#ff8800","color":"#fff","cursor":"pointer"});
+   })
+   $("#closeGrid").mouseleave(function(){
+	   $(this).css({"background-color":"#fff","color":"#ff8800"});
+   })
+   $("#closeGrid").click(function(){
+	   hideAjaxGrid();
+   })
+}
+//Ninedragon，关闭弹窗
+function hideAjaxGrid(){
+	$("#ajaxGrid").remove();
+}
+//NineDragon  main FLHJ HJBM 三个页面间传值
+function setVal2IFrame(paras){
+	$("#centerFrame")[0].contentWindow.setPid(paras);
+}
+function setVal3IFrame(SPXX01,HJID){
+	$("#centerFrame")[0].contentWindow.set_HJID(SPXX01,HJID);
+}
+//执行回调方法
+function execBackFun(parameters){
+	$("#centerFrame")[0].contentWindow.backFun(""+parameters+"");
+}
+function setFooterPosition(mainheight){
+	var leftHeight = $(".shop-left-nav").height();
+	if(leftHeight<500){
+		leftHeight = 500;
+	}
+	if(leftHeight>mainheight){
+		mainheight = leftHeight;
+	}
+	
+	$("#centerFrame").height(mainheight);
+	$("#shop-main").height(mainheight);
+}
+$(document).ready(function(){
+	$('#shop-main .shop-left-nav li a').on('click',function(){
+		$('.shop-left-nav li a').css({background:''});
+		$(this).css('background',"#eee");
+		$('html,body').animate({
+			'scrollTop':'0'
+		},500);
+	});
+})
+//add 2015.11.03.父窗口调用打开遮罩的方法，
+//在子窗口调用时，使用parent.parentOpenWait();
+function parentOpenWait(){
+ top.openWait();
+}
+//add 2015.11.03.父窗口调用关闭遮罩的方法，
+//在子窗口调用时，使用parent.parentCloseWait();
+function parentCloseWait(){
+ top.closeWait();
+}
+</script>
+<div id="header"></div>
+</body>
+</html>

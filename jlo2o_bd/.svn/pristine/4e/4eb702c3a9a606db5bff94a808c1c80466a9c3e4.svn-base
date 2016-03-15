@@ -1,0 +1,54 @@
+<dl class="w12">
+  <dt class="w12">商品管理</dt>
+  <dd class="w12"><a>发布商品</a></dd>
+  <dd class="w12"><a>发布需求</a></dd>
+  <dd class="w12"><a>出售中的商品</a></dd>
+  <dd class="w12"><a>仓库中的商品</a></dd>
+</dl>
+<dl class="w12">
+  <dt class="w12">订单管理</dt>
+  <dd class="w12"><a>采购订单</a></dd>
+  <dd class="w12"><a>销售订单</a></dd>
+  <dd class="w12"><a>评价管理</a></dd>
+  <dd class="w12"><a>返修/退换货</a></dd>
+  <dd class="w12"><a>退货单</a></dd>
+  <dd class="w12"><a>退款单</a></dd>
+</dl>
+<dl class="w12">
+  <dt class="w12">广告设置</dt>
+  <dd class="w12"><a>广告投放</a></dd>
+</dl>
+<dl class="w12">
+  <dt class="w12">我的店铺</dt>
+  <dd class="w12"><a>店铺装修</a></dd>
+</dl>
+<dl class="w12">
+  <dt class="w12">关注中心</dt>
+  <dd class="w12"><a>关注商品</a></dd>
+  <dd class="w12"><a>关注店铺</a></dd>
+</dl>
+<dl class="w12">
+  <dt class="w12">资产中心</dt>
+  <dd class="w12"><a>余额</a></dd>
+  <dd class="w12"><a>优惠券</a></dd>
+  <dd class="w12"><a>积分</a></dd>
+</dl>
+<dl class="w12">
+  <dt class="w12">设置</dt>
+  <dd class="w12"><a>账户信息</a></dd>
+  <dd class="w12"><a>企业信息</a></dd>
+  <dd class="w12"><a>收货地址</a></dd>
+  <dd class="w12"><a>账户安全</a></dd>
+  <dd class="w12"><a>消费记录</a></dd>  
+</dl>
+<dl class="w12">
+  <dt class="w12"><h3>新闻</h3></dt>
+  <dd class="w12"><a>新闻发布</a></dd>
+  <dd class="w12"><a>新闻管理</a></dd>
+</dl>
+<dl class="w12">
+  <dt class="w12"><h3>广告</h3></dt>
+  <dd class="w12"><a>首页楼层</a></dd>
+  <dd class="w12"><a>推广</a></dd>
+</dl>
+

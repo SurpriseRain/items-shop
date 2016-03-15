@@ -1,0 +1,66 @@
+﻿/********************t供应链页面开始**************************/
+#gyl-nav{ width:1200px; height:33px; border-bottom:1px solid #2f80eb; margin:0 auto; margin-top:20px; position:relative;}
+#gyl-nav a.nav{ float:left; height:30px; line-height:30px; font-size:15px; color:#3c3c3c; font-family:"microsoft yahei"; font-weight:bold; padding:0 5px; margin-right:30px;}
+#gyl-nav a.xuan{ border-bottom:3px solid #2f80eb;}
+#gyl-nav a.nav:hover{ border-bottom:3px solid #2f80eb;}
+#gyl-nav ul#nav-mian{ width:827px; background-color:#fff; position:absolute; top:34px; left:0px; z-index:9; border:1px solid #e4e4e4; box-shadow: 0px 0px 8px #e1e1e1; padding-bottom:10px; height:358px;}
+#gyl-nav ul#nav-mian li{ width:807px; height:30px; padding:0 10px 0 20px;}
+#gyl-nav ul#nav-mian li a{ float:left;}
+#gyl-nav ul#nav-mian li a.da{ font-family:"microsoft yahei"; font-size:14px; font-weight:bold; color:#3c3c3c; width:807px; margin-top:5px; line-height:25px;}
+#gyl-nav ul#nav-mian li a.xiao{ color:#6c6c6c; font-size:12px; margin:0px 5px 0 0; padding:2px 5px;}
+#gyl-nav ul#nav-mian li a.xiao:hover{ background-color:#ff8800; color:#fff; cursor:pointer;}
+
+#gyl-pptj{ width:1198px; height:368px; border:1px solid #e4e4e4; margin:0px auto;}
+#gyl-pptj ul{ width:370px; margin-left:828px;}
+#gyl-pptj ul li{ width:370px; height:370px; float:left;}
+#gyl-pptj ul li a.img img{ width:370px; height:370px; border:0px;}
+
+#gyl-pptj ul li .pro-name a{ color:#3c3c3c; line-height:18px;}
+#gyl-pptj ul li .pro-name a:hover{ color:#2f80eb; text-decoration:underline;}
+#gyl-pptj ul li .pro-dp{ width:210px; height:30px; float:left; margin:10px 10px 0 10px;}
+#gyl-pptj ul li .pro-dp a.dp{ width:155px; float:left; height:30px; line-height:20px; color:#3c3c3c;}
+#gyl-pptj ul li .pro-dp a.dq{ float:right; width:50px; height:30px; margin-right:5px; color:#999;}
+
+
+/********************************************/
+#pptj{ width:1198px; margin:15px auto; height:78px; border:1px solid #eee; background-color:#f5f5f5;}
+#pptj .pptitle{ width:80px; height:80px; float:left; background:url(../images/pptj-title.png);}
+#pptj span{ float:left; width:1px; height:50px; margin:15px 26px 15px 2px; background-color:#e4e4e4;}
+#pptj a img{ float:left; width:250px; height:80px; border:0px;}
+#main{ width:1200px; margin:0px auto; height:1350px;}
+#main .main-left{ width:909px; float:left;}
+#main .main-left .folor{ width:909px; height:403px; margin-top:10px;}
+#main .main-left .folor .title{ width:909px; height:40px; line-height:40px; border-bottom:2px solid #eee;}
+#main .main-left .folor .title h2{ float:left; color:#222; font-family:"microsoft yahei"; font-size:20px;}
+#main .main-left .folor .title .zcd{ float:right;}
+#main .main-left .folor .title .zcd a{ float:left; color:#3c3c3c;}
+#main .main-left .folor .title .zcd a:hover{ color:#2f80eb; text-decoration:underline;}
+#main .main-left .folor .title .zcd span{ float:left; width:1px; height:10px; background-color:#ccc; margin:15px 15px;}
+
+#main .main-left .folor ul.pro-case{ width:908px; float:left; border-left:1px solid #eee;}
+#main .main-left .folor ul.pro-case li{ float:left; width:226px; height:350px; border:1px solid #eee; border-left:0px; position:relative;}
+
+#main .main-left .folor ul.pro-case li.first{margin-left:0px;}
+#main .main-left .folor ul.pro-case li a.img{ width:226px; height:226px; float:left; margin-bottom:5px;}
+#main .main-left .folor ul.pro-case li a.img img{ width:226px; height:226px; border:0px;}
+#main .main-left .folor ul.pro-case li .pro-pic{ width:210px; height:25px; margin:0 0 0 10px; float:left;}
+#main .main-left .folor ul.pro-case li .pro-pic span{ float:left; line-height:23px; color:#999;}
+#main .main-left .folor ul.pro-case li .pro-pic b{ float:left; font-size:16px; color:#da271c; font-family:"microsoft yahei"; font-weight:bold;}
+
+#main .main-left .folor ul.pro-case li .pro-name{ width:210px; height:45px; margin:5px 10px 0 10px; float:left;}
+#main .main-left .folor ul.pro-case li .pro-name a{ color:#3c3c3c; line-height:18px;}
+#main .main-left .folor ul.pro-case li .pro-name a:hover{ color:#2f80eb; text-decoration:underline;}
+#main .main-left .folor ul.pro-case li .pro-dp{ width:210px; height:30px; float:left; margin:10px 10px 0 10px;}
+#main .main-left .folor ul.pro-case li .pro-dp a.dp{ width:155px; float:left; height:30px; line-height:20px; color:#3c3c3c;}
+#main .main-left .folor ul.pro-case li .pro-dp a.dq{ float:right; width:50px; height:30px; margin-right:5px; color:#999;}
+
+#main .main-right{ width:278px; float:right; border:1px solid #eee; background-color:#f5f5f5; padding-bottom:30px;}
+#main .main-right h2{ float:left; width:278px; color:#222; font-family:"microsoft yahei"; font-size:20px; text-indent:20px; margin:15px 0;}
+#main .main-right ul#ztc{ width:245px; margin:0 15.5px; border:1px solid #eee; float:left;}
+#main .main-right ul#ztc li{ border-top:1px solid #eee; margin-top:-1px; background-color:#fff; float:left; width:245px; position:relative;}
+#main .main-right ul#ztc li a.img{ float:left; width:90px; height:90px; margin:18px 5px 18px 10px;}
+#main .main-right ul#ztc li a.img img{ width:90px; height:90px; border:0px;}
+#main .main-right ul#ztc li div.text{ float:left; width:130px; height:90px; margin:18px 0;}
+#main .main-right ul#ztc li div.text h4{ margin:0px; padding:0px; float:left; width:130px; height:30px; line-height:30px; color:#3c3c3c;}
+#main .main-right ul#ztc li div.text a{ color:#6c6c6c; line-height:18px; float:left; width:130px;}
+

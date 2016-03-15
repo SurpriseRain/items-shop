@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="JlAppResources.properties"/>
+    
+    <settings>  
+        <setting name="cacheEnabled" value="false"/>
+        <setting name="localCacheScope" value="STATEMENT"/>
+        <setting name="safeResultHandlerEnabled" value="false"/>
+    </settings>
+    
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="JNDI">
+                <property name="data_source" value="java:comp/env/jdbc/o2o" />
+            </dataSource>            
+        </environment>
+    </environments>
+    
+    <mappers>
+		<mapper resource="com/jlsoft/o2o/product/sql/showGoodss.xml" />
+		<mapper resource="com/jlsoft/o2o/product/sql/QFYdisplay.xml"/> 
+		<mapper resource="com/jlsoft/o2o/product/sql/PCdisplay.xml"/>
+		<mapper resource="com/jlsoft/o2o/product/sql/ProductDisplay.xml" />
+		<mapper resource="com/jlsoft/o2o/product/sql/Oper_Spgl.xml" />
+		<mapper resource="com/jlsoft/o2o/product/sql/Oper_floor.xml" />
+		<mapper resource="com/jlsoft/o2o/product/sql/XmlUploadProduct.xml" />
+		<mapper resource="com/jlsoft/o2o/user/sql/Def_ZCGS.xml" />
+		<mapper resource="com/jlsoft/o2o/pub/tree/sql/Tree.xml" />
+		<mapper resource="com/jlsoft/o2o/info/sql/Oper_Xxgl.xml" />    
+		<mapper resource="com/jlsoft/o2o/order/sql/Order.xml" />
+		<mapper resource="com/jlsoft/o2o/user/sql/Def_ZCGS.xml" /> 
+		<mapper resource="com/jlsoft/o2o/product/sql/showGoodlb.xml" />  
+		<mapper resource="com/jlsoft/o2o/product/sql/Oper_Spgl.xml" /> 
+		<mapper resource="com/jlsoft/o2o/product/sql/showXMlist.xml" /> 
+		<mapper resource="com/jlsoft/o2o/order/sql/Oper_THD.xml" /> 
+		<mapper resource="com/jlsoft/o2o/product/sql/KCXX.xml" />
+		<mapper resource="com/jlsoft/o2o/order/sql/Mjck.xml" /> 
+		<mapper resource="com/jlsoft/o2o/order/sql/Mjrk.xml" />
+		<mapper resource="com/jlsoft/o2o/order/sql/Thrk.xml" /> 
+		<mapper resource="com/jlsoft/o2o/pub/sql/SPFL.xml" />
+		<mapper resource="com/jlsoft/o2o/qxgl/sql/oper_qxgl.xml" />  
+		<mapper resource="com/jlsoft/o2o/info/sql/Cxtp.xml" />  
+		<mapper resource="com/jlsoft/o2o/qxgl/sql/Oper_CKQX.xml" />  
+		<mapper resource="com/jlsoft/c2b/sql/MapService.xml" /> 
+		<mapper resource="com/jlsoft/c2b/sql/Oper_FWCX.xml" />
+		<mapper resource="com/jlsoft/c2b/sql/TakeOrder.xml" />
+		<mapper resource="com/jlsoft/o2o/message/sql/Oper_YHZX.xml" />
+		<mapper resource="com/jlsoft/o2o/message/sql/Oper_XiaoXiGL.xml" />
+		<mapper resource="com/jlsoft/o2o/order/sql/OrderInvoice.xml" />
+		<mapper resource="com/jlsoft/o2o/order/sql/LinePayment.xml" />
+		<mapper resource="com/jlsoft/o2o/order/sql/Oper_Address.xml" />
+		<mapper resource="com/jlsoft/o2o/user/sql/MyCollection.xml" />
+		<mapper resource="com/jlsoft/o2o/hdgl/sql/Oper_HDGL.xml" />
+		<mapper resource="com/jlsoft/o2o/hdgl/sql/Oper_HDGL_SIGN_UP.xml" />
+		<mapper resource="com/jlsoft/o2o/qxgl/sql/Oper_FWSGL.xml" />
+    </mappers>
+</configuration>

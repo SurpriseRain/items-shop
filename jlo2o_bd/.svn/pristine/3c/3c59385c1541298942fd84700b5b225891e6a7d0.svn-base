@@ -1,0 +1,80 @@
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="/js/jquery-powerSwitch.js"></script>
+<script type="text/javascript" src="/js/underscore-min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/toper.js"></script>
+<div class="content">
+<div class="row">
+  <ul class="sn-quick-menu">
+    <li class="more_bt">
+      <div class="city-locate"><i class="fa fa-map-marker"></i><a id="city_name" class="current-city">辽宁</a><i class="jt fa fa-angle-down"></i>
+      <div id="city-wrapper" class="more_cd">
+        <ul id="city-list" class="city_list" data-read="0">
+        </ul>
+      </div>
+      </div>
+    </li>
+    <li>您好，欢迎来电器服云平台</li>
+    <li class="login-info">
+       <!--登录信息-->
+       <a class="l-login" href="/customer/sydjt/register/login.html">请登录</a>
+       <a class="l-login login-reg" href="/customer/sydjt/register/registered.html">免费注册</a>
+    </li>
+    <li class="login-ext">
+       <a class="l-ext" id="login-name" href="/customer/sydjt/register/login.html"></a>
+       <a class="l-ext" id="login-ext" href="javascript:void(0);">[退出]</a>
+    </li>
+  </ul>
+  <ul>
+<!--    <li class="more_bt">-->
+<!--      <div><a>我的订单</a><i class="jt fa fa-angle-down"></i></div>-->
+<!--      <div class="more_cd display_none"><a>菜单一</a><a>菜单一</a><a>菜单一</a><a>菜单一</a></div>-->
+<!--    </li>-->
+    <li><i class="fa fa-shopping-cart"></i><a target="_blank" href="/customer/sydjt/shopping/cart.html">购物车<i class="ci-count" id="shopping-amount">0</i>件</a></li>
+<!--    <li><i class="fa fa-star"></i><a>收藏夹</a></li>-->
+<!--    <li class="line"></li>-->
+<!--    <li><i class="fa fa-mobile"></i><a>手机版</a></li>-->
+<!--    <li class="line"></li>-->
+<!--    <li class="more_bt">-->
+<!--      <div><i class="fa fa-smile-o"></i><a>客户服务</a><i class="jt fa fa-angle-down"></i></div>-->
+<!--      <div class="more_cd display_none"><a class="w12">菜单一</a><a class="w12">菜单一</a><a class="w12">菜单一</a><a class="w12">菜单一</a></div>-->
+<!--    </li>-->
+<!--    <li class="line"></li>-->
+<!--    <li class="more_bt">-->
+<!--      <div><i class="fa fa-list"></i><a>网站导航</a><i class="jt fa fa-angle-down"></i></div>-->
+<!--      <div class="more_cd display_none"><a class="w12">菜单一</a><a class="w12">菜单一</a><a class="w12">菜单一</a><a class="w12">菜单一</a></div>-->
+<!--    </li>-->
+
+        <li>
+             <a href="/customer/sydjt/register/login.html" id="u-home">个人中心</a>
+        </li>
+        <li>
+             <a href="/customer/sydjt/index.html">商城首页</a>
+        </li>
+		<li>
+			<a href="javascript:void(0);" onclick="SetHome(this,'http://localhost:8088');">设为首页</a>
+		</li>
+		<li>
+			<a href="javascript:void(0);" onclick="AddFavorite('我的网站',location.href)">收藏本站</a>
+		</li>                   
+  </ul>
+</div>
+</div>
+    <!--配送至-->
+    <script type="text/template" id="m-tpl-2">
+        <%_.each(mapList, function(item) {%>
+			<% if(item.dqbzm02 !== "黑龙江省") {%>
+            	<li id="<%= item.dqbzm01%>">
+                	<a href="javascript:void(0);"><%= item.dqbzm02.substring(0,2)%></a>
+            	</li>
+			<% } else { %>
+				<li id="<%= item.dqbzm01%>">
+                	<a href="javascript:void(0);"><%= item.dqbzm02.replace("省","")%></a>
+            	</li>
+			<% } %>
+        <%});%>
+    </script>

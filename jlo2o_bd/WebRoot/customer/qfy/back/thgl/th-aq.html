@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>退货申请</title>
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/th-sq.css" />
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script> 
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<style>
+.xxtk {
+	display : none;
+}
+
+.line{
+	border-top: 1px dotted #e4e4e4;
+	width: 390px;
+}
+
+</style>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var XSDD01 = $.getUrlParam('XSDD01');
+var SPXX01 = $.getUrlParam('SPXX01');
+var GMSL = $.getUrlParam('GMSL');
+var THSL = $.getUrlParam('THSL');
+var imgUrl=pubJson.path_sptp+"/sptp/";//图片默认路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+var zffs; // 支付方式
+var fklx;//付款类型
+function initData(){
+
+	 var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.return.good.queryXsddInfo','QryType':'Report','dataType':'Json','spxx01':SPXX01,"xsdd01":XSDD01}];
+	 var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	 var rData=visitService(url);
+	  $("#ddh").append(XSDD01);
+	  fklx = rData[0].skfs;
+	  $("#XSDD01").val(XSDD01);
+	  $("#SPXX01").val(SPXX01);
+	  if(rData!=undefined&&rData!=""){
+		  $(".user_name").val(rData[0].xsdd19);
+		  $("#user_tel").val(rData[0].xsdd21);
+		  $(".name").html(rData[0].spxx04);
+		  $("#imgs").attr("src", imgUrl+rData[0].ztid+"/"+rData[0].spxx02+"/images/"+rData[0].spxx02+"_1_small."+rData[0].SPTP02);
+		  $("#count").html(rData[0].xsddi05);
+		  $("#count_YT").html(THSL);
+		  $("#goodslist").val(rData[0].xsddi05);
+		  $("#provinceQY").val(rData[0].province);
+		  $("#QYdzdetail").val(rData[0].otherdz);
+		  $("#xsddi02").val(rData[0].xsddi02);
+		  $("#THJE").val(rData[0].xsddi02);
+		  $("#LXRS").val(rData[0].hy01);
+		  $("#LXDHS").val(rData[0].hy02);
+		  $("#QYdzdetails").val(rData[0].hy03);
+		  $("#LXRS3").val(rData[0].zcxx03);
+		  $("#LXDHS3").val(rData[0].zcxx06);
+		  $("#QYdzdetail3").val(rData[0].zcxx08);
+		  if(rData[0].province!=""){
+			  var list=dqxxList(rData[0].province,2);
+			  	$(list).each(function(i,json){
+			  		if(i==0){
+			  	 		$("#cityQY").empty();
+			  	  		$("#cityQY").append("<option value='0'>请选择</option>");
+			    	}
+			  		$("#cityQY").append("<option>"+json.DQXX02+"</option>");
+			  		$("#cityQY").find("option").eq(i+1).val(json.DQXX01);
+			  	});
+			  	$("#cityQY").val(rData[0].city);
+			  	
+			   var list=dqxxList(rData[0].city,3);
+			  	$(list).each(function(i,json){
+			  		if(i==0){
+			  	 		$("#countryQY").empty();
+			  	  		$("#countryQY").append("<option value='0'>请选择</option>");
+			    	}
+			  		$("#countryQY").append("<option>"+json.DQXX02+"</option>");
+			  		$("#countryQY").find("option").eq(i+1).val(json.DQXX01);
+				  	var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+				  	$("#QYdzdetail").css("width", width+"px");
+			  	});
+			  	$("#countryQY").val(rData[0].county);
+			  	
+			  	var list=dqxxList(rData[0].county,4);
+			  	$(list).each(function(i,json){
+			  		if(i==0){
+			  	 		$("#streetQY").empty();
+			  	  		$("#streetQY").append("<option value='0'>请选择</option>");
+			    	}
+			  		$("#streetQY").append("<option>"+json.DQXX02+"</option>");
+			  		$("#streetQY").find("option").eq(i+1).val(json.DQXX01);
+				  	var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+				  	$("#QYdzdetail").css("width", width+"px");
+			  	});
+			  	$("#streetQY").val(rData[0].street);
+		  }
+		  zffs = rData[0].XSDD50;
+		  if(zffs == "1" || fklx==11){
+			  $(".xxtk").show();
+		  }
+	  }
+	  
+	  $("img").error(function() {
+      	$(this).attr("src", defaultImgUrl);
+      });
+}
+
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+<div id="list-main">
+	<div class="dqlc">
+		<a href="#" class="dqlc-a">订单管理> </a>
+		<a href="#" class="dqlc-a">退货申请> </a>
+		<a id="ddh" href="#" class="dqlc-a">订单号：</a>
+	</div>
+	<table class="sellpro" style="margin-top: 0px;">
+		<tr class="title">
+			<td colspan="2" style="text-align:center;">商品信息</td>
+			<!-- <td>赠品信息</td> -->
+			<td>购买数量</td>
+			<td>已退数量</td>
+		</tr>
+		<tr>
+			<td><a href="#" class="img"><img id="imgs" src="" /></a></td>
+			<td class="nm"><a href="#" class="name"></a></td>
+			<!-- <td></td> -->
+			<td id="count"></td>
+			<td id="count_YT"></td>
+		</tr>
+	 </table>
+</div>
+<div class="clear"></div>
+<form id="form1" name="form1">
+   <ul class="tuidan">
+    <li><h3>退货单据明细</h3></li>
+    <li><div class="bt">*</div><span>退货类型：</span>
+    <input type="radio" checked="checked" name="THLX" class="radio radio1" value="0"/><label class="hui">退货</label>
+    <!-- <input type="radio" name="THLX" class="radio radio1"  value="1"/><label class="hui">换货</label> -->
+    </li>
+    <li><div class="bt">*</div><span>退货数量：</span>
+    <div class='total'><a onclick="jian()">-</a><input value="1" class="goods_total" name="THSL" onblur="jia_goods()"/><a onclick="jia()">+</a></div>
+    <input type="hidden" value="" id="goodslist"/>
+    <input type="hidden" value="" id="xsddi02" name="SPJG"/>
+    <input type="hidden" value="" id="THJE" name="THJE"/>
+    <input type="hidden" value="" id="XSDD01" name="XSDD01"/>
+    <input type="hidden" value="" id="SPXX01" name="SPXX01"/>
+    
+    </li> 
+    <li><div class="bt">&nbsp;</div><span>退货凭证：</span>
+    <input type="checkbox" checked="checked" name="thpzs" class="radio radio1" value="0"/>
+    <label class="hui">购物发票</label>
+    <input type="checkbox" name="thpzs" class="radio radio1"  value="1"/>
+    <label class="hui">第三方检测报告</label>
+    <input type="hidden" name="THPZ" id="THPZ" value=""/>
+    </li>
+    <li><div class="bt">*</div><span>问题描述：</span><textarea name="BZ" id="wtms" placeholder="请输入您遇到的问题及退货原因，仅限500字内！"></textarea></li>
+    
+    <li> <div class="bt">*</div><span>退货方式：</span>
+    <div onclick="tuihuo(1)"><input type="radio" id="WLLX1" checked="checked" name="WLLX" class="radio radio1" value="0"/><label class="hui">上门取件</label></div>
+    <!-- <div onclick="tuihuo(2)"><input type="radio" id="WLLX2" name="WLLX" class="radio radio1"  value="1"/><label class="hui">送货至自提点</label></div> -->
+    <div onclick="tuihuo(3)"><input type="radio" id="WLLX3" name="WLLX" class="radio radio1"  value="2"/><label class="hui">快递至卖家地址</label></div>
+    </li>
+	<div id="thfs">
+	<li id="dzs">
+	<div class="bt">*</div>
+	<span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
+	<select name="PROVINCE" id="provinceQY" >
+     	<option value="0">请选择</option>
+    </select>
+    <select name="CITY" id="cityQY" >
+    	<option value="0">请选择</option>
+    </select>
+    <select name="COUNTY" id="countryQY" >
+     	<option value="0">请选择</option>
+    </select>
+    <select name="streetQY" id="streetQY" >
+     	<option value="0">请选择</option>
+    </select>
+	<input type="text" class="text" id="QYdzdetail" name="XXDZ" value="" style="width: 100px/">
+	</li>
+   <li><div class="bt">*</div><span>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span><input type="text" class="text user_name"  name="LXR" value="" /></li>   
+   <li><div class="bt">*</div><span>联系电话：</span><input type="text" class="text" id="user_tel" name="LXDH" value="" /></li>
+   </div>
+   
+   <div id="thfs2" style="display: none;">
+	<li id="dzs">
+	<div class="bt">*</div>
+	<span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
+	<input style="width: 360px;" disabled="disabled" type="text" class="text" id="QYdzdetails" name="XXDZS" value="" />
+	</li>
+   <li><div class="bt">*</div><span>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span><input disabled="disabled" type="text" class="text" id="LXRS" name="LXRS" value="" /></li>   
+   <li><div class="bt">*</div><span>联系电话：</span><input type="text" disabled="disabled" class="text" id="LXDHS" name="LXDHS" value="" /></li>
+   </div>
+   <!-- 卖家退货地址div 开始  Add 2015.10.28.-->
+   <div id="thfs3" style="display: none;">
+	<li id="dzs">
+	<div class="bt">*</div>
+	<span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span>
+	<input style="width: 360px;" disabled="disabled" type="text" class="text" id="QYdzdetail3" name="XXDZS" value="" />
+	</li>
+   	<li><div class="bt">*</div><span>联&nbsp;&nbsp;系&nbsp;&nbsp;人：</span><input disabled="disabled" type="text" class="text" id="LXRS3" name="LXRS" value="" /></li>   
+   	<li><div class="bt">*</div><span>联系电话：</span><input type="text" disabled="disabled" class="text" id="LXDHS3" name="LXDHS" value="" /></li>
+   </div> 
+   <!-- 卖家退货地址div 结束 -->  
+   <li class="photos" name="photoscount">
+    <div class="bt">&nbsp;</div><span>图片信息：</span>
+    <a class="add" onclick="addphoto()">+</a>
+    <input type="file" id="file01" name="file01" class="addphoto" value="" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"/>
+    <div class="file01"></div>
+    </li>
+	
+    <li>
+    <p style="font-size: 16px;">为了帮助我们更好的解决问题，请您上传图片，最多上传5张图片，每张图片大小不超过5M，支持jpg,png格式文件</p>
+    </li>
+    <li class="xxtk line">
+    </li>
+    <li class="xxtk">
+    	<p style="font-size: 16px;">请填写现下收款信息</p>
+    	<div class="bt">*</div><span>收款银行开户名：</span>
+    	<input type="text" class="text" id="KHMC" name="KHMC" value="" />
+    </li>
+  	<li class="xxtk">
+    	<div class="bt">*</div><span>收款银行开户行：</span>
+    	<input type="text" class="text" id="KHYH" name="KHYH" value="" />
+    </li>
+    <li class="xxtk">
+    	<div class="bt">*</div><span>收款银行账号&nbsp;&nbsp;&nbsp;：</span>
+    	<input type="text" class="text" id="YHZH" name="YHZH" value="" onkeyup="this.value=this.value.replace(/\D/g,'')" />
+    </li>
+  
+    <a class="tj" onclick="okclick()">提交</a>
+</ul>
+</form>
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	showDQXX("QY");
+	initData();
+	$("#QYdzdetail").css("width", "130px");
+	$("#QYdzdetail2").css("width", "130px");
+});
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  		var con="<option value='0'>请选择</option>";
+  		$("#countryQY").html(con).val(0);
+  		var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+  		$("#QYdzdetail").css("width", width+"px");
+  	  });	
+  	}
+    if(index==1){
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  		var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+  		$("#QYdzdetail").css("width", width+"px"); 
+  	  });	
+  	}
+    if(index==2){
+   	  $(this).bind("change",function(inx){
+   		setVal(this,"#street"+id,4);
+   		var width = $("#dzs").width()-$("#provinceQY").width()-$("#cityQY").width()-$("#countryQY").width()-$("#streetQY").width()-200;
+   		$("#QYdzdetail").css("width", width+"px"); 
+   	  });	
+   	}
+  });
+}
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	$(list).each(function(i,json){
+  		if(i==0){
+  	 		$(objaft).empty();
+  	  		$(objaft).append("<option value='0'>请选择</option>");
+    	}
+  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  	});
+}
+
+var a = 1;
+function addphoto(){
+	
+	var arr=$("li[name='photoscount']");
+	if(arr.length <= 4){
+		a++;
+		var str = "";
+		str+='<li class="photolist'+a+'" name="photoscount"><div class="bt">&nbsp;</div>';
+		str+='<span>图片信息：</span>';
+		str+='<a class="add" onclick="delectphoto('+a+')">×</a>';
+		str+='<input type="file" id="file0'+a+'" name="file0'+a+'" class="addphoto" value="" onchange="cc(file0'+a+')"/></li>';
+		str+='<div class="file0'+a+'"></div>';
+		$(".photos").append(str);
+	}else{
+		alert("最多上传5张图片！");
+	}
+	
+}
+function delectphoto(obj){
+	$(".photolist"+obj).remove();
+}
+
+function tuihuo(obj){
+	$("#WLLX"+obj).attr("checked",true);
+	if(obj=="1"){
+		$("#thfs").show();
+		$("#thfs2").hide();
+		$("#thfs3").hide();
+	}else if(obj=="2"){
+		$("#thfs").hide();
+		$("#thfs3").hide();
+		$("#thfs2").show();
+	}
+	else if(obj=="3"){
+		$("#thfs").hide();
+		$("#thfs2").hide();
+		$("#thfs3").show();
+	}
+}
+
+function jian(){
+    //商品数量
+	var goods = $(".goods_total").val();
+	//商品单价
+	var money = $("#xsddi02").val();
+	goods--;
+	var money_total = goods*money;
+	if(goods==0){
+		$(".goods_total").val(1);
+		//商品总价
+		$("#THJE").val(money);
+	}else{
+		$(".goods_total").val(goods);
+		$("#THJE").val(money_total);
+	}
+	
+}
+function jia(){
+	//商品单价
+	var money = $("#xsddi02").val();
+	//本次订单可退的总数量
+	var counts = GMSL - THSL;
+	var goods = $(".goods_total").val();
+		goods++;
+	if(parseInt(goods) <= parseInt(counts)){
+		var money_total = goods*money;
+		$(".goods_total").val(goods);
+		$("#THJE").val(money_total);
+	}else{
+		alert("退货数量不能超过("+counts+"个)！");
+		$(".goods_total").val(counts);
+		$("#THJE").val(counts*money);
+	}
+}
+function jia_goods(){
+	//商品单价
+	var money = $("#xsddi02").val();
+	//本次订单可退的总数量
+	var counts = GMSL - THSL;
+	var goods = $(".goods_total").val();
+	if(parseInt(goods) <= parseInt(counts)){
+		var money_total = goods*money;
+		$(".goods_total").val(goods);
+		$("#THJE").val(money_total);
+	}else{
+		alert("退货数量不能超过("+counts+"个)！");
+		$(".goods_total").val(counts);
+		$("#THJE").val(counts*money);
+	}
+}
+
+
+$("input[type='file']").change(function(){ 
+	if(!checkPic(this.id)){
+		//tse(this.id,"图片限于png,gif,jpeg,jpg,bmp,svg格式");
+		alert("图片限于png,gif,jpeg,jpg,bmp,svg格式");
+		return  false;
+	} 
+}); 
+
+
+function cc(id){
+	filepath=$(id).val();
+	var extStart=filepath.lastIndexOf(".");
+	var ext=filepath.substring(extStart,filepath.length).toUpperCase();
+	if(ext!=".BMP"&&ext!=".PNG"&&ext!=".GIF"&&ext!=".JPG"&&ext!=".JPEG"&&ext!=".SVG"){
+		//tse(id.id,"图片限于png,gif,jpeg,jpg,bmp,svg格式");
+		alert("图片限于png,gif,jpeg,jpg,bmp,svg格式");
+		return false;
+	}
+}
+//提交保存
+function okclick(){
+	
+	if($("#wtms").val().length == 0){
+		alert("请输入退货问题描述！");
+		return false;
+	}
+	
+	if($("#wtms").val().length > 500){
+		alert("您输入的描述信息超过500字!");
+		return false;
+	}
+	
+	if($("#WLLX1").is(":checked")){
+		if($("#provinceQY").val() == 0 ||$("#streetQY").val() == 0 || $("#cityQY").val() == 0 ||$("#countryQY").val() == 0 || $("#QYdzdetail").val().length == 0){
+			alert("请填写详细地址");
+			return false;
+		}
+	}
+	
+	if($(".user_name").val().length == 0){
+		alert("请输入联系人");
+		return false;
+	}
+	if($("#user_tel").val().length == 0){
+		alert("请输入联系电话");
+		return false;
+	}
+	
+	
+/* 	if($("#file01").val().length == 0){
+		alert("请上传商品图片信息");
+		return false;
+	}  */
+	
+	
+	var inp = true;
+/* 	// 判断是否有没选择的文件上传框
+	
+	$("input[id^='file01']").each(function(){
+		if($(this).val() == ""){
+			inp = false;	
+		}
+	}); */
+	 
+	// 判断每个文件大小是否超过2M
+	$("input[id^='file01']").each(function(){
+		var id = $(this).attr("id");
+		if(!fileSize(id)){
+			inp = false;
+		} 
+	});
+	// 如果大于2M 则会提示
+	if(!inp){
+		alert("上传的图片大小要在2M以下");
+		return false;
+	}
+	
+	if(zffs == "1"){
+		if($("#KHMC").val().length == 0){
+			alert("请输入银行开户名称!");
+			return false;
+		}
+		
+		if($("#KHYH").val().length == 0){
+			alert("请输入开户银行!");
+			return false;
+		}
+		
+		if($("#YHZH").val().length == 0){
+			alert("请输入银行账户!");
+			return false;
+		}
+	}
+	
+	var arr=$("input[name='thpzs']");
+	var thpz = "";
+	for(i=0;i<arr.length;i++){
+		if(arr[i].checked){
+			if(i==0){
+				thpz+=arr[i].value;
+			}else{
+				thpz+="#"+arr[i].value;
+			}
+			$("#THPZ").val(thpz);
+	      }
+	}
+	var XmlData1 = $("#form1").formToJson();
+	var spjs = escape(XmlData1[0].spjs);
+	var spcs = escape(XmlData1[0].spcs);
+	XmlData1[0].spjs ="";
+	XmlData1[0].spcs ="";
+	var XmlData=escape(JSON.stringify(XmlData1));
+
+	var fileArray=[];
+	var arr=$("li[name='photoscount']");
+	for(var i=0;i<arr.length;i++){
+		var arrs=$("input[class='addphoto']:eq("+i+")");
+	    fileArray.push(arrs.attr("id"));
+	}
+
+	var val="/Oper_THD/insert_THD.action";
+	var r = confirm('确认操作？');
+	if(r==true){
+		//弹出遮罩层
+		 top.openWait();
+		$.ajaxFileUpload({
+			type:"POST",
+			secureuri:false,
+				fileElementId:fileArray,
+			url:encodeURI(val),//encodeURI避免中文乱码
+			dataType:"text",
+			data:{"spjs":spjs,"spcs":spcs,"XmlData":XmlData},
+			success: function(data) { 
+				//关闭遮罩层
+				top.closeWait();
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			//alert(jsondata.STATE);
+			if(data1==1){
+				alert("保存成功!");
+				location.href="/customer/qfy/back/thgl/th-sphf.html";
+				}else{
+				alert("保存失败!");
+					}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				//关闭遮罩层
+				top.closeWait();
+				alert(textStatus);
+		    }
+		});
+	}
+	else return;
+}
+
+//文件大小限制
+function fileSize(id){
+	//var i = $("#" + id)[0].files[0].size;
+	var i=document.getElementById(id).fileSize;
+	var limit = 2*1024*1024;
+	if(i > limit){
+		return false;
+	}
+	return true;
+} 
+</script>
+</html>

@@ -1,0 +1,28 @@
+body{ margin:0 auto; font-size:12px;}
+.clear{ clear:both;}
+ul,li{ margin:0px; padding:0px; list-style:none;}
+a{ cursor:pointer; text-decoration:none;}
+#header{ width:100%; height:70px; background-color:#6089d4; position:fixed; min-width:1000px; z-index:999;}
+#header .logo{ width:70px; height:70px; float:left; margin-left:20px;}
+#header .logo a img{ width:70px; height:70px; border:0px;}
+#header .bt{ width:225px; float:left; height:70px; margin-left:5px;}
+#header .bt img{ float:left;}
+#header .bt span{ float:left; width:50px; margin:3px 0 0 2px; color:#e4e4e4;}
+#header .bt b{ float:left; color:#fff; margin:3px 0 0 2px;}
+#header .bt a{ float:right; color:#2f5bac; margin:3px 20px 0 0px;}
+#header .bt a:hover{ color:#fff;}
+
+#header .db{ float:right; line-height:50px;color:#fff; font-size:13px; font-family:"microsoft yahei"; margin-right:10px;}
+#header .db label{ margin-left:5px; font-family:"Courier New", Courier, monospace; color:#f97979; font-weight:bold; font-size:18px;}
+#header .db a:hover{ color:#f97979;}
+#header .line{ float:right; margin:15px 20px 25px 10px; width:1px; height:20px; background-color:#2f5caf;}
+
+ul#left-nav{ width:120px; float:left; padding:30px 0 20px 30px; border-right:1px solid #ccc; background-color:#faf8f5; position:fixed; top:70px; height:1800px;}
+ul#left-nav li{ width:130px; height:30px; line-height:30px; margin-bottom:10px; font-family:"microsoft yahei"; font-size:14px; color:#666;}
+.uesrName{ position:absolute; z-index:5;  top:45px; right:10px; color:#fff;}
+.uesrName b{ margin-right:10px;}
+.uesrName a{color:#FFF;text-decoration:none;}
+.uesrName a:hover{ color:#CCC;}
+.dbsy2{ position:absolute; z-index:5;top:25px; right:602px;  color:#fff;}
+div.currentWorkflow { position:fixed;width:100%; background-color: white;z-index: 9999;border: 1px solid rgb(204, 204, 204); border-image: none; border-collapse: collapse;}
+div.currentForm{ position:absolute;width:100%; color:#fff;}

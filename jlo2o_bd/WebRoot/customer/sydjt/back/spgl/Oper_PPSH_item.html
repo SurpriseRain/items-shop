@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 品牌上传</title>
+<link type="text/css" rel="stylesheet"href="/customer/sydjt/css/backPub.css"  />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+</head>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<div id="curPosition" style="width:98.5%">
+    	<a href="#">品牌审核</a>
+    	<span>></span>
+    	<b>审核明细</b>
+	</div>
+	<div class="clera"></div>
+    <input type="hidden" name="role" value=""/>
+    <input type="hidden" id="gsid" name="HBID" value=""/>
+	<table class="single_table">
+	     <tr>
+	       <td style="width:100px;"><span>企业名称：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="gsmc" value="" id="gsmc"  size="34" readonly="readonly" /></td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>品牌名称：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="ppmc" value="" id="ppmc"  size="34" readonly="readonly" /></td>
+	     </tr>
+	     <tr>
+	       <td><span>品牌LOGO：</span></td>
+	       <td>
+	        <img src="" id="imgUrl1" class="img"/>
+	       </td>
+	     </tr> 
+	     <tr>
+	       <td><span>品牌证明文件：</span></td>
+	       <td>
+	        <img src="" id="imgUrl2" class="img"/>
+	       </td>
+	     </tr> 
+	     <tr>
+	       <td style="width:100px;"><span>所属分类：</span></td>
+	       <td style="width:550px;"><font>*</font><input  type="text" name="ppfl" value="" id="ppfl"  size="34" readonly="readonly" /></td>
+	     </tr>
+	     <tr>
+	       <td style="width:100px;"><span>审批意见：</span></td>
+	       <td style="width:550px;"><textarea id="spyj" style="float: left;margin: 11px 0 11px 15px; border:1px solid #fff; min-width: 250px;max-width: 300px;min-height: 100px;" placeholder="请在此输入审批或驳回意见"></textarea></td>
+	     </tr>
+	     <tr class="bot">
+	       <td colspan="2">
+	         <a style="margin: 10px 20px 0 80px;" href="javascript:void(0);" onclick="okclick();" class="bot Medium" style="display: block;">同意</a>
+	         <a style="margin: 10px 20px 0 80px;" href="javascript:void(0);" onclick="unclick();" class="bot Medium" style="display: block;">驳回</a>
+	       </td>
+	      </tr>    
+	</table>
+	<div class="clera"></div>
+</form>
+</body>
+<script type="text/javascript">
+var PPB01=null;
+var o = document.forms[0];
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var gsid = usercookie.ZCXX01;
+var hbid=usercookie.XTCZY01;
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	PPB01 = rowObj.find("#PPBH").val();
+	query();
+}
+
+function query(){
+	var XmlData=[{"ppbh":PPB01,"sqlid":"com.jlsoft.o2o.info.sql.selectW_PPXX","dataType":"Json"}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var data=visitService(url);
+	if(data!=undefined&&data!=""){
+		$("#gsmc").val(data[0].ZCXX02);
+		$("#ppmc").val(data[0].PPNAME);
+		if(data[0].PPTP02!='' && data[0].PPTP02!=null && data[0].PPTP02!=undefined){
+		$("#imgUrl1").attr("src",pubJson.path_sptp+"/pptp/"+data[0].PPTP02);
+		$("#imgUrl2").attr("src",pubJson.path_sptp+"/pptp/"+data[1].PPTP02);
+		}
+		$("#spyj").val(data[0].PPB05);
+		var fltemp = null;
+		for(var i=0; i<data.length; i=i+2){
+			if(fltemp == null || fltemp == ""){
+				fltemp = data[i].SPFL02;
+			}
+			else{
+				fltemp = fltemp + "," + data[i].SPFL02;
+			}
+		}
+		$("#ppfl").val(fltemp);
+		if(data[0].STATE=="0"){
+			}
+		else if(data[0].STATE=="1"){
+			$(".Medium").css({"background-color":"#8D8881"});
+			$(".Medium").removeAttr("onclick");
+			var s='<td colspan="2" style="text-align: center;font-size: 26px;font-family: microsoft yahei;color:#d45149;font-weight: bold;">审核已通过</td>'
+		    $("tr.bot").show();
+			$("tr.bot").html(s);
+			}
+		else if(data[0].STATE=="2"){
+			$(".Medium").css({"background-color":"#8D8881"});
+			$(".Medium").removeAttr("onclick");
+			var s='<td colspan="2" style="text-align: center;font-size: 26px;font-family: microsoft yahei;color:#ff8800;font-weight: bold;">审核未通过</td>'
+			$("tr.bot").show();
+			$("tr.bot").html(s);
+			}/* {
+			//$(".Medium").attr("display","none");
+			//var s='<td colspan="2" style="text-align: center;font-size: 26px;font-family: microsoft yahei;color:#ff8800;font-weight: bold;">审核未通过:'+data[0].PPB05+'</td>'
+			$("tr.bot").html(s);
+			//$(".Medium").removeAttr("onclick");
+			
+		} */
+	}
+}
+
+function unclick() {
+	var spyj = $("#spyj").val();
+	var XmlData=[{"PPB01":PPB01,"STATE":"2","SPYJ":spyj}];
+	var url="/QFY/auditPPXX.action?XmlData="+JSON.stringify(XmlData);
+	var returnVal=visitService(url);
+   	if(returnVal.STATE=='1'){
+   	   	alert("审核成功!");
+		parent.execBackFun("aaa");
+		parent.$("#ajaxGrid").remove();
+   	}else{
+   	   	alert("审核失败!");
+ 	}
+}
+
+function okclick(){
+	var spyj = $("#spyj").val();
+	var XmlData=[{"PPB01":PPB01,"STATE":"1","SPYJ":spyj}];
+	var url="/QFY/auditPPXX.action?XmlData="+JSON.stringify(XmlData);
+	var returnVal=visitService(url);
+   	if(returnVal.STATE=='1'){
+   	   	alert("审核成功!");
+		parent.execBackFun("aaa");
+		parent.$("#ajaxGrid").remove();
+   	}else{
+   	   	alert("审核失败!");
+ 	}
+}
+
+//回填
+function parentWindowFunc(result,rowindex,id){
+	$("#"+id).attr("value",result.getColumnValue(rowindex,"CODE"));
+	$("#s_"+id).attr("value",result.getColumnValue(rowindex,"NAME"));
+}
+
+//图片点击放大
+$(document).ready(function(){
+	  $(".bot").hide();
+	$("td > img").click(function(){
+	  var td_img = $(this).attr("class");
+	  if(td_img == "img"){
+		 $(this).attr("class","big")
+		}else if(td_img == "big"){
+		 $(this).attr("class","img") 
+		}
+	 })
+
+	
+})
+</script>
+</html>

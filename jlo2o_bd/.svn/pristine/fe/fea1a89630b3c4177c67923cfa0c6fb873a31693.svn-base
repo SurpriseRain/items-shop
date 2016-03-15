@@ -1,0 +1,35 @@
+<div class="merch_page_tab">
+  <ul class="w10">
+    <li class="xuan">待支付(2)</li>
+    <li>待发货(2)</li>
+    <li>待确认(125)</li>
+    <li>待物流打包(56)</li>
+    <li>待物流发货(124)</li>
+    <li>已完成(5698)</li>
+    <li>删除(23)</li>
+  </ul>
+</div>
+<div class="w12">
+  <dl class="w12 public_list">
+    <dt class="w12"><span>订货时间：2015-07-07 15:22:22</span><span>订单号：10322652151</span><span>支付方式：线上支付</span><span>供应商：XXXXX旗舰店</span><i class="fa fa-trash-o" title="删除订单"></i></dt>
+    <dd class="w06">
+      <div class="w02"><a href="../proItem/proItem.html"><img src="../images/sp.jpg"></a></div>
+      <div class="w08"><a href="../proItem/proItem.html">商品名称商品商品名称商品名称商品名称商品名称商品名称名称商品名称商品名称商品名称</a></div>
+      <div class="w02"><span class="w12">×1</span></div>
+    </dd>
+    <dd class="w02"><b class="w12">￥ 5,288.00</b><span class="w12">在线支付</span></dd>
+    <dd class="w02"><b class="w12">等待付款</b><a id="my_order_infor" class="w12">订单详细</a></dd>
+    <dd class="w02"><input type="button" value="立即付款" class="jl_btn btn_red"></dd>
+  </dl>
+  <dl class="w12 public_list">
+    <dt class="w12"><span>订货时间：2015-07-07 15:22:22</span><span>订单号：10322652151</span><span>支付方式：线上支付</span><span>供应商：XXXXX旗舰店</span><i class="fa fa-trash-o" title="删除订单"></i></dt>
+    <dd class="w06">
+      <div class="w02"><a href="../proItem/proItem.html"><img src="../images/sp.jpg"></a></div>
+      <div class="w08"><a href="../proItem/proItem.html">商品名称商品商品名称商品名称商品名称商品名称商品名称名称商品名称商品名称商品名称</a></div>
+      <div class="w02"><span class="w12">×1</span></div>
+    </dd>
+    <dd class="w02"><b class="w12">￥ 5,288.00</b><span class="w12">在线支付</span></dd>
+    <dd class="w02"><b class="w12">等待付款</b><a id="my_order_infor" class="w12">订单详细</a></dd>
+    <dd class="w02"><input type="button" value="立即付款" class="jl_btn btn_red"></dd>
+  </dl>
+</div>

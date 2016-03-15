@@ -1,0 +1,1126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/css/multiSelectTree.css" />
+<link rel="stylesheet" type="text/css" href="/css/ext-all.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<style type="text/css">
+	.ke-dialog{
+	top: inherit!important;
+    bottom: 135px !important;
+    }
+</style>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type='text/javascript' src="/js/jquery.foggle.min.js"></script>
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/commons.js" ></script>
+<script type="text/javascript" src="/customer/qfy/js/openbox.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/menu.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/plugins/code/prettify.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+<script type="text/javascript" src="/customer/qfy/js/shop-Delete.js"></script>
+<script type="text/javascript" src="/js/multiSelectTree.js"></script>
+<script type="text/javascript" src="/js/ext-tree-jl.js"></script>
+<script type="text/javascript" src="/js/ext-multree-jl.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<style>
+.checkboxOne {
+width: 80px;
+height: 10px;
+background: #555;
+margin: 20px 80px;
+position: relative;
+border-radius: 3px;
+}
+</style>
+</head>
+
+<script>
+var MyCookie = $.cookie('userInfo');
+if(MyCookie==null){
+	alert("亲，您还未登录！");
+	location.href="/gui_o2o/qfy/fore/index.html";
+}
+var user = JSON.parse(MyCookie);
+var editor1;
+var editor2;
+
+var gsid=user.ZCXX01;
+//上传图片存放路径
+var path="spdetail/"+gsid+"/images/";
+var hbid=user.XTCZY01;
+
+KindEditor.ready(function(K) {
+	 editor1 = K.create('textarea[name="spjs"]', {
+		cssPath : '/keditor/plugins/code/prettify.css',
+		uploadJson : '/servlet/TpUploadServlet?filename='+path + '&filetype=sptp',//上传图片方法，在TpUploadServlet里
+		fileManagerJson : '/fileManageServlet?filename='+path,
+		allowFileManager : true,
+		afterCreate : function() {
+			var self = this;
+			K.ctrl(document, 13, function() {
+				self.sync();
+				document.forms['form0'].submit();
+			});
+			K.ctrl(self.edit.doc, 13, function() {
+				self.sync();
+				document.forms['form0'].submit();
+			});
+		}
+	});
+	prettyPrint();
+	
+});
+
+//获得kindeditor中的信息
+function getValues() {
+   // 取得HTML内容
+   var html1 = editor1.html();
+   // 同步数据后可以直接取得textarea的value
+   editor1.sync();
+}
+var SPXX01 = $.getUrlParam('SPXX01');
+
+$(document).ready(function(){
+	showFL();
+	showW_JLDW();
+	/* $(".dqxzlb > a").click(function(){
+		var objs = $("#ppbNAME").val();
+		if(objs=="" || objs==null){
+			alert("请点击乘用车，选择品牌!");
+			return false;
+		}
+		
+		/* else{			
+		    srchW_goods(SPXX01);
+		   $(".dqbd").css({"display":"block"});
+		   parent.eventChangeIframeSize(); 		   
+		} */
+//	});
+	$("#BARCODE").on("blur",function(){
+		srch();
+		//$("#BARCODE").focus();
+	});
+	$("#sureclick").on("click",function(){
+		okclick();
+	});
+	var i=1;
+    $("li > label").click(function(){
+		  var label_text = $(this).text();
+		  var myDate = new Date();
+		  var time = myDate.getTime();
+	      if(label_text == "新增零件号"){
+			$(this).parent("li").append('<li><span class="name">&nbsp;</span><input style="width:300px;style="cursor:pointer; margin-left:5px;color: orangered;" name="SPGLLJH"  class="styles_'+time+'"  onblur="checkData('+time+');"/><label style="cursor:pointer;">删除零件号</label></li>');
+	          $("li > label").click(function(){
+		           var label_text01 = $(this).text();
+					if(label_text01 == "删除零件号"){
+					  $(this).parent("li").remove();
+					}						 
+			   })
+			}
+	});
+});
+
+//车型车系展示
+
+function showcxs(){
+	if($(".cx").val()==1) {
+		$("#tdcx").show();
+	}else{
+		$("#tdcx").hide();
+	}
+}
+function showcx(){
+	if($(".cx").val()==1) {
+		//onloadTree();//车系车系展示,通配件不展示
+		var url = pubJson.O2OUrl+"/customer/qfy/back/spgl/spgl_item.html?yxcs="+$("#yxcs").val()+"&yxcs_name="+escape($("#yxcs_name").val());
+		parent.ajaxGrid(url);
+		$("#tdcx").show();
+	} else {
+		$("#tdcx").hide();
+	}
+}
+
+//检查页面零件号是否重复
+function  checkDataNum(tis){
+	var $sty = $("input[class^='styles_']");
+	for(var i = 0; i < $sty.length; i++){
+		var styVal = $sty[i].value;
+		if(styVal == tis[0].value && $sty[i] != tis[0]){
+			tis[0].value = "";
+			tse("ljhts","主机厂零件号不能重复!");
+			return false;
+		}
+	}
+	return true;
+}
+ 
+
+//检测零件号是否重复
+function checkData(obj){
+	var $sytles = $("input[class^='styles_']");
+	var SPGLLJH01=$(".styles_"+obj).val();
+	if(SPGLLJH01==""){
+		// alert("主机厂零件号不能为空！");
+		tse("ljhts","主机厂零件号不能为空!");
+		return false;
+	}else{
+		if($sytles.length > 1 && SPGLLJH01 != ""){
+			if (!checkDataNum($(".styles_"+obj))){
+				return false;
+			}
+		}
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.srchW_SPGLLJHSum','QryType':'Report','dataType':'Json','SPGLLJH01':SPGLLJH01,"SPXX01":"",'ZCXX01':gsid}];
+		var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	    var rData=visitService(url);
+	    if(rData!=undefined&&rData!=""){
+			if(rData[0].COUNT>=1){
+				// alert("此主机厂零件号已存在！");
+				tse("ljhts","此主机厂零件号已存在!");
+				$(".styles_"+obj).val("");
+			} else {
+				ts("ljhts");
+			}
+	    }
+	}
+}
+
+//检测自编码是否存在
+function checkZBM(){
+	var SPGL24=$("#SPGL24").val();
+	if(SPGL24==""){
+		// alert("此生产企业自编码不能为空！");
+		tse("qybmts","此生产企业自编码不能为空!");
+	}else{
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.srchW_SPGLZBM','QryType':'Report','dataType':'Json','SPGL24':SPGL24,"SPXX01":""}];
+		var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	    var rData=visitService(url);
+	    if(rData!=undefined&&rData!=""){
+			if(rData[0].COUNT>=1){
+				//alert("此生产企业自编码已存在！");
+				tse("qybmts","此生产企业自编码已存在!");
+				$("#SPGL24").val("");
+			} else {
+		    	ts("qybmts");
+		    }
+	    } 
+	}
+}
+
+function showW_JLDW(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.showW_JLDW','QryType':'Report','dataType':'Json'}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+    var rData=visitService(url);
+    if(rData!=undefined&&rData!=""){
+        $(rData).each(function(index,val){
+        	$(".ge").append("<option value="+val.JLDW01+">"+val.JLDW02+"</option>");
+         });		
+	}
+}
+
+function srchW_goods(SPXX01){
+	 	var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.srchW_goods','QryType':'Report','dataType':'Json','SPXX01':SPXX01}];
+		var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	    var rData=visitService(url);
+	    if(rData!=undefined&&rData!=""){
+		$("#spid").val(SPXX01);
+	    $("#BARCODE").val(rData[0].BARCODE); 
+	    $("#SPXX04").val(rData[0].SPXX04);
+	    $("#ORIGIN_CPLACE").val(rData[0].origin_cplace);
+	}
+}
+
+function onloadTree() {
+	var url ="/TreeCheckbox.jsp?sqlID=com.jlsoft.o2o.pub.tree.sql.cxflTree&backStr=&treeCxjb=1&level=5";
+	setFrameTree(url);
+}
+
+function setFrameTree(url){
+	 //路径
+	 $("#detailsResultTree").attr("src",url);
+}
+
+//取消附件上传
+function removeFile(obj){
+	var fileNameId=$(obj).parent().parent().find("span.photook").attr("id");
+	var num=fileNameId.replace("filename","");
+	//alert(num);
+	$("#files").find("#file"+num).remove();
+	$("#"+fileNameId).text("");
+	$("#"+fileNameId).removeClass("photook");
+}
+
+function photo_open(obj){
+	var id=$(obj).attr("id");
+	$("input[name='idFile']").val(id);
+    jBox('id:photo_open', {showIcon: 'jbox-title-icon' });
+    var height = $("#form1").height()/2+160;
+    $("#jbox").css("margin-top",height+"px");
+}
+
+//展示一级分类
+function showFL() {
+	var functionName = "loadFL";
+	var baseUrl = "";	
+	var url = baseUrl+"/showGoods/selectGlobals.action";
+	var returnData = visitService(url);
+	$(returnData.fl).each(function(i,FL01){
+		/*
+		$("ul.dqlb").find("li").eq(0).append("<input type='radio' name='clxz' /><span>"+FL0.ppfl01name+"</span>");
+		$("ul.dqlb").find("li").eq(0).find("input").eq(i).on("click",function(){
+		$("ul.dqlb").find("li").eq(1).find(".flmain").empty();
+		*/
+	//$(FL0.SPFL02List).each(function(index,FL01){
+		$("ul.dqlb").find("li").eq(1).find(".flmain").append("<div class='yjfl'><span>"+FL01.ppfl01name+"</span><font>></font></div>");
+		$("ul.dqlb").find("li").eq(1).find(".flmain").find("div").eq(i).on("click",function(){
+			 $("#ppbNAME").val("");
+			 $(".dqbd").css({"display":"none"});
+			 $(".flppxz").empty();
+			 $(this).siblings(".yjfl").removeClass("xuanyifl");
+			 $(this).addClass("xuanyifl"); 
+			 var yjfl_text = $(this).children("span").text();
+						 
+		  	$("#SPFL01_CODE").val(FL01.ppfl01code);
+		  	$("#SPFL01_NAME").val(FL01.ppfl01name);
+			$("ul.dqlb").find("li").eq(2).find(".flmain").empty();
+			$("ul.dqlb").find("li").eq(3).find(".flmain").empty();
+			$("ul.dqlb").find("li").eq(4).find(".flmain").empty();
+			//$("ul.dqlb").find("li").eq(2).hide();
+			$(this).attr("class","yjfl xuanyifl");
+				
+			$(FL01.SPFL02List).each(function(m,FL02){
+				$("ul.dqlb").find("li").eq(2).find(".flmain").append("<div class='yjfl'><span>"+FL02.FLNAME+"</span><font>></font></div>");
+				$("ul.dqlb").find("li").eq(2).find(".flmain").find("div").eq(m).on("click",function(){
+					$("#ppbNAME").val("");
+					 $(".flppxz").empty();
+					 $(".dqbd").css({"display":"none"});
+					 $(this).siblings(".yjfl").removeClass("xuanyifl");
+					 $(this).addClass("xuanyifl"); 
+					 var yjfl_text = $(this).children("span").text();
+					
+				  	$("#SPFL02_CODE").val(FL02.FLCODE);
+				  	$("#SPFL02_NAME").val(FL02.FLNAME);
+					$("ul.dqlb").find("li").eq(3).find(".flmain").empty();
+					$("ul.dqlb").find("li").eq(4).find(".flmain").empty();
+					//$("ul.dqlb").find("li").eq(2).show();
+					$(this).attr("class","yjfl xuanyifl");
+					
+					$(FL02.SPFL03List).each(function(n,FL03){
+						$("ul.dqlb").find("li").eq(3).find(".flmain").append("<div class='yjfl'><span>"+FL03.FLNAME+"</span><font>></font></div>");
+						$("ul.dqlb").find("li").eq(3).find(".flmain").find("div").eq(n).on("click",function(){
+							 $(".flppxz").empty();
+							 $(".dqbd").css({"display":"none"});
+							 $("#ppbNAME").val("");
+							 $(this).siblings(".yjfl").removeClass("xuanyifl");
+							 $(this).addClass("xuanyifl"); 
+							 var yjfl_text = $(this).children("span").text();
+							 $("ul.dqlb").find("li").eq(4).find(".flmain").empty();
+						  	 $("#SPFL03_CODE").val(FL03.FLCODE);
+						  	 $("#SPFL03_NAME").val(FL03.FLNAME);
+							 $(this).attr("class","yjfl xuanyifl");
+							 
+							 //查询商品属性
+							 var SPFL03_CODE = $("#SPFL03_CODE").val();
+							 var XmlData = [{"SPFL03_CODE":SPFL03_CODE}];
+							 var urlspsx = baseUrl+"/QFY/selectspsx.action?XmlData="+JSON.stringify(XmlData);
+							 var returnData = visitService(urlspsx);
+							 $(returnData.list).each(function(x,obj){
+								 $("#spsxmc").append("<option value='"+obj.sxbh+"'>"+obj.sxname+"</option>");
+							});
+							 $("#spsxmc").on("change",function(){
+								//查询商品属性值
+					   	    	var sxbh = $("#spsxmc").val();
+					   	    	var XmlData1 = [{"SPFL03_CODE":SPFL03_CODE,"sxbh":sxbh}];
+								var urlspsxz = baseUrl+"/showGoods/selectGlobals.action?XmlData="+JSON.stringify(XmlData1);
+								var returnData = visitService(urlspsxz);
+								 $(returnData.list).each(function(x,obj){
+									 $("#spsxz").append("<option value='"+obj.spzdm+"'>"+obj.spzname+"</option>");
+								 });
+							 });
+							 
+							 var jsonData = [{"SPFL01_CODE":$("#SPFL01_CODE").val(), "ZCXX01" : gsid}];
+							 var fbspppUrl = baseUrl + "/Oper_PPGL/selectFBSPPP.action?jsonData=" + JSON.stringify(jsonData);
+							 var rPPData = visitService(fbspppUrl);
+							 if(rPPData.STATE == "1" && rPPData.resultList.length != 0){
+							 	//根据分类查找对应显示品牌
+							 	$(rPPData.resultList).each(function(n,PP){
+									$("ul.dqlb").find("li").eq(4).find(".flmain").append("<div class='yjfl'><span>"+PP.PPB02+"</span><font>></font></div>");
+									$("ul.dqlb").find("li").eq(4).find(".flmain").find("div").eq(n).on("click",function(){
+										 $(".flppxz").empty();
+
+										 $(this).siblings(".yjfl").removeClass("xuanyifl");
+										 $(this).addClass("xuanyifl"); 
+										 var yjfl_text = $(this).children("span").text();
+										
+									  	 $("#ppb01").val(PP.PPB01);
+									  	 $("#ppbNAME").val(PP.PPB02);
+										 $(this).attr("class","yjfl xuanyifl");
+										 $(".flppxz").append("<span>"+$("#SPFL01_NAME").val()+"</span> > <span>"+$("#SPFL02_NAME").val()+"</span> ><span>"+$("#SPFL03_NAME").val()+"</span> > <span>"+$("#ppbNAME").val()+"</span>");
+									     //选择商品所有子类后,显示录入信息详情
+										 srchW_goods(SPXX01);
+										   $(".dqbd").css({"display":"block"});
+										   parent.eventChangeIframeSize();
+										   parent.setFooterPosition(1900);
+									});
+								});
+							}
+						});
+					});
+				});
+			});
+
+		});
+	//});
+	//		});
+		});
+}
+
+function srch(){
+	var BARCODE=$("#BARCODE").val();
+	var  XmlData1 = [{"BARCODE":BARCODE}];
+	//XmlData1[0].xpbj=xpbj;
+	var XmlData=JSON.stringify(XmlData1);
+	if(BARCODE==""){
+		tse("sptmts","请输入商品条码!");
+		return false;
+	}else if(BARCODE.length != 13){
+		tse("sptmts","请输入13位商品条码!");
+		return false;
+	}
+	var url="/MyGoods/SrchGoods.action?XmlData="+XmlData;
+	var rData=visitService(url);
+	if(rData.STATE=="1"){
+		if(rData.goodsMap!=null&&rData.goodsMap.FLAG!="NO"&&rData.goodsMap.JL_State!="接收失败"){
+			var goodsMap=rData.goodsMap;
+			$("#SPXX04").val(goodsMap.itemName);
+			$("#ORIGIN_COUNTRY").val("");
+			$("#ORIGIN_CPLACE").val("");
+			$("#ORIGIN_PLACE_CODE").val("");//产地代码
+			$("#ORIGIN_EPLACE").val("");//产地英文名
+			$("#HIGH").val(goodsMap.height.value);
+			$("#WIDTH").val(goodsMap.width.value);
+			$("#DEPTH").val(goodsMap.depth.value);
+			$("#HIGH_UNIT").val(goodsMap.height.unitOfMeasure);//高度单位
+			$("#WIDTH_UNIT").val(goodsMap.width.unitOfMeasure);
+			$("#DEPTH_UNIT").val(goodsMap.depth.unitOfMeasure);
+			$("#CATEGORY_CODE").val(goodsMap.classCode);//分类编码
+			$("#BRAND").val("");//品牌
+			$("#KEYWORD").val("");//关键字
+			$("#DESCRIPTION").val(goodsMap.description);//短描述
+			$("#PACKAGING_MATERIAL").val(goodsMap.packagingMaterialCode);//包装材料
+			$("#PACKAGING_TYPE").val(goodsMap.packagingTypeCode);//包装类型
+			$("#SPECIFICATION").val(goodsMap.shortDescription);//规格
+			$("#QUALITY_GUARANTEE_PERIOD").val("");//保质期
+			$("#SUPPLIER").val("");//供应商
+			$("#GOODS_STATUS").val("");//商品状态0为无效
+			$("#LISTDATE").val("");//生产时间
+		}else{
+			// alert("查询不到符合条件的商品!");
+			ts("sptmts");
+			return false;
+		}
+	}else if(rData.STATE=="2"){
+		// alert("商品条码已存在,请重新输入");
+		tse("sptmts","商品条码已存在,请重新输入!");
+		$("#BARCODE").val("");
+		return false;
+	}else{
+		// alert("请输入正确的商品条码!");
+		tse("sptmts","请输入正确的商品条码!");
+		return false;
+	}
+}
+
+//新增保存
+function okclick(){
+        //判断是否要跟跟物流对接
+        var wlUrl = "/PubService/getZCGSWL.action?ZCXX01="+gsid;
+        var wlReturnData = visitService(wlUrl);
+        if(wlReturnData.CurConf == "1" && wlReturnData.APP_KEY == undefined){
+        	alert("请先在安迅物流上注册");
+        	return;
+        }
+        
+        // 判断是否填写发票说明
+        var fpUrl = "/FWSM/getFPSMWS.action?ZCXX01=" + gsid;
+        var fpReturnData = visitService(fpUrl);
+        if(fpReturnData.CurConf == "1"){
+        	alert("请先完善发票服务说明信息!");
+        	return;
+        }
+        //发布商品具体赋值
+		getValues();
+		$("#gsid").attr("value",gsid);
+		var SPFL01_CODE=$("#SPFL01_CODE").find("option:selected").val();
+		var SPFL01_NAME=$("#SPFL01_NAME").find("option:selected").html();
+		var SPFL02_CODE=$("#SPFL02_CODE").next().find("option:selected").val();
+		var SPFL02_NAME=$("#SPFL02_NAME").next().find("option:selected").html();
+		// var ppb02=$("#ppbNAME").val();
+		$("#spgl26").val(0);
+		 $("#spgl27").val(0);
+		 $("#spgl28").val(0);
+		/* //判断可追溯;
+		   if($("#spgl266").attr("checked"))
+		    {
+			   $("#spgl26").val(1);
+		      
+		    }else{
+		    	$("#spgl26").val(0);
+		    }
+		 //判断同质配件;
+		   if($("#spgl277").attr("checked"))
+		    {
+			   $("#spgl27").val(1);
+		    }else{
+		      $("#spgl27").val(0);
+		    }
+		 //判断放心汽修;
+		   if($("#spgl288").attr("checked"))
+		    {
+			   $("#spgl28").val(1);
+		    }else{
+		    	$("#spgl28").val(0);
+		    } */
+		/* if(ppb02=="" || ppb02==null){
+			alert("请选择品牌!");
+			return false;
+		}
+		var sptma=$("#BARCODE").val();
+		if(sptma=="" || sptma==null){
+			alert("请输入商品条码!");
+			return false;
+		} else if(sptma.length!=13){
+			alert("请输入13位商品条码!");
+			return false;
+		}
+		var scqyzbm=$("#SPGL24").val();
+		if(scqyzbm=="" || scqyzbm==null){
+			alert("请输入生产企业编码!");
+			return false;
+		}
+		var zjcljh=$(".styles_-1").val();
+		if(zjcljh=="" || zjcljh==null){
+			alert("请输入主机厂零件号!");
+			return false;
+		}
+		var spmca=$("#SPXX04").val();
+		if(spmca=="" || spmca==null){
+			alert("请输入商品名称!");
+			return false;
+		}
+		var spjq=$("#SPJGB05").val();
+		if(spjq=="" || spjq==null){
+			alert("请输入商品零售价!");
+			return false;
+		}
+		if(!/^\d{1,10}(\.\d{1,2})?$/.test(spjq)){
+			alert('价格输入错误,最长10位且最多保留两位小数')
+			return false;
+		}
+		var chang=$("#SPXX09").val();
+		if(chang=="" || chang==null){
+			alert("请输入商品的长度!");
+			return false;
+		}
+		var kuan=$("#SPXX10").val();
+		if(kuan=="" || kuan==null){
+			alert("请输入商品的宽度!");
+			return false;
+		}
+		var gao=$("#SPXX11").val();
+		if(gao=="" ||gao==null){
+			alert("请输入商品的高度!");
+			return false;
+		}
+		var zl=$("#SPXX12").val();
+		if(zl=="" ||zl==null){
+			alert("请输入商品的重量!");
+			return false;
+		}
+		var ggxha=$("#GGXH").val();
+		if(ggxha=="" ||ggxha==null){
+			alert("请输入商品的规格型号!");
+			return false;
+		}
+		var jldw=$(".ge").val();
+		if(jldw=="" ||jldw==null){
+			alert("请选择商品的计量单位!")
+			return false;
+		} */
+		var flag = checkNull();
+		if(!flag){
+			return false;
+		}
+		
+		var XmlData1 = $("#form1").formToJson();
+		XmlData1[0].sx="";
+		XmlData1[0].SPFL01=$("#SPFL03_CODE").val();
+		XmlData1[0].SPFL02=$("#SPFL03_NAME").val();
+		var spjs = escape(XmlData1[0].spjs);
+		var spcs = escape(XmlData1[0].spcs);
+		XmlData1[0].spjs ="";
+		XmlData1[0].spcs ="";
+		
+		if($(".cx").val()==1) {
+			var CXBH = $("#yxcs").val();
+			XmlData1[0].CXBH=CXBH;
+		} else {
+			XmlData1[0].CXBH=null;
+		}
+		var XmlData=escape(JSON.stringify(XmlData1));
+		var fileArray=[];
+   
+		var arr=$("input[class='modalInput']");
+		for(var i=1;i<=arr.length;i++){
+		    fileArray.push("file0"+i);
+		}
+
+		var val="/MyGoods/insertNewGoods.action";
+		var r = confirm('确认保存商品信息吗？');
+		if(r==true){
+		     //弹出遮罩层
+		     top.openWait();
+		     
+			$.ajaxFileUpload({
+				type:"POST",
+				secureuri:false,
+ 					fileElementId:fileArray,
+				url:encodeURI(val),//encodeURI避免中文乱码
+				dataType:"text",
+				data:{"spjs":spjs,"spcs":spcs,"XmlData":XmlData},
+				success: function(data) { 
+					//关闭遮罩层
+					top.closeWait();
+					
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				//(jsondata.STATE);
+				if(data1==1){
+					if(pubJson.Solr == "1"){
+						var solrUrl = "/SearchHandler/searchAddNewIndex.action?spid=" + jsondata.spid; 
+						visitService(solrUrl);
+					}
+					alert("保存成功!");
+					//location.reload();
+					$("#yxcs_name").html("");
+					$("#tdcx").hide();
+					clearData();
+					if(SPXX01!=null){
+						parent.execBackFun("aaa");
+						parent.$("#ajaxGrid").remove();
+					}
+				}else{
+					alert("保存失败!");
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					//关闭遮罩层
+					top.closeWait();
+					//alert(textStatus);
+					//alert(JSON.stringify(XMLHttpRequest)+"  ++ "+textStatus+"  ++  "+errorThrown);
+			    }
+			});
+		}
+		else return;
+}
+
+function clearData(){
+	$("#BARCODE").val("");
+	$("#SPGL24").val("");
+	$(".dqbd").find("input[name='SPGLLJH']").val("");
+	$("#ORIGIN_CPLACE").val("");
+	$("#SPXX04").val("");
+	$("#SPJGB05").val("");
+	$("#SPXX09").val("");
+	$("#SPXX10").val("");
+	$("#SPXX11").val("");
+	$("#SPXX12").val("");
+	$("#GGXH").val("");
+	$(".cx").val("");
+	$("#filename01").text("");
+	$("#filename02").text("");
+	$("#filename03").text("");
+	$("#filename04").text("");
+	editor1.html("");
+	$("#yxcs_name").val("");
+	$("#yxcs").val("");
+	// 清除对号样式
+	$(".sptmts").empty();
+	$(".qybmts").empty();
+	$(".ljhts").empty();
+	$(".spmcts").empty();
+	$(".lsjgts").empty();
+	$(".lengthts").empty();
+	$(".widthts").empty();
+	$(".heightts").empty();
+	$(".weightts").empty();
+	$(".ggxhts").empty();
+	$(".yxcxts").empty();
+	
+}
+function getFileName() {
+	var file=$("#jbox-content").find("input[type='file']").val();
+	var stuff = file.split(".")[1];
+    if (stuff != "png" && stuff != "jpg" && stuff != "PNG" && stuff != "JPG"){
+      alert("请选择正确的png,jpg文件导入");
+      return false;
+    }
+    
+	var box=window.$.jBox.getBox();
+	var oldfile=$(box).find("input[name='pic']");
+	var num=$(box).find("input[name='idFile']").val();
+	$(box).find("input[name='idFile']").val("");
+	var id="file"+num;
+	//$(newfile).attr("id",id).attr("name",id).removeClass("browbtn");
+	$("#files").find("#"+id).remove();
+	$("#files").append(oldfile);
+	$("#files").find("input[name='pic']").attr("id",id).attr("name","files").removeClass("browbtn");
+	var path = $("#files").find("#"+id).val();
+	if(path!=""){
+		var filename = "";
+		var pos1 = path.lastIndexOf('/');
+		var pos2 = path.lastIndexOf('\\');
+		var pos = Math.max(pos1, pos2);
+		if (pos < 0) {
+			filename = path;
+		} else {
+			filename = path.substring(pos + 1);
+		}
+		var size=document.getElementById(id).files[0].size;
+		var limit= 1*1024*1024;
+		if(size > limit){
+			alert("上传的图片大小要在1M以下");
+			$("#files").find("#"+id).remove();
+		}else{
+		$("#filename" + num).html(filename).addClass("photook");
+		}
+	}else{
+		alert("请上传图片!");
+	}
+
+	window.jBox.close();
+	$("body").css("overflow","auto");
+    
+}
+//执行回调方法
+function backFun(s){
+	var sArray=s.split("#");
+	$("#yxcs_name").val(sArray[1]);
+	$("#yxcs").val(sArray[0]);
+	if($("#yxcs").val().length > 0){
+		ts("yxcxts");
+	} else {
+		tse("yxcxts","请选择已选车系!");
+	}
+}
+
+function checkedNum(id){
+	var c = $("#" + id);
+    if(/[^\d]/.test(c.val())){//替换非数字字符  
+      var temp_amount=c.val().replace(/[^\d]/g,'');
+      $("#" + id).val(temp_amount);
+    }
+ }
+
+function checkedNum1(id){
+	var c = $("." + id);
+    if(/[^\d]/.test(c.val())){//替换非数字字符  
+      var temp_amount=c.val().replace(/[^\d]/g,'');
+      $("." + id).val(temp_amount);
+    }
+}
+
+// 检查是否为空
+function checkNullLength(id, cls){
+	if($("#" + id).val().length > 0){
+		ts(cls);
+	}
+}
+
+// 为空判断
+function checkNull(){
+	var ppb02 = $("#ppbNAME").val();
+	if(ppb02 == "" || ppb02 == null){
+		tse("ppxzts","请选择品牌!");
+		return  false;
+	}
+	var sptma=$("#BARCODE").val();
+	if(sptma == "" || sptma == null){
+		tse("sptmts","请输入商品条码!");
+		return false;
+	} else if(sptma.length != 13){
+		tse("sptmts","请输入13位商品条码!")
+		return false;
+	}
+	var scqyzbm = $("#SPGL24").val();
+	if(scqyzbm == "" || scqyzbm == null){
+		tse("qybmts","请输入生产企业编码!");
+		return false;
+	}
+	var zjcljh = $(".styles_-1").val();
+	if(zjcljh == "" || zjcljh == null){
+		tse("ljhts","请输入主机厂零件号!");
+		return false;
+	}
+	var spmca = $("#SPXX04").val();
+	if(spmca == "" || spmca == null){
+		tse("spmcts","请输入商品名称!");
+		return false;
+	}
+	var spjq = $("#SPJGB05").val();
+	if(spjq == "" || spjq == null){
+		tse("lsjgts","请输入商品零售价!");
+		return false;
+	}
+	if(!/^\d{1,10}(\.\d{1,2})?$/.test(spjq)){
+		tse("lsjgts","价格输入错误,最长10位且最多保留两位小数!");
+		return false;
+	}
+	var chang = $("#SPXX09").val();
+	if(chang == "" || chang == null){
+		tse("lengthts","请输入商品的长度!");
+		return false;
+	}
+	var kuan = $("#SPXX10").val();
+	if(kuan == "" || kuan == null){
+		tse("widthts","请输入商品的宽度!");
+		return false;
+	}
+	var gao = $("#SPXX11").val();
+	if(gao == "" || gao == null){
+		tse("heightts","请输入商品的高度!");
+		return false;
+	}
+	var zl = $("#SPXX12").val();
+	if(zl == "" || zl == null){
+		tse("weightts","请输入商品的重量!");
+		return false;
+	}
+	var ggxha = $("#GGXH").val();
+	if(ggxha == "" || ggxha == null){
+		tse("ggxhts","请输入商品的规格型号!");
+		return false;
+	}
+	var jldw = $(".ge").val();
+	if(jldw == "" || jldw == null){
+		tse("jldwts","请选择商品的计量单位!");
+		return false;
+	}
+	var sycx=$(".cx").val();
+	if(sycx=="" ||sycx==null){
+		tse("sycxts","请选择商品的试用车系!")
+		return false;
+	}
+	// 如果是特定车系 判断是否选择了已选车系
+	if(sycx == 1){
+		if($("#yxcs").val().length == 0){
+			tse("yxcxts","请选择已选车系!")
+			return false;
+		}
+	}
+	return true;
+}
+
+</script>
+
+<body>
+<!-----公共部门开始---->
+<form id="form1" name="form1">
+<input type="hidden" id="sqlid" name="sqlid" value="com.jlsoft.o2o.sql.goods.SELECT_SPCX"/>
+<input type="hidden" id="spid" name="spid" value="0"/>
+<input type="hidden" id="spcode" name="spcode" value=""/>
+<input type="hidden" id="gsid" name="ZCXX01" value=""/>
+<!-- 编码中心回传隐藏数据 -->
+<input type="hidden" name="ORIGIN_COUNTRY" value="" id="ORIGIN_COUNTRY" size="25" class="text" />
+<input type="hidden" name="ORIGIN_PLACE_CODE" value="" id="ORIGIN_PLACE_CODE" size="25" class="text" />
+<input type="hidden" name="ORIGIN_EPLACE" value="" id="ORIGIN_EPLACE" size="25" class="text" />
+<input type="hidden" name="CATEGORY_CODE" value="" id="CATEGORY_CODE" size="25" class="text" />
+<input type="hidden" name="BRAND" value="" id="BRAND" size="25" class="text" />
+<input type="hidden" name="KEYWORD" value="" id="KEYWORD" size="25" class="text" />
+<input type="hidden" name="DESCRIPTION" value="" id="DESCRIPTION" size="25" class="text" />
+<input type="hidden" name="PACKAGING_MATERIAL" value="" id="PACKAGING_MATERIAL" size="25" class="text" />
+<input type="hidden" name="PACKAGING_TYPE" value="" id="PACKAGING_TYPE" size="25" class="text" />
+<input type="hidden" name="SUPPLIER" value="" id="SUPPLIER" size="25" class="text" />
+<input type="hidden" id="spfl01name" name="spfl01name" />
+<input type="hidden" id="ppb01" name="PPB01" />
+<input type="hidden" id="ppbNAME" name="PPB02" />
+<input type="hidden" id="SPFL01_CODE" name="SPFL01_CODE" />
+<input type="hidden" id="SPFL02_CODE" name="SPFL02_CODE" />
+<input type="hidden" id="SPFL01_NAME" name="SPFL01_NAME" />
+<input type="hidden" id="SPFL02_NAME" name="SPFL02_NAME" />
+<input type="hidden" id="SPFL03_CODE" name="SPFL03_CODE" />
+<input type="hidden" id="SPFL03_NAME" name="SPFL03_NAME" />
+<input type="hidden" id="dtbj" name="dtbj" value="2"/>  <!-- 大厅标记默认为2, -->
+<!-- 
+<input type="hidden" id="spsxid" name="spsxid" />
+<input type="hidden" id="spsxz" name="spsxz" />
+ -->
+<input type="hidden" name="file05" value="15" />
+
+<!-- 中间开始 -->
+ <!--  <div class="dqlc"><a href="#" class="dqlc-a">我是卖家</a> > <a href="#" class="dqlc-a">商品管理</a> > <b class="dqlc-b" onclick="">发布商品</b></div>
+  <div class="dqtb">
+    您最近使用的类目：<select><option>请选择</option><option>举升车门/尾门/行李箱盖</option><option>轮胎</option></select>
+  </div> -->
+  <ul class="dqlb">
+    <li class="clxz">
+    	<span class="qxz">请选择：</span><div class="ppxzts"></div>
+    </li>
+    <li>
+<!--      <input placeholder="输入名称/拼音首字母">-->
+       <div class="flmain"> </div>
+    </li>
+    <li>
+<!--      <input placeholder="输入名称/拼音首字母">-->
+	  <div class="flmain">
+	  </div>
+    </li>
+    <li>
+<!--      <input placeholder="输入名称/拼音首字母">-->
+	  <div class="flmain">
+	  </div>
+    </li>
+    <li>
+<!--      <input placeholder="输入名称/拼音首字母">-->
+	  <div class="flmain">
+	  </div>
+    </li>
+  </ul>
+  <div class="dqxzlb">
+    <b>您当前的选择是：</b>
+  	<div class="flppxz">
+    	
+    </div>
+    <a>选择完毕后,继续完善详细信息</a>
+    <div style="clear:both;"></div>
+  </div>
+  <ul class="dqbd">
+    <li><h2><font>*  表示必填项</font></h2></li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">商品条码：</span>
+    	<input class="sptm" name="BARCODE" id="BARCODE" value="" onkeyup="checkedNum('BARCODE')" />
+    	<div class="tishi">国家编码中心注册编码</div>
+    	<!-- 商品条码提示 -->
+    	<div class="sptmts"></div>
+    </li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">生产企业编码：</span>
+    	<input class="sptm" name="SPGL24" id="SPGL24" value=""   onblur="checkZBM();"/>
+    	<div class="tishi">生产企业编码</div>
+    	<!-- 生产企业编码提示 -->
+    	<div class="qybmts"></div>
+    </li>
+	<li>
+		<div class="btx">*</div>
+		<span class="name">主机厂零件号：</span>
+		<input class="styles_-1" style="width:300px;" name="SPGLLJH" id="SPGLLJH"   onblur="checkData(-1);"/>
+		<label style="cursor:pointer; margin-left:5px;color: orangered;">新增零件号</label>
+		<!-- 零件号提示 -->
+		<div class="ljhts"></div>
+	</li>    
+	<li>
+		<span class="name">商品名称：</span>
+		<div class="btx">*</div>
+		<input class="spmc" name="spname" value="" id="SPXX04" onblur="checkNullLength(this.id, 'spmcts')"/>
+		<div class="tishi">
+			<font id="remLen" >可输入60个字</font>
+		</div>
+		<!-- 商品名称提示 -->
+		<div class="spmcts"></div>
+	</li>
+   
+   	<!-- onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\u4E00-\u9FA5]/g,'')" -->
+    <li>
+    	<span class="name">产地：</span>
+    	<input class="spmc" name="ORIGIN_CPLACE" value="" id="ORIGIN_CPLACE"/>
+    </li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">商品零售价：</span>
+    	<input class="lsj"  name="SPJGB05" id="SPJGB05" value="" onkeyup="this.value=(this.value.match(/\d+(\.\d{0,2})?/)||[''])[0]" onblur="checkNullLength(this.id, 'lsjgts')"/>
+    	<label>元</label>
+    	<div class="tishi">普通会员看到的价格</div>
+    	<!-- 零售价格提示 -->
+    	<div class="lsjgts"></div>
+    </li>
+    <li>
+	    <div class="clera"></div>
+    </li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">长：</span>
+    	<input class="lsj" name="SPXX09" id="SPXX09" value="" onkeyup="this.value=(this.value.match(/\d+(\.\d{0,2})?/)||[''])[0]" onblur="checkNullLength(this.id, 'lengthts')" />
+    	<label>cm</label>
+    	<!-- 长度提示 -->
+    	<div class="lengthts"></div>
+    </li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">宽：</span>
+    	<input class="lsj" name="SPXX10" id="SPXX10" value="" onkeyup="this.value=(this.value.match(/\d+(\.\d{0,2})?/)||[''])[0]" onblur="checkNullLength(this.id, 'widthts')" />
+    	<label>cm</label>
+    	<!-- 宽度提示 -->
+    	<div class="widthts"></div>
+    </li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">高：</span>
+    	<input class="lsj" name="SPXX11" id="SPXX11" value="" onkeyup="this.value=(this.value.match(/\d+(\.\d{0,2})?/)||[''])[0]" onblur="checkNullLength(this.id, 'heightts')" />
+    	<label>cm</label>
+    	<!-- 高度提示 -->
+    	<div class="heightts"></div>
+    </li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">重量：</span>
+    	<input class="lsj" name="SPXX12" id="SPXX12" value="" onkeyup="this.value=(this.value.match(/\d+(\.\d{0,2})?/)||[''])[0]" onblur="checkNullLength(this.id, 'weightts')" />
+    	<label>kg</label>
+    	<!-- 重量提示 -->
+    	<div class="weightts"></div>
+   	</li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">规格型号：</span>
+    	<input class="lsj" name="ggxh" id="GGXH" value="" onblur="checkNullLength(this.id, 'ggxhts')"/>
+    	<!-- 规格型号提示 -->
+    	<div class="ggxhts"></div>
+    </li>
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">计量单位：</span>
+   	 	<select class="ge" name="jldw01"></select>
+   	 	<!-- 计量单位提示 -->
+   	 	<div class="jldwts"></div>
+    </li>
+  
+    <li>
+    	<div class="btx">*</div>
+    	<span class="name">适用车系：</span>
+		<select  id="sycxa" name="sycxa" class="cx"  onchange="showcxs();" >
+			<option value="0">通配件</option>
+			<option value="1">特定车型备件</option>
+		</select>
+		<!-- 适用车系提示 -->
+		<div class="sycxts"></div>
+      <!-- <li><div class="btx">*</div><span class="name">是否促销：</span>
+      <select  id="spgl08" name="spgl08" class="cx" ><option value="0">非促销</option><option value="1">促销</option></select>
+      <br /> -->
+      <!-- <div class="sycx">
+      		<fieldset>
+				<iframe id="detailsResultTree" name="detailsResultTree" frameborder="0" marginheight="0" marginwidth="0" width="100%"  height="400px" scrolling="auto"
+						 	src=""></iframe>
+			</fieldset>
+      </div> -->
+    </li>
+    <li id="tdcx" style="display: none;">
+    	<div class="btx">*</div>
+	    <span class="name">已选车系：</span>
+	    <textarea cols="70" rows="3" class="lsj" id="yxcs_name" style="margin-left: 10px;margin-top: 3px;float:left;" readonly="readonly"  onclick="showcx();" placeholder="点击此处添加车型！" ></textarea>
+	    <input type="hidden" id="yxcs" />
+	    <!-- 已选车系提示 -->
+	    <div class="yxcxts"></div>
+    </li>
+    <li>
+	    <div class="btx">*</div>
+	    <span class="name">是否促销：</span>
+	    <select  id="spgl08" name="spgl08" class="cx" >
+		    <option value="0">非促销</option>
+		    <option value="1">促销</option>
+    	</select>
+    	<!-- 是否促销提示 -->
+    	<div class="sfcxts"></div>
+    </li>
+    
+<!--    <li>-->
+<!--    	<span class="name">商品属性：</span>-->
+<!--    	<select name="spsxmc" id="spsxmc" value="">-->
+<!--            <option value="0">属性名</option>-->
+<!--    	</select>-->
+<!--    	<select name="spsxz" id="spsxz" value="">-->
+<!--            <option value="">属性值</option>-->
+<!--    	</select>-->
+<!--    </li>-->
+  	<li>
+     <!-- <div class="btx">*</div><span class="name">选择表签：</span>
+   	 <span class="name" style="width:41px;">可追溯:</span><input type= "checkbox" value= " " name='spgl266' id="spgl266" />
+	 <span class="name" style="width:54px;">同质配件:</span><input type= "checkbox" value= " " name='spgl277' id="spgl277" /> 
+	 <span class="name" style="width:54px;">放心汽修:</span> <input type= "checkbox" value= " " name='spgl288'id="spgl288" /> -->
+	 <input type= "hidden" value= " "name='spgl26' id="spgl26" />
+	 <input type= "hidden" value= " "name='spgl27' id="spgl27" />
+	 <input type= "hidden" value= " "name='spgl28' id="spgl28" />
+    </li>
+    <li><span class="name">商品图片：</span><input type="button" id="01" value="上传" onclick="photo_open(this);" class="modalInput" />
+	<span class="photook" id="filename01"></span>
+	<span class="clearlink"><a href="javascript:void(0)" onclick="removeFile(this);">取消</a></span>
+	</li>
+	<li>
+	<span class="name">商品图片：</span><input type="button" id="02" value="上传" onclick="photo_open(this);" class="modalInput" />
+	<span class="photook" id="filename02"></span>
+	<span class="clearlink"><a href="javascript:void(0)" onclick="removeFile(this);">取消</a></span>
+	</li>
+	<li>
+	<span class="name">商品图片：</span><input type="button" id="03" value="上传" onclick="photo_open(this);" class="modalInput" />
+	<span class="photook" id="filename03"></span>
+	<span class="clearlink"><a href="javascript:void(0)" onclick="removeFile(this);">取消</a></span>
+	</li>
+	<li>
+	<span class="name">商品图片：</span><input type="button" id="04" value="上传" onclick="photo_open(this);" class="modalInput" />
+	<span class="photook" id="filename04"></span>
+	<span class="clearlink"><a href="javascript:void(0)" onclick="removeFile(this);">取消</a></span>
+	</li>
+	<li>
+            <div id="photo_open">
+                <div class="cart_ok" >
+                    <h3 class="cart_opentit" style="padding: 10px;">上传图片</h3>
+                       <div class="modbox">
+                          <b>请选择图片文件</b>
+                          <input id="idFile" type="file" name="pic" class="browbtn" value="1" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg,.JPG"  />
+                          <input type="hidden" name="idFile" value="" />
+                          <p class="">上传图片文件格式仅限于JPG、PNG<br/>图片存储大小请小于1MB<br/>如果文件较大请耐心等待上传时间</p>
+                          <input type="button" name="button4" id="button4" onclick="getFileName();" value="上传" class="modalInput fl" />
+                          <input type="button" name="button5" id="button5" value="取消" class="jbox-close closebtn fl" />
+                          <br class="clear"/>
+                      </div>
+                </div>
+            </div>
+            <div id="files"  class="clear">
+            	
+            </div>
+    </li>
+
+    <li><span class="name">商品描述：</span>
+      <div id="JKDiv_spym" style="width:670px; float:left; margin:12px 0 0 10px;">
+	      <textarea id="spjs" name="spjs" style="width:670px; height:300px; float:left; margin:12px 0 0 10px; max-width:670px;resize: none;max-height:300px;" ></textarea>
+	      <div class="clear" style="clear:both;"></div>
+      </div>
+    </li> 
+
+    <li><span class="name">&nbsp;</span><a href="javascript:void(0);" class="qr" id="sureclick">确认发布商品</a></li>    
+  </ul>
+<div class="clear"></div>
+<!---------------------底部--------------------->
+</form>
+</body>
+</html>

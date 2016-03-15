@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电器服务云</title>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/shop-Public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/form/js/currentLog.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/menu.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+
+$(document).ready(function(){
+	if(userCookie==null){			
+		location.href="/customer/sydjt/register/login.html";
+	}
+	else{
+		var menuId=$.getUrlParam("menuId");
+		$("#shopHead").load("/customer/sydjt/back/shop-Header.html?ss="+Math.random());	
+		menu.init(userCookie.XTCZY01);
+		$("#footer").load("/customer/sydjt/back/shop-Foot.html?ss="+Math.random());
+		//配置最终跳转URL路径页面
+		var url = "";
+		if(userCookie.LX=="24"){
+			url="/customer/sydjt/back/ddgl/myorder.html?menuId=A403";
+		}else{
+			url="/customer/sydjt/back/ddgl/Oper_DDGL.html?menuId=A401";
+		}
+		$("#centerFrame").attr("src",url);
+		//直接跳转到菜单配置界面
+		/* if($.getUrlParam("bdPage") != "null" && $.getUrlParam("bdPage") != null){
+			url = pubJson.FormUrl+$.getUrlParam("bdPage")+"?PI_USERNAME="+userCookie.XTCZY01;
+		} */
+		//判断框架内页面加载哪个页面
+		/**
+		if(menuId=="A001"){
+			$("#centerFrame").attr("src","/customer/sydjt/back/Oper_SPXX.html?menuId=A001");
+		}else{
+			$("#centerFrame").load(function() { 
+				var mainheight = parseInt($.getUrlParam("height"))+"px";
+    			$("#centerFrame").height(mainheight);
+			}); 
+		}
+		*/
+	}
+})
+</script>
+<body>
+<!-- head开始 -->
+<div id="shopHead"></div>
+<!-- head结束 -->
+<!-- 中间开始 -->
+<a id="contentMD"></a>
+<div id="shop-main">
+  <!-- 左侧菜单开始 -->
+  <div id="shopLeft">
+  	  <ul class="shop-left-nav">
+  	 </ul>
+  </div>
+  <!-- 左侧菜单结束 -->
+  
+  <div class="shop-right-main">
+  	 <!--<div id="bd_Form"></div>
+  	  --><iframe id="centerFrame" name="centerFrame" src="" frameborder="0" marginheight="0" class="right-main" scrolling="auto" style="border:0px; height:1200px;margin-left:10px;"></iframe>
+  </div>
+ 
+</div>
+<div class="clear"></div>
+<!-- 中间结束 -->
+<div id="footer"></div>
+</body>
+<script type="text/javascript">
+//改变iframe高度
+function changeIframeSize(){
+	$("#centerFrame").load(function(){
+		var mainheight = $(this).contents().find("html").height()+30;
+		var leftHeight = $(".shop-left-nav").height();
+		if(leftHeight<410){
+			leftHeight = 410;
+		}
+		if(leftHeight>mainheight){
+			mainheight = leftHeight;
+		}
+		$(this).height(mainheight);
+		$(this).width("100%");
+	});
+	//首页返回到顶部
+	scrollOffset($("#contentMD").offset());
+}
+
+//被动改变iframe高度
+function eventChangeIframeSize(){
+	var mainheight = $("#centerFrame").contents().find("body").height()+30;
+	$("#centerFrame").height(mainheight);
+}
+
+/************Grid调用************/
+function ajaxGrid(url,height){
+	if(height== undefined || height == null){
+		height=2000;
+		}
+   $("body").append('<div style="width:100%; height:1500px; background-color:rgba(1,1,1,0.3); position:fixed; top:0px; left:0px;" id="ajaxGrid">'+
+		   '<div style="width:834px; height:500px; background-color:#fff; border:3px solid #e4e4e4; margin:0 auto; margin-top:50px; position:relative;">'+
+		  //'<div style="width:986px; height:486px; margin:7px; background-color:#fff;">'+
+		   '<iframe id="alertDIV" name="alertDIV" src='+url+' style="width:830px ;height:496px"></iframe>'+
+		   //'</div>'+
+		   '</div>'+
+		   '<div style="width:30px; height:30px; position:absolute; top:50px; background-color:#fff; border:1px solid #e4e4e4; left:50%; margin-left:419px; font-size:30px; line-height:30px; text-align:center; color:#ff8800;" id="closeGrid" title="关闭">×</div>'+
+		   '</div>')
+   $("#closeGrid").mouseover(function(){
+	   $(this).css({"background-color":"#ff8800","color":"#fff","cursor":"pointer"});
+   })
+   $("#closeGrid").mouseleave(function(){
+	   $(this).css({"background-color":"#fff","color":"#ff8800"});
+   })
+   $("#closeGrid").click(function(){
+	   $("#ajaxGrid").remove();
+   })
+}
+
+//执行回调方法
+function execBackFun(parameters){
+	$("#centerFrame")[0].contentWindow.backFun(""+parameters+"");
+}
+</script>
+</html>

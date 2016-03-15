@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.sql.return.good">
+<resultMap id="result_selectTHD" type="com.jlsoft.o2o.order.bean.Thd">
+		<id column="THDH" property="THDH"/>
+		<result column="XSDD01" property="XSDD01"/>
+		<result column="THDH" property="THDH"/>
+		<result column="ZCXX01" property="ZCXX01"/>
+		<result column="XSDD04" property="XSDD04"/>
+		<result column="ZCXX02" property="ZCXX02"/>
+		<result column="XSDD02" property="XSDD02"/>
+		<result column="DDZT" property="DDZT"/>
+		<result column="THZT" property="THZT"/>
+		<result column="THJE" property="THJE"/>
+		<result column="ZDSJ" property="ZDSJ"/>
+		<result column="THPZ" property="THPZ"/>
+		<result column="BZ" property="BZ"/>
+		<result column="PROVINCE" property="PROVINCE"/>
+		<result column="CITY" property="CITY"/>
+		<result column="COUNTY" property="COUNTY"/>
+		<result column="STREET" property="STREET"/>
+		<result column="XXDZ" property="XXDZ"/>
+		<result column="LXR" property="LXR"/>
+		<result column="LXDH" property="LXDH"/>
+		<result column="WLLX" property="WLLX"/>
+		<result column="SHYJ" property="SHYJ"/>
+		<result column="SPXX01" property="SPXX01"/>
+		<result column="SPXX02" property="SPXX02"/>
+		<result column="SPXX04" property="SPXX04"/>
+		<result column="THLX" property="THLX"/>
+		<result column="SPJG" property="SPJG"/>
+		<result column="SPSL" property="SPSL"/>
+		<result column="SPJE" property="SPJE"/>
+		<result column="XSDDI05" property="XSDDI05"/>
+		<result column="ZTID" property="ZTID"/>
+		<result column="SPTP02" property="SPTP02"/>
+		<result column="hy01" property="hy01"/>
+		<result column="hy02" property="hy02"/>
+		<result column="hy03" property="hy03"/>
+		<result column="skfs" property="skfs"/>
+		<result column="XSDD50" property="XSDD50"/>
+		<result column="KHMC" property="KHMC"/>
+		<result column="KHYH" property="KHYH"/>
+		<result column="YHZH" property="YHZH"/>
+		<result column="KTDH" property="KTDH"/>
+		<result column="KTGS" property="KTGS"/>
+		<result column="zcxx03" property="zcxx03"/>
+		<result column="zcxx06" property="zcxx06"/>
+		<result column="zcxx08" property="zcxx08"/>
+		<collection property="SPLIST" resultMap="result_xsdditem" />
+	</resultMap>
+	
+	<resultMap id="result_xsdditem" type="com.jlsoft.o2o.order.bean.ThdItem">
+		<result column="THDH" property="THDH"/>
+		<result column="XSDD01" property="XSDD01"/>
+		<result column="SPXX01" property="SPXX01"/>
+		<result column="SPXX02" property="SPXX02"/>
+		<result column="SPXX04" property="SPXX04"/>
+		<result column="TPMC" property="TPMC"/>
+		<result column="SPTP02" property="SPTP02"/>
+	</resultMap>
+	
+		<select id="selectTHD" parameterType="Map" resultMap="result_selectTHD">
+				select t1.THDH,t1.XSDD01,t5.ZCXX01,t6.XSDD04,t6.XSDD02,T1.THZT
+						 ,t4.SPXX01,t4.SPXX02,t4.SPXX04,(select zcxx02 from w_zcxx where zcxx01 =(case when #{TYPE}='2' THEN t1.HBID ELSE t1.ZTID END)) as ZCXX02
+						 ,t1.THJE,DATE_FORMAT(t1.ZDSJ, '%Y-%m-%d') as ZDSJ,(SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE t1.ZTID=S.ZCXX01 AND S.SPXX01=t4.SPXX01 AND S.SPTP01=1) SPTP02
+			From w_thd t1 join w_thditem t2 on t1.THDH=t2.THDH
+			join w_spxx t4 on t2.SPXX01=t4.spxx01
+			join w_spgl t5 on t4.SPXX01=t5.SPXX01
+			join w_xsdd t6 on t6.xsdd01=t1.XSDD01
+			join W_DJZX t7 on  t1.XSDD01=t7.W_DJZX01
+			where
+			 (t1.ZTID = #{ZTID} OR T1.HBID=#{ZTID})  AND  t1.THZT IN (#{THZT})
+		  <if test="SPMC!=''" > AND t1.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = t4.SPXX01) LIKE concat('%', #{SPMC} ,'%') ))</if>
+			ORDER BY t1.ZDSJ DESC
+			 
+	</select>
+	
+	<select id="selectTHD_sum" parameterType="Map" resultType="java.util.Map">
+	select count(1) as COUNT From w_thd t1 join w_thditem t2 on t1.THDH=t2.THDH
+	join w_spxx t4 on t2.SPXX01=t4.spxx01
+	join w_spgl t5 on t4.SPXX01=t5.SPXX01
+	join w_xsdd t6 on t6.xsdd01=t1.XSDD01
+	join W_DJZX t7 on  t1.XSDD01=t7.W_DJZX01
+	 where  (t1.ZTID = #{ZTID} OR T1.HBID=#{ZTID})  AND  t1.THZT IN (#{THZT})
+	  <if test="SPMC!=''" > AND t1.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = t2.SPXX01) LIKE concat('%', #{SPMC} ,'%') ))</if>
+	</select>
+	
+	
+	<select id="selectSYXTTHD" parameterType="Map" resultMap="result_selectTHD">
+				select t1.THDH,t1.XSDD01,t5.ZCXX01,t6.XSDD04,t6.XSDD02,T1.THZT
+						 ,t4.SPXX01,t4.SPXX02,t4.SPXX04,(select zcxx02 from w_zcxx where zcxx01 =(case when #{TYPE}='2' THEN t1.HBID ELSE t1.ZTID END)) as ZCXX02
+						 ,t1.THJE,DATE_FORMAT(t1.ZDSJ, '%Y-%m-%d') as ZDSJ,(SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE t1.ZTID=S.ZCXX01 AND S.SPXX01=t4.SPXX01 AND S.SPTP01=1) SPTP02
+			From w_thd t1 join w_thditem t2 on t1.THDH=t2.THDH
+			join w_spxx t4 on t2.SPXX01=t4.spxx01
+			join w_spgl t5 on t4.SPXX01=t5.SPXX01
+			join w_xsdd t6 on t6.xsdd01=t1.XSDD01
+			join W_DJZX t7 on  t1.XSDD01=t7.W_DJZX01
+			where
+			 (t1.ZTID = #{ZTID} OR T1.HBID=#{ZTID})  
+		  <if test="THZT!='2,5,10'" >AND  t1.THZT IN (#{THZT})</if>
+		  <if test="THZT=='2,5,10'" >AND  t1.THZT IN ('2','5','10')</if>
+		  <if test="SPMC!=''" > AND t1.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = t4.SPXX01) LIKE concat('%', #{SPMC} ,'%') ))</if>
+			ORDER BY t1.ZDSJ DESC
+			 
+	</select>
+	
+	<select id="selectSYXTTHD_sum" parameterType="Map" resultType="java.util.Map">
+	select count(1) as COUNT From w_thd t1 join w_thditem t2 on t1.THDH=t2.THDH
+	join w_spxx t4 on t2.SPXX01=t4.spxx01
+	join w_spgl t5 on t4.SPXX01=t5.SPXX01
+	join w_xsdd t6 on t6.xsdd01=t1.XSDD01
+	join W_DJZX t7 on  t1.XSDD01=t7.W_DJZX01
+	 where  (t1.ZTID = #{ZTID} OR T1.HBID=#{ZTID})
+	  <if test="THZT!='2,5,10'" >AND  t1.THZT IN (#{THZT})</if>
+	  <if test="THZT=='2,5,10'" >AND  t1.THZT IN ('2','5','10')</if>
+	  <if test="SPMC!=''" > AND t1.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = t2.SPXX01) LIKE concat('%', #{SPMC} ,'%') ))</if>
+	</select>
+<!-- 查询退货信息 -->
+<!-- modify 2015.10.28 增加卖家地址的查询 -->
+     <select id="queryReturnGood" parameterType="Map" resultMap="result_selectTHD">
+
+     SELECT
+		ws.spxx01,
+		ws.spxx02,
+		ws.spxx04,
+		xi.xsddi05,
+		wt.KTDH,
+		wt.KTGS,
+		wt.THLX,
+		wt.THSL,
+		wt.THPZ,
+		wt.BZ,
+		wt.PROVINCE,
+		wt.CITY ,
+		wt.COUNTY ,
+		wt.STREET ,
+		wt.XXDZ,
+		wt.LXR,
+		wt.LXDH,
+		wt.WLLX,
+		wt.THJE,
+		wx.ZTID,
+		 wt.THZT,
+ 		wtt.SPJG,
+ 		wtt.THSL AS SPSL,
+ 		wtt.THJE AS SPJE,
+ 		wt.SHYJ,
+ 		wtp.TPMC,hy01,hy02,hy03,tt.skfs,
+ 		wt.THDH,(SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE wt.ZTID=S.ZCXX01 AND S.SPXX01=ws.SPXX01 AND S.SPTP01=1) SPTP02,
+ 		wx.XSDD50 XSDD50,
+ 		wt.KHMC KHMC,
+		wt.KHYH KHYH,
+  		wt.YHZH YHZH,
+    	wgs.zcxx03,
+	  	wgs.zcxx06,
+		wgs.zcxx08 
+FROM
+     w_thd wt
+LEFT JOIN w_thditem wtt on wtt.THDH = wt.THDH
+LEFT JOIN w_thdtp wtp on wtp.THDH =wtt.THDH and wtp.SPXX01 = wtt.SPXX01
+LEFT JOIN w_spxx ws on ws.spxx01 = wtt.SPXX01
+LEFT JOIN w_xsdd wx on wx.xsdd01 = wt.XSDD01
+LEFT JOIN w_xsdditem xi ON wx.xsdd01 = xi.xsdd01
+LEFT JOIN ck on ck.ck01 = xi.ck01
+LEFT join W_XSDDSKFS tt on tt.xsdd01=wx.xsdd01 
+LEFT JOIN w_zcgs wgs on wt.ztid= wgs.zcxx01 
+WHERE
+	wt.THDH = #{THDH}
+     </select>
+       <!-- 根据退货单号和商品信息查询图片-->
+     <select id="queryGoodImg" parameterType="Map" resultType="java.util.Map">
+     		select TPXH,TPMC from w_thdtp
+     		WHERE THDH = #{THDH} AND SPXX01=#{SPXX01}
+     </select>
+      <!-- 根据订单编号和商品编号，查看收货人信息-->
+      <!-- modify 2015.10.28.  增加卖家地址的查询 -->
+   <select id="queryXsddInfo" parameterType="Map" resultType="java.util.Map">
+     		select 
+				t1.xsdd01,t2.spxx02,t3.ztid,t1.xsddi05,
+				t2.spxx04,t1.spxx01,t3.xsdd19,t3.xsdd20,t3.xsdd21,hy01,hy02,hy03,
+				t3.xsdd22,t3.province,t3.city,t3.county,t3.street,t3.otherdz,t1.xsddi02,(SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE t3.ZTID=S.ZCXX01 AND S.SPXX01=t2.SPXX01 AND S.SPTP01=1) SPTP02, 
+				t3.XSDD50 XSDD50,t4.zcxx08,t4.zcxx03,t4.zcxx06,t5.skfs 
+				from 
+				w_xsdditem t1 join w_spxx t2 
+				on t1.spxx01=t2.spxx01
+				join w_xsdd t3 on t1.xsdd01=t3.xsdd01
+				left join ck on ck.ck01 = t1.ck01 
+				left join w_zcgs t4 on t3.ztid = t4.zcxx01
+				left join w_xsddskfs t5 on t1.xsdd01=t5.xsdd01 
+				WHERE
+				t1.xsdd01=#{xsdd01}
+				and
+				t1.spxx01=#{spxx01}
+     </select>
+         <!-- 退单财务审核列表-->
+   <select id="querySWSH" parameterType="Map" resultType="java.util.Map">
+				     		     SELECT
+					date_format(w_thd.ZDSJ, '%Y-%c-%d') AS ZDSJ,
+					w_zcxx.zcxx02,
+					w_thd.THDH,
+					w_thd.THJE,
+					w_thd.THSL,
+					w_xsdd.xsdd08,
+					w_thd.THZT,
+				(
+							CASE w_xsddskfs.skfs
+							WHEN 6 THEN
+								'支付宝'
+							WHEN 8 THEN
+								'银联'
+							WHEN 9 THEN
+								'微信'
+							WHEN 10 THEN
+								'线下汇款'
+							WHEN 11 THEN
+								'钱包支付'
+							END
+						)
+				   skfs
+				FROM
+					w_thd
+				LEFT JOIN w_zcxx ON w_zcxx.zcxx01 = w_thd.ZTID
+				LEFT JOIN w_xsdd ON w_xsdd.xsdd01 = w_thd.XSDD01
+				LEFT JOIN w_xsddskfs ON w_xsddskfs.xsdd01 = w_xsdd.xsdd01
+				WHERE
+					w_thd.THZT IN (4,6,7,8)
+				<if test="thzt != null  and thzt!=''">
+		               AND w_thd.THZT=${thzt}
+	            </if>
+				<!-- <if test="dzsj != null  and dzsj!=''">
+		               AND ZCXX14=${thzt}
+	            </if>
+	            <if test="zcxx02 != null and zcxx02!=''">
+		            AND zcxx02=#{zcxx02}
+	            </if> -->
+	            <if test="dzsj != null and dzsj!=''">
+		            AND w_thd.ZDSJ &gt;= date_add(current_date(), interval -#{dzsj} MONTH) 
+	            </if>
+	            <if test="dzsj != null and dzsj!=''">
+		            AND w_thd.ZDSJ &lt;= current_date()
+	            </if>
+	            <if test="date_s!='' and date_s!=null">
+		           AND w_thd.ZDSJ &gt;= #{date_s} 
+	            </if>
+  	            <if test="date_e!='' and date_e!=null">
+  		           AND w_thd.ZDSJ &lt;= #{date_e} 
+  	             </if>
+	ORDER BY w_thd.ZDSJ DESC
+					
+     </select>
+     
+      <!-- 退单财务审核列表-和-->
+   <select id="querySWSH_sum" parameterType="Map" resultType="java.util.Map">
+     		     select count(1)as count  from w_thd
+				LEFT JOIN w_zcxx on w_zcxx.zcxx01 = w_thd.ZTID
+				LEFT JOIN w_xsdd on w_xsdd.xsdd01 = w_thd.XSDD01
+				WHERE
+					w_thd.THZT IN (4,6,7,8)
+				<if test="thzt != null  and thzt!=''">
+		               AND THZT=${thzt}
+	           <!--  </if>
+				<if test="dzsj != null  and dzsj!=''">
+		               AND ZCXX14=${thzt}
+	            </if>
+	            <if test="zcxx02 != null and zcxx02!=''">
+		            AND ZCXX02=#{zcxx02} -->
+	            </if>
+	            <if test="dzsj != null and dzsj!=''">
+		            AND w_thd.ZDSJ &gt;= date_add(current_date(), interval -#{dzsj} MONTH) 
+	            </if>
+	            <if test="dzsj != null and dzsj!=''">
+		            AND w_thd.ZDSJ &lt;= current_date()
+	            </if>
+	            <if test="date_s!='' and date_s!=null">
+		           AND w_thd.ZDSJ &gt;= #{date_s} 
+	            </if>
+  	            <if test="date_e!='' and date_e!=null">
+  		           AND w_thd.ZDSJ &lt;= #{date_e} 
+  	             </if>
+	ORDER BY w_thd.ZDSJ DESC
+		
+     </select>
+</mapper>

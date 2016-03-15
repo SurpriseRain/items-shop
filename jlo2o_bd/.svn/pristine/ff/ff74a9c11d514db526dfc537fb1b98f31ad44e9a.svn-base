@@ -1,0 +1,1075 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.sql.order">
+
+	<resultMap id="result_selectW_XSDD" type="com.jlsoft.o2o.order.bean.Xsdd">
+		<id column="XSDD01" property="XSDD01"/>
+		<result column="XSDD01" property="XSDD01"/>
+		<result column="THDH" property="THDH"/>
+		<result column="ZCXX01" property="ZCXX01"/>
+		<result column="XSDD04" property="XSDD04"/>
+		<result column="ZCXX02" property="ZCXX02"/>
+		<result column="XSDD02" property="XSDD02"/>
+		<result column="DDZT" property="DDZT"/>
+		<result column="THZT" property="THZT"/>
+		<result column="SPTP02" property="SPTP02"/>
+		<result column="XSDD50" property="XSDD50"/>
+		<collection property="SPLIST" resultMap="result_xsdditem" />
+	</resultMap>
+	
+	<resultMap id="result_xsdditem" type="com.jlsoft.o2o.order.bean.XsddItem">
+		<result column="XSDD01" property="XSDD01"/>
+		<result column="SPXX01" property="SPXX01"/>
+		<result column="SPXX02" property="SPXX02"/>
+		<result column="SPXX04" property="SPXX04"/>
+		<result column="SPTP02" property="SPTP02"/>
+		<result column="XSDDI05" property="XSDDI05"/>
+	</resultMap>
+	
+	<select id="selectW_XSDD" parameterType="Map" resultMap="result_selectW_XSDD">
+<!-- modify 2015.12.29. 修改主体ID的查询,W_XSDD中的ZTID作为ZTID,W_SPGL中的ZCXX01作为ZCXX01 -->
+<!-- SELECT DATE_FORMAT(A.XSDD04, '%Y-%m-%d %H:%i:%S') XSDD04, A.XSDD01, C.ZCXX02, A.XSDD02,D.W_DJZX02,
+				D.W_DJZX02 as DDZT,
+			A.ZTID ZCXX01,  B.SPXX01,  B.XSDDI05,  E.SPXX02, E.SPXX04,(select SUBSTRING_INDEX(sptp02,'.',-1) from w_sptp where spxx01 = b.spxx01 and zcxx01 = c.zcxx01 and sptp01= '1') SPTP02
+			,A.XSDD50
+			FROM
+				W_XSDD A,
+				W_XSDDITEM B,
+				W_ZCXX C,
+				W_DJZX D,
+				W_SPXX E
+			WHERE
+				A.XSDD01 = B.XSDD01
+			AND C.ZCXX01 = A.ZTID
+			AND A.XSDD01 = D.W_DJZX01
+			AND B.SPXX01 = E.SPXX01
+			AND A.HBID = #{HBID}--> 
+SELECT DATE_FORMAT(A.XSDD04, '%Y-%m-%d %H:%i:%S') XSDD04, A.XSDD01, C.ZCXX02, A.XSDD02,D.W_DJZX02,
+				D.W_DJZX02 as DDZT,
+			A.ZTID ZTID, F.ZCXX01 ZCXX01,  B.SPXX01,  B.XSDDI05,  E.SPXX02, E.SPXX04,(select SUBSTRING_INDEX(sptp02,'.',-1) from w_sptp where spxx01 = b.spxx01 and zcxx01 = c.zcxx01 and sptp01= '1') SPTP02
+			,A.XSDD50
+			FROM
+				W_XSDD A,
+				W_XSDDITEM B,
+				W_ZCXX C,
+				W_DJZX D,
+				W_SPXX E,
+				W_SPGL F
+			WHERE
+				A.XSDD01 = B.XSDD01
+			AND A.XSDD01 = D.W_DJZX01
+			AND B.SPXX01 = E.SPXX01
+			AND E.SPXX01 = F.SPXX01 
+			AND F.ZCXX01 = C.ZCXX01 
+			AND A.HBID = #{HBID}
+			<if test="ZTID!=''"> AND A.ZTID = #{ZTID} </if>
+	       <if test="FLAG!='' and FLAG!=null" > AND D.W_DJZX02 = #{FLAG}</if>
+	       <if test="SPMC!=''" > AND A.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = X.SPXX01) LIKE concat('%', #{SPMC} ,'%') ))</if>
+				
+			ORDER BY
+				A.XSDD01 DESC; 
+	</select>
+	<select id="selectW_XSDD2" parameterType="Map" resultMap="result_selectW_XSDD">
+				select t1.THDH,t1.XSDD01,t5.ZCXX01,t6.XSDD04,t6.XSDD02,T1.THZT
+						 ,t3.SPXX01,t4.SPXX02,t4.SPXX04
+			
+			From w_thd t1 join w_thditem t2 on t1.THDH=t2.THDH
+			join w_thdtp t3 on t1.THDH=t3.THDH
+			join w_spxx t4 on t3.SPXX01=t4.spxx01
+			join w_spgl t5 on t4.SPXX01=t5.SPXX01
+			join w_xsdd t6 on t6.xsdd01=t1.XSDD01
+			join W_DJZX t7 on  t1.XSDD01=t7.W_DJZX01
+			where
+			 (t1.ZTID = #{ZTID} OR T1.HBID=#{ZTID})  AND  t1.THZT IN (#{THZT})
+	</select>
+	
+	<select id="selectW_XSDD_sum" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) as COUNT
+		FROM W_XSDD A, W_DJZX D
+		WHERE A.XSDD01 = D.W_DJZX01
+		AND A.HBID = #{HBID} 
+		<if test="FLAG!='' and FLAG!=null" > AND D.W_DJZX02 = #{FLAG}</if>
+		<if test="SPMC!=''" > AND A.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = X.SPXX01) LIKE concat('%', #{SPMC} ,'%') ))</if>
+		ORDER BY  A.XSDD04  DESC; 
+	</select>
+	
+	<select id="selectW_XSDD2_sum" parameterType="Map" resultType="java.util.Map">
+			select count(1) as COUNT
+			From w_thd t1 join w_thditem t2 on t1.THDH=t2.THDH
+			join w_thdtp t3 on t1.THDH=t3.THDH
+			join w_spxx t4 on t3.SPXX01=t4.spxx01
+			join w_spgl t5 on t4.SPXX01=t5.SPXX01
+			join w_xsdd t6 on t6.xsdd01=t1.XSDD01
+			join W_DJZX t7 on  t1.XSDD01=t7.W_DJZX01
+			where
+			 (t1.ZTID = #{ZTID} OR T1.HBID=#{ZTID})  AND  t1.THZT IN (#{THZT})
+	</select>
+
+  <select id="queryMyOrder_" parameterType="Map" resultType="java.util.Map">
+ SELECT 
+ 			t.ZTID,t.HBID,t.ZCXX02,t.ZCXX18,t.XSDD01,CAST(t.XSDD02 AS CHAR) as XSDD02,t.XSDD04,t.XSDD25,t.W_DJZX02,
+ 			t.DZBH,t.DDZT,t.ZDORD,t.SPXX01,t.SPMC,t.ZCXX01,CAST(t.XSDDI02 AS CHAR) as XSDDI02,CAST(t.XSDDI05 AS CHAR) as XSDDI05,t.XSDDI04,t.XSDDI06,t.TZJG,t.TZSL,t.PJBJ,t.TYPE
+ 			 FROM (SELECT A.ZTID, A.HBID, C.ZCXX02, C.ZCXX18 , A.XSDD01, A.XSDD02, 
+    		 DATE_FORMAT(A.XSDD04, '%Y-%m-%d') XSDD04,
+    		 A.XSDD25, B.W_DJZX02,DZBH,
+             CASE B.W_DJZX02
+             WHEN 1 THEN '待审核'
+             WHEN 2 THEN '未通过'
+             WHEN 3 THEN '待支付'
+             WHEN 4 THEN '待发货'
+             WHEN 5 THEN '待确认收货'
+             WHEN 6 THEN '已收货'
+             WHEN 7 THEN '已冲红'
+             WHEN 8 THEN '已开单'
+             WHEN 9 THEN '异常订单'
+             WHEN 10 THEN '已评价'
+             WHEN 11 THEN '已终止'
+             WHEN 12 THEN '已删除'
+             WHEN 17 THEN '线下汇款待审核'
+             END DDZT,
+		       C.ZCXX18 ZDORD,
+		       '' as SPXX01,
+		       '' as SPMC,
+		       '' as ZCXX01,
+		       '' as XSDDI02,
+		       '' as XSDDI05,
+		       '' as XSDDI04,
+           '' as XSDDI06,
+           '' as TZJG,
+           '' as TZSL,
+           '' as PJBJ,1 AS TYPE
+      FROM W_XSDD A, W_DJZX B, W_ZCXX C
+     WHERE A.HBID = #{HBID}  
+     	AND A.XSDD01 = B.W_DJZX01
+       AND C.ZCXX01 = A.ZTID
+       <if test="ZTID!=''"> AND A.ZTID = #{ZTID} </if>
+       <if test="FLAG!='' and FLAG!=null" > AND B.W_DJZX02 = #{FLAG}</if>
+       <if test="SPMC!=''" > AND A.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = X.SPXX01) LIKE concat('%', #{SPMC} ,'%') ))</if>
+UNION 
+SELECT A.ZTID, A.HBID, C.ZCXX02, C.ZCXX18 , A.XSDD01, A.XSDD02, 
+    		 DATE_FORMAT(A.XSDD04, '%Y-%m-%d') XSDD04,
+    		 A.XSDD25, B.W_DJZX02,DZBH,
+             CASE B.W_DJZX02
+             WHEN 1 THEN '待审核'
+             WHEN 2 THEN '未通过'
+             WHEN 3 THEN '待支付'
+             WHEN 4 THEN '待发货'
+             WHEN 5 THEN '待确认收货'
+             WHEN 6 THEN '已收货'
+             WHEN 7 THEN '已冲红'
+             WHEN 8 THEN '已开单'
+             WHEN 9 THEN '异常订单'
+             WHEN 10 THEN '已评价'
+             WHEN 11 THEN '已终止'
+             WHEN 12 THEN '已删除'
+             WHEN 17 THEN '线下汇款待审核'
+             END DDZT,
+		       C.ZCXX18 ZDORD,
+		       WX.SPXX01,
+		       (SELECT Y.SPXX04 FROM W_SPXX Y WHERE	Y.SPXX01 = WX.SPXX01) SPMC,
+		       C.ZCXX01,
+		       WX.XSDDI02,
+		       WX.XSDDI05,
+		       IFNULL(WX.XSDDI04,0) XSDDI04,
+           IFNULL(WX.XSDDI06,0) XSDDI06,
+           (WX.XSDDI02+ IFNULL(WX.XSDDI04,0)) TZJG,
+           (WX.XSDDI05+ IFNULL(WX.XSDDI06,0)) TZSL,
+           (SELECT COUNT(0) FROM W_SPPJ P WHERE WX.SPXX01=P.SPXX01 AND P.xsdd01=WX.XSDD01) PJBJ, 0 AS TYPE
+      FROM W_XSDD A, W_DJZX B, W_ZCXX C,w_xsdditem wx
+     WHERE
+     A.HBID = #{HBID}  
+     AND A.XSDD01 = B.W_DJZX01
+     AND C.ZCXX01 = A.ZTID
+	AND wx.xsdd01 =A.xsdd01
+	<if test="ZTID!=''"> AND A.ZTID = #{ZTID} </if>
+    <if test="FLAG!='' and FLAG!=null" > AND B.W_DJZX02 = #{FLAG}</if>
+    <if test="SPMC!=''" > AND A.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = X.SPXX01) LIKE concat('%', #{SPMC} ,'%') ))</if>
+)T ORDER BY T.XSDD01 desc,TYPE desc
+     </select>
+    <!-- 查询订单主表 -->
+     <select id="queryMyOrder" parameterType="Map" resultType="java.util.Map">
+ SELECT A.ZTID, A.HBID, C.ZCXX02, C.ZCXX18 , A.XSDD01, A.XSDD02, 
+    		 DATE_FORMAT(A.XSDD04, '%Y-%m-%d') XSDD04,
+    		 A.XSDD25, B.W_DJZX02,DZBH,
+             CASE B.W_DJZX02
+             WHEN 1 THEN '待审核'
+             WHEN 2 THEN '未通过'
+             WHEN 3 THEN '待支付'
+             WHEN 4 THEN '待发货'
+             WHEN 5 THEN '待确认收货'
+             WHEN 6 THEN '已收货'
+             WHEN 7 THEN '已冲红'
+             WHEN 8 THEN '已开单'
+             WHEN 9 THEN '异常订单'
+             WHEN 10 THEN '已评价'
+             WHEN 11 THEN '已终止'
+             WHEN 12 THEN '已删除'
+             WHEN 17 THEN '线下汇款待审核'
+             END DDZT,
+						A.XSDD01,
+		       C.ZCXX18 ZDORD,
+		       WX.SPXX01,
+		       (SELECT Y.SPXX04 FROM W_SPXX Y WHERE	Y.SPXX01 = WX.SPXX01) SPMC,
+		       C.ZCXX01,
+		       C.ZCXX02,
+		       WX.XSDDI02,
+		       WX.XSDDI05,
+		       IFNULL(WX.XSDDI04,0) XSDDI04,
+           IFNULL(WX.XSDDI06,0) XSDDI06,
+           (WX.XSDDI02+ IFNULL(WX.XSDDI04,0)) TZJG,
+           (WX.XSDDI05+ IFNULL(WX.XSDDI06,0)) TZSL,
+           (SELECT COUNT(0) FROM W_SPPJ P WHERE WX.SPXX01=P.SPXX01 AND P.xsdd01=WX.XSDD01) PJBJ
+      FROM W_XSDD A, W_DJZX B, W_ZCXX C,w_xsdditem wx
+     WHERE A.HBID = #{HBID}
+       AND A.XSDD01 = B.W_DJZX01
+       AND C.ZCXX01 = A.ZTID
+       AND wx.xsdd01 =A.xsdd01
+       <if test="ZTID!=''"> AND A.ZTID = #{ZTID} </if>
+       <if test="FLAG!='' and FLAG!=null" > AND B.W_DJZX02 = #{FLAG}</if>
+       <if test="SPMC!=''" > AND A.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = X.SPXX01) LIKE '%'|| #{SPMC} ||'%' ))</if>
+       ORDER BY A.XSDD04 DESC
+     </select>
+     
+     <!-- 查询可用余额 -->
+     <sql id="KYYE">
+       NVL((SELECT (NVL(SUM(DWYE04 * -1), 0) - NVL((SELECT E.DJJE FROM W_DJJE E WHERE E.WLDW01 = A.HBID AND E.GSXX01 = A.ZTID), 0)) KYYE
+        FROM DWYEZ
+       WHERE WLDW01 = A.HBID
+         AND GSXX01 = A.ZTID
+       GROUP BY GSXX01, WLDW01),0) 
+     </sql>
+   
+     <!-- 查询授信额度 -->
+     <sql id="SXED">
+      NVL((SELECT NVL(SUM(DWYE05), 0) SXED
+          FROM DWYEZ
+         WHERE WLDW01 = A.HBID
+           AND GSXX01 = A.ZTID
+         GROUP BY GSXX01, WLDW01 ),0)
+     </sql>
+
+   <select id="queryMyCollect" parameterType="Map" resultType="java.util.Map">
+      SELECT ZTID,(SELECT ZCXX02 FROM W_ZCXX B WHERE A.ZTID =B.ZCXX01) ZCXX02,HBID,
+             A.SPXX01,B.SPXX04 
+        FROM W_COLLECT A,W_SPXX B
+       WHERE A.SPXX01=B.SPXX01
+         AND HBID = #{HBID}
+       <if test="ZTID!=''"> AND ZTID = #{ZTID} </if>
+       <if test="SPMC!='' and SPMC!=null"> AND SPXX04  like '%'||#{SPMC}||'%' </if>
+   </select>  
+   
+  <select id="queryMyCollectDS" parameterType="Map" resultType="java.util.Map">
+      SELECT distinct ZTID,(SELECT ZCXX02 FROM W_ZCXX B WHERE A.ZTID =B.ZCXX01) ZCXX02
+        FROM W_COLLECT A,W_SPXX B
+       WHERE A.SPXX01=B.SPXX01
+         AND HBID = #{HBID}
+       <if test="ZTID!=''"> AND ZTID = #{ZTID} </if>
+       <if test="SPMC!='' and SPMC!=null"> AND SPXX04  like '%'||#{SPMC}||'%' </if>
+   </select>  
+      
+    <select id="queryMyCollectSum" parameterType="Map" resultType="java.util.Map">
+      SELECT COUNT(1) SUM
+        FROM W_COLLECT A,W_SPXX B
+       WHERE A.SPXX01=B.SPXX01
+         AND HBID = #{HBID}
+       <if test="ZTID!=''"> AND ZTID = #{ZTID} </if>
+       <if test="SPMC!='' and SPMC!=null"> AND SPXX04  like '%'||#{SPMC}||'%' </if>
+   </select>  
+         
+     <select id="queryMyOrderSum" parameterType="Map" resultType="java.util.Map">
+    SELECT COUNT(1) SUM
+      FROM W_XSDD A, W_DJZX B, W_ZCXX C
+     WHERE A.HBID = #{HBID}
+       AND A.XSDD01 = B.W_DJZX01
+       AND C.ZCXX01 = A.ZTID 
+       <if test="ZTID!=''"> AND A.ZTID = #{ZTID} </if>
+       <if test="FLAG!='' and FLAG!=null" > AND B.W_DJZX02 = #{FLAG}</if>
+       <if test="SPMC!=''" > AND A.XSDD01 IN ((SELECT X.XSDD01 FROM W_XSDDITEM X WHERE (SELECT Y.SPXX04 FROM W_SPXX Y WHERE Y.SPXX01 = X.SPXX01) LIKE '%'|| #{SPMC} ||'%' ))</if>
+       ORDER BY A.XSDD04 DESC
+     </select>
+     
+     
+     <!-- 查询订单明细表 -->
+     <select id="queryOrderItem" parameterType="Map" resultType="java.util.Map">
+    	SELECT B.XSDD01,
+		       D.ZCXX18 ZDORD,
+		       A.SPXX01,
+		       (SELECT Y.SPXX04 FROM W_SPXX Y WHERE	Y.SPXX01 = A.SPXX01) SPMC,
+		       G.ZCXX01,
+		       Z.ZCXX02,
+		       A.XSDDI02,
+		       A.XSDDI05,
+		       IFNULL(A.XSDDI04,0) XSDDI04,
+           IFNULL(A.XSDDI06,0) XSDDI06,
+           (A.XSDDI02+ IFNULL(A.XSDDI04,0)) TZJG,
+           (A.XSDDI05+ IFNULL(A.XSDDI06,0)) TZSL,
+           (SELECT COUNT(0) FROM W_SPPJ P WHERE A.SPXX01=P.SPXX01 AND P.xsdd01=A.XSDD01) PJBJ
+		  FROM W_XSDDITEM A, W_XSDD B, W_DJZX C,W_ZCXX D,W_SPGL G,W_ZCXX Z
+		 WHERE A.XSDD01 = #{XSDD01}
+		   AND A.XSDD01 = B.XSDD01
+		   AND G.ZCXX01 = B.ZTID
+		   AND G.ZCXX01 = Z.ZCXX01
+		   AND G.SPXX01 = A.SPXX01
+		   AND B.ZTID = D.ZCXX01
+		   AND A.XSDD01 = C.W_DJZX01
+     </select>
+
+ <!-- 查询订单商品 -->
+     <select id="queryOrderItem_a" parameterType="Map" resultType="java.util.Map">
+    	SELECT B.XSDD01,
+    		   Z.ZCXX02,
+		       D.ZCXX18 ZDORD,
+		       A.SPXX01,
+		       WS.SPXX02,
+		       (SELECT Y.SPXX04 FROM W_SPXX Y WHERE	Y.SPXX01 = A.SPXX01) SPMC,
+		       G.ZCXX01,
+		       A.XSDDI02,
+		       A.XSDDI05,
+		       IFNULL(A.XSDDI04,0) XSDDI04,
+           IFNULL(A.XSDDI06,0) XSDDI06,
+           (A.XSDDI02+ IFNULL(A.XSDDI04,0)) TZJG,
+           (A.XSDDI05+ IFNULL(A.XSDDI06,0)) TZSL,A.THSL,
+           (SELECT COUNT(0) FROM W_SPPJ P WHERE A.SPXX01=P.SPXX01 AND P.xsdd01=A.XSDD01) PJBJ,
+           <!-- (SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE G.ZCXX01=S.ZCXX01 AND S.SPXX01=A.SPXX01 AND S.SPTP01=1) SPTP02, -->
+           (SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE G.ZCXX01=S.ZCXX01 AND S.SPXX01=A.SPXX01 LIMIT 1) SPTP02,
+           (SELECT SPTP01 FROM W_SPTP S WHERE G.ZCXX01=S.ZCXX01 AND S.SPXX01=G.SPXX01 LIMIT 1) SPTP01
+		  FROM W_XSDDITEM A, W_XSDD B, W_DJZX C,W_ZCXX D,W_SPGL G,W_ZCXX Z,W_SPXX WS
+		 WHERE A.XSDD01 = #{XSDD01}
+		   AND A.XSDD01 = B.XSDD01
+		   AND G.ZCXX01 = B.ZTID
+		   AND G.ZCXX01 = Z.ZCXX01
+		   AND G.SPXX01 = A.SPXX01
+		   AND B.ZTID = D.ZCXX01
+		   AND A.SPXX01 = WS.SPXX01
+		   AND A.XSDD01 = C.W_DJZX01
+     </select>
+<!-- 查询订单商品 -->
+     <select id="queryOrderItem_a_sum" parameterType="Map" resultType="java.util.Map">
+    	SELECT count(1) as COUNT
+		  FROM W_XSDDITEM A, W_XSDD B, W_DJZX C,W_ZCXX D,W_SPGL G,W_ZCXX Z,W_SPXX WS
+		 WHERE A.XSDD01 = #{XSDD01}
+		   AND A.XSDD01 = B.XSDD01
+		   AND G.ZCXX01 = B.ZTID
+		   AND G.ZCXX01 = Z.ZCXX01
+		   AND G.SPXX01 = A.SPXX01
+		   AND B.ZTID = D.ZCXX01
+		   AND A.SPXX01 = WS.SPXX01
+		   AND A.XSDD01 = C.W_DJZX01
+     </select>
+	  <select id="selectGZINFO" parameterType="Map" resultType="java.util.Map">
+       SELECT TO_CHAR(T.W_DJZT02, 'yyyy-MM-dd HH24:MI:SS') W_DJZT02, T.W_DJZT03
+        FROM W_DJZT T
+        WHERE T.W_DJZT01 = #{XSDD01}
+        ORDER BY T.W_DJZT02 ASC
+      </select>
+     
+     <select id="selectSkfsSum" parameterType="Map" resultType="java.util.Map">
+     SELECT COUNT(*) SUM FROM W_XSDDSKFS WHERE XSDD01=#{XSDD01}
+     </select>
+     
+      <select id="selectMyOrder2" parameterType="Map" resultType="java.util.Map">
+      SELECT C.SHR, C.SHDZ, C.LXDH, C.LXDH, WM_CONCAT(C.ZFFS) ZFFS, C.PSFS, C.FPLX,
+        C.FPTT, C.SPZJE, C.YFJE, C.JF, C.ZXZFJE, C.ZTMC, C.BZ
+   FROM (SELECT A.XSDD19 SHR, A.XSDD20 SHDZ, A.XSDD21 LXDH,
+                 (CASE NVL(B.SKFS, 0)
+                    WHEN 0 THEN
+                     '余额支付'
+                    WHEN 1 THEN
+                     '在线支付'
+                    WHEN 2 THEN
+                     '返利支付'
+                  END) ZFFS, A.XSDD26 PSFS,
+                 (CASE A.XSDD10
+                    WHEN 1 THEN
+                     '不需要发票'
+                    WHEN 2 THEN
+                     '普通发票'
+                    WHEN 3 THEN
+                     '增值税发票'
+                    WHEN NULL THEN
+                     ''
+                  END) FPLX, NVL(A.XSDD11, '') FPTT, A.XSDD02 SPZJE,
+                 NVL(A.XSDD03, 0) YFJE, NVL(A.XSDD25, 0) JF,
+                 NVL(A.XSDD09, 0) ZXZFJE,
+                 (SELECT B.ZCXX02 FROM W_ZCXX B WHERE B.ZCXX01 = A.ZTID) ZTMC,
+                 NVL(A.XSDD27, '无') BZ
+            FROM W_XSDD A, W_XSDDSKFS B
+           WHERE A.XSDD01 = #{XSDD01}
+             AND A.XSDD01 = B.XSDD01) C
+  GROUP BY C.SHR, C.SHDZ, C.LXDH, C.LXDH, C.PSFS, C.FPLX, C.FPTT,
+           C.SPZJE ,C.YFJE, C.JF, C.ZXZFJE, C.ZTMC, C.BZ
+	    </select> 
+     
+     <select id="selectMyOrder" parameterType="Map" resultType="java.util.Map">
+   SELECT A.XSDD19 SHR, A.XSDD20 SHDZ, A.XSDD21 LXDH,
+                 (CASE NVL(A.XSDD08, 0)
+                    WHEN 0 THEN
+                     '余额支付'
+                    WHEN 1 THEN
+                     '在线支付'
+                    WHEN 2 THEN
+                     '返利支付'
+                  END) ZFFS, A.XSDD26 PSFS,
+                 (CASE A.XSDD10
+                    WHEN 1 THEN
+                     '不需要发票'
+                    WHEN 2 THEN
+                     '普通发票'
+                    WHEN 3 THEN
+                     '增值税发票'
+                    WHEN NULL THEN
+                     ''
+                  END) FPLX, NVL(A.XSDD11, '') FPTT, A.XSDD02 SPZJE,
+                 NVL(A.XSDD03, 0) YFJE, NVL(A.XSDD25, 0) JF,
+                 NVL(A.XSDD09, 0) ZXZFJE,
+                 (SELECT B.ZCXX02 FROM W_ZCXX B WHERE B.ZCXX01 = A.ZTID) ZTMC,
+                 NVL(A.XSDD27, '无') BZ
+            FROM W_XSDD A
+           WHERE A.XSDD01 = #{XSDD01}
+	    </select> 
+	    
+     <select id="selectOrderItem" parameterType="Map" resultType="java.util.Map">
+	    SELECT C.XSDD01,
+	           C.XSDDI01,
+	       C.SPXX01,  
+	       NVL(C.XSDDI03,0) XSDDI03,
+	         C.XSDDI05 GMSL,
+	         (C.XSDDI05 + NVL(C.XSDDI06, 0)) SHSL,
+	         B.SPXX04 SPMC,
+	         A.XSDD02 SPZJE,
+	         C.XSDDI02 GMJG,
+	         (C.XSDDI02 + NVL(C.XSDDI04, 0)) SHJG,
+	         ((C.XSDDI05 + NVL(C.XSDDI06, 0)) * (C.XSDDI02 + NVL(C.XSDDI04, 0))) SPJE,
+	       NVL(C.XSDDI10,0) XSDDI10,
+	       ((C.XSDDI05 + NVL(C.XSDDI06,0)) - NVL(C.XSDDI10,0)) noXSDDI10,
+	       C.XSDDI11 XSDDI11,
+	       TO_CHAR(A.XSDD04,'YY-MM-DD') CGRQ,
+	       (SELECT W_ZCXX.ZCXX02 FROM W_ZCXX WHERE A.ZTID = W_ZCXX.ZCXX01) GSXXNAME,
+	       D.W_DJZX02 DDZT,
+	       (CASE D.W_DJZX02
+	           WHEN 1 THEN  '待审核中'
+	           WHEN 2 THEN  '未通过'
+	           WHEN 3 THEN  '待支付 '
+	           WHEN 4 THEN  '待发货'
+	           WHEN 5 THEN  '待确认收货'
+	           WHEN 6 THEN  '已收货'
+	           WHEN 7 THEN  '已冲红'
+	           WHEN 8 THEN  'V7已开单'
+	           WHEN 9 THEN '问题订单'
+             WHEN 10 THEN '已评价'
+             WHEN 11 THEN '已终止'
+             WHEN 12 THEN '已删除'
+             WHEN 17 THEN '线下汇款待审核'
+	         END) DDZTMC,
+	         NVL(C.XSDDI07,0) ZSJF,
+	         C.SPXX01 SPXX01,
+	         A.ZTID JXS,
+	          <include refid="KYYE"/> KYYE,
+	      <include refid="SXED"/> SXED,
+	       (SELECT W_ZCXX.ZCXX18 FROM W_ZCXX WHERE W_ZCXX.ZCXX01 = A.ZTID) ZDORD
+	      FROM W_XSDD A, W_SPXX B,W_XSDDITEM C,W_DJZX D
+	     WHERE C.SPXX01 = B.SPXX01 AND A.XSDD01 = C.XSDD01 AND D.W_DJZX01 = C.XSDD01 
+	       AND C.XSDD01 = #{XSDD01}
+  	</select>
+  	
+ 	<select id="selectOrderNUM" parameterType="Map" resultType="java.util.Map">
+		SELECT COUNT(*) SUM
+		FROM W_XSDD W, W_DJZX D
+		WHERE W.XSDD01 = D.W_DJZX01
+		AND W.HBID = #{GSID}
+		AND D.W_DJZX02 = #{W_DJZX02}
+	</select>
+	
+	<select id="selectMyGHS" parameterType="Map" resultType="java.util.Map">
+  	SELECT A.ZTID, (SELECT B.ZCXX02 FROM W_ZCXX B WHERE B.ZCXX01 = A.ZTID) ZTMC
+	  FROM W_GSGX A
+	 WHERE A.HBID = #{HBID}
+    </select>
+    
+    <select id="selectMyGHSQY" parameterType="Map" resultType="java.util.Map">
+	   SELECT W.ZCXX01 ZTID, W.ZCXX02 ZTMC
+	   FROM W_ZCXX W
+	   WHERE W.ZCXX01 IN (SELECT G.ZTID FROM W_GSGX G WHERE G.HBID = #{HBID})
+    </select>
+    
+    <select id="getMyGhsListForUmpay" parameterType="Map" resultType="java.util.Map">
+	   SELECT W.ZCXX01 GSXX01, W.ZCXX02 GSXX02
+	   	FROM W_ZCXX W
+	  	WHERE EXISTS (SELECT 1
+	            FROM W_GSGX A
+	          	WHERE A.ZTID = W.ZCXX01
+	            AND A.HBID = #{HBID})
+	    AND NOT EXISTS (SELECT 1
+	            FROM W_QYXX Q
+	            WHERE Q.ZTID = W.ZCXX01
+	            AND Q.HBID = #{HBID})
+	    AND W.ZCXX35 IS NOT NULL
+	</select>
+	
+	<select id="selectOrder_adminOrGHS" parameterType="map" resultType="map">
+		SELECT A.XSDD01 XSDD01,
+		         A.ZTID ZTID,
+        		(SELECT ZCXX02 FROM W_ZCXX WHERE ZCXX01 = A.ZTID) GSXXNAME,
+       			(SELECT ZCXX02 FROM W_ZCXX WHERE ZCXX01 = A.HBID) KHNAME,
+       		 	A.XSDD02 XSDD02,
+       		 	DATE_FORMAT(A.XSDD04,'%Y-%m-%d %H:%i %S') XSDD04,
+       		 	CASE A.XSDD26
+	         		WHEN 1 THEN  '供货商配送'
+	         		WHEN 2 THEN  '零售商自取'
+	         		ELSE NULL
+       		 	END XSDD26,
+       		 	A.XSDD07 XSDD07,
+		       A.XSDD21 XSDD21,
+		       A.XSDD20 XSDD20,
+		       A.XSDD19 XSDD19,
+		       A.XSDD11 FPTT,
+		       CASE A.XSDD10
+		         WHEN 1 THEN  '不需要发票'
+		         WHEN 2 THEN  '普通发票'
+		         WHEN 3 THEN  '增值税发票'
+		         ELSE NULL
+		       END FPLXX,
+		       B.W_DJZX02 DJZX02,
+		       A.XSDD10 FPLX,
+		       A.XSDD14 KHH,
+		       A.XSDD13 NSRSBH,
+		       A.XSDD15 CWZH,
+		       A.XSDD17 FPLXDH,
+		       A.XSDD16 FPYJDZ,
+		       A.XSDD27 MEMO,
+		       CASE B.W_DJZX02
+		         WHEN 1 THEN  '待审核中'
+		         WHEN 2 THEN  '审核未通过'
+		         WHEN 3 THEN  '待支付 '
+		         WHEN 4 THEN  '待发货'
+		         WHEN 5 THEN  '待确认收货'
+		         WHEN 6 THEN  '已完成'
+		         WHEN 7 THEN  '已冲红'
+		         WHEN 8 THEN  'V7已开单'
+		         WHEN 9 THEN  '异常订单'
+             WHEN 10 THEN '已评价'
+             WHEN 11 THEN '已终止'
+             WHEN 12 THEN '已删除'
+		         ELSE null
+		       END DDZTMC
+		  FROM W_XSDD A, W_DJZX B
+		 WHERE A.XSDD01 = B.W_DJZX01
+			<if test="xsdd01!=''">AND A.XSDD01 = #{xsdd01}</if>
+			<if test="khname!=''">AND A.HBID in (select  R.ZCXX01 from W_ZCXX r WHERE r.ZCXX02 like '%'||#{khname}||'%')</if>
+			<if test="gsxxname!=''">AND A.ZTID in (select  R.ZCXX01 FROM W_ZCXX r WHERE r.ZCXX02 like '%'||#{gsxxname}||'%')</if>
+			<if test="gsid!='' and gsid!='JL'">AND A.ZTID = #{gsid}</if>
+			<if test="flag!='' and flag!=null">AND B.w_djzx02 = #{flag}</if>
+			<if test="yjsj_start!=''">AND A.XSDD04 &gt;= to_date(#{yjsj_start} ||' 00:00:00','YYYY-MM-DD HH24:mi:ss')</if>
+			<if test="yjsj_end!=''">AND A.XSDD04 &lt;= to_date(#{yjsj_end} ||' 23:59:59','YYYY-MM-DD HH24:mi:ss')</if>
+	
+		ORDER BY A.XSDD04  DESC NULLS LAST
+	</select>
+	
+	<select id="selectBxwspNUM" parameterType="Map" resultType="java.util.Map">
+		SELECT COUNT(1) SUM
+		FROM W_FLPPQX E
+		WHERE E.HBID = #{GSID}
+		AND E.FLPP02 = 8
+	</select>
+	
+	<select id="selectRzsqNUM" parameterType="Map" resultType="java.util.Map">
+		SELECT 
+		(CASE A.CPLX WHEN '1' THEN '光大银行白金信用卡' WHEN '2' THEN '民生银行信用银票贷款' END) CPLX,
+		(CASE A.SHZT WHEN 2 THEN '初审通过' WHEN 3 THEN '初审未通过' WHEN 4 THEN '复审通过' WHEN 5 THEN '复审未通过' END) SHZT,
+		A.SHYJ SHYJ
+		FROM W_RZSQ A
+		WHERE A.SHZT IN (2, 3, 4, 5)
+		AND A.GSID = #{GSID}
+	</select>
+	 
+	 <select id="selectOrderItemByIdOnlySelect" parameterType="map" resultType="map">
+     SELECT DISTINCT A.XSDD01,
+           A.XSDDI01,
+		   A.SPXX01,	
+		   A.XSDDI03 XSDDI03,
+	       A.XSDDI05 GMSL,NVL(A.XSDDI06, 0) XSDDI06,
+	       (A.XSDDI05 + NVL(A.XSDDI06, 0)) SHSL,
+	       B.SPXX04 SPMC,
+	       A.XSDDI02 GMJG,NVL(A.XSDDI04, 0) XSDDI04,
+	       (A.XSDDI02 + NVL(A.XSDDI04, 0)) SHJG,
+	       ((A.XSDDI05 + NVL(A.XSDDI06, 0)) * (A.XSDDI02 + NVL(A.XSDDI04, 0))) SPJE,
+	        I.FLFS01 XSLX,(SELECT F.FLFS02 FROM W_FLFS F WHERE F.FLFS01=I.FLFS01 ) XSLXMC,
+		   NVL(A.XSDDI10,0) XSDDI10,
+		   ((A.XSDDI05 + NVL(A.XSDDI06,0)) - NVL(A.XSDDI10,0)) noXSDDI10,
+		   A.XSDDI11 XSDDI11
+  		FROM W_XSDDITEM A, W_SPXX B,W_ITEMDETAIL I
+ 		WHERE A.SPXX01 = B.SPXX01
+ 		AND A.XSDD01= I.XSDD01
+   		AND A.XSDD01 = #{xsdd01}
+	</select>
+	
+	<select id="selectOrderItemById" parameterType="map" resultType="map">
+     SELECT A.XSDD01,
+       		A.SPXX01,
+       		A.XSDDI05 GMSL,
+       		(A.XSDDI05 + NVL(A.XSDDI06, 0)) SHSL,
+       		B.SPXX04 SPMC,
+       		A.XSDDI02 GMJG,
+       		(A.XSDDI02 + NVL(A.XSDDI04, 0)) SHJG,
+       		((A.XSDDI05 + NVL(A.XSDDI06, 0)) * (A.XSDDI02 + NVL(A.XSDDI04, 0))) SPJE,
+       		(SELECT J.SPJGB02
+          		FROM W_SPJGB J
+         		WHERE J.SPXX01 = A.SPXX01
+          		 AND J.ZCXX01 = X.ZTID) FXXJ,
+      		(SELECT SUM((K.CKSP04 + K.CKSP05 - K.KCXX02)) KCSL
+          		FROM W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01
+         		WHERE ck.ck09= '0' and K.SPXX01 = A.SPXX01
+           		AND K.ZCXX01 = X.ZTID) KCSL,
+       		'' XSLX,
+       		'' XSLXMC,
+       		'' CKSP12,
+       		'' CKSPSX,
+       		'' CK01,
+	        '' CKMC,
+       		(SELECT D.BM01
+          		FROM W_DWYWY D
+         		WHERE D.PPB01 = B.PPB01 AND D.SPFL01 = B.SPFL01_CODE AND
+          		D.GSXX01 =
+                		(SELECT Z.ZCXX25 FROM W_ZCXX Z WHERE Z.ZCXX01 = X.ZTID) AND
+          		D.WLDW01 = (SELECT DISTINCT Y.WLDW01
+                              		FROM W_YWDJXX Y
+                             		WHERE Y.HBID = X.HBID)) BM01,
+       		(SELECT D.BM02
+          		FROM W_DWYWY D
+         		WHERE D.PPB01 = B.PPB01 AND D.SPFL01 = B.SPFL01_CODE AND
+          		D.GSXX01 =
+                		(SELECT Z.ZCXX25 FROM W_ZCXX Z WHERE Z.ZCXX01 = X.ZTID) AND
+          		D.WLDW01 = (SELECT DISTINCT Y.WLDW01
+                              		FROM W_YWDJXX Y
+                             		WHERE Y.HBID = X.HBID)) BM02,
+       		(SELECT D.RYXX01
+          		FROM W_DWYWY D
+         		WHERE D.PPB01 = B.PPB01 AND D.SPFL01 = B.SPFL01_CODE AND
+          		D.GSXX01 =
+                		(SELECT Z.ZCXX25 FROM W_ZCXX Z WHERE Z.ZCXX01 = X.ZTID) AND
+          		D.WLDW01 = (SELECT DISTINCT Y.WLDW01
+                              		FROM W_YWDJXX Y
+                             		WHERE Y.HBID = X.HBID)) RYXX01,
+       		(SELECT D.RYXX02
+          		FROM W_DWYWY D
+         		WHERE D.PPB01 = B.PPB01 AND D.SPFL01 = B.SPFL01_CODE AND
+          		D.GSXX01 =
+                		(SELECT Z.ZCXX25 FROM W_ZCXX Z WHERE Z.ZCXX01 = X.ZTID) AND
+          		D.WLDW01 = (SELECT DISTINCT Y.WLDW01
+                              		FROM W_YWDJXX Y
+                             		WHERE Y.HBID = X.HBID)) RYXX02
+  		FROM W_XSDDITEM A, W_SPXX B, W_XSDD X
+ 		WHERE A.SPXX01 = B.SPXX01
+   		AND A.XSDD01 = X.XSDD01
+   		AND A.XSDD01 = #{xsdd01}
+	</select>
+	
+	<select id="select-gzInfoById" parameterType="map" resultType="map">
+		SELECT TO_CHAR(T.W_DJZT02, 'YYYY-MM-DD HH24:MI:SS') XSDD21,
+               T.W_DJZT03 RESON
+		  FROM W_DJZT T
+		 WHERE T.W_DJZT01 = #{xsdd01}
+		 ORDER BY T.W_DJZT02 ASC
+	</select>
+	<!-- 根据订单查看该订单商品 -->
+	<select id="selectddxx" parameterType="map" resultType="map">
+	SELECT SPXX01,XSDD01,
+  	CASE SPPJ03 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ03,
+  	CASE SPPJ04 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ04,
+  	CASE SPPJ05 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ05,
+  	CASE SPPJ06 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符'   WHEN 5 THEN '非常好' END SPPJ06
+  	FROM W_SPPJ WHERE 1=1
+  	<if test="xsdd01!=''">AND XSDD01 = #{xsdd01}</if>
+	</select>
+	<select id="selectAssess" parameterType="map" resultType="map">
+	SELECT SPPJ08 FROM W_SPPJ WHERE 1=1
+	<if test="xsdd01!=''">AND XSDD01 = #{XSDD01}</if>
+	</select>
+	
+	<!--订单审核-查询  -->
+	<select id="Srch_Order" parameterType="map" resultType="java.util.Map">
+	SELECT A.XSDD01, XSDD02, SUM(XSDDI05) XSDDI05,DATE_FORMAT(XSDD04,'%Y-%m-%d %k:%i:%s') XSDD04,C.W_DJZX02,
+	       A.HBID,(SELECT ZCXX02 FROM W_ZCXX WHERE ZCXX01 = A.HBID) KHNAME,(SELECT XTCZY01 FROM W_ZCXX WHERE ZCXX01 = A.HBID) SHR
+	       ,A.ZTID,(SELECT ZCXX02 FROM W_ZCXX WHERE ZCXX01 = A.ZTID) GSXXNAME  
+	  FROM W_XSDD A,W_XSDDITEM B,W_DJZX C
+	 WHERE A.XSDD01=B.XSDD01
+	   AND B.XSDD01=C.W_DJZX01
+	<if test="XSDD01!='' and XSDD01!=null">
+	 	AND A.XSDD01 = #{XSDD01}
+	</if>
+	<if test="ZCXX01!='' and ZCXX01!=null">
+	 	AND A.ZTID = #{ZCXX01}
+	</if>
+	<if test="W_DJZX02!='' and W_DJZX02!=null">
+	 	AND C.W_DJZX02 = #{W_DJZX02}
+	</if>
+	<if test="date_s!='' and date_s!=null">AND A.XSDD04 &gt;= #{date_s} ' 00:00:00'</if>
+  	<if test="date_e!='' and date_e!=null">AND A.XSDD04 &lt;= #{date_e} ' 23:59:59'</if>
+  	GROUP BY XSDD01
+  	ORDER BY XSDD04 DESC
+	</select>
+	
+		<!--订单审核-查询  -->
+	<select id="Srch_Order_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) as COUNT  FROM (
+	SELECT A.XSDD01, XSDD02, SUM(XSDDI05) XSDDI05,DATE_FORMAT(XSDD04,'%Y-%m-%d %k:%i:%s') XSDD04,C.W_DJZX02,
+	       A.HBID,(SELECT ZCXX02 FROM W_ZCXX WHERE ZCXX01 = A.HBID) KHNAME
+	       ,A.ZTID,(SELECT ZCXX02 FROM W_ZCXX WHERE ZCXX01 = A.ZTID) GSXXNAME  
+	  FROM W_XSDD A,W_XSDDITEM B,W_DJZX C
+	 WHERE A.XSDD01=B.XSDD01
+	   AND B.XSDD01=C.W_DJZX01
+	<if test="XSDD01!='' and XSDD01!=null">
+	 	AND A.XSDD01 = #{XSDD01}
+	</if>
+	<if test="ZCXX01!='' and ZCXX01!=null">
+	 	AND A.ZTID = #{ZCXX01}
+	</if>
+	<if test="W_DJZX02!='' and W_DJZX02!=null">
+	 	AND C.W_DJZX02 = #{W_DJZX02}
+	</if>
+	<if test="date_s!='' and date_s!=null">AND A.XSDD04 &gt;= #{date_s} ' 00:00:00'</if>
+  	<if test="date_e!='' and date_e!=null">AND A.XSDD04 &lt;= #{date_e} ' 23:59:59'</if>
+  	GROUP BY XSDD01
+  	ORDER BY XSDD04 DESC)as total
+	 
+	</select>
+	
+	<!-- 订单明细-查询 -->
+	<select id="Srch_OrderItem" parameterType="map" resultType="java.util.Map">
+	SELECT C.SPPJ07,C.SPPJ12,A.XSDD01,A.XSDDI01,A.SPXX01,A.XSDDI03 XSDDI03,A.XSDDI05 GMSL,IFNULL(A.XSDDI06, 0) XSDDI06,
+	      (A.XSDDI05 + IFNULL(A.XSDDI06, 0)) SHSL,B.SPXX04 SPMC,A.XSDDI02 GMJG,IFNULL(A.XSDDI04, 0) XSDDI04,
+	      (A.XSDDI02 + IFNULL(A.XSDDI04, 0)) SHJG,((A.XSDDI05 + IFNULL(A.XSDDI06, 0)) * (A.XSDDI02 + IFNULL(A.XSDDI04, 0))) SPJE,
+	      IFNULL(A.XSDDI10,0) XSDDI10,((A.XSDDI05 + IFNULL(A.XSDDI06,0)) - IFNULL(A.XSDDI10,0)) noXSDDI10,
+	      A.XSDDI11 XSDDI11,(SELECT w_goods.barcode FROM w_goods WHERE spxx01=A.spxx01)BARCODE
+	 FROM W_XSDDITEM A, W_SPXX B,W_SPPJ C
+	WHERE A.SPXX01 = B.SPXX01
+	<if test="XSDD01!='' and XSDD01!=null">
+	 	AND A.XSDD01 = #{XSDD01}
+	</if>
+	AND a.spxx01=b.spxx01
+	AND b.spxx01=#{SPXX01}
+	AND c.sppj01=#{SPPJ01}
+	</select>
+	
+	<select id="Srch_OrderDetail" parameterType="map" resultType="java.util.Map">
+	SELECT A.XSDD01,A.XSDDI01,A.SPXX01,A.XSDDI03 XSDDI03,A.XSDDI05 GMSL,IFNULL(A.XSDDI06, 0) XSDDI06,
+	      (A.XSDDI05 + IFNULL(A.XSDDI06, 0)) SHSL,B.SPXX04 SPMC,A.XSDDI02 GMJG,IFNULL(A.XSDDI04, 0) XSDDI04,
+	      (A.XSDDI02 + IFNULL(A.XSDDI04, 0)) SHJG,((A.XSDDI05 + IFNULL(A.XSDDI06, 0)) * (A.XSDDI02 + IFNULL(A.XSDDI04, 0))) SPJE,
+	      IFNULL(A.XSDDI10,0) XSDDI10,((A.XSDDI05 + IFNULL(A.XSDDI06,0)) - IFNULL(A.XSDDI10,0)) noXSDDI10,
+	      A.XSDDI11 XSDDI11,(SELECT w_goods.barcode FROM w_goods WHERE spxx01=A.spxx01)BARCODE
+	 FROM W_XSDDITEM A, W_SPXX B 
+	WHERE A.SPXX01 = B.SPXX01
+	<if test="XSDD01!='' and XSDD01!=null">
+	 	AND A.XSDD01 = #{XSDD01}
+	</if>
+	AND a.spxx01=b.spxx01
+	</select>
+	
+	<!--出库单-查询  -->
+	<select id="selectW_CKD" parameterType="map" resultType="java.util.Map">
+	<!-- SELECT A.CKDH,A.ZCXX01,(SELECT ckdz100 from ck where ckdz99 = A.SHCK) SHCK,A.CKR,DATE_FORMAT(A.CKSJ,'%Y-%m-%d %h:%i:%s') CKSJ,A.BZ FROM W_CKD A
+	WHERE 1=1  -->
+	SELECT A.CKDH,A.ZCXX01,(SELECT ck02 from ck where ck01 = A.SHCK) SHCK,A.CKR,DATE_FORMAT(A.CKSJ,'%Y-%m-%d %H:%i:%s') CKSJ,A.BZ FROM W_CKD A
+	WHERE 1=1 
+	<if test="CKDH!='' and CKDH!=null">
+	 	AND A.CKDH = #{CKDH}
+	</if>
+	<if test="ZCXX01!='' and ZCXX01!=null">AND A.ZCXX01 = #{ZCXX01}</if>
+	<if test="date_s!='' and date_s!=null">AND A.CKSJ &gt;= #{date_s} ' 00:00:00'</if>
+  	<if test="date_e!='' and date_e!=null">AND A.CKSJ &lt;= #{date_e} ' 23:59:59'</if>
+  	ORDER BY CKSJ DESC
+	</select>
+	
+	<!--出库单-查询-和 -->
+	<select id="selectW_CKD_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) as COUNT FROM W_CKD A
+	WHERE 1=1 
+	<if test="CKDH!='' and CKDH!=null">
+	 	AND A.CKDH = #{CKDH}
+	</if>
+	<if test="ZCXX01!='' and ZCXX01!=null">AND A.ZCXX01 = #{ZCXX01}</if>
+	<if test="date_s!='' and date_s!=null">AND A.CKSJ &gt;= #{date_s} ' 00:00:00'</if>
+  	<if test="date_e!='' and date_e!=null">AND A.CKSJ &lt;= #{date_e} ' 23:59:59'</if>
+  	ORDER BY CKSJ DESC
+	</select>
+	
+	
+	<!--出库单明细-查询  -->
+	<select id="selectW_CKD_item" parameterType="map" resultType="java.util.Map">
+	SELECT B.SPXX02,B.SPXX04,C.SPCM01,C.BARCODE,A.CKSL FROM W_CKDITEM A,W_SPXX B,W_CKDCM C 
+	WHERE A.SPXX01=B.SPXX01 AND A.CKDH=C.CKDH AND A.SPXX01=C.spxx01 
+	<if test="CKDH!='' and CKDH!=null">
+	 	AND A.CKDH = #{CKDH}
+	</if>
+	ORDER BY C.BARCODE
+	</select>
+	<!--出库单明细-查询  总和-->
+	<select id="selectW_CKD_item_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) as COUNT FROM W_CKDITEM A,W_SPXX B,W_CKDCM C 
+	WHERE A.SPXX01=B.SPXX01 AND A.CKDH=C.CKDH AND A.SPXX01=C.spxx01
+	<if test="CKDH!='' and CKDH!=null">
+	 	AND A.CKDH = #{CKDH}
+	</if>
+	ORDER BY C.BARCODE
+	</select>
+	
+	<!-- 订单明细 -->  
+	<select id="selectW_xsddMain" parameterType="map" resultType="java.util.Map">
+	SELECT A.XSDD01 XSDD01,A.ZTID ZTID,A.XSDD08 XSDD08,
+						DATE_FORMAT(A.XSDD04, '%Y-%m-%d %h:%m:%s') XSDD04,A.XSDD02 XSDD02,xsdd03,
+						0 YHJE,0 SJYF,
+						0 JYYE,0 JE,DATE_FORMAT(A.XSDD06, '%Y-%m-%d %h:%m:%s') XSDD06,
+						(SELECT ZCXX02 FROM W_ZCXX WHERE ZCXX01 = A.ZTID) GSXXNAME,
+       			(SELECT ZCXX02 FROM W_ZCXX WHERE ZCXX01 = A.HBID) KHNAME,
+						A.XSDD20 XSDD20,A.XSDD21 XSDD21,A.XSDD07 XSDD07,
+				CASE A.XSDD26
+		         WHEN 0 THEN  '卖家配送'
+		         WHEN 1 THEN  '买家自提'
+		         ELSE NULL
+		       END XSDD26,
+		      CASE A.XSDD10
+		         WHEN 1 THEN  '不需要发票'
+		         WHEN 2 THEN  '普通发票'
+		         WHEN 3 THEN  '增值税发票'
+		         ELSE NULL
+		       END FPLXX,
+		       A.XSDD19 XSDD19,A.XSDD10 FPLX,A.XSDD11 FPTT,       
+		       B.W_DJZX02 W_DJZX02,A.XSDD14 KHH, A.XSDD17 FPLXDH,
+		       A.XSDD16 FPYJDZ,A.XSDD27 MEMO,
+		       CASE B.W_DJZX02
+		         WHEN 1 THEN  '待审核中'
+		         WHEN 2 THEN  '审核未通过'
+		         WHEN 3 THEN  '待支付 '
+		         WHEN 4 THEN  '待发货'
+		         WHEN 5 THEN  '待确认收货'
+		         WHEN 6 THEN  '已完成'
+		         WHEN 7 THEN  '已冲红'
+		         WHEN 8 THEN  'V7已开单'
+		         WHEN 9 THEN  '异常订单'
+             WHEN 10 THEN '已评价'
+             WHEN 11 THEN '已终止'
+             WHEN 12 THEN '已删除'
+             WHEN 17 THEN '线下汇款待审核'
+		         ELSE null
+		       END DDZTMC,xsdd14,xsdd15,xsdd16,xsdd17,xsdd18
+		  FROM W_XSDD A, W_DJZX B
+		 WHERE A.XSDD01 = B.W_DJZX01
+	<if test="XSDD01!='' and XSDD01!=null">
+	 	AND A.XSDD01 = #{XSDD01}
+	</if>
+	ORDER BY A.XSDD04  DESC
+	</select>
+	
+	<!--订单明细-商品展示-->
+	<select id="selectW_xsddItem" parameterType="map" resultType="java.util.Map">
+	SELECT
+	(select BARCODE from w_goods where spxx01 = A.spxx01) as BARCODE,
+	(SELECT COUNT(0) FROM W_SPPJ P WHERE A.SPXX01=P.SPXX01 AND P.xsdd01=A.XSDD01) PJBJ,
+	C.SPXX02,
+	C.SPXX01,
+	C.SPXX04,
+	A.XSDDI02,
+	A.XSDDI05	,(select SUBSTRING_INDEX(sptp02,'.',-1) from w_sptp where spxx01 = c.spxx01 and sptp01= '1') SPTP02,
+	(SELECT ZCXX01 FROM w_spgl WHERE SPXX01 = C.SPXX01) AS ZCXX01,
+	(SELECT ZTID FROM w_xsdd WHERE w_xsdd.xsdd01 = A.XSDD01) AS ZTID 
+	FROM
+	W_XSDDITEM A,
+	W_SPXX C
+	WHERE
+	A.SPXX01 = C.SPXX01
+	<if test="XSDD01!='' and XSDD01!=null">
+	 	AND A.XSDD01 = #{XSDD01}
+	</if>
+	</select>
+	
+	<!--查询商品评价信息-->
+	<select id="selectW_XSDDSKFS" parameterType="map" resultType="java.util.Map">
+	SELECT
+	xsdd01,
+	CASE skfs
+WHEN 0 THEN
+	'余额支付'
+WHEN 1 THEN
+	'在线支付'
+WHEN 6 THEN
+	'支付宝支付'
+WHEN 8 THEN
+	'银联支付'
+WHEN 9 THEN
+	'微信支付'
+when 10 then
+	'线下汇款'
+when 11 then
+	'EBC钱包 '  
+END skfs,
+ zfje,
+ DATE_FORMAT(zfsj, ' %Y-%m-%d %H:%i:%s') zfsj,
+ (
+	SELECT
+		DATE_FORMAT(
+			xsdd04,
+			' %Y-%m-%d %H:%i:%s'
+		)
+	FROM
+		w_xsdd
+	WHERE
+		xsdd01 = w_xsddskfs.xsdd01
+) AS xdsj
+FROM
+	w_xsddskfs
+WHERE
+	1 = 1
+	<if test="XSDD01!='' and XSDD01!=null">
+	 AND	XSDD01 = #{XSDD01}
+	</if>
+	</select>
+		<!--订单明细-商品展示-->
+	<select id="selectSPPJ" parameterType="map" resultType="java.util.Map">
+		SELECT sppj03,sppj04,sppj05,sppj06,sppj07 from w_sppj where spxx01=#{SPXX01} and xsdd01= #{XSDD01}
+	</select>
+	<select id="selectNumXNCK" parameterType="map" resultType="java.util.Map">
+			SELECT count(1) count from w_zcxx where 1=1
+			<if test="ZCXX01!='' and ZCXX01!=null">
+			AND zcxx01 in
+				<foreach collection="ZCXX01" index="index" item="tag" open="(" separator="," close=")">
+			 	 #{tag}
+				</foreach>
+			</if>
+			and zcxx65='1' 
+	</select>
+	
+	<!--入库单查询  begin -->
+	<!--入库单-查询  -->
+	<select id="selectW_RKD" parameterType="map" resultType="java.util.Map">
+	SELECT A.RKDH,A.ZCXX01,(SELECT ck02 from ck where ck01 = A.SHCK) SHCK,DATE_FORMAT(A.RKSJ,'%Y-%m-%d %H:%i:%s') RKSJ,A.BZ FROM W_RKD A
+	WHERE 1=1 
+	<if test="RKDH!='' and RKDH!=null">
+	 	AND A.RKDH = #{RKDH}
+	</if>
+	<if test="ZCXX01!='' and ZCXX01!=null">AND A.ZCXX01 = #{ZCXX01}</if>
+	<if test="date_s!='' and date_s!=null">AND A.RKSJ &gt;= #{date_s} ' 00:00:00'</if>
+  	<if test="date_e!='' and date_e!=null">AND A.RKSJ &lt;= #{date_e} ' 23:59:59'</if>
+  	ORDER BY RKSJ DESC
+	</select>
+	
+	<!--入库单-查询-和 -->
+	<select id="selectW_RKD_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) as COUNT FROM W_RKD A
+	WHERE 1=1 
+	<if test="RKDH!='' and RKDH!=null">
+	 	AND A.RKDH = #{RKDH}
+	</if>
+	<if test="ZCXX01!='' and ZCXX01!=null">AND A.ZCXX01 = #{ZCXX01}</if>
+	<if test="date_s!='' and date_s!=null">AND A.RKSJ &gt;= #{date_s} ' 00:00:00'</if>
+  	<if test="date_e!='' and date_e!=null">AND A.RKSJ &lt;= #{date_e} ' 23:59:59'</if>
+  	ORDER BY RKSJ DESC
+	</select>
+	
+	<!--入库单明细-查询  -->
+	<select id="selectW_RKD_item" parameterType="map" resultType="java.util.Map">
+	SELECT B.SPXX02,B.SPXX04,C.SPCM01,C.BARCODE,A.RKSL FROM W_RKDITEM A,W_SPXX B,W_RKDCM C 
+	WHERE A.SPXX01=B.SPXX01 AND A.RKDH=C.RKDH AND A.SPXX01=C.spxx01 
+	<if test="RKDH!='' and RKDH!=null">
+	 	AND A.RKDH = #{RKDH}
+	</if>
+	ORDER BY C.BARCODE
+	</select>
+	<!--入库单明细-查询  总和-->
+	<select id="selectW_RKD_item_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) as COUNT FROM W_RKDITEM A,W_SPXX B,W_RKDCM C 
+	WHERE A.SPXX01=B.SPXX01 AND A.RKDH=C.RKDH AND A.SPXX01=C.spxx01
+	<if test="RKDH!='' and RKDH!=null">
+	 	AND A.RKDH = #{RKDH}
+	</if>
+	ORDER BY C.BARCODE
+	</select>
+	<!-- 入库单查询 end -->
+	
+	<!-- 销售查询 BEGIN -->
+	<select id="selectXSCX" parameterType="map" resultType="java.util.Map">
+		SELECT
+			DATE_FORMAT(A.XSDD04,'%Y-%m-%d') GMRQ,
+			C.ZCXX02 ZCXX02,
+			C.ZCXX08 ZCXX08,
+			C.ZCXX06 ZCXX06,
+			D.SPXX04 SPXX04,
+			SUM(B.XSDDI05) XSDDI05,
+			E.DQBZM02 DQBZM02
+		FROM
+			W_XSDD A
+		LEFT JOIN W_XSDDITEM B ON A.XSDD01 = B.XSDD01
+		LEFT JOIN W_ZCXX C ON A.HBID = C.ZCXX01
+		LEFT JOIN W_SPXX D ON B.SPXX01 = D.SPXX01
+		LEFT JOIN DQBZM E ON A.COUNTY = E.DQBZM01
+		LEFT JOIN W_DJZX F ON F.W_DJZX01 = A.XSDD01
+		WHERE
+			1 = 1
+		AND A.CITY = #{CITY}
+		<if test="COUNTRY!='' and COUNTRY!=null">
+	 		AND A.COUNTY = #{COUNTRY}
+		</if>
+		<if test="date_s!='' and date_s!=null">
+	 		AND DATE_FORMAT(A.XSDD04,'%Y-%m-%d') &gt;= #{date_s}
+		</if>
+		<if test="date_e!='' and date_e!=null">
+	 		AND DATE_FORMAT(A.XSDD04,'%Y-%m-%d') &lt;= #{date_e}
+		</if>
+		<if test="CXNAME!='' and CXNAME!=null">
+	 		AND (C.ZCXX02 LIKE CONCAT ('%', #{CXNAME}, '%') OR D.SPXX04 LIKE CONCAT ('%', #{CXNAME}, '%')) 
+		</if>
+		AND F.W_DJZX02 IN (4, 5, 6, 10, 13, 14, 15, 16)
+		GROUP BY
+			GMRQ,
+			ZCXX02,
+			SPXX04,
+			DQBZM02
+		ORDER BY
+			GMRQ
+	</select>
+	<!-- 销售查询 END -->
+	
+	<!-- 销售查询 SUM BEGIN -->
+	<select id="selectXSCX_sum" parameterType="map" resultType="java.util.Map">
+		SELECT COUNT(1) AS COUNT FROM 
+			(SELECT
+				DATE_FORMAT(A.XSDD04,'%Y-%m-%d') GMRQ,
+				C.ZCXX02 ZCXX02,
+				C.ZCXX08 ZCXX08,
+ 				C.ZCXX06 ZCXX06,
+				D.SPXX04 SPXX04,
+				SUM(B.XSDDI05) XSDDI05,
+				E.DQBZM02 DQBZM02
+			FROM
+				W_XSDD A
+			LEFT JOIN W_XSDDITEM B ON A.XSDD01 = B.XSDD01
+			LEFT JOIN W_ZCXX C ON A.HBID = C.ZCXX01
+			LEFT JOIN W_SPXX D ON B.SPXX01 = D.SPXX01
+			LEFT JOIN DQBZM E ON A.COUNTY = E.DQBZM01
+			LEFT JOIN W_DJZX F ON F.W_DJZX01 = A.XSDD01
+			WHERE
+				1 = 1
+			AND A.CITY = #{CITY}
+			<if test="COUNTRY!='' and COUNTRY!=null">
+		 		AND A.COUNTY = #{COUNTRY}
+			</if>
+			<if test="date_s!='' and date_s!=null">
+		 		AND DATE_FORMAT(A.XSDD04,'%Y-%m-%d') &gt;= #{date_s}
+			</if>
+			<if test="date_e!='' and date_e!=null">
+		 		AND DATE_FORMAT(A.XSDD04,'%Y-%m-%d') &lt;= #{date_e}
+			</if>
+			<if test="CXNAME!='' and CXNAME!=null">
+		 		AND (C.ZCXX02 LIKE CONCAT ('%', #{CXNAME}, '%') OR D.SPXX04 LIKE CONCAT ('%', #{CXNAME}, '%')) 
+			</if>
+			AND F.W_DJZX02 IN (4, 5, 6, 10, 13, 14, 15, 16)
+			GROUP BY
+				GMRQ,
+				ZCXX02,
+				SPXX04,
+				DQBZM02
+			ORDER BY
+				GMRQ) t
+	</select>
+	<!-- 销售查询 SUM END -->
+	
+</mapper>

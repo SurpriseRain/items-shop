@@ -1,0 +1,47 @@
+ <link rel="stylesheet" type="text/css" href="/customer/qfy/css/foot.css" />
+<!-- <div class="fooer-menu">-->
+<!--    <dl>-->
+<!--      <dt>购物指南</dt>-->
+<!--      <dd><a href="#">免费注册</a></dd>-->
+<!--      <dd><a href="#">采购商品</a></dd>-->
+<!--      <dd><a href="#">常见问题</a></dd>-->
+<!--      <dd><a href="#">联系客服</a></dd>-->
+<!--    </dl>-->
+<!--    <dl>-->
+<!--      <dt>购物指南</dt>-->
+<!--      <dd><a href="#">免费注册</a></dd>-->
+<!--      <dd><a href="#">采购商品</a></dd>-->
+<!--      <dd><a href="#">常见问题</a></dd>-->
+<!--      <dd><a href="#">联系客服</a></dd>-->
+<!--    </dl>-->
+<!--    <dl>-->
+<!--      <dt>购物指南</dt>-->
+<!--      <dd><a href="#">免费注册</a></dd>-->
+<!--      <dd><a href="#">采购商品</a></dd>-->
+<!--      <dd><a href="#">常见问题</a></dd>-->
+<!--      <dd><a href="#">联系客服</a></dd>-->
+<!--    </dl>-->
+<!--    <dl>-->
+<!--      <dt>购物指南</dt>-->
+<!--      <dd><a href="#">免费注册</a></dd>-->
+<!--      <dd><a href="#">采购商品</a></dd>-->
+<!--      <dd><a href="#">常见问题</a></dd>-->
+<!--      <dd><a href="#">联系客服</a></dd>-->
+<!--    </dl>-->
+<!--    <dl>-->
+<!--      <dt>购物指南</dt>-->
+<!--      <dd><a href="#">免费注册</a></dd>-->
+<!--      <dd><a href="#">采购商品</a></dd>-->
+<!--      <dd><a href="#">常见问题</a></dd>-->
+<!--      <dd><a href="#">联系客服</a></dd>-->
+<!--    </dl>-->
+<!--  </div>-->
+  <div class="bq">
+    <div class="bq_main">
+    友情链接：
+    <a href="http://www.camra.org.cn" target="_blank">汽车配件维修行业协会</a>
+    <a href="http://www.camra-arpc.org.cn" target="_blank">汽车配件维修行业协会配件维修工作委员会</a>
+    <a href="http://www.ancc.org.cn" target="_blank">中国物品编码中心</a>
+    <a href="http://www.aimchina.org.cn" target="_blank">中国自动识别技术协会</a>
+    </div>
+</div>

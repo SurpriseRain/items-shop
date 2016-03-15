@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中国汽服云平台</title>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+</head>
+<script type="text/javascript">
+	$(function() {
+		//点击登录
+		$("#loginbtn").click(
+				function() {
+					var username = $.trim($("#XTCZY01").val());
+					var password = $("#XTCZY02").val();
+					var arr = [];
+					var o = {};
+					o["XTCZY01"] = username;
+					o["XTCZY02"] = password;
+					arr.push(o);
+					var users=arr;// modify by liuwx jhj  2014年8月5日10:53:39 初始化users
+					var data = visitService("/UserLogin/login.action?XmlData="
+							+ JSON.stringify(arr));
+					var loginState = data.test;
+					if (loginState == 1) {
+						alert("用户名有误!");
+						$("#XTCZY01").focus();
+					} else if (loginState == 2) {
+						alert("密码错误!");
+						$("#XTCZY02").focus();
+					} else if (loginState == 3) {
+						if ($("#safeSignCheck").is(":checked")) {// modify by liuwx jhj  2014年8月5日10:53:39  更改为safeSignCheck
+							if (users != null) {
+								var bool = false;
+								for ( var i = 0; i < users.length; i++) {
+									if (users[i].userName == $("#XTCZY01").val()) {
+										bool = true;
+										users[i].passWord = $("#XTCZY02").val();
+									}
+								}
+								if (bool == false) {
+									var o = {};
+									o.userName = $("#XTCZY01").val();
+									o.passWord = $("#XTCZY02").val();
+									users.push(o);
+								}
+							} else {
+								users = [];
+								var o = {};
+								o.userName = $("#XTCZY01").val();
+								o.passWord = $("#XTCZY02").val();
+								users.push(o);
+							}
+							$.cookie("users", null, {
+								path : '/'
+							});
+							$.cookie("users", JSON.stringify(users), {
+								expires : 90,
+								path : '/'
+							});
+						}
+						else// modify by liuwx jhj  2014年8月5日10:53:39  不记录密码时候 清空 users
+						{
+							$.cookie("users", null, {
+								path : '/'
+							});
+						};
+						var userInfo = data.userInfo;
+						var updateDate = new Date();
+						updateDate.setTime(updateDate.getTime() + 1 * 24 * 60 * 60
+								* 1000);//超过1天,cookie需要重新更新
+						userInfo.UPDATETIME = updateDate.getTime();
+						$.cookie("userInfo", null, {
+							path : '/'
+						});
+						$.cookie("userInfo", JSON.stringify(userInfo), {
+							expires : 30,
+							path : '/'
+						});
+
+						rememberUrl = "/customer/qfy/back/shop-main.html";
+						window.location.href = rememberUrl;
+					}
+
+		});
+	});
+
+	//登陆按钮
+	function keyLogin(){
+  		if (event.keyCode==13)   //回车键的键值为13
+     	document.getElementById("loginbtn").click();  //调用登录按钮的登录事件
+  	}
+</script>
+<body>
+  <div>
+    <ul>
+      <li><span>用户名:</span><input type="text" id="XTCZY01" name="XTCZY01" value="" /></li>
+      <li><span>密码:</span><input type="password" id="XTCZY02" name="XTCZY02" value="" /></li>
+      <li><span>&nbsp;</span><a id="loginbtn" type="submit" value="" onclick="">登 录</a></li>
+    </ul>
+</div>
+</body>
+</html>

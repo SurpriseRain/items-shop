@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.user.sql" >
+
+	<select id="checkNumOfExistGSMC" parameterType="map" resultType="java.lang.Integer">
+		select count(1) from w_zcgs w where w.zcxx02=#{dwmc} and w.zcgs01&lt;&gt;4 
+	</select>
+	
+	<!-- 查询公司总数  -->
+	<select id="queryNumForZCXX"  resultType="int">
+		SELECT COUNT(1) FROM W_ZCXX
+	</select>
+	
+	<select id="select_zcgs_qy" parameterType="map" resultType="map" >
+		SELECT DQXX01, DQXX02 FROM DQXX WHERE 1=1
+		<if test="qydm!=null and qydm!='' "> AND DQX_DQXX01 = #{qydm}</if>
+		<if test="dqjb !=null and dqjb!= '' "> AND DQXX03 = #{dqjb}</if>	
+	</select>
+	
+	<!-- 查询所有供货商 -->
+	<select id="select_all_ghs" parameterType="map" resultType="map" >
+		SELECT ZCXX01,ZCXX02 FROM W_ZCXX WHERE LENGTH(ZCXX01)=4	
+	</select>
+	
+	<!-- 查询帐号、邮件、手机号在系统中是否存在 -->
+	<select id="selectZHYJSJH" parameterType="map" resultType="map" >
+		SELECT COUNT(1) AMOUNT FROM W_ZCGS WHERE 1 = 1
+		<if test="XTCZY01!=null and XTCZY01!=''"> AND XTCZY01 = #{XTCZY01}</if>
+		<if test="ZCXX09!=null and ZCXX09!=''"> AND ZCXX09 = #{ZCXX09}</if>	
+		<if test="ZCXX26!=null and ZCXX26!=''"> AND ZCXX26 = #{ZCXX26}</if>
+	</select>
+	
+	<!-- 通过帐号找公司 -->
+	<select id="selectByZHGetGs" parameterType="map" resultType="map" >
+		SELECT ZCXX01 FROM W_ZCGS WHERE 1 = 1
+		<if test="XTCZY01!=null and XTCZY01!=''"> AND XTCZY01 = #{XTCZY01}</if>
+	</select>
+	
+	<!-- 汽服云查找地区 -->
+	<select id="select_qfydq" parameterType="map" resultType="map" >
+		SELECT DQBZM01 DQXX01,DQBZM02 DQXX02,DQBZM06,DQBZM08 YZBM FROM DQBZM
+		 WHERE 1 = 1
+		<!-- <if test="dqjb==1"> and DQBZM01 ='120000'</if> -->
+		<if test="qydm!=null and qydm!='' "> AND DQBZM_DQBZM01 = #{qydm}</if>
+		<if test="dqjb !=null and dqjb!= '' "> AND DQBZM03 = #{dqjb}</if>	
+		<if test="FWSGL != '' and FWSGL != null">
+			AND NOT EXISTS (
+				SELECT B.DQXX01 FROM W_DQCK B
+				LEFT JOIN CK C
+				ON B.CK01 = C.CK01 
+				WHERE DQBZM.DQBZM01 = B.DQXX01
+				AND C.TYPE = 1
+			)
+		</if>
+		ORDER BY DQBZM01
+	</select>
+	
+	<!-- 汽服云大区查询 -->
+	<select id="select_dqmc" parameterType="map" resultType="map" >
+		SELECT dqbzm01,dqbzm02 FROM DQBZM  WHERE dqbzm03=1
+	</select>
+	<select id="select_dqmc_2" parameterType="map" resultType="map" >
+		SELECT dqbzm01,dqbzm02 FROM DQBZM  WHERE dqbzm03=2  AND DQBZM07 = 1  AND dqbzm_dqbzm01 = #{dqbzm01}
+	</select>
+	<select id="select_dqmc_3" parameterType="map" resultType="map" >
+		SELECT dqbzm01,dqbzm02 FROM DQBZM  WHERE dqbzm03=2 AND dqbzm_dqbzm01 = #{DQMC}
+	</select>
+	
+	<!-- 查找需要审核的公司 -->
+	<select id="selectW_ZCGS" parameterType="map" resultType="map">
+	SELECT CASE B.LX WHEN 42  THEN '经销企业' WHEN 43  THEN '生产企业' WHEN  44 THEN '维修企业' end LX,A.ZCXX01,XTCZY01,ZCXX02,ZCXX07,ZCXX08,ZCXX06,DATE_FORMAT(ZCXX14,'%Y-%m-%d %h:%m:%s')ZCXX14,ZCXX55,ZCXX56,ZCGS01,ZCGS03 GSLX FROM W_ZCGS  A ,W_GSLX B
+	WHERE A.ZCXX01 = B.GSID
+	<if test="sjly != null  and sjly!=''">
+		AND ZCXX56=${sjly}
+	</if>
+	<if test="dpzt != null and dpzt!=''">
+		AND ZCGS01=#{dpzt}
+	</if>
+	<if test="date_s!='' and date_s!=null">
+		AND ZCXX14 &gt;= #{date_s} ' 00:00:00'
+	</if>
+  	<if test="date_e!='' and date_e!=null">
+  		AND ZCXX14 &lt;= #{date_e} ' 23:59:59'
+  	</if>
+  	<if test="gslx!='' and gslx!=null">
+  		AND ZCGS03 = #{gslx}
+  	</if>
+  	<if test="dq!='' and dq!=null">
+  		AND ZCXX08  LIKE CONCAT('%',#{dq},'%')  
+  	</if>
+  	<if test="qymc!='' and qymc!=null">
+  		AND ZCXX02  LIKE CONCAT('%',#{qymc},'%')
+  	</if>
+	ORDER BY ZCXX14 DESC
+	</select>
+	
+	<!-- 查找需要审核的公司-和 -->
+	<select id="selectW_ZCGS_sum" parameterType="map" resultType="map">
+    SELECT COUNT(1) as COUNT
+    FROM (
+    SELECT ZCXX01,XTCZY01,ZCXX02,ZCXX07,ZCXX08,ZCXX06,ZCXX55,ZCXX56,ZCGS01 FROM W_ZCGS 
+	WHERE 1=1
+	<if test="sjly != null  and sjly!=''">
+		AND ZCXX56=${sjly}
+	</if>
+	<if test="dpzt != null and dpzt!=''">
+		AND ZCGS01=#{dpzt}
+	</if>
+	<if test="date_s!='' and date_s!=null">
+		AND ZCXX14 &gt;= #{date_s} ' 00:00:00'
+	</if>
+  	<if test="date_e!='' and date_e!=null">
+  		AND ZCXX14 &lt;= #{date_e} ' 23:59:59'
+  	</if>
+  	<if test="gslx!='' and gslx!=null">
+  		AND ZCGS03 = #{gslx}
+  	</if>
+  	<if test="dq!='' and dq!=null">
+  		AND ZCXX08  LIKE CONCAT('%',#{dq},'%')  
+  	</if>
+  	<if test="qymc!='' and qymc!=null">
+  		AND ZCXX02  LIKE CONCAT('%',#{qymc},'%')
+  	</if>
+	ORDER BY ZCXX14 DESC
+     )as total
+    
+	</select>
+	
+	<!-- 查找公司银行卡信息 -->
+	<select id="selectW_GSYHK" parameterType="map" resultType="map" >
+		SELECT GSYHK01,GSYHK02,GSYHK03,GSYHK04,GSYHK05,GSYHK06,GSYHK07,GSYHK08,GSYHK09, DATE_FORMAT(GSYHK10,'%Y-%m-%d %h:%m:%s'),GSYHK11 FROM  W_GSYHK WHERE 1 = 1
+		<if test="ZCXX01!=null and ZCXX01!=''"> AND ZCXX01 = #{ZCXX01}</if>
+		ORDER BY
+           GSYHK10 desc
+		
+	</select>
+	
+	<!-- 查找公司银行卡信息 -->
+	<select id="selectW_GSYHK_sum" parameterType="map" resultType="map" >
+		SELECT COUNT(1) as COUNT
+        FROM (
+        SELECT GSYHK01,GSYHK02,GSYHK03,GSYHK04,GSYHK05,GSYHK06,GSYHK07,GSYHK08,GSYHK09, DATE_FORMAT(GSYHK10,'%Y-%m-%d %h:%m:%s'),GSYHK11 FROM  W_GSYHK WHERE 1 = 1
+		<if test="ZCXX01!=null and ZCXX01!=''"> AND ZCXX01 = #{ZCXX01}</if>
+          ORDER BY
+           GSYHK10 desc
+           )as total
+	</select>
+	
+	<!-- 查找公司银行卡信息 明细-->
+	<select id="selectW_GSYHK2" parameterType="map" resultType="map" >
+		SELECT GSYHK01,GSYHK02,GSYHK03,GSYHK04,GSYHK05,GSYHK06,GSYHK07,GSYHK08,GSYHK09, DATE_FORMAT(GSYHK10,'%Y-%m-%d %h:%m:%s'),GSYHK11 FROM  W_GSYHK WHERE 1 = 1
+		<if test="GSYHK01!=null and GSYHK01!=''"> AND GSYHK01 = #{GSYHK01}</if>
+	</select>
+	
+	<!-- 查找公司审核意见-->
+	<select id="select_shyj" parameterType="map" resultType="map" >
+		SELECT ZCXX01,DATE_FORMAT(CZSJ,'%Y-%m-%d %H:%m:%s') CZSJ,Content FROM W_ZCGS_SHJL WHERE ZCXX01 = #{ZCXX01}
+	</select>
+</mapper>

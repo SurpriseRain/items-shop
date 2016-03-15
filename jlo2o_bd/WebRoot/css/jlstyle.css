@@ -1,0 +1,151 @@
+/*默认样式用于查询条件或报表*/
+TABLE{
+	font-size: 12px;
+	border: 1px solid #DEDEDE;
+	border-collapse:collapse;
+	width: 100%;
+	padding: 2px;
+}
+
+TABLE TH{
+	background-color: #ed292a;
+	color: #E6FFFF;
+	text-align: left;
+	border: 1px solid #DEDEDE;
+        height: 22px;
+}
+TABLE TD{
+	empty-cells: show;
+        height: 22px;
+	border: 1px solid #DEDEDE;
+        line-height:15pt;
+}
+/*灰白相间结果集样式*/
+TABLE.record TR{
+	background-color: expression((this.rowIndex%2==0) ? "#F0F0F0" : "#E1E1E1" );
+}
+/*可点击灰白相间结果集样式*/
+TABLE.clickableRecord TR{
+	background-color: expression((this.rowIndex%2==0) ? "#F0F0F0" : "#E1E1E1" );
+	cursor: hand;
+	event: expression(
+	onmouseover = function(){
+		this.style.backgroundColor = '#4682B4'
+		this.style.color = 'white'
+	},
+	onmouseout = function(){
+		this.style.backgroundColor = ''
+		this.style.color = ''
+	});
+}
+/*数字类型居右*/
+TH.number{
+	text-align: right;
+}
+TD.number{
+	text-align: right;
+}
+/*无网格线样式用于外包装*/
+#wrap{
+	border: 0px;
+	padding: 0px;
+}
+
+
+/*文本框样式*/
+input.text{
+	height: 20px;
+	border-color: #7f99b2;
+	border-style: solid;
+	border-width: 1px;
+}
+
+/*文件上传*/
+.fileUpload {
+    font-family: Verdana,sans-serif;
+    margin-top: 0em;
+    border-bottom-width:1px;
+    background-color:#FFFFFF;
+    border-style:solid;
+    padding-right:1px;
+    border-right-width:1px;
+    border-left-width:1px;
+    padding-top:1px;
+    border-color:#7f99b2;
+    padding-bottom:1px;
+    border-top-width:1px;
+    padding-left:1px;
+    margin-left: 0.25em;
+}
+
+/*图片按钮的样式*/
+img.button{
+	cursor: hand;
+	height : 19px;
+	width: 49x;
+}
+
+/* 操作说明信息 */
+div.note table, div.tip table, div.important table, div.caution table, div.warning table {
+	width: 100%;
+	font-size: 12px;
+	border: 1px solid #B0C4DE;
+	background-color: #F0F8FF;
+	color: #000000;
+	/* padding inside table area */
+	padding: 0.5em;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+}
+
+td.none{
+	border-bottom-width: 0px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-top-width: 0px;
+        line-height:15pt
+        height: 22px;
+}
+
+/* 层展示结果样式 */
+.d1{
+   text-align: center;
+   background-color: #3E6197;
+   color: #EEFDFF;
+}
+
+.toolsbar{
+   height:16px;padding:3px;pacing:1px;text-align:center;color:white;cursor:not-allowed;
+}
+
+div.note table, div.tip table, div.important table, div.caution table, div.warning table {
+    width: 100%;
+    font-size: 12px;
+    border: 0px solid #B0C4DE;
+    background-color: #F0F8FF;
+    color: #000000;
+    padding: 0;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.notEnter{
+    height: 18px;
+    border:1px #7f99b2 solid;
+    background-color:#ECE9D8;
+}
+
+.onlyWiew{
+    height: 18px;
+    border:1px #7f99b2 solid;
+    background-color:#ECE9D8;
+}
+
+.mustEnter{
+    color:#0000FF;
+}
+
+.lable_10{
+width:10%;
+text-Align:right;
+}

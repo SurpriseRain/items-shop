@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<!--<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />-->
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var ZCXX01 = "";
+  //判断登录用户是否是运营平台
+  if(usercookie.Role==0){
+  	ZCXX01 = usercookie.ZCXX01;
+  }
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.Srch_Order','QryType':'Report','dataType':'Json','ZCXX01':ZCXX01,'W_DJZX02':$('#W_DJZX02').val(),'date_s':$('#date_s').val(),'date_e':$('#date_e').val()}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">订单管理</a>
+    	<span>></span>
+    	<b>订单发货</b>
+	</div> -->
+	<div class="clera"></div>
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+	<ul id="screening">
+	   <li style="width:250px;">
+	     <span>订单状态：</span>
+		 <select id="W_DJZX02" name="W_DJZX02" style="width:135px;">
+		   <option value="4">待发货</option>
+	       <option value="">全部</option>
+	       <option value="1">待审核中</option>
+	       <option value="2">审核未通过</option>
+	       <option value="3">待支付</option>
+	       <option value="5">待确认收货</option>
+	       <option value="6">已完成</option>
+	       <!-- <option value="7">已冲红</option>
+	       <option value="8">V7已开单</option>
+	       <option value="9">异常订单</option>
+	       <option value="10">已评价</option>
+	       <option value="11">已终止</option>
+	       <option value="12">已删除</option> -->
+        </select>
+	   </li>
+	   <li style="width:550px;">
+	   	<span>订单时间：</span>
+		<input id="date_s" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+	   	<span class="z" style="width:20px;">~</span>
+	    <input id="date_e" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+	    <a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+	<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="true"  url="/jlquery/selecto2o.action" 
+	columnsArr="[
+	{'property':'XSDD01','header':'订单号','type':'lable','width':'100px'},
+	{'property':'KHNAME','header':'公司名称','type':'lable','width':'196px'},
+	{'property':'XSDD02','header':'订单价格','type':'lable','width':'60px'},
+	{'property':'XSDDI05','header':'商品数量','type':'lable','width':'60px'},
+	{'property':'W_DJZX02','header':'订单状态','type':'number','width':'70px'},
+	{'property':'XSDD04','header':'订单时间','type':'lable','width':'160px'},
+	{'property':'W_DJZX02','header':'操作','type':'ddsh','width':'30px'}]" 
+	afterUrl="/customer/qfy/back/ddgl/Oper_DDGL_item.html?xsdd01=" 
+	>
+	</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+
+})
+//执行回调方法
+function backFun(parameters){
+	init();
+}
+</script>

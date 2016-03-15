@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.SELECT_SPTB_SPXX','QryType':'Report','dataType':'Json','SPXX01':$('#SPXX01').val(),'SPXX04':$('SPXX04').val()}];
+  return visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/control/js/tablekj.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.kkPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+  <div class="dqlc"><a href="#" class="dqlc-a">基础设置</a> > <a href="#" class="dqlc-a">商品同步</a></div>
+ 	<table id="TABLE" class="table2" style="width:100%">
+ 	    <tr>
+      		<td>商品编码</td>
+      		<td><input type="text" id="SPXX01" name="SPXX01"  size="20" class="text"/></td>
+      		<td>商品名称</td>
+      		<td><input type="text" id="SPXX04" name="SPXX04"  size="20" class="text"/></td>
+      		<td>
+				<a href="javascript:void(0);" class="seach_bot" onclick="query()">查询</a>
+	  		</td>
+   		</tr>
+ 	</table>
+
+<div class="center">
+	<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" multiPage="true"  url="/jlquery/selecto2o.action" 
+	columnsArr="[
+						{'property':'SPXX01','header':'商品编码','type':'lable','width':'50px'},
+						{'property':'SPXX02','header':'商品内码','type':'lable','width':'80px'},
+						{'property':'SPXX04','header':'商品名称','type':'lable','width':'100px'},
+						{'property':'SPFL02NAME','header':'商品分类','type':'lable','width':'50px'}]">
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var win = dialogArguments;
+var code = $.getUrlParam("code"); 
+function query(){
+  	init();
+}
+
+//执行回调方法
+function backFun(spxx01){
+	win.srchSPXX(spxx01);
+	window.close();
+	//parent.backFun2("11");
+}
+</script>

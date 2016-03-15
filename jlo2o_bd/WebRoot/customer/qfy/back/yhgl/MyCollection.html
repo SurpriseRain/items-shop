@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shangpin.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/pinpai_MyCollection.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/dianpu.css" />
+<title>汽服云</title>
+<style>
+	.tcc{width:100%;height:600px;position:absolute;top:0;left:0;background:#000;opacity:0.6;filter:alpha(opacity=60);}
+	.wrap{height:auto;}
+	.tccz{width:300px;height:200px;position:absolute;left:50%;top:15%;margin-left:-150px;margin-top:-100px;background: #ffffff;opacity:1;filter:alpha(opacity=100);}
+	.main-tcc{display:none};
+	.cart_ok h3{width:100%;text-align:center;}
+	.tcc-button{width:100%;height:30px;line-height:30px;text-align:center;}
+	.navselect{background:rgb(238, 238, 238);color:#fff};
+</style>
+</head>
+<body>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.pagecommon.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/control/js/tuidan_carlist.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<div id="wrap">
+		<!-- <div id="head">
+			<ul>
+				<li><a href="" style='color: rgb(241, 10, 10); font-size: 15px;'>收藏中心</a></li>
+				<li>></li>
+				<li><a href="" style='color: #1B1A1A; font-size: 15px;'>收藏的产品</a></li>
+			</ul>
+		</div> -->
+		
+		<div id="nav">
+			<ul>
+				<li class="navselect"><a href="/customer/qfy/back/yhgl/MyCollection.html">收藏的商品</a></li>
+				<li><a href="/customer/qfy/back/yhgl/MyDrand.html">收藏的店铺</a></li>
+				<li><a href="/customer/qfy/back/yhgl/MyShop.html">收藏的品牌</a></li>
+			</ul>
+		</div>
+		<div id="quanxuan" >
+			<div class="inp">
+				<input type="checkbox" name="" id="rdo_checked_all" value="" /><span>全选</span>
+				<a href="">加入购物车</a>
+				<a>|</a>
+				<a href="" id="btn_delValue">取消关注</a>
+			</div>
+			
+			<div class="shangpin" id="shangpin">
+				
+				
+			</div>
+			
+			<div id="yema"></div>
+				<div id="cart_open">
+				<div class="main-tcc">
+				<div class="tcc">弹出层
+				 </div>
+				 <div class="tccz">
+				 <div class="cart_ok">
+	<h3  style=' height:40px; width: 300px; line-height: 40px; background: #cccccc;margin:0 auto;text-align:center;' class="cart_opentit">
+		添加成功
+	</h3>
+	<div class="cart_box clearfix">
+		<p class="ok" id="gwcs">
+		</p>
+		
+		<div class="tcc-button">
+		<input type='button' value='继续购物'  onclick="jboxClose();" ></input>
+		<input type='button' value='去购物车结算' id='qgw'  ></input>
+		
+		</div>
+			<br class="clear" />
+		</div>
+		<br class="clear" />
+	</div>		 	
+				 </div>
+				</div>
+</div>
+			
+		</div>
+		
+		
+	</div>
+<script type="text/javascript">
+$(function() {
+	var MyCookie = $.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	var u = usercookie.ZCXX01;
+	var hf = usercookie.LX;
+	//查询收藏商品的总数量
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.MyCollection.select_SCSP_sum','QryType':'Report','dataType':'Json','ZCXX01':u}];
+	var rumData = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	var rowNum = rumData[0].COUNT;
+	//查询所有收藏商品的信息
+	var xmlData = [{'ZCXX01': u}];
+	var url = "/message/jlquery/selectAllSCSP.action?XmlData="
+		+ JSON.stringify(xmlData);
+	$.ajax({
+		type : "GET", //请求方式
+		url : encodeURI(url),
+		//async:false,
+		success : function(data) {
+		 	if (data != null) {
+				try {
+					var json = jQuery.parseJSON(data);
+				 	//展示数据
+					showSPXX(json.data);
+					//返回文件名
+					fileName =  json.fileName;
+					$('#yema').kkPages({ 
+					   PagesClass:'li.jl', //需要分页的元素
+					   RowNum:rowNum,
+					   FileName:fileName,
+					   PagesMth:pubJson.PagesMth, //每页显示个数 
+					   PagesNavMth:pubJson.PagesNavMth, //显示导航个数
+					   callback:function(pageData){
+							showSPXX(pageData);
+							showDel();
+						}
+					});
+				} catch (e) {
+					return;
+				}
+			} 
+		},
+		error : function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("获取数据失败，状态是：" + textStatus + "+" + XMLHttpRequest
+					+ "+" + errorThrown);
+		}
+	});
+});
+//展示收藏商品数据
+function showSPXX(rData0) {
+	var u = rData0;
+	var spObj = $("#shangpin");
+	spObj.empty();
+	var str = "";
+	for (var i = 0; i < u.length; i++) {
+		str += setSPXXHtml(u[i]);
+	}
+	spObj.html(str);
+}
+//收藏商品数据-拼接的方法
+function setSPXXHtml(data) {
+	var imgUrl=pubJson.path_sptp+"/sptp/";//图片默认路径
+	var defaultDpxxImgUrl = "/customer/qfy/images/cptpzq.png";
+	var tpArr = data.sptp02.split("\.");
+	var scspUrl=imgUrl+data.gsid+"/"+data.spxx02+"/images/"+data.spxx02+"_"+data.sptp01+"_big."+tpArr[1];
+	var splj="/customer/qfy/showProduct/product.html?spxx01="+data.spxx01+"&zcxx01="+data.gsid+"&gsid="+data.gsid+"&gsmc="+escape(data.zcxx02);
+	var str = "";
+	str += "<dl>";
+	str+="<dt><a href='"+splj+"' target='_blank'><img src='"+scspUrl+"'  onerror='this.onerror=null;this.src=\""+ defaultDpxxImgUrl +"\" '  ></a></dt>";
+	str += "<dd>";
+	str += "<input type='checkbox' name='no' class='ob' onclick='sleAll()' id='' value='"+ data.Id + "' />";
+	str += "<input style='width:100px;border:none;'type='text' value='"+data.spxx04+"'></input>";
+	str += "<p>"+ data.spjgb05 + "</p>";
+	str += "<input type='button' name='' id='' onclick='insert_cart(0,\""+data.spxx01+"\",\""+data.gsid+"\",\""+data.spjgb05+"\")' value='加入购物车' />";
+	str += "<input type='button' name='' onclick='quxiao("+ data.Id + ")' id='"+ data.Id + "' value='取消' />";
+	str += "</dd>";
+	str += "</dl>";
+	return str;
+}
+function quxiao(id){
+	var xmlData =  {'id' : id} ;
+	var url = "/YHZX/deleteSCSP.action?XmlData="+ JSON.stringify(xmlData);
+	$.ajax({
+	       type : "GET", //请求方式
+	       url : encodeURI(url),
+	       success : function(data) {
+	       //刷新 
+	       location.reload();
+	       },
+	       });
+}
+$(function(){
+    /*-----全选-----*/
+    $('#rdo_checked_all').click(function(){
+        var is_checked=$('#rdo_checked_all').attr('checked');
+        if(is_checked=="checked"){
+            $('input[name=no]').attr('checked',true);
+        }
+        else{
+           $('input[name=no]').attr('checked',false);          
+        }
+      });
+    /*----------删除-------*/
+    $('#btn_delValue').click(function(){
+        var array = new Array(); //用于保存 选中的那一条数据的ID   
+        var flag; //判断是否一个未选   
+        $("input[name='no']:checkbox").each(function() { //遍历
+                    if ($(this).attr("checked")) { //判断是否选中    
+                        flag = true; //只要有一个被选择 设置为 true  
+                    }  
+                })  
+        if (flag) {  
+            $("input[name='no']:checkbox").each(function() { //遍历 
+                        if ($(this).attr("checked")) { //判断是否选中    
+                            var id = $(this).val()
+                            var xmlData =  {'id' : id} ;
+                            var url = "/YHZX/deleteSCSP.action?XmlData="+ JSON.stringify(xmlData);
+                        	$.ajax({
+                        	       type : "GET", //请求方式
+                        	       url : encodeURI(url),
+                        	       success : function(data) {
+                        	    	
+                        	       //刷新 
+                        	      location.reload();
+                        	       },
+                        	       });
+                        }
+                    })  
+            
+        } else {  
+            alert("请至少选择一个商品");  
+        }  
+    }); 
+});
+
+//加入购物车
+function insert_cart(j,SPXX01,a,SPJGB05){
+	var MyCookie = $.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	var ZCXX01=a;
+	var MyCookie = $.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	if(MyCookie==null){
+		//alert("请登录!");
+		dlgShow({content:"请登录",yesFn:function(){
+			location.href="/customer/qfy/register/login.html";
+		 },noFn:function(){}
+		 });
+		return false;
+		
+	}else if(usercookie.ZCGS01==4){
+		//价格为0不让加入购物车
+		if(SPJGB05=="0"){
+			//alert("暂时无法加入购物车!");
+			dlgShow({content:"暂时无法加入购物车"});
+			return false;
+			}
+		var cartXmlData=[];
+		var cartJson={};
+		cartJson.HBID=usercookie.ZCXX01;
+		cartJson.ZTID=ZCXX01;
+		//不确定因素
+		//var DQXX01 ="120100";
+		/*----------------------------加入购物车相关----------------开始------------------------------------------------------------  */
+ 		//页面加载时根据首页已选省，获取默认大区仓库编号存放在cookie
+		var city_list = $.cookie('city_list');
+		var city_lists = JSON.parse(city_list);
+		var city_value =city_lists[0].city_value;
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.select_dqmc_2','dataType':'Json','dqbzm01':city_value}];
+		var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+		var rData=visitService(url);
+		DQXX01 = rData[0].dqbzm01;//大区仓库编号
+		/*----------------------------加入购物车相关--------------结束--------------------------------------------------------------  */
+		cartJson.DQXX01=DQXX01;
+		var cartSpxxList=[];
+		var cartJsonItem={};
+		cartJsonItem.SPXX01	=SPXX01;
+		var cartNUM=selectCartGoods(SPXX01,usercookie.ZCXX01,ZCXX01);
+		 
+		var count=parseInt(cartNUM.NUM)+parseInt(1);
+		
+		//添加maxNum
+		var xmlData=[];
+		var spxxJson={};
+	    spxxJson.SPXX01=SPXX01;
+	    spxxJson.ZCXX01=ZCXX01;
+	    spxxJson.DQXX01=DQXX01;
+	    xmlData.push(spxxJson);
+	    //加入库存验证 -- 待修改
+	    var url="/ProductDisplay/jlquery/SPXQnotlogin.action?XmlData="+JSON.stringify(xmlData);
+	    var returnData=visitService(url);
+	    spxxJson=returnData[0];
+		if(parseInt(spxxJson.SPIMGURL)<parseInt(spxxJson.SPGL15)){
+			maxNum=parseInt(spxxJson.SPIMGURL);
+		}else{
+			maxNum=parseInt(spxxJson.SPGL15);
+		}
+		if (maxNum == "0") {
+			alert("库存不足,请选择其他商品");
+			//dlgShow({content:"库存不足,请选择其他商品"});
+			return false;
+		}
+		
+		if(count>= 1000){
+			alert("最大购买数量为999");
+			//alert("库存不够,请检查您的购物车商品的数量！当前还可与购买"+(maxNum-parseInt(cartNUM.NUM)));
+			//dlgShow({content:"最大购买数量为999"});
+			return false;
+		}
+		if(count<0){
+			alert("您的输入有误,请重新输入");
+			//alert("库存不够,请检查您的购物车商品的数量！当前还可与购买"+(maxNum-parseInt(cartNUM.NUM)));
+			//dlgShow({content:"您的输入有误,请重新输入"});
+			return false;
+		}
+		if(count>maxNum){
+			alert("库存不足,当前还可以购买数量为:"+(maxNum-parseInt(cartNUM.NUM)));
+			//alert("库存不够,请检查您的购物车商品的数量！当前还可与购买"+(maxNum-parseInt(cartNUM.NUM)));
+			//dlgShow({content:"库存不足,当前还可以购买数量为:"+(maxNum-parseInt(cartNUM.NUM))});
+			return false;
+		}
+		//购买数量为1
+		cartJsonItem.GWC01=1;	
+		cartJsonItem.GWC02=SPJGB05;
+		//取值分销单价
+		cartSpxxList.push(cartJsonItem);
+		cartJson.SPLIST=cartSpxxList;
+		cartXmlData.push(cartJson);
+		//加入库存验证 -- 待修改
+		var cartUrl="/CartManage/insertGwcSpxx.action?XmlData="+JSON.stringify(cartXmlData)+"&s="+Math.random();
+		var cartReturnVal=visitService(cartUrl);
+		if(cartReturnVal.STATE==1){
+			selectMyCart(usercookie);
+			//购物车联动
+			$('.main-tcc').show();
+			 $(".tccz").html("<ul  style='width: 260px; height: 30px; margin: auto; background: #ddd;font-weight: blod; line-height: 30px;'><a style='color: #000000; cursor: pointer; margin-left: 80px;'>加入成功</a></ul></br><span style='margin-left: 80px; line-height: 50px;'>购物车中共有"+cartReturnVal.TOTALNUM+"件商品</span><br/><span style='margin-left: 90px; '>金额总计："+cartReturnVal.TOTALAMOUNT+" </span>   </br>  <input style='margin-left: 40px; margin-top: 30px; width: 90px; height: 30px; line-height: 30px; border-raduis: 15px; background: #6a6a6a;  border: none; color: #ffffff; font-weight: blod;' type='button' value='继续购物'  onclick='jboxClose();' ></input> <input type='button' style='margin-left: 20px; background: #ff4a00; color: #ffffff; font-weight: blod; border: none;  width: 100px; height: 30px; line-height: 30px; border-raduis: 5px; text-aline: center;' onclick='GoShopping();'  value='去购物车结算' id='qgw'  ></input>         ");
+			/* cartReturnData(cartReturnVal);
+			jBox('id:cart_open', {showIcon: 'jbox-title-icon' });
+			$("table").css("width","350px"); */
+			//购物车联动
+		}else{
+			//jBox('id:cart_no', {showIcon: 'jbox-title-icon' });
+			dlgShow({content:"商品数量为0，加入购物车失败"});
+			$("table").css("width","350px");
+		}
+	}else{
+		//alert("暂时无法加入购物车，请检查账号信息是否完整!");
+		dlgShow({content:"暂时无法加入购物车,请检查账号信息是否完整"});
+	}
+}
+function selectCartGoods(SPXX01,ZCXX01,ZTID){
+	var xmlData=[];
+	var json={};
+		json.SPXX01=SPXX01;
+		json.ZCXX01=ZCXX01;
+		json.ZTID=ZTID;
+		xmlData.push(json);
+	var url="/CartManage/selectGoodsNumForId.action?XmlData="+JSON.stringify(xmlData)+"&s="+Math.random();
+	var returnData=visitService(url);
+	return returnData;
+}
+//查询购物车
+function selectMyCart(usercookie){
+	var xmlData=[];
+	var json={};
+	json.HBID=usercookie.ZCXX01;
+	json.DQXX01=usercookie.ZCXX07;
+	xmlData.push(json);
+	//加入库存验证 -- 待修改
+	var url="/CartManage/selectGwcByHbid.action?XmlData="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(data){
+			//展示
+			$(data.GWCLIST).each(function(m,spxxList){
+				  $(".shuliang").html(spxxList.TOTALNUM);
+			});
+		}
+	});
+}
+function jboxClose(){
+	$("#cart_open").remove();
+	window.location.reload();//刷新当前页面.
+}
+function GoShopping(json){
+	 window.open('/customer/qfy/shopping/cart.html?')
+	 //window.location.href="/customer/qfy/shopping/cart.html?";
+}
+$(document).ready(function(){
+	$('#nav li').on('click',function(){
+		$('#nav li').removeClass('navselrct');
+		$(this).addClass('navselect');
+	})
+})
+
+function sleAll(){
+	var chsub = $("input[name='no']").length; //获取check的个数  
+    var checkedsub = $("input[name='no']:checked").length; //获取选中的check的个数  
+    if (checkedsub == chsub) {  
+        $("#rdo_checked_all").attr("checked", true);
+    } else {
+    	$("#rdo_checked_all").attr("checked", false);
+    }
+}
+function showDel(){
+	$("#rdo_checked_all").attr("checked", false);
+}
+</script>
+</body>
+</html>

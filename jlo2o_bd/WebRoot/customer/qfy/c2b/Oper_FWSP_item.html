@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 发布店铺</title>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+//初始化服务类型数据
+$(document).ready(function(){
+	$("#wxc").val(usercookie.ZCXX01);
+	var url = "/FWSP/select_FWMC.action";
+	var rData = visitService(url);
+	if(rData != undefined && rData != ""){
+		 $(rData.fwmcList).each(function(index,val){
+	    	$("#fwlx").append("<option value='"+val.ID+"'>"+val.SERVERTYPENAME+"</option>");
+	     });
+	}
+});
+// 初始化数据
+$(document).ready(function(){
+	var fwtcid = $.getUrlParam('id');
+	var XmlData=[{"fwtcid":fwtcid}];
+	var json={"fwtcid":fwtcid};
+	var url="/FWSP/update_FWTC_BJ.action?XmlData="+JSON.stringify(json);
+	var rData = visitService(url);
+	//服务名称
+	$("#fwmc").val(rData.fwmcList[0].ServiceName);
+	//原价格
+	$("#yjg").val(rData.fwmcList[0].OriginalPrice);
+	//现价格
+	$("#xjg").val(rData.fwmcList[0].CurrentPrice);
+	//上传标题图片
+	//服务说明图片
+});
+$(document).ready(function(){
+//文件大小限制
+function fileSize(id){
+	var i = $("#" + id)[0].files[0].size;
+	var limit = 1*1024*1024;
+	if(i > limit){
+		return false;
+	}
+	return true;
+}
+function fileIsNull(){
+	 //判断每个文件大小是否超过1M
+ 	var inp = true;
+	$("input[id^='file']").each(function(){
+		var id = $(this).attr("id");
+		if(!fileSize(id)){
+			inp = false;
+		}
+	});
+// 如果大于1M 则会提示
+	if(!inp){
+		alert("上传的图片大小要在1M以下");
+		return false;
+	}
+}
+});
+</script>
+<body leftmargin="0" topmargin="0" rightmargin="0">
+<form id="form1" name="form1" action="" method="post">
+	<input type="hidden" name="wxc" value="" id="wxc" placeholder="输入维修厂" style="width:300px;" /></td>
+	<input type="hidden" name="fwtcid" value="" id="fwtcid" placeholder="输入维修厂" style="width:300px;" /></td>
+	<div class="clera"></div>
+	<table class="single_table">
+		<tr class="title"><td colspan="2">
+		<b>发布服务套餐</b>
+		<span style="color: red; font-size: 12px; position: absolute; right: 0px; padding-right: 20px;">* 必填项</span></td></tr>
+		<tr>
+       		<td style="width:100px;"><span>服务类型：</span></td>
+       		<td style="width:550px;"><font>*</font>
+	       		<select id="fwlx" name="fwlx" style="width: 160px;" >
+			    	<option value="">请选择</option>
+				</select>
+			</td>
+     	</tr>
+     	<tr>
+       		<td style="width:100px;"><span>服务名称：</span></td>
+       		<td style="width:550px;"><font>*</font>
+       		<input name="fwmc" value="" id="fwmc"  style="width:300px;" /></td>
+     	</tr>
+     	<tr>
+       		<td style="width:100px;"><span>原价格：</span></td>
+       		<td style="width:550px;"><font>*</font>
+       		<input name="yjg" value="" id="yjg" placeholder="输入原价格" style="width:300px;" /></td>
+     	</tr>
+     	<tr>
+       		<td style="width:100px;"><span>现价格：</span></td>
+       		<td style="width:550px;"><font>*</font>
+       		<input name="xjg" value="" id="xjg" placeholder="输入现价格" style="width:300px;" /></td>
+     	</tr>
+     	<tr><td><span>上传标题图片：</span></td><td><font>*</font><input type="file" name="titlePic" value="" id="file1" style="width:300px;"accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP" /></td></tr>
+     	<tr><td><span>服务说明图片：</span></td><td><font>*</font><input type="file" name="detailPic" value="" id="file2" style="width:300px;"accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP" /></td></tr>
+     	<tr class="bot">
+       	<td colspan="2">
+         	<a class="bot Medium" href="javascript:void(0);" onclick="okclick();">确 定</a>
+       	</td>
+      	</tr>    
+    </table>
+  	<div class="clera"></div>
+</form>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function okclick(){
+	var fwlx = $("#fwlx").val();
+	if(fwlx == ""){
+		alert("请选择服务类型!");
+		return false;
+	}
+	var fwmc = $("#fwmc").val();
+	if(fwmc == ""){
+		alert("请填写服务名称!");
+		return false;
+	}
+	var yjg = $("#yjg").val();
+	if(yjg == ""){
+		alert("请填写原价格!");
+		return false;
+	}
+	var xjg = $("#xjg").val();
+	if(xjg == ""){
+		alert("请填写现价格!");
+		return false;
+	}
+	var file1 = $("#file1").val();
+	var file2 = $("#file2").val();
+	if(file1 == "" || file2 == ""){
+		var pic = confirm('确认使用默认图片？');
+		if(pic!==true){
+			return false;
+		}
+	}
+var fwtcid = $.getUrlParam('id');
+$("#fwtcid").val(fwtcid);
+var XmlData1 = $("#form1").formToJson();
+var XmlData=escape(JSON.stringify(XmlData1));
+var val="/FWSP/insertFWSP_UP.action";
+var r = confirm('确认发布服务套餐吗？');
+if(r==true){
+	var fileArray=[];
+	if(file1 == "" || file2 == ""){
+	}else{
+		fileArray.push("file1");
+		fileArray.push("file2");
+	}
+	$.ajaxFileUpload({
+		type:"POST",
+		secureuri:false,
+		fileElementId:fileArray,
+		url:encodeURI(val),//encodeURI避免中文乱码
+		data:{"XmlData":XmlData},
+		dataType:"text",
+		success: function(data) { 
+			alert("发布成功!");
+			location.href="/customer/qfy/c2b/Oper_FWCX.html";
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert(textStatus);
+	    }
+	});
+	}
+	else return; 
+} 
+</script>

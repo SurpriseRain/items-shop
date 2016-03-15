@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+    
+    <JLConfig id="JIA.V9.HYXX">
+        <FIELD attrname="USERID"  fieldtype="string"  width="20"/>
+        <FIELD attrname="LONGINNAME"  fieldtype="string"  width="20"/>
+        <FIELD attrname="MOBILE"  fieldtype="string"  width="20"/>
+        <FIELD attrname="STATURS"  fieldtype="string"  width="20"/>
+    </JLConfig> 
+    
+    <JLConfig id="JIA.V9.TGXX">
+        <FIELD attrname="ACTID"  fieldtype="string"  width="20"/>
+        <FIELD attrname="ACTNAME"  fieldtype="string"  width="200"/>
+        <FIELD attrname="TEL"  fieldtype="string"  width="20"/>
+        <FIELD attrname="TYPE"  fieldtype="string"  width="20"/>
+        <FIELD attrname="CHANNELID"  fieldtype="string"  width="20"/>
+        <FIELD attrname="CHANNELNAME"  fieldtype="string"  width="200"/>
+        <FIELD attrname="STARTDATE"  fieldtype="dateTime" />
+        <FIELD attrname="ENDDATE"  fieldtype="dateTime" />
+        <FIELD attrname="AREAFLAG"  fieldtype="string"  width="20"/>
+<!--        <FIELD attrname="DELFLAG"  fieldtype="string"  width="20"/>-->
+        <FIELD attrname="OPENTIEM"  fieldtype="dateTime" />
+        <FIELD attrname="PJQAY_RATE"  fieldtype="fixed"  decimals="4"  width="16" />
+    </JLConfig> 
+    
+    <JLConfig id="JIA.V9.OrderStatus">
+        <FIELD attrname="TOTALAMOUNT"  fieldtype="fixed"  decimals="4"  width="16" />
+        <FIELD attrname="DINGJINAMOUNT"  fieldtype="fixed"  decimals="4"  width="16" />
+        <FIELD attrname="NEEDPAYAMOUNT"  fieldtype="fixed"  decimals="4"  width="16" />
+        <FIELD attrname="ACTID"  fieldtype="string"  width="20"/>
+        <FIELD attrname="STATUS"  fieldtype="i4" />
+        <FIELD attrname="ORDERID"  fieldtype="string"  width="20"/>
+        <FIELD attrname="ORDERGROUPNO"  fieldtype="string"  width="20"/>
+        <FIELD attrname="TYPE"  fieldtype="i4" />
+    </JLConfig>     
+    
+    <JLConfig id="JIA.V9.PreOrderStatus">
+        <FIELD attrname="ORDERID"  fieldtype="string"  width="20"/>
+        <FIELD attrname="ORDERGROUPID"  fieldtype="string"  width="20"/>
+        <FIELD attrname="DINGJINAMOUNT"  fieldtype="fixed"  decimals="4"  width="16" />        
+        <FIELD attrname="ACTID"  fieldtype="string"  width="20"/>
+        <FIELD attrname="ACTNAME"  fieldtype="string"  width="200"/>
+        <FIELD attrname="AREAFLAG"  fieldtype="string"  width="20"/>
+        <FIELD attrname="ADDRESS"  fieldtype="string"  width="200"/>
+        <FIELD attrname="USERNAME"  fieldtype="string"  width="50"/>
+        <FIELD attrname="MOBILE"  fieldtype="string"  width="20"/>
+    </JLConfig>     
+
+</root>

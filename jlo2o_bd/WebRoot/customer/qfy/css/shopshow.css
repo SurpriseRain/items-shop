@@ -1,0 +1,80 @@
+@charset "UTF-8";
+/* reset start */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {margin: 0;padding: 0; }
+body, button, input, select, textarea {font: 12px/1.5 Microsoft YaHei,arial,"\5b8b\4f53";*line-height: 1.5;-ms-overflow-style: scrollbar; }
+h1, h2, h3, h4, h5, h6 {font-size: 100%; }
+address, cite, dfn, em, var {font-style: normal; }
+code, kbd, pre, samp {font-family: courier new,courier,monospace; }
+small {font-size: 12px; }
+ul, ol {list-style: none; }
+a {text-decoration: none;color: #000; }
+a:hover {text-decoration: none; }
+a:visited {color: #000; }
+sup {vertical-align: text-top; }
+sub { vertical-align: text-bottom; }
+legend { color: #000; }
+fieldset, img {border: 0; }
+button, input, select, textarea {font-size: 100%; }
+table {border-collapse: collapse;border-spacing: 0; }
+/* reset start */
+/* 蓝色主题 开始*/
+/* 主题颜色 ff3c3c*/
+/* 公共基色 */
+/* 导航条 */
+/* 楼层 20ac9d*/
+/* 联系客服 */
+/* 蓝色主题 结束*/
+.clear:after{display: block;height: 0;clear: both;visibility: hidden;}
+.container{width:1190px;height: auto;margin: 10px auto;font:12px/1.5 Microsoft YaHei,arial,"\5b8b\4f53"}
+/*banner开始*/
+.banner{width: 1190px;height:460px;border:none;}
+/*.banner结束*/
+/*content开始*/
+.content{width: 100%;height: auto;background: green;margin-top: 20px;}
+/*左侧商家信息*/
+.shopLeft{ width: 220px;height:auto;float: left;margin-left:40px; font:12px/1.5 Microsoft YaHei,arial,"宋体"}
+.shopxx{width:100%;height: auto;}
+.shopxx li{width: 100%;height: auto;position: relative;}
+.shopxx li h4{width: 100%;height: 53px;border-radius:10px;-webkit-border-radius:10px;text-align:center;cursor: pointer;line-height: 53px;border: 1px solid #Fe6900;font-size:15px;-moz-border-radius: 10px;}
+.shopJbxx{width: 100%;height: auto;border: 1px solid #Fe6900;position: relative;z-index: 10000;top:-8px;background: #fff;margin-bottom:10px;clear: both;}
+.shopJbxx ul{width:auto;height: auto;border-bottom: 1px dotted #c8c8c8;}
+.shopJbxx h3{font-size: 14px;height: auto;line-height: 30px;width: 100%;text-align:center;margin-left:-10px;}
+.shopJbxx .bt{width:80px;font-size: 14px;}
+.shopJbxx .nr{font-size: 12px;} 
+.shopJbxx p{width: auto;line-height: 20px;padding: 5px 10px;font-size:12px;}
+.shopJbxx ul li{font-size: 12px;height:auto;line-height: 30px;width: 100%;text-indent:10px;}
+.shopJbxx a{display:block;width:120px;height: 30px;line-height: 30px;text-align: center;border-radius: 4px;background:#fe6900;margin: 20px auto;font-size: 12px;color:#fff;}
+.shopJbxx  img{display: block;width: 100px;height: 62px;float: left;}
+.shopxx li>a{display:block;position: absolute;right:-8px;top:22px;color:#000;height:15px;line-height:15px;width:60px;text-align:center;}
+.shopxx li>a:hover{color:#fe6900}
+.shopxx .shopH{height:190px;margin-bottom:12px;}
+.shopImg{height: 160px;}
+.shopImg img{margin: 10px 0 10px 6px;}
+.shopJbxx .shoplxr{margin-top: 20px;border: none;}
+.shoplxr li{height: 30px;line-height: 30px;}
+ 
+/*右侧商品展示部分*/
+.shopRight{width:870px;height:auto;float: right;font:12px/1.5 Microsoft YaHei,arial,"宋体"}
+.shopPX{width: 100%;height: 35px;line-height: 35px;background:rgba(249, 249, 249, 0.53);font-size: 14px;height: 35px;line-height: 35px;}
+.shopPX ul{width:auto;height:30px;line-height:30px;border:1px solid #eee;}
+.shopPX ul li{float:left;width:auto;height:30px;line-height:30px;padding:0;margin:0;}
+.shopPX li .px2{display:block;padding:0 20px 0 10px;border:1px solid #eee;background:url(../images/sx-ico.png) no-repeat 55px -41px;margin-left:-1px;font-size:12px;text-align:left;}
+.shopPX li a:hover{background:url(../images/sx-ico.png) no-repeat 55px -63px;}
+.shopPX li .px1{display:block;padding:0 30px 0 10px;border:1px solid #eee;background:url(../images/sx-ico.png) no-repeat 55px -41px;margin-left:-1px;font-size:12px;text-align:left;}
+.shopPX .shopgd{float:right;font-size:12px;background-images:none;padding-right:20px;font:12px/1.5 Microsoft YaHei,arial,"宋体";line-height:30px;}
+#shubiao1{text-align:right;width:60px;padding-left:0px;}
+
+.shopPX input{margin:10px 5px 0 20px;}
+.shopPX span{display: block;color: red;float: right;}
+.shopshow img{display: block;width:160px;height:160px;padding:25px 50px;margin:0 auto;background:#fcfcfc;}
+.shopshow li{width: 260px;height: auto;float: left;margin:15px 0 0 15px;text-align:left;font-size:12px;border:1px solid #eee;box-shadow:0 0 4px rgba(245, 245, 245, .6);font:12px/1.5 Microsoft YaHei,arial,"宋体";}
+.shopshow li:hover{border:1px solid #ff6800;transition: box-shadow .3s linear;transition-property: box-shadow;transition-duration: 0.2s;transition-timing-function: linear;transition-delay: initial;-webkit-transition: -webkit-box-shadow .2s linear;display: list-item;text-align: -webkit-match-parent;box-shadow:0 0 10px rgba(245, 222, 179, .6);}
+.shopshow li .shopTitle{display:block;font-size:14px;line-height:20px;height:20px;cursor:pointer;color:#000;text-align:left;width:260px;overflow:hidden;text-indent:14px;}
+.shopshow li .shop-oem{display:block;float:left;width:100%;height:20px;line-height:20px;text-align:left;}
+.shopshow li span{display:inline-block;font-size: 12px;color:#000;line-height:20px;height:20px;width:100%;text-indent:15px;}
+.shopshow li span b{color:#fe6900;}
+.shopshow li .shop-pp{float:left;}
+.shopshow li .shop-oldjg{float:right;}
+.shopshow li em{float: right;color: #ccc;font-size: 12px;}
+.shopshow li p{width: 100%;line-height:15px;float: left;}
+/*content结束*/

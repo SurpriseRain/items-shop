@@ -1,0 +1,379 @@
+<div class="content">
+  <div class="row">
+  <div class="w12">
+  	<div class="checkout_tit"><span>填写并核对订单信息</span></div>
+    <div class="w12 settlement">
+ 		<div class="w12 s_tit">
+        	<h3>收货人信息</h3>
+            <a onclick="jl_modal_show();">新增收货地址</a>
+        </div>
+        <div class="w12 s_cont">
+        	<ul class="w12">
+            	<li>
+            		<div class="w02 name active">默认地址<em></em></div>
+               		<div class="w08 addr">
+						<span class="addr-name" title="黄卫">黄卫</span>
+						<span class="addr-info" title="湖北 武汉市 江汉区 新华街道新华路186号福星国际商会大厦1610-1615室">湖北 武汉市 江汉区 新华街道新华路186号福星国际商会大厦16...</span>
+						<span class="addr-tel">131****9652</span>
+					</div>
+                	<div class="w02"><a href="#none" class="hide">设为默认地址</a><a onclick="jl_modal_show();">编辑</a><a href="#none">删除</a></div>
+            	</li>
+                <li>
+            		<div class="w02 name">黄卫 湖北<em></em></div>
+               		<div class="w08 addr">
+						<span class="addr-name" title="黄卫">黄卫</span>
+						<span class="addr-info" title="湖北 武汉市 江汉区 新华街道新华路186号福星国际商会大厦1610-1615室">湖北 武汉市 江汉区 新华街道新华路186号福星国际商会大厦16...</span>
+						<span class="addr-tel">131****9652</span>
+					</div>
+                	<div class="w02"><a href="#none">设为默认地址</a><a href="#none">编辑</a><a href="#none">删除</a></div>
+            	</li>
+            </ul>
+            <div class="w12 display_none tool"><a>更多地址<em class="fa fa-angle-double-down"></em></a></div>
+            <div class="w12 tool"><a>收起地址<em class="fa fa-angle-double-up"></em></a></div>
+        </div>
+        <div class="w12 s_tit">
+        	<h3>送货清单</h3>
+            <a href="#none" onclick="">返回修改购物车</a>
+        </div>
+        <div class="w12 pro_list">
+        	<dl class="w12 tab">
+            	<dd class="w06">商品信息</dd>
+                <dd class="w02">单价（元）</dd>
+            	<dd class="w02">数量</dd>
+            	<dd class="w02">小计（元）</dd>
+            </dl>
+        	<dl class="w12">
+            	<dt class="w01"><a class="pro_img" href="../proItem/proItem.html"><img src="../images/sp.jpg" class="w12"></a></dt>
+            	<dd class="w04 mr_w01">
+                	<div class="pro_name"><a class="w12" href="../proItem/proItem.html">努比亚（nubia）小牛4 Z9mini 全黑 移动联通电信4G手机 双卡双待黑 移动联通电信4G手机 双卡双待黑 移动联通电信4G手机 双卡双待</a>
+                    <h4 class="w12 shop_name">商家：HEYMOOR官方旗舰店</h4>
+                    </div>
+                </dd>
+                <dd class="w02"><div class="pro_pic">￥2200.00</div></dd>
+            	<dd class="w02"><div class="pro_form"><i>-</i><input type="text" value="1"><div><i>+</i></div></div></dd>
+            	<dd class="w02"><div class="pro_pic">￥2200.00</div></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w01"><a class="pro_img" href="../proItem/proItem.html"><img src="../images/sp.jpg" class="w12"></a></dt>
+            	<dd class="w04 mr_w01">
+                	<div class="pro_name"><a class="w12" href="../proItem/proItem.html">努比亚（nubia）小牛4 Z9mini 全黑 移动联通电信4G手机 双卡双待</a>
+                    <h4 class="w12 shop_name">商家：HEYMOOR官方旗舰店</h4>
+                    </div>
+                </dd>
+                <dd class="w02"><div class="pro_pic">￥2200.00</div></dd>
+            	<dd class="w02"><div class="pro_form"><i>-</i><input type="text" value="1"><div><i>+</i></div></div></dd>
+            	<dd class="w02"><div class="pro_pic">￥2200.00</div></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w01"><a class="pro_img" href="../proItem/proItem.html"><img src="../images/sp.jpg" class="w12"></a></dt>
+            	<dd class="w04 mr_w01">
+                	<div class="pro_name"><a class="w12" href="../proItem/proItem.html">努比亚（nubia）小牛4 Z9mini 全黑 移动联通电信4G手机 双卡双待</a>
+                    <h4 class="w12 shop_name">商家：HEYMOOR官方旗舰店</h4>
+                    </div>
+                </dd>
+                <dd class="w02"><div class="pro_pic">￥2200.00</div></dd>
+            	<dd class="w02"><div class="pro_form"><i>-</i><input type="text" value="1"><div><i>+</i></div></div></dd>
+            	<dd class="w02"><div class="pro_pic">￥2200.00</div></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w01"><a class="pro_img" href="../proItem/proItem.html"><img src="../images/sp.jpg" class="w12"></a></dt>
+            	<dd class="w04 mr_w01">
+                	<div class="pro_name"><a class="w12" href="../proItem/proItem.html">努比亚（nubia）小牛4 Z9mini 全黑 移动联通电信4G手机 双卡双待</a>
+                    <h4 class="w12 shop_name">商家：HEYMOOR官方旗舰店</h4>
+                    </div>
+                </dd>
+                <dd class="w02"><div class="pro_pic">￥2200.00</div></dd>
+            	<dd class="w02"><div class="pro_form"><i>-</i><input type="text" value="1"><div><i>+</i></div></div></dd>
+            	<dd class="w02"><div class="pro_pic">￥2200.00</div></dd>
+            </dl>
+        </div>
+         <div class="w12 s_tit">
+        	<h3>配送方式</h3>
+        </div>
+        <div class="w12 psfs">
+        	<ul class="w12 p_title">
+            	<li><div class="name ">平台自营快递<em></em></div></li>
+                <li><div class="name active">门店自提<em></em></div></li>
+            </ul>
+            <div class="w12 p_tab">
+            	<ul class="w12 model_list">
+                	<li class="w12"><span>服务承诺：</span>由专员负责配送，速度很快，还接受上门刷卡付款服务</li>
+                	<li class="w12">
+                    	<span>配送时间：</span>&nbsp;&nbsp;工作日、双休日与节假日均可送货<a class="xg" href="#none">修改时间</a>
+                	</li>
+                    <li class="w12 distribution_time">
+                    	<table>
+        					<tr class="title">
+            					<td class="no1">时间段</td>
+                				<td><span>8-27</span><label>今天</label></td>
+                				<td><span>8-28</span><label>周五</label></td>
+                				<td><span>8-29</span><label>周六</label></td>
+                				<td><span>8-30</span><label>周日</label></td>
+                				<td><span>8-31</span><label>周一</label></td>
+                				<td><span>9-1</span><label>周二</label></td>
+                				<td><span>9-2</span><label>周三</label></td>
+                				<td><span>9-3</span><label>周四</label></td>
+            				</tr>
+            				<tr>
+            					<td class="no1">09:00-15:00</td>
+                				<td></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+            				</tr>
+            				<tr>
+            					<td class="no1">15:00-19:00</td>
+                				<td></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>已选</a></td>
+                				<td><a>可选</a></td>
+                				<td><a>可选</a></td>
+            				</tr>
+        			</table>
+        			<p>温馨提示：我们会努力按照您指定的时间配送，但因天气、交通等各类因素影响，您的订单有可能会有延误现象！</p>
+        			<div class="distribution_bottom"><a class="active">保存</a><a>取消</a></div>
+                    </li>
+                </ul>
+                <ul class="w12 model_list display_none">
+                    <li class="w12"><span>自提时间：</span>提货时间以短信通知为准</li>
+                    <li class="w12"><span>自提地点：</span>江汉自提点<a class="xg" href="#none">选择自提地点</a></li>
+                    <li class="w12">
+                    	<p class="w12">
+                        	<span class="fl">选择区域：</span>
+                           	<select>
+						   		<option value="-1">全部区域</option>
+						   		<option value="17:1381:50718:0">洪山区</option>
+						   		<option value="17:1381:50716:0">汉阳区</option>
+						   		<option value="17:1381:50719:0">汉南区</option>
+						   		<option value="17:1381:3583:0">硚口区</option>
+						   		<option value="17:1381:3079:0">武昌区</option>
+						   		<option value="17:1381:50715:0">黄陂区</option>
+						   		<option value="17:1381:3582:0">江汉区</option>
+						   		<option value="17:1381:50712:0">蔡甸区</option>
+						   		<option value="17:1381:50713:0">江夏区</option>
+						   		<option value="17:1381:4424:0">武汉经济技术开发区</option>
+						   		<option value="17:1381:1386:0">江岸区</option>
+						   		<option value="17:1381:50714:0">新洲区</option>
+						   		<option value="17:1381:50717:0">青山区</option>
+						   		<option value="17:1381:50720:0">东西湖区</option>
+							</select>
+                        </p>
+                        <div class="w12 where_list">
+                            <div class="w12 w_item">
+                            	<div class="w04 place active">武汉东风站 <em></em></div>
+                                <div class="w07 p_xx">
+                                	<span> 地址：湖北省武汉市沌口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开路鑫晶33808 </span>
+                                </div>
+                                <div class="w01"><a>[详细地图]</a></div>
+                            </div>
+                            <div class="w12 w_item">
+                            	<div class="w04 place">武汉东风站 <em></em></div>
+                                <div class="w07 p_xx">
+                                	<span> 地址：湖北省武汉市沌口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开路鑫晶33808 </span>
+                                </div>
+                                <div class="w01"><a>[详细地图]</a></div>
+                            </div>
+                            <div class="w12 w_item">
+                            	<div class="w04 place ">武汉东风站 <em></em></div>
+                                <div class="w07 p_xx">
+                                	<span> 地址：湖北省武汉市沌口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开路鑫晶33808 </span>
+                                </div>
+                                <div class="w01"><a>[详细地图]</a></div>
+                            </div>
+                            <div class="w12 w_item">
+                            	<div class="w04 place ">武汉东风站 <em></em></div>
+                                <div class="w07 p_xx">
+                                	<span> 地址：湖北省武汉市沌口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开路鑫晶33808 </span>
+                                </div>
+                                <div class="w01"><a>[详细地图]</a></div>
+                            </div>
+                            <div class="w12 w_item">
+                            	<div class="w04 place ">武汉东风站 <em></em></div>
+                                <div class="w07 p_xx">
+                                	<span> 地址：湖北省武汉市沌口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开路鑫晶33808 </span>
+                                </div>
+                                <div class="w01"><a>[详细地图]</a></div>
+                            </div>
+                            <div class="w12 w_item">
+                            	<div class="w04 place ">武汉东风站 <em></em></div>
+                                <div class="w07 p_xx">
+                                	<span> 地址：湖北省武汉市沌口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开发区4号地块东荆河路鑫晶佳苑小区B栋4号房027-84233808 口开路鑫晶33808 </span>
+                                </div>
+                                <div class="w01"><a>[详细地图]</a></div>
+                            </div>
+                        </div>
+                        <div class="w12 where_list_btm"><a class="active">保存自提点</a><a class="btn+">取消</a></div>
+                        <div class="w12">
+                        	<span class="w12">温馨提示：</span>
+                        	<p class="w12">1、自提时付款，支持现金、POS刷卡、支票支付 <a>查看自提流程</a></p>
+                            <p class="w12 red">2、电器服务云将根据您的收货地址显示其范围内的自提点，请确保您的收货地址正确填写。 </p>
+                    	</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="w12 s_tit">
+        	<h3>发票信息</h3>
+        </div>
+        <div class="w12 fpxx">
+        	<p class="w12"><span>不开发票</span><a>修改</a></p>
+            <ul class="w12 fp_title">
+            	<li><div class="name ">普通发票<em></em></div></li>
+                <li><div class="name ">电子发票<em></em></div></li>
+                <li><div class="name active">增值税发票<em></em></div></li>
+            </ul>
+            <div class="w12 fapiao display_none">
+            <dl class="w12">
+            	<dt class="w02">发票抬头：</dt>
+                <dd class="w10">
+                	<div class="xz w07">个人<em></em></div>
+                    <div class="xz w07 active clear">武汉金力软件有限公司<em></em></div>
+                    <div class="w12"><a class="blue">新增单位发票</a></div>
+                </dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">发票内容：</dt>
+                <dd class="w10">
+                	<ul class="w12 fpnr">
+            			<li><div class="name active">明细<em></em></div></li>
+                		<li><div class="name">办公用品<em></em></div></li>
+                        <li><div class="name">电脑配件<em></em></div></li>
+                		<li><div class="name">耗材<em></em></div></li>
+                        <li><div class="name">办公用品<em></em></div></li>
+                        <li><div class="name">电脑配件<em></em></div></li>
+                		<li><div class="name">耗材<em></em></div></li>
+                        <li><div class="name">办公用品<em></em></div></li>
+                        <li><div class="name">电脑配件<em></em></div></li>
+                		<li><div class="name">耗材<em></em></div></li>
+            		</ul>
+                </dd>
+            </dl>
+            <dl class="w12 fapiao_btm mt_10">
+            	<dt class="w02">&nbsp; </dt>
+                <dd class="w10">
+                	<div class="w12"><a class="active">保存</a><a>取消</a></div>
+                    <div class="w12 mt_10">温馨提示：发票的开票金额不包括优惠券支付部分</div>
+                    <div class="w12"><a class="none">发票信息相关问题</a></div>
+                </dd>                
+            </dl>
+            </div>
+            <div class="w12 fapiao display_none">
+            <div class="w12 prompt_box">电子发票是税务局认可的有效收付款凭证，具有售后维权的法律效力，暂不支持企业报销<br><a target="_blank" class="blue">什么是电子发票</a></div>
+            <dl class="w12">
+            	<dt class="w02">发票抬头：</dt>
+                <dd class="w10">
+                	<div class="xz w07">个人<em></em></div>
+                    <div class="xz w07 active clear">武汉金力软件有限公司<em></em></div>
+                    <div class="w12"><a>新增单位发票</a></div>
+                </dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">发票内容：</dt>
+                <dd class="w10">
+                	<ul class="w12 fpnr">
+            			<li><div class="name active">明细<em></em></div></li>
+                		<li><div class="name">办公用品<em></em></div></li>
+                        <li><div class="name">电脑配件<em></em></div></li>
+                		<li><div class="name">耗材<em></em></div></li>
+                        <li><div class="name">办公用品<em></em></div></li>
+                        <li><div class="name">电脑配件<em></em></div></li>
+                		<li><div class="name">耗材<em></em></div></li>
+                        <li><div class="name">办公用品<em></em></div></li>
+                        <li><div class="name">电脑配件<em></em></div></li>
+                		<li><div class="name">耗材<em></em></div></li>
+            		</ul>
+                </dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">收票人手机：</dt>
+                <dd class="w10"><input value="131****8653" /></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">收票人手机：</dt>
+                <dd class="w10"><input/></dd>
+            </dl>   
+            <dl class="w12 fapiao_btm">
+            	<dt class="w02">&nbsp; </dt>
+                <dd class="w10">
+                	<div class="w12"><a class="active">保存发票信息</a><a>取消</a></div>
+                    <div class="w12 mt_10">温馨提示：发票的开票金额不包括优惠券支付部分</div>
+                    <div class="w12"><a class="none">发票信息相关问题</a></div>
+                </dd>                
+            </dl>
+            </div>
+            <div class="w12 fapiao zzsfp">
+            <div class="w12 prompt_box">
+            	<a href="#" target="_blank">委托书下载</a>
+                <label>|</label>
+                <a href="#" target="_blank">发票制度说明</a>
+                <label>|</label>
+                <a href="#" target="_blank" class="ftx-05">首次开具增值税发票阅读</a>
+            </div>
+            <ul class="invoice_status w12">
+				<li class="fore1 curr">1.填写公司信息<b></b></li>
+				<li class="fore2 ">2.填写收票人信息<b></b></li>
+			</ul>					
+            <dl class="w12">
+            	<dt class="w02">单位名称：</dt>
+                <dd class="w10"><input class="w07"/><span class="error_msg">单位名称不能为空！</span></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">纳税人识别码：</dt>
+                <dd class="w10"><input class="w07"/><span class="error_msg">纳税人识别号不能为空！</span></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">注册地址：</dt>
+                <dd class="w10"><input class="w07"/><span class="error_msg">注册地址不能为空！</span></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">注册电话：</dt>
+                <dd class="w10"><input class="w07"/><span class="error_msg">注册电话不能为空！</span></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">开户银行：</dt>
+                <dd class="w10"><input class="w07"/><span class="error_msg">开户银行不能为空！</span></dd>
+            </dl>
+            <dl class="w12">
+            	<dt class="w02">银行账户：</dt>
+                <dd class="w10"><input class="w07"/><span class="error_msg">银行帐户不能为空！</span></dd>
+            </dl>   
+            <dl class="w12 fapiao_btm">
+            	<dt class="w02">&nbsp; </dt>
+                <dd class="w10">
+                	<div class="w12"><a class="active">下一步</a><a>取消</a></div>
+                    <div class="w12 mt_10">温馨提示：发票的开票金额不包括优惠券支付部分</div>
+                    <div class="w12"><a class="none">发票信息相关问题</a></div>
+                </dd>                
+            </dl>
+            </div>
+        </div>
+    </div>
+    <ul class="w12 order_summary">
+    	<li><span class="w10"><em class="number">3</em> 件商品，总商品金额：</span><em class="w02">￥6600.00</em></li>
+            <li><span class="w10">返现：</span><em class="price w02"> -￥0.00</em></li>
+            <li><span class="w10">运费：</span><em class="price w02">￥0.00</em></li>
+            <li><span class="w10">应付总额：</span><em class="price w02">￥6600.00</em></li>
+    </ul>
+    <div class="w12 cart_end ">
+    	<dl class="w12"><dd class="w10">应付总额：<b>￥6600.00</b></dd><dd class="w02"><a href="../pay/pay.html"><input type="button" class="jl_btn btn_red" value="提交订单" /></a></dd></dl>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="jl_modal display_none">
+  <div class="jl_modal_hidden" onclick="jl_modal_hidden();"></div>
+  <div class="set_address"></div>
+</div>
+<script type="text/javascript">
+$(".set_address").load("../set_address.html");
+</script>
+
+

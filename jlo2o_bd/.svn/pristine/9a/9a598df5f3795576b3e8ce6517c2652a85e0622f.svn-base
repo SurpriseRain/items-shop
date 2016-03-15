@@ -1,0 +1,209 @@
+<div class="w12 title">
+  <h2 class="w04">订单审核</h2>
+  <ul>
+    <li><a>导航图</a><i class="fa fa-angle-right"></i></li>
+    <li><a>下载订单</a><i class="fa fa-angle-right"></i></li>
+    <li><a>订单导入</a><i class="fa fa-angle-right"></i></li>
+    <li><a>手工开单</a><i class="fa fa-angle-right"></i></li>
+    <li><a>订单审核</a><i class="fa fa-angle-right"></i></li>
+    <li><a>订单发货</a></li>
+  </ul>
+</div>
+
+<div class="w12 content">
+<div class="w09 content_left">
+  <div class="w12 tabel_title">
+    <h3 class="xuan">待审核<span>(1000)</span></h3>
+    <h3>已审核<span>(9000)</span></h3>
+    <i class="fa fa-lock" title="锁定订单"></i>
+    <i class="fa fa-unlock" title="取消锁定"></i>
+    <i class="fa fa-check-square-o" title="取消锁定"></i>
+    
+  </div>
+  <div class="w12 tabel_show">
+    <dl class="tabel_nav">      
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd></dl>
+    <dl class="xuan">
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+    <dl>
+      <dt><input type="checkbox" /></dt>
+      <dd style="width:200px;">网店订单编号</dd>
+      <dd style="width:200px;">本地订单编号</dd>
+      <dd style="width:200px;">退款状态</dd>
+      <dd style="width:200px;">单据摘要</dd>
+      <dd style="width:200px;">金额</dd>
+      <dd style="width:200px;">商城扣费</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:200px;">货到付款</dd>
+      <dd style="width:100px;">货到付款</dd>
+    </dl>
+  </div>
+  
+  <div class="w12 table_control">
+  <div class="w06"><input type="button" class="jl_btn btn_red btn_maigin_right" value="审核确认"><input type="button" class="jl_btn btn_red btn_maigin_right" value="删除"><input type="button" class="jl_btn btn_red btn_maigin_right" value="批量编辑"></div>
+  <div class="w06">
+      <ul class="jl_paging02">
+        <li><span>1/30</span></li>
+        <li><i class="fa fa-fast-backward" title="首页"></i></li>
+        <li><i class="fa fa-arrow-left" title="上一页"></i></li>
+        <li><span>跳转到</span></li>
+        <li><input type="text"></li>
+        <li><input type="button" class="jl_btn btn_white" value="确定"></li>
+        <li><i class="fa fa-arrow-right" title="下一页"></i></li>
+        <li><i class="fa fa-fast-forward" title="尾页"></i></li>
+        <li><select><option>每页10条</option><option>每页30条</option><option>每页50条</option></select></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="w03 content_right">
+  <div class="w12 case">
+    <div class="w12 case_title"><h3 class="xuan">商品清单</h3><a>查看详细>></a></div>
+    <ul>
+      <li>QRTECH 麦本本 小麦2S 独显游戏本15英寸超薄i7笔记本电脑 i5手提</li>
+      <li>QRTECH 麦本本 小麦2S 独显游戏本15英寸超薄i7笔记本电脑 i5手提</li>
+      <li>QRTECH 麦本本 小麦2S 独显游戏本15英寸超薄i7笔记本电脑 i5手提</li>
+      <li>查看更多</li>
+    </ul>
+  </div>
+  <div class="w12 case">
+    <div class="w12 case_title"><h3 class="xuan">订单详细</h3><a>查看详细>></a></div>
+    <ul class="w12">
+      <li class="w12"><span class="w03">订单号：</span><label class="w08">1231231212</label></li>
+      <li class="w12"><span class="w03">订单号：</span><label class="w08">1231231212</label></li>
+      <li class="w12"><span class="w03">订单号：</span><label class="w08">1231231212</label></li>
+    </ul>
+  </div>
+  <div class="w12 case">
+    <div class="w12 case_title"><h3 class="xuan">买家备注</h3><h3>卖家备注</h3></div>
+    <ul class="w12"><li class="w12"><textarea class="w12">买家备注备注买家备注备注买家备注备注买家备注备注</textarea></li></ul>
+  </div>
+</div>
+</div>

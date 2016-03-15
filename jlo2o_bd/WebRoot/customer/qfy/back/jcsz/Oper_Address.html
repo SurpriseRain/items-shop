@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var ZCXX01 =usercookie.ZCXX01;
+  var hf = usercookie.LX
+  if(hf!=44 && hf!=24){
+	 $("#fh").show();
+  }
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.address.selectAddress','QryType':'Report','dataType':'Json','ZCXX01':ZCXX01}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">基础管理</a>
+    	<span>></span>
+    	<b>地址维护</b>
+	</div> -->
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:830px;">
+   			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="save()">收货</a>
+   			<a   id="fh" style="display:none" href="javascript:void(0);" class="bot Shot seach_bot" onclick="save1()">送货</a>
+   	   </li>
+	</ul>
+	<div class="clera"></div>
+<div class="center">
+	<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+	columnsArr="[		
+						{'property':'DZBH','header':'地址编号','type':'hidden','width':'70px','id':'ZCXX01'},
+						{'property':'SHRMC','header':'联系人','type':'lable','width':'70px','id':'ZCXX01'},
+						{'property':'SJHM','header':'手机号码','type':'lable','width':'100px','id':'DPXX01'},
+						{'property':'DZ','header':'地址','type':'lable','width':'150px','id':'ZCXX02'},
+						{'property':'DZLX','header':'地址类型','type':'lable','width':'200px','id':'DPXX02'},
+						{'property':'MARK','header':'默认状态','type':'lable','width':'200px','id':'DPXX02'}
+						]"
+	afterUrl="/customer/qfy/back/jcsz/Oper_Address_item.html?DZBH=">
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+//执行回调方法
+function del(SPPJ01){
+	var XmlData=[{"SPPJ01":SPPJ01}];
+	var url="/OrderPj/deleteOrderPj.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData.STATE=="1"){
+		alert("操作成功!");
+		query();
+		}else{
+			alert("操作失败!");
+			}
+}
+//新增收货地址
+function save(){
+	parent.ajaxGrid('/customer/qfy/back/jcsz/Oper_Address_item.html?DZLX=0');
+}
+//新增收货地址
+function save1(){
+	parent.ajaxGrid('/customer/qfy/back/jcsz/Oper_Address_item.html?DZLX=1');
+}
+
+</script>

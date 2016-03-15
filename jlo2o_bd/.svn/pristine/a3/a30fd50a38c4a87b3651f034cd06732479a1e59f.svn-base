@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var XSDD01 = $.getUrlParam('xsdd01');
+var sm_list="";//已扫过的商品条码串
+var sm_list_2=[];//已扫过的商品条码串数组校验
+function initData(){
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["sqlid"]="com.jlsoft.o2o.sql.mjck.selectMJCKSPXX";
+    XmlData["XSDD01"]=XSDD01;
+	XmlData["dataType"]="Json";
+	dataArr.push(XmlData);
+	var rData = visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+	var data = rData.data;
+	var a = 0;//商品条码与扫码ID
+	var b = 1;//扫码枪选择ID
+	var str="<table class='list_table text_1'><tr class='title' style='text-align:left;'><td>商品名称</td><td>商品条码</td><td>商品分类</td><td>供货商</td><td>扫码操作</td></tr>";
+	for(var i=0;i<data.length;i++) {
+		var count = data[i].xsddi05;
+		if(count>1){
+			for(var j=0;j<count;j++) {
+				a++;
+				b++;
+				str+='<tr><td>'+data[i].spxx04+'</td>';
+				str+='<td><input type="hidden" id="ckcm_'+a+'" value="'+data[i].barcode+'"/>'+data[i].barcode+'</td>';
+				str+='<td>'+data[i].spfl02+'</td><td>'+data[i].zcxx02+'</td>';
+				str+='<td><input type="text" id="'+a+'" class="list_1" name="cm_list"  onkeypress="return userName_onkeypress(event,'+a+','+b+')" />';
+				str+='<b id="true'+a+'" style="color:red; font-size:24px;margin-left:5px; line-height：50px;"></b></td></tr>';
+			 }
+		}else{
+			a++;
+			b++;
+			str+='<tr><td>'+data[i].spxx04+'</td>';
+			str+='<td><input type="hidden" id="ckcm_'+a+'" value="'+data[i].barcode+'"/>'+data[i].barcode+'</td>';
+			str+='<td>'+data[i].spfl02+'</td><td>'+data[i].zcxx02+'</td>';
+			str+='<td><input type="text" id="'+a+'" name="cm_list"   onkeypress="return userName_onkeypress(event,'+a+','+b+')" />';
+			str+='<b id="true'+a+'" style="color:red; font-size:24px; margin-left:5px; line-height：50px;"></b></td></tr>';
+		}
+	 }
+	str+='</table>'
+	$(".center").html(str);
+}
+
+//扫码操作
+function userName_onkeypress(event,n,obj){  
+ 	if(event.keyCode==13){
+ 		var a = 0;
+ 		var x = $("#ckcm_"+n).val();//要校验的条码
+ 		var s = $("#"+n).val();//扫码枪
+ 		var y = s.replace(/（/g,"(").replace(/）/g,")");
+ 		var z = y.substring(5,18);
+   		var XmlData=[{"uniqueCode":y}];
+   		var url="/Oper_MJRK/GetProduceExist.action?XmlData="+JSON.stringify(XmlData);
+   		var returnVal=visitService(url);
+   		if(returnVal.flag){
+   			alert("商品未入库！");
+   			$("#"+n).val("");
+   			return false;
+   		}
+ 		if(x==z){
+ 			var list_1 = $("input[class='list_1']");
+ 	 		for(var i=0;i<list_1.length;i++) {
+ 	 			var sm = list_1[i].id;
+ 	 			var sm_value = $("#"+sm).val();
+ 				if(sm_value==y){
+ 					a++;
+ 					//break; modify 2015.10.30. 存在重复串码无法提示的问题，注释掉。
+ 				  } 
+ 			 }
+ 	 		if(a>1){
+ 	 			alert("该商品已扫过！");
+ 	 			$("#"+n).val("");
+ 	 			return false;
+ 	 		}
+ 			$("#"+obj).focus();
+ 			var w = 0;//串码计数器
+ 			for(var i=0;i<sm_list_2.length;i++) {
+ 	 			if(sm_list_2[i]==y){
+ 	 				w++;
+ 	 				break;
+ 	 			}
+ 			 }
+ 			if(w==0){
+ 				sm_list+=y+",";
+ 	 			sm_list_2.push(y);
+ 	 			$("#true"+n).html("√");
+ 			}
+ 		}else{
+ 			alert("该商品不在此订单内！");
+ 			$("#"+n).val("");
+ 			$("#true"+n).html("×");
+ 		}
+  	}	
+} 
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridListNoPage.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">库房管理</a>
+    	<span>></span>
+    	<b>订单出库</b>
+	</div> -->
+	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+	<div class="clera"></div>
+  <ul id="screening">
+   <li style="width:60px;">
+    	商品重量：
+   </li>
+   <li style="width:200px;">
+    	<input style="width: 200px;" type="text" name="XSDD41" id="XSDD41" placeholder=" 输入商品重量（kg）" maxlength="10" value=""/>
+   </li>
+   <li style="width:400px;">
+		<a href="javascript:void(0);" id="button_save" class="bot Short sub_bot">保存</a>
+		<a href="javascript:void(0);" id="button_print" onclick="print()" class="bot Short" >打印</a>
+   </li>
+  </ul>
+	<div class="clera"></div>
+	<div class="center">
+	
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+	initData();
+  //点击保存
+  $(".sub_bot").click(function(){
+	  var XSDD41=$("#XSDD41").val();
+		if(XSDD41=="" ||XSDD41==null){
+			alert("请输入商品重量!");
+			return false;
+		}
+		if(XSDD41.length > 10){
+			alert("重量不得超过10位数!");
+			return false;
+		}
+		if(!/^\d{1,10}(\.\d{1,2})?$/.test(XSDD41)){
+			alert('重量输入错误,且最多保留两位小数！')
+			return false;
+		}
+	  if(sm_list.length==0){
+		  alert("扫码操作有误！");
+		  return false;
+	  }
+	  
+	  var cm_list = $("input[name='cm_list']");
+ 		for(var i=0;i<cm_list.length;i++) {
+ 			var sm = cm_list[i].id;
+ 			var sm_value = $("#"+sm).val();
+			if(sm_value==""){
+				alert("还存在未扫描的商品！");
+				return false; 
+			  } 
+		 }
+ 		if(cm_list.length!=sm_list_2.length){
+ 			alert("扫码操作有误！");
+ 			return false;
+ 		}
+ 		var sm_lists = sm_list.substring(0,sm_list.length-1);
+ 		var XmlData={"XSDD01":XSDD01,"sm_list":sm_lists,"ZCXX01":usercookie.ZCXX01,"XSDD41":XSDD41};
+ 		var url="/Oper_MJRK/insert_XSDDCM.action?XmlData="+JSON.stringify(XmlData);
+ 		var returnVal=visitService(url);
+ 		var loginState = returnVal.STATE;
+ 		if (loginState == 1) {
+ 			alert("保存成功！");
+ 			$("#button_save").css("display","none");
+ 			$("#button_print").css("display","block");
+ 			//location.href="/customer/qfy/back/ddgl/mjddck.html";
+ 		}
+ 		else if(loginState == 2){ 
+ 			//modify 2015.10.30. 增加串码在销售订单串码表中已经存在的处理
+ 			alert("串码重复！"); 			
+ 		}
+ 		else if(loginState == 3){ 
+ 			//add 2015.11.03. 增加串码在销商品串码表中不存在的处理
+ 			alert("串码商品不存在！"); 			
+ 		}
+ 		else{
+ 			alert("保存失败！");
+ 		} 
+  });
+})
+
+//执行回调方法
+function backFun(parameters){
+	init();
+}
+
+//打印
+function print(){
+	var url = "/PubPrtDocument?prtType=xsd&xsdd="+XSDD01;
+	window.open(url);
+}
+</script>

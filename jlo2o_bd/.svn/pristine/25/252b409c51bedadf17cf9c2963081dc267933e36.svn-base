@@ -1,0 +1,241 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/customer/sydjt/back/floor/js/Oper_SYGGW.js"></script>
+<form id="form1" name="form1">
+<div class="w12 merch_main">
+	<ul class="w12 merch_breadcrumb">
+			<li><i class="fa fa-home"></i><span>首页</span></li>
+			<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+			<li><span>广告管理</span></li>
+			<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+			<li><b>发布首页广告</b></li>
+	</ul>
+<div class="w12 user_content">
+	<div class="w12 user_page_main">
+			<div class="w12">
+			  <div class="w12">
+				<dl class="w12 public_form">
+			      <dt class="w01">地区：</dt>
+			      <dd class="w11"><select name="DQXX01" class="w03">
+				  <option value="12">辽宁</option>
+				  <option value="01">北京</option></select><br></dd>
+				</dl>
+			    <dl class="w12 public_form">
+				  <dt class="w01">日期：</dt>
+				  <dd class="w03"><input id="date_s" name="date_s" value="" type="text" class="Wdate w10" readonly="readonly"></dd>
+				  <dd class="w01" style="text-align:center;">~</dd>
+				  <dd class="w03"><input id="date_e" name="date_e" value="" type="text" class="Wdate w10" readonly="readonly"></dd>
+				  <dd class="w02"><input type="button" class="w04 jl_btn btn_red" value="查询" name="serach">
+				  </dd>
+				</dl>
+			  </div>  
+			  <dl class="w12 public_form">
+					<dt class="w01">小时:</dt>
+			        <dd class="w11">
+			          <ul class="w12 area">
+			            <li class="w01" data-sjqj="00:00-1:00" title="凌晨0点到1点"><span>1</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="1:00-2:00" title="凌晨1点到2点"><span>2</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="2:00-3:00" title="凌晨2点到3点"><span>3</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="3:00-4:00" title="凌晨3点到4点"><span>4</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="4:00-5:00" title="凌晨4点到5点"><span>5</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="5:00-6:00" title="早晨5点到6点"><span>6</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="6:00-7:00" title="早晨6点到7点"><span>7</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="7:00-8:00" title="上午7点到8点"><span>8</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="8:00-9:00" title="上午8点到9点"><span>9</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="9:00-10:00" title="上午9点10点"><span>10</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="10:00-11:00" title="上午10点到上午11点"><span>11</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="11:00-12:00" title="中午11点到中午12点"><span>12</span></li>
+			            <li class="w01" data-sjqj="12:00-13:00" title="中午12点到下午1点"><span>13</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="13:00-14:00" title="下午1点到下午2点"><span>14</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="14:00-15:00" title="下午2点到下午3点"><span>15</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="15:00-16:00" title="下午3点到下午4点"><span>16</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="16:00-17:00" title="下午4点到下午5点"><span>17</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="17:00-18:00" title="下午5点到下午6点"><span>18</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="18:00-19:00" title="晚上6点到晚上7点"><span>19</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="19:00-20:00" title="晚上7点到晚上8点"><span>20</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="20:00-21:00" title="晚上8点到晚上9点"><span>21</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="21:00-22:00" title="下午9点到下午10点"><span>22</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="22:00-23:00" title="晚上10点到晚上11点"><span>23</span><i class="fa fa-angle-right"></i></li>
+			            <li class="w01" data-sjqj="23:00-24:00" title="晚上11点到晚上12点"><span>24</span></li>
+			          </ul>
+			        </dd> 
+			  </dl>
+			  <dl class="w12 public_form">
+			    <dt class="w01">布局图：</dt>
+			    <dd class="w05 adv_main">
+			      <ul class="w12 xz">
+			        <li class="w03"><em class="color_03"></em>可选广告位</li>
+			        <li class="w03"><em class="color_01"></em>已售广告位</li>
+			        <li class="w03"><em class="color_02"></em>我的广告位</li>
+			      </ul>
+			      <div class="w12 adv_index">
+			        <div class="adv_header">电器服务云首页广告推广</div>
+			        <div class="adv_index_banner ggtype" data-ggtype="LBT" data-gglx="01">
+			          <ul class="banner_main">
+			            <li class="w12 color_03" title="可以投放广告"><i class="fa fa-check-circle-o"></i></li>
+			            <li class="w12 color_01 xuan" title="不可以投放广告"><i class="fa fa-times-circle-o"></i></li>
+			            <li class="w12 color_03">可投放广告</li>
+			            <li class="w12 color_03">可投放广告</li>
+			            <li class="w12 color_03">可投放广告</li>
+			            <li class="w12 color_03">可投放广告</li>
+			          </ul>
+			          <ul class="banner_nav">
+			            <li class="w02"><span>1</span></li>
+			            <li class="w02 xuan"><span>2</span></li>
+			            <li class="w02"><span>3</span></li>
+			            <li class="w02"><span>4</span></li>
+			            <li class="w02"><span>5</span></li>
+			            <li class="w02"><span>6</span></li>
+			          </ul>
+			        </div>
+			      <div id="floor" class="w12 ggtype" data-ggtype="LCFL" data-gglx="02">
+				      <!-- <div class="w12 adv_index_floor">
+				          <h3 class="w12">1F 冰箱/洗衣机/空调</h3>
+				          <div class="w12 adve_main">
+				          <div class="w03 floor_adve color_03" title="可以投放广告">
+				            <i class="fa fa-check-circle-o"></i>
+				          </div>
+				          <ul class="w09 floor_pro">
+				            <li class="w03">
+				              <div class="w12 pro_main color_03" title="可以投放广告">
+				                <i class="fa fa-check-circle-o"></i>
+				              </div>
+				            </li>
+				            <li class="w03">
+				              <div class="w12 pro_main color_01" title="不可以投放广告">
+				                <i class="fa fa-times-circle-o"></i>
+				              </div>
+				            </li>
+				            <li class="w03">
+				              <div class="w12 pro_main color_03" title="我投放的广告">
+				                <i class="fa fa-clock-o"></i> 
+				              </div>
+				            </li>
+				            <li class="w03">
+				              <div class="w12 pro_main color_01" title="不可以投放广告">
+				                <i class="fa fa-times-circle-o"></i>
+				              </div>
+				            </li>
+				            <li class="w03">
+				              <div class="w12 pro_main color_01" title="不可以投放广告">
+				                <i class="fa fa-times-circle-o"></i>
+				              </div>
+				            </li>
+				            <li class="w03">
+				              <div class="w12 pro_main color_01" title="不可以投放广告">
+				                <i class="fa fa-times-circle-o"></i>
+				              </div>
+				            </li>
+				            <li class="w03">
+				              <div class="w12 pro_main color_01" title="不可以投放广告">
+				                <i class="fa fa-times-circle-o"></i>
+				              </div>
+				            </li>
+				            <li class="w03">
+				              <div class="w12 pro_main color_01" title="不可以投放广告">
+				                <i class="fa fa-times-circle-o"></i>
+				              </div>
+				            </li>
+				          </ul>
+				          </div>
+				          <div class="w12 floor_brand">
+				            <ul class="w12">
+				              <li class="w02">
+				                <div class="pro_main color_03" title="可以投放广告">
+				                  <i class="fa fa-check-circle-o"></i>
+				                </div>
+				              </li>
+				              <li class="w02">
+				                <div class="pro_main color_03" title="可以投放广告">
+				                  <i class="fa fa-check-circle-o"></i>
+				                </div>
+				              </li>
+				              <li class="w02">
+				                <div class="pro_main color_03" title="可以投放广告">
+				                  <i class="fa fa-check-circle-o"></i>
+				                </div>
+				              </li>
+				              <li class="w02">
+				                <div class="pro_main color_03" title="可以投放广告">
+				                  <i class="fa fa-check-circle-o"></i>
+				                </div>
+				              </li>
+				              <li class="w02">
+				                <div class="pro_main color_03" title="可以投放广告">
+				                  <i class="fa fa-check-circle-o"></i>
+				                </div>
+				              </li>
+				              <li class="w02">
+				                <div class="pro_main color_03" title="可以投放广告">
+				                  <i class="fa fa-check-circle-o"></i>
+				                </div>
+				              </li>      
+				            </ul>
+				          </div>
+				          <div class="w12 floor_brand">
+				            <ul class="w12">
+				              <li class="w12"><div class="pro_main color_03" title="可以投放广告"><i class="fa fa-check-circle-o"></i></div></li>        
+				            </ul>
+				          </div>
+				        </div>
+					</div> -->			       
+			    </dd>
+			    <dd class="w06 adv_jg">
+			      <ul class="w12">
+			        <li class="w12 title">我选择的广告位</li>
+			        <li class="w12">
+			          <dl class="w12 public_table_title">
+						<dt class="w01"><input type="checkbox" name="ggwall"></dt>
+						<dd class="w03">时间段</dd>
+						<dd class="w02">广告位</dd>
+						<dd class="w02">状态</dd>
+						<dd class="w02">价格</dd>
+						<dd class="w02">操作</dd>
+					  </dl>
+					  <div class="w12 adv_sol">
+					  </div>
+					  <input type="hidden" name="GGGL09"></input>
+					  <input type="hidden" name="GGGL11"></input>
+					  <input type="hidden" name="GGGL08" value="2"></input>
+			        </li>
+			        <li class="w12"><span class="w02">合计：</span><b><input type="hidden" name="GGGL05" value="3000"></input>3,000.00元</b></li>
+			        <li class="w12"><span class="w02">图片：</span><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="" style="display:none"></img><input type="file" class="modalInput" id="file01" name="files" title="上传图片"></div></li>
+			        <li class="w12"><span class="w02">链接：</span><input type="text" class="w08" name="GGGL15" /></li>
+			        <li class="w12"><span class="w02">标题：</span><input type="text" class="w08" name="GGGL04"/></li>
+			        <li class="w12"><span class="w02">&nbsp;</span><input type="button" class="w04 jl_btn btn_red" value="确认发布" name="tj"/></li>
+			      </ul>
+			      <ul class="w12">
+			        <li class="w12 title">历史广告</li>
+			        <li class="w12">
+			          <dl class="w12 public_table_title">
+			            <dd class="w05">时间段</dd>
+			            <dd class="w03">广告位</dd>
+			            <dd class="w02">价格</dd>
+			            <dd class="w02">操作</dd>
+			          </dl>
+			          <dl class="w12 public_table_main">
+			            <dd class="w05">2015-12-07 08-09</dt>
+			            <dd class="w03">01-01</dt>
+			            <dd class="w02">3,999.00</dt>
+			            <dd class="w02"><i class="fa fa-trash-o"></i><i class="fa fa-eye"></i></dt>
+			          </dl>
+			          <dl class="w12 public_table_main">
+			            <dd class="w05">2015-12-07 08-09</dt>
+			            <dd class="w03">01-01</dt>
+			            <dd class="w02">3,999.00</dt>
+			            <dd class="w02"><i class="fa fa-trash-o"></i><i class="fa fa-eye"></i></dt>
+			          </dl>
+			          <dl class="w12 public_table_main">
+			            <dd class="w05">2015-12-07 08-09</dt>
+			            <dd class="w03">01-01</dt>
+			            <dd class="w02">3,999.00</dt>
+			            <dd class="w02"><i class="fa fa-trash-o"></i><i class="fa fa-eye"></i></dt>
+			          </dl>
+			        </li>
+			      </ul>
+			    </dd>
+			  </dl>
+		</div>
+</div> 
+</form>

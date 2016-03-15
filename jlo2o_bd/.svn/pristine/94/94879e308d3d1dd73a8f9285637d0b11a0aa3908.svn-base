@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="../css/carSs.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+<script type="text/javascript" src="../js/public1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+
+<title>统一编码</title>
+<script type="text/javascript">
+function AutoScroll(obj){
+        $(obj).find("ul:first").animate({
+                marginTop:"-25px"
+        },500,function(){
+                $(this).css({marginTop:"0px"}).find("li:first").appendTo(this);
+        });
+}
+$(document).ready(function(){
+setInterval('AutoScroll(".scrollDiv")',1500)
+});
+
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+$(document).ready(function(){
+	showUser();
+	$("#header").load("/customer/qfy/head-08.jsp?ss="+Math.random(),function(reponse,status){
+		if(status=="success"){
+		$(".tybm").css({"color":"#ff8800"});
+		}
+	});
+	$("#footer").load("/customer/qfy/foot-08.html?ss="+Math.random());	
+});
+
+//检查是否已登录
+function showUser(){
+	if(usercookie!=null){
+		$("#ext").attr("style","display:black").attr("href","javascript:void(0)").on("click",function(){
+			//清除cookie
+			$.cookie('userInfo',null,{path:"/"});  
+			window.location="/customer/qfy/index.html";
+		});
+		if(usercookie.LX!=21){
+			$("#houtaigl").append('<a class="left no4" href="/gui_o2o/back/Main.jsp">后台管理</a>');			
+		} 
+		$("#regist").remove();
+		$("#loginP").html(usercookie.ZCXX02).css("width","100px");
+		$("ul.login").hide();
+	}else{			
+		$("#head-cat").find("div").remove();
+		$("ul.login").show();
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="header"></div>
+<div class="clera"></div>
+<div id="bm-banner">
+  <div><a href="http://www.jctm.com.cn/autopts/">企业系统实施指南</a></div>
+</div>
+
+<div id="bm-title">
+  <ul class="bm-title-main">
+    <li><span>目录：</span></li>
+    <li><a href="#bm-01">01、编码的意义</a></li>
+	<li><a href="#bm-02">02、编码体系介绍</a></li>
+	<li><a href="#bm-03">03、名词解释</a></li>
+	<li><a href="#bm-04">04、申请流程</a></li>
+  </ul>
+</div>
+<div id="pdb-main">
+  <ul class="pdb-left bm-left">
+    <li id="bm-01">
+      <h2><b>01.</b>编码的意义</h2>
+      <span>> 全球唯一的编码与标识，是企业及产品的唯一“身份证”，在全球贸易与信息交换、共享中是唯一的辨识依据；</span>
+      <span>> 增强供应链管理的有效手段，提升供应链管理水平；</span>
+      <span>> 为配件产品质量追溯、品牌化发展、维修企业服务质量评价与维修质量责任界定、消费者满意度调查与投诉受理、保险理赔、金融服务、政府监管、云平台服务等提供标准化数据依据；</span>
+	  <span>> 采用唯一编码与标识的自动识别技术，可以减少人为错误的发生及人工成本，提高行业管理、市场流通、商品交易及大数据应用的效率；</span>
+	  <span>> 唯一标识代码将作为企业在全球范围内各种社会行为、商务活动等的唯一“身份证”，是企业各种关联信息的唯一索引；</span>
+	  <span>> 符合政府、行业、市场、企业多层面的发展与应用需求，统一编码与标识与国际接轨；</span>
+	  <span>> 物联网、移动计算、电子商务、产品质量追溯、行业及关联产业（保险、金融等）捆绑式的融合发展，跨界集成服务的云平台架构及运营等，将促进行业信息化发展；</span>
+	  <span>> 配件统一编码是行业融合、信息化、电子商务发展的重要前提。</span>
+    </li>
+    <li id="bm-02">
+      <h2><b>02.</b>体系介绍</h2>
+      <span class="txjs"><b>汽车维修协会管理编码</b><font>汽车维修协会对其行业会员、企业进行注册登记所分配的用于协会内部管理的编码；此编码由维修协会分配管理，以确认加入质量保障体系的企业身份，其编码与维修企业的位置码、配件生产企业的商品条码捆绑，便于识别身份、质量追责、打假保优、大数据管理（行业内企业注册、标识的使用、云平台准入、管理等），以及政府监管部门对行业管理的考核等</font></span>
+      <span class="txjs"><b>汽车维修、流通企业统一编码</b><font class="sdd">为汽车维修、流通企业统一分配的全球参与方位置代码(GLN)，用于企业的代码标识</font></span>
+	  <span class="txjs"><b>汽车零部件产品统一编码</b><font class="sdd">为汽车零部件产品统一分配的全球贸易项目代码（GTIN），即我国统称的“商品条码”，用于零部件产品的编码标识</font></span>
+	  <span class="txjs"><b>编码体系</b><font class="lianghang">全球贸易项目代码（GTIN）、系列货运包装箱代码（SSCC）、全球参与方位置码（GLN）、全球可回收资产标识（GRAI）、全球单个资产标识（GIAI）、全球服务关系代码（GSRN）、属性代码（AI）</font></span>
+    </li>
+    <li id="bm-03">
+      <h2><b>03.</b>名称解释</h2>
+      <span class="txjs"><label>“全球统一标识系统”（ 简称GS1系统）:</label>是以对贸易项目、物流单元、位置、资产、服务关系等进行编码为核心的，服务于全球物流供应链的开放的标准体系。该系统集条码、射频等自动数据采集、电子数据交换、全球产品分类、全球数据同步、产品电子代码（EPC）等系统为一体，具有全球统一性、系统性、科学性、可维护性、可扩展性的特点。</span>
+      <span class="txjs"><label>汽车维修行业协会管理代码:</label>汽车维修行业协会管理代码采用全球统一标识系统编码与标识体系中的GB/T 16986-2009《商品条码 应用标识符》应用标识符（AI）91数据结构，实施汽车维修行业协会对其行业会员、企业注册登记的内部编码管理，编码数据格式，汽车维修行业协会管理编码可应用于汽车维修行业企业准入管理，该管理编码与企业代码标识（位置码）、产品编码（商品条码）共同使用，达到维修部件的全过程质量追溯管理。</span>
+      <span class="txjs"><label>汽车维修、流通企业统一编码（位置码）:</label>汽车维修、流通企业统一编码采用国际通用的全球统一标识系统编码与标识体系中的“全球参与方位置代码”(简称位置码，英文缩写GLN, Global Location Number)，见GB/T16828-2007《商品条码 参与方位置编码与条码表示》。GLN是对参与供应链等活动的法律实体、功能实体和物理实体进行唯一标识的代码，用于贸易伙伴之间通过电子数据交换和自动数据采集应用实现信息的有效流动。全球位置码（GLN）提供了国际共同认可的标识团体和位置的标准，已经被负责UN/EDIFACT的联合国工作组和国际化组织(ISO 6523) 认可。全球参与方位置代码（简称位置码）由厂商识别代码、位置参考代码和校验码组成，用13位数字字符表示。根据维修协会会员的分类，具体建议选用其中某一种编码。</span>
+      <span class="txjs"><label>汽车维修配件产品统一编码:</label>汽车维修配件统一编码数据由基本数据结构或基本数据结构加上扩展数据结构两种方式表示。基本数据结构由GTIN、批号和系列号组成。数据要素均应按本标准的要素序号的从小到大顺序排列。当除了基本数据之外，汽车零部件还需额外增加数据信息时，采用扩展数据。基本数据结构式中，关于“汽车维修配件的统一编码与标识”标准，有关地方标准正在陆续出台（以国标草案为统一文本）。根据国家标准委下达的计划，中国自动识别技术协会正在组织起草小组开展标准制定工作，“汽车维修配件的统一编码与标识”国家标准将在2014年完成报批。该标准与国际统一规范的编码规则一致，在全球实现配件的唯一编码与标识。</span>
+      <span class="txjs"><label>什么是位置码:</label>位置码的全称是全球参与方位置代码（Global Location Number，GLN），简称位置码，是对供应链中各参与方的法律实体、功能实体、物理实体以及网络商铺等进行唯一标识的代码。广泛用于贸易伙伴间的信息传递，有效促进了贸易参与方与客户间的沟通效率。GLN直接用数字来代替文字，以条码等形式呈现。可以用来标识贸易商、工厂、部门、一信信箱地址、一家网上商店、建筑物的某个房间、仓库或仓库的某个门、交货地点等。GS1系统全球参与方位置代码——全球位置码（GLN）是用于物理实体、功能实体或法律实体的唯一标识。GLN用GTIN-13（EAN/UCC-13）数据结构来实现。在应用GLN时，前面需按功能标注相应的应用标识符，如AI（410）、 AI（412）、 AI（413）等。在商业贸易中，位置码为企业提供了各类实体和位置的有效识别方法，主要有如下特点：<br />唯一性：可以在全球唯一标识，结构简单，容易识别，使信息传递过程十分便利。<br />通用性：可以对任何企业的任何活动或行为，进行任何位置或功能的识别。<br />标准化：在国内，由中国物品编码中心统一管理。全球越来越多的国家和地区都在日常的商业活动中使用位置码对实体进行管理。<br /><label>快速提高EDI（电子数据交换）的效率：</label>在电子数据交换中，所有的贸易参与方都必需使用相同的位置代码标准。这是EDI有效进行的先决条件和重要前提。位置码能为电子数据交换中的各参与方、位置等提供呈个唯一的、通用的、有效的代码标识。企业通过采用位置码，只需交换一次企业的名称、地址、指定位置等贸易参与方信息，即可在以后的贸易过程中始终通过位置码获取并使用，快速、准确的提高了电子数据交换的效率。<br /><label>有效识别实体位置</label>在贸易活动中，位置码是与贸易伙伴指定位置相联系的主数据的一个关键因素，具有全球唯一性和通用性，简单、方便、快捷，任何时候，企业只要有位置识别的需求，编码一次，即可终身使用。位置码通过数字和条件等相结合的形式表现出来，能指代地球上的任何实体位置。大可以是一幢大楼，一个仓库，小可以是一个交货地点、电脑中的一个文件等，都可以为它们提供精确识别位置的有效方法。
+<br /><label>高效同步商品信息：</label>在全球商品数据同步中，位置码是能否获得有效贸易数据的前提和关键，它与商品条码、全球目标市场一起，共同决定了一条商品信息的唯一性。企业将产品信息录入全球商品数据同步系统，确认完发货方及收货方的位置码，即可完成订单，确保了信息处理的及时、高效，促进了信息流与实物流的有效整合。<br /><label>加快实现智能物流：</label>位置码能以条码的形式呈现，附着在化物的物流单元上，并在各种 物流配送中为企业提供货物所处位置及环境的有效识别方法，优化物流运输路线，及时调配车辆，实时全程监控物流，加快了智能物流的实现进程，大大提高了企业供应链的运作效率。<br /><label>助力实现产品质量安全追溯：</label>在产品质量安全追溯中，通过采用全球通用、统一的位置码，正确记录和标识产品在供应链环节中的流转位置和状况，自动采集追溯信息，确保各贸易伙伴参与方之间信息传递的快速准确，帮助企业实现标准化的追溯操作全流程。<br /><label>个性标识各类商铺：</label>位置码可以标识实体商铺和网络商铺，特别是在电子商务中，位置码作为一种全新的、个性的网格地址标识，能有效的统一企业的常用名称、产品商标等品牌资源，是企业树立形象、打造品牌、推广产品的有力武器，也是社会各界快速了解企业的便捷途径。位置码可以印刷在名片、卡片、广告等宣传品上，新潮、醒目、个性，客户在线访问时，只需要在输入位置码或者扫描位置码，即可轻松到达企业网络店铺。
+</span>
+	  
+    </li>
+    <li id="bm-04">
+      <h2><b>04.</b>申请流程</h2>
+      <span><label>流通、维修企业统一编码系统</label></span>
+	  <img src="/customer/qfy/images/lc-01.png" />
+	  
+      <span><label>生产企业基本操作流程</label></span>
+	  <img src="/customer/qfy/images/lc-02.png" />
+	  <span>申请编码：项目代码、位置码、协会管理编码<br />产品信息管理：及时提交、更新产品数据<br />标识管理：标签材质、格式选择设计<br />批次、序列号管理：对单品编码进行严格分配与管理<br />产品赋码：对单品进行赋码（贴标、DPM）<br />包装关联：为适应物流需要，需要实现包装赋码关联<br />发货采集：记录产品流向<br />数据交换：将相关的数据与汽服云平台进行数据交换</span>
+	  
+      <span><label>流通企业基本操作流程</label></span>
+	  <img src="/customer/qfy/images/lc-03.png" />
+	  <span>申请编码：项目代码、位置码、追溯企业编码（准入）<br />产品信息管理：及时交换更新产品数据<br />出入库采集：记录配件采购入库和发货出库信息<br />数据交换：将相关的数据与汽服云平台进行数据交换</span>
+	  <span></span>
+      <span><label>维修企业基本操作流程</label></span>
+	  <img src="/customer/qfy/images/lc-04.png" />	  
+	  <span>申请编码：项目代码、位置码、追溯企业编码（准入）<br />产品信息管理：及时交换更新产品数据<br />入库采集：记录配件采购入库信息<br />配件使用采集：记录配件的使用情况<br />数据交换：将相关的数据与汽服云平台进行数据交换</span>
+
+    </li>
+  </ul>
+</div>
+<div class="clear"></div>
+<!---------------------底部--------------------->
+<div id="footer">
+</div>
+</body>
+</html>

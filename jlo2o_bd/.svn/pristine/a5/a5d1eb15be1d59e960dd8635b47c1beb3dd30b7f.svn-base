@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>退货申请</title>
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/th-sq.css" />
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var ryzh = $.getUrlParam("RYZH");
+
+// 查询仓库
+function select_ck(){
+	var url = "/Oper_CKQX/selectCKList.action";
+	var returnVal = visitService(url);
+	if(returnVal != undefined && returnVal != ""){ 
+		// 显示仓库名称
+       	var ckList = returnVal.ckList;
+       	
+    	for (var i = 0; i < ckList.length; i++){
+   			$(".clear").append("<div style='width:45%;float:left;font-size:14px;margin-left:20px;margin-top:10px;'><input type='checkbox' name='ckxx' style=' margin-bottom:3px;' class='checks' id='"+ ckList[i].CK01 +"' value='"+ ckList[i].CK02 +"'/>" + ckList[i].CK02 + "</div>");
+    	}
+    	
+    	$(".checks").on("click",function(){
+        	var obj = $(this).is(":checked");
+        	var i = $(this).attr("id");
+        	var val = $(this).val();
+        	if(obj){
+        		$(".clears").append("<div  id='" + i + "' codes='" + val + "' name='checkedcar' style='border:1px solid #e4e4e4;width:auto;float:left;font-size:14px;margin-left:15px;margin-top:5px;'>" + val + "&nbsp;<a class='clone' id='" + i + "' name='" + val + "'>×</a>&nbsp;</div>");
+        	}else{
+        		$(".clears").find("#" + i).remove();
+        	}
+			$(".clone").on("click",function(){
+				$(".clears").find("#" + i).remove();
+				$("#" + i)[0].checked=false;
+			});
+        });
+    	
+   	    var cks=$("div[name='checkedcar']");
+     	var str=$("input[name='ckxx']");
+     	
+		for (var i = 0; i < cks.length; i++) {
+			for (var j = 0; j < str.length; j++) {
+				if (cks[i].id == str[j].id) {
+					str[j].checked = true;
+					break;
+				}
+			}
+		}
+	}
+}
+	// 提交
+	function okclick() {
+		var cks = $("a[class='clone']");
+		var str_id = "";
+		var str_name = "";
+		for (var i = 0; i < cks.length; i++) {
+			str_id += cks[i].id + ",";
+			str_name += cks[i].name + ",";
+		}
+		str_id = str_id.substring(0, str_id.length - 1);
+		str_name = str_name.substring(0, str_name.length - 1);
+		var s = str_id + "#" + str_name;
+		parent.execBackFun(s);
+		parent.$("#ajaxGrid").remove();
+		top.closeWait();
+	}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<style>
+.tj{ background: #ff8800 none repeat scroll 0 0;border: 1px solid #cccccc;color: #ffffff; cursor: pointer;font-size: 16px;line-height: 20px; margin-left: 50px; margin-right: 10px;padding: 5px 10px;text-align: center;width: 100px; float: right}
+.tj:hover{background: #c76e09 none repeat scroll 0 0;}
+.dqlcs{margin-top: 20px;}
+.clears{border-bottom:1px solid #e4e4e4;border-top:1px solid #e4e4e4; height:120px;width:auto;margin-top:10px; overflow: auto;}
+.clear{border-bottom:1px solid #e4e4e4; height: 300px;width:auto; overflow: auto;}
+ul,li{ margin:0px; padding:0px; list-style:none;}
+.selectSea{ float:left; position:relative; margin:0 6px;}
+.selectSea .jt{ position:absolute; right:3px; top:1px; width:20px; height:33px; background:url("../../images/selectSea_ico.png");}
+.selectSea input{ float:left; height:35px; line-height:35px; width:130px; padding:0 5px; border:1px solid #ccc;}
+.selectSea ul{ float:left; position:absolute; top:35px; width:140px; left:0px; border:1px solid #ccc; background-color:#fff; display:none;min-height:100px;  max-height:230px; height:auto; overflow-y:auto; overflow:scroll; overflow-x:hidden;}
+.selectSea ul li{ float:left; width:140px; overflow-x:auto; height:35px; line-height:35px; padding:0 5px; font-size:12px;}
+.selectSea ul li:hover{ background-color:#eee; cursor:pointer;width:140px}
+</style>
+</head>
+<body>
+
+<div class="clears"></div>
+<div class="clear"></div>
+<div class="dqlcs">
+	<a class="tj" onclick="okclick()">提交</a>
+</div>
+
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	select_ck();
+
+	var ckdm = $.getUrlParam("CKDM");
+	var fpck = $.getUrlParam("FPCK");
+	fpck = unescape(fpck);
+	var ckdmArray = ckdm.split(",");
+	var fpckArray = fpck.split(",");
+	
+	if(ckdm != "" && ckdm != null){
+		 if(ckdmArray.length != 0){
+			for(var i = 0; i < ckdmArray.length; i++){
+				$(".clears").append("<div id='" + ckdmArray[i]+"' name='checkedcar' style='border:1px solid #e4e4e4;width:auto;float:left;font-size:14px;margin-left:15px;margin-top:5px;'>" + fpckArray[i] + "&nbsp;<a class='clone' id='" + ckdmArray[i] + "' name='" + fpckArray[i] + "'>×</a>&nbsp;</div>");
+				$("input[id='" + ckdmArray[i] + "']").attr("checked","checked");
+			}
+			$(".clone").on("click",function(){
+				var obj = $(this).attr("id");
+				$(".clears").find("#"+obj).remove();
+			});
+		} 
+	}
+});
+</script>
+</html>

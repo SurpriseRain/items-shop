@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>汽福云-报名详情</title>
+	<link rel="stylesheet" type="text/css" href="activeCom.css"/>
+	<style>
+	*{list-style:none;}
+	.activeXY{font-family: Arial;color: #000;height: auto;font-size: 12px;border: 2px solid #eee;margin-top: 10px; margin-left: -7px;padding-left:15px;overflow:hidden;width:812px;}
+	.activeXY{list-style:none;}
+	.activeXY li{width:100%;height:auto;line-height:40px;}
+	.activeXY li label{width:200px;height:40px;line-height:40px;font-size:14px;}
+	.activeXY h1{width: 100%;height: 40px;line-height: 40px;text-align:center;font-size: 16px;}
+	.activeXY h4{width: 100%;height: 30px;line-height: 30px;font-size: 14px;font-weight: 400px;text-align: left;}
+	.activeXY ul{width: auto;padding: 0 10px;height: auto;}
+	.activeXY p,.activeXY ul li{width: auto;line-height: 20px;}
+	.activeBtn{width: 830px;margin: 0 auto;position: relative;}
+	.activeBtn span{display:block;width: 100%;height: auto;}
+	.activeBtn .inpbtn1,.activeBtn .inpbtn2{width: auto;padding: 0 15px;border: none;background: #ff8800;text-align:center;height: 25px;line-height: 25px;cursor: pointer;color: #fff;margin: 0 15px;border-radius: 4px;position: absolute;}
+	.activeBtn .inpbtn1{left: 50%;margin-left: -100px;}
+	.activeBtn .inpbtn2{left: 50%;margin-left: -30px;}
+	.clear{clear:both;width:auto;}
+	.activeBtn .inpbtn1, .activeBtn .inpbtn2{top:20px;}
+	iframe.right-main{width:852px;}
+
+	</style>
+	<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+	<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+	<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+	<script type="text/javascript" src="/control/js/o2o.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript">
+		var ActivityId = $.getUrlParam("ActivityId"); //活动ID
+		var activityName = unescape($.getUrlParam("hdmc")); // 活动名称
+		var spflList = null;
+		var spfl02 = "";
+		//满减规则
+		 $(document).ready(function(){
+			 var url = "/WDHD/select_activityfulloffrule.action?ActivityId="+ActivityId;
+			 var rData = visitService(url);
+			 if(rData != undefined && rData != ""){
+			 	 var html="<label>满减规则：</label>";
+				 $(rData.fullList).each(function(index,val){
+				 	if(index==0){
+				 		html+="<span>满"+val.ActivityFullPrice+"<span><span class='z' style='width:10px;'>减</span><span>"+val.ActivityOffPrice+"</span><div></div>";
+				 	}else{
+				 		html+="<span style='margin-left:70px'>满"+val.ActivityFullPrice+"<span><span class='z' style='width:10px;'>减</span><span>"+val.ActivityOffPrice+"</span><div></div>";
+				 	}
+				 });
+				 $("#full").append(html);
+			}
+		});
+		//查询所有的产品分类
+		 $(document).ready(function(){
+			var url = "/WDHD/select_SPFL.action";
+			var rData = visitService(url);
+			if(rData != undefined && rData != ""){
+				spflList = rData.spflList;
+			}
+		});
+		$(document).ready(function(){
+			var url = "/WDHD/select_ActivityDetail.action?ActivityId="+ActivityId;
+			var rData = visitService(url);
+			if(rData != undefined && rData != ""){
+				 $(rData.detailList).each(function(index,val){
+					 $("#activityName").html(val.ActivityName);
+				 	 getflmc(val.SPFL01);
+			 		 spfl02 = spfl02.substring(0,spfl02.length-1);
+					 $("#spfl").html(spfl02);
+					 $("#ActivityStartTime").html(val.ActivityStartTime);
+					 $("#ActivityEndTime").html(val.ActivityEndTime);
+				 	 $("#EnrollEndTime").html(val.EnrollEndTime);
+				 	 $("#EnrollStartTime").html(val.EnrollStartTime);
+			     });
+			}
+		}); 
+		//报名
+		function toSignUp(){
+			//活动ID为空回首页
+			if(ActivityId==null || ActivityId==""){
+				location.href="/"			
+				return false;
+			}
+			location.href="/customer/qfy/back/hdgl/Activityxy.html?ActivityId="+ActivityId + "&hdmc=" + escape(activityName);
+		}
+			//取得分类名称
+		function getflmc(spfl01){
+			var spfl01s = spfl01.split(",");
+			var flag = false;
+			spfl02 = "";
+			for(var j=0;j<spflList.length;j++){
+				for(var i=0;i<spfl01s.length;i++){
+					if(spfl01s[i]==spflList[j].spfl01){
+						spfl02 += spflList[j].spfl02+",";
+					}
+				}
+			}
+		} 
+		 $(document).ready(function(){
+		 	$(".inpbtn2").click(function(){
+		 		history.back(-1);
+		 	});
+		});
+	</script>
+	
+</head>
+<body style="overflow:hidden;">
+	<div id="main" class="activeXY">
+	<ul>
+	   <li style="width:100%;">
+	    	<label>活动名称：</label>
+	    	<span id="activityName"> </span>
+	   </li>
+	   <div class="clear"></div><div class="clear"></div>
+	    <div class="clear"></div><div class="clear"></div>
+	    <li style="width:100%;">
+	    	<label>商品品类：</label>
+	    	<span id="spfl" width="50px"></span>
+	   </li>
+	    <div class="clear"></div><div class="clear"></div>
+	     <div class="clear"></div><div class="clear"></div>
+	    <li style="width:100%;">
+		   	<label>活动时间：</label>
+			<span id="ActivityStartTime"></span>
+		   	<span class="z" style="width:10px;">~</span>
+		    <span id="ActivityEndTime"></span>
+	   </li>
+	    <div class="clear"></div><div class="clear"></div>
+	     <div class="clear"></div><div class="clear"></div>
+	    <li style="width:100%;">
+		    <label>报名时间：</label>
+		    <span id="EnrollStartTime"></span>
+		   	<span class="z" style="width:10px;">~</span>
+		    <span id="EnrollEndTime"></span>
+	   </li>
+	    <div class="clear"></div><div class="clear"></div>
+	     <div class="clear"></div><div class="clear"></div>
+	   <li style="width:100%;" id="full">
+	   </li>
+	</ul>
+	</div>
+	<div id="btm" class="activeBtn">
+		<span><input type="button" name="" class="inpbtn1" id="" onclick="toSignUp();" value="报名" />
+		<input type="button" name="" class="inpbtn2" id="" value="取消" /></span>
+		<div class="clear"></div>
+	</div>
+</body>
+</html>

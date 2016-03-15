@@ -1,0 +1,220 @@
+#banner_main{ width:1200px; height:502px; margin:0 auto;}
+#banner_main .ban_main{ width:700px; height:492px; margin:10px 10px 0 210px; background-color:#fff; float:left;}
+/*******************banner*****************/
+#banner_main .ban_main .banner{ width:700px; height:315px; background-color:#000;}
+#banner_main .ban_main .banner #divSmallBox{overflow:hidden;*display:inline;*zoom:1;width:10px;height:10px;margin:0 5px;border-radius:10px;background:#ffffff;}
+#banner_main .ban_main .banner #playBox{ width:700px; height:315px; background:#333; position:relative; overflow:hidden;}
+#banner_main .ban_main .banner #playBox .oUlplay { width:99999px; position:absolute; left:0; top:0;}
+#banner_main .ban_main .banner #playBox .oUlplay li{ float:left;}
+#banner_main .ban_main .banner #playBox .oUlplay li a img{ width:700px; height:315px;border:0px;}
+#banner_main .ban_main .banner #playBox .pre{ cursor:pointer; width:45px; height:70px; background:url(/customer/qfy/images/l.png) no-repeat; position:absolute; top:110px; left:5px; z-index:10; opacity:0;}
+#banner_main .ban_main .banner #playBox:hover .pre{ opacity:0.3;}
+#banner_main .ban_main .banner #playBox:hover .pre:hover{ opacity:0.5;}
+#banner_main .ban_main .banner #playBox .next{ cursor:pointer; width:45px; height:70px; background:url(/customer/qfy/images/r.png) no-repeat; position:absolute; top:110px; right:5px; z-index:10; opacity:0;}
+#banner_main .ban_main .banner #playBox:hover .next{ opacity:0.3;}
+#banner_main .ban_main .banner #playBox:hover .next:hover{ opacity:0.7;}
+#banner_main .ban_main .banner #playBox .smalltitle {width:700px; height:10px; position:absolute; bottom:15px; z-index:10}
+#banner_main .ban_main .banner #playBox .smalltitle ul{ width:80px; height:10px; background-color:rgba(1,1,1,0.2); margin:0 auto; padding:2px 5px; border-radius:7px;}
+#banner_main .ban_main .banner #playBox .smalltitle ul li{ width:10px; height:10px; margin:0 3px; border-radius:10px; background:#eee; float:left; overflow:hidden;*display:inline;*zoom:1; cursor:pointer;}
+#banner_main .ban_main .banner #playBox .smalltitle .thistitle{ background:#ff8800; cursor:pointer;}
+
+/*******************新增生产厂家*****************/
+#banner_main .ban_main .new_main{ width:231.5px; height:175px; float:left; border-left:1px solid #eee; border:1px solid #e4e4e4;}
+
+#banner_main .ban_main .new_main b{ float:left; width:231.5px; height:45px; background:url(/customer/qfy/images/xjr.png) no-repeat #fff; border-bottom:1px solid #e4e4e4;}
+#banner_main .ban_main .new_main b.xjrsccj{ background-position:0 0;}
+#banner_main .ban_main .new_main b.xjrwcqy{ background-position:0 -45px;}
+#banner_main .ban_main .new_main b.xjrjxs{ background-position:0 -90px;}
+#banner_main .ban_main .new_main .new_list{ width:231.5px; float:left; height:100px; position:relative;}
+#banner_main .ban_main .new_main .new_list .topLoop{ position:relative;}
+/*#banner_main .ban_main .new_main .new_list .topLoop .hd{ overflow:hidden;  height:30px; position:absolute; right:20px; top:-38px; z-index:888;}*/
+#banner_main .ban_main .new_main .new_list .topLoop .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:-30px;  }
+#banner_main .ban_main .new_main .new_list .topLoop .hd ul li{ position:relative; _display:inline; float:left;  width:10px; height:10px; overflow:hidden; background:#ccc; margin-right:7px; text-indent:-999px; cursor:pointer; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; behavior: url(../PIE.htc);}
+#banner_main .ban_main .new_main .new_list .topLoop .hd ul li.on{ background:#ff8800;  }
+#banner_main .ban_main .new_main .new_list .topLoop .bd{ padding:0 15px;}
+#banner_main .ban_main .new_main .new_list .topLoop .bd ul{ overflow:hidden; height:130px; zoom:1; }
+#banner_main .ban_main .new_main .new_list .topLoop .bd ul li{ line-height:25px; height:25px;}
+#banner_main .ban_main .new_main .new_list .topLoop .bd ul li a{ color:#666;}
+#banner_main .ban_main .new_main .new_list .topLoop .bd ul li a font{ padding:0px 3px; background-color:#C30; color:#fff; font-size:10px; margin-left:10px;}
+#banner_main .ban_main .new_main .new_list .topLoop .bd ul li a:hover{ color:#ff8800; text-decoration:underline;}
+#banner_main .ban_main .new_main .new_list .topLoop .bd ul li a:hover font{ text-decoration:none;}
+
+/*******************右侧登陆*****************/
+#banner_main .login_pinpai{ width:280px; height:492px; float:right; margin-top:10px; box-shadow: 1px 1px 5px #eee;}
+#banner_main .login_pinpai .login{ width:278px; height:313px; border:1px solid #e4e4e4;}
+#banner_main .login_pinpai .login h3{ float:left; padding:0px; margin:0px; width:49%; height:38px; line-height:38px; text-align:center; font-size:15px; color:#333; font-family:"microsoft yahei"; cursor:pointer;}
+#banner_main .login_pinpai .login h3.login_bot_xuan{ border:1px solid #fff; border-top:0px; border-left:0px; color:#2f80eb}
+#banner_main .login_pinpai .login h3.login_bot{ border:1px solid #e4e4e4; border-top:0px; background-color:#f5f5f5; border-left:0px;}
+
+#banner_main .login_pinpai .login h3.reg_bot{ border:1px solid #e4e4e4; border-top:0px; background-color:#f5f5f5; border-right:0px; float:right;}
+#banner_main .login_pinpai .login h3.reg_bot_xuan{ border:1px solid #fff; border-top:0px; border-left:0px; color:#2f80eb}
+
+/*******************登录详细*****************/
+#banner_main .login_pinpai .login ul.login_main{ width:218px; height:223px; margin:15px 30px; float:left;}
+#banner_main .login_pinpai .login ul.login_main li{ margin-bottom:10px; float:left; width:216px}
+#banner_main .login_pinpai .login ul.login_main li span{ float:left; width:40px; height:40px; margin-top:5px; background:url(/customer/qfy/images/index_login_ico.png) #a1a1a1;}
+#banner_main .login_pinpai .login ul.login_main li span:hover{ background:url(/customer/qfy/images/index_login_ico.png) #888; cursor:pointer;}
+#banner_main .login_pinpai .login ul.login_main li span.pwd{ background-position:0 -40px;}
+
+#banner_main .login_pinpai .login ul.login_main li input{ float:left; width:160px; padding:0 5px; height:38px; border:1px solid #e4e4e4; margin-top:5px; border-left:0px; color:#666;}
+#banner_main .login_pinpai .login ul.login_main li input:hover{ border-color:#a1a1a1;}
+#banner_main .login_pinpai .login ul.login_main li a.forget{ float:right; margin-top:5px; color:#ff8800;}
+#banner_main .login_pinpai .login ul.login_main li a.forget:hover{ text-decoration:underline;}
+#banner_main .login_pinpai .login ul.login_main li.ts{ float:left; width:216px; border:1px solid #f9d2a3; background-color:#faf3ea; color:#ee0e0e; min-height:30px; line-height:30px; display:none;}
+#banner_main .login_pinpai .login ul.login_main li.ts b{ float:left; width:16px; height:16px; background-color:#ee0e0e; color:#fff; border-radius:50%; line-height:16px; text-align:center; margin:7px; font-weight:100; font-size:14px;}
+#banner_main .login_pinpai .login ul.login_main li.ts label{ float:left; line-height:30px;}
+
+#banner_main .login_pinpai .login ul.login_main li a.login_bot{ float:left; width:216px; height:35px; line-height:35px; font-size:15px; border:1px solid #c76e09; background-color:#ff8800; text-align:center; color:#fff; font-family:"microsoft yahei"; box-shadow:0px 0px 2px #ccc; margin-top:10px;text-shadow: 0px 0 1px #666}
+#banner_main .login_pinpai .login ul.login_main li a.login_bot:hover{ background-color:#ee8800;}
+
+/*******************快速注册详细*****************/
+#banner_main .login_pinpai .login .reg_main{ width:218px; height:223px; margin:15px 30px; float:left;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info{ float:left; width:218px; height:200px; margin:10px 0; position:relative;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li{ float:left; margin-bottom:10px;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li.ts{ float:left; width:216px; border:1px solid #f9d2a3; background-color:#faf3ea; color:#ee0e0e; min-height:30px; line-height:30px; position:absolute; top:153px; display:none;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li.ts b{ float:left; width:16px; height:16px; background-color:#ee0e0e; color:#fff; border-radius:50%; line-height:16px; text-align:center; margin:7px; font-weight:100; font-size:14px;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li span{ float:left; width:37px; height:37px; background-color:#000; background:url(/customer/qfy/images/index_login_ico.png) #a1a1a1; background-position:-1.5px -2.5px; cursor:pointer;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li span.pwd{ background-position:-1.5px -42.5px}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li span.zhlx{ background-position:-1.5px -83.5px}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li span:hover{ background-color:#888;}
+
+#banner_main .login_pinpai .login .reg_main ul.reg_info li select{ float:left; width:181px; border:1px solid #e4e4e4; height:37px; padding:0 0 0 5px; color:#666;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li select:hover{ border-color:#a1a1a1;}
+
+#banner_main .login_pinpai .login .reg_main ul.reg_info li input.text{ float:left; width:169px; border:1px solid #e4e4e4; height:35px; padding:0 5px; color:#666;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li input.text:hover{ border-color:#a1a1a1;}
+
+#banner_main .login_pinpai .login .reg_main ul.reg_info li input.checkbox{ float:left; border:1px solid #e4e4e4; margin:2px 10px 0 0; color:#666; padding:0px;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li label{ float:left; width:160px;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li label a.xy{ margin-left:5px; color:#ff8800;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li label a.xy:hover{ text-decoration:underline;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li a.reg_bot_yes{ float:left; width:214px; height:35px; line-height:35px; font-size:15px; border:1px solid #c76e09; background-color:#ff8800; text-align:center; color:#fff; font-family:"microsoft yahei"; box-shadow:0px 0px 2px #ccc; margin-top:10px;text-shadow: 0px 0 1px #666}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li a.reg_bot_yes:hover{ background-color:#ee8800;}
+#banner_main .login_pinpai .login .reg_main ul.reg_info li a.reg_bot_no{ float:left; width:214px; height:35px; line-height:35px; font-size:15px; border:1px solid #aaa; background-color:#ccc; text-align:center; color:#fff; font-family:"microsoft yahei"; box-shadow:0px 0px 2px #ccc; margin-top:10px;text-shadow: 0px 0 1px #666}
+
+/*******************登陆后显示会员资料*****************/
+#banner_main .login_pinpai .user_info{ width:278px; height:313px; border:1px solid #e4e4e4;}
+#banner_main .login_pinpai .user_info ul.user_list{ width:258px; height:293px; margin:10px;}
+#banner_main .login_pinpai .user_info ul.user_list li{ border-bottom:1px dotted #e4e4e4;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx{ height:130px;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx span{ float:left; color:#999; margin-left:10px;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx a.img{ width:80px; height:80px; float:left; margin:10px 0;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx a.img img{ width:80px; height:80px; border-radius:50%; border:0px;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx div.text{ float:right; width:170px; height:80px; margin:10px 0;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx div.text h3{ float:left; width:170px; height:25px; line-height:25px; font-family:"microsoft yahei"; color:#3c3c3c; font-size:16px; overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx div.text h3:hover a{ color:#ff8800;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx div.text a.tel{ float:left; padding:0 10px; height:20px; line-height:20px; background-color:#ff8800; margin:3px 9px 7px 1px; color:#fff;}
+
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx div.text a.tel:hover{ background-color:#c76e09;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx div.text b{ float:left; width:20px; height:20px; background-color:#eee; margin-right:5px; text-align:center; line-height:20px; font-family:"microsoft yahei"; color:#3c3c3c;}
+#banner_main .login_pinpai .user_info ul.user_list li.jbxx div.text b:hover{ background-color:#ff8800; color:#fff; cursor:pointer;}
+
+#banner_main .login_pinpai .user_info ul.user_list li.dbsi{ height:150px; margin-top:10px; border-bottom:0px;}
+#banner_main .login_pinpai .user_info ul.user_list li.dbsi a{ float:left; text-align:center; width:110px; height:22px; line-height:22px; border:1px solid #ff8800; margin: 0 8px 10px 2px; background-color:#fdf4e9; font-family:"microsoft yahei"; color:#3c3c3c;}
+#banner_main .login_pinpai .user_info ul.user_list li.dbsi a font{ color:#e40000;}
+#banner_main .login_pinpai .user_info ul.user_list li.dbsi a:hover{ background-color:#ff8800; color:#fff;}
+#banner_main .login_pinpai .user_info ul.user_list li.dbsi a:hover font{ color:#fff;}
+
+/*******************新加入品牌*****************/
+#banner_main .login_pinpai .new_pinpai{ width:278px; height:175px; border:1px solid #e4e4e4; margin-top:-1px;}
+#banner_main .login_pinpai .new_pinpai b{ float:left; width:278px; height:45px; background:url(/customer/qfy/images/xjr.png) no-repeat #fff; border-bottom:1px solid #e4e4e4; background-position:0 -135px;}
+#banner_main .login_pinpai .new_pinpai .new_list{ width:278px; float:left; height:100px; position:relative;}
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop{ position:relative;}
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .hd{ overflow:hidden;  height:30px; position:absolute; right:20px; top:-38px; z-index:888;}
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:10px;  }
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .hd ul li{ position:relative; _display:inline; float:left;  width:10px; height:10px; overflow:hidden; background:#ccc; margin-right:7px; text-indent:-999px; cursor:pointer; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; behavior: url(../PIE.htc);}
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .hd ul li.on{ background:#ff8800;  }
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .bd{ padding:0 15px; height:120px;}
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .bd ul{ overflow:hidden; height:130px; zoom:1; }
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .bd ul li{ line-height:25px; height:25px;}
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .bd ul li a{ color:#666;}
+#banner_main .login_pinpai .new_pinpai .new_list .topLoop .bd ul li a:hover{ color:#ff8800; text-decoration:underline;}
+
+/*******************新加入商品滚动*****************/
+#new_pro_list{ width:1199px; height:350px; margin:15px auto; border:1px solid #e4e4e4; border-left:0px;}
+#new_pro_list .pro_case{ float:left; border-left:1px solid #e4e4e4; height:350px; width:169.5px;}
+#new_pro_list .pro_case .pro_case_title{ float:left; width:170px; height:50px; background:url(/customer/qfy/images/pro_case_title.png) #f5f5f5; border-bottom:1px solid #e4e4e4;}
+#new_pro_list .pro_case .pro_case_yhkx{ background-position:0px 0px;}
+#new_pro_list .pro_case .pro_case_dlxt{ background-position:0px -50px;}
+#new_pro_list .pro_case .pro_case_dpxg{ background-position:0px -100px;}
+#new_pro_list .pro_case .pro_case_qcdq{ background-position:0px -150px;}
+#new_pro_list .pro_case .pro_case_lhbs{ background-position:0px -200px;}
+#new_pro_list .pro_case .pro_case_csbj{ background-position:0px -250px;}
+#new_pro_list .pro_case .pro_case_mrzs{ background-position:0px -300px; width:172px;}
+
+#new_pro_list .pro_case .pro_case_main{ float:left; width:170px; height:300px;}
+#new_pro_list .pro_case .pro_case_main .topLoop{ position:relative;}
+#new_pro_list .pro_case .pro_case_main .topLoop .hd{ overflow:hidden;  height:30px; position:absolute; right:5px; top:-38px; z-index:888;}
+#new_pro_list .pro_case .pro_case_main .topLoop .hd ul{ float:right; overflow:hidden; zoom:1; margin-top:10px;  }
+#new_pro_list .pro_case .pro_case_main .topLoop .hd ul li{ position:relative; _display:inline; float:left;  width:10px; height:10px; overflow:hidden; background:#ccc; margin-right:7px; text-indent:-999px; cursor:pointer; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; behavior: url(../PIE.htc);}
+#new_pro_list .pro_case .pro_case_main .topLoop .hd ul li.on{ background:#ff8800;}
+
+
+#new_pro_list .pro_case .pro_case_main .topLoop .bd{ padding:0 5px;}
+#new_pro_list .pro_case .pro_case_main .topLoop .bd ul{ overflow:hidden; zoom:1; height:290px;}
+#new_pro_list .pro_case .pro_case_main .topLoop .bd ul li{ line-height:20px; height:52px; width:160px; margin-top:5px;}
+#new_pro_list .pro_case .pro_case_main .topLoop .bd ul li a{ color:#666; height:50px; float:left; border:1px solid #fff; border-bottom:1px dotted #eee;}
+#new_pro_list .pro_case .pro_case_main .topLoop .bd ul li a img{ float:left; width:38px; height:38px; border:1px solid #ccc; margin:5px;}
+#new_pro_list .pro_case .pro_case_main .topLoop .bd ul li a span{ float:left; width:100px; height:40px; padding-right:5px; margin-top:2px; overflow:hidden;text-overflow:ellipsis;}
+#new_pro_list .pro_case .pro_case_main .topLoop .bd ul li a:hover{ color:#ff8800; text-decoration:underline; border:1px solid #ff8800;}
+
+/**********************广告**********************/
+
+#hxgg{ width:1200px; height:100px; margin:15px auto;}
+#hxgg a img{ border:0px; width:1200px; height:100px;}
+
+/********************************************/
+
+#main{ width:1200px; margin:0px auto; height:1250px;}
+#main .main-left{ width:909px; float:left;}
+#main .main-left .folor{ width:909px; height:403px; margin-top:10px;}
+#main .main-left .folor .title{ width:907px; height:40px; line-height:40px; border-bottom:2px solid #eee;}
+#main .main-left .folor .title h2{ float:left; color:#222; font-family:"microsoft yahei"; font-size:20px;}
+#main .main-left .folor .title .zcd{ float:right;}
+#main .main-left .folor .title .zcd a{ float:left; color:#3c3c3c;}
+#main .main-left .folor .title .zcd a:hover{ color:#3061ef; text-decoration:underline;}
+#main .main-left .folor .title .zcd span{ float:left; width:1px; height:10px; background-color:#ccc; margin:15px 15px;}
+
+#main .main-left .folor ul.pro-case{ width:908px; float:left; border-left:1px solid #eee;}
+#main .main-left .folor ul.pro-case li{ float:left; width:225px; height:345px; border:1px solid #eee; border-left:0px; position:relative;}
+
+#main .main-left .folor ul.pro-case li.first{margin-left:0px;}
+#main .main-left .folor ul.pro-case li a.img{ width:225px; height:225px; float:left; margin-bottom:5px;}
+#main .main-left .folor ul.pro-case li a.img img{ width:226px; height:226px; border:0px;}
+#main .main-left .folor ul.pro-case li .pro-pic{ width:210px; height:25px; margin:0 0 0 10px; float:left;}
+#main .main-left .folor ul.pro-case li .pro-pic span{ float:left; line-height:23px; color:#999;}
+#main .main-left .folor ul.pro-case li .pro-pic b{ float:left; font-size:16px; color:#da271c; font-family:"microsoft yahei"; font-weight:bold;}
+
+#main .main-left .folor ul.pro-case li .pro-name{ width:210px; height: 35px; margin:5px 10px 0 10px; float:left; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;}
+#main .main-left .folor ul.pro-case li .pro-name a{ color:#3c3c3c; line-height:18px; float:left; width:210px; height:35px; overflow:hidden;text-overflow:ellipsis;}
+#main .main-left .folor ul.pro-case li .pro-name a:hover{ color:#ff8800; text-decoration:underline;}
+#main .main-left .folor ul.pro-case li .pro-dp{ width:210px; height:30px; float:left; margin:10px 10px 0 10px;}
+#main .main-left .folor ul.pro-case li .pro-dp a.dp{ width:192px; float:left; height:30px; line-height:20px; color:#3c3c3c;}
+#main .main-left .folor ul.pro-case li .pro-dp a.dq{ float:right; width:50px; height:30px; margin-right:5px; color:#999;}
+
+#main .main-right{ width:278px; float:right; border:1px solid #eee; background-color:#f5f5f5; padding-bottom:30px;}
+#main .main-right h2{ float:left; width:278px; color:#222; font-family:"microsoft yahei"; font-size:20px; text-indent:20px; margin:15px 0;}
+#main .main-right ul#ztc{ width:245px; margin:0 15.5px; border:1px solid #eee; float:left;}
+#main .main-right ul#ztc li{ border-top:1px solid #eee; margin-top:-1px; background-color:#fff; float:left; width:245px; position:relative;}
+#main .main-right ul#ztc li a.img{ float:left; width:90px; height:90px; margin:18px 5px 18px 10px;}
+#main .main-right ul#ztc li a.img img{ width:90px; height:90px; border:0px;}
+#main .main-right ul#ztc li div.text{ float:left; width:130px; height:90px; margin:18px 0;}
+#main .main-right ul#ztc li div.text h4{ margin:0px; padding:0px; float:left; width:130px; height:30px; line-height:30px; color:#3c3c3c;overflow:hidden; text-overflow:ellipsis; white-space: nowrap;}
+#main .main-right ul#ztc li div.text a{ color:#6c6c6c; line-height:18px; float:left; width:130px;}
+
+
+/********************************************/
+.pdb-right{ width:250px; height:300px; padding-left:10px; float:right;}
+.pdb-right li.scrollDiv{ width:100%; height:150px;line-height:25px;overflow:hidden; position:relative;}
+.pdb-right li.scrollDiv h2{ font-family:"microsoft yahei"; color:#3c3c3c; height:40px; line-height:40px; border-bottom:1px solid #eee; margin-bottom:10px; position:absolute; z-index:9; background-color:#fff; font-size:14px; width:230px;}
+
+.pdb-right li.scrollDiv ul{ width:245px; height:50px; padding-left:5px; position:absolute; top:50px; z-index:8;}
+.pdb-right li.scrollDiv ul li{ line-height:25px;}
+  
+
+
+  .foce{
+
+  	height:38px;line-height:38px;font-size:16px;
+
+  }

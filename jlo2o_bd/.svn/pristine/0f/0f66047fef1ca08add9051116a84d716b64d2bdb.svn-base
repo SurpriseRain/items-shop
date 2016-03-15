@@ -1,0 +1,266 @@
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+
+<script type="text/javascript" src="/customer/sydjt/js/columns/columns_carlist.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+
+<script type="text/javascript" src="/control/js/list_pjsd.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+
+<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+    <li><i class="fa fa-home"></i><span>首页</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>订单管理</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><b>评价晒单</b></li>
+</ul>
+</div>
+
+<!--<div class="w12 user_page_title"><h3>评价晒单</h3></div>-->
+<div class="w12 user_content">
+  <div class="w12 user_page_tab">
+    <ul class="w09">
+    	<li class="xuan" id="dpj" onclick="changeIframeSize('ddgl/my_pjsd.html?FLAG=6','#centerFrame')">待商品评价(0)</li>
+    	<li id="ypj" onclick="changeIframeSize('ddgl/my_pjsd.html?FLAG=10','#centerFrame')">已评价(0)</li>
+    	<li id="khfpj" onclick="changeIframeSize('ddgl/khfpj.html?FLAG=10','#centerFrame')">可回复评价(0)</li>
+    </ul>
+  </div>
+  
+  
+  <div class="w12 user_page_main" id="DPJ">
+  <dl class="w12 public_table_title">
+      <dd class="w08"><span class="w12">商品信息</span></dd>
+      <dd class="w04"><span class="w12">评价状态</span></dd>
+    <form id="form1" name="form1" action="">
+    <input type="hidden" id="ZTID" name="ZTID" value=""/>
+    <input type="hidden" id="SPXX01" name="SPXX01" value=""/>
+	<input type="hidden" id="XSDD01" name="XSDD01" value=""/>
+	<input type="hidden" id="HBID" name="HBID" value=""/>
+	<input type="hidden" id="ZCXX02" name="ZCXX02" value=""/>
+	<input type="hidden" id="SPPJ08" name="SPPJ08" value=""/>
+	<input type="hidden" id="SPPJ09" name="SPPJ09" value=""/>
+	<input type="hidden" id="SPPJ10" name="SPPJ10" value="1"/>
+	<input type="hidden" id="XTCZY01" name="XTCZY01" value=""/>
+	
+    <input type="hidden" id="SPPJ03" name="SPPJ03" value="5"/>
+	<input type="hidden" id="SPPJ04" name="SPPJ04" value="5"/>
+	<input type="hidden" id="SPPJ05" name="SPPJ05" value="5"/>
+	<input type="hidden" id="SPPJ06" name="SPPJ06" value="5"/>
+	<textarea hidden id="textarea" name="SPPJ07"></textarea>
+	</form>
+      <div id="dpj_item">
+      </div>
+  </dl>
+  <div class="w12">
+	  <div class="center">
+	  <div jl jlid="DefStaPer" id="carlist_htd" newclos="4" multiPage="true" emtype="htd" LX="0" url="/getcarlist_htd.do" newline="" before_reply="" after_reply=""></div>
+	  </div>
+  </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+$("#XTCZY01").val(userCookie.XTCZY01);
+if(userCookie.LX=='24'){//个人用户
+	$("#ZCXX02").val(userCookie.XTCZY01);
+}else{
+	$("#ZCXX02").val(userCookie.ZCXX02);
+}
+$("#HBID").val(userCookie.ZCXX01);
+
+var pjsd={};
+pjsd.FLAG = "";
+
+function initData(){
+	pjsd.FLAG=JL.getParam("FLAG");
+	i++;
+	loadInfos();
+	if(JL.getParam("FLAG")==6){
+		$("#dpj").addClass("xuan");
+		$("#ypj").removeClass("xuan");
+	}else if(JL.getParam("FLAG")==10){
+		$("#ypj").addClass("xuan");
+		$("#dpj").removeClass("xuan");
+		}
+	if(JL.getParam("FLAG")=="undefined"){
+		pjsd.FLAG=6;
+	}
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_XSDD','QryType':'Report','dataType':'Json','HBID':userCookie.ZCXX01,"ZTID":"","FLAG":pjsd.FLAG,"SPMC":""}];
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+
+function loadInfos(){
+	var	XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":userCookie.ZCXX01,"W_DJZX02":"6",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM6 = visitService(url)[0].SUM;
+	$("#dpj").html("待评价订单("+SUM6+")");
+	var	XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":userCookie.ZCXX01,"W_DJZX02":"10",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM6 = visitService(url)[0].SUM;
+    $("#ypj").html("已评价订单("+SUM6+")");
+    //loadXsdds(6);
+    var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.selectAllOrderPj_sum','QryType':'Report','dataType':'Json','xsdd01':'','zcxx02':'','ZCXX01':userCookie.ZCXX01,'beginTime':'','endTime':''}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM6 = visitService(url)[0].COUNT;
+    $("#khfpj").html("可回复评价("+SUM6+")");
+}
+
+function loadXsdds(i){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_XSDD','QryType':'Report','dataType':'Json','HBID':userCookie.ZCXX01,"ZTID":"","FLAG":i,"SPMC":""}];
+	var data="";
+		data=visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+//	alert(JSON.stringify(data))
+data=data.data;
+	if(data !=""){
+		$(data).each(function(index,obj){
+
+			var str='';
+			$(obj.SPLIST).each(function(index2,spObj){
+			      str +='<dd class="w08">';
+			      str +='<div class="w02"><img src="'+imgUrl+obj.ZCXX01+'/'+spObj.SPXX02+'/images/'+spObj.SPXX02+'_1_small.'+spObj.SPTP02+'" /></div>';
+			      str +='<div class="w10">';
+			      str +='<a href="/customer/sydjt/showProduct/product.html?spxx01='+spObj.SPXX01+'&zcxx01='+obj.ZCXX01+'&gsid='+obj.ZCXX01+'&gsmc='+escape(obj.ZCXX02)+'" target="_blank">'+spObj.SPXX04+'</a>';
+			      str +='</div>';
+			      str +='<label class="font_grey">购买时间：'+spObj.XSDD04+'</label>';
+			    str +='</dd>';
+			    str +='<dd class="w04"><input type="button" value="点击评价" class="jl_btn btn_red new" id="DJPJ"/></dd>';
+			    			  str +='<dd class="zhankai w12">';
+			    				  str +='<div class="line"></div>';
+			    				  str +='<div class="w12 pj_list">';
+			    				  str +='<span class="w01">评分：</span><div class="w11"></div>';
+			    				  str +='</div>';
+			    				  str +='<div class="w12 pj_list">';
+			    				  str +='<span class="w01">心得：</span>';
+			    				  str +='<textarea class="w09" placeholder="商品是否给力？快分享你的购买心得吧~"></textarea>';
+			    				  str +='</div>';
+			    				  str +='<div class="w12 pj_list">';
+			    				  str +='<span class="w01">晒单：</span>';
+			    				  str +='<div class="w01 add_img">+</div>';
+			    				  str +='</div>';
+			    				  str +='<div class="w12 pj_list">';
+			    				  str +='<span class="w01">&nbsp;</span>';
+			    				  str +='<input type="button" class="jl_btn btn_red" value="发表评论">';
+			    				  str +='</div>';
+			    				  str +='</dd>';
+
+				$("#dpj_item").append(str);
+			});
+			
+		});
+	}else{
+		$("#dpj_item").append('<div class="w12 order_none">亲，您还没有待评价订单哦~</div>');
+	}
+}
+
+pjsd.DPJ = function(){
+	//$("#YPJ").hide();
+	//$("#DPJ").show();
+	pjsd.FLAG = 6;
+	initData();
+}
+pjsd.YPJ = function(){
+	//$("#DPJ").hide();
+	//$("#YPJ").show();
+	pjsd.FLAG = 10;
+	$("#carlist_htd").empty();
+	//initData();
+	DefStaPer.init();
+}
+pjsd.DJPJ = function(XSDD01,SPXX01,PJBJ){
+	$("#zhankai_"+XSDD01).toggle();
+	var $textarea = $("#zhankai_"+XSDD01).find("textarea");
+	if(PJBJ>0){
+		//$(".button").removeAttr("onclick");
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectSPPJ','dataType':'Json','SPXX01':SPXX01,'XSDD01':XSDD01}];
+		var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+		var rData=visitService(url);
+		 var sppj03 = rData[0].sppj03;
+		 var sppj04 = rData[0].sppj04;
+		 var sppj05 = rData[0].sppj05;
+		 var sppj06 = rData[0].sppj06;
+		 //setStars("SPPJ03",sppj03);
+		 //setStars("SPPJ04",sppj04);
+		 //setStars("SPPJ05",sppj05);
+		 //setStars("SPPJ06",sppj06);
+		 $($textarea).val(rData[0].sppj07);
+		 $("#zhankai_"+XSDD01).find("input").hide();
+		 $("#textarea_"+XSDD01).attr("disabled",true);
+		 //$(".button").removeAttr("onclick");
+		 //$(".button").hide();
+	}
+} 
+
+pjsd.Upload = function(id){
+	$("#"+id).parent().find("i").remove();
+	$("#"+id).parent().find("img").show();
+}
+
+pjsd.FBPJ = function(XSDD01,SPXX01,XSDD04,ZTID){
+	$("#SPXX01").val(SPXX01);
+	$("#XSDD01").val(XSDD01);
+	$("#SPPJ08").val(XSDD04);
+	$("#ZTID").val(ZTID);
+
+	if ($("#SPPJ03").val() == '') {
+		alert("商品描述相符不能为空！");
+		//$("#SPPJ03").focus();
+		return false;
+	}
+	if ($("#SPPJ04").val() == '') {
+		alert("请评价物流发货速度！");
+		//$("#SPPJ04").focus();
+		return false;
+	}
+	if ($("#SPPJ05").val() == '') {
+		alert("请评价客服服务态度！");
+		//$("#SPPJ05").focus();
+		return false;
+	}
+	if ($("#SPPJ06").val() == '') {
+		alert("请评价配送人员态度！");
+		//$("#SPPJ06").focus();
+		return false;
+	}
+	if($("#textarea_"+XSDD01).val()==""){
+		alert("评价内容不能为空！");
+		return false;
+	}
+var XmlData1=$("#form1").formToJson();
+XmlData1[0].SPPJ07=$("#textarea_"+XSDD01).val();
+var XmlData=JSON.stringify(XmlData1);
+var url="/OrderPj/insertW_SPPJ.action?XmlData="+XmlData+"&t=" + Math.random();
+$.ajax({
+	type:"post",//请求类型
+	async: false, //同步
+	url:encodeURI(url),
+	dataType:"text",//返回类型
+	success:function(data)//成功处理
+	{
+		//关闭遮罩层
+		top.closeWait();
+		var json = jQuery.parseJSON(data);
+		var jsondata = json.data;
+		var data1=jsondata.STATE;
+		if(data1==1){
+			init();
+				alert("保存成功!");
+		}else{
+			alert("保存失败!");
+		}
+	},
+});
+		
+}
+</script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>

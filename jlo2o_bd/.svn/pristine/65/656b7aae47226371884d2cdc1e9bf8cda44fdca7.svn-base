@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电器服务云 - 买家中心 - 支付成功</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript">
+
+//获取公用默认图片路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+
+$(document).ready(function(){
+	//加载头和尾 
+	$("#header").load("Head.html", function() {
+		  $("#menu-lest").remove();
+		  $("#header").find("a[id='qbsp']").attr("class","bian");
+	      $("#header").find("a[id='sy']").attr("class","");
+		});
+	$("#header").load("/customer/sydjt/head.jsp");
+	$("#footer").load("/customer/sydjt/foot.html");	
+	var user=JSON.parse($.cookie("userInfo"));
+	if(user==null){
+		location.href="/customer/sydjt/index.html";
+		return false;
+	}
+	$("a.topLink").click(function() {
+		$("html, body").animate({
+		scrollTop: $($(this).attr("href")).offset().top + "px"
+		}, {
+		duration: 800,
+		easing: "swing"
+	});
+		return false;
+	});
+	
+});
+
+function ckdd(){
+	window.location.href="/customer/sydjt/back/shop-main.html";
+}
+</script>
+</head>
+
+<body>
+<!-- hearder -->
+<div id="header">
+</div>
+<div id="second" style="border: 0px;">
+<img src="/customer/sydjt/images/gou.png" class="gou" />
+<span class="ddfh"><b class="cg">您已成功支付，等待发货...</b></span>
+</div>
+<a class="qd" onclick="ckdd();">确定</a>
+<!-- footer -->
+<div id="footer" class="clearfix mt20">
+</body>
+</html>

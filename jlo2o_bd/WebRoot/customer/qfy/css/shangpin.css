@@ -1,0 +1,145 @@
+*{
+	
+}
+
+ul,li,ol,li,a{
+	text-decoration: none;
+	list-style: none;
+	font-size: 14px;
+}
+
+#wrap{
+	width: 600px;
+	height: 900px;
+}
+
+#head{
+	width: 100%;
+	height: 20px;
+	margin-left: -5px;
+	border: 1px solid #cccccc;
+}
+
+#head ul{
+	margin: auto;
+	margin-left: -38px;
+}
+
+#head ul li{
+	float: left;
+	line-height: 20px;
+	font-size: 14px;
+	margin-left: 3px;
+}
+
+#head ul li a{
+	color: #595858;
+}
+
+#head ul li a:hover{
+	color: #ff0000;
+}
+
+#nav{
+	width: 100%;
+	height: 20px;
+}
+
+#nav ul{
+	height: 30px;
+	line-height: 30px;
+}
+
+#nav ul li{
+	color: #595858;
+	width: 100px;
+	height: 30px;
+	float: left;
+	text-align: center;
+}
+
+#nav ul li:hover{
+	background: rgb(238, 238, 238);
+	
+}
+
+#nav ul li a{
+	color: #595858;
+}
+
+#nav ul li a:hover{
+	color: #fffffff;
+}
+
+#quanxuan{
+	margin-top: 5px;
+	width: 100%;
+	height: 500px;
+	border: 1px solid #CCCCCC;
+}
+
+#quanxuan .inp{
+	margin: 10px;
+}
+
+#quanxuan span{
+	font-size: 14px;
+	margin-right: 20px;
+	color: #595858;
+}
+
+#quanxuan .inp a{
+	color: #595858;
+}
+
+.shangpin{
+	width: 100%;
+	height: 400px;
+}
+
+.shangpin dl{
+	width: 160px;
+    height: 200px;
+    float: left;
+    margin: auto;
+    margin-left: -10px;
+}
+
+.shangpin dl dt{
+	width: 100px;
+	height: 100px;
+	margin-left: 60px;
+}
+
+.shangpin dl dt img{
+	width: 100px;
+	height: 100px;
+}
+
+.shangpin input{
+	background: none;
+	border: 1px solid #595858;
+	color: #727272;
+}
+
+.shangpin dd p{
+	color: #595858;
+	margin: 5px;
+}
+
+.shangpin #qx,.shangpin dd span{
+	margin-top: 10px;
+	color: #595858;
+}
+
+#yema{
+	width: 100%;
+	height: 50px;
+	margin-top: 10px;
+	line-height: 50px;
+}
+
+
+
+
+

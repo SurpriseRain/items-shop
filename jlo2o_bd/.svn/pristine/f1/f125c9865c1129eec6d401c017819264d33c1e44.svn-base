@@ -1,0 +1,10 @@
+$(document).ready(function(){
+  $("#cusService").mouseover(function(){
+	$(this).animate({"right":"-32px"}) 
+	$("#cusService_main").animate({"right":"5px"})  
+  })
+  $("#cusService_main").mouseleave(function(){
+	$("#cusService").animate({"right":"5px"}) 
+	$(this).animate({"right":"-222px"})  
+  })
+})

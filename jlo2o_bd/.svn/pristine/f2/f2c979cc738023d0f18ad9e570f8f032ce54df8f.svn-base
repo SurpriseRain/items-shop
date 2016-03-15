@@ -1,0 +1,21 @@
+/*提示信息样式开始*/
+.bmts .successTs,.yxqts .successTs{margin-top:10px;}
+	/*一拖多服务管理开始*/
+.qyts .errTs{margin-left:129px;}
+.ppts{margin-left:126px;}
+
+	/*一拖多服务管理结束*/
+.gsts{margin-top:0px;}
+.flts .errTs{margin-top:10px;}
+td .errTs,td .successTs,#search .errTs,.qyts,.sqwz0{float:left;}
+/* #search .errTs{margin-top:-5px;} */
+td .successTs{margin-top:10px;}
+#main ul.userName li .errTs{padding:0 5px;margin-top:-10px;color:#f00;font-size:12px;font-family:"Microsoft YaHei",arial,"宋体";}
+.errTs{display:block;width: auto;line-height:30px;height:30px;cursor: pointer;border: 1px solid #ffbdbe;background: #FFEBEB;color: #f00;padding:0 15px;font-size:12px;font-family:"Microsoft YaHei",arial,"宋体"; text-align:left;margin-left:5px;}
+.successTs{display:block;width:auto;line-height:30px;height:auto;cursor: pointer;color:#f00;padding:10px 30px;font-size:12px;font-family:"Microsoft YaHei",arial,"宋体"; text-align:left;background: url(../images/tssuccess.png) no-repeat;background-position:10px 0px;}
+ul.dqbd li .successTs{margin-top:5px;}
+/*提示信息样式结束*/
+
+/*提示信息规范开始*/
+.jrx{width:100px;}
+/*提示信息规范结束*/

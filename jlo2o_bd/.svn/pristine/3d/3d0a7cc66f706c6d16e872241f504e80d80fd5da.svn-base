@@ -1,0 +1,103 @@
+package com.jlsoft.o2o.interfacepackage.loop.workflow;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jlsoft.framework.JLBill;
+
+@Controller
+@RequestMapping("/InitCZY")
+public class InitCZY extends JLBill{
+	@RequestMapping("/handleCZY.action")
+	public Map handleCZY() throws Exception{
+		String sql = "SELECT B.PERSON_ID,B.PASSWD,A.ZCXX02 PERSON_NAME FROM W_ZCGS A,W_XTCZY B WHERE A.ZCXX01=B.GSID";
+		List list = queryForList(o2o,sql);
+		Map map = null;
+		for(int i=0;i<list.size();i++){
+			map = (Map)list.get(i);
+			try{
+				tbCZY(map);
+			}catch(Exception ex){
+				ex.printStackTrace();
+			}
+		}
+		return new HashMap();
+	}
+	
+	/**
+	 * @todo 同步操作员
+	 * @param map
+	 * @throws Exception
+	 */
+	public void tbCZY(Map map) throws Exception{
+		Connection conn=null;
+		PreparedStatement pstmt=null;
+		CallableStatement cstmt=null;
+		ResultSet rs=null;
+		try{
+			conn = getWorkflowConnection();
+			conn.setAutoCommit(false);
+            conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+            String GSXX01 = "0001";
+            String BM01 = "000101";
+            //获取操作员编号
+            cstmt = conn.prepareCall("{call UPDATE_BHZT(?,?)}");
+            cstmt.setString(1, "W_CZY");
+            cstmt.registerOutParameter(2,java.sql.Types.INTEGER);
+            int CZY01 = cstmt.getInt(2);
+            //写入W_CZY表
+            pstmt=conn.prepareStatement("INSERT INTO W_CZY(CZY01,CZY02,CZY03,CZY04,GSXX01,BM01) VALUES(?,?,?,?,?,?)");
+            pstmt.setInt(1, CZY01);
+            pstmt.setString(2, map.get("PERSON_ID").toString());
+            pstmt.setString(3, map.get("PERSON_NAME").toString());
+            pstmt.setString(4, map.get("PASSWD").toString());
+            pstmt.setString(5, GSXX01);
+            pstmt.setString(6, BM01);
+            pstmt.executeUpdate();
+            conn.commit();
+		}catch(Exception ex){
+			if(conn != null){
+				conn.rollback();
+			}
+			ex.printStackTrace();
+			throw ex;
+		}finally{
+			if(rs != null){
+				rs.close();
+				rs=null;
+			}
+			if(pstmt != null){
+				pstmt.close();
+				pstmt=null;
+			}
+			if(conn != null){
+				conn.close();
+				conn=null;
+			}
+		}
+	}
+	
+	/**
+	 * @todo 获取工作数据库连接
+	 * @return
+	 * @throws Exception
+	 */
+	public Connection getWorkflowConnection()throws Exception{
+		String url = "jdbc:oracle:thin:@119.79.224.118:6789:ORCL";
+		String user = "qy_workflow";
+		String password = "aaaa";
+		Class.forName("oracle.jdbc.driver.OracleDriver");
+		Connection conn = DriverManager.getConnection(url, user, password);
+		return conn;
+	}
+	
+}

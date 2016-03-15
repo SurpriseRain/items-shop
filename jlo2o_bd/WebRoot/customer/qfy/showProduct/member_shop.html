@@ -1,0 +1,1712 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="汽车配件;汽车用品;汽车配件大全;汽车配件网上购物;汽车配件市场;汽车配件超市;汽车保养用品;汽车用品网上商城" />
+<title>汽车配件|汽车保养用品|汽车配件市场|汽车用品网上商城</title>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="../css/products.css" />
+<link rel="stylesheet" type="text/css" href="../css/carSs.css" />
+<link rel="stylesheet" type="text/css" href="/control/css/splist_1.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link rel="stylesheet" type="text/css" href="../css/member_shop.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.Paging.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="../js/openbox.js"></script>
+<script type="text/javascript" src="../js/jq.Slide.js"></script>
+<script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="../js/public1.js"></script>
+<script type="text/javascript" src="/js/jquery.bxslider2.min.js"></script>
+<script type="text/javascript" src="../js/scripts.js"></script>
+<script type="text/javascript" src="../js/accounting.min.js"></script>
+<script type="text/javascript" src="../js/gyl.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<style>
+.spdm {
+display: table-row;
+height: 30px;
+line-height: 30px;
+}
+.spdm label{
+display: table-cell;
+text-align: right;
+width: 54px;
+}
+</style>
+</head>
+
+<script type="text/javascript">
+document.title = pubJson.title;//设置网页标题
+var baseUrl="";	
+
+var MyCookie = $.cookie('userInfo');
+var usercookie=JSON.parse(MyCookie);
+var DQXX01 ="120100";
+//获取公用默认图片路径
+var defaultImgUrl = pubJson.defaultImgUrl;
+var imgUrl=pubJson.path_sptp+"/sptp/";//图片默认路径
+var pagesize="8";
+var fileName="";
+var returnData = null;
+var is_pre="0";
+$(document).ready(function(){	
+	$(".pro-case").hide();
+	$(".listBOX").show();
+	$("#pjfl2").hide();
+	$("#cxpp2").hide();
+	$("#shubiao2").hide();
+	$("#shubiao4").hide();
+	$("#shubiao6").hide();
+	var oe=$.getUrlParam("spglljh01");
+	if(oe!=""&&oe!=null){
+		$("#header").load("/customer/qfy/head.jsp?oe="+oe+"&&ss="+Math.random());
+		$("#oe").val(oe);
+	}else{
+		$("#header").load("/customer/qfy/head.jsp?ss="+Math.random());
+	}
+	$("#footer").load("/customer/qfy/foot.html?ss="+Math.random());
+	$(".totals").on("click",function(){
+		var style = $(".list_a").css("overflow");
+		if(style=="hidden"){
+			$(".list_a").css("overflow","visible");
+			$(".list_a").css("height","auto");
+		}else{
+			$(".list_a").css("overflow","hidden");
+			$(".list_a").css("height.listBOX li a.img","68px");
+		}
+	});
+	var itemCode = $.getUrlParam("itemCode");
+	if(itemCode!=null &&　itemCode!=undefined && itemCode!='') {
+		var itemName = unescape($.getUrlParam("itemName"));
+		$(".pro-none").find(".bmzx-text").find("h2").html(itemName);
+		$(".pro-none").find(".bmzx-text").find("p").first().html("商品条码："+itemCode);
+		$(".pro-none").find(".bmzx-text").show();
+		$(".bmzx").show();
+		$(".pro-left").hide();
+		$(".pro-right").hide();
+		return;
+	}
+	//附近维修厂
+	selectMoreNews();
+	//配件分类
+	beiju();//页面加载时  一二三级分类显示   
+	//车系品牌
+	showFLPP();
+	//配件品牌
+	showPJPP();
+	//加载项目
+	showProject();
+	//弹框处理
+	var height = $(window).height();
+	$("#zhezhao").css({"height":height});
+	
+	$(".zhezhao-title > .fy > .close").click(function(){
+		$("#zhezhao").css({"display":"none"}); 
+	})
+	var prista="0";   //价格筛选  最低价格
+	var priend="9999999";  //最高价格  
+	var sppx="3";  //商品排序分类       1 销量       2价格      3上架时间    
+	//页面加载时   根据条件 调用后台查询商品   
+    $(".sx-left a").each(function(index){
+		$(this).click(function(){
+			addrssid = $(this).attr("id");
+			id = addrssid.replace('shubiao','');
+				$(".sx-left a").removeClass('current');
+				$("#shubiao"+id).addClass('current');
+				var sppx=id;
+				//按综合排序
+				if(id==1){
+					$("#shubiao1").hide();
+					$("#shubiao2").show();
+				}else if(id==2)
+				{
+					$("#shubiao2").hide();
+					$("#shubiao1").show();	
+				}
+				if(id==3){
+					$("#shubiao3").hide();
+					$("#shubiao4").show();
+					$("#xiaoliang").val(3);
+				}else if(id==4)
+				{
+					$("#shubiao4").hide();
+					$("#shubiao3").show();
+					$("#xiaoliang").val(4);
+				}
+				
+				if(id==5){
+					$("#shubiao5").hide();
+					$("#shubiao6").show();
+					$("#jiage").val(5);
+					
+				}else if(id==6)
+				{
+					$("#shubiao6").hide();
+					$("#shubiao5").show();
+					$("#jiage").val(6);
+				}
+				SELECTmethod();
+		});
+		
+	
+	});
+	
+	//项目对外接口
+    var project_id=$.getUrlParam("project_id");
+    if(project_id!=null){
+    	$("#w"+project_id).click();
+    }
+    //配件3级分类对外接口
+    var f3_id=$.getUrlParam("f3_id");
+    var f3_name=$.getUrlParam("f3_name");
+    if(f3_id!=null&&f3_name!=null){
+    	$("#search_filter_feilei").find(".list_a").find("ul").append('<li style="float:left;"><a onclick="javascript:deleteSelectFenlei($(this));" id="f3d'+f3_id+'"><font style="font-size: 12px;color: #ff8800; border:#e4e4e4 1px solid;">'+unescape(f3_name)+'<label class="label_size">×</label></font></a></li>');
+    	$("#search_filter_fenlei_div").show();
+		var XmlData = [{"spfl01":f3_id}];
+		//根据分类过滤项目
+		searchProjectByfenlei(XmlData);
+		//根据分类过滤品牌
+		var url=baseUrl+"/showGoods/selectPinpaiByfenlei.action?XmlData="+JSON.stringify(XmlData);
+		var returnData= visitService(url).list;
+		$("#pjpp_main").find("a").each(function(index,o1){
+			var is_exists=false;
+			for(var i=0;i<returnData.length;i++){
+				if(("p"+returnData[i].FLCODE)==o1.id){
+					is_exists=true;
+					break;
+				}
+			}
+			if(is_exists){
+				$(o1).show();
+			}else{
+				$(o1).hide();
+			}
+		});	
+		$("#pjpp").show();
+    }
+	//品牌对外接口
+    var pinpai_id=$.getUrlParam("pinpai_id");
+    if(pinpai_id!=null&&pinpai_name!=null){
+    	$("#p"+pinpai_id).click();
+    }
+    //车型对外接口
+    var chexing_id=$.getUrlParam("chexing_id");
+    var chexing_name=$.getUrlParam("chexing_name");
+    if(chexing_id!=null&&chexing_name!=null){
+    	 	$("#search_filter_chexing").append('<a style="border:#e4e4e4 1px solid;color: #ff8800;" onclick="javascript:deleteSelectchexing($(this))" id="cxd'+chexing_id+'">'+unescape(chexing_name)+'<label class="label_size">×</label></a><span id="cxd'+chexing_id+'_span">&nbsp&nbsp&nbsp&nbsp</span>');
+
+    		$("#search_filter_chexing_div").show();
+    }
+    SELECTmethod();
+});
+
+function SELECTmethod(){
+	var sppl=$("#sppl").val();
+	var prista=$("#prista").val();
+	var priend=$("#priend").val();
+	var sppx=$("#sppx").val();
+	var jiage=$("#jiage").val();
+	var xiaoliang=$("#xiaoliang").val();
+	var SPNAMELIST=$.getUrlParam("SPXX04");
+	
+	var searchMap={};
+	var searchlist=[];
+	searchMap.sppl=sppl;
+	searchMap.prista=prista;
+	searchMap.priend=priend;
+	searchMap.DQXX01=DQXX01;
+	searchMap.sppx=sppx;
+	searchMap.SPNAMELIST=SPNAMELIST;
+	searchMap.jiage=jiage;
+	searchMap.xiaoliang=xiaoliang;
+	//品牌code拼接
+	var pinpailist=[];
+	$("#search_filter_pinpai").find("a").each(function(index,o){
+		pinpailist.push($(o).attr('id').replace("pd",""));
+	});
+	if(pinpailist.length>0){
+		searchMap["ppList"]=pinpailist;
+	}
+	
+	//车系code拼接
+	var chexinglist=[];
+	$("#search_filter_chexing").find("a").each(function(index,o){
+		chexinglist.push($(o).attr('id').replace("cxd",""));
+	});
+	
+	if(chexinglist.length>0){
+		searchMap["cxList"]=chexinglist;
+	}
+	
+	//配件类型拼接
+	var fenleilist=[];
+	$("#search_filter_feilei").find("a").each(function(index,o){
+		if($(o).attr('id').indexOf("f3d")!=-1){
+			fenleilist.push($(o).attr('id').replace("f3d",""));
+		}
+		
+	});
+	if(fenleilist.length>0){
+		searchMap["flList"]=fenleilist;
+	}
+	var oe=$("#oe").val();
+	
+    if(oe!=""&&oe!=null){
+    	searchMap["oe"]=oe;
+    }
+	searchlist.push(searchMap);
+    
+	//加入库存验证 -- 待修改
+	//查询总数量
+	var sumUrl = "/PCdisplay/jlquery/selectHYSPnotloginPXSUM.action?XmlData="+JSON.stringify(searchlist);
+	var rumData=visitService(sumUrl);
+	var rowNum=rumData[0].SUM;
+	//查询数据
+	var url=baseUrl+"/PCdisplay/jlquery/selectHYSPnotloginPX.action?XmlData="+JSON.stringify(searchlist);
+	var rData0 = "";
+	$.ajax({
+	    type: "GET",  //请求方式
+	    async: false,   //true表示异步 false表示同步
+	    url:encodeURI(url),
+	    data:{},
+	    success: function(data){
+	      if (data != null){
+	        try{
+	        	var json = jQuery.parseJSON(data);
+	        	//展示数据
+	            showSPXX(json.data);
+	            //返回文件名
+	            fileName =  json.fileName;
+	            //展示分页
+	            if(is_pre=="0"){
+	            	$(".listBOX").show();
+	        		$(".pro-case li").hide();
+	            }else{
+	            	$(".listBOX").hide();
+	        		$(".pro-case li").show();
+	            }
+	    		$('.center').kkPages({ 
+	    	 	   PagesClass:'li.jl', //需要分页的元素
+	    	 	   RowNum:rowNum,
+	    	 	   FileName:fileName,
+	    	 	   PagesMth:pubJson.PagesMth, //每页显示个数 
+	    	 	   PagesNavMth:pubJson.PagesNavMth //显示导航个数
+	    	 	});
+	            $.getScript("/js/jquery.Paging.js",function(){}) ;
+	        }catch(e){
+	          return;
+	        }
+	      }
+	    },
+    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+        }
+	});
+
+}
+//展示所有项目
+function showProject() {
+	var url=baseUrl+"/showGoods/selectProjects.action";
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(returnData){
+			$(returnData.projectlist).each(function(j,ppxx){
+				$("#wxxm").find(".sxtj-main").find("ul").append('<li><a id="w'+ppxx.XMBH+'" onclick="selectproject('+'\''+ppxx.XMBH+'\',\''+ppxx.XMMC+'\')">'+ppxx.XMMC+'</a></li>');						
+			});
+		}
+	});
+}
+//项目点击事件
+function selectproject(a,b){
+	//清除已选择分类
+	$("#search_filter_xiangmu_div").find("a").each(function(index,o){
+		$(o).remove();
+	});
+	//清除已选择分类
+	$("#search_filter_fenlei_div").find("a").each(function(index,o){
+		$(o).remove();
+	});
+		
+	// 清除已选择品牌
+	$("#search_filter_pinpai_div").find("a").each(function(index,o){
+		$(o).remove();
+	});
+	$("#search_filter_pinpai_div").hide();
+	var is_add=true;
+	if($("#search_filter_xiangmu").find("a").length==1){
+		is_add=false;
+	}
+	if(is_add){
+		$("#search_filter_xiangmu").append('<a onclick="javascript:deleteSelectProject($(this));" id="wd'+a+'"><font style="margin: 0 auto;font-size: 12px;color: #ff8800;width: 930px; height: 30px;line-height: 30px;margin-left: 30px;border:#e4e4e4 1px solid;">'+b+'<label class="label_size">×</label></font></a>');
+
+		$("#search_filter_xiangmu_div").show();
+		
+		
+		$("#pjfl1").hide();
+		$("#pjfl2").hide();
+		$("#pjpp").hide();
+		//根据项目查询三级分类
+		var XmlData = [{"xmbh":a}];
+		var url=baseUrl+"/showGoods/selectFenlei3ByProject.action?XmlData="+JSON.stringify(XmlData);
+		var returnData= visitService(url);
+		$(returnData.list).each(function(j,ppxx){
+			$("#search_filter_feilei").find(".list_a").find("ul").append('<li style="float: left;"><a onclick="javascript:deleteSelectFenlei($(this));" id="f3d'+ppxx.FLCODE+'"><font style="font-size: 12px;color: #ff8800;border:#e4e4e4 1px solid;">'+ppxx.FLNAME+'<label class="label_size">×</label></font></a></li>');
+
+			$("#search_filter_fenlei_div").show();
+			
+		});
+		/* //过滤一级分类
+		var url=baseUrl+"/showGoods/selectFenlei1ByProject.action?XmlData="+JSON.stringify(XmlData);
+		var returnData= visitService(url).list;
+		$("#pjfl1_main").find("a").each(function(index,o){
+			
+			var is_exists=false;
+			//根据项目查询一级分类
+			for(var i=0;i<returnData.length;i++){
+				var ppxx=returnData[i];
+				var is_exists=false;
+				if(("wwy"+ppxx.FLCODE)==o.id){
+					is_exists=true;
+					break;
+				}
+			}
+			if(is_exists){
+				$(o).show();
+			}else{
+				$(o).hide();
+			}
+			
+		}); */
+		
+		
+		
+		//根据项目查询品牌
+		/* var url=baseUrl+"/showGoods/selectPinpaiByProject.action?xmbh="+a;
+		var returnData= visitService(url);
+		$(returnData.list).each(function(j,ppxx){
+			$("#search_filter_pinpai").append('<a onclick="javascript:deleteSelectPinpai(this);" id="pd'+ppxx.FLCODE+'"><font style="margin: 0 auto;font-size: 12px;color: #666;width: 930px; height: 30px;line-height: 30px;margin-left: 20px;">'+ppxx.FLNAME+'<label>×</label></font></a>');
+
+			$("#search_filter_pinpai_div").show();
+、		}); */
+		//过滤品牌
+		var url=baseUrl+"/showGoods/selectPinpaiByProject.action?XmlData="+JSON.stringify(XmlData);
+		var returnData= visitService(url).list;
+		$("#pjpp_main").find("a").each(function(index,o){
+			var is_exists=false;
+			//根据项目查询一级分类
+			for(var i=0;i<returnData.length;i++){
+				var ppxx=returnData[i];
+				var is_exists=false;
+				if(("p"+ppxx.FLCODE)==o.id){
+					is_exists=true;
+					break;
+				}
+			}
+			if(is_exists){
+				$(o).show();
+			}else{
+				$(o).hide();
+			}
+		});
+		$("#pjpp").show();
+		$("#pjfl1").show();
+	}
+	clearOe();
+	SELECTmethod();
+
+}
+//项目删除事件
+function deleteSelectProject(obj){
+	var count=$("#search_filter_xiangmu").find("a").length
+	obj.remove();
+	if(count==1){
+		$("#search_filter_xiangmu_div").hide();
+	}
+	
+	//清除已选择分类
+	$("#search_filter_fenlei_div").find("a").each(function(index,o){
+		$(o).remove();
+	});
+	// 清除已选择品牌
+	$("#search_filter_pinpai_div").find("a").each(function(index,o){
+		$(o).remove();
+	});
+	$("#pjpp").show();
+	$("#pjpp_main").find("a").each(function(index,o){
+		$(o).show();
+	});
+	$("#pjfl1").show();
+	$("#pjfl2").hide();
+	
+	$("#pjfl1_main").find("a").each(function(index,o){
+		$(o).show();
+	});
+	$("#search_filter_fenlei_div").hide();
+	$("#search_filter_pinpai_div").hide();
+	SELECTmethod();
+}
+//展示所有品牌
+function showPJPP() {
+	var url=baseUrl+"/showGoods/pjpplist.action";
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(returnData){
+			$(returnData.pjpplist).each(function(j,ppxx){
+				var si = "";
+				$("#pjpp").find(".sxtj-main").find("ul").append('<li><a id="p'+ppxx.PPB01+'" onclick="selectPinpai('+'\''+ppxx.PPB01+'\',\''+ppxx.PPB02+'\')">'+ppxx.PPB02+'</a></li>');						
+			});
+		}
+	});
+	
+}
+//品牌点击事件
+function selectPinpai(a,b){
+	
+	var is_add=true;
+	$("#search_filter_pinpai").find("a").each(function(){		
+		if(("pd"+a)==(this.id+"")){
+			is_add=false;
+		}
+	});
+	if(is_add){
+		$("#search_filter_pinpai").append('<a onclick="javascript:deleteSelectPinpai($(this));" id="pd'+a+'"><font style="margin: 0 auto;font-size: 12px;color: #ff8800;width: 930px; height: 30px;line-height: 30px;margin-left: 30px;border:#e4e4e4 1px solid;">'+b+'<label class="label_size">×</label></font></a>');
+
+		$("#search_filter_pinpai_div").show();
+
+	}
+	clearOe();
+	SELECTmethod();
+
+}
+//品牌删除事件
+function deleteSelectPinpai(obj){
+	var count=$("#search_filter_pinpai").find("a").length
+	obj.remove();
+	if(count==1){
+		$("#search_filter_pinpai_div").hide();
+	}
+	SELECTmethod();
+}
+
+function clearOe(){
+	$("#sousuo").val("");
+	$("#oe").val("");
+}
+//查询 静态变量里存的  会员商品JSON
+function beiju() {
+	var functionName = "loadbeiju";
+	var url=baseUrl+"/showGoods/selectGlobals.action";
+	var  returnData=visitService(url);
+	var fkqgSps = returnData.fl;
+	if(fkqgSps!=null){
+		$("#sppllength").attr("value",fkqgSps.length);
+		$("#pjfl1").find(".sxtj-main").find("ul").empty();
+		for(var i=0; i<fkqgSps.length;i++){
+			var fkqgSp = fkqgSps[i];
+			//显示一级分类 		
+			$("#pjfl1").find(".sxtj-main").find("ul").append('<li><a onclick="pens1(\''+fkqgSp.ppfl01code+'\',\''+fkqgSp.ppfl01name+'\')"  id="wwy'+fkqgSp.ppfl01code+'">'+fkqgSp.ppfl01name+'</a></li>');						
+		}
+	}
+}
+
+//点击   一级分类   
+function pens1(a,b){
+	var obj2=$("a[name='a_pens_select2']");
+	for(var i=0;i<obj2.length;i++){
+		obj2.remove();
+		$("#pens"+(i+1)+"_select2_label").remove();
+	}
+	//根据条件 调用后台查询商品 
+   	var fkqgSpUrl=baseUrl+"/showGoods/selectGlobals.action";
+	var rData0 = visitService(fkqgSpUrl);
+	var fkqgSps = rData0.fl;
+	$("#sppllength").attr("value",fkqgSps.length);
+	$("#pjfl1").hide();
+	$("#pjfl2").hide();
+	$("#pjfl2").find(".sxtj-main").find("ul").empty();
+
+	for(var i=0; i<fkqgSps.length;i++){
+		if(fkqgSps[i].ppfl01code==a) {
+			for(var j=0; j<fkqgSps[i].SPFL02List.length;j++){
+			//显示二级分类 
+				$("#pjfl2").find(".sxtj-main").find("ul").append('<li><a id="f2'+fkqgSps[i].SPFL02List[j].FLCODE+'" onclick="pens2(\''+fkqgSps[i].ppfl01code+'\',\''+fkqgSps[i].SPFL02List[j].FLCODE+'\',\''+fkqgSps[i].SPFL02List[j].FLNAME+'\',\''+a+'\',\''+b+'\')">'+fkqgSps[i].SPFL02List[j].FLNAME+'</a></li>');
+			}
+		}
+	}
+	$("#pjfl2_select").prepend('<li  name="pens_select2_li" class="dqxz"><span  name="a_pens_select2" id=\'pens1_select2\' onclick="pens1_select(\''+a+'\',1)">'+b+' <font title="删除">×</font></span><li>');
+
+	$("#pjfl2").show();
+	addxuanClass("pens_select2_li");
+
+}
+//点击 二级 分类 
+function pens2(er,si,b,pid,pname){	
+
+	if(si!=""){
+		//显示三级分类  
+		var lengths=$("#sppllength").val();
+		var fkqgSpUrl=baseUrl+"/showGoods/selectGlobalss.action?er="+er+"&lengths="+lengths;
+		var rData0 = visitService(fkqgSpUrl);
+		var fkqgSps = rData0.fll;
+		$("#pjfl1").hide();
+		$("#pjfl2").hide();
+		$("#pjfl2").find(".sxtj-main").find("ul li[name!='pens_select2_li']").remove();
+		
+		$("#pens1_select2").after('<label id=\'pens2_select2_label\'>&gt;</label><span name="a_pens_select2" id=\'pens2_select2\' onclick="pens1_select(\''+si+'\',2,\''+pid+'\',\''+pname+'\')">'+b+' <font title="删除">×</font></span>');
+		
+		  for(var i=0; i<fkqgSps.length;i++){  
+			if(fkqgSps[i].FLCODE==si){
+				for(var j=0;j<fkqgSps[i].SPFL03List.length;j++){ 
+						$("#pjfl2").find(".sxtj-main").find("ul").append('<li><a  id="f3'+fkqgSps[i].SPFL03List[j].FLCODE+'" onclick="pens3(\''+si+'\',\''+fkqgSps[i].SPFL03List[j].FLCODE+'\',\''+fkqgSps[i].SPFL03List[j].FLNAME+'\',\''+er+'\',\''+si+'\',\''+b+'\')">'+fkqgSps[i].SPFL03List[j].FLNAME+'</a></li>');						
+				}	
+			}
+		}  
+    }
+	$("#pjfl2").show();
+	addxuanClass("pens_select2_li");
+}
+
+//点击三级分类   
+function pens3(si,PPBCODEa,b,per,pisi,pb){	
+	var is_add=true;
+	var fenleiString="";
+	$("#search_filter_feilei").find("a").each(function(){		
+		if(("f3d"+PPBCODEa)==(this.id+"")){
+			is_add=false;
+		}
+	});
+	if(is_add){
+		
+		$("#wxxm").hide();
+		$("#pjpp").hide();
+		$("#search_filter_feilei").find(".list_a").find("ul").append('<li style="float:left;"><a onclick="javascript:deleteSelectFenlei($(this));" id="f3d'+PPBCODEa+'"><font style="font-size: 12px;color: #ff8800;border:#e4e4e4 1px solid;">'+b+'<label class="label_size">×</label></font></a>');
+
+		$("#search_filter_fenlei_div").show();
+		$("#pjfl1").show();
+		$("#pjfl2").hide();
+		
+		var fenleiString="";
+		$("#search_filter_feilei").find("a").each(function(){		
+			if(fenleiString==""){
+				fenleiString=this.id;
+			}else{
+				fenleiString=fenleiString+","+this.id;
+			}
+		});
+		var re=new RegExp("f3d","g");
+		fenleiString=fenleiString.replace(re,"");
+		var XmlData = [{"spfl01":fenleiString}];
+		//根据分类过滤项目
+		searchProjectByfenlei(XmlData);
+		//根据分类过滤品牌
+		var url=baseUrl+"/showGoods/selectPinpaiByfenlei.action?XmlData="+JSON.stringify(XmlData);
+		var returnData= visitService(url).list;
+		$("#pjpp_main").find("a").each(function(index,o1){
+			var is_exists=false;
+			for(var i=0;i<returnData.length;i++){
+				if(("p"+returnData[i].FLCODE)==o1.id){
+					is_exists=true;
+					break;
+				}
+				
+			}
+			if(is_exists){
+				$(o1).show();
+			}else{
+				$(o1).hide();
+			}
+			
+			
+		});	
+		$("#pjfl2").find(".sxtj-main").find("ul li").remove();
+		$("#wxxm").show();
+		$("#pjpp").show();
+	}else{
+		alert("配件类型已选择");
+		$("#pjfl2").find(".sxtj-main").find("ul li").remove();
+		
+		$("#pjfl1").show();
+		$("#pjfl2").hide();
+		
+	}
+	
+	addxuanClass("pens_select2_li");
+	clearOe();
+	SELECTmethod();
+}
+function pens1_select(objid,index,p1,p2,p3){
+		 if(index==2){
+				$("#pens2_select2").remove();
+				$("#pens2_select2_label").remove();
+			//根据条件 调用后台查询商品 
+		   	var fkqgSpUrl=baseUrl+"/showGoods/selectGlobals.action";
+			var rData0 = visitService(fkqgSpUrl);
+			var fkqgSps = rData0.fl;
+			$("#sppllength").attr("value",fkqgSps.length);
+			$("#pjfl1").hide();
+			$("#pjfl2").hide();
+			$("#pjfl2").find(".sxtj-main").find("ul li[name!='pens_select2_li']").remove();
+			
+			for(var i=0; i<fkqgSps.length;i++){
+				if(fkqgSps[i].ppfl01code==p1) {
+					for(var j=0; j<fkqgSps[i].SPFL02List.length;j++){
+					//显示二级分类 
+						$("#pjfl2").find(".sxtj-main").find("ul").append('<li><a id="f2'+fkqgSps[i].SPFL02List[j].FLCODE+'" onclick="pens2(\''+fkqgSps[i].ppfl01code+'\',\''+fkqgSps[i].SPFL02List[j].FLCODE+'\',\''+fkqgSps[i].SPFL02List[j].FLNAME+'\',\''+p1+'\',\''+p2+'\')">'+fkqgSps[i].SPFL02List[j].FLNAME+'</a></li>');
+					}
+				}
+			}
+			$("#pjfl2").show();
+		}else if(index==1){
+			$("#pens1_select1").remove();
+			$("#pens1_select1_label").remove();
+			$("#pens2_select2").remove();
+			$("#pens2_select2_label").remove();
+			$("#pjfl1").show();
+			$("#pjfl2").hide();
+		}
+	addxuanClass("pens_select2_li");
+}
+
+function addxuanClass(name){
+
+	
+	$("li[name='"+name+"'] span").removeClass("xuan");
+	$("li[name='"+name+"'] span:last").addClass("xuan");
+}
+//根据当前所选多个3级分类查询品牌
+function selectPinpaiByfenlei(){
+	$("#pjpp_main").hide();
+	var fenleiString="";
+	$("#search_filter_feilei").find("a").each(function(){		
+		if(fenleiString==""){
+			fenleiString=this.id;
+		}else{
+			fenleiString=fenleiString+","+this.id;
+		}
+	});
+	var re=new RegExp("f3d","g");
+	fenleiString=fenleiString.replace(re,"");
+	var XmlData = [{"spfl01":fenleiString}];
+	
+	var url=baseUrl+"/showGoods/selectPinpaiByfenlei.action?XmlData="+JSON.stringify(XmlData);
+	var returnData= visitService(url).list;
+	$("#pjpp_main").find("a").each(function(index,o1){
+		var is_exists=0;
+		for(var i=0;i<returnData.length;i++){
+			if(("p"+returnData[i].FLCODE)==o1.id){
+				is_exists=1;
+				break;
+			}
+			
+		}
+		if((is_exists==1)){
+			$(o1).show();
+		}else{
+			$(o1).hide();
+		}
+		
+	});
+	$("#pjpp_main").show();
+}
+//根据当前所选多个3级分类查询项目
+function searchProjectByfenlei(XmlData){
+	$("#wxxm_main").hide();
+	var fenleiString="";
+	$("#search_filter_feilei").find("a").each(function(){		
+		if(fenleiString==""){
+			fenleiString=this.id;
+		}else{
+			fenleiString=fenleiString+","+this.id;
+		}
+	});
+	var re=new RegExp("f3d","g");
+	fenleiString=fenleiString.replace(re,"");
+	var XmlData = [{"spfl01":fenleiString}];
+	
+	var url=baseUrl+"/showGoods/selectProjectByfenlei.action?XmlData="+JSON.stringify(XmlData);
+	var returnData= visitService(url).list;
+	$("#wxxm_main").find("a").each(function(index,o1){
+		var is_exists=0;
+		for(var i=0;i<returnData.length;i++){
+			if(("w"+returnData[i].FLCODE)==o1.id){
+				is_exists=1;
+				break;
+			}
+			
+		}
+		if((is_exists==1)){
+			$(o1).show();
+		}else{
+			$(o1).hide();
+		}
+		
+	});
+	$("#wxxm_main").show();
+}
+
+//删除分类事件
+function deleteSelectFenlei(obj){
+	obj.remove();
+	var count=$("#search_filter_feilei").find("a").length
+	if(count==0){
+		$("#search_filter_fenlei_div").hide();
+		$("#wxxm_main").find("a").each(function(){
+			$(this).show();
+		});	
+		$("#pjpp_main").find("a").each(function(){
+			$(this).show();
+		});
+		
+	}else{
+		searchProjectByfenlei();
+		selectPinpaiByfenlei();
+	}
+	SELECTmethod();
+}
+
+
+
+//全部车型车系品牌分类
+function showFLPP() {
+	var functionName = "loadFLPP";
+	var url = "/showGoods/qfypplist.action";
+	var returnData=visitService(url);
+	var FLPP = returnData.qfypplist;
+	var obj1 = $("#cxpp1");
+	var obj2 = $("#cxpp2");
+	$(FLPP).each(function(index,FL01){
+		obj1.find(".sxtj-main").find("ul").append('<li><a>'+FL01.ORIGIN_COUNTRY+'</a></li>');
+		
+		//点击车系
+		obj1.find(".sxtj-main").find("ul").find("a").eq(index).on("click",function(){	
+			
+			obj1.hide();
+			obj2.find(".sxtj-main").find("ul li").remove();
+			$("#cxpp2_select").append('<li  name="a_cxpp1_select2_li" class="dqxz"><span  name="a_cxpp_select2" id=\'a_cxpp1_select2\' onclick="cxpp1_select(\''+FL01.ORIGIN_COUNTRY+'\',1)">'+FL01.ORIGIN_COUNTRY+' <font title="删除">×</font></span></span></li>');
+			addxuanClass("a_cxpp1_select2_li");
+			obj2.show();
+			
+			//循环展示品牌
+			$(FL01.PPFL02list).each(function(m,FL02){
+				obj2.find(".sxtj-main").find("ul").append("<li><a>"+FL02.BRAND+"</a></li>");
+				
+				//点击品牌
+				obj2.find(".sxtj-main").find("ul").find("a").eq(m).on("click",function(){
+					obj1.hide();
+					obj2.find(".sxtj-main").find("ul li[name!='a_cxpp1_select2_li']").remove();
+					$("li[name='a_cxpp1_select2_li']").append('<label id=\'a_cxpp2_select2_label\'>&gt;</label><span  name="a_cxpp_select2" id=\'a_cxpp2_select2\' onclick="cxpp1_select(\''+FL02.BRAND+'\',2,\''+FL01.ORIGIN_COUNTRY+'\')">'+FL02.BRAND+' <font title="删除">×</font></span></span>');
+					addxuanClass("a_cxpp1_select2_li");
+					obj2.show();
+					//循环展示车型
+					$(FL02.PPFL03list).each(function(n,FL03){
+						
+						obj2.find(".sxtj-main").find("ul").append("<li><a>"+FL03.CAR_TYPE+"</a></li>");
+						//点击车型
+						obj2.find(".sxtj-main").find("ul").find("a").eq(n).on("click",function(){
+							
+							obj1.hide();
+							obj2.find(".sxtj-main").find("ul li[name!='a_cxpp1_select2_li']").remove();
+							$("li[name='a_cxpp1_select2_li']").append('<label id=\'a_cxpp3_select2_label\'>&gt;</label><span  name="a_cxpp_select2" id=\'a_cxpp3_select2\' onclick="cxpp1_select(\''+FL03.CAR_TYPE+'\',3,\''+FL01.ORIGIN_COUNTRY+'\',\''+FL02.BRAND+'\')">'+FL03.CAR_TYPE+' <font title="删除">×</font></span></span>');
+							addxuanClass("a_cxpp1_select2_li");
+							obj2.show();
+							//循环展示车款
+							$(FL03.PPFL04list).each(function(o,FL04){
+								
+								obj2.find(".sxtj-main").find("ul").append("<li><a>"+FL04.CAR+"</a></li>");
+								//点击车款
+								obj2.find(".sxtj-main").find("ul").find("a").eq(o).on("click",function(){									
+									obj1.hide();
+									obj2.show();
+									itemcar(FL04.CAR_ID,FL04.CAR);
+								});
+							});
+							
+							
+						});
+					});
+					
+					
+				});
+			});
+			
+		});
+	});
+}
+
+function cxpp1_select(objid,index,pid1,pid2){
+	var length= $("span[name='a_cxpp_select2']").length;
+	
+	$("#cxpp2_main").find("ul li[name!='a_cxpp1_select2_li']").remove();
+	
+		if(index==3){
+			$("#a_cxpp"+3+"_select2").remove();
+			$("#a_cxpp"+3+"_select2_label").remove();
+			var url = "/showGoods/qfypplist.action";
+			var returnData=visitService(url);
+			var FLPP = returnData.qfypplist;
+			var obj1 = $("#cxpp1");
+			var obj2 = $("#cxpp2");
+			$(FLPP).each(function(index,FL01){
+
+				if(pid1==FL01.ORIGIN_COUNTRY){
+					
+					//循环展示品牌
+					$(FL01.PPFL02list).each(function(m,FL02){
+						if(FL02.BRAND==pid2){
+							
+								//循环展示车型
+								$(FL02.PPFL03list).each(function(n,FL03){
+									obj2.find(".sxtj-main").find("ul").append("<li><a>"+FL03.CAR_TYPE+"</a></li>");
+									//点击车型
+									obj2.find(".sxtj-main").find("ul").find("a").eq(n).on("click",function(){
+										
+										obj1.hide();
+										
+										$("li[name='a_cxpp1_select2_li']").append('<label id=\'a_cxpp3_select2_label\'>&gt;</label><span  name="a_cxpp_select2" id=\'a_cxpp3_select2\' onclick="cxpp1_select(\''+FL03.CAR_TYPE+'\',3,\''+FL02.BRAND+'\')">'+FL03.CAR_TYPE+'</span>');
+										
+										//循环展示车款
+										$(FL03.PPFL04list).each(function(o,FL04){
+											
+											obj2.find(".sxtj-main").find("ul").append("<li><a>"+FL04.CAR+"</a></li>");
+											//点击车款
+											obj2.find(".sxtj-main").find("ul").find("a").eq(o).on("click",function(){
+												
+												itemcar(FL04.CAR_ID,FL04.CAR);
+											});
+										});
+										
+										
+									});
+								});
+								
+								
+							
+						}
+						
+						
+					});
+					
+				}
+					
+					
+			});
+			
+			$("#cxpp2").show();
+			
+		}else if(index==2){
+			$("#a_cxpp"+2+"_select2").remove();
+			$("#a_cxpp"+2+"_select2_label").remove();
+			$("#a_cxpp"+3+"_select2").remove();
+			$("#a_cxpp"+3+"_select2_label").remove();
+			var url = "/showGoods/qfypplist.action";
+			var returnData=visitService(url);
+			var FLPP = returnData.qfypplist;
+			var obj1 = $("#cxpp1");
+			var obj2 = $("#cxpp2");
+			$(FLPP).each(function(index,FL01){
+
+				if(pid1==FL01.ORIGIN_COUNTRY){
+					//循环展示品牌
+					$(FL01.PPFL02list).each(function(m,FL02){
+						obj2.find(".sxtj-main").find("ul").append("<li><a>"+FL02.BRAND+"</a></li>");
+						//点击品牌
+						obj2.find(".sxtj-main").find("ul").find("a").eq(m).on("click",function(){
+							obj1.hide();
+							obj2.find(".sxtj-main").find("ul li[name!='a_cxpp1_select2_li']").remove();
+							$("li[name='a_cxpp1_select2_li']").append('<label id=\'a_cxpp2_select2_label\'>&gt;</label><span  name="a_cxpp_select2" id=\'a_cxpp2_select2\' onclick="cxpp1_select(\''+FL02.BRAND+'\',2,\''+FL01.ORIGIN_COUNTRY+'\')">'+FL02.BRAND+' <font title="删除">×</font></span>');
+							obj2.show();
+							//循环展示车型
+							$(FL02.PPFL03list).each(function(n,FL03){
+								
+								obj2.find(".sxtj-main").find("ul").append("<li><a>"+FL03.CAR_TYPE+"</a></li>");
+								//点击车型
+								obj2.find(".sxtj-main").find("ul").find("a").eq(n).on("click",function(){
+									
+									obj1.hide();
+									obj2.find(".sxtj-main").find("ul li[name!='a_cxpp1_select2_li']").remove();
+									
+									$("li[name='a_cxpp1_select2_li']").append('<label id=\'a_cxpp3_select2_label\'>&gt;</label><span  name="a_cxpp_select2" id=\'a_cxpp3_select2\' onclick="cxpp1_select(\''+FL03.CAR_TYPE+'\',3,\''+FL01.ORIGIN_COUNTRY+'\',\''+FL02.BRAND+'\')">'+FL03.CAR_TYPE+' <font title="删除">×</font></span></span>');
+
+									//循环展示车款
+									$(FL03.PPFL04list).each(function(o,FL04){
+										
+										obj2.find(".sxtj-main").find("ul").append("<li><a>"+FL04.CAR+"</a></li>");
+										//点击车款
+										obj2.find(".sxtj-main").find("ul").find("a").eq(o).on("click",function(){
+											
+											obj1.hide();
+											obj2.show();
+											itemcar(FL04.CAR_ID,FL04.CAR);
+										});
+									});
+									
+									
+								});
+							});
+							
+							
+						});
+					});
+				}
+					
+					
+			});
+			
+			$("#cxpp2").show();
+
+		}else if(index==1){
+			$("#a_cxpp"+1+"_select2").remove();
+			$("#a_cxpp"+1+"_select2_label").remove();
+			$("#a_cxpp"+2+"_select2").remove();
+			$("#a_cxpp"+2+"_select2_label").remove();
+			$("#a_cxpp"+3+"_select2").remove();
+			$("#a_cxpp"+3+"_select2_label").remove();
+			$("#cxpp1").show();
+			$("#cxpp2").hide();
+		}
+	addxuanClass("a_cxpp1_select2_li");
+
+}
+
+function itemcar(code,name){
+	$("#carname").empty();
+	$("#carname").append(name);
+	$("#code").val(code);
+	$("#zhezhao").css({"display":"block"}); 
+	clearOe();
+	showcaritem(code);  //弹框的页面展示 
+	showselectTJ(code);  //查询  弹框页面的筛选条件   
+}
+
+//弹框的页面展示 
+function showcaritem(code){
+	var MOBILE_MODLE_YEAR=$("#listone").val();
+	if(MOBILE_MODLE_YEAR=="全部年款"){
+		MOBILE_MODLE_YEAR="";
+	}
+	var MOBILE_DISPLACEMENT=$("#listtwo").val();
+	if(MOBILE_DISPLACEMENT=="全部车型排量"){
+		MOBILE_DISPLACEMENT="";
+	}
+	var MOBILE_TRANSMISSION_TYPE=$("#listthree").val();
+	if(MOBILE_TRANSMISSION_TYPE=="全部变速箱类型"){
+		MOBILE_TRANSMISSION_TYPE="";
+	}
+	var para=[{"CAR_ID":code,"MOBILE_MODLE_YEAR":MOBILE_MODLE_YEAR,"MOBILE_DISPLACEMENT":MOBILE_DISPLACEMENT,"MOBILE_TRANSMISSION_TYPE":MOBILE_TRANSMISSION_TYPE}];
+	
+	var url=baseUrl+"/QFYdisplay/jlquery/qfylistitem.action?XmlData="+JSON.stringify(para);
+	var rData0 = "";
+	$.ajax({
+	    type: "GET",  //请求方式
+	    async: false,   //true表示异步 false表示同步
+	    url:encodeURI(url),
+	    data:{},
+	    success: function(data){
+	      if (data != null){
+	        try{
+	          var json = jQuery.parseJSON(data);
+	          rData0 = json.data;
+	        }catch(e){
+	          return;
+	        }
+	      }
+	    },
+    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+        }
+	  });
+
+	$("#zhezhaocase").empty();
+	var item = rData0;
+	$(item).each(function(index,newsObj){
+		var type_code=newsObj.MOBILE_MODLE_ID;
+		$("#zhezhaocase").append("<li><a id='cx"+type_code+"'>"+newsObj.MOBILE_MODLE+"</a></li>");
+		$("#zhezhaocase").find("li").eq(index).find("a").on("click",function(){
+			$("#MOBILE_MODLE_ID").val(newsObj.MOBILE_MODLE_ID);
+			$("#search_filter_chexing_div").show();
+			
+			
+			$("#zhezhao").css({"display":"none"}); 
+			
+			var is_add=true;
+			$("#search_filter_chexing").find("a").each(function(){
+				if(("cxd"+type_code)==this.id){
+					is_add=false;
+				}
+			});
+			if(is_add){
+				
+				$("#search_filter_chexing").append('<a style="border:#e4e4e4 1px solid;color: #ff8800;" onclick="javascript:deleteSelectchexing($(this))" id="cxd'+type_code+'">'+newsObj.MOBILE_MODLE+'<label class="label_size">×</label></a><span id="cxd'+type_code+'_span">&nbsp&nbsp&nbsp&nbsp</span>');
+
+				$("#search_filter_chexing_div").show();
+				
+				SELECTmethod();
+			}else{
+				alert("车型品牌已选择");
+			}
+			var obj1=$("a[name='a_cxpp_select1']");
+			var obj2=$("a[name='a_cxpp_select2']");
+			for(var i=0;i<obj1.length;i++){
+				obj1[i].remove();
+				$("#cxpp"+(i+1)+"_select1_span").remove();
+			}
+			for(var i=0;i<obj2.length;i++){
+				obj2[i].remove();
+				$("#cxpp"+(i+1)+"_select2_span").remove();
+			}
+			$("#cxpp1").show();
+			$("#cxpp2").hide();
+		});
+	});
+}
+function deleteSelectchexing(obj){
+	var count=$("#search_filter_chexing").find("a").length
+	obj.remove();
+	$("#cxd"+$(obj).attr("id")+"_span").remove();
+	if(count==1){
+		$("#search_filter_chexing_div").hide();
+	}
+	SELECTmethod();
+}
+
+//查询  弹框页面的筛选条件   
+function showselectTJ(code){
+	var para=[{"CAR_ID":code}];
+	var fkqgSpUrl="/showGoods/qfySelectTJ.action?XmlData="+JSON.stringify(para);
+	ajaxQ({
+		"url" : fkqgSpUrl,//原始url 
+		"callback" : function(rData0){
+			var listone = rData0.qfySelectTJ1;   //查询 全部年款 
+			$("#listone").empty();
+			$("#listone").append('<option>全部年款</option>');
+			for(var y=0;y<listone.length;y++){
+				$("#listone").append('<option>'+listone[y].MOBILE_MODLE_YEAR+'</option>');
+			}
+
+			var listtwo = rData0.qfySelectTJ2;   //查询 全部车型排量 
+			$("#listtwo").empty();
+			$("#listtwo").append('<option>全部车型排量</option>');
+			for(var j=0;j<listtwo.length;j++){
+				$("#listtwo").append('<option>'+listtwo[j].MOBILE_DISPLACEMENT+'</option>');
+			}
+
+			var listthree = rData0.qfySelectTJ3;  //查询全部变速箱类型 
+			$("#listthree").empty();
+			$("#listthree").append('<option>全部变速箱类型</option>');
+			for(var l=0;l<listthree.length;l++){
+				$("#listthree").append('<option>'+listthree[l].MOBILE_TRANSMISSION_TYPE+'</option>');
+			}
+		}
+	});
+}
+
+//弹框页面 根据筛选条件 查询  内容
+function TJselect(){
+	var codez=$("#code").val();
+	showcaritem(codez);
+}
+
+
+//直通车
+function selectMoreNews() {
+	var functionName = "loadMoreNews";
+	var newsXmlData=[];
+	var newsJson={};
+	newsJson.num=3;
+	newsXmlData.push(newsJson);
+	var url="/HomePage/selectW_DDPX.action?XmlData="+JSON.stringify(newsXmlData);
+	visitService1(url,functionName);
+}
+
+function loadMoreNews(){
+	var newInfoList = returnData.mapList;
+	$(newInfoList).each(function(index,newsObj){
+		var json = {};
+		json.gsid = newsObj.ZCXX01;
+		json.gsmc = newsObj.ZCXX02;
+		if(newInfoList[index]!=undefined){
+			if(index<9){
+				var url="/customer/qfy/showDpxx/shopAllGoods.html?gsid="+newsObj.ZCXX01+"&gsmc="+escape(newsObj.ZCXX02);
+				$(".pro-right").find("ul").find("li").eq(index).find("h4").html(newsObj.ZCXX02);
+				var imgUrl = pubJson.path_sptp+"/dptp/"+newsObj.DPXX02;
+				$("#ztc").find("li").eq(index).find("a").attr("href",url).find("img").attr("src",imgUrl).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'" );
+				$("#ztc").find("li").eq(index).find(".text").find("a").last().attr("href",url).html(newsObj.DPXX01);
+			}
+		}
+	});
+}
+
+
+
+function jian(j){
+	var  counts = $(".count"+j).val();
+	if(counts==0){
+		$(".count"+j).val(counts);
+	}else{
+		counts--;
+		$(".count"+j).val(counts);
+	}
+	
+}
+function jia(j){
+	var counts = $(".count"+j).val();
+	counts++;
+	$(".count"+j).val(counts);
+}
+var maxNum;
+//直接购买
+function shopping(j,SPXX01,ZCXX01,SPJGB05){
+	if(SPJGB05==0){
+		alert("暂时无法购买");
+		return false;
+	}
+	var xmlData=[];
+	var spxxJson={};
+    spxxJson.SPXX01=SPXX01;
+    spxxJson.ZCXX01=ZCXX01;
+    spxxJson.DQXX01=DQXX01;
+    xmlData.push(spxxJson);
+    //加入库存验证 -- 待修改
+    var url="/ProductDisplay/jlquery/SPXQnotlogin.action?XmlData="+JSON.stringify(xmlData);
+    var returnData=visitService(url);
+    spxxJson=returnData[0];
+	if(parseInt(spxxJson.SPIMGURL)<parseInt(spxxJson.SPGL15)){
+		maxNum=parseInt(spxxJson.SPIMGURL);
+	}else{
+		maxNum=parseInt(spxxJson.SPGL15);
+	}
+	
+	if(MyCookie==null){
+		alert("请登录后再加入购物车");
+		location.href="/customer/qfy/register/login.html";
+		return false;
+	}else if(usercookie.ZCGS01==4){
+		var cartXmlData=[];
+		var cartJson={};
+		cartJson.HBID=usercookie.ZCXX01;
+		cartJson.ZTID=ZCXX01;
+		cartJson.DQXX01=DQXX01;
+		var cartSpxxList=[];
+		var cartJsonItem={};
+		cartJsonItem.SPXX01=SPXX01;
+		cartJsonItem.SPXX01=SPXX01;
+		cartJsonItem.CKZT=DQXX01;
+		var count=$(".count"+j).val();
+		if(count>maxNum){
+			alert("库存不够！当前库存为"+maxNum);
+			return false;
+		}
+		
+		cartJsonItem.GWC01=$(".count"+j).val();	
+		cartJsonItem.GWC02=SPJGB05;
+		//取值分销单价
+		cartSpxxList.push(cartJsonItem);
+		cartJson.SPLIST=cartSpxxList;
+		cartXmlData.push(cartJson);
+		window.location="/customer/qfy/shopping/cart_02.html?xmlData="+escape(JSON.stringify(cartXmlData));
+		
+	}else{
+		alert("暂时无法加入购物车，请检查账号信息是否完整!");
+		}
+}
+
+
+//加入购物车
+function insert_cart(j,SPXX01,ZCXX01,SPJGB05){
+	if(MyCookie==null){
+		alert("请登录后再加入购物车");
+		location.href="/customer/qfy/register/login.html";
+		return false;
+		
+	}else if(usercookie.ZCGS01==4){
+		//价格为0不让加入购物车
+		if(SPJGB05=="0"){
+			alert("暂时无法加入购物车!");
+			return false;
+			}
+		var cartXmlData=[];
+		var cartJson={};
+		cartJson.HBID=usercookie.ZCXX01;
+		cartJson.ZTID=ZCXX01;
+		cartJson.DQXX01=DQXX01;
+		var cartSpxxList=[];
+		var cartJsonItem={};
+		cartJsonItem.SPXX01	=SPXX01;
+		var cartNUM=selectCartGoods(SPXX01,usercookie.ZCXX01,ZCXX01);
+		var count=parseInt(cartNUM.NUM)+parseInt($(".count"+j).val());
+		var maxNum = parseInt($("#kc_"+j).val());
+		if(count>maxNum){
+			alert("库存不够，请检查购物车数量！您还可以购买"+(maxNum-parseInt(cartNUM.NUM)));
+			return false;
+		}
+		cartJsonItem.GWC01=$(".count"+j).val();	
+		cartJsonItem.GWC02=SPJGB05;
+		//取值分销单价
+		cartSpxxList.push(cartJsonItem);
+		cartJson.SPLIST=cartSpxxList;
+		cartXmlData.push(cartJson);
+		//加入库存验证 -- 待修改
+		var cartUrl="/CartManage/insertGwcSpxx.action?XmlData="+JSON.stringify(cartXmlData)+"&s="+Math.random();
+		var cartReturnVal=visitService(cartUrl);
+		if(cartReturnVal.STATE==1){
+			selectMyCart(usercookie);
+			//购物车联动
+			cartReturnData(cartReturnVal);
+			jBox('id:cart_open', {showIcon: 'jbox-title-icon' });
+			$("table").css("width","350px");
+			//购物车联动
+		}else{
+			jBox('id:cart_no', {showIcon: 'jbox-title-icon' });
+			$("table").css("width","350px");
+		}
+	}else{
+		alert("暂时无法加入购物车，请检查账号信息是否完整!");
+	}
+}
+
+function selectCartGoods(SPXX01,ZCXX01,ZTID){
+	var xmlData=[];
+	var json={};
+		json.SPXX01=SPXX01;
+		json.ZCXX01=ZCXX01;
+		json.ZTID=ZTID;
+		xmlData.push(json);
+	var url="/CartManage/selectGoodsNumForId.action?XmlData="+JSON.stringify(xmlData)+"&s="+Math.random();
+	var returnData=visitService(url);
+	return returnData;
+}
+//关闭jBox
+function jboxClose(){
+	//$(".cat-products").remove();
+	$(".jbox-body").hide();
+}
+/*jBox效果*/
+function cart_open() {
+    jBox('id:cart_open', {showIcon: 'jbox-title-icon' });
+}
+function cartReturnData(json){
+	$("#cart_open").find("p.ok").html("<strong>加入成功</strong>购物车中共有"+json.TOTALNUM+"件商品<br />金额总计："+accounting.formatMoney(json.TOTALAMOUNT));
+	$("#cart_open").find("a").first().attr("href","#");
+	$("#cart_open").find("a").last().attr("href","/customer/qfy/shopping/cart.html?r="+Math.random());
+}
+
+//查询购物车
+function selectMyCart(usercookie){
+	var xmlData=[];
+	var json={};
+	json.HBID=usercookie.ZCXX01;
+	json.DQXX01=usercookie.ZCXX07;
+	xmlData.push(json);
+	//加入库存验证 -- 待修改
+	var url="/CartManage/selectGwcByHbid.action?XmlData="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(data){
+			//展示
+			$(data.GWCLIST).each(function(m,spxxList){
+				  $(".shuliang").html(spxxList.TOTALNUM);
+			});
+		}
+	});
+}
+
+//展示商品列表
+function showSPXX(data){
+	var rData0 = data;
+	var spObj = $("#z1").find(".pro-case");
+	var str = $("#z1").find(".listBOX");
+	spObj.empty();
+	str.empty();
+	$(rData0).each(function(j,lcsp){
+		//楼层商品图片路径
+		var lcspUrl=imgUrl+lcsp.ZCXX01+"/"+lcsp.SPXX02+"/images/"+lcsp.SPXX02+"_1_big."+lcsp.SPTP02;
+		//列表
+		var obj="";
+		obj+="<li class='first jl'>";
+		obj+="<a href='/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)+"' class='img'>";
+		obj+="<img class='imgdata"+j+"' src='"+lcspUrl+"'/></a>";
+		obj+="<div class='pro-name'>";
+		obj+="<a href='/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)+"'>"+lcsp.SPXX04+"</a><br/>";
+		obj+="<span class='spdm'><label>供&nbsp;货&nbsp;方:</label><a href='/customer/qfy/showDpxx/shopAllGoods.html?gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)+"'><span>"+lcsp.ZCXX02+"</span></a></span>";
+		obj+="<span class='spdm'><label>O&nbsp;&nbsp;E&nbsp;&nbsp;M:</label><span>"+lcsp.SPGLLJH01+"</span></span>";
+		obj+="<span class='spdm'><label>商品条码:</label><span>"+lcsp.BARCODE+"</span></span>";
+		obj+="<span class='spdm'><label>规格型号:</label><span>"+lcsp.GGXH+"</span></span>";
+		//obj+="<label class='sycx'>适用车型：北京现代伊兰特 2015款 北京现代伊兰特 2015款</label>";
+		obj+="<a href='/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)+"' class='gd'>>>查看更多信息</a></div>";
+		if(usercookie!=null){
+			if(usercookie.LX=="43"&&usercookie.ZCXX01!=lcsp.ZCXX01){
+				obj+="<div class='pro-pic'><span>会员价：</span><b>价格不可见</b>";
+			}else{
+				obj+="<div class='pro-pic'><span>会员价：</span><b>"+accounting.formatMoney(lcsp.SPJGB05)+"</b>";
+			}
+		}else{
+		   obj+="<div class='pro-pic'><span>会员价：</span><b>登录可见</b>";
+		} 
+		obj+="<span class='sl'><label class='sz'><b onclick='jian("+j+")'>-</b><input value='1' class='sr count"+j+"''><b onclick='jia("+j+")'>+</b></label></span>";
+		obj+="<span style='margin-left:25px;'>当前库存量<input type='hidden' id='kc_"+j+"' value='"+lcsp.SPIMGURL+"'/>"+lcsp.SPIMGURL+"</span></div>";
+		obj+="<a href='#' class='zjgm' onclick='shopping(\""+j+"\",\""+lcsp.SPXX01+"\",\""+lcsp.ZCXX01+"\",\""+lcsp.SPJGB05+"\")'>直接购买</a>";
+		obj+="<a href='#' class='jrsc' onclick='insert_cart(\""+j+"\",\""+lcsp.SPXX01+"\",\""+lcsp.ZCXX01+"\",\""+lcsp.SPJGB05+"\")'>加入购物车</a>"; 
+		str.append(obj);
+        $("img").error(function() {
+        	$(this).attr("src", defaultImgUrl);
+        });
+        
+		//九宫格
+		if(j%4 == 0) {
+		    spObj.append('<li class="first jl"><a class="img"><img src=""/></a><div class="pro-name"><a href=""></a></div><div class="pro-pic"><span>会员价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp" href=""></a><a class="dq"></a></div></li>');
+		}else {
+		    spObj.append('<li class="jl"><a class="img"><img src=""/></a><div class="pro-name"><a href=""></a></div><div class="pro-pic"><span>会员价：</span><b></b></div><div class="pro-dp"><div class="wzmrz" title="位置码已认证"></div><a class="dp" href=""></a><a class="dq"></a></div></li>');
+		}
+		
+		//商品图片和链接
+		spObj.find("li").eq(j).find("a").first().attr("href","/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).find("img").attr("src",lcspUrl).attr("onerror","this.onerror=null;this.src='"+defaultImgUrl+"'");
+		//商品名称和链接
+		spObj.find("li").eq(j).find("div.pro-name").find("a").attr("href","/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).html(lcsp.SPXX04);
+
+		if(usercookie!=null) {
+			if(usercookie.LX=="43"&&usercookie.ZCXX01!=lcsp.ZCXX01){
+				spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html("价格不可见");
+			}else{
+				//商品零售价
+				spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html(accounting.formatMoney(lcsp.SPJGB05));
+			}
+		} else {
+		   spObj.find("li").eq(j).find("div.pro-pic").eq(0).find("b").html("登陆可见");						
+		}
+		            	
+		//购买链接
+		spObj.find("li").eq(j).find("div.pro-rz").eq(0).find("a.cat").attr("href","/customer/qfy/showProduct/product.html?spxx01="+lcsp.SPXX01+"&zcxx01="+lcsp.ZCXX01+"&gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02));
+		//店铺名称和链接
+		spObj.find("li").eq(j).find("div.pro-dp").find("a.dp").attr("href","/customer/qfy/showDpxx/shopAllGoods.html?gsid="+lcsp.ZCXX01+"&gsmc="+escape(lcsp.ZCXX02)).html(lcsp.ZCXX02);
+	});
+	//商品展示方式切换
+	
+	
+	if($(".pro-case").attr("style")=="display: none;"){
+		$(".listBOX").show();
+		$(".pro-case").hide();
+	}else{
+		$(".pro-case").show();
+		$(".listBOX").hide();
+	}
+	
+	$(".previous-nv").on("click",function(){
+		$(".pro-case").show();
+		$(".listBOX").hide();
+		$(".pro-case li").show();
+		is_pre="1";
+	});
+	$(".next-nv").on("click",function(){
+		$(".pro-case").hide();
+		$(".listBOX").show();
+		is_pre="0";
+	});
+	
+}
+function closeWindow(){
+	$("#zhezhao").css({"display":"none"}); 
+}
+</script>
+<body>
+	<input type="hidden" id="sppllength" name="sppllength" value="" />
+	<!--  2空调     3冰箱    4洗衣机    5电视   6手机  -->
+	<input type="hidden" id="sppl" name="sppl" value="" />
+	<input type="hidden" id="oe" name="oe" value="" />
+	<input type="hidden" id="fourCODE" name="fourCODE" value="" />
+	<input type="hidden" id="sixCODE" name="sixCODE" value="" />
+	<input type="hidden" id="prista" name="prista" value="0" />
+	<input type="hidden" id="priend" name="priend" value="9999999" />
+	<input type="hidden" id="sppx" name="sppx" value="1" />
+	<!-- 1 销量       2价格      3上架时间  -->
+	<input type="hidden" id="shuliang" name="shuliang" value="0" />
+	<input type="hidden" id="MOBILE_MODLE_ID" name="MOBILE_MODLE_ID"
+		value="" />
+	<input type="hidden" id="code" value="" />
+	<input type="hidden" id="jiage" value="5" />
+    <input type="hidden" id="xiaoliang" value="" />
+
+	<div id="zhezhao">
+		<div class="zhezhao-xt">
+			<div class="zhezhao-main">
+				<div class="zhezhao-title">
+					<b id="carname"></b> <select id="listone" onchange="TJselect()">
+						<option>全部年款</option>
+
+					</select> <select id="listtwo" onchange="TJselect()">
+						<option>全部车型排量</option>
+
+					</select> <select id="listthree" onchange="TJselect()">
+						<option>全部变速箱类型</option>
+
+					</select> <span class="title_right"><a style="float: right;"
+						href="javascript:closeWindow()" title="单击关闭此窗口">关闭</a></span>
+					<!-- 
+        <div class="fy" id="shuliang1">
+           		          <span class="shopnum clorange fl">共<span id="TOTAL1">0</span>件商品</span>
+                          <span class="fl" id="page1"><b class="clorange">1</b>/10</span>
+                          <span class="fr">
+                           <a onclick="pageUp1()" class="prev">上一页</a>
+                           <select name="PAGING1" id="PAGING1" onchange="PAGING1(this)"></select>
+                           <a onclick="pageDown1()" class="next">下一页</a>
+                          </span>
+                          
+                           <a class="close">×</a>
+          </div>
+         -->
+					<ul class="zhezhao-case" id="zhezhaocase">
+
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="header"></div>
+<div id="cart_open" style="display: none">
+<div class="cart_ok">
+	<h3 class="cart_opentit" style="padding: 10px;">
+		添加成功
+	</h3>
+	<div class="cart_box clearfix">
+		<p class="ok">
+			<strong>加入成功</strong>
+			<br />
+		</p>
+		<div>
+		<a href="#" onclick="jboxClose();" class="btn btn_samller btn_black mt10 fl mr10">继续购物</a>
+			<a href="" class="btn btn_samller mt10 fl">去购物车结算</a>
+			</div>
+			<br class="clear" />
+		</div>
+		<br class="clear" />
+	</div>
+</div>
+<div id="cart_no" class="cart_no" style="display: none">
+	<h3 class="cart_opentit" style="padding: 10px;">
+		加入失败
+	</h3>
+	<div class="cart_box clearfix">
+		<p class="no">
+			<strong>加入失败</strong>
+			<br />
+		</p>
+		<a href="#" class="btn btn_moder fr mt10 mr10" onclick="jboxClose();">确定</a>
+		<br class="clear" />
+	</div>
+</div>
+	<div class="clear"></div>
+	<!-----------------------------列表内容--------------------------------->
+	<div id="pro-min">
+
+		<div class="pro-none">
+			<!-- 
+	<img src="/gui_o2o/qfy/images/b3.jpg" class="bmzx" />
+	 -->
+			<div class="bmzx-text">
+				<h2></h2>
+				<p></p>
+				<p>该商品已在中国编码中心备案。</p>
+				<p>该商品未在汽服云平台上架，您可以在汽服云平台搜索其他同类产品。</p>
+			</div>
+		</div>
+
+		<div class="pro-left">
+			<div style="display: none" class="pro-tj">
+				<span>您已选择：</span>
+				<div id="pjflbj"></div>
+				<div id="pjppbj"></div>
+				<div id="cxppbj"></div>
+			</div>
+
+			<div
+				style="height: 30px; line-height: 40px; text-indent: 20px; display: none"
+				class="pro-sxtj" id="search_filter_chexing_div">
+				<div id="search_filter_chexing" name="search_filter"
+					style="height: 30px; line-height: 40px; text-indent: 20px;">
+					已选择：&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+			</div>
+
+			<div class="pro-sxtj" id="cxpp1" style="height:30px">
+				<div class="sxtj-bt">车型品牌：</div>
+				<div class="sxtj-main" id="cxpp1_main" style="height:60px">
+					<ul>
+
+					</ul>
+				</div>
+				<div class="sxtj-more">更多</div>
+			</div>
+
+			<div class="pro-sxtj" id="cxpp2">
+				<div class="sxtj-bt">车型品牌：</div>
+				<div class="sxtj-main" id="cxpp2_main">
+					<ul id="cxpp2_select">
+
+					</ul>
+				</div>
+				<div class="sxtj-more">更多</div>
+			</div>
+
+			<div
+				style="height: 30px; line-height: 40px; text-indent: 20px; display: none"
+				id="search_filter_fenlei_div">
+				<div id="search_filter_feilei" name="search_filter" class="pro-sxtj">
+					<div class="sxtj-bt">已选择：</div>
+					<div class="sxtj-bt list_a"
+						style="width: 800px; height: 30px; margin-left: -10px; overflow: hidden;">
+						<ul>
+
+						</ul>
+					</div>
+					<div class="sxtj-more totals">更多</div>
+				</div>
+			</div>
+
+			<div class="pro-sxtj" id="pjfl1">
+				<div class="sxtj-bt">配件分类：</div>
+				<div class="sxtj-main" id="pjfl1_main">
+					<ul>
+
+					</ul>
+				</div>
+
+				<div class="sxtj-more">更多</div>
+			</div>
+			<div class="pro-sxtj" id="pjfl2">
+
+				<div style="padding-top: 9px" class="sxtj-bt">配件分类：</div>
+
+				<div class="sxtj-main" id="pjfl2_main">
+					<ul id="pjfl2_select">
+
+					</ul>
+				</div>
+				<div class="sxtj-more">更多</div>
+			</div>
+
+			<div class="pro-sxtj" id="search_filter_pinpai_div"
+				style="display: none">
+				<div id="search_filter_pinpai" name="search_filter"
+					style="height: 30px; line-height: 40px; text-indent: 20px;">
+					已选择：</div>
+			</div>
+			<div class="pro-sxtj" id="pjpp">
+				<div class="sxtj-bt">配件品牌：</div>
+				<div class="sxtj-main" id="pjpp_main">
+					<ul>
+
+					</ul>
+				</div>
+				<div class="sxtj-more">更多</div>
+			</div>
+
+			<div class="pro-sxtj" id="search_filter_xiangmu_div"
+				style="display: none">
+				<div id="search_filter_xiangmu" name="search_filter"
+					style="height: 30px; line-height: 40px; text-indent: 20px; font-color: #666;">
+					已选择：</div>
+			</div>
+
+			<div class="pro-sxtj" id="wxxm">
+				<div class="sxtj-bt">维修项目：</div>
+				<div class="sxtj-main" id="wxxm_main">
+					<ul>
+
+					</ul>
+				</div>
+				<div class="sxtj-more">更多</div>
+			</div>
+
+			<div class="pro-sx">
+
+
+
+				<div class="sx-left">
+					<a id="shubiao1" title="点击月销量从高到低" class="jiangxu px2" style="display: none;">综合</a>
+					<a id="shubiao2" title="点击价格从低到高" class="shenxu px4" style="display: none;">综合</a>
+					<a id="shubiao3" title="点击月销量从高到低" class="jiangxu px1" style="display: none;">销量</a> 
+			        <a id="shubiao4" title="点击价格从低到高" class="shenxu px4" style="display: none;">销量</a>
+				    <a id="shubiao5" title="点击价格从高到低" class="jiangxu px3">价格</a> 
+					<a id="shubiao6" title="点击价格从低到高" class="shenxu px4">价格</a>
+					<!--        <a class="dq"><span>地区:</span><input value="请选择" disabled="disabled" /></a>        -->
+				</div>
+				<div class="sx-right">
+					<a class="next-nv">列表</a> <a class="previous-nv">九宫格</a>
+				</div>
+			</div>
+
+			<div class="center" jl jlid="splist_1" id="z1" url="/getSpxx.do">
+				<ul class="listBOX"></ul>
+				<ul class="pro-case"></ul>
+			</div>
+
+
+
+		</div>
+
+		<div class="pro-right">
+			<div class="pro-wxc-title">直通车</div>
+
+			<ul id="ztc">
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+				<li><a href="#" class="img"><img src="" /></a>
+					<div href="#" class="text">
+						<h4></h4>
+						<a href="#"></a>
+					</div></li>
+			</ul>
+
+		</div>
+
+	</div>
+
+	<div class="clear"></div>
+	<!---------------------底部--------------------->
+	<div id="footer"></div>
+</body>
+</html>

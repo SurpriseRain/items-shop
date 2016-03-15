@@ -1,0 +1,64 @@
+<ul id="cms-box" class="carousel">
+<!--  <li style="background:url('/customer/sydjt/images/banner01.jpg') no-repeat center top"><a href="#"></a></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner02.jpg') no-repeat center top"></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner01.jpg') no-repeat center top"></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner02.jpg') no-repeat center top"></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner01.jpg') no-repeat center top"></li>-->
+<!--  <li style="background:url('/customer/sydjt/images/banner02.jpg') no-repeat center top"></li>-->
+</ul>
+<div class="content">
+<div class="row">
+  <div class="w02 news">
+    <h3><i class="fa fa-volume-up"></i>新闻公告</h3>
+    <div class="w12 news_case">
+      <ul>
+        <li><i class="w01 fa fa-volume-down"></i><a class="w10">支持学员支持学员直通鸟巢直通鸟巢</a></li>
+        <li><i class="w01 fa fa-volume-down"></i><a class="w10">7.8%定期理财热销中</a></li>
+        <li><i class="w01 fa fa-volume-down"></i><a class="w10">错收价款退费说明</a></li>
+        <li><i class="w01 fa fa-volume-down"></i><a class="w10">打卡赚云钻赢好礼</a></li>
+        <li><i class="w01 fa fa-volume-down"></i><a class="w10">新人独享好货低至5折</a></li>
+      </ul>
+    </div>
+    <h3><i class="fa fa-flash"></i>快捷操作</h3>
+    <div class="w12 news_case">
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-truck"></i></dt><dd class="w12">送货</dd></a></dl>
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-wrench"></i></dt><dd class="w12">家电维修</dd></a></dl>
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-coffee"></i></dt><dd class="w12">菜单</dd></a></dl>
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-coffee"></i></dt><dd class="w12">菜单</dd></a></dl>
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-coffee"></i></dt><dd class="w12">菜单</dd></a></dl>
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-coffee"></i></dt><dd class="w12">菜单</dd></a></dl>
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-coffee"></i></dt><dd class="w12">菜单</dd></a></dl>
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-coffee"></i></dt><dd class="w12">菜单</dd></a></dl>
+      <dl class="w04"><a><dt class="w12"><i class="fa fa-coffee"></i></dt><dd class="w12">菜单</dd></a></dl>
+    </div>
+  </div>
+</div>
+</div>
+    <script type="text/template" id="m-tpl-3">
+        <%_.each(mapList, function(item,index) {%>
+            <% if(index === 0) {%>
+				<li style="background:url('/jlsoft/banner/<%= item.FILENAME%>') no-repeat center top"><a href="<%= item.URL%>"></a></li>
+            <% } else { %>
+				<li style="background:url('/jlsoft/banner/<%= item.FILENAME%>') no-repeat center top"><a href="<%= item.URL%>"></a></li>
+            <% } %>
+        <%});%>
+    </script>
+    
+<script type="text/javascript">
+/* 轮播图 --start-- */
+$(function(){
+    var xmlData=[{"size":4,"gsid":"0000"}];
+    var url="/HomePage/selectPictureMainPage.action?XmlData="+JSON.stringify(xmlData);
+
+    var rData = visitService(url);
+    var str="";
+    $(rData.mapList).each(function(index,item){
+    	str += "<li style=\"background:url(/jlsoft/banner/"+item.FILENAME+") no-repeat center top\"><a href='"+item.URL+"'></a></li>";
+
+    });
+    $("#cms-box").append(str);
+    
+})
+</script>
+
+<script type="text/javascript" src="/customer/sydjt/js/banner.js"></script>

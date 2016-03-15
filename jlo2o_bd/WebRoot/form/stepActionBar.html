@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/stepAction.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+</head>
+<body>
+<div class="clear"></div>
+<ul id="mian"></ul>
+</body>
+<script>
+var currentXw;
+$(document).ready(function(){
+	var data = $.getUrlParam("data");
+	var ahref="";
+	
+	if(data != null){
+		data = JSON.parse(data);
+		for(var i=0;i<data.length;i++){
+			 if(i==0){
+			     currentXw="xwmc_"+data[i].xwbh;
+		  	     ahref=ahref+'<a class="xuan" href="javascript:void(0);" id="xwmc_'+data[i].xwbh+'" onclick="changePage('+data[i].gzlbh+','+data[i].xwbh+','+data[i].ywdh+','+data[i].rzbh+')">'+decodeURI(data[i].xwmc)+'</a>';
+		  	     changePage(data[i].gzlbh,data[i].xwbh,data[i].ywdh,data[i].rzbh);
+			 }else{
+		  	     ahref=ahref+'<a href="javascript:void(0);" id="xwmc_'+data[i].xwbh+'" onclick="changePage('+data[i].gzlbh+','+data[i].xwbh+','+data[i].ywdh+','+data[i].rzbh+')">'+decodeURI(data[i].xwmc)+'</a>';
+		  	 }
+		}
+	}
+
+	 $("#mian").append('<li><div class="libottom">'+ahref+ '</div></li>');
+	 $(".libottom > a").mouseover(function(){
+		$(".libottom > a").not("#"+currentXw).removeClass("xuan");
+		$(this).addClass("xuan");		
+	 });
+	 $(".libottom > a").mouseout(function(){
+		$(".libottom > a").not("#"+currentXw).removeClass("xuan");	
+	 });
+});
+
+function changePage(gzlbh,xwbh,ywdh,rzbh){
+	currentXw="xwmc_"+xwbh;
+	$(".libottom > a").removeClass("xuan");	
+	$("#"+currentXw).addClass("xuan");
+	parent.loadFormByList(xwbh);
+}
+</script>
+</html>

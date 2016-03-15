@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<title>汽服云 - 卖家中心</title>
+<style type="text/css">
+@charset "UTF-8";
+/* reset start */
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+body{
+	overflow-x:hidden;
+	overflow-y:hidden;
+}
+#curPosition {
+    border: 1px solid #e4e4e4;
+    float: left;
+    line-height: 30px;
+    padding-left: 10px;
+    width: 818px;
+   
+}
+#curPosition a {
+    color: #ff4a00;
+    float: left;
+    line-height: 30px;
+    font-size:14px;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+#curPosition b {
+    color: #3c3c3c;
+    float: left;
+    font-weight:550;
+    font-size:12px;:
+    line-height:30px;
+    margin-left:5px;
+   
+}
+#curPosition>span{
+
+	color:#ccc;
+	float:left;
+	display:block;
+	line-height:30px;
+	height:30px;
+	font-size:14px;
+	margin-left:5px;
+
+}
+.msg-menu{
+	width:820px;
+	
+	
+	
+	
+	
+}
+.msg-menu ul{
+	width:100%;
+	height:180px;
+
+	
+	
+}
+.msg-menu ul li{
+float:left;
+list-style:none;
+font-size:14px;
+height:30px;
+line-height:30px;
+width:100%;
+margin:10px 0;
+
+	
+}
+.msg-menu ul li h3{
+	width:200px;
+	height:30px;
+	float:left;
+	text-indent:100px;
+	font-size:14px;
+	font-weight:600;
+	
+}
+.msg-menu ul li p{
+	height:30px;
+	line-height:30px;
+	font-size:14px;
+	
+	
+}
+#shurujine{
+	width:50px;
+	line-height:20px;
+}
+.fplb_Title{
+	font-size: 14px;
+	width:100px;
+	color:#000;
+	font-weight:600;
+	height:20px;
+	line-height:20px;
+	float:left;
+	text-indent:10px;
+	
+
+}
+.msg-xt{
+width:100%;
+float:left;
+}
+.msg-xt h4{
+	font-size:14px;
+	height:40px;
+	line-height:40px;
+	margin-top:20px;
+	text-indent:10px;
+	
+}
+.msg-sp{
+	width:100%;
+	clear:both;
+	position:relative;
+	text-align:center;
+	
+}
+#save{
+	width:100px;
+	height:34px;
+	text-align:center;
+	border:none;
+	background:#F80;
+	cursor:pointer;
+	color:#fff;
+	font-weight:600;
+	font-size:16px;
+	margin:20px 0 20px -30px;
+
+}
+
+
+ul#pdb-info {
+    border: 1px solid #e4e4e4;
+    float: left;
+    margin: 10px 0;
+    padding-left: 10px;
+    width: 818px;
+    background:#f9f9f9;
+}
+
+
+</style>
+</head>
+<body>
+<form id="form1" name="form1">
+	<!-- <div id="curPosition">
+		<a href="#">基础管理</a>
+		<span >></span>
+		<b>发票管理</b>
+	</div> -->
+	
+	<ul id="pdb-info">
+	<div id="zong" ><!--总div  -->
+		
+		
+		<div class="msg-menu" ><!-- checkbox选中div -->
+			
+			
+				<ul >
+					<li><h2 class="fplb_Title">发票类别：</h2>
+						<input type='checkbox' name="fap" id="r1"  value="1" />普通发票
+						<input type='checkbox' name="fap"  id="r2" value="2" />增值税发票
+					</li>
+					<li><h2 class="fplb_Title">增票说明：</h2><br/>
+						<h3>按周期开具:</h3>
+						<input name="zpsm" type="radio" value="10" id="r10"/>10天 
+						<input name="zpsm" type="radio" value="30" id="r30"/>30天
+					</li>
+					<li>
+						<p><h3>按金额开具：</h3>金额满
+						<!-- <input onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
+						<input name=txt1  value="" id="shurujine" onchange="if(/\D/.test(this.value)){alert('只能输入数字');this.value='';}">
+						 -->
+						<input type="text" value="" id="shurujine" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" >即可申请开票</p>
+					</li>
+					
+				</ul>
+			<div class="msg-xt"><!--输入服务说明 -->
+				<h4 class="dpfwsm">服务说明：</h4>
+			<!--富文本框  -->
+			<!-- <span class="name">店铺服务说明：</span> -->
+			<input type="hidden" id="gsid" name="ZCXX01" value=""/>
+      		<div id="JKDiv_spym" style="width:670px; height:300px;  margin:5px 0 0 30px;clear:both;">
+      		<textarea id="spjs" name="spjs"  style="width:670px; height:300px; float:left; margin:12px 0 0 10px; max-width:670px;" ></textarea>
+      		</div> 
+			</div>
+			<div class="msg-sp"><!--确定按钮div  -->
+			<input type="button" id="save" value="确认" />
+			</div>
+			
+		</div>
+	</div>
+	</ul>
+	</form>
+	<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/control/js/o2o.js"></script>
+	<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+	<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+	<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="/control/js/tuidan_carlist.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/keditor/kindeditor.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/keditor/lang/zh_CN.js"></script>
+	<script type="text/javascript" charset="utf-8" src="/keditor/plugins/code/prettify.js"></script>
+	<script type="text/javascript">
+	var MyCookie = $.cookie('userInfo');
+	var usercookie = JSON.parse(MyCookie);
+	var us = usercookie.ZCXX01;
+	
+	var editor1;
+	
+	//获得kindeditor中的信息
+	function getValues() {
+		// 取得HTML内容
+		var html1 = editor1.html();
+		// 同步数据后可以直接取得textarea的value
+		editor1.sync();
+	}
+	$(function() {
+		var json = {"ZCXX01":us};
+		var url = "/FWSM/select_FWSM.action?XmlData=" + JSON.stringify(json);
+		var returnData=visitService(url);
+		var zcxxs = returnData.zcxx[0];
+		//判断是更新还是插入
+		if(zcxxs!=undefined){
+			//公司编码
+			var zcxx = zcxxs.ZCXX01;
+			//发票类别
+			var InvoiceType = zcxxs.InvoiceType;
+			//单选
+			if(InvoiceType !=3){
+				$("#r"+InvoiceType+"").attr({checked:"checked"});
+			//多选
+			}else{
+				//alert("多选");
+				$("#r1").attr({
+	                checked:"checked"
+	            });
+				$("#r2").attr({
+	                checked:"checked"
+	            });
+			}
+			//增票说明
+			var InvoicePeriod = zcxxs.InvoicePeriod;
+			//alert(JSON.stringify(InvoicePeriod));
+			$("#r"+InvoicePeriod+"").attr({
+	                checked:"checked"
+	            });
+			//金额
+			var InvoiceMoney = zcxxs.InvoiceMoney;
+			//回显
+			$("#shurujine").val(InvoiceMoney);
+			//服务说明
+			var InvoiceDescribe = zcxxs.InvoiceDescribe;
+			var InvoiceDescribe = unescape(InvoiceDescribe);
+			
+		}
+		
+		
+		/* 富文本框 */
+		KindEditor.ready(function(K) {
+			editor1 = K.create('textarea[name="spjs"]', {
+		  	resizeType : 1,
+				allowPreviewEmoticons : false,
+				allowImageUpload : false,
+				items : [
+					'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+					'removeformat']
+			});
+			//prettyPrint();
+			editor1.insertHtml(InvoiceDescribe);
+		});
+		
+		//KindEditor.html("#spjs",InvoiceDescribe);
+		
+		//$("#spjs").val(InvoiceDescribe);
+		//alert(JSON.stringify(InvoiceDescribe));
+		
+		$('#save').click(function(){
+			 var faplb = [];//定义一个数组    
+	            $('input[name="fap"]:checked').each(function(){//遍历每一个名字为interest的复选框，其中选中的执行函数    
+	            	faplb.push($(this).val());//将选中的值添加到数组chk_value中    
+	            });
+	            if(isNaN(faplb))
+	            {
+	            //alert("不是数字");
+	            faplb = 3;
+	            //alert(faplb);
+	            }else
+	            {
+	            //alert("是数字");
+	            faplb =faplb[0];
+	            //alert(faplb);
+	            }
+			/*  var temp1=document.getElementsByName("fap");  
+			 for (i=0;i<temp1.length;i++){  
+			 //遍历Radio 
+			 if(temp1[i].checked){
+				 //发票类别
+				 var faplb = temp1[i].value;  
+			 }}  */
+			 
+			 var temp2=document.getElementsByName("zpsm");  
+			 for (i=0;i<temp2.length;i++){  
+			 //遍历Radio 
+			 if(temp2[i].checked){
+				 //增票说明
+				 var zpsm = temp2[i].value;
+				 
+			 }}
+			 //金额
+			 var shurujine = $('#shurujine').val();
+			 if(faplb == undefined){
+					alert("请选择发票类别");
+					return;
+				}
+			 if(zpsm == undefined){
+					alert("请选择增票");
+					return;
+				}
+			 if(shurujine == ""){
+					alert("请输入金额");
+					return;
+				}
+			 //店铺说明
+			 //var dpsm = $('#spjs').val();
+			 //获得kindeditor中的信息
+			 getValues();
+			 var XmlData1 = $("#form1").formToJson();
+			 var zhuanyi = escape(XmlData1[0].spjs);
+			 //alert(XmlData1[0].spjs);
+			 //alert(zhuanyi);
+			 var zishu = zhuanyi.length;
+			 //alert(zishu);
+			 if(zishu>3999){
+				 alert("输入字符超过限制");
+				 return false;
+			 } 
+			//发布的消息
+				var json = {
+					"ZCXX01":us,
+					"InvoiceType" : faplb,
+					"InvoicePeriod":zpsm,
+					"InvoiceDescribe":zhuanyi,
+					"InvoiceMoney":shurujine
+				};
+			//alert(JSON.stringify(json));
+				var url = "/FWSM/select_FWSM.action?XmlData=" + JSON.stringify(json);
+				var returnData=visitService(url);
+				//alert(JSON.stringify(returnData));
+				var data = returnData.zcxx[0]
+				//进行判断是  更新   还是   插入
+				if(data!= undefined ){
+					var url = "/FWSM/update_FWSM.action?XmlData=" + JSON.stringify(json);
+					visitSvcAsync(url, function(rData) {
+						if (rData.STATE == "1") {
+							alert("更新成功!");
+							location.reload();
+						} else {
+							alert("失败!");
+						}
+					});
+				}else{
+					 var url = "/FWSM/insert_FWSM.action?XmlData=" + JSON.stringify(json);
+						visitSvcAsync(url, function(rData) {
+							if (rData.STATE == "1") {
+								alert("提交成功!");
+								location.reload();
+							} else {
+								alert("失败!");
+							}
+						});
+				} 
+		 });
+	});
+	</script>
+</body>
+</html>

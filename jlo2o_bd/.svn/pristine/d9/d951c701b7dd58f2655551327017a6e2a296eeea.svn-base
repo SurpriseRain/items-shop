@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 活动管理:报名 -->
+<mapper namespace="com.jlsoft.o2o.hdgl.sql.Oper_HDGL_SIGN_UP">
+
+	<!-- 报名：查询符合条件的商品列表     开始 -->
+	<!-- 根据报名活动ID及zcxx01查询,上架、库存大于0，且商品所属品类包含在活动商品品类等条件的记录 -->
+  	<select id="selectProductList" parameterType="Map" resultType="java.util.Map">
+			SELECT <!-- b.spfl01_name 'fl1', --> c.barcode,a.spgl24,b.spxx04 'spmc', b.spxx01, c.zcxx01 'ZCXX01',
+			 a.spgl04 'spjg',<!--  d.cksp04 'kc', --> DATE_FORMAT(a.spgl18, '%Y-%m-%d %H:%i:%S') 'sjsj',
+			 IFNULL(SUM(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) kc,
+			 D.SPFL02 fl,
+			 SUBSTRING_INDEX(S.SPTP02,'.',-1) SPTP02,
+			 S.SPTP01, 
+			 b.SPXX02
+			FROM w_spgl a 
+			 LEFT JOIN w_spxx b ON a.spxx01 = b.spxx01
+			 LEFT JOIN w_goods c ON b.spxx01 = c.spxx01
+			 LEFT JOIN spfl D on b.spfl01 = D.SPFL01
+			 <!-- LEFT JOIN w_kcxx d ON c.spxx01 = d.spxx01  -->
+			 LEFT JOIN activity ac ON ac.ActivityId = #{ActivityId} 
+			 LEFT JOIN W_KCXX K ON K.SPXX01 = b.SPXX01 
+		 	AND K.ZCXX01 = a.ZCXX01  
+       		AND K.CK01 IN (SELECT CK01 FROM W_DQCK)
+			LEFT JOIN CK ON CK.CK01 = K.CK01 
+			LEFT JOIN W_SPTP S ON S.ZCXX01 = a.zcxx01 AND S.SPXX01 = a.spxx01 
+			WHERE a.zcxx01 = #{ZCXX01}
+			 AND a.spgl12 = 1 
+			 <!-- AND d.cksp04 > 0  -->
+			 <!-- AND FIND_IN_SET(b.spfl01, ac.SPFL01) > 0 -->
+			 <if test="SPFL01!='' and SPFL01!=null">
+			  	AND (
+					<foreach collection="SPFL01" index="index" item="tag" open="(" separator="OR" close=")">
+				 	 b.spfl01 LIKE CONCAT('',#{tag},'%')
+					</foreach>
+				)
+			 </if>
+			 AND b.spxx01 NOT IN (
+				 SELECT
+					AP.SPXX01
+				FROM
+					ACTIVITYPRODUCT AP
+				LEFT JOIN ACTIVITY AY 
+				ON AP.ACTIVITYID = AY.ACTIVITYID
+				WHERE
+					a.zcxx01 = AP.ZCXX01 AND AP.STATE  IN (0, 1)
+				AND AY.STATE  = 1 
+				AND AY.ENROLLENDTIME > NOW()
+			)
+			<if test="barcode!='' and barcode!=null "> AND c.barcode like CONCAT('%',#{barcode},'%') </if>
+			<if test="spxx04!='' and spxx04!=null "> AND b.spxx04 like CONCAT('%',#{spxx04},'%') </if>
+			<if test="prodectIds!='' and prodectIds!=null "> AND FIND_IN_SET(b.spxx01, #{prodectIds}) > 0 </if>
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   开始-->
+			<if test="cjbm!='' and cjbm!=null "> AND a.spgl24 like CONCAT('%',#{cjbm},'%') </if>
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   结束-->		
+			GROUP BY b.spxx01
+			 order by b.spfl01_name 
+	</select>
+	
+  	<select id="selectProductList_sum" parameterType="Map" resultType="java.util.Map">
+  		SELECT COUNT(1) COUNT FROM 
+  		(SELECT <!-- b.spfl01_name 'fl1', --> c.barcode,a.spgl24,b.spxx04 'spmc', b.spxx01, c.zcxx01 'ZCXX01',
+			 a.spgl04 'spjg',<!--  d.cksp04 'kc', --> DATE_FORMAT(a.spgl18, '%Y-%m-%d %H:%i:%S') 'sjsj',
+			 IFNULL(SUM(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) kc,
+			 D.SPFL02 fl,
+			 SUBSTRING_INDEX(S.SPTP02,'.',-1) SPTP02,
+			 S.SPTP01, 
+			 b.SPXX02
+			FROM w_spgl a 
+			 LEFT JOIN w_spxx b ON a.spxx01 = b.spxx01
+			 LEFT JOIN w_goods c ON b.spxx01 = c.spxx01
+			 LEFT JOIN spfl D on b.spfl01 = D.SPFL01
+			 <!-- LEFT JOIN w_kcxx d ON c.spxx01 = d.spxx01  -->
+			 LEFT JOIN activity ac ON ac.ActivityId = #{ActivityId} 
+			 LEFT JOIN W_KCXX K ON K.SPXX01 = b.SPXX01 
+		 	AND K.ZCXX01 = a.ZCXX01  
+       		AND K.CK01 IN (SELECT CK01 FROM W_DQCK)
+			LEFT JOIN CK ON CK.CK01 = K.CK01 
+			LEFT JOIN W_SPTP S ON S.ZCXX01 = a.zcxx01 AND S.SPXX01 = a.spxx01 
+			WHERE a.zcxx01 = #{ZCXX01}
+			 AND a.spgl12 = 1 
+			 <!-- AND d.cksp04 > 0  -->
+			 <!-- AND FIND_IN_SET(b.spfl01, ac.SPFL01) > 0 -->
+			 <if test="SPFL01!='' and SPFL01!=null">
+			  	AND (
+					<foreach collection="SPFL01" index="index" item="tag" open="(" separator="OR" close=")">
+				 	 b.spfl01 LIKE CONCAT('',#{tag},'%')
+					</foreach>
+				)
+			 </if>
+			 AND b.spxx01 NOT IN (
+				 SELECT
+					AP.SPXX01
+				FROM
+					ACTIVITYPRODUCT AP
+				LEFT JOIN ACTIVITY AY 
+				ON AP.ACTIVITYID = AY.ACTIVITYID
+				WHERE
+					a.zcxx01 = AP.ZCXX01 AND AP.STATE  IN (0, 1)
+				AND AY.STATE  = 1 
+				AND AY.ENROLLENDTIME > NOW()
+			)
+			<if test="barcode!='' and barcode!=null "> AND c.barcode like CONCAT('%',#{barcode},'%') </if>
+			<if test="spxx04!='' and spxx04!=null "> AND b.spxx04 like CONCAT('%',#{spxx04},'%') </if>
+			<if test="prodectIds!='' and prodectIds!=null "> AND FIND_IN_SET(b.spxx01, #{prodectIds}) > 0 </if>
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   开始-->
+			<if test="cjbm!='' and cjbm!=null "> AND a.spgl24 like CONCAT('%',#{cjbm},'%') </if>
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   结束-->		
+			GROUP BY b.spxx01
+			 order by b.spfl01_name ) T
+			
+	</select>
+	
+	<select id="selectActivitySPFL" parameterType="Map" resultType="java.util.Map">
+  		SELECT SPFL01 FROM ACTIVITY WHERE ACTIVITYID = #{ActivityId}
+	</select>
+	
+	<select id="aaa">
+	SELECT count(a.spxx04) COUNT
+			FROM w_goods a 
+			 LEFT JOIN w_spxx b ON a.spxx01 = b.spxx01 
+			 LEFT JOIN w_spgl c ON b.spxx01 = c.spxx01 
+			 <!-- LEFT JOIN w_kcxx d ON c.spxx01 = d.spxx01 -->  
+			 LEFT JOIN activity ac ON ac.ActivityId = #{ActivityId}
+			 LEFT JOIN W_KCXX K ON K.SPXX01 = b.SPXX01 
+		 	AND K.ZCXX01 = c.ZCXX01  
+       		AND K.CK01 IN (SELECT CK01 FROM W_DQCK)
+			LEFT JOIN CK ON CK.CK01 = K.CK01  			  
+			WHERE a.zcxx01 = #{ZCXX01}
+			 AND c.spgl12 = 1 
+			 <!-- AND d.cksp04 > 0  -->
+			 AND FIND_IN_SET(b.spfl01, ac.SPFL01) > 0
+			<if test="barcode!='' and barcode!=null "> AND a.barcode like CONCAT('%',#{barcode},'%') </if>
+			<if test="spxx04!='' and spxx04!=null "> AND a.spxx04 like CONCAT('%',#{spxx04},'%') </if>
+			<if test="prodectIds!='' and prodectIds!=null "> AND FIND_IN_SET(a.spxx01, #{prodectIds}) > 0 </if>
+	</select>
+	<!-- 报名：商品查询结束 -->	
+</mapper>

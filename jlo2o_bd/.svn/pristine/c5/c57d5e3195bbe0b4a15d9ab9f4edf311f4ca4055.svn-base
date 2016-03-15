@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.info.sql">
+	<select id="Srch_ZXXW" parameterType="map" resultType="map">
+	SELECT A.JLBH,
+	A.TITLE,
+	DATE_FORMAT(A.FBSJ,'%Y-%m-%d %k:%i:%s') FBSJ,
+	(SELECT X.NAME FROM W_XXLX X WHERE X.CODE = A.CODE) LXNAME,
+	(SELECT X.CODE FROM W_XXLX X WHERE X.CODE = A.CODE) LXCODE,
+	ZSFW
+	FROM W_XX A
+	WHERE 1=1
+	<if test="jlbh!=''">AND A.JLBH = #{jlbh}</if>
+	<if test="title!=''">AND A.TITLE LIKE CONCAT ('%',#{title},'%')</if>
+	<if test="code!=''">
+		AND A.CODE = #{code}
+	</if>
+	<if test="date_s!=''">AND A.FBSJ &gt;= DATE_FORMAT(#{date_s},'%Y-%m-%d %k:%i:%s')</if>
+  	<if test="date_e!=''">AND A.FBSJ &lt;= DATE_FORMAT(#{date_e},'%Y-%m-%d %k:%i:%s')</if>
+  	order by FBSJ desc
+	</select>
+	
+	<select id="Srch_ZXXW_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT FROM W_XX A WHERE 1=1
+	<if test="jlbh!=''">AND A.JLBH = #{jlbh}</if>
+	<if test="title!=''">AND A.TITLE LIKE CONCAT ('%',#{title},'%')</if>
+	<if test="code!=''">
+		AND A.CODE = #{code}
+	</if>
+	<if test="date_s!=''">AND A.FBSJ &gt;= DATE_FORMAT(#{date_s},'%Y-%m-%d %k:%i:%s')</if>
+  	<if test="date_e!=''">AND A.FBSJ &lt;= DATE_FORMAT(#{date_e},'%Y-%m-%d %k:%i:%s')</if>
+  	order by FBSJ desc
+	</select>
+	
+	<select id="Srch_ZXXWSUM" parameterType="map" resultType="map">
+	SELECT COUNT(1) SUM
+	FROM W_XX A
+	WHERE A.CODE &lt;&gt;9
+	<if test="title!=''">AND A.TITLE LIKE '%'||#{title}||'%'</if>
+	<if test="code!=''">
+	<!-- 	
+		<if test="code==0">	AND A.CODE LIKE '%'||#{code}||'%'</if>
+		<if test="code==1">	AND A.CODE = #{code}</if>
+	 -->
+	 	AND A.CODE = #{code}
+	</if>
+	<if test="date_s!=''">AND A.FBSJ &gt;= to_date(#{date_s},'yyyy-mm-dd')</if>
+  	<if test="date_e!=''">AND A.FBSJ &lt;= to_date(#{date_e},'yyyy-mm-dd')</if>
+  	order by FBSJ desc
+	</select>
+	
+	<select id="Srch_ALFX" parameterType="map" resultType="java.util.Map">
+	SELECT A.ALBH ALBH,
+       B.LXMC LXNAME,
+       B.LXBH LXBH,
+       A.ALTITLE ALTITLE,
+       DATE_FORMAT(A.FBSJ,'%Y-%m-%d %k:%i:%s') FBSJ,
+       A.FBR FBR,
+       (CASE A.CKQX
+         WHEN -1 THEN
+          '未分配'
+         WHEN 0 THEN
+          '供货商'
+         WHEN 1 THEN
+          '客户'
+       END) CKQX,
+       (CASE A.STATE
+         WHEN 0 THEN
+          '有效'
+         WHEN 1 THEN
+          '无效'
+       END) STATE,
+       A.FILENAME FILENAME,
+       A.FILEPATH FILEPATH,
+       A.GJNR GJNR,
+       A.TJBJ TJBJ
+ 	 FROM W_ALFX A, W_ALLX B
+ 	 WHERE 1=1
+ 	 AND A.ALLX = B.LXBH
+ 	 <if test="albh != '' and albh != null"> AND A.ALBH =#{albh}</if>
+ 	 <if test="altitle!=''">AND A.ALTITLE LIKE CONCAT ( '%',#{altitle},'%')</if>
+ 	 <if test="ckqx != '' and ckqx != null"> AND A.CKQX =#{ckqx}</if>
+ 	 <if test="state != '' and state != null">AND A.STATE =#{state} </if>
+  	ORDER BY FBSJ DESC
+	</select>
+	
+	<select id="Srch_ALFX_sum" parameterType="map" resultType="java.util.Map">
+	SELECT COUNT(1) as COUNT FROM W_ALFX A, W_ALLX B
+ 	 WHERE 1=1
+ 	 AND A.ALLX = B.LXBH
+ 	 <if test="albh != '' and albh != null"> AND A.ALBH =#{albh}</if>
+ 	 <if test="altitle!=''">AND A.ALTITLE LIKE CONCAT ( '%',#{altitle},'%')</if>
+ 	 <if test="ckqx != '' and ckqx != null"> AND A.CKQX =#{ckqx}</if>
+ 	 <if test="state != '' and state != null">AND A.STATE =#{state} </if>
+  	ORDER BY FBSJ DESC
+	</select>
+	
+	<select id="Srch_ALFXSUM" parameterType="map" resultType="map">
+	SELECT COUNT(1) SUM
+ 	 FROM W_XX A
+ 	 WHERE 1=1
+ 	 <if test="altitle!=''">AND A.ALTITLE  LIKE CONCAT('%','${altitle}','%')</if>
+ 	 <if test="ckqx!=''">
+ 	 		<if test="ckqx==-1">
+ 			 AND A.CKQX =#{ckqx}
+ 			 </if>
+ 	 </if>
+ 	 <if test="state!=''">
+ 	 		<if test="state==-1">
+ 			AND A.STATE =#{state}
+ 			 </if>
+ 	 </if>
+  	ORDER BY FBSJ DESC
+	</select>
+	<select id="select_LxList" parameterType="map" resultType="map">
+	SELECT W.LXBH ALLX,W.LXMC LXNAME,
+	CASE W.CKQX
+         WHEN -1 THEN
+          '未分配'
+         WHEN 0 THEN
+          '供货商'
+         WHEN 1 THEN
+          '客户'
+       END CKQX FROM W_ALLX W WHERE 1=1
+ 	 <if test="ckqx!=''">
+ 	 		<if test="ckqx!=-1">
+ 			 AND W.CKQX =#{ckqx}
+ 			 </if>
+ 	 </if>
+	    <if test="DHBJ!='' and DHBJ!=null">AND W.DHBJ = #{DHBJ}</if>
+	    <if test="lxname!=''">AND W.LXMC like CONCAT('%','${lxname}','%') </if>
+	</select>
+	
+	<select id="select_LxList_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT FROM W_ALLX W WHERE 1=1
+ 	 <if test="ckqx!=''">
+ 	 		<if test="ckqx!=-1">
+ 			 AND W.CKQX =#{ckqx}
+ 			 </if>
+ 	 </if>
+	    <if test="DHBJ!='' and DHBJ!=null">AND W.DHBJ = #{DHBJ}</if>
+	    <if test="lxname!=''">AND W.LXMC like CONCAT('%','${lxname}','%') </if>
+	</select>
+	
+	<select id="Srch_XXLX" parameterType="map" resultType="map">
+	select CODE,NAME from W_XXLX WHERE 1=1
+	<if test="name!=''">AND NAME like '%'||#{name}||'%' </if>
+	<if test="code!= ''"> AND CODE =#{code}</if>
+	</select>
+
+	
+	<!-- 基础信息中 关联部门仓库 查询 -->
+	<select id="srch_Bm" parameterType="map" resultType="map">
+		SELECT A.BM01 BMBM, A.BM02 BMNAME, A.BM03 BMJB
+  		FROM W_BM A
+ 		WHERE A.BM04 = 1
+ 		
+	</select>
+	
+	<select id="srch_Ck" parameterType="map" resultType="map">
+		SELECT A.CK01 CKBM, A.CK02 CKNAME FROM W_CK A WHERE A.CK04 = 1
+	</select>
+	<!-- 查询部门和仓库的关系 -->
+	<select id="srch_Relation" parameterType="map" resultType="map">
+		SELECT A.DQXX01, B.BM02 BMNAME, C.CK02 CKNAME
+		  FROM W_DQCK A, W_BM B, W_CK C
+		 WHERE A.BM01 = B.BM01
+		   AND A.CK01 = C.CK01
+		   <if test="dqxx01 !=null and dqxx01 !='' ">
+		   AND A.DQXX01 LIKE '%'||#{dqxx01}||'%'
+		   </if>
+		   <if test="ckbm !=null and ckbm !='' ">
+		   AND A.CK01 = #{ckbm}
+		   </if>
+		   <if test=" bmname !=null and bmname !='' ">
+		   AND B.BM02 LIKE '%'||#{bmname}||'%'
+		   </if>
+		   <if test=" ckname !=null and ckname !='' ">
+		   AND C.CK02 LIKE '%'||#{ckname}||'%'
+		   </if>
+	</select>
+	
+	<select id="Srch_XWXX" parameterType="map" resultType="map">
+		SELECT (SELECT NAME FROM W_XXLX WHERE A.CODE = CODE) LXNAME, A.TITLE ALTITLE, 
+				A.JLBH ALBH
+  		  FROM W_XX A
+  		 WHERE A.CODE &lt;&gt; 1
+		order by FBSJ desc
+	</select>
+
+	<select id="Srch_XWXXSUM" parameterType="map" resultType="map">
+	SELECT COUNT(1) SUM
+	FROM W_XX A
+	WHERE A.CODE &lt;&gt;1
+  	order by FBSJ desc
+	</select>
+	
+	   	<!-- 查询新闻发布区域编码 -->
+	<select id="selectW_XXQY" parameterType="Map" resultType="Map">
+		select QYDM DQXX01
+    		from w_xxqy 
+   		    where BH = #{jlbh}  
+   		ORDER BY QYDM 
+	</select>
+		<!-- 查询政策新闻（带区域） -->
+	<select id="Srch_ZCXW" parameterType="map" resultType="map">
+	SELECT A.JLBH,
+	A.TITLE,
+	TO_CHAR(A.FBSJ, 'YYYY-MM-DD') FBSJ,
+	(SELECT X.NAME FROM W_XXLX X WHERE X.CODE = A.CODE) LXNAME,
+	(SELECT X.CODE FROM W_XXLX X WHERE X.CODE = A.CODE) LXCODE,
+	ZSFW
+	FROM W_XX A,W_XXQY B
+	WHERE  A.JLBH=B.BH
+	<if test="title!=''">AND A.TITLE LIKE '%'||#{title}||'%'</if>
+	<if test="code!=''">
+		AND A.CODE = #{code}
+	</if>
+	<if test="code!=''">
+		AND B.QYDM = #{QYDM}
+	</if>
+	<if test="date_s!=''">AND A.FBSJ &gt;= to_date(#{date_s},'yyyy-mm-dd')</if>
+  	<if test="date_e!=''">AND A.FBSJ &lt;= to_date(#{date_e},'yyyy-mm-dd')</if>
+  	order by FBSJ desc
+	</select>
+	
+	<select id="Srch_ZCXWSUM" parameterType="map" resultType="map">
+	SELECT COUNT(1) SUM
+	FROM W_XX A,W_XXQY B
+	WHERE  A.JLBH=B.BH
+	<if test="title!=''">AND A.TITLE LIKE '%'||#{title}||'%'</if>
+	<if test="code!=''">
+	 	AND A.CODE = #{code}
+	</if>
+	<if test="code!=''">
+		AND B.QYDM = #{QYDM}
+	</if>
+	<if test="date_s!=''">AND A.FBSJ &gt;= to_date(#{date_s},'yyyy-mm-dd')</if>
+  	<if test="date_e!=''">AND A.FBSJ &lt;= to_date(#{date_e},'yyyy-mm-dd')</if>
+  	order by FBSJ desc
+	</select>
+	
+	
+	<select id="selectW_DPXX" parameterType="map" resultType="map">
+	SELECT A.ZCXX01,B.ZCXX02,A.DPXX01,A.DPXX02,A.DPXX03, A.DPXX04  FROM W_DPXX A, W_ZCXX B WHERE A.ZCXX01=B.ZCXX01
+	 <if test="ZCXX01!=''"> AND A.ZCXX01 = #{ZCXX01} </if>
+	 <if test="ZCXX02!='' and ZCXX02!=null"> AND B.ZCXX02 LIKE CONCAT('%',#{ZCXX02},'%') </if>
+ 	</select>
+ 	
+ 	<select id="selectW_DPXX_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT  FROM W_DPXX A, W_ZCXX B WHERE A.ZCXX01=B.ZCXX01
+	 <if test="ZCXX01!=''"> AND A.ZCXX01 = #{ZCXX01} </if>
+	 <if test="ZCXX02!='' and ZCXX02!=null"> AND B.ZCXX02 LIKE CONCAT('%',#{ZCXX02},'%') </if>
+ 	</select>
+
+ 	<select id="selectW_PPXX_simple" parameterType="map" resultType="map">
+	SELECT B.PPB01 PPBH,
+		A.PPB02 PPNAME,
+		DATE_FORMAT(B.ENDTIME, '%Y-%m-%d') ENDTIME,
+       	IF(A.PPB08 &lt; NOW() AND B.STATE = 1, 4,
+	       B.STATE
+	   	) PPQXZT
+ 	 FROM W_PPQX B
+ 	 LEFT JOIN PPB A
+ 	 ON A.PPB01 = B.PPB01
+	 WHERE 1=1 
+	 <if test="ZCXX01!='' and ZCXX01 != null"> AND B.ZCXX01 = #{ZCXX01} </if>
+	 <if test="ppbh != '' and ppbh != null"> AND B.PPB01 = #{ppbh} </if>
+	 <if test="pptitle != '' and pptitle != null"> AND A.PPB02 LIKE CONCAT( '%',#{pptitle},'%')</if>
+	 <if test="state != '' and state != null"> 
+	 	<choose>
+	 		<when test="state == 4">
+	 			AND A.PPB08 &lt; NOW() AND B.STATE = 1
+	 		</when>
+	 		<when test="state == 1">
+	 			AND A.PPB08 &gt; NOW() AND B.STATE = 1
+	 		</when>
+	 		<otherwise>
+	 			AND B.STATE = #{state} 
+	 		</otherwise>
+	 	</choose>
+	 </if>
+ 	</select>
+ 	
+ 	<select id="selectW_PPXX_simple_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT FROM PPB A
+	 WHERE 1=1 
+	 <if test="ZCXX01!='' and ZCXX01 != null"> AND A.ZCXX01 = #{ZCXX01} </if>
+	 <if test="ppbh != '' and ppbh != null"> AND A.PPB01 = #{ppbh} </if>
+	 <if test="pptitle != '' and pptitle != null"> AND A.PPB02 LIKE CONCAT( '%',#{pptitle},'%')</if>
+	 <if test="state != '' and state != null"> AND A.PPB04 = #{state} </if>
+ 	</select>
+ 	
+ 	<select id="selectW_PPXX_simplea" parameterType="map" resultType="map">
+		SELECT
+		a.PPB01 PPBH,
+		b.PPB02 PPNAME,
+		DATE_FORMAT(
+			A.endtime,
+			'%Y-%m-%d'
+		) TIME,
+		(
+			CASE A.State
+			WHEN 0 THEN
+				'待审核'
+			WHEN 1 THEN
+				'通过'
+			WHEN 2 THEN
+				'未通过'
+			WHEN 3 THEN
+				'停用'
+			END
+		) STATE,
+		A.zcxx01 id 
+	FROM
+		w_ppqx A LEFT JOIN PPB b ON a.ppb01 = b.PPB01 
+	WHERE
+		1 = 1
+	 <!-- <if test="ZCXX01!='' and ZCXX01 != null"> AND A.ZCXX01 = #{ZCXX01} </if> -->
+	 <if test="ppbh != '' and ppbh != null"> AND A.PPB01 = #{ppbh} </if>
+	 <if test="pptitle != '' and pptitle != null"> AND B.PPB02 LIKE CONCAT( '%',#{pptitle},'%')</if>
+	 <if test="state != '' and state != null"> AND A.State = #{state} </if>
+ 	</select>
+ 	
+ 	<select id="selectW_PPXX_simplea_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT FROM W_PPQX A LEFT JOIN PPB B ON A.PPB01 = B.PPB01
+	 WHERE 1=1 
+	 <!-- <if test="ZCXX01!='' and ZCXX01 != null"> AND A.ZCXX01 = #{ZCXX01} </if> -->
+	 <if test="ppbh != '' and ppbh != null"> AND A.PPB01 = #{ppbh} </if>
+	 <if test="pptitle != '' and pptitle != null"> AND B.PPB02 LIKE CONCAT( '%',#{pptitle},'%')</if>
+	 <if test="state != '' and state != null"> AND A.State = #{state} </if>
+ 	</select>
+ 	
+ 	<select id="selectW_PPXX" parameterType="map" resultType="map">
+	SELECT A.PPB01 PPBH,
+		F.PPB02 PPNAME,
+        A.STATE,
+       	A.BZ,
+       	B.SPFL01,
+       	E.SPFL02,
+       	C.PPTP01,
+       	C.PPTP02,
+       	F.PPTP,
+       	DATE_FORMAT(A.ENDTIME, '%Y-%m-%d') ENDTIME,
+       	F.PPB07, 
+        DATE_FORMAT(F.PPB08, '%Y-%m-%d') PPB08,
+        (SELECT zcxx02 FROM w_zcxx WHERE zcxx01 = A.zcxx01) GSMC,
+        (SELECT zcgs03 FROM w_zcgs WHERE zcxx01 = F.zcxx01) GSLX,
+        F.zcxx01 GSID 
+ 	 FROM  W_PPQX A 
+ 	 LEFT JOIN W_PPFL B ON A.PPB01 = B.PPB01 
+ 	 LEFT JOIN W_PPTP C ON A.PPB01 = C.PPB01 AND C.PPTP01 &lt;&gt; 0
+ 	 LEFT JOIN SPFL E ON B.SPFL01 = E.SPFL01
+	 LEFT JOIN PPB F ON A.PPB01 = F.PPB01 
+	 WHERE 1 = 1 
+	 <if test="ZCXX01!='' and ZCXX01 != null"> AND A.ZCXX01 = #{ZCXX01} </if>
+	 <if test="ppbh != '' and ppbh != null"> AND A.PPB01 = #{ppbh} </if>
+	 <if test="pptitle != '' and pptitle != null"> AND F.PPB02 LIKE CONCAT( '%',#{pptitle},'%')</if>
+	 <if test="state != '' and state != null"> AND A.STATE = #{state} </if>
+ 	</select>
+	
+</mapper>

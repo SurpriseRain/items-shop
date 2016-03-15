@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.info.sql.selectW_DPXX','QryType':'Report','dataType':'Json','ZCXX01':$('#ZCXX01').val(),'ZCXX02':$('#ZCXX02').val()}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<div id="curPosition">
+    	<a href="#">广告位管理</a>
+    	<span>></span>
+    	<b>直通车审核</b>
+	</div>
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:830px;">
+	   	<span>公司编码：</span>
+		<input type="text" id="ZCXX01" name="ZCXX01"  size="20" class="text"/>
+	   	<span>店铺名称：</span>
+		<input type="text" id="ZCXX02" name="ZCXX02"  size="20" class="text"/>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'ZCXX01','header':'公司编码','type':'lable','width':'50px','id':'ZCXX01'},
+							{'property':'ZCXX02','header':'店铺名称','type':'lable','width':'180px','id':'ZCXX02'},
+							{'property':'DPXX01','header':'店铺介绍','type':'lable','width':'180px','id':'DPXX01'},
+							{'property':'DPXX02','header':'图片名称','type':'lable','width':'50px','id':'DPXX02'},
+							{'property':'DPXX04','header':'审核状态','type':'dpsh','width':'50px','id':'DPXX04'}]"
+		afterUrl="/customer/qfy/back/dpgl/Oper_DPSH_item.html?ZCXX01="
+		>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+</script>

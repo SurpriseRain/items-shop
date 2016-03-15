@@ -1,0 +1,129 @@
+/***********************插件弹出层开始***********************/
+.jl_poplayer{ padding:20px; min-width:500px; max-width:1000px; background-color:#fff; border:1px solid #ccc; box-shadow: 3px 3px 5px #eee; position:absolute; top:39px; left:-1px; z-index:99; font-size:14px;display:none;}
+.add_jg{ height:40px; border-bottom:1px dotted #eee;}
+.add_jg span{ float:left; line-height:30px;}
+.add_jg label{ float:left; border:1px solid #ccc; padding:4px 10px; margin-right:10px; cursor:pointer;}
+.add_jg label a{ font-size:15px; margin-left:10px;}
+.add_jg label:hover{ background-color:#d22d29; border:1px solid #d22d29; color:#fff;}
+.jl_poplayer ul{ width:100%; max-height:250px; overflow-y:auto; overflow-x:hidden; position:relative;}
+.jl_poplayer ul li{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer; position:relative;}
+.jl_poplayer ul li:hover{ background-color:#f5f5f5; cursor:pointer;}
+.jl_poplayer ul li.case_list{ margin:10px 10px 0 0; padding:3px 15px; border:1px solid #e4e4e4;}
+.jl_poplayer ul li.case_xuan{ background-color:#f5f5f5;}
+.jl_poplayer input[type="radio"]{ margin:5px 0 !important;}
+.jl_poplayer label.radio{ margin:0 0 0 5px !important; padding:0px !important; line-height:inherit !important;}
+.jl_poplayer input[type="checkbox"]{ margin:5px 0 !important;}
+.jl_poplayer label.checkbox{ margin:0 0 0 5px !important; padding:0px !important; line-height:inherit !important;}
+.jl_poplayer input[type="button"]{ padding:8px 0;}
+/***********************插件弹出层结束***********************/
+
+
+/***********************树形插件01开始***********************/
+ul.jl_tree_01{}
+ul.jl_tree_01 li{ padding:3px 15px !important; border:1px solid #e4e4e4; margin:10px 10px 0 0 !important;}
+ul.jl_tree_01 li.title{ width:100%; margin:10px 0 0 0; padding:0px; border:0px; text-align:left; font-size:12px; color:#ccc;}
+ul.jl_tree_01 li.title:hover{ background-color:#fff;}
+ul.jl_tree_01 li.xuan{ background-color:#d22d29; border:1px solid #d22d29; color:#fff;}
+/***********************树形插件01结束***********************/
+
+
+/***********************树形插件02开始***********************/
+.jl_tree_02{ width:100%;}
+.jl_tree_02 ul{min-height:216px; max-height:216px; width:150px; margin:10px 27px 0 0; border:1px solid #ccc; overflow-y:scroll; overflow-x:hidden; position:relative;}
+.jl_tree_02 ul:last-child{ margin-right:0px !important;}
+.jl_tree_02 ul li{ width:100%; border-bottom:1px solid #e4e4e4;}
+.jl_tree_02 ul li input[type="checkbox"]{ margin:12px 5px 12px 10px !important;}
+.jl_tree_02 ul li span{ line-height:35px;}
+/***********************树形插件02结束***********************/
+
+
+/***********************树形插件03开始***********************/
+.jl_tree_03{ width:100%;}
+.jl_tree_03 ul{ max-width:500px; border-style:dotted; border-width:0px 0px 0px 1px; border-color:#d22d29; display:none; margin-left:32px;}
+.jl_tree_03 ul:first-child{ display:block; margin-left:0px;}
+.jl_tree_03 ul li{ min-height:35px; width:100%; padding-left:20px;}
+.jl_tree_03 ul li:hover{ background-color:#fff;}
+.jl_tree_03 ul li:before{ position:absolute; width:20px; height:1px; z-index:2; content:''; top:17px; left: 0px; bottom:0px; border-style:dotted; border-width:0px 0px 1px 0px; border-color:#d22d29;}
+.jl_tree_03 ul li div{float:left; width:100%; height:35px; line-height:35px; text-align:center;}
+.jl_tree_03 ul li div input[type="checkbox"]{ float:left; width:15px; height:15px; margin:10px 5px 0 5px !important;}
+.jl_tree_03 ul li i{ float:left; font-style:normal; width:15px; height:15px; font-size:15px; line-height:15px; text-align:center; border:1px solid #d5d5d5; margin:9px 5px 9px 0px; cursor:pointer;}
+.jl_tree_03 ul li i.jt{ float:left; width:0 !important; height:0 !important; border-style:solid !important; border-width:5px 5px 5px 5px !important; border-color:#fff !important; border-left-color:#ccc !important; margin: 12px 0px 0 5px !important;}
+.jl_tree_03 ul li a{ float:left; line-height:35px; overflow:hidden; text-overflow: ellipsis; white-space:nowrap;}
+/***********************树形插件03结束***********************/
+
+
+/***********************数据对换插件开始***********************/
+.jl_dataexchange{ width:100%;}
+.change_case{ width:47%; height:300px; float:right; border:1px solid #ccc;}
+.change_case:first-child{ float:left;}
+.change_case .allchange{ width:100%; height:40px; line-height:40px; text-align:center; font-size:20px;  border-bottom:1px solid #ccc; cursor:pointer; font-weight:bold; color:#fff; font-family:Georgia, "Times New Roman", Times, serif;}
+.change_case ul{ width:100%; min-height:200px; float:left;}
+.change_case ul li{ float:left; width:100%; text-indent:20px; height:30px; line-height:30px;}
+/***********************数据对换插件结束***********************/
+
+
+/***********************多选插件开始***********************/
+ul.jl_multiselect li.xuan{ background-color:#f1f1f1;}
+ul.jl_multiselect li span{ display:none;}
+/***********************多选插件结束***********************/
+
+
+/***********************选项卡01插件开始***********************/
+ul.jl_tab01{ border:1px solid #ccc; height:auto; font-size:14px; margin:10px 0;}
+ul.jl_tab01 li{ float:left; padding:4px 30px; text-align:center; border-left:1px solid #ccc;}
+ul.jl_tab01 li:first-child{ border-left:0px !important;}
+ul.jl_tab01 li:hover{ background-color:#f5f5f5; cursor:pointer;}
+ul.jl_tab01 li.xuan{ background-color:#3896d4; color:#fff;}
+/***********************选项卡01插件开始***********************/
+
+
+/***********************分页01插件开始***********************/
+ul.jl_paging01{ height:28px; line-height:28px; margin:10px 0;}
+ul.jl_paging01 li{ float:left; margin-right:10px;}
+ul.jl_paging01 li input[type="text"]{ width:40px; margin:0px 10px; padding:3px 0; text-align:center; text-indent:inherit;}
+ul.jl_paging01 li a:hover{ text-decoration:underline;}
+ul.jl_paging01 li span{ float:left;}
+ul.jl_paging01 li input[type="button"]{ padding:1px 8px; margin:0 0 0 10px;}
+/***********************分页01插件结束***********************/
+
+/***********************分页02插件开始***********************/
+ul.jl_paging02{}
+ul.jl_paging02 li{ float:left; margin:10px 10px 10px 0px;}
+ul.jl_paging02 li i{ width:24px; height:24px; line-height:22px; border:1px solid #999; border-radius:50%; cursor:pointer; text-align:center;}
+ul.jl_paging02 li span{ line-height:24px;}
+ul.jl_paging02 li i:hover{ border-color:rgb(48, 126, 204); color:rgb(48, 126, 204);}
+ul.jl_paging02 li input[type="text"]{ width:40px; height:24px; margin:0px; padding:0px; text-align:center; border-color:#999; text-indent:0px;}
+ul.jl_paging02 li input[type="text"]:hover{ border-color:rgb(48, 126, 204);}
+ul.jl_paging02 li input[type="button"]{ height:24px; padding:0px 5px; margin:0px; font-size:12px;}
+/***********************分页02插件开始***********************/
+
+/***********************客服插件开始***********************/
+.jl_cusservice{ width:30px; background-color:#e40000; position:fixed; right:5px; top:205px; text-align:center; padding:10px 0; color:#fff; cursor:pointer; z-index:999999; font-size:16px;}
+
+.cusservice_main{ width:220px; padding:10px 10px 10px 0; min-height:250px; border:1px solid #e4e4e4; background-color:#fff; border-radius:3px; box-shadow:0px 0px 5px #eee; position:fixed; right:-222px; top:205px; z-index:999999; }
+.cusservice_main .title{ width:200px; height:50px; margin-left:10px; background:url(../images/cusService_title.png); border-bottom:1px solid #e4e4e4;}
+.cusservice_main .qq_list{ float:left; width:220px; margin:10px 0;}
+.cusservice_main .qq_list a{ width:93px; height:33px; margin-left:10px; border:1px solid #e4e4e4; cursor:pointer;}
+.cusservice_main .qq_list a:hover{ background-color:#eee;}
+.cusservice_main .qq_list a img{ float:left; width:33px; height:33px;}
+.cusservice_main .qq_list a span{ float:left; width:50px; height:33px; line-height:33px; margin-left:5px;}
+.cusservice_main .tel_list{ width:200px; padding:10px 0 10px 40px; font-size:23px; height:60px; line-height:50px; border-top:1px solid #e4e4e4; margin:20px 0 0 10px; float:left; background:url(../images/sever_tel.png) no-repeat; background-position:0 10px; font-weight:bold;}
+/***********************客服插件结束***********************/
+
+
+/***************************************上传控件开始**************************************/
+.file_box{ position:relative; width:100%; margin-top:10px;}
+.file_box input[type="text"]{ width:69.5% !important; margin:0px !important;}
+.btn{ background-color:#f5f5f5; border:1px solid #ccc; height:30px; width:15%; border:1px solid #ccc; cursor:pointer;}
+.btn:hover{ background-color:#eee}
+.file{ position:absolute; top:0; width:85%; right:15%; height:30px; filter:alpha(opacity:0);opacity:0;}
+/***************************************上传控件结束**************************************/
+
+
+/***************************************下拉控件开始**************************************/
+.select{ border:1px solid #e1e1e1; border-top:1px solid #c1c1c1; float:left; display:inline; max-width:100%; width:100%; margin-top:10px;}
+* html .select div select{display:block; float:left;}
+.select select{width:100%; float:none; padding:3px 0; border:0px; background-color:#fff;}
+.select input[type=text]{ border: 0px !important; margin: 0px !important; }
+.select:hover{border:1px solid #666666;}
+/***************************************下拉控件结束**************************************/

@@ -1,0 +1,429 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中国汽服云平台</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/products-main.css" />
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<style>
+/*新增*/
+#pro-main{
+	border: 1px solid #eeeeee;
+    height: 410px;
+    margin: 30px auto 0;
+    padding-bottom: 0;
+    width: 1200px;
+}
+#pro-main .pro-main-left{
+	float: left;
+    height: 400px;
+    width: 400px;
+}
+#pro-main .pro-main-left img{
+    height: 400px;
+    width: 400px;
+}
+#pro-main .pro-main-right{
+	float: left;
+    height: 420px;
+    margin-left: 15px;
+    width: 775px;
+}
+#pro-main .pro-main-right .pro-title{
+	color: #000000;
+    font-size: 18px;
+    height: 60px;
+    line-height: 60px;
+    width: 775px;
+}
+#pro-main .pro-main-right .pro-down{
+	 background-color: #fbfbfb;
+    height: 300px;
+    margin-top: 5px;
+    width: 775px;
+}
+#pro-main .pro-main-right .pro-pic{
+	background-color: #fff1f1;
+    height: 45px;
+    width: 775px;
+}
+#pro-main .pro-main-right .pro-pic .pic span{
+	color: #000000;
+    float: left;
+    font-family: "microsoft yahei";
+    font-size: 16px;
+    margin-left: 10px;
+    margin-top: 13px;
+}
+#pro-main .pro-main-right .pro-title span{
+	color: #000000;
+    float: left;
+    margin-top: 0;
+    width: 775px;
+}
+#pro-main .pro-main-right .pro-pic .pic b{
+	color: #da271c;
+    float: left;
+    font-family: "microsoft yahei";
+    font-size: 21px;
+    margin: 8px 0 0 10px;
+}
+#pro-main .pro-main-right .pro-yf{
+	float: left;
+    height: 45px;
+    width: 775px;
+}
+#pro-main .pro-main-right .pro-yf span{
+	color: #000000;
+    float: left;
+    font-family: "microsoft yahei";
+    line-height: 50px;
+    margin: 0 0 0 10px;
+    width: 80px;
+    font-size: 16px;
+}
+#pro-main .pro-main-right .pro-yf p{
+	color: #000000;
+    float: left;
+    font-family: "microsoft yahei";
+    line-height: 50px;
+    margin: 0 0 0 10px;
+    width: 675px;
+    font-size: 16px;
+}
+#pro-main .pro-main-right .pro-yf a.yuyue{
+	background-color: #ff3c3c;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    float: left;
+    font-family: "microsoft yahei";
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    margin-left: 10px;
+    margin-top: 10px;
+    text-align: center;
+    width: 80px;
+}
+#pro-main .pro-main-right .pro-yf label{
+    float: right;
+    height: 45px;
+    width: 676px;	
+}
+
+#peo-info-main{
+min-height: 700px;
+}
+#peo-info-main .info-right .title {
+    background-color: #fbfbfb;
+    border-bottom: 1px solid #eee;
+    height: 46px;
+    line-height: 40px;
+}
+body, button, input, select, textarea {
+    font: 12px/1.5 Microsoft YaHei,arial,"宋体";
+}
+body {
+    font-family: Arial,Verdana;
+    font-size: 12px;
+}
+body {
+    color: #6a6a6a;
+    font-family: Verdana,"微软雅黑","HelveticaNeue","Helvetica Neue",Arial,sans-serif;
+    font-size: 12px;
+}
+#peo-info-main .info-right {
+    border: 1px solid #e4e4e4;
+    float: left;
+    height: 100%;
+    margin-left: 9px;
+    width: 926px;
+}
+#peo-info-main .down{
+  height: 100%;
+    width: 840px;
+    float:left;
+    margin-left:20px;
+}
+#peo-info-main .info-right-bottom .pj{
+	height: 100%;
+    width: 850px;
+}
+#peo-info-main .info-right-bottom .pj .members .sd_left{
+	display: block;
+    float: left;
+    padding-top: 5px;
+    width: 120px;
+}
+#peo-info-main .info-right-bottom .pj .members .sd_right{
+	color: #6a6a6a;
+    float: left;
+    line-height: 10px;
+    margin-left: 33px;
+    overflow: hidden;
+    width: 800px;s
+}
+#peo-info-main .info-right-bottom .pj .starlist li{
+	float: left;
+    margin-top:5px;
+    width: 360px;
+}
+#peo-info-main .info-right-bottom .xq{
+     text-align: center;
+    width: 600px;
+    
+}
+.xq{
+	width:1200px; 
+	height:100%;
+	margin: 0 auto; 
+
+}
+.xq img{
+	margin: 5px auto; 
+}
+
+#peo-info-main ul.info-left {
+    border: 1px solid #eee;
+    float: left;
+    width: 228px;
+}
+
+#peo-info-main ul.info-left li.title {
+    background-color: #fbfbfb;
+    border-bottom: 1px solid #eee;
+    height: 46px;
+    margin: 0 0 14px;
+    width: 228px;
+}
+
+#peo-info-main ul.info-left li.title h2 {
+    color: #3c3c3c;
+    font-family: "microsoft yahei";
+    font-size: 15px;
+    line-height: 40px;
+    margin: 0 0 0 20px;
+    padding: 0;
+}
+</style>
+<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+var MyCookie =$.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+/* if(usercookie == null){
+	window.location.href = "/customer/qfy/register/login.html?type=1";
+} */
+</script>
+</head>
+<body>
+<!--------公共开始---------->
+<div id="header"></div>
+<div class="clera"></div>
+<!-----------------------------产品详细--------------------------------->
+<div id="pro-main">
+	<div class="pro-main-left">
+	    <img id="Title" src="/customer/qfy/images/ad.jpg"></img>
+	</div>
+	<div class="pro-main-right">
+		<div class="pro-title" >
+		    <span id="serviceName">前减震器+前减震器+前减震器+前减震器</span>
+		</div>
+		<div id="summary_price"  class="pro-pic">
+			<div class="pic"><span id="yuanjia">&nbsp;现&nbsp;售&nbsp;价：</span><b id="CurrentPrice">298</b></div>
+		</div>
+		<div class="pro-down">
+			<div class="pro pro-yf">
+			  <span>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;价：</span>
+			  <label id="OriginalPrice" >300</label>
+			</div>
+			<div class="pro pro-yf">
+			   <span>套餐类型：</span>
+			   <p id="ServerType"></p>
+			</div>
+			<div class="pro pro-yf">
+			   <span>供&nbsp;应&nbsp;&nbsp;商：</span>
+			   <p id="ZCXX02"></p>
+			</div>
+			<div class="pro pro-yf">
+			   <span>预约时间：</span>
+			   <p><input id="time_start"  value="" type="text"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" style="margin-top: 15px;" />
+			   至 <input id="time_end"  value="" type="text"  onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" style="margin-top: 15px;" />
+			   </p>
+			</div>
+			<div class="pro pro-yf">
+			   <span>是否上门：</span>
+			   <p><input id="time_yy" name="time_yy" type="radio" value="0" checked="checked"/>否  
+			   <input id="time_yy" name="time_yy" type="radio"  value="1"/>是</p>
+			</div>
+			<div class="pro pro-yf">
+			    <a class="yuyue">预&nbsp;约</a> 
+			</div>
+		</div>
+	</div>
+  
+</div>
+
+<div class="clera"></div>
+<!-----------------------------产品详细--------------------------------->
+<div id="peo-info-main">
+  <ul class="info-left">
+    <li class="title"><h2>商品推荐</h2></li>
+    <li style="overflow:hidden;text-overflow:ellipsis;">
+<a class="img" ><img src="/customer/qfy/images/abcd.jpg" /></a>
+<a class="text">前减震器右 北京现代伊兰特悦动 i30</a>
+</li>
+  <li style="overflow:hidden;text-overflow:ellipsis;">
+<a class="img" ><img src="/customer/qfy/images/abcd.jpg" /></a>
+<a class="text">前减震器右 北京现代伊兰特悦动 i30</a>
+</li>
+  <li style="overflow:hidden;text-overflow:ellipsis;">
+<a class="img" ><img src="/customer/qfy/images/abcd.jpg" /></a>
+<a class="text">前减震器右 北京现代伊兰特悦动 i30</a>
+</li>
+  </ul>
+  <div class="info-right">
+    <div class="title">
+      <h2 class="xuan"><b>商品详情</b></h2> 
+      <h2><b>商品评价</b></h2>
+    </div>
+    <div class="right-main"></div>
+  </div>
+  
+  
+  
+  <div class="info-right-bottom down">
+      <!-- 商品详情 -->
+      <div class="xq">
+            <img id="Detail" src="/customer/qfy/images/ad.jpg"></img>        
+      </div>
+      <!-- 商品评价 -->
+      <div class="pj" style="display: none;">
+      	 <div id="assesscon">
+		    <div class="assbox">
+    		<!-- 评价 -->
+            <div id="khpj" class="members clearfix"><div class="sd_left"><strong>北京维修厂</strong></div><div class="sd_right"><div class="title clearfix"> <span class="yushou fl"><font class="bold">综合评价：4.25</font></span>  <span class="time fr">评价日期：2015-09-12</span>  </div> <ul class="starlist clearfix"><li><span>商品描述相符：</span><span class="star star5"></span></li><li><span>物流发货速度：</span><span class="star star4"></span></li><li><span class="fl">客服服务态度：</span><span class="star star4"></span></li><li><span class="fl">配送人员态度：</span><span class="star star4"></span></li></ul><div class="evaluate clearfix" style="margin-top: 20px;"><span>评价：</span><p>这是一件很好的商品！！！</p></div><span class="clorgray">购买日期：2015-09-10</span></div></div>             
+            <!-- 评价 -->
+            <div id="khpj" class="members clearfix"><div class="sd_left"><strong>天津客户</strong></div><div class="sd_right"><div class="title clearfix"> <span class="yushou fl"><font class="bold">综合评价：4.25</font></span>  <span class="time fr">评价日期：2015-09-12</span>  </div> <ul class="starlist clearfix"><li><span>商品描述相符：</span><span class="star star5"></span></li><li><span>物流发货速度：</span><span class="star star4"></span></li><li><span class="fl">客服服务态度：</span><span class="star star4"></span></li><li><span class="fl">配送人员态度：</span><span class="star star4"></span></li></ul><div class="evaluate clearfix" style="margin-top: 20px;"><span>评价：</span><p>这是一件很好的商品！！！</p></div><span class="clorgray">购买日期：2015-09-10</span></div></div>             
+            <!-- 评价 -->
+            <div id="khpj" class="members clearfix"><div class="sd_left"><strong>北京客户</strong></div><div class="sd_right"><div class="title clearfix"> <span class="yushou fl"><font class="bold">综合评价：4.25</font></span>  <span class="time fr">评价日期：2015-09-12</span>  </div> <ul class="starlist clearfix"><li><span>商品描述相符：</span><span class="star star5"></span></li><li><span>物流发货速度：</span><span class="star star4"></span></li><li><span class="fl">客服服务态度：</span><span class="star star4"></span></li><li><span class="fl">配送人员态度：</span><span class="star star4"></span></li></ul><div class="evaluate clearfix" style="margin-top: 20px;"><span>评价：</span><p>这是一件很好的商品！！！</p></div><span class="clorgray">购买日期：2015-09-10</span></div></div>             
+            <!-- 评价 -->
+            <div id="khpj" class="members clearfix"><div class="sd_left"><strong>天津维修厂</strong></div><div class="sd_right"><div class="title clearfix"> <span class="yushou fl"><font class="bold">综合评价：4.25</font></span>  <span class="time fr">评价日期：2015-09-12</span>  </div> <ul class="starlist clearfix"><li><span>商品描述相符：</span><span class="star star5"></span></li><li><span>物流发货速度：</span><span class="star star4"></span></li><li><span class="fl">客服服务态度：</span><span class="star star4"></span></li><li><span class="fl">配送人员态度：</span><span class="star star4"></span></li></ul><div class="evaluate clearfix" style="margin-top: 20px;"><span>评价：</span><p>这是一件很好的商品！！！</p></div><span class="clorgray">购买日期：2015-09-10</span></div></div>             
+            
+            <!-- pages -->
+            <div  class="filter_top noline">
+                <div class="fore clearfix">
+                          <div class="shop_page w100">                    
+								 <span class="shopnum clorange fl">共<span id="TOTAL">1</span>条评价</span>
+				                 <span id="page" class="fl"><b class="clorange">1</b>/1</span>
+				                 <span class="fr">
+				                  <a class="prev" onclick="pageUp()">上一页</a>
+				                  <select onchange="PAGING(this)" id="PAGING" name="PAGING"><option value="1">1</option></select>
+				                  <a class="next" onclick="pageDown()">下一页</a>
+				                 </span>
+				                 <br class="clear">
+                          </div>
+                    </div>
+              </div>
+            </div>
+         </div>
+      </div>
+  </div>
+</div>
+<div class="clera"></div>
+<div id="footer"></div>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript">
+ var MyCookie =$.cookie('userInfo');
+ var usercookie = JSON.parse(MyCookie);
+	 var id=$.getUrlParam('id');
+ if (usercookie != null){
+	 var carOwerId = usercookie.Id;
+	 var role = usercookie.Role;
+}
+ var CurrentPrice="";
+ var defaultImgUrl = pubJson.defaultImgUrl;
+ $(function(){
+	$("#header").load("/customer/qfy/head-08.jsp");
+	$("#footer").load("/customer/qfy/foot-08.html?ss="+Math.random());
+	selectBarcode(id);//查询商品信息
+	if (role == 5) {
+		$("#CurrentPrice").html("价格不可见");
+		$("#OriginalPrice").html("价格不可见");
+	}
+	//预约功能
+	$(".yuyue").on('click',function(){
+		if(usercookie == null){
+			window.location.href = "/customer/qfy/register/login.html?type=1";
+			return false;
+		}
+		if($("#time_start").val() == "" || $("#time_end").val() ==""){
+			alert("请选择预约时间！");
+			return false;
+		}
+		else if($("#time_start").val() > $("#time_end").val()){
+			alert("预约时间：开始时间不能大于结束时间！");
+			return false;
+		}
+		var time_start = $("#time_start").val(); 
+		var time_end = $("#time_end").val();
+		var obj = $("input[type='radio']:checked").val();
+		var xmlData=[{"ServiceId":id,"UserId":carOwerId,"TotailPrice":CurrentPrice,"OrderServiceStartTime":time_start,"OrderServiceEndTime":time_end,"IsVisit":obj}];
+		var url="/Oper_OrderService/insertOrderService.action?json="+JSON.stringify(xmlData);
+		ajaxQ({
+			"url" : url,//原始url 
+			"callback" : function(data){
+				if(data.STATE=="success"){
+					alert("预约成功!");
+				}else{
+					alert("预约失败!");
+				}
+			}
+		});
+	});
+	
+    $(".info-right-bottom > div").css({"display":"none"});										   
+    $(".xq").css({"display":"block"}); 
+	$("h2").click(function(){	
+		$("h2").removeClass("xuan");
+		$(this).addClass("xuan");	   
+		var h2text = $(this).text();
+		if(h2text == "商品详情"){
+			$(".info-right-bottom > div").css({"display":"none"});
+			$(".xq").show();
+		}
+		if(h2text == "商品评价"){
+			$(".info-right-bottom > div").css({"display":"none"});
+			$(".pj").show();
+		}
+	});
+	
+});
+
+//查询商品信息
+function selectBarcode(id){
+	var json = [{"id":id}];
+	var Url='/FWSP/selectFWSP.action?json='+JSON.stringify(json);;
+	var rData0 = visitService(Url);
+	$("#serviceName").html(rData0.ServiceName);
+	//商品售价
+	CurrentPrice = rData0.CurrentPrice
+	$("#CurrentPrice").html(accounting.formatMoney(CurrentPrice));
+	$("#OriginalPrice").html(accounting.formatMoney(rData0.OriginalPrice));
+	//套餐类型
+	$("#ServerType").html(rData0.ServerTypeName);
+	//供货商
+	$("#ZCXX02").html(rData0.ZCXX02);
+	$("#Title").attr("src","/jlsoft/fftp/fwsp/"+rData0.ServiceTitlePicturePath).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/ad.jpg'" );;
+	$("#Detail").attr("src","/jlsoft/fftp/fwsp/"+rData0.ServiceDetailPicturePath).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/ad.jpg'" );;
+ }
+
+</script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+</body>
+</html>

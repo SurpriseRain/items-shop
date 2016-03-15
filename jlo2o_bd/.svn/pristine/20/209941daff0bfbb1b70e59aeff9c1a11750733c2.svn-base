@@ -1,0 +1,557 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="汽修;汽修软件;汽修汽配软件" />
+<title>汽修|汽修软件|汽修汽配软件|汽服云平台</title>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+</head>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#header").load("/customer/qfy/head-08.jsp?",function(reponse,status){
+		if(status=="success"){
+			$(".zzfws").css({"color":"#ff8800"});
+		}
+	});
+	$("#footer").load("/customer/qfy/foot-08.html");
+	});
+</script>
+<body>
+<div id="header">
+</div>
+<div class="clera"></div>
+
+<div id="zzfw">
+  <p class="zengzhi">增值服务</p>
+<p class="qhfy">汽服云O2O/M平台，为广大维修企业、经销、生产及最终用户等提供完整的增值服务软件系统，包括企业管理ERP、汽修业务SERVICE、客户关系CRM、办公OA、电商B2B/B2C/C2B，以及考核系统、员工绩效等，企业需要解决线上、线下、移动一体化的企业运营解决方案。其主要功能内容如下：</p>
+<table border="1" cellpadding="0" cellspacing="0" >
+  <tr >
+    <td width="105" valign="center" ><p >ERP </p></td>
+    <td width="100" valign="center" ><p >SERVICE </p></td>
+    <td width="109" valign="center" ><p >CRM </p></td>
+    <td width="108" valign="center" ><p >OA </p></td>
+    <td width="130" valign="center" ><p >B2B/B2C/C2B </p></td>
+    
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >合同管理 </p></td>
+    <td width="100" valign="center" ><p >会员管理 </p></td>
+    <td width="109" valign="center" ><p >客户关系 </p></td>
+    <td width="108" valign="center" ><p >表单设计 </p></td>
+    <td width="130" valign="center" ><p >店铺管理 </p></td>
+  
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >价格管理 </p></td>
+    <td width="100" valign="center" ><p >洗车保养 </p></td>
+    <td width="109" valign="center" ><p >会员管理 </p></td>
+    <td width="108" valign="center" ><p >流程设计 </p></td>
+    <td width="130" valign="center" ><p >微商城 </p></td>
+  
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >进货管理 </p></td>
+    <td width="100" valign="center" ><p >维修改装 </p></td>
+    <td width="109" valign="center" ><p >促销政策 </p></td>
+    <td width="108" valign="center" ><p >公文收发 </p></td>
+    <td width="130" valign="center" ><p >仓储物流 </p></td>
+    
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >库存管理 </p></td>
+    <td width="100" valign="center" ><p >钣金喷漆 </p></td>
+    <td width="109" valign="center" ><p >积分政策 </p></td>
+    <td width="108" valign="center" ><p >邮件收发 </p></td>
+    <td width="130" valign="center" ><p >渠道管理 </p></td>
+   
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >零售业务 </p></td>
+    <td width="100" valign="center" ><p >保险购买 </p></td>
+    <td width="109" valign="center" ><p >综合报表 </p></td>
+    <td width="108" valign="center" ><p >考勤管理 </p></td>
+    <td width="130" valign="center" ><p >账户管理 </p></td>
+  
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >分销业务 </p></td>
+    <td width="100" valign="center" ><p >定损理赔 </p></td>
+    <td width="109" valign="center" ><p >数据分析 </p></td>
+    <td width="108" valign="center" ><p >代办事宜 </p></td>
+    <td width="130" valign="center" ><p >金融服务 </p></td>
+  
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >会员管理 </p></td>
+    <td width="100" valign="center" ><p >年审代办 </p></td>
+    <td width="109" valign="center" ><p >知识库 </p></td>
+    <td width="108" valign="center" ><p >培训考试 </p></td>
+    <td width="130" valign="center" ><p >数据分析 </p></td>
+  
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >物流安装 </p></td>
+    <td width="100" valign="center" ><p >旧件回收 </p></td>
+    <td width="109" valign="center" ><p >&nbsp;</p></td>
+    <td width="108" valign="center" ><p >调查问卷 </p></td>
+    <td width="130" valign="center" ><p >&nbsp;</p></td>
+   
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >往来对账 </p></td>
+    <td width="100" valign="center" ><p >二手车交易 </p></td>
+    <td width="109" valign="center" ><p >&nbsp;</p></td>
+    <td width="108" valign="center" ><p >知识库 </p></td>
+    <td width="130" valign="center" ><p >&nbsp;</p></td>
+   
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >结算收入 </p></td>
+    <td width="100" valign="center" ><p >质量检验 </p></td>
+    <td width="109" valign="center" ><p >&nbsp;</p></td>
+    <td width="108" valign="center" ><p >&nbsp;</p></td>
+    <td width="130" valign="center" ><p >&nbsp;</p></td>
+  
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >综合报表 </p></td>
+    <td width="100" valign="center" ><p >客户回访 </p></td>
+    <td width="109" valign="center" ><p >&nbsp;</p></td>
+    <td width="108" valign="center" ><p >&nbsp;</p></td>
+    <td width="130" valign="center" ><p >&nbsp;</p></td>
+   
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >财务凭证 </p></td>
+    <td width="100" valign="center" ><p >拖车代驾 </p></td>
+    <td width="109" valign="center" ><p >&nbsp;</p></td>
+    <td width="108" valign="center" ><p >&nbsp;</p></td>
+    <td width="130" valign="center" ><p >&nbsp;</p></td>
+    
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >往来调拨 </p></td>
+    <td width="100" valign="center" ><p >维修派工 </p></td>
+    <td width="109" valign="center" ><p >&nbsp;</p></td>
+    <td width="108" valign="center" ><p >&nbsp;</p></td>
+    <td width="130" valign="center" ><p >&nbsp;</p></td>
+   
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >KPI考核 </p></td>
+    <td width="100" valign="center" ><p >提成统计 </p></td>
+    <td width="109" valign="center" ><p >&nbsp;</p></td>
+    <td width="108" valign="center" ><p >&nbsp;</p></td>
+    <td width="130" valign="center" ><p >&nbsp;</p></td>
+   
+    </tr>
+  <tr >
+    <td width="105" valign="center" ><p >&nbsp;</p></td>
+    <td width="100" valign="center" ><p >综合报表 </p></td>
+    <td width="109" valign="center" ><p >&nbsp;</p></td>
+    <td width="108" valign="center" ><p >&nbsp;</p></td>
+    <td width="130" valign="center" ><p >&nbsp;</p></td>
+    
+    </tr>
+</table>
+
+<p class="qhfy">不仅如此，除上述系统及业务功能外，汽服云平台还针对不同客户提供个性化开发、流程配置、其他需求定制开发等高级服务，具体事宜请与商务人员联系。</p>
+
+
+<table border="1" cellpadding="0" cellspacing="0" >
+  <tr >
+    <td width="68" valign="center" ><p >姓名 </p></td>
+    <td width="142" valign="center" ><p >联系电话 </p></td>
+    <td width="124" valign="center" ><p >移动电话 </p></td>
+    <td width="110" valign="center" ><p >联系QQ </p></td>
+    <td width="162" valign="center" ><p >邮箱 </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >邱鹏 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13554228048 </p></td>
+    <td width="110" valign="center" ><p >1401188888 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >陈谋 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13554213971 </p></td>
+    <td width="110" valign="center" ><p >396592242 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >魏淑琦 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13277070912 </p></td>
+    <td width="110" valign="center" ><p >857229516 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >李茜 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >18707140930 </p></td>
+    <td width="110" valign="center" ><p >348591973 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+</table>
+<p class="qiye">企业ERP系统 </p>
+<p class=" zengzhi">1.系统简介</p>
+<p class=" qhfy"> JL SCMV9 供应链系统采用集中管理、分散经营、统一核算、库存共用（资金、人员）、统一配送、规范服务的模式，解决企业物资流、资金流、信息流、服务流的问题，管理上由事后反应转变成事前控制和过程控制。</p>
+<p class=" zengzhi">2.业务流程</p>
+<img src="/customer/qfy/images/jccb-ywlc.png" class="ywlc"/>
+
+<p class=" zengzhi">3.系统界面</p>
+<p class="zddhd">3.1制定订货单</p>
+<img src="/customer/qfy/images/ERP-zddhd.jpg" />
+
+<p class=" zddhd">3.2制定结算登记单</p>
+<img src="/customer/qfy/images/ERP-zdjsdjd.jpg"/>
+
+<p class=" zddhd">3.3制定订单入库单</p>
+<img src="/customer/qfy/images/ERP-zdddrkd.jpg"/>
+
+<p class=" zddhd">3.4制定盘点表</p>
+<img src="/customer/qfy/images/ERP-zdpdb.jpg"/>
+
+<p class=" zengzhi">4.联系我们</p>
+<table border="1" cellpadding="0" cellspacing="0" >
+  <tr >
+    <td width="68" valign="center" ><p >姓名 </p></td>
+    <td width="142" valign="center" ><p >联系电话 </p></td>
+    <td width="124" valign="center" ><p >移动电话 </p></td>
+    <td width="110" valign="center" ><p >联系QQ </p></td>
+    <td width="162" valign="center" ><p >邮箱 </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >邱鹏 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13554228048 </p></td>
+    <td width="110" valign="center" ><p >1401188888 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >陈谋 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13554213971 </p></td>
+    <td width="110" valign="center" ><p >396592242 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >魏淑琦 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13277070912 </p></td>
+    <td width="110" valign="center" ><p >857229516 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >李茜 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >18707140930 </p></td>
+    <td width="110" valign="center" ><p >348591973 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+</table>
+
+<p class="qiye">汽修管理系统 </p>
+<p class=" zengzhi">1.系统简介</p>
+<p class=" qhfy">汽修SERVICE系统是针对汽车维修企业量身定做的业务系统，该系统采用领先的所见即所得技术，实现业务流程、操作界面完全自定义，满足各个企业不同的需求，帮助企业打造业务流程的信息化，还可实现企业OA办公流程。</p>
+<p class=" qhfy">汽修SERVICE系统涵盖客户关系、汽修业务、人员管理、员工培训、维修知识库等内容，可实现从接车到交车全环节业务流程梳理、监控、质检、回访。在实现企业日常业务需求以外，还帮助企业建立自己的人才和知识体系，为企业的可持续性发展提供助力。</p>
+<p class=" qhfy">汽修SERVICE系统操作简便，以业务引擎驱动，自动提醒对应岗位人员的待办事宜，最大限度降低系统使用培训所需时间，提高员工操作效率。 </p>
+<p class=" zengzhi">2.业务流程</p>
+<img src="/customer/qfy/images/jccb-ywlc.png" class="ywlc"/>
+
+<p class=" zengzhi">3.系统界面</p>
+<p class="zddhd">3.1服务单</p>
+<img src="/customer/qfy/images/fwd.jpg" />
+
+<p class="zddhd">3.2年审登记</p>
+<img src="/customer/qfy/images/nsdjd.jpg" />
+
+<p class="zddhd">3.3保险登记</p>
+<img src="/customer/qfy/images/bxdjd.jpg" />
+
+<p class="zddhd">3.4客户关系</p>
+<img src="/customer/qfy/images/khdad.jpg" />
+
+<p class=" zengzhi">4.联系我们</p>
+<table border="1" cellpadding="0" cellspacing="0" >
+  <tr >
+    <td width="68" valign="center" ><p >姓名 </p></td>
+    <td width="142" valign="center" ><p >联系电话 </p></td>
+    <td width="124" valign="center" ><p >移动电话 </p></td>
+    <td width="110" valign="center" ><p >联系QQ </p></td>
+    <td width="162" valign="center" ><p >邮箱 </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >邱鹏 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13554228048 </p></td>
+    <td width="110" valign="center" ><p >1401188888 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >陈谋 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13554213971 </p></td>
+    <td width="110" valign="center" ><p >396592242 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >魏淑琦 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >13277070912 </p></td>
+    <td width="110" valign="center" ><p >857229516 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+  <tr >
+    <td width="68" valign="center" ><p >李茜 </p></td>
+    <td width="142" valign="center" ><p >027-85350648-8804 </p></td>
+    <td width="124" valign="center" ><p >18707140930 </p></td>
+    <td width="110" valign="center" ><p >348591973 </p></td>
+    <td width="162" valign="center" ><p >marketing@qchfy.com </p></td>
+  </tr>
+</table>
+
+<!--  <p class="wjdc">问卷调查</p>
+<p class="qxz">(请选择您所需的增值服务内容，我们将会尽快与您联系。)</p>
+
+<table border="1" align="center" cellpadding="0" cellspacing="0" class="wenjuan">
+  <tr >
+    <td width="780" valign="top" colspan="10" ><p class="zddhd">企业增值服务登记表 </p></td>
+  </tr>
+  <tr >
+    <td width="140" valign="top" colspan="2" ><p >企业名称 </p></td>
+    <td width="640" valign="top" colspan="8" text-align="left"; ><p >
+      <input style="line-height:20px; margin-left:-350px;" />
+    <a style="color:#F00; font-weight:bold; padding-top:10px; margin-left:10px;">*</a>已在汽服云平台注册的用户请直接登陆卖家中心 </p></td>
+  </tr>
+  <tr >
+    <td width="140" valign="top" colspan="2" ><p >联系人 </p></td>
+    <td width="640" valign="top" colspan="8" ><p > <input style="line-height:20px; margin-left:-630px;" /></td>
+  </tr>
+  <tr >
+    <td width="140" valign="top" colspan="2" ><p >联系电话 </p></td>
+    <td width="640" valign="top" colspan="8" ><p > <input style="line-height:20px; margin-left:-385px;" />  <a style="color:#F00; font-weight:bold; margin-top:5px; margin-left:10px;">*</a>请保持在线，方便我们的商务人员与您联系 </p></td>
+  </tr>
+  <tr >
+    <td width="140" valign="top" colspan="2" ><p >联系邮箱 </p></td>
+    <td width="640" valign="top" colspan="8" ><p ><a name="Text4" id="Text4" > <input style="line-height:20px; margin-left:-630px;" /></p></td>
+  </tr>
+  <tr >
+    <td width="780" valign="top" colspan="10" ><p >系统列表（请选择您所需的模块内容） </p></td>
+  </tr>
+  <tr >
+    <td width="140" valign="top" colspan="2" ><p >ERP </p></td>
+    <td width="180" valign="top" colspan="2" ><p >SERVICE </p></td>
+    <td width="134" valign="top" colspan="2" ><p >CRM </p></td>
+    <td width="153" valign="top" colspan="2" ><p >OA </p></td>
+    <td width="172" valign="top" colspan="2" ><p >B2B/B2C/C2B </p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="top" ><p >模块 </p></td>
+    <td width="69" valign="top" ><p >选择 </p></td>
+    <td width="90" valign="top" ><p >模块 </p></td>
+    <td width="90" valign="top" ><p >选择 </p></td>
+    <td width="67" valign="top" ><p >模块 </p></td>
+    <td width="67" valign="top" ><p >选择 </p></td>
+    <td width="76" valign="top" ><p >模块 </p></td>
+    <td width="76" valign="top" ><p >选择 </p></td>
+    <td width="86" valign="top" ><p >模块 </p></td>
+    <td width="86" valign="top" ><p >选择 </p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="top" ><p >合同管理 </p></td>
+    <td width="69" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="90" valign="top" ><p >会员管理 </p></td>
+    <td width="90" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="67" valign="top" ><p >客户关系 </p></td>
+    <td width="67" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="76" valign="top" ><p >表单设计 </p></td>
+    <td width="76" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="86" valign="top" ><p >店铺管理 </p></td>
+    <td width="86" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >价格管理 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="top" ><p >洗车保养 </p></td>
+    <td width="90" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="67" valign="top" ><p >会员管理 </p></td>
+    <td width="67" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="76" valign="top" ><p >流程设计 </p></td>
+    <td width="76" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="86" valign="bottom" ><p >微商城 </p></td>
+    <td width="86" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+  </tr>
+  <tr >
+    <td width="70" valign="top" ><p >进货管理 </p></td>
+    <td width="69" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="90" valign="top" ><p >维修改装 </p></td>
+    <td width="90" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="67" valign="top" ><p >促销政策 </p></td>
+    <td width="67" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="76" valign="top" ><p >公文收发 </p></td>
+    <td width="76" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="86" valign="bottom" ><p >仓储物流 </p></td>
+    <td width="86" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >库存管理 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="top" ><p >钣金喷漆 </p></td>
+    <td width="90" valign="top" ><label><input type="checkbox" style="margin-top:13px;" /> </label></td>
+    <td width="67" valign="bottom" ><p >积分政策 </p></td>
+    <td width="67" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="76" valign="bottom" ><p >邮件收发 </p></td>
+    <td width="76" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="86" valign="bottom" ><p >渠道管理 </p></td>
+    <td width="86" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >零售业务 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >保险购买 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="bottom" ><p >综合报表 </p></td>
+    <td width="67" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="76" valign="bottom" ><p >考勤管理 </p></td>
+    <td width="76" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="86" valign="bottom" ><p >账户管理 </p></td>
+    <td width="86" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >分销业务 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >定损理赔 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="bottom" ><p >数据分析 </p></td>
+    <td width="67" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="76" valign="bottom" ><p >代办事宜 </p></td>
+    <td width="76" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="86" valign="bottom" ><p >金融服务 </p></td>
+    <td width="86" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >会员管理 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >年审代办 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="bottom" ><p >知识库 </p></td>
+    <td width="67" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="76" valign="bottom" ><p >培训考试 </p></td>
+    <td width="76" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="86" valign="bottom" ><p >数据分析 </p></td>
+    <td width="86" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >物流安装 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >旧件回收 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="bottom" ><p >调查问卷 </p></td>
+    <td width="76" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >往来对账 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >二手车交易 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="bottom" ><p >知识库 </p></td>
+    <td width="76" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >结算收入 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >质量检验 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >综合报表 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >客户回访 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >财务凭证 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >拖车代驾 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="bottom" ><p >往来调拨 </p></td>
+    <td width="69" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >维修派工 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="center" ><p >KPI考核 </p></td>
+    <td width="69" valign="center" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="90" valign="bottom" ><p >提成统计 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="bottom" ><p >&nbsp;</p></td>
+  </tr>
+  <tr >
+    <td width="70" valign="center" ><p >&nbsp;</p></td>
+    <td width="69" valign="center" ><p >&nbsp;</p></td>
+    <td width="90" valign="bottom" ><p >综合报表 </p></td>
+    <td width="90" valign="bottom" ><label><input type="checkbox" style=" margin-bottom:13px;" /> </label></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="67" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="76" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="center" ><p >&nbsp;</p></td>
+    <td width="86" valign="bottom" ></td>
+  </tr>
+</table>
+<a class="qdbtj">确认并提交</a>-->
+</div> 
+
+<div class="clera"></div>
+<div id="footer">
+</div>
+
+</body>
+
+</html>

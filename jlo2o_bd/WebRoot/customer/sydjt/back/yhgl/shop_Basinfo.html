@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心 - 基本信息</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Basinfo.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script> 
+</head>
+<script type="text/javascript">
+var dqdm="";
+var imgUrl=pubJson.path_sptp+"/dptp/";
+$(document).ready(function(){
+	//加载地址信息
+	showDQXX("QY");
+	
+	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	var zcxx01 = userCookie.ZCXX01;
+	$("#ZCXX01").val(zcxx01);
+	var arr = [];
+	var o = {};
+	o["ZCXX01"] = zcxx01;
+	arr.push(o);
+	var data = visitService("/UserInfo/selectCompanyInfo.action?XmlData="+JSON.stringify(arr));
+	var list=data.lists;
+	$(".dpName").val(list[0].ZCXX02);
+	$(".hym").val(list[0].HYGLM);
+	$(".csm").val(list[0].SBM);
+	$(".csm").attr("title",list[0].SBM);
+	$(".qym").val(list[0].WZM);
+	$(".qym").attr("title",list[0].WZM);
+	dqdm = list[0].ZCXX07;
+	$(".add").val(list[0].ZCXX08);
+	$(".add").attr("title",list[0].ZCXX08);
+	$(".frdb").val(list[0].ZCXX03);
+	$(".frdb").attr("title",list[0].ZCXX03);
+	$(".lxr").val(list[0].ZCXX33);
+	$(".lxr").attr("title",list[0].ZCXX33);
+	$(".phone").val(list[0].ZCXX06);
+	$(".phone").attr("title",list[0].ZCXX06);
+	$(".zj").val(list[0].ZCXX55);
+	$(".zj").attr("title",list[0].ZCXX55);
+	$(".eml").val(list[0].ZCXX09);
+	$(".eml").attr("title",list[0].ZCXX09);
+
+	$(data.lists).each(function(index,val){
+		if(val.DPTP01==3){
+			$(".yyzzbh").val(val.DPTP05);
+			$(".yyzzbh").attr("title",val.DPTP05);
+			$("#imgUrl1").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==4){
+			$(".zzjgbh").val(val.DPTP05);
+			$(".zzjgbh").attr("title",val.DPTP05);
+			$("#imgUrl2").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==5){
+			$(".swdjbh").val(val.DPTP05);
+			$(".swdjbh").attr("title",val.DPTP05);
+			$("#imgUrl3").attr("src",imgUrl+val.DPTP02);
+		}
+		if(val.DPTP01==6){
+			$(".yhkfzbh").val(val.DPTP05);
+			$(".yhkfzbh").attr("title",val.DPTP05);
+			$("#imgUrl4").attr("src",imgUrl+val.DPTP02);
+		}
+
+	})
+
+	//图片点击放大
+		$("td > img").click(function(){
+		  var td_img = $(this).attr("class");
+		  if(td_img == "img"){
+			 $(this).attr("class","big")
+			}else if(td_img == "big"){
+			 $(this).attr("class","img") 
+			}
+		 })
+})
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  	  });	
+  	}
+    if(index==1){
+  	  var dqjb=2;
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  	  });	
+  	}	 			
+  });
+}
+
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	$(list).each(function(i,json){
+  		if(i==0){
+  	 		$(objaft).empty();
+  	  		$(objaft).append("<option value='0'>请选择</option>");
+    	}
+  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  	});
+}
+</script>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<input type="hidden" value="" id="ZCXX01" name="ZCXX01" />
+	<div id="curPosition">
+    	<a href="#">用户管理</a>
+    	<span>></span>
+    	<b>账户信息</b>
+	</div>
+  <table class="single_table">
+     <tr class="title"><td colspan="2"><b>基本资料</b><font>* 必填项</font></td></tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">企业名称：</span></td>
+       <td style="width:550px;"><input value="" class="dpName" name="dpName" disabled="true" readonly="readonly" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">行业管理码：</span></td>
+       <td style="width:550px;"><input value="" class="hym" name="hym" disabled="true" readonly="readonly" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">厂商识别码：</span></td>
+       <td style="width:550px;"><input value="" class="csm" name="csm" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">企业位置码：</span></td>
+       <td style="width:550px;"><input value="" class="qym" name="qym" title="" style="width:300px;" disabled="true" readonly="readonly" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">企业地址：</span></td>
+       <td class="add1" style="display: none;"><select id="provinceQY" class="dy" title=""><option value="0">请选择</option></select><select id="cityQY"><option value="0">请选择</option></select><select id="countryQY"><option value="0">请选择</option></select><input value="" title="" class="address" id="QYdzdetail" style="width:156px"/><label class="caozuo">取消</label></td>
+       <td class="add2" style="display: table-cell block;width:550px;"><input value="" title="" class="add" readonly="readonly" style="width:300px;"/><label class="caozuo">修改</label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">企业法人：</span></td>
+       <td style="width:550px;"><font>*</font><input value="" class="frdb" name="frdb" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">联系人：</span></td>
+       <td style="width:550px;"><font>*</font><input value="" class="lxr" name="lxr" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">手机号码：</span></td>
+       <td style="width:550px;"><font>*</font><input value="" class="phone" name="phone" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">电话号码：</span></td>
+       <td style="width:550px;"><input value="" class="zj" name="zj" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">邮箱地址：</span></td>
+       <td style="width:550px;"><input value="" class="eml" name="eml" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">营业执照编号：</span></td>
+       <td style="width:550px;"><input value="" class="yyzzbh" name="yyzzbh" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+     <tr>
+	    <td style="width:150px;"><span style="width:145px;">上传营业执照：</span></td>
+	    <td class="xstp"><img src="" id="imgUrl1" class="img"/><label class="caozuo" >修改</label></td>
+	    <td class="sctp" style="display:none;">
+	    	<input type="hidden" id="filename1" />
+	    	<input style="width:300px;" type="file" name="file" value="" id="file1"  size="34" onchange="changefile(1);" /><label class="caozuo" onclick="cancelfile(1);">取消</label>
+	    </td>
+	 </tr>
+     <tr>
+       <td style="width:150px;"><span style="width:145px;">组织机构代码证编号：</span></td>
+       <td style="width:550px;"><input value="" class="zzjgbh" name="zzjgbh" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+          <tr>
+	    <td style="width:150px;"><span style="width:145px;">上传组织机构代码证：</span></td>
+	    <td  class="xstp"><img src="" id="imgUrl2" class="img"/><label class="caozuo" >修改</label></td>
+	    <td class="sctp" style="display:none;">
+	    	<input type="hidden" id="filename2" />
+	    	<input style="width:300px;" type="file" name="file" value="" id="file2"  size="34" onchange="changefile(2);" /><label class="caozuo" onclick="cancelfile(2);">取消</label>
+	    </td>
+	 </tr>
+          <tr>
+       <td style="width:150px;"><span style="width:145px;">税务登记证编号：</span></td>
+       <td style="width:550px;"><input value="" class="swdjbh" name="swdjbh" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+          <tr>
+	    <td style="width:150px;"><span style="width:145px;">上传税务登记证：</span></td>
+	    <td class="xstp"><img src="" id="imgUrl3" class="img"/><label class="caozuo" >修改</label></td>
+	    <td class="sctp" style="display:none;">
+	    	<input type="hidden" id="filename3" />
+	    	<input style="width:300px;" type="file" name="file" value="" id="file3"  size="34" onchange="changefile(3);" /><label class="caozuo" onclick="cancelfile(3);">取消</label>
+	    </td>
+	 </tr>
+          <tr>
+       <td style="width:150px;"><span style="width:145px;">银行开户许可证编号：</span></td>
+       <td style="width:550px;"><input value="" class="yhkfzbh" name="yhkfzbh" title="" style="width:300px;" /><label class="bz"></label></td>
+     </tr>
+          <tr>
+	    <td style="width:150px;"><span style="width:145px;">上传银行开户许可证：</span></td>
+	    <td class="xstp"><img src="" id="imgUrl4" class="img"/><label class="caozuo" >修改</label></td>
+	    <td class="sctp" style="display:none;">
+	    	<input type="hidden" id="filename4" />
+	    	<input style="width:300px;" type="file" name="file" value="" id="file4"  size="34" onchange="changefile(4);" /><label class="caozuo" onclick="cancelfile(4);">取消</label>
+	    </td>
+	 </tr>
+     <tr class="bot">
+       <td colspan="2">
+         <a style="margin-left: 193px;" class="bot Medium" onclick="ok()">保存</a>
+       </td>
+      </tr>    
+    </table>
+  <div class="clera"></div>  
+  	<div class="clera"></div>
+  	<input type="hidden" value="" id="dqdm" name="dqdm" />
+  	<input type="hidden" value="" id="address" name="address" />
+</form>
+<!---------------------底部--------------------->
+</body>
+<script type="text/javascript">
+function changefile(id){
+	$("#filename"+id).val(id);
+}
+function cancelfile(id){
+	$("#filename"+id).val("");
+}
+function ok(){
+	if(checkNull()){
+		var temp = $(".add2").attr("style");
+		if(temp=="display: none"){
+		 	//拼接地址
+		 	var ZCXX07="";  //地址编码
+		   	var ZCXX08="";  //中文地址
+		   	if($("#provinceQY").val() != "0"){
+			  	ZCXX07=$("#provinceQY").val();
+			  	ZCXX08=ZCXX08+$("#provinceQY option:selected").text();
+		   	}
+		   	if($("#cityQY").val() != "0"){
+			  	ZCXX07=$("#cityQY").val();
+			  	ZCXX08=ZCXX08+$("#cityQY option:selected").text();
+		   	}
+		   	if($("#countryQY").val() != "0"){
+		      	ZCXX07=$("#countryQY").val();
+			  	ZCXX08=ZCXX08+$("#countryQY option:selected").text();
+		   	}
+		   	$("#dqdm").val(ZCXX07);
+		   	var address=ZCXX08+$("#QYdzdetail").val();
+		   	$("#address").val(address);
+		}
+		else{
+		   	$("#dqdm").val(dqdm);
+		   	$("#address").val($(".add").val());
+		}
+	
+	var XmlData1 = $("#form1").formToJson();                                     	
+	var XmlData=escape(JSON.stringify(XmlData1));
+	var fileArray=[];
+	if($("#filename1").val()=="" && $("#imgUrl1").attr("src")=="" ){
+		alert("请上传营业执照!");
+		return false;
+	}
+	if($("#filename2").val()=="" && $("#imgUrl2").attr("src")==""){
+		alert("请上传组织机构代码证!");
+		return false;
+	}
+	if($("#filename3").val()=="" && $("#imgUrl3").attr("src")==""){
+		alert("请上传税务登记证!");
+		return false;
+	}
+	if($("#filename4").val()=="" && $("#imgUrl4").attr("src")==""){
+		alert("请上传银行开户许可证!");
+		return false;
+	}
+	fileArray.push("file1");
+	fileArray.push("file2");
+	fileArray.push("file3");
+	fileArray.push("file4");
+	
+	var val="/UserInfo/updateCompanyInfo.action";
+	var r = confirm('确认更新信息吗？');
+	if(r==true){
+	$.ajaxFileUpload({
+		type:"POST",
+		secureuri:false,
+		fileElementId:fileArray,
+		url:encodeURI(val),//encodeURI避免中文乱码
+		data:{"XmlData":XmlData},
+		dataType:"text",
+		success: function(data) { 
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			if(data1==1){
+				alert("保存成功!");
+				}else{
+				alert("保存失败!");
+					}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+			alert(textStatus);
+	    }
+	});
+	}
+	else return;
+	}else{}
+}
+
+//判断输入项是否合法
+function checkNull(){
+	/*if($(".csm").val().length == 0){
+		alert("请输入厂商识别码");
+		return false;
+	}*/
+	if($(".frdb").val().length == 0){
+		alert("请输入企业法人");
+		return false;
+	}
+	if($(".lxr").val().length == 0){
+		alert("请输入联系人");
+		return false;
+	}
+	if($(".phone").val().length == 0){
+		alert("请输入手机号码");
+		return false;
+	}else{
+		if(!checkPhone()){
+			return false;
+		}
+	}
+	if($(".zj").val().length == 0){
+		alert("请输入联系电话");
+		return false;
+	}else{
+		if(!checkTel()){
+			return false;
+		}
+	}
+	if($(".eml").val() == "0"){
+		alert("地址不明确");
+		return false;
+	}else{
+		if(!checkEmail()){
+			return false;
+		}
+	}
+	return true;
+}
+function checkPhone(){
+	var isMobile=/^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	if(!isMobile.test($(".phone").val())){
+		alert("请正确填写手机号码,例如:13415764179");
+		return false;
+	}else{
+		return true;
+	}
+}
+function checkTel(){
+	var isPhone=/^((0\d{2,3}))?(\d{7,8})(-(\d{3,}))?$/;   //座机验证规则
+	if(!isPhone.test($(".zj").val())){
+		alert("请正确填写联系电话,例如:0104816048");
+		return false;
+	}else{
+		return true;
+	}
+}
+function checkEmail(){
+		var email=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+		if(!email.test($(".eml").val())){
+			alert("请正确输入邮箱地址");
+			return false;
+		}else{
+			return true;
+		}
+}
+</script>
+</html>

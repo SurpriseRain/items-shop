@@ -1,0 +1,97 @@
+body{ margin:0px; font-size:12px; color:#666; font-family:Arial,Verdana; width:830px;}
+ul,li,h2,h3,h4,input{ list-style:none; margin:0px; padding:0px;}
+a{ text-decoration:none; cursor:pointer;}
+.clera{ clear:both;}
+input{ outline:none;}
+table{ border-collapse:collapse; border:1px solid #e4e4e4; width:100%;}
+table tr{ /*height:50px; line-height:50px;*/ text-align:center; border-top:1px solid #e4e4e4;}
+table tr:hover{ background-color:#f5f5f5;}
+table tr td{ position:relative; border-color:#e4e4e4;}
+table tr td.shuru{ padding-left:70px;}
+table tr.title{ width:100%; height:35px; line-height:35px; border-top:2px solid #e4e4e4; background-color:#f5f5f5; color:#3c3c3c; font-size:14px; font-family:"microsoft yahei"; font-weight:bold;}
+table tr.title td{ border:0px;}
+table tr.title td h3{ float:left; width:500px; margin-left:20px; padding:0px; text-align:left;}
+ 
+table tr td span{ float:left; /*min-width:30px;*/ max-width:150px; margin:0 10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+table tr td label{ float:left; min-width:20px; max-width:50px; margin:0 10px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+table tr td input{ float:left; height:25px; border:1px solid #e4e4e4; padding:0 5px;}
+table tr td input.sr{ min-width:30px;}
+
+table tr td span a.bot{ color:#2254e4; font-family:"microsoft yahei"; font-weight:bold; margin-left:10px;}
+table tr td span a.bot:hover{ text-decoration:underline; color:#ff8800;}
+table tr td a.botton{ float:left; width:100px; height:30px; text-align:center; line-height:30px; border:1px solid #c76e09; background-color:#ff8800; color:#fff; font-family:"microsoft yahei"; position:absolute; left:50%; margin-left:-50px; top:10px;}
+
+#dqwz{ width:818px; border:1px solid #e4e4e4; line-height:30px; padding-left:10px; color:#666; margin-bottom:10px; font-family:"microsoft yahei";}
+#dqwz a{ color:#2254e4;}
+#dqwz a:hover{ color:#ff8800;}
+#dqwz span{ margin:0 5px; color:#ccc;}
+
+#dqcz{ width:818px; height:50px; margin-bottom:10px; padding-left:10px;}
+#dqcz label{ float:left; margin-top:18px;}
+#dqcz a.bot{ float:left; height:25px; line-height:25px; border:1px solid #e4e4e4; padding:0 10px; margin:13px 10px 0 0; background-color:#f5f5f5; font-family:"microsoft yahei";}
+#dqcz a.bot:hover{ background-color:#ff8800; border:1px solid #c76e09; color:#fff;}
+#dqcz input{ float:left; border:1px solid #e4e4e4; height:25px; outline:none; margin:13px 10px 0 0; padding:0 5px;}
+#dqcz input:hover{ border:1px solid #c76e09;}
+
+/******************************遮罩层调用***************************************/
+#ajaxGrid{ position:fixed; width:100%; height:2000px; background:url(../images/ajaxGrid_bg.png); z-index:9999999; top:0px; display:none;}
+#ajaxGrid .ajaxGrid_main{width:800px; height:450px; background-color:rgba(1,1,1,0.3); position:absolute; left:50%; margin-left:-400px; top:120px; border:1px solid #2f80eb;}
+#ajaxGrid .ajaxGrid_main .ajaxGrid_nr{width:786px; height:436px; margin:7px; background-color:#fff;}
+#ajaxGrid .ajaxGrid_main .ajaxGrid_nr table tr td.left_title{ text-align:right; width:70px;}
+#ajaxGrid .ajaxGrid_main .ajaxGrid_nr table tr td.left_title span{ text-align:right; width:70px;}
+.tcc{ position:absolute; width:573px; height:250px; background-color:#fff; left:0px; top:39px; z-index:999; border:1px solid #e4e4e4; box-shadow: 0px 0px 5px #ccc; padding:15px; display:none;}
+.tcc ul{ float:left; width:131px; height:180px; border:1px solid #e4e4e4; padding-right:10px; overflow-y:scroll;}
+.tcc ul li{ float:left; width:120px; height:30px; line-height:30px; border-bottom:1px dotted #e4e4e4; cursor:pointer;}
+.tcc ul li:hover{ background-color:#f5f5f5;}
+.tcc ul li input{ float:left; width:15px; height:15px; min-width:15px; margin:7.5px 0 7.5px 10px; padding:0px; border:0px;}
+.tcc ul li span{ float:left; margin:0px 0px 0px 5px; cursor:pointer; width:90px; padding:0px; text-align:left;}
+.cz{ width:998px; height:60px; background-color:#f5f5f5; float:left; margin-top:5px; border:1px solid #ff8800; line-height:30px;}
+.cz .yxzbm{ float:left; width:80px; height:30px; line-height:30px;}
+.cz .bm{ float:left; width:400px; height:60px;}
+.cz .bm a{ float:left; border:1px solid #ccc; height:16px; line-height:16px; margin:5px 5px 5px 0; padding:2px 2px 2px 5px;}
+.cz .bm a label{ float:none; padding:0px; font-size:14px;}
+.cz .bm a:hover{ background-color:#ff8800; border:1px solid #ff8800; cursor:pointer; color:#fff;}
+.cz .bm a:hover label{ color:#fff; cursor:pointer;}
+.cz .bm a:hover label:hover{ color:#e40000;}
+.cz a.bot{ float:left; width:60px; height:30px; background-color:#ff8800; color:#fff; line-height:30px; margin:15px;}
+.cz a.bot:hover{ background-color:rgb(47, 128, 235);}
+
+/******************************查询系统操作员***************************************/
+table{ border-collapse:collapse; border:1px solid #e4e4e4; width:100%;}
+table tr.fuxuan{ height:50px; line-height:50px;  border-top:1px solid #e4e4e4;}
+table tr.xd{ min-height:50px; line-height:50px;  border-top:1px solid #e4e4e4; background:#F00; width:830px; }
+
+
+table tr.fuxuan:hover{ background-color:#f5f5f5;}
+table tr.fuxuan td{ position:relative; border-color:#e4e4e4; text-align:center;}
+table tr.fuxuan td input{ margin-left:25px; float:left;}
+table tr.fuxuan td input.checkbox{ width:15px; border:0px; height:15px; margin:0px 0 0 40px; padding:0px; min-width:0px;}
+table tr.fuxuan td span{ min-width:30px; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+
+
+.fenye{ height:40px; width:320px; float:left; margin:10px 500px 10px 200px;}
+.fenye a{ float:left; height:24px; border:1px solid #e4e4e4; margin:13px 0 0 -1px; padding:0 10px; line-height:24px; cursor:pointer; font-size:14px;}
+.fenye a.close{ background-color:#e40; color:#fff; font-size:30px; font-weight:bold; border:1px solid #e40; padding:0px;}
+.fenye a:hover{ background-color:#ccc; color:#F00; border:1px solid #ccc;}
+.fenye a.close:hover{ background-color:#e40; color:#fff; border:1px solid #e40;}
+.fenye a.xuan{ background-color:#ccc; color:#000; border:1px solid #ccc;}
+
+/**********************************岗位控件CSS***********************************/
+ .statusWidgetDiv{ position:absolute; width:573px; height:250px; background-color:#fff; left:0px; top:39px; z-index:999; border:1px solid #e4e4e4; box-shadow: 0px 0px 5px #ccc; padding:15px; display:none;}
+ .statusWidgetDiv ul{ float:left; width:511px; height:180px; border:1px solid #e4e4e4; padding-right:10px; overflow-y:scroll;}
+ .statusWidgetDiv ul li{ float:left; width:120px; height:30px; line-height:30px; border-bottom:1px dotted #e4e4e4; cursor:pointer;}
+ .statusWidgetDiv ul li:hover{ background-color:#f5f5f5;}
+ .statusWidgetDiv ul li input{ float:left; width:15px; height:15px; min-width:15px; margin:7.5px 0 7.5px 10px; padding:0px; border:0px;}
+ .statusWidgetDiv ul li span{ float:left; margin:0px 0px 0px 5px; cursor:pointer; padding:0px;}
+ .czStatus{ width:571px; height:60px; background-color:#f5f5f5; float:left; margin-top:5px; border:1px solid #ff8800; line-height:30px;}
+ .czStatus .valid{ float:left; width:80px; height:30px; line-height:30px;}
+ .czStatus .validStatus{ float:left; width:400px; height:60px;}
+ .czStatus .validStatus a{ float:left; border:1px solid #ccc; height:16px; line-height:16px; margin:5px 5px 5px 0; padding:2px 2px 2px 5px;}
+ .czStatus .validStatus a label{ float:none; padding:0px; font-size:14px;}
+ .czStatus .validStatus a:hover{ background-color:#ff8800; border:1px solid #ff8800; cursor:pointer; color:#fff;}
+ .czStatus .validStatus a:hover label{ color:#fff; cursor:pointer;}
+ .czStatus .validStatus a:hover label:hover{ color:#e40000;}
+ .czStatus a.bot{ float:right; width:60px; height:30px; background-color:#ff8800; color:#fff; line-height:30px; margin:15px;}
+ .czStatus a.bot:hover{ background-color:rgb(47, 128, 235);}
+/**********************************岗位控件CSS***********************************/

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>汽服云</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/qfy_order.css" />
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<style type="text/css">
+.bankbox {
+    border: 1px solid #d8d8d8;
+    height: 35px;
+    line-height: 35px;
+    margin-right: 42px;
+    padding: 6px;
+    width: 120px;
+}
+</style>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var THZT=$.getUrlParam('THZT');
+var TYPE=$.getUrlParam('TYPE');
+function initData(){
+	var thzts = $("#thzt").val();
+	var SPMC = $("#SPMC").val();
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.return.good.selectTHD','QryType':'Report','dataType':'Json','ZTID':usercookie.ZCXX01,"SPMC":SPMC,'THZT':thzts,'TYPE':TYPE}];
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/control/js/tuidan_carlist.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+<!-- <div class="dqlc"><a href="#" class="dqlc-a">订单管理</a> > <a href="#" class="dqlc-a">我的退单</a></div> -->
+<div class="car_remaining">
+      <div class="affirm_in">
+            <h3 class="affirmtit clearfix"  id="wust" ></h3>
+            <p class="mt10 clearfix" id="spsp">
+			退单状态：
+			<script type="text/javascript">
+				document.write(showTHZT());
+				$("#thzt").addClass("bankbox");
+				$("#thzt").val(THZT);
+			</script>
+			商品名称：
+			<input type="text" name="SPMC" id="SPMC" class="regbox" />
+			<input type="submit" name="button2" id="changebtn2" value="搜索" class="btn  btn_samller displayinh ml10" onclick="init()" />
+            </p>
+      </div>
+</div>
+<div class="center">       
+<div jl jlid="DefStaPer" id="carlist_htd" newclos="4" multiPage="true" emtype="htd" url="/getcarlist_htd.do" newline="" before_reply="" after_reply=""></div>
+</div>
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+</html>

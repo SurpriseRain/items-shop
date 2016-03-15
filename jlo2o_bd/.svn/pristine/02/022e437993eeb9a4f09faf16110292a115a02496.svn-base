@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 找回密码 - 填写用户名或邮箱</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/zhmm-main.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/reg.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<style>
+.get_code{
+	background: #eeeeee;
+    margin-left: 10px;
+    margin-top: 2px;
+    padding: 8px;
+    position: absolute;
+}
+.get_code:hover{
+	background-color: #e4e4e4;
+}
+</style>
+</head>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$(".reg_bot").on('click',function(){
+		var phone = $("#phone").val();
+		var userPwd = $("#userPwd").val();
+		if(phone==""){
+			alert("手机号不能为空");
+			return false;
+		}
+		if(userPwd==""){
+			alert("验证码不能为空");
+			return false;
+		}
+		if(smsYzm!=userPwd){
+			alert("短信验证码错误");
+			return false;
+		}
+		location.href="zhmm_xgmm_tel.html?tel="+phone;
+	});
+	
+});
+
+</script>
+<body>
+<!-----公共部门开始---->
+<div id="header">
+  <div class="header_main">
+    <a class="logo" href="/customer/qfy/index.html" ><img src="/customer/qfy/images/zhmm-logo.png" /></a>
+    <!------------------流程------------------>
+    <div class="tecPro">
+      <div class="userLc">
+      <div class="userlcMain">
+        <div class="userlcCase"><a class="fxlc_zz">1.填写手机号</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">2.修改密码</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">3.成功</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+<div class="clera"></div>
+<div id="main">
+  <ul class="userName">
+    <li class="title">您正在使用"手机"验证身份，请完成以下操作：</li>
+   
+    <li><span>手机号</span><input type="text" class="text foce" placeholder="请输入手机号" id="phone" /></li>
+   
+    <li><span>验证码</span><input class="text foce yanzm" id="userPwd" name="userPwd" type="text" placeholder="输入验证码"/>
+	<a class="get_code yzsj" onclick="sendPhone($('#phone').val(),$('#endtime'),false)">点击获取&nbsp;(<b style="color: red;" id="endtime">0</b>)</a>
+    </li>
+    <li><span>&nbsp;</span><a class="reg_bot">下一步</a></li>
+  </ul>
+</div>
+
+</body>
+<script type="text/javascript" src="/customer/qfy/js/mobile.js"></script>
+</html>

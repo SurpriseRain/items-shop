@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.c2b.sql.mapservice">
+
+	<select id="selectXQ" parameterType="Map" resultType="java.util.Map">
+		SELECT servicedemand.Id,carowner.ReallyName,carowner.Phone,servicedemand.DemandStatus,servicedemand.QuotedPrice,(select InitialId from servicetype where Id=servicedemand.ServiceTypeID)ServiceTypeID,servicedemand.DemandDescription,carowner.Longitude,carowner.Latitude,ifnull(carowner.CarNumber,'')CarNumber,ifnull(carowner.CarBrand,'')CarBrand,SceneImagePage from carowner
+		RIGHT JOIN servicedemand on carowner.Id = servicedemand.UserId
+		where servicedemand.DemandStatus = '0' and servicedemand.InvalidTime &gt;=now()
+	</select>
+	
+	<select id="selectPJ" parameterType="Map" resultType="java.util.Map">
+		SELECT ProduceDemand.Id,w_zcxx.zcxx03,zcxx06,ProduceDemand.ProduceName,ProduceDemand.BuyCount,ProduceDemand.QuotedPrice,ProduceDemand.DemandDescription,w_zcxx.Longitude,w_zcxx.Latitude,'1' as type from  w_zcxx
+		RIGHT JOIN ProduceDemand on ProduceDemand.BuyerId = w_zcxx.zcxx01
+		where ProduceDemand.DemandStatus = '0' and ProduceDemand.InvalidTime &gt;= now()
+		union
+		select OutSourcing.Id,w_zcxx.zcxx03,zcxx06,null,null,0,OutSourcingContent,w_zcxx.Longitude,w_zcxx.Latitude,'2' as type from OutSourcing
+		INNER JOIN w_zcxx on w_zcxx.zcxx01 = OutSourcing.PublisherId
+		UNION
+		SELECT Recruit.Id,w_zcxx.zcxx03,zcxx06,null,null,0,RecruitInfo,w_zcxx.Longitude,w_zcxx.Latitude,'3' as type from Recruit
+		INNER JOIN w_zcxx on w_zcxx.zcxx01 = Recruit.PublisherId
+	</select>
+	
+	<select id="selectZCXX" parameterType="Map" resultType="java.util.Map">
+		SELECT ifnull((select dqbzm08 from dqbzm where dqbzm01 =(select dqbzm.dqbzm_dqbzm01 from dqbzm where dqbzm01 =zcxx07)),'022') cityCode,Longitude,Latitude from w_zcxx
+		where 1=1
+		<if test="zcxx01!= null and zcxx01!=''"> AND w_zcxx.zcxx01= #{zcxx01}</if>
+	</select>
+	
+	<select id="selectXQUser" parameterType="Map" resultType="java.util.Map">
+		SELECT servicedemand.Id,carowner.ReallyName,carowner.Phone,servicedemand.DemandStatus XQZT,servicedemand.QuotedPrice,(select InitialId from servicetype where Id=servicedemand.ServiceTypeID)ServiceTypeID,servicedemand.DemandDescription,carowner.Longitude,carowner.Latitude,ifnull(carowner.CarNumber,'')CarNumber,ifnull(carowner.CarBrand,'')CarBrand,ifnull((select TakeOrderStatus from takeorder where OrderNumber=servicedemand.Id),'0') JDZT from carowner
+		RIGHT JOIN servicedemand on carowner.Id = servicedemand.UserId
+		where 1=1
+		<if test="userId!= null and userId!=''"> AND servicedemand.UserId= #{userId}</if>
+		<if test="serviceUserId!= null and serviceUserId!=''"> AND servicedemand.ServiceUserId= #{serviceUserId}</if>
+	</select>
+	
+	<select id="selectXQUser_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT count(1) COUNT from carowner
+		RIGHT JOIN servicedemand on carowner.Id = servicedemand.UserId
+		where 1=1
+		<if test="userId!= null and userId!=''"> AND servicedemand.UserId= #{userId}</if>
+		<if test="serviceUserId!= null and serviceUserId!=''"> AND servicedemand.ServiceUserId= #{serviceUserId}</if>
+	</select>
+	
+	<select id="selectPJUser" parameterType="Map" resultType="java.util.Map">
+		SELECT ProduceDemand.Id,w_zcxx.zcxx03,zcxx06,ProduceDemand.ProduceName,ProduceDemand.BuyCount,ProduceDemand.DemandStatus XQZT,ProduceDemand.QuotedPrice,ProduceDemand.DemandDescription,w_zcxx.Longitude,w_zcxx.Latitude from  w_zcxx
+		RIGHT JOIN ProduceDemand on ProduceDemand.BuyerId = w_zcxx.zcxx01
+		where 1=1
+		<if test="userId!= null and userId!=''"> AND producedemand.BuyerId= #{userId}</if>
+		<if test="serviceUserId!= null and serviceUserId!=''"> AND producedemand.ServiceUserId= #{serviceUserId}</if>
+	</select>
+	
+	<select id="selectPJUser_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT count(1) COUNT from  w_zcxx
+		RIGHT JOIN ProduceDemand on ProduceDemand.BuyerId = w_zcxx.zcxx01
+		where 1=1
+		<if test="userId!= null and userId!=''"> AND producedemand.BuyerId= #{userId}</if>
+		<if test="serviceUserId!= null and serviceUserId!=''"> AND producedemand.ServiceUserId= #{serviceUserId}</if>
+	</select>
+</mapper>

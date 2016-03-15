@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心 - 出售中的商品</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/ext-all.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Tmsq.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/menu.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script> 
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+var gsid=userCookie.ZCXX01;
+$(document).ready(function(){
+
+	var menuId=$.getUrlParam("menuId");
+	//$("#shopHead").load("/gui_o2o/qfy/fore/vendor/shop-Header.html?ss="+Math.random());	
+	//$("#shopLeft").load("/gui_o2o/qfy/fore/vendor/shop-Left.html?menuId="+menuId+"&ss="+Math.random());
+	//menu.init(userCookie.XTCZY01);
+	//$("#footer").load("/gui_o2o/qfy/fore/Foot.html?ss="+Math.random());
+	queryclick();
+	$(".seach_bot").on("click",function(){
+		queryclick();
+	});
+});
+
+//点击查询
+function queryclick(){
+	var  XmlData1 = $("#form1").formToJson();
+	var XmlData=JSON.stringify(XmlData1);
+	var url="/DateGrid.jsp?fileUrl=spgl&gridId=queryMyGoods_seller&XmlData="+XmlData;
+	setFrame(encodeURI(url));
+}
+
+//给iframe赋值路径
+function setFrame(url){
+  $("#detailsResult").attr("src",url);
+  $("#detailsResult").css("height",parent.clientHeight - 100);
+}
+</script>
+
+<body>
+  <form id="form1" name="form1" action="">
+	<input type="hidden" id="sqlid" name="sqlid" value="com.jlsoft.o2o.sql.goods.queryMyGoods"/>
+	<input type="hidden" id="ZCXX01" name="ZCXX01" value="0151"/>
+	<input type="hidden" name="spid" value=""/>
+	<input type="hidden" name="spmc" value=""/>
+	<input type="hidden" name="spgl12" value="0"/>
+<!-- head结束 -->
+<!-----------------------------楼层--------------------------------->
+<div id="shop-main">
+ <div class="shop-right-main">
+  <div class="dqlc"><a href="#" class="dqlc-a">我是卖家</a> > <a href="#" class="dqlc-a">商品中心</a> > <b class="dqlc-b">仓库中的商品</b></div>
+  <div class="dqtb">
+      <tr>
+
+      <td align="right">商品厂家自编码</td>
+      <td>
+      	<input type="text" name="cjzbm" value=""/>
+      </td>
+
+      <td align="right">商品名称</td>
+      <td>
+      	<input type="text" name="spmc" value=""/>
+      </td>
+      <td>
+        <a class="seach_bot">搜索</a>
+      </td>
+ 
+    </tr>
+     
+  </div>
+  <!--
+  <table class="sellpro">
+	<tr class="title">
+	  <td>图片</td>
+	  <td>名称</td>
+	  <td>厂家自编码</td>
+	  <td>价格</td>
+	  <td>操作</td>
+	</tr>
+	<tr>
+	  <td><a href="#" class="img"><img src="images/cpimg.png" /></a></td>
+	  <td><a href="#" class="name">泰溥（Taipu）汽车防雪挡风挡防霜罩 防冻半身车衣车罩 冬季前挡风玻璃遮雪档半身车衣车罩 轿车款</a></td>
+	  <td><a>12345685757576567</a></td>
+	  <td><a class="pic">220<font>.00</font></a></td>
+	  <td><a class="bot">编辑</a><a class="bot">下架</a><a class="bot">删除</a></td>
+	</tr>
+  </table>
+   -->
+  <div>
+
+	<div id="resultMainDiv">
+	  <iframe id="detailsResult" name="detailsResult" src='' frameborder="0" scrolling="auto" marginheight="0" marginwidth="0" width="100%" height="350px"></iframe>
+	</div>
+  
+</div>
+  </div>
+</div>
+<div class="clear"></div>
+<!---------------------底部--------------------->
+</form>
+</body>
+
+</html>

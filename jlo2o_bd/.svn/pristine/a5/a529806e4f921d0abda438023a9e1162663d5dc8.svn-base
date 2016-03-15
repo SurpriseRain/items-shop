@@ -1,0 +1,231 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/settlement.css" />
+<title>电器服云 - 其选择支付方式</title>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+
+</head>
+<script type="text/javascript">
+var baseUrl="";
+//获取公用默认图片路径
+var url=window.location.href;
+JL.setDivUrl("url",url);
+var defaultImgUrl = pubJson.defaultImgUrl;
+var user=JSON.parse($.cookie("userInfo"));
+var ddze=JL.getParam("zfje");
+var zcxx01=user.ZCXX01;
+var JYDH=JL.getParam("JYDH");
+var zfje=JL.getParam("zfje");
+var ztid="";
+var dzbh=JL.getParam("dzbh")
+$(document).ready(function(){
+	$("#XSDD01").html(JYDH);
+	$(".sqxq").on("click",function(){
+		if($(".o_list>.display_none").length>0){
+			$(".o_list>.o_list_info").removeClass("display_none");
+		}else{
+			$(".o_list>.o_list_info").addClass("display_none");
+			$("#sqxq").html("打开详情<i class=\"fa fa-angle-down sqxq\"></i>");
+		}
+	});
+	//显示买家信息
+	var xmlData={};
+	xmlData["JYDH"]=JYDH;
+	var url="/OrderFlowManage/getOrderMessage.action?json="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(returnVal){
+			var str="";
+			if(returnVal.DDLIST.length==1){
+		    str='<h3 class="w12">订单提交成功，请您尽快付款！订单号：'+returnVal.DDLIST[0].XSDD01+'</h3><p class="w12">请您在提交订单后<span class="font-red">24小时</span>内完成支付，否则订单会自动取消。</p>';
+			}
+			/*$(returnVal.DDLIST).each(function(index,ddjson){
+				str+='<label style="margin-left: 60px;">订单'+(index+1)+'：<b>'+ddjson.XSDD01+'</b></label>'
+				});*/
+			$("#ddlist").append(str);
+			$(".money").html("￥"+zfje);
+			
+			payOnline();
+		}
+	});
+});
+
+
+//配送地址
+function query_city(){
+  alert($("#city_name").text()+$("#city_value").val());
+}
+//点击立即支付
+function payOnline(){
+	//支付方式选择
+	var skfsArr=[];
+	var payment;
+	$(".ljzf").attr("disabled",false);
+	$(".pay_main").find(".pay_tab_content li").find("span").each(function(index){
+			$(this).on("click",function(){
+				$(this).parents().find("li").removeClass("active");
+				$(this).parent().addClass("active");
+				$(this).append("<em></em>");
+				var json={};
+				var SKLIST=[];
+				json.ZHBJ=2;
+				json.JYDH=JYDH;
+				var jsonItem={};
+				jsonItem.SKFS=$(this).data("val");//收款方式:支付宝支付6  银联支付8
+				jsonItem.ZFJE=zfje;
+				SKLIST.push(jsonItem);
+				json.SKLIST=SKLIST;
+				skfsArr.push(json);
+				payment=$(this).data("val");
+			});
+	});
+
+   $(".ljzf").on("click",function(){
+		if(payment==undefined){
+		  alert("请选择支付方式！");
+		  return;
+		}
+		$(".ljzf").attr("disabled",true);
+		var xmlData=[];
+		var json={};
+		json.payment=payment;//支付类型
+		json.JYDH=JYDH;//订单号
+		json.AMOUNT=zfje;//订单总金额
+		json.ZTID=ztid;//主体公司
+		json.HBID=user.ZCXX01;//伙伴
+		/**物流信息**/
+		json.logistics_type="EXPRESS";//物流类型
+		json.logistics_fee="0.00";//物流费用
+		json.logistics_payment="SELLER_PAY";//物流支付方式
+		/**收货信息**/
+		//var addressList = queryADRESS();
+		//json.WIDreceive_name=addressList[0].SHRMC;//"张三";//收货人姓名
+		//json.WIDreceive_address=addressList[0].ADDRESS;//"北京市海淀区";//收货人地址
+		//json.WIDreceive_zip=addressList[0].YZBM;//"123456";//收货人邮编
+		//json.WIDreceive_phone=addressList[0].GDDH;//"0571-88158090";//收货人电话号码(固定电话)
+		//json.WIDreceive_mobile=addressList[0].MOBILE;//"13312341234";//收货人手机号码
+		xmlData.push(json);
+		//window.location.href="/customer/sydjt/shopping/ABCWait.html?r="+Math.random()+"&xsdd01="+JYDH+"&ztid="+ztid;
+		if(payment == "6"){
+		    //淘宝支付
+			window.open("/AlipayOnline/payOnline.action?r="+Math.random()+"&XmlData="+JSON.stringify(xmlData)+"&skfsArr="+JSON.stringify(skfsArr),"_blank");
+		}else if(payment == "8"){
+			//银联支付 -- 收款方式未加
+			var url="/OrderFlowManage/insertOrderPayway.action?XmlData="+JSON.stringify(skfsArr);
+			ajaxQ({
+				"url" : url,
+				"callback" : function(returnVal){
+	    			if(returnVal.STATE=="1"){
+	    				var url = "/customer/sydjt/shopping/post.jsp?r=0.7162957752589136&orderNo="+JYDH+"&orderAmount="+(zfje*100);
+	    				window.open(url,"_self");
+	    			}else if(returnVal.STATE=="0"){
+	    				alert(returnVal.ERROR);
+	    			}
+				}
+			});
+			//通联支付
+			//window.open("/customer/sydjt/demo/post.jsp?r="+Math.random()+"&serverip=http://ceshi.allinpay.com/gateway/index.do?&inputCharset=1&pickupUrl=http://192.168.103.51/demo/eshop/display-pay-result/display.do&receiveUrl=http://192.168.103.51/demo/eshop/recv-pay-result/recv.do&version=v1.0&language=1&signType=1&merchantId=100020091218001&payerName=沈阳大家庭&payerEmail=feilong@163.com&payerTelephone=13123456789&payerIDCard=1&pid=1&orderNo="+JYDH+"&orderAmount="+zfje+"&orderCurrency=0&orderDatetime=20150813100831&orderExpireDatetime=60&productName=火星人&&productPrice=100&productNum=1&productId=\"00732\"&productDesc=火星人&ext1=123&ext2=123&extTL=\"\"&payType=0&issuerId=123&pan=\"\"&tradeNature=GOODS","_blank");
+			window.open("/customer/sydjt/shopping/post.jsp?r=0.7162957752589136&orderNo="+JYDH+"&orderAmount="+(parseFloat(zfje)*100).toFixed(0)+"&person_id="+user.XTCZY01,"_blank");
+		}else if(payment == "7"){
+			//铜根源支付
+			var jsonTgy={};
+			jsonTgy.ORDER_NO=JYDH;//订单号
+			window.open("http://192.168.1.110:8088/TGYInterface/TradeDate.action?r="+Math.random()+"&json="+JSON.stringify(jsonTgy),"_blank");
+		}else if(payment == "9"){
+			window.open("/customer/sydjt/weixin/weixin_scan_pay.html?r="+Math.random()+"&XmlData="+JSON.stringify(xmlData)+"&skfsArr="+JSON.stringify(skfsArr)+"&JYDH="+JYDH+"&zfje="+zfje,"_blank");
+		}
+	});
+	
+}
+
+//保存收款方式
+function savePayment(json){
+	var xmlData=[];
+		xmlData.push(json);
+    var url="/OrderFlowManage/insertOrderPayway.action?XmlData="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(returnVal){
+			var returnVal=visitService(url);
+	    	if(returnVal.STATE=='1'){
+	    		return returnVal;
+	    	}else if(returnVal.STATE=='0'){
+	    		alert(returnVal.ERROR);
+	    		return false;
+	    	}
+		}
+	});
+}
+//查询收货地址
+/* function queryADRESS(){
+  var xmlData=[];
+  var json={};
+	  json.ZCXX01=user.ZCXX01;
+	  json.DZBH=dzbh;
+   xmlData.push(json);
+   var url="/CartManage/selectAddressInfo.action?XmlData="+JSON.stringify(xmlData);
+   var spList=visitService(url).ADDRESSLIST;
+   return spList;
+} */
+</script>
+<html>
+<body>
+<div class="content">
+<div class="row">
+	<div class="w12 order pay_main">
+		<div id="ddlist" class="o_left w09">
+        	<!--<h3 class="w12">订单提交成功，请您尽快付款！订单号：10373066775</h3>
+            <p class="w12">请您在提交订单后<span class="font-red">24小时</span>内完成支付，否则订单会自动取消。</p>-->
+        </div>
+        <div class="o_right w03">
+        	<div class="o_price">
+                <em>应付金额</em><strong id="money" class="money">149.00</strong><em>元</em>
+            </div>
+            <div><a class="sqxq" id="sqxq">收起详情<i class="fa fa-angle-down sqxq"></i></a></div>
+        </div>
+        <div class="w12 o_list">
+    		<div class="w12 o_list_info" >
+        		<span>收货地址：湖北武汉市江汉区新华街道新华路186号福星国际商会大厦1610-1615室</span>
+        		<span>收货人：黄卫</span>
+        		<span>131****9652</span>
+            </div>
+            <!--<div class="w12 o_list_info">
+        		<span>商品名称：OKKO日常休闲男鞋运动鞋反绒皮板鞋韩版潮男鞋 灰色 40码 8101</span>
+            </div>-->
+    	</div>		
+	</div>
+    <!--payment-->
+    <div class=" w12 payment pay_main">
+   		<div class="w12 pay_value">
+        	<h2 class="w03">快速支付<strong id="money" class="money">149.00</strong><em>元</em></h2>
+         </div>
+         <div class="w12 pay_tab">
+         	<ul>
+            	<li><a><i></i>网银支付</a></li>
+                <li class="active"><a>第三方支付</a></li>
+            </ul>
+         </div>
+         <div class="w12 pay_tab_content">
+         	<ul>
+                <li><span class="bank-logo alipay" data-val="6">支付宝</span></li>
+                <li><span class="bank-logo tl" data-val="8">通联支付</span></li>
+                <li><span class="bank-logo weixin" data-val="9">微信支付</span></li>
+                <li class="pay_more">更多银行</li>
+            </ul>
+         </div>
+         <div class="w12"><a class="pay_btn ljzf">跳转网银并支付</a></div> 	
+    </div>
+</div>
+</div>
+</body>
+</html>
+
+

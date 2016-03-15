@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.product.sql.XmlUploadProduct">
+
+	<!-- 查询商品导入基本数据 -->
+	<select id="selectW_SPDR" parameterType="map" resultType="java.util.Map">
+	SELECT BARCODE,SPXX04,SPECIFICATION,JLDW FROM W_SPDRITEM WHERE 1=1
+	<if test="ZCXX01 != ''"> 
+		AND ZCXX01=#{ZCXX01} 
+	</if>
+	<if test="SPDR01 != ''">
+		AND SPDR01=#{SPDR01} 
+	</if>
+	</select>
+	
+	<!-- 查询导入和导出记录 -->
+	<select id="selectW_SPCMJLB" parameterType="map" resultType="java.util.Map">
+	SELECT A.BARCODE,B.SPXX04,A.CMZT,
+	SUBSTRING(A.SPCM01,1,(CHAR_LENGTH(A.SPCM01) - LOCATE('|',REVERSE(A.SPCM01)))) SPCM01 
+	FROM W_SPCMJLB A,W_GOODS B WHERE A.ZCXX01=B.ZCXX01 AND A.BARCODE=B.BARCODE
+	<if test="ZCXX01 != ''"> 
+		AND A.ZCXX01=#{ZCXX01} 
+	</if>
+	<if test="DJBH != ''">
+		AND A.DJBH=#{DJBH}
+	</if>
+	</select>
+	
+	<!-- 查询包装关系 -->
+	<select id="selectW_SPCMBZ" parameterType="map" resultType="java.util.Map">
+	SELECT A.BARCODE,B.SPXX04,A.PACKLEVEL,
+	SUBSTRING(A.CURCODE,1,(CHAR_LENGTH(A.CURCODE) - LOCATE('|',REVERSE(A.CURCODE)))) CURCODE,
+	SUBSTRING(A.PARENTCODE,1,(CHAR_LENGTH(A.PARENTCODE) - LOCATE('|',REVERSE(A.PARENTCODE)))) PARENTCODE
+	FROM W_SPCMBZ A,W_GOODS B WHERE A.ZCXX01=B.ZCXX01 AND A.BARCODE=B.BARCODE
+	<if test="ZCXX01 != ''"> 
+		AND A.ZCXX01=#{ZCXX01} 
+	</if>
+	<if test="DJBH != ''">
+		AND A.DJBH=#{DJBH}
+	</if>
+	</select>
+		<!-- 查询包装关系-和 -->
+	<select id="selectW_SPCMBZ_sum" parameterType="map" resultType="java.util.Map">
+	SELECT count(1)as count FROM W_SPCMBZ A,W_GOODS B WHERE A.ZCXX01=B.ZCXX01 AND A.BARCODE=B.BARCODE
+	<if test="ZCXX01 != ''"> 
+		AND A.ZCXX01=#{ZCXX01} 
+	</if>
+	<if test="DJBH != ''">
+		AND A.DJBH=#{DJBH}
+	</if>
+	</select>
+	
+	
+	<!-- 查询是否已导入的商品串码 -->
+	<select id="selectW_CKDCM" parameterType="map" resultType="java.util.Map">
+	SELECT DISTINCT SPCM01 FROM  W_CKDCM WHERE SPCM01 IN
+	<foreach collection="cmList" index="index" item="tag" open="(" separator="," close=")">
+	  #{tag}
+	</foreach>
+	</select>
+	
+	<!-- 查询包装码 -->
+	<select id="selectBZM" parameterType="map" resultType="java.util.Map">
+	SELECT W_SPCMBZ.ZCXX01,W_SPCMBZ.BARCODE,CURCODE,SPXX04,CKDH,PCH,DATE_FORMAT(DRRQ, '%Y-%m-%d %H:%i:%S') AS DRRQ FROM W_SPCMBZ
+	LEFT JOIN W_SPXX ON W_SPCMBZ.SPXX01 = W_SPXX.SPXX01
+	LEFT JOIN W_SPCMDR ON  W_SPCMDR.SPCMDR01 = W_SPCMBZ.DJBH
+	LEFT JOIN W_CKDCM ON W_SPCMBZ.CURCODE = W_CKDCM.SPCM01
+	WHERE  PACKLEVEL='1'
+	<if test="ZCXX01 != ''"> 
+		AND W_SPCMBZ.ZCXX01=#{ZCXX01} 
+	</if>
+	<if test="BARCODE != ''"> 
+		AND W_SPCMBZ.BARCODE=#{BARCODE} 
+	</if>
+	<if test="BATCHNUMBER != ''"> 
+		AND W_SPCMBZ.CURCODE LIKE CONCAT('%',#{BATCHNUMBER},'%')
+	</if>
+	<if test="SERIALNUMBER != ''"> 
+		AND W_SPCMBZ.CURCODE LIKE CONCAT('%',#{SERIALNUMBER},'%')
+	</if>
+	</select>
+	
+	<select id="selectBZM_sum" parameterType="map" resultType="java.util.Map">
+	SELECT count(1)as count FROM W_SPCMBZ
+	LEFT JOIN W_SPXX ON W_SPCMBZ.SPXX01 = W_SPXX.SPXX01
+	LEFT JOIN W_SPCMDR ON  W_SPCMDR.SPCMDR01 = W_SPCMBZ.DJBH
+	LEFT JOIN W_CKDCM ON W_SPCMBZ.CURCODE = W_CKDCM.SPCM01
+	WHERE  PACKLEVEL='1'
+	<if test="ZCXX01 != ''"> 
+		AND W_SPCMBZ.ZCXX01=#{ZCXX01} 
+	</if>
+	<if test="BARCODE != ''"> 
+		AND W_SPCMBZ.BARCODE=#{BARCODE} 
+	</if>
+	<if test="BATCHNUMBER != ''"> 
+		AND W_SPCMBZ.CURCODE LIKE CONCAT('%',#{BATCHNUMBER},'%')
+	</if>
+	<if test="SERIALNUMBER != ''"> 
+		AND W_SPCMBZ.CURCODE LIKE CONCAT('%',#{SERIALNUMBER},'%')
+	</if>
+	</select>
+	
+</mapper>

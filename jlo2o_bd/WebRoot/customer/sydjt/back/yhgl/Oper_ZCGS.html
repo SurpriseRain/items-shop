@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<!--<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />-->
+<!--<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />-->
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var dataArr = [];
+  var XmlData = {};
+  XmlData["sqlid"]="com.jlsoft.o2o.user.sql.selectW_ZCGS";
+  XmlData["QryType"]="Report";
+  XmlData["sjly"]=$("#sjly").val();
+  XmlData["dpzt"]=$("#dpzt").val();
+  XmlData["date_s"]=$("#date_s").val();
+  XmlData["date_e"]=$("#date_e").val();
+  dataArr.push(XmlData);
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+	    <li><i class="fa fa-home"></i><span>首页</span></li>
+	    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+	    <li><span>店铺管理</span></li>
+	    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+	    <li><b>注册审核</b></li>
+	</ul>
+	</div>
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+ 	
+ 	<div class="w12 user_content">
+	<div class="w12 user_page_main">
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+ 	<input type="hidden" id="allx" name="allx" value=""/>
+	<div class="w12 user_page_seach">
+	<dl class="w03 public_form">
+		<dt class="w05">
+			<label class="w12">注册状态：</label>
+		</dt>
+        <dd class="w06">
+		     <select class="w12" id="dpzt" name="dpzt" >
+				<option value="">请选择</option>
+				<option value="2">信息待补充</option>
+			 	<option value="3">待审核</option>
+			 	<option value="4">审核通过</option>
+			 	<option value="5">审核未通过</option>
+		     </select>
+        </dd>
+	</dl>
+	<dl class="w05 public_form">
+		<dt class="w03">
+			<label class="w12">注册时间：</label>
+		</dt>
+        <dd class="w09">
+			<input id="date_s" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+			<b class="w01 text_center">~</b>
+			<input id="date_e" name="" value="" type="text" class="Wdate" onClick="WdatePicker()"/>
+        </dd>
+	</dl>
+	<dl class="w04 public_form">
+		<dt class="w04">
+			<label class="w12">数据来源：</label>
+		</dt>
+        <dd class="w04">
+		     <select class="w12" id="sjly" name="sjly" >
+	   	   		<option value="">请选择</option>
+				<option value="0">PC注册</option>
+				<option value="1">APP注册</option>
+				<option value="2">初始导入</option>
+		     </select>
+        </dd>
+        <dd class="w03"><input type="button" value="查询" onclick="query()" class="jl_btn btn_red seach_bot"/></dd>
+	</dl>
+	</div>
+	<div class="clera"></div>
+	 
+	<div class="center">
+	<div jl jlid="DefStaPer" id="lb" newclos="4" rowClick="open" multiPage="true" height="1500" url="/jlquery/selecto2o.action" 
+	columnsArr="[
+	{'property':'ZCXX01','header':'公司代码','type':'hidden'},
+	{'property':'XTCZY01','header':'用户名','type':'lable','width':'100px'},
+	{'property':'ZCXX02','header':'公司名称','type':'lable','width':'150px'},
+	{'property':'LX','header':'公司类型','type':'lable','width':'100px'},
+	{'property':'ZCXX08','header':'公司地址','type':'lable','width':'150px'},
+	{'property':'ZCXX06','header':'手机号码','type':'lable','width':'80px'},
+	{'property':'ZCGS01','header':'状态','type':'number','width':'60px'},
+	{'property':'ZCXX56','header':'数据来源','type':'number','width':'60px'}]" 
+	afterUrl="/customer/qfy/back/yhgl/Oper_ZCGS_item.html"
+	>
+	</div>
+	</div>
+</div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+})
+function backFun(){
+	 init();
+}
+</script>

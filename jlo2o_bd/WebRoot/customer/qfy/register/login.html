@@ -1,0 +1,392 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/login.js" ></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/login.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/index-08.min.css" />
+<title>用户登录</title>
+<style>
+.yangshib{
+    display: inline-block;
+     padding-top: 27px;
+    text-align: center;
+    width: 125px;
+    color: #3c3c3c;
+    font-family:"microsoft yahei";
+  	font-size：25px;
+    font-weight: 400;
+}
+#footer{ width:100%;}
+#footer .fooer-menu{ width:1200px; height:150px; border-top:1px solid #eee; margin:20px auto;}
+#footer .fooer-menu dl{ float:left; width:200px; margin:30px 0 0 40px;}
+#footer .fooer-menu dl dt{ font-size:14px; float:left; color:#6c6c6c; font-size:16px; font-weight:bold; margin-bottom:5px;}
+#footer .fooer-menu dl dd{ float:left; width:220px; line-height:18px; margin-left:5px;}
+#footer .fooer-menu dl dd a{ color:#999;}
+#footer .fooer-menu dl dd a:hover{ color:#3061ef;}
+#footer .bq{ width:100%; height:50px; border-top:2px solid #3061ef;}
+
+#footer .bq{ width:100%; height:50px; line-height:50px; border-top:2px solid #296ecc;}
+#footer .bq_main{ width:1200px; margin:0 auto; text-align:center;}
+#footer .bq_main a{ margin-right:30px; color:#666;}
+#footer .bq_main a:hover{ color:#ff8800; text-decoration:underline;}
+</style>
+</head>
+<script type="text/javascript">
+var returnData = null;
+var rememberUrl = $.getUrlParam("rememberUrl");
+var type = $.getUrlParam("type");
+$(document).ready(function(){
+$(".loginbotton").click(
+		function(){
+			ok_click();
+	});
+})
+
+/**
+*输入帐号密码后按回车关联到登录按钮
+*/	
+function userName_onkeypress(event){   
+    if(event.keyCode==13)   
+    	$("#XTCZY02").focus();   
+}  
+
+function Password_onkeypress(event){  
+    if(event.keyCode==13)  
+    	ok_click();   
+}   
+
+function ok_click(){
+	if ($.trim($("#login_userName").val()) == null || $.trim($("#login_userName").val()) == "") {
+		alert("请输入帐号");
+		return false;
+	}else if($("#XTCZY02").val() == null || $("#XTCZY02").val() == ""){
+		alert("请输入密码");
+		return false;
+	}
+	var username = $.trim($("#login_userName").val());
+	var password = $("#XTCZY02").val();
+	//车主登录
+	var c2bState = carOwnerLogin(username,password);
+	if(c2bState == "1"){
+	    rememberUrl = "/customer/qfy/index.html";
+	    $(".login").hide();
+		$(".user_info").show();
+		window.location.href = rememberUrl;
+		return;
+	}
+	//B2B登录
+	var arr = [];
+	var o = {};
+	o["XTCZY01"] = username;
+	o["XTCZY02"] = password;
+	arr.push(o);
+	var users=arr;
+	var data = visitService("/UserLogin/login.action?XmlData="+JSON.stringify(arr));
+	var loginState = data.state;
+	if (loginState == 1) {
+		alert("用户名有误!");
+		$("#XTCZY01").focus();
+	} else if (loginState == 2) {
+		alert("密码错误!");
+		$("#XTCZY02").focus();
+	} else if (loginState == 3) {
+		var userInfo = data.userInfo;
+		//判断公司名称是否为空，为空调转到补充数据页面
+		/**
+		if((userInfo.ZCXX02=="" || userInfo.ZCXX02==null || userInfo.ZCGS01==2) && userInfo.ZCXX56=="0"){
+			registerPerfect(username,userInfo.ZCXX01);
+		}else if(userInfo.ZCGS01==3){
+			//跳转到成功页面
+			var url = pubJson.O2OUrl+"/customer/qfy/register/registerPerfect2.html?ZCXX02="+escape(userInfo.ZCXX02);
+			window.location.href=url;
+		}else{
+		}
+		*/
+			//保存cookies值
+			if ($("#safeSignCheck").is(":checked")) {
+				if (users != null) {
+					var bool = false;
+					for ( var i = 0; i < users.length; i++) {
+							if (users[i].userName == $("#XTCZY01").val()) {
+								bool = true;
+								users[i].passWord = $("#XTCZY02").val();
+							}
+					}
+					if (bool == false) {
+						var o = {};
+						o.userName = $("#XTCZY01").val();
+						o.passWord = $("#XTCZY02").val();
+						users.push(o);
+					}
+				} else {
+					users = [];
+					var o = {};
+					o.userName = $("#XTCZY01").val();
+					o.passWord = $("#XTCZY02").val();
+					users.push(o);
+				}
+				$.cookie("users", null, {
+					path : '/'
+				});
+				$.cookie("users", JSON.stringify(users), {
+					expires : 90,
+					path : '/'
+				});
+			}
+			else{
+				$.cookie("users", null, {
+				path : '/'
+				});
+			};
+			var updateDate = new Date();
+			updateDate.setTime(updateDate.getTime() + 1 * 24 * 60 * 60* 1000); //超过1天,cookie需要重新更新
+			userInfo.UPDATETIME = updateDate.getTime();
+			$.cookie("userInfo", null, {
+				path : '/'
+			});
+			$.cookie("userInfo", JSON.stringify(userInfo), {
+				/* expires : 1, */
+				path : '/'
+			});
+			
+			//当没有完善页面时，跳转到完善页面
+			if((userInfo.ZCXX02=="" || userInfo.ZCXX02==null || userInfo.ZCGS01==2) && userInfo.ZCXX56=="0"){
+				registerPerfect(username,userInfo.ZCXX01,userInfo.LX);
+			}
+			if ((rememberUrl == "" || rememberUrl == null || rememberUrl == "null") && userInfo.ZCGS01 != 2) {
+				if(userInfo.LX=="43"||userInfo.LX=="42"||userInfo.LX=="34"){
+					rememberUrl = "/customer/qfy/back/shop-main.html";
+				}else{
+					rememberUrl = "/customer/qfy/index.html";
+				}
+				$(".login").hide();
+			    $(".user_info").show();
+				window.location.href = rememberUrl;
+			}
+			//角色跳转
+			if(userInfo.Role == 5){
+				location.href = "/customer/qfy/back/shop-main.html";
+			}
+			/* if (rememberUrl == "" || rememberUrl == null || rememberUrl == "null") {
+			rememberUrl = "/customer/qfy/index.html";
+			$(".login").hide();
+			$(".user_info").show();
+			window.location.href = rememberUrl;
+			}else{
+			}
+			 */
+			//登录成功返回上页
+			if(type!="1"){
+				history.go(-1);
+			}
+		}
+} 
+
+//车主登录LX=24
+function carOwnerLogin(userName,password){
+    var json={};
+	json["userName"] = userName;
+	json["password"] = password;
+	var data = visitService("/CarOwnerRegist/carOwerLogin.action?jsonData="+JSON.stringify(json));
+	data["LX"]="24";
+	data["ZCXX01"]="JL";
+	data["ZCXX07"]="120100";
+	var loginState = data.STATE;
+	if(loginState == "1"){
+		$.cookie("userInfo", null, {
+				path : '/'
+		});
+		$.cookie("userInfo", JSON.stringify(data), {
+				expires : 1,
+				path : '/'
+		});
+	}
+	return loginState;
+}
+
+//判断注册用户信息是否完成，不完整调整到补充信息页面
+function registerPerfect(rydm,zcxx01,gslx){
+	var url ;
+	if (gslx == '44') {
+		 url = pubJson.O2OUrl+"/customer/qfy/register/registerPerfectDBWX.html?XTCZY01="+rydm+"&ZCXX01="+zcxx01+"&GSLX="+gslx;
+	}else{
+		 url = pubJson.O2OUrl+"/customer/qfy/register/registerPerfectDB.html?XTCZY01="+rydm+"&ZCXX01="+zcxx01+"&GSLX="+gslx;
+	}
+	window.location.href=url;
+}
+$(document).ready(function(){
+	$("#footer").load("/customer/qfy/foot-08.html?ss="+Math.random());	
+});
+</script>
+<style>
+ 	body{ margin:0 auto; font-size:12px; color:#666; font-family:Arial,Verdana; color:#3c3c3c; font:'微软雅黑 Regular';background: #eef3fa;}
+	ul,li,h1,h2,h3,h4,input{ list-style:none; margin:0px; padding:0px;}
+	a{ text-decoration:none; cursor:pointer;}
+	.clera{ clear:both;}
+	input,select{ outline:none;}
+	img{ border:0px;}
+	.container{
+		width: 1200px;
+		height: auto;
+		margin: 0 auto;
+	}
+	.header{
+		width: 100%;
+		height: 91px;
+		background: #f7f7f7;
+	}
+	.header a>img{
+
+		float: left;
+	}
+	.wl{
+		display: block;
+		width: 200px;
+		height:91px;
+		line-height: 90px;
+		cursor: pointer;
+		font-size: 20px;
+		color:#000; 
+		float: left;
+		margin-left: 35px;
+	}
+	.content{
+		width: 100%;
+		height: 497px; 
+		background: #0d7fd7;
+		clear: both;
+		/*border: 1px solid red;*/
+	}
+	.conLeft{
+		width: 691px;
+		height: 497px;
+		float: left;
+		overflow: hidden;
+	}
+	.conRight{
+		width: 320px;
+		height: 300px;
+		float: left;
+		/*background: red;*/
+		margin-top: 100px;
+	}
+	.conRight h4{
+		font-size: 17px;
+		color: #fff;
+		line-height: 20px;
+	}
+	.loginBox{
+		width: 318px;
+		height: 310px;
+		border: 2px solid #ecf5fc;
+		background: #fff;
+		margin-top: 20px;
+	}
+	.loginContent{
+		padding-left: 20px;
+	}
+	.loginContent img{
+		margin-top: 20px;
+	}
+	.loginContent ul li{
+		width: 288px;
+		height: 40px;
+		line-height:40px;
+		margin-top: 10px;
+		border: 1px solid #c4c4c4;
+		font-size:14px;
+	}
+	.loginContent ul li span{
+		display:block;
+		width: 35px;
+		height: 40px;
+		/*background:green;*/
+		float: left;
+		border-right: 1px solid #c4c4c4;
+	}
+	
+	.userIcon{
+		background: url(/customer/qfy/images/tb.png) no-repeat -2px 1px;
+	}
+	.passIcon{
+		background: url(/customer/qfy/images/tb.png) no-repeat -43px 1px;
+	}
+	.loginContent ul li .text{
+		width: 248px;
+		line-height:30px;
+		text-indent:10px;
+		border: none;
+	}
+	.loginContent ul li input[type="checkbox"]{
+		margin-right:2px;
+		
+		margin-top:7px;
+		cursor: pointer;
+		border:none;
+		
+	}
+	.loginContent ul li .zcz{padding:0 35px;}
+	.loginContent ul li .loginbotton{
+		display:block;
+		background: #ff6700;
+		border: none;
+		width: 290px;
+		height: 40px;
+		text-align: center;
+		line-height: 40px;
+		color: #fff;
+		font-weight: 600;
+		border-radius: 4px;
+		
+	}
+	.loginContent ul li input[value]{
+		color: #a09f9f;
+		font-size:12px;
+	}
+	.loginContent .pw{width: 288px;height: 40px;line-height:40px;}
+	.loginContent .pw>span{float:left}
+	.loginContent .pw>input{float:left;width:248px;line-height:24px;height:36px;border:none;outline:none;}
+</style>
+<body>
+	<div class="container">
+		<div class="header">
+		<a href="/customer/qfy/index.html"><img src="/customer/qfy/images/logo.png" alt="logo" class="logo"></a>
+		<a href="javascript:;" class="wl">欢迎登录</a>
+		</div>
+		<div class="content clear">
+			<div class="conLeft">
+				<a><img src="/customer/qfy/images/left.png" alt=""></a>
+			</div>
+			<div class="conRight">
+				<h4>同质配件&nbsp;&nbsp;&nbsp;&nbsp;统一编码&nbsp;&nbsp;&nbsp;全程追溯</h4>
+				<div class="loginBox">
+					<form action="#" class="loginContent">
+						<img src="/customer/qfy/images/ts.png" alt="">
+						<ul>
+							<li class="pw"><span class="userIcon"></span><input placeholder="会员名/邮箱" class="text" id="login_userName" onkeypress="return userName_onkeypress(event)"></li>
+							<li class="pw"><span class="passIcon"></span><input type="password" class="text" id="XTCZY02" placeholder="请输入密码" onkeypress="return Password_onkeypress(event)"></li>
+							<li style="border:none;" class="zcf">
+								<!-- <input type="checkbox"><em>自动登录</em> -->
+								<a href="/customer/qfy/register/loginzc.html" class="zcw zcz">立即注册</a>
+								<a href="/customer/qfy/back/yhgl/zhmm_yhm.html" class="zcw wjm" >忘记密码？</a>
+								</li>
+							<li  style="border:none;text-align:center;"><a class="loginbotton">立即登录</a></li>
+						</ul>
+					</form>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<!---------------------底部--------------------->
+	<div id="footer">
+	</div>
+</body>
+</html>

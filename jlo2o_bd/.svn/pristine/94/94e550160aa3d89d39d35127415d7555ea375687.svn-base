@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var RKDH = $.getUrlParam('RKDH');
+//初始化数据
+function initData(){
+	if(RKDH==null){
+		var rkdh = $('#rkdh').val();
+	}else{
+		var rkdh = RKDH;
+	}
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.mjrk.selectRKD','dataType':'Json','QryType':'Report','RKDH':rkdh,'ZCXX01':usercookie.ZCXX01,'GSLX':usercookie.LX}];
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+	    <a href="#">我是卖家</a>
+    	<span>></span>
+    	<a href="#">库存管理</a>
+    	<span>></span>
+    	<b>入库货架编辑</b>
+	</div> -->
+ 	
+ <ul id="screening">
+   <li style="width:830px;">
+	<span>入库单号：</span>
+	<input type="text" id="rkdh" name="rkdh" value="" size="20" class="text"/>
+    <a href="javascript:void(0);" class="bot Short seach_bot">查询</a>
+   </li>
+</ul>
+<div class="clera"></div>
+ 
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4" rowClick="" multiPage="true" height="1500" url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'RKDH','header':'入库单号','type':'lable','width':'100px'},
+{'property':'CKDH','header':'出库单号','type':'lable','width':'150px'},
+{'property':'SHCK_NAME','header':'收货仓库','type':'lable','width':'150px'},
+{'property':'SHCK','header':'收货仓库编号','type':'hidden','width':'150px'},
+{'property':'RKSJ','header':'入库时间','type':'lable','width':'180px'},
+{'property':'RKDH','header':'操作','type':'eidt_rkdh','width':'80px'}]" 
+afterUrl="/customer/qfy/back/ckgl/wruk_item.html?RKDH=">
+</div>
+
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  //点击查询
+  $(".seach_bot").click(function(){
+     init();
+  })
+});
+
+//查看退货详情
+function select_thxx(obj,SHCK){
+	location.href="/customer/qfy/back/ckgl/wruk_item.html?RKDH="+obj+"&SHCK="+SHCK;
+}
+</script>

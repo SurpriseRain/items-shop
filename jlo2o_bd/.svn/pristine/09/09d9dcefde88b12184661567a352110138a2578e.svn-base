@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript">
+//初始化数据
+var RKDH = $.getUrlParam('RKDH');
+var SHCK = $.getUrlParam('SHCK');
+function initData(){
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["sqlid"]="com.jlsoft.o2o.sql.mjrk.selectHJBH";
+    XmlData["RKDH"]=RKDH;
+	XmlData["dataType"]="Json";
+	dataArr.push(XmlData);
+	var rData = visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+	var data = rData.data;
+	var str="<table class='list_table text_1'><tr class='title' style='text-align:left;'><td>商品名称</td><td>商品条码</td><td>货架编号</td></tr>";
+	for(var i=0;i<data.length;i++) {
+		str+='<tr><td>'+data[i].SPXX04+' <input type="hidden" id="SP'+data[i].SPXX01+'" name="SPXX01" value="'+data[i].SPXX01+'"/> </td>';
+		if(data[i].BARCODE==undefined){
+			str+='<td></td>';
+		}else{
+			str+='<td>'+data[i].BARCODE+'</td>';
+		}
+		var HJBH = data[i].HJBH==undefined?"":data[i].HJBH;
+		str+='<td><input type="text" placeholder="点击选择货架" id="'+data[i].SPXX01+'" name="HJID" value="'+HJBH+'"  onclick="open_HJ('+data[i].SPXX01+')"/>';
+		str+='</td></tr>';
+	 }
+	str+='</table>'
+	$(".center").html(str);
+}
+
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridListNoPage.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<!-- <div id="curPosition">
+    	<a href="#">库房管理</a>
+    	<span>></span>
+    	<b>选择货架</b>
+	</div> -->
+	<div class="clera"></div>
+  <ul id="screening">
+   <li style="width:400px;">
+		<a href="javascript:void(0);" id="button_save" class="bot Short sub_bot">保存</a>
+   </li>
+  </ul>
+	<div class="clera"></div>
+	<div class="center">
+	
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+  initData();
+  //点击保存
+  $(".sub_bot").click(function(){
+	  var splist = "";
+	  var hjlist = "";
+	    var HJ_list = $("input[name='HJID']");
+ 		for(var i=0;i<HJ_list.length;i++) {
+ 			var HJ = HJ_list[i].id;
+ 			var HJ_value = $("#"+HJ).val();
+			if(HJ_value==""){
+				alert("还存在未选货架的商品！");
+				return false; 
+			  } 
+		 }
+ 		for(var i=0;i<HJ_list.length;i++) {
+ 			var HJ = HJ_list[i].id;
+ 			var HJ_value = $("#"+HJ).val();
+			hjlist+=HJ_value+",";
+		 }
+ 		var SP_list = $("input[name='SPXX01']");
+ 		for(var i=0;i<SP_list.length;i++) {
+ 			var SP = SP_list[i].id;
+ 			var SP_value = $("#"+SP).val();
+			splist+=SP_value+",";
+		 }
+ 		
+ 		var sp = splist.substring(0,splist.length-1);
+ 		var hj = hjlist.substring(0,hjlist.length-1);
+ 		var XmlData={"shck":SHCK,"sp_list":sp,"hjlist":hj};
+ 		var url="/Oper_SPHJ/insert_sphj.action?XmlData="+JSON.stringify(XmlData);
+ 		var returnVal=visitService(url);
+ 		var loginState = returnVal.STATE;
+ 		if (loginState == 1) {
+ 			alert("保存成功！");
+ 			location.href="/customer/qfy/back/ckgl/wruk.html";
+ 		}else{
+ 			alert("保存失败！");
+ 		} 
+  });
+})
+
+//执行回调方法
+function backFun(parameters){
+	init();
+}
+
+function open_HJ(SPXX01){
+	parent.ajaxGrid("/customer/qfy/back/ckgl/Thrk_HJBM.html?SPXX01="+SPXX01);
+}
+function set_HJID(SPXX01,HJID){
+	$("#"+SPXX01).val(HJID);
+}
+</script>

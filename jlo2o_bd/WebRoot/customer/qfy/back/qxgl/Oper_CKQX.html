@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/control/js/dtree.js"></script>
+<style type="text/css">
+
+#main {
+float: left;
+height: 800px;
+width: 100%;
+}
+#left {
+    border-left: 1px solid #e4e4e4;
+    float: left;
+    height: 100%;
+    overflow: auto;
+    padding-top: 10px;
+    width: 59%;
+}
+#right {
+float: right;
+display:"inline";
+width: 40%;
+}
+
+ul.dqbd{ width:auto; padding-left:10px; margin:10px 0; border:1px solid #e4e4e4; float:left; display:block;}
+ul.dqbd li{ line-height:50px; width:auto; position:relative; float:left;}
+ul.dqbd li span.name{ float:left; margin-left:0px; width:70px; text-align:right; color:#3c3c3c;}
+ul.dqbd li input{ border:1px solid #aaa; height:25px; line-height:25px; font-family:"microsoft yahei"; font-size:14px; padding-left:5px; float:left; margin:12px 0 0 10px;}
+ul.dqbd li input.sptm{ width:200px;}
+ul.dqbd li input.spmc{ width:500px;}
+ul.dqbd li input.spsl{ width:60px;}
+ul.dqbd li input.lsj{ width:100px; color:#e40000;}
+ul.dqbd li input.spgg-rl{ width:60px;}
+ul.dqbd li select{ margin:0px; padding:0px; border:1px solid #aaa; height:27px; line-height:27px; float:left; margin:12px 0 0 10px; font-family:"microsoft yahei"; font-size:14px;}
+ul.dqbd li select.cd{ margin-right:5px; width:150px;}
+ul.dqbd li select.ge{ width:100px;}
+ul.dqbd li select.cx{ width:150px;}
+ul.dqbd li label{ margin:0 0 0 5px; float:left;}
+ul.dqbd li .btx{ float:left; margin-right:5px; line-height:50px; color:#e40000; position:absolute; left:112px;}
+ul.dqbd li .tishi{ float:left; margin-left:20px; line-height:50px; color:#999;}
+ul.dqbd li .tishi font{ color:#090; font-weight:bold; margin:0 5px;}
+ul.dqbd li .spge{}
+ul.dqbd li a.qr{ float:left; width:200px; height:30px; background-color:#2f80eb; color:#fff; line-height:30px; text-align:center; margin:30px 0 30px 10px;}
+ul.dqbd li a.qr:hover{ background-color:#1a47cc;}
+
+#curPosition {
+    border: 1px solid #e4e4e4;
+    float: left;
+    line-height: 30px;
+    padding-left: 10px;
+    width: 98%;
+}
+
+#curPosition a {
+    color: #004098;
+    float: left;
+    line-height: 30px;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+</style>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.qxgl.sql.oper_CKQX.selectQYList','QryType':'Report','dataType':'Json','personid':$('#personid').val(),'gsmc':$('#gsmc').val()}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+
+// 获取编辑点击后的文本框值
+function  edit(ryzh){
+	
+	var url="/Oper_CKQX/selectCKQXList.action";
+	var searchMap={};
+	var searchlist=[];
+	//获取值
+	searchMap["personid"] = ryzh;
+	searchlist.push(searchMap);
+	url=url+"?JsonData="+JSON.stringify(searchlist);
+	var returnData=visitService(url);
+	
+	$("#fpryzh").val(ryzh);
+	if(returnData.ckqxList != undefined && returnData.ckqxList != ""){
+		var ckqxList = returnData.ckqxList;
+		var fpckList = "";
+		var ckdmList = "";
+		for (var i = 0; i < ckqxList.length; i++) {
+			ckdmList+=ckqxList[i].CK01 + ",";
+			fpckList+=ckqxList[i].CK02 + ",";
+		}
+		ckdmList = ckdmList.substring(0, ckdmList.length - 1);
+		fpckList = fpckList.substring(0, fpckList.length - 1);
+		$("#fpck").val(fpckList);
+		$("#ckdm").val(ckdmList);
+	} else {
+		$("#fpck").val("");
+		$("#ckdm").val("");
+	}
+}
+
+// 弹出页面
+function grid(){
+	if($("#fpryzh").val() != null && $("#fpryzh").val() != ""){
+		parent.ajaxGrid("/customer/qfy/back/qxgl/Oper_CKQX_item.html?RYZH=" + $("#fpryzh").val() + "&FPCK=" + escape($("#fpck").val()) + "&CKDM=" + $("#ckdm").val());
+	} else {
+		return false;
+	}
+}
+
+<!-- 授权当前用户账号的仓库权限  -->
+function save(){	
+	//获取选择公司对应的仓库权限
+	var r = confirm('确认更新信息吗？');
+	if(r == true){
+		var CKDM = $("#ckdm").val();
+		var RYZH = $("#fpryzh").val();
+		var JsonData= {"RYZH" : RYZH, "CKDM" : CKDM};
+		var url = "/Oper_CKQX/insertCKQXList.action?JsonData=" + JSON.stringify(JsonData);
+		var returnVal = visitService(url);
+		if(returnVal.STATE == 1){
+			alert("更新成功");
+			window.location.reload();
+		}else{
+			alert("更新失败");
+		}
+	}
+	else return;
+}	
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<!-- 界面 -->
+	<div id="main">
+		<!-- <div id="curPosition">
+			<a href="#">菜单权限管理</a> 
+			<span>></span> 
+			<b>仓库权限分配</b>
+		</div> -->
+		<div class="clera"></div>
+		<ul id="screening">
+			<li style="width: 818px;">
+				<span>人员账号：</span> 
+				<input type="text" id="personid" name="personid" value="" size="20" class="text" /> 
+				<span>公司名称：</span>
+				<input type="text" id="gsmc" name="gsmc" value="" size="20" class="text" /> 
+				<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+			</li>
+		</ul>
+		<div class="clera"></div>
+		<div class="center">
+			<!-- 左边 -->
+			<div id="left" jl jlid="DefStaPer" id="lb" newclos="5" rowClick="" multiPage="true" url="/jlquery/selecto2o.action"
+				columnsArr="[
+								{'property':'PERSON_ID','header':'人员账号','type':'lable','width':'80px'},
+								{'property':'ZCXX02','header':'公司名称','type':'lable','width':'200px'},
+								{'property':'ZCXX65','header':'仓库类型','type':'lable','width':'100px'},
+								{'property':'PERSON_ID','header':'操作','type':'qxgl','width':'150px'}]"
+				>
+			</div>
+			<!-- 右边 -->
+			<div id="right">
+				<ul class="dqbd">
+					<li>
+						<span class="name"><span style="color: red"></span>人员账号：</span>
+						<input class="sptm" name="fpryzh" id="fpryzh" value="" disabled="disabled" />
+					</li>
+					<li>
+						<span class="name"><span style="color: red">*</span>分配仓库：</span>
+						<textarea cols="27" rows="6" class="sptm" id="fpck" style="margin-left: 10px; margin-top: 3px;" readonly="readonly"
+							onclick="grid()" placeholder="点击此处添加仓库！"></textarea> 
+						<input type="hidden" id="ckdm" />
+					</li>
+					<li>
+						<span class="name">&nbsp;</span><a href="#" class="qr" id="sureclick" onclick="save()">授权修改</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+// 初始化
+function init() {
+    var divs = $("div[jl]");
+    for (var i = 0; i < divs.length; i++) {
+        eval($(divs[i]).attr('jlid') + ".init(" + $(divs[i]).attr('id') + ");");
+    }
+}
+// 查询操作
+function query(){
+	$("#fpryzh").val("");
+  	init();
+	var divs = $("div[jl]");
+	for (var i = 0; i < divs.length; i++) {
+        eval($(divs[i]).attr('jlid') + ".init(" + $(divs[i]).attr('id') + ");");
+    }
+}
+//执行回调方法
+function backFun(s){
+	// 进行拼串操作
+	var sArray=s.split("#");
+	$("#fpck").val(sArray[1]);
+	$("#ckdm").val(sArray[0]);
+}
+
+</script>

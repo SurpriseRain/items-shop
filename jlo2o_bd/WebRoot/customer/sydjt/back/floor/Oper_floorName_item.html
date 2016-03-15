@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/tablekj.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+</head>
+<body>
+<!--   <div id="curPosition">-->
+<!--    	<a href="#">楼层管理</a>-->
+<!--    	<span>></span>-->
+<!--    	<a href="#">楼层名称</a>-->
+<!--    	<span>></span>-->
+<!--    	<b>楼层名称详情</b>-->
+<!--	</div>-->
+<!--	<div class="clera"></div>-->
+<!--	<form name="form1" id="form1" action="" method="post">-->
+<!--			<input type="hidden" id="sqlid" value="">-->
+<!--			<table id="TABLESty" cellpadding="3" cellspacing="3" class="table2" width="100%">-->
+<!--			<tr>-->
+<!--			<td id="l" width="60%" class="td" valign="top">-->
+<!--			<fieldset>-->
+<!--							<legend-->
+<!--								style="font-size: 12px; font-weight: bold; margin-left: 20px; border: 0px">-->
+<!--								楼层名称详细信息-->
+<!--							</legend>-->
+<!--							<table id="TABLE" cellpadding="0" cellspacing="0" width="100%">-->
+<!--						-->
+<!--								<tr>-->
+<!--									<td align="right" width="10%">-->
+<!--										楼层名称编码-->
+<!--									</td>-->
+<!--									<td width="23%">-->
+<!--										<input type="text" name="lcfl01" id="lcfl01" value="" readonly="readonly"/>-->
+<!--									</td>-->
+<!--									<td align="right">-->
+<!--										楼层名称-->
+<!--									</td>-->
+<!--									<td>-->
+<!--										<input type="text" id="lcfl02" name="LCFL02" />			-->
+<!--									</td>-->
+<!--									-->
+<!--								</tr>-->
+<!--				<tr class="bot">-->
+<!--       				<td colspan="2">-->
+<!--         				<a class="bot Medium" href="javascript:void(0);" onclick="okclick();">新增</a>-->
+<!--       				</td>-->
+<!--       	-->
+<!--      			</tr>  -->
+<!--					</table>-->
+<!--				</fieldset>-->
+<!--			</td>-->
+<!--			</tr>-->
+<!--			</table>-->
+
+<!--			<jsp:include flush="true" page="../include/ViewDragDiv.jsp" />-->
+
+<!--		</form>-->
+<form id="form1" name="form1" action="" method="post">
+	<div id="curPosition">
+    	<a href="#">楼层管理</a>
+    	<span>></span>
+    	<a href="#">楼层名称</a>
+    	<span>></span>
+    	<b>楼层名称详情</b>
+	</div>
+	<div class="clera"></div>
+    <input type="hidden" id="sqlid" value="">
+	<table class="single_table">
+	     <tr class="title"><td colspan="2"><b>楼层名称详情</b><font>* 必填项</font></td></tr>
+	     <tr>
+	       <td style="width:100px;"><span>楼层名称编码：</span></td>
+	       <td style="width:550px;"><input type="text" name="lcfl01" id="lcfl01" value="" disabled="true" readonly="readonly"/></td>
+	     </tr>
+	     <tr>
+	       <td><span>楼层名称：</span></td>
+	       <td><font>*</font><input type="text" id="lcfl02" name="LCFL02" /></td>
+	     </tr>   
+	     <tr class="bot">
+	       <td colspan="2">
+	         <a href="javascript:void(0);" onclick="okclick();" class="bot Medium">确 定</a>
+	       </td>
+	     </tr>    
+	</table>
+  	<div class="clera"></div>
+</form>
+
+<div class="clera"></div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//var win = dialogArguments;
+var SPXX01=$.getUrlParam('SPXX01');
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+$(document).ready(function(){
+	/*
+	if(SPXX01!=null){
+		srchSPXX(SPXX01);
+		}
+	*/
+});
+function okclick(){
+	var  XmlData1 = $("#form1").formToJson();
+	var lcfl02 = $("#lcfl02").val();//发布商品简单些的描述话
+	if(lcfl02 == ""){
+		alert("请填写楼层名称!");
+		return false;
+	}
+	var XmlData=JSON.stringify(XmlData1);
+	var url="/oper_floor/insertFloorName.action?XmlData="+XmlData;
+	if(confirm("确认操作?")){
+	$.ajax({
+		type:"POST",
+		async:false,
+		url:encodeURI(url),
+		data:{XmlData:XmlData},
+		dataType:"text",
+		success: function(data) { 
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			//alert(jsondata.STATE);
+			if(data1==1){
+				alert("保存成功!");
+				parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+				}else{
+				alert("保存失败!");
+					}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	        alert(textStatus);
+	    }
+	});
+	}
+}
+//修改商品时查询商品详细信息
+function sel(rowObj){
+		$("#ZTID").val(rowObj.find("#GSID").val());
+		$("#SPXX01").val(rowObj.find("#SPXX01").val());
+		$("#SPXX04").val(rowObj.find("#SPXX04").val());
+		$("#GHSNAME").val(rowObj.find("#GHSNAME").val());
+		$("#FLNAME").val(rowObj.find("#FLNAME").val());
+	   }  
+
+
+</script>

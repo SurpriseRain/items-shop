@@ -1,0 +1,52 @@
+/******************服务管理 公共样式-按钮样式开始***************/
+a.bot{display:block;float:left;width:auto;padding:0 10px;cursor:pointer;height:28px;line-height:30px;margin:0;}
+a.bot{margin:10px 0 0 10px;padding:0 20px;color:#fff;cursor:pointer;text-align:center;background:#ff8800;height:30px;line-height:30px;}
+a.bot:hover{background:#ff8600;}
+a.bot_sty{border-radius:15px;padding:0 10px;}
+.clear{clear:both;}
+.fwswz{width:566px;margin:0 auto;}
+.btx,.btx1{float: left;margin-right: 5px;line-height: 50px;color: #e40000;position: absolute;left: 112px;}
+.btx1{left:74px;}
+/******************服务管理 公共样式-按钮样式结束**************/
+
+/******************服务管理状态文字样式开始******************/
+.LayColor{color:#c3c3c3;}
+.bmwz{float:left;}
+/******************服务管理状态文字样式开始******************/
+
+/*****************服务管理样式开始*******************/
+.divHeight{height:400px;height:auto;min-height:100px;width:800px; background:#f9f9f9;margin:0 auto;} 
+.CMbtn{position:relative;width:728px;margin:0 auto;}
+.CMbtn a{margin-left:20px;}
+.ppts{margin-top:20px;}
+span{margin-left:8px;}
+.bm_r{width:5px; float:left;}
+ul#pdb-info #ppmc_div li{float: left;width:200px;margin-left:10px;line-height:30px;}
+#ppmc_div{float:left;width:700px;margin-left:115px;margin-top:-45px;}
+#ppmc_div.ppmc_div{margin-left:170px;margin-top:-50px;}
+#ppmc_div li{width:200px;float:left;}
+#ppmc_div li input{width: 20px;margin-top:10px;}
+#ppmc_div li span{display:block;width: auto;padding:0 20px; text-align: left;margin: 0px;float: none;line-height:50px;text-indent:5px;}
+#form1{margin:0 auto;width:800px;height:auto;}
+.ysCity{display:block;width:100%;line-height:50px;float:left;margin-top:10px;}
+textarea{margin-left:55px;}
+.btx{position:static;}
+.ysCity>span{display:block;width:auto;padding:0 20px;margin-left:115px;}
+.ysCity>a{float:right;margin-right:326px;}
+.ysCity1>a{float:right;margin-right:349px;}
+/**********************服务管理样式结束******************/
+
+/*****************服务管理信息样式开始***********************/
+.fwsxx{width:800px;height:auto;}
+.fwsxx li{width:100%;}
+.fwsxx .sqpp{width:820px;}
+.fwsxx span{display:inline-block;padding:0 10px;text-align:center;width:110px;height:50px;line-height:50px;}
+span.dyxx,span.dyxx0{width:200px;margin-left:163px;text-align:left;}
+span.dyxx0{margin-left:131px;}
+.fwsxx input{height:30px;line-height:25px;font-size:12px;}
+.yxdy span,.yxpp span{float:left;}
+li.yxpp,li.yxdy{margin-bottom:10px;}
+.yxdy textarea,.yxpp textarea{margin-left:0;}
+.sqdy select{border:1px solid #aaa;height:27px;float:left;margin:12px 0 0 2px;font-family:'microsoft yahei';font-size:14px;width:100px;}
+span.sqdy1{float:left;padding:0 6px;margin-right:-3px;}
+/******************服务管理信息样式结束**********************/

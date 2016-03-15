@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+	var fpbh = $.getUrlParam('fpbh');
+  	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.orderInvoice.sel_xsdditem','dataType':'Json','fpbh':fpbh}];
+    return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+
+
+//发票审核
+function fpsh(){
+	var fpbh = $.getUrlParam('fpbh');
+	var XmlData = [{"fpbh":fpbh}];
+	var url="/audit/update_fpsh.action?XmlData="+JSON.stringify(XmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(returnVal){
+			if(returnVal.STATE=="1"){
+				alert("审核成功!");
+				history.go(-1);
+			}else{
+				alert("审核失败");
+				return;
+			}
+		}
+	});
+} 
+
+//发票驳回
+function fpbh(){
+	var fpbh = $.getUrlParam('fpbh');
+	var XmlData = [{"fpbh":fpbh}];
+	var url="/audit/update_fpbh.action?XmlData="+JSON.stringify(XmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(returnVal){
+			if(returnVal.STATE=="1"){
+				alert("驳回成功!");
+				history.go(-1);
+			}else{
+				alert("驳回失败");
+				return;
+			}
+		}
+	});
+}
+
+function back(){
+	history.go(-1);
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<div id="curPosition" style="width:100%;">
+    	<a href="#">发票管理</a>
+    	<span>></span>
+    	<a href="#">发票审核</a>
+    	<span>></span>
+    	<b>发票明细</b>
+	</div>
+	<div class="clera"></div> 
+	<div class="center">
+		<table class="show_table">
+		    <tr>
+		    	<td><span>经销商：</span></td><td  style="width:150px"><label id="span_sname" title=""></label></td>
+		    	<td><span>购买企业：</span></td><td><label id="span_bname" title=""></label></td>
+		    	<td><span>发票状态：</span></td><td  style="width:150px"><label id="span_fpstate" title=""></label></td>
+			</tr>
+			<tr>
+		       <td><span>订单数量：</span></td><td  style="width:150px"><label id="span_ddsl" title=""></label></td> 
+		       <td><span>发票总金额：</span></td><td><label id="span_fpje" title=""></label></td>
+		       <td><span>联系人：</span></td><td><label id="span_lxr" title="" ></label></td>
+		    </tr>
+		    <tr>
+		    	<td><span>联系电话：</span></td><td><label id="span_lxdh" title="" ></label></td>
+		    	<td><span>邮寄地址：</span></td><td><label id="span_yjdz" title="" ></label></td>
+		    	<td><span>申请时间：</span></td><td><label id="span_sqsj" title="" ></label></td>
+		    </tr>
+		      <tr>
+		    	<td><span>发票类型：</span></td><td><label id="fplx" title="" ></label></td>
+		    	<td id="fpttt"><span>发票抬头：</span></td><td><label id="fptt" title="" ></label></td>
+		    </tr>
+		</table>
+    	<div class="clera"></div>
+
+	    <!-- 展示明细 -->
+		<div jl jlid="DefStaPer" id="lb" style="overflow:auto;" newclos="4" multiPage="false" url="/jlquery/selecto2o.action"
+		columnsArr="[
+		{'property':'xsdd01','header':'订单编号','type':'lable','width':'200px'},
+		{'property':'xsdd02','header':'订单金额','type':'lable','width':'100px'},
+		{'property':'cnt','header':'商品数量','type':'lable','width':'100px'},
+		{'property':'xdsj','header':'下单时间','type':'lable','width':'200px'}]"
+		>
+		</div>
+	</div>
+	<div class="clera"></div> 
+	
+	<!----------------------->	
+	<div>
+		<table class="show_table" id="zcxxinfo" style="display: none">
+			<tr>
+		    	<td><span>单位名称：</span></td><td><label id="w_dwmc" title=""></label></td>
+		    	<td><span style="width:100px;">纳税人识别码：</span></td><td><label id="w_nsrsbm" title=""></label></td>
+			</tr>
+			<tr>
+		       <td><span>开户银行：</span></td><td><label id="w_khyh" title=""></label></td>
+		       <td><span>银行账户：</span></td><td><label id="w_yhzh" title="" ></label></td>
+		    </tr>
+		    <tr>
+		       <td><span>注册电话：</span></td><td><label id="w_zcdh" title=""></label></td> 
+		       <td><span>注册地址：</span></td><td><label id="w_zcdz" title=""></label></td>
+		    </tr>
+		</table>
+	</div>
+	<div class="clera"></div> 
+	<table class="single_table" id="pic_list" style="display: none"> 
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">营业执照：</span></td>
+       <td id="yyzz">
+        <img src="" class="img"/>
+       </td>
+     </tr> 
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">税务登记证：</span></td>
+       <td id="swdjz">
+        <img src="" class="img"/>
+       </td>
+     </tr> 
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">组织机构代码证：</span></td>
+       <td id="zzjgdmz">
+        <img src="" class="img"/>
+       </td>
+     </tr>   
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">开户许可证：</span></td>
+       <td id="kfxkz">
+        <img src="" class="img"/>
+       </td>
+     </tr>
+  </table>
+
+	
+	<!-- 展示按钮 -->
+		 <div style="text-align:center;width:500px; margin:0 auto;">
+			<a href="javascript:void(0);" onclick="fpsh();" id="shBtn" class="bot Medium FH" style="text-align:center;display: none;">审核</a>
+			<a href="javascript:void(0);" onclick="fpbh();" id="bhBtn" class="bot Medium FH" style="text-align:center;display: none;">驳回</a>
+			<a href="javascript:void(0);" onclick="back();" class="bot Medium FH" style="text-align:center;">返回</a>
+		</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//初始查询主表信息
+$(document).ready(function(){
+	$("td > img").click(function(){
+		  var td_img = $(this).attr("class");
+		  if(td_img == "img"){
+			 $(this).attr("class","big")
+			}else if(td_img == "big"){
+			 $(this).attr("class","img") 
+			}
+		 });
+	
+	var fpbh = $.getUrlParam('fpbh');
+	//用户类型
+	var type = $.getUrlParam('type');
+    var XmlData = [{"fpbh":fpbh}];
+	
+	var url="/audit/select_fpxx.action?XmlData="+JSON.stringify(XmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(returnVal){
+			$("#span_sname").html(returnVal.sName);
+			$("#span_bname").html(returnVal.bName);
+			$("#span_fpstate").html(returnVal.fpstate);
+			$("#span_ddsl").html(returnVal.ddsl);
+			$("#span_fpje").html(returnVal.m);
+			$("#span_lxr").html(returnVal.lxr);
+			$("#span_lxdh").html(returnVal.lxdh);
+			$("#span_yjdz").html(returnVal.yjdz);
+			$("#span_sqsj").html(returnVal.applytime);
+			$("#fptt").html(returnVal.fptt);
+
+			if(returnVal.invoicestate == 1 && type==2){
+				$("#shBtn").show();
+				$("#bhBtn").show();
+			}else{
+				$("#shBtn").remove();
+				$("#bhBtn").remove();
+				$(".FH").attr("style","margin-left: 180px;");
+			}
+			$("#fplx").html(returnVal.fptype);
+			var fplx = returnVal.fplx;
+			if(fplx == 2){
+				$("#pic_list").show();
+				$("#zcxxinfo").show();
+				$("#fpttt").hide();
+				$("#fptt").hide();
+				//显示详情
+				var zcxxInfo = returnVal.zcxxInfo;
+				$("#w_dwmc").html(zcxxInfo.ZCXX02);
+				$("#w_nsrsbm").html(zcxxInfo.ZCXX28);
+				$("#w_khyh").html(zcxxInfo.GSYHK03);
+				$("#w_yhzh").html(zcxxInfo.GSYHK02);
+				$("#w_zcdh").html(zcxxInfo.ZCXX72);
+				$("#w_zcdz").html(zcxxInfo.ZCXX71);
+				
+				
+				//显示图片
+				var str="";
+				var imgUrl="";
+				var dptpObj={};
+				var dptpList = returnVal.tpList;
+				for(var i=0;i<dptpList.length;i++){
+					dptpObj=dptpList[i];
+					imgUrl=pubJson.path_sptp+"/dptp/"+dptpObj.ZCXX01+"/"+dptpObj.TPMC;
+					if(dptpObj.TPLX == "3"){
+						$("#yyzz").find(".img").attr("src",imgUrl);
+					}
+					if(dptpObj.TPLX == "5"){
+						$("#swdjz").find(".img").attr("src",imgUrl);
+					}
+					if(dptpObj.TPLX == "4"){
+						$("#zzjgdmz").find(".img").attr("src",imgUrl);
+					}
+					if(dptpObj.TPLX == "6"){
+						$("#kfxkz").find(".img").attr("src",imgUrl);
+					}
+				}
+			}
+		}
+	});
+	
+});
+</script>

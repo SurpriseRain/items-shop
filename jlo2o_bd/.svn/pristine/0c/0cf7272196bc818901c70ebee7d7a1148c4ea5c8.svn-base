@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.sql.thrk">
+
+	<select id="selectTHRK" parameterType="Map" resultType="java.util.Map">
+		SELECT w_thd.THDH,w_thd.hbid,w_thd.LXR,w_thd.LXDH,w_thditem.THSL,DATE_FORMAT(w_thd.ZDSJ, '%Y-%m-%d %k:%i:%s') ZDSJ from w_thd
+		LEFT JOIN w_thditem on w_thd.THDH = w_thditem.THDH
+		LEFT JOIN w_xsdd on w_xsdd.xsdd01 = w_thd.XSDD01
+		LEFT JOIN w_xsdditem on w_xsdditem.xsdd01 = w_xsdd.xsdd01 and w_xsdditem.spxx01 = w_thditem.SPXX01
+		LEFT JOIN w_zcxx on w_zcxx.zcxx01 = w_thd.ZTID
+		where 1=1 and w_xsdditem.ck01 in (select ck01 from W_XTCZYCK where person_id = #{XTCZY01})
+		and w_thd.THZT = '10'
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="THDH!='' and THDH!=null" > AND w_thd.THDH = #{THDH}</if>
+		ORDER BY w_thd.THDH
+	</select>
+	
+	<select id="selectTHRK_sum" parameterType="Map" resultType="java.util.Map">
+		select count(1) COUNT FROM (SELECT w_thd.THDH,w_thd.hbid,w_thd.LXR,w_thd.LXDH,w_thditem.THSL,w_thd.SHSJ from w_thd
+		LEFT JOIN w_thditem on w_thd.THDH = w_thditem.THDH
+		LEFT JOIN w_xsdd on w_xsdd.xsdd01 = w_thd.XSDD01
+		LEFT JOIN w_xsdditem on w_xsdditem.xsdd01 = w_xsdd.xsdd01 and w_xsdditem.spxx01 = w_thditem.SPXX01
+		LEFT JOIN w_zcxx on w_zcxx.zcxx01 = w_thd.ZTID
+		where 1=1 and w_xsdditem.ck01 in (select ck01 from W_XTCZYCK where person_id = #{XTCZY01})
+		and w_thd.THZT = '10'
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="THDH!='' and THDH!=null" > AND w_thd.THDH = #{THDH}</if>
+		)t
+	</select>
+	
+	<select id="selectTHDSPXX" parameterType="Map" resultType="java.util.Map">
+		SELECT w_goods.spxx04,w_goods.barcode,(SELECT zcxx02 from w_zcxx where zcxx01 = w_xsdd.ztid) zcxx02,spfl02,w_thditem.THSL from w_thd
+		LEFT JOIN w_thditem on w_thditem.THDH = w_thd.THDH
+		LEFT JOIN w_xsdd on w_xsdd.xsdd01 = w_thd.XSDD01
+		LEFT JOIN w_goods on w_goods.spxx01 = w_thditem.spxx01
+		LEFT JOIN w_spxx on w_spxx.spxx01 = w_goods.spxx01
+		where 1=1
+		<if test="THDH!='' and THDH!=null" > AND W_THD.THDH = #{THDH}</if>
+	</select>
+	
+	<select id="selectTHCM" parameterType="Map" resultType="java.util.Map">
+		SELECT spcm01 from w_thd
+		LEFT JOIN w_xsdd ON w_xsdd.xsdd01 = w_thd.XSDD01
+		LEFT JOIN w_xsddcm on w_xsddcm.XSDD01 = w_xsdd.xsdd01
+		where 1=1
+		<if test="THDH!='' and THDH!=null" > AND w_thd.THDH = #{THDH}</if>
+	</select>
+	
+</mapper>

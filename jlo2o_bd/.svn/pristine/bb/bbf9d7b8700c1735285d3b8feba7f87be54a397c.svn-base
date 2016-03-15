@@ -1,0 +1,469 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css"	href="/css/ext-all.css" />
+		<link type="text/css" rel="stylesheet"	href="/customer/qfy/css/header-min.css" />
+		<link type="text/css" rel="StyleSheet"	href="/css/jquery.autocomplete.css" />
+		<script type="text/javascript"	src="/js/ext-base.js"></script>
+		<script type="text/javascript"	src="/js/ext-all.js"></script>
+		<script type="text/javascript"	src="/js/ext-lang-zh_CN.js"></script>
+		<script type="text/javascript"	src="/js/jquery-1.7.2.js"></script>
+		<script type="text/javascript"	src="/js/json2.js"></script>
+		<script type="text/javascript"	src="/js/commons.js"></script>
+		<script type="text/javascript"	src="/js/jquery.autocomplete.js"></script>
+		<script type="text/javascript"	src="/js/ajaxfileupload.js"></script>
+		<script type="text/javascript"	src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript"	src="/customer/qfy/js/pubJson.js"></script>
+		<title>首页展示图片设置</title>
+		<link rel="StyleSheet" href="/css/jlstyle.css" type="text/css" />
+		<style type="text/css">
+		.text_gsmc {
+			width: 81%;
+			border: 0px;
+		}
+		.qr:hover{ background-color:#ed292a;}
+		.qr{ float:left; width:200px; height:30px; background-color:#ff3c3c; color:#fff; line-height:30px; text-align:center; margin:30px 0 30px 10px;}
+		.text_view {
+			width: 51%;
+			border: 0px;
+			height: 20px;
+		}
+		
+		.text_fj {
+			width: 25%;
+		}
+		
+		.required {
+			color: red;
+		}
+		</style>
+	</head>
+
+	<body style="position:absolute;">
+		<!--拖动层开始-->
+		<jsp:include flush="true" page="../include/ViewDragDiv.jsp" />
+		<!--拖动层结束-->
+		<form id="form1" name="form1" action="" method="post"
+			enctype="multipart/form-data">
+
+			<input name="finalLink" type="hidden" id="finalLink">
+			<table>
+			
+		<tr><th colspan="5">首页展示图片设置</th></tr>
+		
+				<tr>
+					<td class="lable_10">
+						<strong>首页大图展示一：</strong>
+					</td>
+					<td colspan="3">
+						<input id="file00" type="file" name="files" class="text_fj"	value="" />
+						<input type="hidden" name="tplx0" value="90" />
+						<a id="fj_0" href=""></a>
+						<label id="fj_0_">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td class="lable_10">
+						<strong>链接1：</strong>
+					</td>
+					<td>
+						&nbsp;商品编码
+						<input id="spid1" name="spid1" type="hidden">
+						<input id="s_spid1" name="s_spid1" size="25">
+						<img src="/customer/qfy/images/srch.gif" class="button" onclick="xzsp(1)"/>
+						<br>
+						会员商品
+						<input type="radio" name="link1" id="link12"
+							onclick="VIPLink('finalLink1')" />
+						<br>
+						其他
+						<input type="radio" name="link1" id="link13"
+							onclick="otherLink('otherLink1','finalLink1','link13')">
+						&nbsp;其他链接
+						<input name="otherLink1" id="otherLink1" size="57">
+						<br>
+						最终&nbsp;
+						<input size="90" name="finalLink1" id="finalLink1" />
+					</td>
+				</tr>
+
+				<tr>
+					<td class="lable_10">
+						<strong>首页大图展示二：</strong>
+					</td>
+					<td colspan="3">
+						<input id="file01" type="file" name="files" class="text_fj"	value="" />
+						<input type="hidden" name="tplx1" value="91" />
+
+						<a id="fj_1" href=""></a>
+						<label id="fj_1_">
+<!--							暂未上传-->
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td class="lable_10">
+						<strong>链接2：</strong>
+					</td>
+					<td>
+<!--						单品-->
+<!--						<input type="radio" name="link2" id="link21"-->
+<!--							onclick="checkGoods('link21','spid2','jxs2','finalLink2')" />-->
+						&nbsp;商品编码
+						<input id="spid2" name="spid2" type="hidden">
+						<input id="s_spid2" name="s_spid2" size="25">
+						<img src="/customer/qfy/images/srch.gif" class="button" onclick="xzsp(2)"/>
+						<br>
+						会员商品
+						<input type="radio" name="link2" id="link22"
+							onclick="VIPLink('finalLink2')">
+						<br>
+						其他
+						<input type="radio" name="link2" id="link23"
+							onclick="otherLink('otherLink2','finalLink2','link23')">
+						&nbsp;其他链接
+						<input name="otherLink2" id="otherLink2" size="57">
+						<br>
+						最终&nbsp;
+						<input size="90" name="finalLink2" id="finalLink2" />
+					</td>
+				</tr>
+
+				<tr>
+					<td class="lable_10">
+						<strong>首页大图展示三：</strong>
+					</td>
+					<td colspan="3">
+						<input id="file02" type="file" name="files" class="text_fj"	value="" />
+						<input type="hidden" name="tplx2" value="92" />
+
+						<a id="fj_2" href=""></a>
+						<label id="fj_2_">
+<!--							暂未上传-->
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td class="lable_10">
+						<strong>链接3：</strong>
+					</td>
+					<td>
+<!--						单品-->
+<!--						<input type="radio" name="link3" id="link31"-->
+<!--							onclick="checkGoods('link31','spid3','jxs3','finalLink3')" />-->
+						&nbsp;商品编码
+						<input id="spid3" name="spid3" type="hidden">
+						<input id="s_spid3" name="s_spid3" size="25">
+						<img src="/customer/qfy/images/srch.gif" class="button" onclick="xzsp(3)"/>
+						<br>
+						会员商品
+						<input type="radio" name="link3" id="link32"
+							onclick="VIPLink('finalLink3')">
+						<br>
+						其他
+						<input type="radio" name="link3" id="link33"
+							onclick="otherLink('otherLink3','finalLink3','link33')">
+						&nbsp;其他链接
+						<input name="otherLink3" id="otherLink3" size="57">
+						<br>
+						最终&nbsp;
+						<input size="90" name="finalLink3" id="finalLink3" />
+					</td>
+				</tr>
+
+				<tr>
+					<td class="lable_10">
+						<strong>首页大图展示四：</strong>
+					</td>
+					<td colspan="3">
+						<input id="file03" type="file" name="files" class="text_fj"	value="" />
+						<input type="hidden" name="tplx3" value="93" />
+
+						<a id="fj_3" href=""></a>
+						<label id="fj_3_">
+<!--							暂未上传-->
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td class="lable_10">
+						<strong>链接4：</strong>
+					</td>
+					<td>
+						&nbsp;商品编码
+						<input id="spid4" name="spid4" type="hidden">
+						<input id="s_spid4" name="s_spid4" size="25">
+						<img src="/customer/qfy/images/srch.gif" class="button" onclick="xzsp(4)"/>
+						<br>
+						会员商品
+						<input type="radio" name="link4" id="link42"
+							onclick="VIPLink('finalLink4')">
+						<br>
+						其他
+						<input type="radio" name="link4" id="link43"
+							onclick="otherLink('otherLink4','finalLink4','link43')">
+						&nbsp;其他链接
+						<input name="otherLink4" id="otherLink4" size="57">
+						<br>
+						最终&nbsp;
+						<input size="90" name="finalLink4" id="finalLink4" />
+					</td>
+				</tr>
+
+
+				<tr>
+					<td class="lable_10">
+						<strong>首页大图展示五：</strong>
+					</td>
+					<td colspan="3">
+						<input id="file04" type="file" name="files" class="text_fj"	value="" />
+						<input type="hidden" name="tplx4" value="94" />
+
+						<a id="fj_4" href=""></a>
+						<label id="fj_4_">
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td class="lable_10">
+						<strong>链接5：</strong>
+					</td>
+					<td>
+						&nbsp;商品编码
+						<input id="spid5" name="spid5" type="hidden">
+						<input id="s_spid5" name="s_spid5">
+						<img src="/customer/qfy/images/srch.gif" class="button" onclick="xzsp(5)"/>
+						<br>
+						会员商品
+						<input type="radio" name="link5" id="link52"
+							onclick="VIPLink('finalLink5')">
+						<br>
+						其他
+						<input type="radio" name="link5" id="link53"
+							onclick="otherLink('otherLink5','finalLink5','link53')">
+						&nbsp;其他链接
+						<input name="otherLink5" id="otherLink5" size="57">
+						<br>
+						最终&nbsp;
+						<input size="90" name="finalLink5" id="finalLink5" />
+					</td>
+				</tr>
+				<tr >
+					<td colspan="2" ><a class="qr" onclick="submitAll();">保存图片</a></td>
+				</tr>
+			</table>
+
+		</form>
+
+
+	</body>
+
+<script type="text/javascript" charset="UTF-8">
+
+function submitAll(){
+ var user=JSON.parse($.cookie("userInfo"));
+ var xmlData=[];
+ var fileArray=[];
+	for(var m=0;m<9;m++){
+		var json={};
+		if(checkedData(m)){
+			//json.num=m+1;
+			json.tplx=$("input[name='tplx"+m+"']").val();
+			json.link=$("#finalLink"+(Number(m)+1)).val();
+			json.gsid=user.ZCXX01;
+			fileArray.push("file0"+m);
+			xmlData.push(json);
+		}
+	}
+	var val="/JcszDt/displayPicture.action?XmlData="+escape(JSON.stringify(xmlData));
+	if(confirm('确认上传吗?')==true){
+		 //弹出遮罩层
+		 top.openWait();
+	$.ajaxFileUpload({
+			type:"POST",
+			secureuri:false,
+			fileElementId:fileArray,
+			url:encodeURI(val),//encodeURI避免中文乱码
+			dataType:"text",
+			success: function(data) {
+				//关闭遮罩层
+				top.closeWait();
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				if(data1=="1"){
+					alert("保存成功!");
+					showPic(user);
+					}else{
+					alert("保存失败!");
+						}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				//关闭遮罩层
+				top.closeWait();
+				alert(textStatus);
+		    }
+	});
+	}
+}
+function checkedData(m){
+	var obj=$("#file0"+m);
+	if(obj.length>0&&obj.val()!=undefined&&obj.val()!=""){
+		return true;
+	}else{
+		return false;
+	}
+}
+//给iframe赋值路径
+function setFrame(url){
+  $("#mainResult").attr("src",url);
+  //$("#mainResult").css("height",parent.clientHeight - 230);
+}
+
+
+var projectUrl=pubJson.projectUrl;
+function checkGoods(link,spid,jxs,finalLink){
+	document.getElementById(finalLink).value = "";
+	var spid = document.getElementById(spid).value;
+	var jxs = document.getElementById(jxs).value;
+	if(spid==''){
+		alert("请填写商品编码");
+		document.getElementById(link).checked='';
+	}else if(jxs==''){
+		alert("请填写 供货商编码");
+		document.getElementById(link).checked='';
+	}
+	else if(spid!=''&&jxs!=''){
+		document.getElementById(finalLink).value = projectUrl+"fore/product.html?spxx01="+spid+"&zcxx01="+jxs;
+	}
+}
+
+function VIPLink(finalLink){
+	document.getElementById(finalLink).value = "";
+	document.getElementById(finalLink).value = projectUrl+"fore/member_shop.html"; 
+}
+
+function otherLink(otherLink,finalLink,link){
+	document.getElementById(finalLink).value = "";
+	var otherLink = document.getElementById(otherLink).value;
+	if(otherLink == ''){
+		alert("请填写链接");
+		document.getElementById(link).checked='';
+	}else if(otherLink != ''){
+		document.getElementById(finalLink).value = otherLink;
+	}
+}
+
+	var file00 = document.getElementById("file00");
+	var file01 = document.getElementById("file01");
+	var file02 = document.getElementById("file02");
+	var file03 = document.getElementById("file03");
+	var file04 = document.getElementById("file04");
+	$(document).ready(function(){
+		 var user=JSON.parse($.cookie("userInfo"));
+		     showPic(user);	
+	});
+	function showPic(user){
+		var xmlData=[];
+		var json={};
+			json.ZCXX01=user.ZCXX01;
+			xmlData.push(json);
+		var url="/JcszDt/selectPictureForMainPage.action?XmlData="+JSON.stringify(xmlData);
+		ajaxQ({
+			"url" : url,
+			"callback" : function(data){
+				var showPic=data.pictureList;
+				var len=showPic.length;
+					$(showPic).each(function(index,picJson){
+						var tplx=picJson.FILETYPE;
+							m=tplx.substring(tplx.lastIndexOf("9")+1);
+							var href="/JcszDt/downloadAttach.action?fileName="+picJson.FILENAME+"&filePath="+picJson.FILEPATH
+							$("#fj_"+m).attr("href",href).html("下载");
+							$("#fj_"+m+"_").html("");
+					});
+			}
+		});
+		
+	}
+
+/*文本框联想查询 */
+var url = "/servlet/LenoveQuery?db=O2O&parameter=SPXX&lx=0&backStr=AND ROWNUM<=10";
+$("#spid1").autocomplete(url,{
+  extraParams: {code:function(){return $("#spid1").val();}},
+  matchContains: true,//是否只要包含文本框里的就可以
+  autoFill: false,//自动填充
+  selectFirst:true,
+  contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+  formatItem: function(row, i, max) {//格式化列表中的条目 row:条目对象,i:当前条目数,max:总条目数
+    var row = eval("(" + row + ")");
+    return row.mc;
+  },
+  formatMatch: function(row, i, max) {//配合formatItem使用，作用在于，由于使用了formatItem，所以条目中的内容有所改变，而我们要匹配的是原始的数据，所以用formatMatch做一个调整，使之匹配原始数据
+    var row = eval("(" + row + ")");
+    return row.mc + row.dm;
+  },
+  formatResult: function(row, i, max) {//定义最终返回的数据，比如我们还是要返回原始数据，而不是formatItem过的数据
+    var obj =eval("(" + row + ")");
+    return obj.mc;
+  }
+}).result(function(event, row) {
+  var row = eval("(" +row + ")");
+  getSPXXValue(row.dm,row.mc);
+});
+
+function getSPXXValue(id,value){
+  $("#spid1").attr("value",id);
+}
+
+//商品编码的放大镜功能
+function xzsp(num){
+	window.showModalDialog('Oper_Spbm.html?code='+num, window, 'dialogHeight:480px; dialogWidth:640px; status:no; help:no; resizable:yes;');
+}
+
+//查询供应商信息
+function scrhZcxx(num){
+	var xmlData=[];
+	var json={};
+	json.SPXX01 = $("#spid"+num).val();
+	json.sqlid="com.jlsoft.o2o.define.sql.PubDefQuery.querySPGHS";
+	xmlData.push(json);
+	var url="/jlquery/selectO2O.action?XmlData="+JSON.stringify(xmlData);
+	ajaxQ({
+		"url" : url, 
+		"callback" : function(data){
+			if(a.STATE=="1"){
+				$("#jxs"+num).attr("value",data[0].ZCXX01);
+		}else{
+			alert("操作失败!");
+		}
+		}
+	});
+}
+
+//供货商查询
+function qryGHS(num){
+  var sp = $.trim($("#spid"+num).val());
+  if(sp == ""){
+    alert("请先选择商品!");
+    return;
+  }
+  var backStr = " AND SPXX01="+sp;
+	window.showModalDialog('/Srch_DataInfo.jsp?code='+num+'&id=SPGHS'+'&backStr='+backStr, window, 'dialogHeight:480px; dialogWidth:640px; status:no; help:no; resizable:yes;');
+	//scrhZcxx(num);
+}
+
+function parentWindowFunc(result,rowindex,id,code){
+  var spbm = result.getColumnValue(rowindex,"SPXX01");
+  var ghs = result.getColumnValue(rowindex,"CODE");
+  $("#jxs"+code).attr("value",ghs);
+  $("#s_jxs"+code).attr("value",result.getColumnValue(rowindex,"NAME"));
+  $("#finalLink"+code).attr("value",pubJson.projectUrl+"fore/product.html?spxx01="+spbm+"&zcxx01="+ghs);
+}
+
+function backFun2(code,spxx01,spmc){
+	$("#s_spid"+code).attr("value",spxx01);
+}
+</script>
+</html>

@@ -1,0 +1,146 @@
+<ul class="w12 user_info">
+  <li class="w04">
+    <div class="w03 user_tx"><a><img src="../images/info_tx.png" class="w12" /></a></div>
+    <div class="w09 user_text">
+      <h3 class="w12" id="name">名称</h3>
+      <p class="w12"><a title="绑定邮箱"><i class="fa fa-envelope"></i>邮箱</a><a class="绑定手机"><i class="fa fa-mobile-phone"></i>手机</a><a class="修改密码" href="javascript:void(0);" onclick="changeIframeSize('/customer/sydjt/back/yhgl/resetPwd.html?menuId=B002','centerFrame')"><i class="fa fa-unlock-alt"></i>修改密码</a></p>
+    </div>
+  </li>
+  <li class="w05">
+    <div class="w12 user_todo">
+      <dl class="w06"><dt class="w02"><a><img src="../images/info_tx.png" class="w12" /></a></dt><dd class="w09"><a>待付款</a><span>0</span></dd></dl>
+      <dl class="w06"><dt class="w02"><a><img src="../images/info_tx.png" class="w12" /></a></dt><dd class="w09"><a>待发货</a><span>0</span></dd></dl>
+      <dl class="w06"><dt class="w02"><a><img src="../images/info_tx.png" class="w12" /></a></dt><dd class="w09"><a>待收货</a><span>0</span></dd></dl>
+      <dl class="w06"><dt class="w02"><a><img src="../images/info_tx.png" class="w12" /></a></dt><dd class="w09"><a>退货</a><span>0</span></dd></dl>
+    </div>
+  </li>
+  <li class="w03">
+    <div class="w12 user_account">
+      <div>余额：<b>0.00</b>元</div>
+      <div>积分：<b>0.00</b>元</div>
+      <div>优惠券：<b>0.00</b>元</div>
+    </div>
+  </li>
+</ul>
+
+<div class="w12 my_orders">
+  <div class="w12 order_title"><h3>我的订单</h3><a href="javascript:void(0);" onclick="changeIframeSize('/customer/sydjt/back/ddgl/myorder.html?menuId=A403','#centerFrame',null,'#FLAG',0)">查看更多订单</a></div>
+  <div class="w12 order_main" id="myorder">
+  <!-- 
+    <div class="w12 order_none">亲，您还没有订单哦~</div>
+    <dl class="w12">
+      <dt class="w01"><a href="../proItem/proItem.html"><img src="../images/sp.jpg" class="w12" /></a></dt>
+      <dd class="w04"><a class="w12">刹那芳华</a></dd>
+      <dd class="w02"><span class="w12">￥5288.00</span><span class="w12">在线支付</span></dd>
+      <dd class="w02"><span class="w12">2015-10-09</span><span class="w12">11:15:20</span></dd>
+      <dd class="w02">
+        <b class="w12">等待付款</b><span class="w12">跟踪<i class="fa fa-angle-down"></i></span>
+        <div class="order_info">
+          <div class="jt"></div>
+          <ul class="w12 title"><li class="w04"><b>处理时间</b></li><li class="w08"><b>处理信息</b></li></ul>
+          <ul class="w12"><li class="w04">2015-10-09 12:08:26</li><li class="w08">您提交了订单，请等待系统确认。</li></ul>
+          <ul class="w12"><li class="w04">2015-10-09 12:20:20</li><li class="w08">您已付款。</li></ul>
+          <ul class="w12"><li class="w04">2015-11-09 10:10:09</li><li class="w08">卖家发货，顺丰物流，物流单号：200000200000000000000000000000</li></ul>
+          <ul class="w12"><li class="w04">2015-10-09 12:08:26</li><li class="w08">您提交了订单，请等待系统确认</li></ul>
+        </div>
+      </dd>
+      <dd class="w01"><a class="w12">查看</a></dd>
+    </dl>
+    --->
+  </div>
+</div>
+
+<div class="w12 my_orders">
+  <div class="w12 order_title"><h3>关注的商品</h3><a>查看更多关注</a></div>
+  <div class="w12 order_main">
+    <div class="w12 order_none">亲，您还没有关注的商品哦~</div>
+  </div>
+</div>
+
+<script type="text/javascript" src="/control/js/carlist-back.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+$(document).ready(function(){
+	if(usercookie.LX=='24'){//个人
+		$("#name").html(userCookie.XTCZY01);
+	}else{//企业
+		$("#name").html(userCookie.ZCXX02);
+	}
+	loadInfos();
+	loadXsdds();
+})
+
+function loadInfos(){
+	$(".user_todo").empty();
+	/*
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":userCookie.ZCXX01,"W_DJZX02":"1",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM1 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":userCookie.ZCXX01,"W_DJZX02":"2",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM2 = visitService(url)[0].SUM;*/
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":userCookie.ZCXX01,"W_DJZX02":"3",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM3 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":userCookie.ZCXX01,"W_DJZX02":"4",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM4 = visitService(url)[0].SUM;
+	var XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":userCookie.ZCXX01,"W_DJZX02":"5",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM5 = visitService(url)[0].SUM;
+	var	XmlData=[{"sqlid":"com.jlsoft.o2o.sql.order.selectOrderNUM","GSID":userCookie.ZCXX01,"W_DJZX02":"6",'dataType':'Json'}];
+	url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var SUM6 = visitService(url)[0].SUM;
+    $(".user_todo").append(
+    	      '<dl class="w06"><dt class="w02"><a><img src="../images/info_tx.png" class="w12" /></a></dt><dd class="w09"><a href="javascript:void(0);" onclick='+"changeIframeSize('/customer/sydjt/back/ddgl/myorder.html?FLAG=3','#centerFrame',3,'#FLAG',1)"+'>待付款</a><span>'+SUM3+'</span></dd></dl>'+
+    	      '<dl class="w06"><dt class="w02"><a><img src="../images/info_tx.png" class="w12" /></a></dt><dd class="w09"><a href="javascript:void(0);" onclick='+"changeIframeSize('/customer/sydjt/back/ddgl/myorder.html?FLAG=4','#centerFrame',4,'#FLAG',2)"+'>待发货</a><span>'+SUM4+'</span></dd></dl>'+
+    	      '<dl class="w06"><dt class="w02"><a><img src="../images/info_tx.png" class="w12" /></a></dt><dd class="w09"><a href="javascript:void(0);" onclick='+"changeIframeSize('/customer/sydjt/back/ddgl/myorder.html?FLAG=5','#centerFrame',5,'#FLAG',3)"+'>待收货</a><span>'+SUM5+'</span></dd></dl>'+
+    	      '<dl class="w06"><dt class="w02"><a><img src="../images/info_tx.png" class="w12" /></a></dt><dd class="w09"><a href="javascript:void(0);" onclick='+"changeIframeSize('/customer/sydjt/back/ddgl/myorder.html?FLAG=6','#centerFrame',6,'#FLAG',4)"+'>待评价</a><span>'+SUM6+'</span></dd></dl>'
+                	/*'<a href="myorder.html?FLAG=1">待审核订单('+SUM1+')</a>'+*/
+                    /*'<a href="myorder.html?FLAG=2">未通过审核('+SUM2+')</a>'+*/
+                );
+}
+
+function loadXsdds(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_XSDD','QryType':'Report','dataType':'Json','HBID':userCookie.ZCXX01,"ZTID":"","FLAG":"","SPMC":""}];
+	var data=visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData)).data;
+//	alert(JSON.stringify(data))
+	if(data !=""){
+		var i=0;
+		$(data).each(function(index,obj){
+			if(obj.DDZT=="3" && i<3){
+			//$(".order_main").html("");
+			i++;
+			var str='';
+			$(obj.SPLIST).each(function(index2,spObj){
+				
+				str +=	'<dl class="w12">'+
+			      '<dt class="w01"><a href="/customer/sydjt/showProduct/product.html?spxx01='+spObj.SPXX01+'&zcxx01='+obj.ZCXX01+'&gsid='+obj.ZCXX01+'&gsmc='+escape(obj.ZCXX02)+'" target="_blank"><img title="'+spObj.SPXX04+'" src="'+imgUrl+obj.ZCXX01+'/'+spObj.SPXX02+'/images/'+spObj.SPXX02+'_1_small.'+spObj.SPTP02+'" class="w12" /></a></dt>'+
+			      '<dd class="w04"><a class="w12">'+obj.ZCXX02+'</a></dd>'+
+			      '<dd class="w02"><span class="w12">'+accounting.formatMoney(obj.XSDD02)+'</span><span class="w12">在线支付</span></dd>'+
+			      '<dd class="w02"><span class="w12">'+obj.XSDD04.substring(0,10)+'</span><span class="w12">'+obj.XSDD04.substring(11,21)+'</span></dd>'+
+			      '<dd class="w02">'+
+			        '<b class="w12">'+eval("changeColumns.W_DJZX02_"+obj.DDZT)+'</b><span class="w12">跟踪<i class="fa fa-angle-down"></i></span>'+
+			        '<div class="order_info">'+
+			          '<div class="jt"></div>'+
+			          '<ul class="w12 title"><li class="w04"><b>处理时间</b></li><li class="w08"><b>处理信息</b></li></ul>'+
+			          '<ul class="w12"><li class="w04">2015-10-09 12:08:26</li><li class="w08">您提交了订单，请等待系统确认。</li></ul>'+
+			          '<ul class="w12"><li class="w04">2015-10-09 12:20:20</li><li class="w08">您已付款。</li></ul>'+
+			          '<ul class="w12"><li class="w04">2015-11-09 10:10:09</li><li class="w08">卖家发货，顺丰物流，物流单号：200000200000000000000000000000</li></ul>'+
+			          '<ul class="w12"><li class="w04">2015-10-09 12:08:26</li><li class="w08">您提交了订单，请等待系统确认</li></ul>'+
+			        '</div>'+
+			      '</dd>'+
+			      '<dd class="w01"><a class="w12" onclick="goodslist(\''+obj.XSDD04+'\',\''+obj.XSDD01+'\',\''+obj.DDZT+'\',\'0000\',\'#centerFrame\')">查看</a></dd>'+
+			    '</dl>';
+			});
+			$("#myorder").append(str);}
+		});
+	}else{
+		$("#myorder").append('<div class="w12 order_none">亲，您还没有订单哦~</div>');
+	}
+}
+</script>
+

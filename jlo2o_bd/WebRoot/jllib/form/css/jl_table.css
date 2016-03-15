@@ -1,0 +1,41 @@
+.jl_table{ width:100%; float:left; position:relative; padding-top:20px;}
+
+.table_content{ float:left; width:100%; }
+.table_title{ float:left; width:100%; line-height:40px; text-indent:12px; background-color:#49D; color:#fff; font-size:16px;}
+.table_title span{ float:left;margin-right:20px;margin-top: 2px;}
+.table_title input[type="button"]{ padding: 1px 15px !important; font-size: 14px;}
+.table_title i{position: inherit !important; float:right; margin: 0 15px 0 -8px; font-size: 16px; line-height:44px; color:#eee; cursor:pointer;}
+.table_title i:hover{ color:#fff;}
+.table_show{ float:left; width:100%; overflow:hidden; overflow-y:auto; overflow-x:auto; border:1px solid #e1e1e1;}
+.table_main{ min-width:100%;}
+.table_nav{ float:left; width:100%; padding:0 12px; line-height:35px; color:rgb(48, 126, 204); background-color:#f9f9f9; border-bottom:1px solid #e1e1e1;}
+.table_nav i{ margin-right:16px; color:rgb(48, 126, 204); cursor:pointer;}
+.table_nav i:hover{ background-color:rgba(255, 255, 255, 0.2);}
+.table_case{ width:100%;}
+
+.table_control{ float:left; width:100%; background-color:rgb(239, 243, 248); padding:0 12px;}
+.table_control div{ display:inline-block;}
+
+dl.table{ width:100%; height:40px; border-bottom:1px solid #e1e1e1; font-size:14px;}
+dl.tablehover{ background-color: rgb(241, 248, 253);}
+dl.table:hover{ background-color: rgb(241, 248, 253);}
+dl.title{ color:#666; font-weight:bold; background-color:#f1f1f1 !important; background-image: -webkit-linear-gradient(#f5f5f5,#e9e9e9) !important; background-image: -moz-linear-gradient(#f5f5f5,#e9e9e9) !important; background-image: -o-linear-gradient(#f5f5f5,#e9e9e9) !important; background-image: linear-gradient(#f5f5f5,#e9e9e9) !important;}
+dl.title dd i{ position:absolute; width:5px; height:100%; top:0px; right:0px; cursor:col-resize;}
+
+dl.settlement{ background-color:#fff6fa !important;}
+
+
+dl.table dt{ border-right:1px solid #e1e1e1; width:40px; height:40px;}
+dl.table dt input[type="checkbox"]{ margin:12px;}
+dl.table dd{ border-right:1px solid #e1e1e1; height:40px; padding:10px; position:relative; display:block;white-space:nowrap; text-overflow:ellipsis;}
+dl.table dd em{ overflow:hidden;white-space:nowrap; text-overflow:ellipsis; font-style:inherit;}
+
+dl.table dd .table_change{ width:100%; min-height:39px; position:absolute; top:0px; left:0px; z-index:1; background-color:#fff;}
+dl.table dd .table_change input[type="text"]{ width:100%; padding:10px 5px; height:100%; margin:0px; border:0px;}
+dl.table dd .table_change > i{ position:absolute; z-index:1; top:0; right:5px; line-height:40px; color:#ccc; cursor:pointer;}
+dl.table dd .table_change i:hover{ color:#666;}
+dl.table dd .table_change input[type="number"]{width:100%; height:100%; margin:0px; border:0px;}
+dl.table dd .table_change .select{ width:100%; height:100%; margin:0px; border:0px;}
+dl.table dd .table_change select{ width:98%; padding:10px 5px; height:100%;}
+dl.table dd:last-child{ border-right:1px solid #e1e1e1;}
+

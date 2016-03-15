@@ -1,0 +1,23 @@
+/***
+新闻列表页
+***/
+.pr5{ padding-right:5px;}
+.pl5{ padding-left:5px;}
+.news_list .search{ height:35px; line-height:35px; border: 1px solid #d0e4c2;margin:10px 0;background: #fcfffa; padding:0 10px;}
+.news_list .search h2{color: #333;font-size: 14px;font-weight: normal;font-family: "microsoft yahei";}
+.news_list .search .form{ line-height:25px;}
+.news_list .search .form input{  float:right; height:25px; width:120px; margin:4px 10px 0 0;border: 1px solid;border-color: #ccc;}
+.news_list .search .form a{ float:right; height:25px; margin:4px 0 0; border:1px solid #e4e4e4; padding:0 10px; background-color:#f5f5f5; border-radius:3px;}
+
+.news_list .news_div{border: 1px solid #EBEBEB;margin-bottom: 10px;}
+.news_list .news_div span.w03{ text-align:right;}
+.news_list .news_div h5{ padding:0 10px; height: 30px;line-height: 30px;background: #f7f7f7;color: #666;}
+.news_list .news_div ul{ padding: 10px 10px 20px;}
+.news_list .news_div ul li{height: 30px;line-height: 30px;overflow: hidden;zoom: 1;border-bottom: 1px dotted #ddd;}
+.news_list .news_div ul li a{ color:#35a;word-break:keep-all; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.news_list .news_div ul li span{ color:#999;}
+.news_list .news_div ul li a:hover{ text-decoration:underline;}
+.paging{ float:left; height:30px; line-height:30px; width:250px; text-align:center; position:relative; left:50%; top:0; margin-left:-125px;}
+.paging a{ width:25px; height:25px; line-height:25px; text-align:center; border:1px solid #e4e4e4; border-radius:50%; color:#999; margin-right:5px;}
+.paging a:hover{ background-color:#e84d1c; border-color:#e84d1c; color:#fff;}
+.paging span{ margin:0 10px 0 5px;}

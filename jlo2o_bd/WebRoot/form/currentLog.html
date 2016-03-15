@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>OA首页</title>
+<link rel="stylesheet" type="text/css" href="/css/index_bd.css" />
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.min_bd.js"></script>
+<script type="text/javascript" src="/js/jquery.pop_bd.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/form/js/currentLog.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript">
+var userInfo=JSON.parse($.cookie("userInfo"));
+var rydm = userInfo.XTCZY01;
+var XMBH;
+var GZLBH;
+var parentID;
+$(document).ready(function(){
+	XMBH=$.getUrlParam("XMBH");
+	GZLBH=$.getUrlParam("GZLBH");
+	parentID=$.getUrlParam("parentID");
+	loadWorkFlow(rydm);
+	$(".hang").mouseover(function(){
+		$(this).css({"background-color":"#f5f5f5","cursor":"pointer"});							
+	});
+	$(".hang").mouseleave(function(){
+		$(this).css({"background-color":"#ffffff"});							
+	});
+	
+});
+
+function loadWorkFlow(rydm){
+	var url=pubJson.PcrmUrl+"/document/getDBSY.do?XmlData={\"PI_USERNAME\":\""+rydm+"\",\"JKLX\":\"5\"}";
+	var returnVal = visitService(url);
+	if(returnVal != "undefined"){
+		appendCurrentLog(returnVal);
+	}else{
+		alert("查询代办失败!");
+	}
+}
+
+function appendCurrentLog(proxyData){
+	var data=proxyData.resultList;
+	for(var i=0;i<data.length;i++){
+		var logstep=(data[i].LOGSTEP)[0];
+		var GZLMC=data[i].GZLMC;
+		var JLBH=null;var BDBH=null;
+		var YWSJ=null,YWDJLX=null,ZYSJ=null;
+		var z19=null;var z1=null;
+		try{YWSJ=JSON.parse(data[i].YWSJ);}catch(e){YWSJ="";}
+		try{JLBH=YWSJ[logstep.YWDJLX].jlbh;}catch(e){JLBH="";}
+		try{BDBH=YWSJ[logstep.YWDJLX].bdbh;}catch(e){BDBH="";}
+		try{z19=YWSJ[logstep.YWDJLX].z19==undefined?"":YWSJ[logstep.YWDJLX].z19;}catch(e){z19="";}
+		try{z1=YWSJ[logstep.YWDJLX].z1.value==undefined?"":YWSJ[logstep.YWDJLX].z1.value;}catch(e){z1="";}
+		
+		if(data[i].YWSJ!=undefined && data[i].YWSJ!=null){
+			YWSJ=JSON.parse(data[i].YWSJ);
+			try{
+				if(YWSJ[logstep.YWDJLX].bdbh ==34){//跟踪单，待办事宜清单中增加跟踪类型
+					if(YWSJ[logstep.YWDJLX].z44!= undefined && YWSJ[logstep.YWDJLX].z44.key != undefined){
+						GZLMC=YWSJ[logstep.YWDJLX].z44.key+'-'+GZLMC;
+					}
+				}
+			}catch(e){
+			}
+
+			var TODO_PROFILE=null;
+			var TODO_PROFILE_STR="";
+			if(data[i].YWSJ!=null && data[i].YWSJ!="null" && data[i].YWSJ!=""){
+				YWSJ=JSON.parse(data[i].YWSJ);
+				for(var key in YWSJ){
+	     			YWDJLX = key;
+	   			}
+			 	ZYSJ=YWSJ[YWDJLX];
+			}
+			if(data[i].TODO_PROFILE!=null && data[i].TODO_PROFILE!="null" && data[i].TODO_PROFILE!=""){
+		  		TODO_PROFILE = JSON.parse(data[i].TODO_PROFILE);
+		  		var tempVal = "";
+		  		$.each(TODO_PROFILE,function(m){
+			    	if(ZYSJ != null && ZYSJ[m]!=undefined){
+			      		tempVal = ZYSJ[m];
+			    	}
+		        	TODO_PROFILE_STR = TODO_PROFILE[m]+"："+tempVal+"&nbsp;&nbsp;&nbsp;&nbsp;"+TODO_PROFILE_STR;
+		      	});
+		  		TODO_PROFILE_STR = "（"+TODO_PROFILE_STR+"）";
+			}
+		}
+		
+		if(GZLBH!=null){
+			if(GZLBH==data[i].GZLBH){
+				$("#currentLog_tab").append("<tr class='hang'>"+
+												"<td><input type='checkbox' /></td>"+
+												"<td>"+data[i].TJRYMC+"</td>"+
+												"<td><a title='"+data[i].BZMC+"' href='"+pubJson.O2OUrl+"/form/stepAction.html?XMBH="+data[i].XMBH+"&GZLBH="+data[i].GZLBH+"&BZBH="+data[i].BZBH+"&RZBH="+data[i].RZBH+"' onclick='showLC("+data[i].XMBH+","+data[i].GZLBH+","+data[i].BZBH+","+data[i].RZBH+")'>流水号:"+BDBH+"-"+JLBH+"  "+data[i].GZLMC+"-"+data[i].BZMC+TODO_PROFILE_STR+"</a></td>"+
+												"<td>"+data[i].TJRQ+"</td>"+
+											"</tr>");
+			}
+		}else{
+			$("#currentLog_tab").append("<tr class='hang'>"+
+					"<td><input type='checkbox' /></td>"+
+					"<td>"+data[i].TJRYMC+"</td>"+
+					"<td><a title='"+data[i].BZMC+"' href='"+pubJson.O2OUrl+"/form/stepAction.html?XMBH="+data[i].XMBH+"&GZLBH="+data[i].GZLBH+"&BZBH="+data[i].BZBH+"&RZBH="+data[i].RZBH+"' onclick='showLC("+data[i].XMBH+","+data[i].GZLBH+","+data[i].BZBH+","+data[i].RZBH+")'>流水号:"+BDBH+"-"+JLBH+"  "+data[i].GZLMC+"-"+data[i].BZMC+TODO_PROFILE_STR+"</a></td>"+
+					"<td>"+data[i].TJRQ+"</td>"+
+				"</tr>");
+		}
+	}
+	var bodyHeight=$(".table").height()<$(document).height()?$(document).height():$(".table").height();
+	$(".table").height(bodyHeight);
+}
+</script>
+</head>
+<body>
+<div class="table">
+	<table>
+		<tr class="trtitle">
+		  <td class="no1"><input type="checkbox" /></td>
+		  <td class="no2">发起人</td>
+		  <td class="no3">标题</td>
+		  <td class="no4">时间</td>
+		</tr>
+		<tbody id="currentLog_tab">
+			<!-- <tr class="trsj" id="today"><td colspan="4">今日<span>('+today+'条)</span></td></tr> -->
+		</tbody>
+	</table>
+</div>
+<div class="clear"></div>
+</body>
+</html>

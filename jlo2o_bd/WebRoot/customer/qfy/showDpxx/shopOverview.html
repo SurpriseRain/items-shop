@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="Keywords" content="汽车零配件同质配件、零配件同质配件、汽车零配件、同质配件、汽服云、汽后服云、中国汽车维修协会">
+	<title>商家首页商品展示</title>
+	<link rel="stylesheet" type="text/css" href="../css/qygs.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/public.css" />
+	<link rel="stylesheet" type="text/css" href="../css/qypublic.css" />
+	<link rel="stylesheet" type="text/css" href="../css/qy_allgoodsfl.css" />
+	<link rel="stylesheet" type="text/css" href="../css/products-main.css" />
+	<link rel="stylesheet" type="text/css" href="/customer/qfy/css/head.css" />
+	<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+	<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+	<style>
+		#qfy-copyright p a{color:#000;text-decoration:none;}
+		#qfy-copyright p a:hover{color:#ff6700;text-decoration:underline;}
+	</style>
+</head>
+<body>
+	<!-----公共部门开始---->
+	<div id="shopHead"></div>
+	<div class="clera"></div>
+	<div class="container">
+		<div id="main1">
+			<div class="main1_h1">
+				<h1>公司简介</h1>
+			</div>
+			
+			<div class="main1_xq">
+				<div class="main1_xq_top" >
+				 	<p id="qygs"></p>
+					<div class="clear"></div>
+					
+				</div>
+				
+				<div class="main1_xq_btm">
+					<ul id="jbxx">
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+
+		<div id="main2">
+			<div class="main2_h1">
+				<h1>认证信息</h1>
+			</div>
+			<div class="main2_xx">
+				<div class="main2_xx_one">
+					<div class="xx_one_top">
+						<p>品牌认证信息:<span><a id="jxppMore" href="">更多&gt;&gt;</a></span></p>
+					</div>
+					<div class="xx_one_btm" id="pprzxx">
+					</div>
+				</div>
+				<div class="main2_xx_two">
+					<p><a id="zzrzxx">资质认证信息：</a></p>
+					<ul>
+						<li>企业名称</li>
+						<li id="qymc"></li>
+						<a  id="yyzz" onclick="showPic(0)">企业证件图片</a>
+					</ul>
+					<img id="imgUrl0" src="" style="display: none"/>
+					<ul>
+						<li>经营地址</li>
+						<li id="jydz"></li>
+					</ul>
+				<br>
+					<ul>
+						<li>一般纳税人证明</li>
+						<li id="ybnsrzm"></li>
+						<a  id="nsrzm" onclick="showPic(1)">纳锐人证件图片</a>
+					</ul>
+					<img id="imgUrl1" src="" style="display: none"/>
+				</div>
+				<div class="main2_xx_three">
+					<p><a>行业认证信息：</a></p>
+					
+					<ul>
+						<li>厂商识别码</li>
+						<li id="cssbm"></li>
+					</ul></br>
+					<ul>
+						<li>行业管理码</li>
+						<li id="hyglm"></li>
+						<a  id="hygl" onclick="showPic(2)">行业管理证件图片</a>
+					</ul>
+					<img id="imgUrl2" src="" style="display: none" />
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clera"></div>
+	<div id="footer"></div>
+	
+	<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+	<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="/js/jquery.pagecommon.js"></script>
+	<script type="text/javascript" src="/js/edlg.min.js"></script>
+	<script type="text/javascript" src="../js/responsiveslides.min.js"></script>
+	<script type="text/javascript">
+		var MyCookie = $.cookie('userInfo');
+		var usercookie = JSON.parse(MyCookie);
+		var DQXX01="120100";
+		var imgUrl = pubJson.path_sptp;//图片默认路径 +"/sptp/"
+		//获取公用默认图片路径
+		var defaultImgUrl = pubJson.defaultImgUrl;
+		var baseUrl = "";	
+		var rmssc = "";
+		var pagesize = "9";//分页
+		var fileName = "";
+		var gsid = $.getUrlParam("gsid");
+		var sppx = 6;
+		$(document).ready(function(){
+			$("#shopHead").load("/customer/qfy/showDpxx/shopHead.html");	
+			$("#footer").load("/customer/qfy/foot-08.html");
+			$("#imgUrl0").attr("src", defaultImgUrl);
+			$("#imgUrl1").attr("src", defaultImgUrl);
+			$("#imgUrl2").attr("src", defaultImgUrl);
+			selectSellersInfo(); // 展示店铺信息
+			$("#jxppMore").attr("href","/customer/qfy/showProduct/pinpai.html?gsid=" + gsid);
+		});
+		
+		// 店铺信息
+		function selectSellersInfo(){
+			var jsonData = [{"ZCXX01":gsid}];
+			var url = "/SellersShop/selectQYGS.action?jsonData=" + JSON.stringify(jsonData);
+			var dpxxData = visitService(url);
+			if(dpxxData.STATE == "1"){
+				var filePath = pubJson.path_sptp + "/dptp/" + gsid + "/" + gsid + "_dpjs.html";
+			    var url = "/ReadHTML/getHTMLBody.action?filePath=" + filePath;
+			    var rBody = visitService(url);
+			    if(rBody != undefined && rBody != ""){
+				    if(rBody.STATE == "1"){
+					    $("#qygs").html(rBody.SPJS);  //给商品参数编辑框赋值
+				    }
+			    }
+				var str = "";
+				str+="<li>经营地址：" + dpxxData.dpxxList[0].ZCXX08 + "</li>";
+				str+="<li>联系人：" + dpxxData.dpxxList[0].ZCXX03 + "</li>";
+				str+="<li>电&nbsp;话：" + dpxxData.dpxxList[0].ZCXX06 + "</li>";
+				str+="<li>邮&nbsp;箱：" + dpxxData.dpxxList[0].ZCXX09 + "</li>";
+				$("#jbxx").append(str);
+				// 品牌图片
+				var ppxxUrl = "/SellersShop/selectDPPPTP.action?jsonData=" + JSON.stringify(jsonData);
+				var ppData = visitService(ppxxUrl);
+				if(ppData.STATE == "1"){
+					$(ppData.ppxxList).each(function(i, ppList){
+						var ppStr = "";
+						var ppImgUrl = "";
+						if(ppList.PPTP02 != null && ppList.PPTP02 != "" && ppList.PPTP02 != undefined){
+							ppImgUrl = imgUrl + "/pptp/" + ppList.PPTP02;
+						} else {
+							ppImgUrl = defaultImgUrl
+						}
+						ppStr+="<div><a href='javascript:void(0);'><img src='" + ppImgUrl + "' alt='' onerror='this.onerror=null;this.src=\"" + defaultImgUrl + "\"' /></a></div>";
+						$("#pprzxx").append(ppStr);
+					});
+				}
+				// 企业名称
+				$("#qymc").html("&nbsp;" + (dpxxData.dpxxList[0].ZCXX02 == null ? "" : dpxxData.dpxxList[0].ZCXX02));
+				// 经营地址
+				$("#jydz").html("&nbsp;" + (dpxxData.dpxxList[0].ZCXX08 == null ? "" : dpxxData.dpxxList[0].ZCXX08));
+				// 一般纳税人识别码
+				$("#ybnsrzm").html("&nbsp;" + (dpxxData.dpxxList[1].DPTP05 == null ? "" : dpxxData.dpxxList[1].DPTP05));
+				// 厂商识别码
+				$("#cssbm").html("&nbsp;" + (dpxxData.dpxxList[0].SBM == null ? "" : dpxxData.dpxxList[0].SBM));
+				// 行业管理码
+				$("#hyglm").html("&nbsp;" + (dpxxData.dpxxList[0].HYGLM == null ? "" : dpxxData.dpxxList[0].HYGLM));
+				
+				$(dpxxData.dpxxList).each(function(k, dpList){
+					var dpImgUrl = "";
+					if(dpList.DPTP02 != null && dpList.DPTP02 != "" && dpList.DPTP02 != undefined){
+						dpImgUrl = imgUrl + "/dptp/" + gsid + "/" + dpList.DPTP02;
+					} else {
+						dpImgUrl = defaultImgUrl
+					}
+					// 营业执照  一般纳税人证明  管理码图片
+					$("#imgUrl" + k).attr("src", dpImgUrl).attr("onerror","this.onerror=null;this.src='" + defaultImgUrl + "'");
+				});
+			}
+		}
+		
+		function showPic(id){
+			$("[id^=imgUrl]").attr("style","display: none;");
+			$("#imgUrl" + id).attr("style","display: block;");
+		}
+	</script>
+</body>
+</html>

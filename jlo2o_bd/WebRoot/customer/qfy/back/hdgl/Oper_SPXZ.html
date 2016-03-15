@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 活动报名</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<style>
+.yangshi {
+    border: 1px solid #e4e4e4;
+    float: left;
+    height: 440px;
+    overflow-y: scroll;
+}
+a.fill{
+    margin: 10px 72px;
+    position: relative;
+	left: 50%;
+	margin-left:-50px;
+}
+</style>
+<script type="text/javascript">
+	// 初始化数据
+	var usercookie;
+	var ActivityId = $.getUrlParam("ActivityId"); //活动id
+	var MyCookie = $.cookie('userInfo');
+	usercookie = JSON.parse(MyCookie);
+	var ZCXX01 = usercookie.ZCXX01;
+	var checkVal = $.getUrlParam("chkVal");
+	var sArray = checkVal.split(",");
+	
+	function initData(){
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL_SIGN_UP.selectActivitySPFL','dataType':'Json','ActivityId':ActivityId}];
+		var rData = visitGrid("/jlquery/selecto2o.action", JSON.stringify(XmlData));
+		var SPFL01 = [];
+		if(rData.data != undefined){
+			var spfl = rData.data[0].SPFL01;
+			SPFL01 = spfl.split(",");
+		}
+		var barcode = $("#barCode").val();
+		var spxx04 = $("#productName").val();
+		var cjbm = $("#cjbm").val();
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL_SIGN_UP.selectProductList','QryType':'Report','dataType':'Json','ZCXX01':ZCXX01,'ActivityId':ActivityId,'barcode':barcode,'spxx04':spxx04,'cjbm':cjbm,'SPFL01' : SPFL01}];
+		return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData)); 
+	}
+	$(document).ready(function(){
+	     init();
+	     pageGridChangeFunc();
+	     $(".check").on("click",function(){
+	    	 subSelectAll();
+	     });
+	});
+	// 查询方法
+	function query(){
+		init();
+		// 查询后给checkbox勾选
+		var $ddh = $("[id^=ddh_]");
+		for(var i = 0; i < $ddh.length; i++){
+			$("#" + $ddh[i].innerHTML).attr("checked",true);
+		}
+		pageGridChangeFunc();
+	}
+	
+	// 回调方法
+	function backFun(){
+	 	init();
+	}
+	
+	// 子勾选框全选
+	function subSelectAll(flg){
+		var chsub = $("input[name='check']").length; //获取check的个数  
+	    var checkedsub = $("input[name='check']:checked").length; //获取选中的check的个数  
+	    if (checkedsub == chsub) {  
+	        $("#selAll").attr("checked", true);
+	        if(flg == "1"){
+		    	$("#selAll").attr("disabled", true);
+		    }
+	    } else {
+	    	$("#selAll").attr("checked", false);
+	    }
+	}
+	
+	// 勾选 回调 
+	function pageGridChangeFunc(){
+		if(checkVal != "" && checkVal != undefined){
+			var sArray = checkVal.split(",");
+			for(var i = 0; i < sArray.length; i++){
+				$("#" + sArray[i]).attr("checked", true).attr("disabled", true);
+			}
+			subSelectAll(1);
+		}
+	}
+/*	
+	//合并商品ID
+	function mergeProductIds(){
+		var $ddh = $(" .check");
+		var ids = $("#ids").val();
+		
+		var idsArray = new Array(); 
+		if(ids.length > 0){
+			idsArray =ids.split(",");
+		}
+		//遍历选中的商品，进行商品ID拼接
+		for(var i = 0; i < $ddh.length; i++){
+			var id = $($ddh[i]).attr("id");
+			if($($ddh[i]).attr('checked')){
+				//ids += $($ddh[i]).parent().parent().attr("id");				
+				if($.inArray(id, idsArray)==-1){				
+					idsArray.push(id);
+				}
+			}
+			else{
+				var index = $.inArray(id, idsArray)
+				if(index > 0){
+					idsArray.splice(index,1);
+				}			
+			}
+		}
+		//检查商品ID串，如果是逗号结尾，
+		//if(ids !="undefined" && ids.length > 0){
+		//	var lastChar = ids.charAt(ids.length -1);
+		//	if(lastChar == ","){
+		//		ids = ids.
+		//	}			
+		//}
+		ids = idsArray.toString();
+		$("#ids").val(ids);
+	}
+*/	
+	
+	//填充活动报名页面的商品列表
+	function fillProductList(){
+		var $ddh = $(" .check");
+		var ids = "";
+		for(var i = 0; i < $ddh.length; i++){
+			if($($ddh[i]).attr('checked')){
+				//ids += $($ddh[i]).parent().parent().attr("id");
+				ids += $($ddh[i]).attr("id");
+				ids +=",";
+			}
+		}
+		if(ids !="undefined" && ids.length > 0){
+			ids = ids.substring(0, ids.length -1);
+		}
+		//return ids;
+		parent.execBackFun(ids);
+		parent.$("#ajaxGrid").remove();
+		top.closeWait();
+	}
+	
+</script>
+</head>
+<body>
+<div class="order_style yangshi">
+	<ul id="screening"  style="height:50px;width:805px;" >
+	  <li style="width:805px;">
+	   	<span>商品名称:</span>
+		<input type="text" id="productName" name="ghs" class="text" style="width: 100px;" size="100" value=""/>
+		 <span>企业编码:</span>
+		<input type="text" id="cjbm" name="ghs" class="text" style="width: 100px;" size="100" value=""/>
+		<span>商品条码:</span>
+		<input type="text" id="barCode" name="ghs" class="text" style="width: 100px;" size="100" value=""/>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+	   </li>	   
+	</ul>
+	<div class="clera"><input type="hidden" id="ids" value=""/></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'spxx01','header':'全选','type':'wdhd','width':'60px'},
+							{'property':'spgl24','header':'企业编码','type':'lable','width':'120px'},
+							{'property':'barcode','header':'商品条码','type':'lable','width':'120px'},
+							{'property':'fl','header':'商品品类','type':'lable','width':'100px'},							
+							{'property':'spmc','header':'商品名称','type':'lable','width':'200px'},
+							{'property':'kc','header':'库存','type':'lable','width':'100px'}
+							]">
+		</div>
+	</div>
+</div>
+	<div>
+	<ul style="height:50px; width: 100%;" >
+	  <li>
+		<a href="javascript:void(0);" class="bot fill" onclick="fillProductList();">确定</a>
+	   </li>	   
+	</ul>	
+	</div>
+
+</body>
+</html>

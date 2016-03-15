@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="Keywords" content="汽车零配件同质配件、零配件同质配件、汽车零配件、同质配件、汽服云、汽后服云、中国汽车维修协会">
+    <title>汽服云平台首页 | 误删除！index页面源文件</title>
+</head>
+<body>
+    <!--车型细分-->
+    <script type="text/template" id="m-tpl-9">
+        <%_.each(mapList, function(item,index) {%>
+            <a href="<%= item.href%>">
+				<img src="<%= item.src %>" alt="" width="40" height="40">
+				<span><%= item.name %></span>
+			</a>
+        <%});%>
+    </script>    
+    <!--维修-->
+    <script type="text/template" id="m-tpl-8">
+        <%_.each(mapList, function(item,index) {%>
+            <li>
+                <a href="<%= item.href %>">
+                    <img src="<%= item.src + "/" + (index + 1) + ".png"%>" alt="" width="40" height="40"/>
+                    <span><%= item.name%></span>
+                </a>
+            </li>
+        <%});%>
+    </script>
+    <!--配送至-->
+    <script type="text/template" id="m-tpl-2">
+        <%_.each(mapList, function(item) {%>
+			<% if(item.dqbzm02 !== "黑龙江省") {%>
+            	<li id="<%= item.dqbzm01%>">
+                	<a href="javascript:void(0);"><%= item.dqbzm02.substring(0,2)%></a>
+            	</li>
+			<% } else { %>
+				<li id="<%= item.dqbzm01%>">
+                	<a href="javascript:void(0);"><%= item.dqbzm02.replace("省","")%></a>
+            	</li>
+			<% } %>
+        <%});%>
+    </script>
+    <!--焦点图-->
+    <script type="text/template" id="m-tpl-3">
+        <%_.each(mapList, function(item,index) {%>
+            <% if(index === 0) {%>
+                <div id="cmsSlide<%= (index + 1)%>" class="cms_slide cms_explain">
+                    <a href="<%= item.URL%>"><img src="/jlsoft/banner/JL/<%= item.FILENAME%>" alt=""></a>
+                </div>
+            <% } else { %>
+                <div id="cmsSlide<%= (index + 1)%>" class="cms_slide cms_hidden">
+                    <a href="<%= item.URL%>"><img data-src="/jlsoft/banner/JL/<%= item.FILENAME%>" alt=""></a>
+                </div>
+            <% } %>
+        <%});%>
+    </script>
+    <script type="text/template" id="m-tpl-6">
+        <%_.each(mapList, function(item,index) {%>
+            <% if(index === 0) {%>
+                <a href="javascript:" class="on" data-rel="cmsSlide<%= (index+1)%>"><%= (index+1)%></a>
+            <% } else { %>
+                <a href="javascript:" data-rel="cmsSlide<%= (index+1)%>"><%= (index+1)%></a>
+            <% } %>
+        <%});%>
+    </script>
+    <!--楼层一-->
+    <script type="text/template" id="m-tpl-4">
+        <%_.each(mapList, function(item,index) {%>
+			<% if(index === 2 || index === 5) {%>
+            <li style="border-right: 0;"><a class="" href="<%= item.href%>" target="_blank">
+				<div class="good-info">
+					<p class="good-name" title="<%= item.gname%>"><%= item.shortGName%></p>
+    				<p class="good-company" title="<%= item.cname%>"><%= item.shortCName%></p>
+    				<p class="good-price"><%= item.price%></p>
+  				</div>
+				<img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/></a>
+				<%= item.icon %>
+			</li>
+			<% } else { %>
+				<li><a class="" href="<%= item.href%>" target="_blank">
+				<div class="good-info">
+					<p class="good-name" title="<%= item.gname%>"><%= item.shortGName%></p>
+    				<p class="good-company" title="<%= item.cname%>"><%= item.shortCName%></p>
+    				<p class="good-price"><%= item.price%></p>
+  				</div>
+				<img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/></a>
+				<%= item.icon %>
+				</li>
+			<% } %>
+        <%});%>
+    </script>
+    <!--楼层二-->
+    <script type="text/template" id="m-tpl-5">
+        <%_.each(mapList, function(item,index) {%>
+            <% if(index < 4) {%>
+                <li class="fl-gr-m-bl10"><a href="<%= item.href%>" target="_blank">
+				<img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/>
+				<div class="good-info">
+					<p class="good-name" title="<%= item.gname%>"><%= item.shortGName%></p>
+    				<p class="good-company" title="<%= item.cname%>"><%= item.shortCName%></p>
+    				<p class="good-price"><%= item.price%></p>
+  				</div>
+				</a>
+				<%= item.icon %>
+				</li>
+            <% } else { %>
+                <li class="fl-gr-m-l10"><a href="<%= item.href%>" target="_blank">
+				<img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/>
+				<div class="good-info">
+					<p class="good-name" title="<%= item.gname%>"><%= item.shortGName%></p>
+    				<p class="good-company" title="<%= item.cname%>"><%= item.shortCName%></p>
+    				<p class="good-price"><%= item.price%></p>
+  				</div>
+				</a><%= item.icon %></li>
+            <% } %>
+        <%});%>
+    </script>
+	<!--直通车-->
+    <script type="text/template" id="m-tpl-7">
+        <%_.each(mapList, function(item,index) {%>
+			<% if(index < 4) {%>
+            	<a href="###" class="grid-col-51"><img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/></a>
+			<% } else { %>
+				<a href="###" class="grid-col-51" style="margin: 0;"><img src="../../images/s.gif" data-src="<%= item.src%>" class="la" alt=""/></a>
+			<% } %>
+        <%});%>
+    </script>
+	<script type="text/template" id="m-tpl-10">
+        <%_.each(mapList, function(item,index) {%>
+			<li>
+				<i class="news-icon <%= item.classStr %>"></i>
+				<span class="news-name-1" title="<%= item.rName %>"><%= item.name %></span>				
+			</li>
+        <%});%>
+    </script>
+    <script type="text/template" id="m-tpl-11">
+        <%_.each(mapList, function(item,index) {%>
+			<li>
+				<i class="news-icon news-icon-user <%= item.classStr %>"><%= item.typeStr %></i>
+				<span class="news-name-2" title="<%= item.rName %>"><%= item.name %></span>
+				<span class="news-phone-2" title="<%= item.rPhone %>"><%= item.phone %></span>
+				<i class="news-icon news-icon-quick"></i>
+			</li>
+        <%});%>
+    </script>
+</body>
+</html>

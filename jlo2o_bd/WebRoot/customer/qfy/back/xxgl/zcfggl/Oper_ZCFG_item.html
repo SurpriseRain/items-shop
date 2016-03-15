@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+<bean:message key="define.xx.title"/>
+</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+		<LINK href="/css/multiSelectTree.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" type="text/css" href="/css/ext-all.css" />
+	    <link type="text/css" rel="StyleSheet" href="/css/jquery.autocomplete.css"/>
+	    <link type="text/css" rel="stylesheet" href="/css/multiSelectTree.css" />
+		<script type="text/javascript" src="/js/ext-base.js"></script>
+		<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+		<script type="text/javascript" src="/js/jquery-1.7.2.js"></script>
+		<script type="text/javascript" src="/js/json2.js"></script>
+		<script type="text/javascript" src="/js/commons.js"></script>
+		<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+		<script charset="utf-8" src="/keditor/kindeditor.js"></script>
+		<script charset="utf-8" src="/keditor/lang/zh_CN.js"></script>
+		<script type="text/javascript" src="/js/multiSelectTree.js"></script>
+		<script type="text/javascript" src="/js/ext-multree-jl.js"></script>
+		<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+		<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+		
+<script>
+//看懂KindEditor用法
+	var editor;
+	KindEditor.ready(function(K) {
+		editor = K.create('textarea[name="context"]', {
+			cssPath : '/keditor/plugins/code/prettify.css',
+			uploadJson : '/servlet/TpUploadServlet?filename=newstp',
+			fileManagerJson : '/fileManageServlet?filename=newstp',
+			allowFileManager : true,
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					document.forms['form1'].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					document.forms['form1'].submit();
+				});
+			}
+		});
+		//prettyPrint();
+	});
+</script>
+<style type="text/css">
+.imgLeftTD{
+   width:10%;
+   text-align:right;
+   border-left-width:0px;
+}
+.imgRightTD{
+   border-right-width:0px;
+}
+</style>
+</head>
+
+<body leftmargin="0" topmargin="0" rightmargin="0" scroll="auto">
+ <html:errors/>
+ <form id="form1" name="form1" method="post" >
+  <input type="hidden" id="jlbh" name="jlbh" value=""/>
+  <input type="hidden" id="QYCODES" name="QYCODES" value=""/>
+    <!--拖动层开始-->
+    <jsp:include flush="true" page="../../include/ViewDragDiv.jsp" />
+    <!--拖动层结束-->
+  <div id="curPosition" style="width:98.5%">
+    <a href="#">信息管理</a>
+    <span>></span>
+    <a href="#">政策法规</a>
+    <span>></span>
+    <b>政策法规发布</b>
+  </div>
+  <div class="clera"></div>
+  
+  <input type="hidden" id="DHBJ" name="DHBJ" value="1"/>
+  <input type="hidden" id="albh" name="albh" value=""/>
+  <input type="hidden" name="fbr" id="fbr" value="JL"/>
+  <input type="hidden" id="gjnr" value="1" name="gjnr" maxlength="47" size="20"/>
+  <table class="single_table">
+     <tr class="title"><td colspan="2"><b>政策法规发布</b><font>* 必填项</font></td></tr>
+     <tr>
+       <td style="width:100px;"><span style="width:110px;">政策法规标题：</span></td>
+       <td style="width:550px;"><input type="text" id="altitle" name="altitle" value="" size="20" class="text"/></td>
+     </tr>
+     <tr>
+       <td style="width:100px;"><span style="width:110px;">查看权限：</span></td>
+       <td style="width:550px;"><font>*</font>
+         <select style="width: 153px" id="ckqx" name="ckqx"  >
+   	 		<option id="ckqx_2" value="-1" >全部</option>
+<!-- 			<option id="ckqx_0"  value="0" >供货商</option>
+			<option id="ckqx_1"  value="1" >客户</option> -->
+		 </select>
+       </td>
+     </tr>
+     <tr>
+       <td style="width:100px;"><span style="width:110px;">政策法规类型：</span></td>
+       <td style="width:550px;">
+         <select style="width: 153px" id="allx" name="allx">
+       		<option value="0">请选择</option>
+		 </select>
+	   </td>
+     </tr>
+     <tr>
+       <td style="width:100px;"><span style="width:110px;">特别法规：</span></td>
+       <td>
+   			<input type="radio" class="radio" id="tjbj_0" name="tjbj" value="0" onclick="isUpload(this);"/><label class="radio">否(不需上传图片)</label>
+   			<input type="radio" class="radio" id="tjbj_1" name="tjbj" value="1" onclick="isUpload(this);"/><label class="radio">是(需上传图片)</label>
+       </td>
+     </tr>
+     
+     <tr id="logo_tr" style="display:none">
+       <td><span style="width:110px;">LOGO图片：</span></td>
+       <td><img  id="preview_img"  src='' ></td>
+     </tr>
+        
+     <tr>
+       <td><span style="width:110px;">上传LOGO图片：</span></td>
+       <td><input type="file" name="file" value="" id="file" value="" size="34" /><label class="bz">图片尺寸为80*80</label></td>
+     </tr>
+     <tr>
+       <td style="width:100px;"><span style="width:110px;">公告或新闻：</span></td>
+       <td style="width:550px;">
+	      <select style="width: 153px" id="xwgg" name="xwgg" value="">
+	       	<option value="1">公告</option>
+	       	<option value="2">新闻</option>
+		  </select>
+	   </td>
+     </tr>
+     <tr>
+     	<td colspan="2">
+     	  <div>
+          <textarea id="context_1" name="context"  style="width:820px;height:300px;" ></textarea>
+          </div>
+        </td>
+     </tr>
+     <tr class="bot">
+       <td colspan="2">
+         <a href="javascript:void(0);" class="bot Long" onclick="update();">保 存</a>
+       </td>
+      </tr>    
+    </table>
+  <div class="clera"></div>
+  </form>
+  <script language="javascript" type="text/javascript">
+  $(document).ready(function(){
+    /**标题字符限制**/
+    $('#title').maxLength(100); 
+  });
+</script>
+</body>
+
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user=JSON.parse(MyCookie);
+var ALBH=null;
+//var ALBH=$.getUrlParam('JLBH');
+window.onload = function(){
+	if(MyCookie==null){
+		
+	}else{
+	   $("#fbr").val(user.ZCXX02);
+	}
+	triggerOnchange();
+	$("#albh").val("");
+}
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	$("#logo_tr").show();
+	ALBH=rowObj.find("#ALBH").val();
+
+	//triggerOnchange();
+	if(ALBH!=undefined&&ALBH!="null"){
+		$("#albh").val(ALBH);
+		selectZxxwDetail();
+	}else{
+		$("#albh").val("");
+	}
+}
+
+function triggerOnchange(){
+	$("#ckqx").find("option").each(function(){
+		if($(this).is(":selected")){
+			$("#allx").children().remove();
+			$("#allx").append("<option value=''>请选择</option>");
+			var xmlData=[];
+			var json={};
+				json.CKQX=$(this).val();
+				json.gsid=user.ZCXX01;
+				json.DHBJ=$("#DHBJ").val();
+				xmlData.push(json);
+				var url="/Xxgl/selectAllx.action?XmlData="+JSON.stringify(xmlData);
+				var returnVal=visitService(url);
+				$(returnVal.mapList).each(function(){
+					$("#allx").append("<option value='"+this.LXBH+"'>"+this.LXMC+"</option>");
+				});
+		}
+	});
+	$("#allx").val();
+}
+function selectZxxwDetail(){
+ 	var baseUrl="";
+	var albh=$("#albh").val();
+	var gsid=user.ZCXX01;
+	var url=baseUrl+"/Xxgl/selectAlfxDetail.action?albh="+albh+"&gsid="+gsid;
+	var rData = visitService(url);//RdATA 为JSON
+	if(rData!=undefined&&rData!=""){
+		var alList=rData.alDetailList;
+		var context=alList[0].CONTEXT;
+			if(context==null){
+				context="";
+			}
+			editor.html(context);
+			$("#altitle").val(alList[0].ALTITLE);
+			var num=alList[0].tjbj;
+			$("#tjbj_"+num).attr("checked","checked");
+			var lxbh=alList[0].LXBH;
+			$("#allx").find("option").each(function(){
+				if(lxbh==$(this).val()){
+					$(this).attr("selected",true);
+				}
+			});
+			var FILENAME=alList[0].FILENAME;
+			if(FILENAME==""||FILENAME==null){
+				$("#preview_img").attr("src","/customer/qfy/images/msimg.jpg");
+			}else{
+				$("#preview_img").attr("src","/jlsoft/zcfg/"+FILENAME);
+			}
+			
+		}
+			/*
+		$("#title").val(xwList[0].title);
+		$("#code").empty();	
+		$("#code").append(
+		  		'<option value='+xwList[0].LXCODE+'>'+xwList[0].LXNAME+'</option>'
+		  	);	
+		}
+			*/
+}
+
+function newclick(){
+	$("#albh").val("");
+	$("#altitle").val("");
+	$("#gjnr").val("");
+	$("#file").val("");
+	editor.html("");
+}
+
+function update(){
+		var tjbj=$("input[name=tjbj]:checked").val(); 
+		if(tjbj!="1" && tjbj!="0") {
+			alert("请勾选特别案例");
+			return;
+		}
+		if($("#ckqx").val() == ""){
+		    alert("请选择查看权限！");
+		    return;
+		 }
+		if($("#altitle").val() == ""){
+		     alert("请出入标题");
+		     o.title.focus();
+		     return;
+		}
+
+		if($("#allx").val() == ""){
+		     alert("请选择政策法规类型");
+		     o.title.focus();
+		     return;
+		}
+		
+		 if(tjbj == 0 ){
+			  $("#file").val("");
+		 }else{
+			 if($("#file").val()==""){
+				 alert("特别法规请上传图片!");
+				 return;
+				 }
+			 }
+		 if(tjbj == 1 && $("#gjnr").val() == ""){
+			  alert("请填写此案例的关键内容！");
+			  return;
+		 }
+		 if($("#gjnr").val().length>50){
+				alert("关键内容不能超过50字符");
+				return false;
+		 }
+		  	getValues();
+			var XmlData1 = $("#form1").formToJson();
+			XmlData1[0].context =XmlData1[0].context;
+			XmlData1[0].gsid =user.ZCXX01;
+			var XmlData=escape(JSON.stringify(XmlData1));
+			var val="";
+			if(ALBH!=null){
+				val="/Xxgl/updateALLXInfo.action";   //编辑
+				}else{
+				val="/Xxgl/updateAllx.action";       //新增
+					}
+			var r = confirm('确认更新信息吗？');
+			if(r==true){
+				//弹出遮罩层
+			     top.openWait();
+				if($("#file").val()!=""){
+					var fileArray=[];
+					fileArray.push("file");
+					$.ajaxFileUpload({
+						type:"POST",
+						secureuri:false,
+						fileElementId:fileArray,
+						url:encodeURI(val),//encodeURI避免中文乱码
+						dataType:"text",
+						data:{"XmlData":XmlData},
+						success: function(data) { 
+							//关闭遮罩层
+							top.closeWait();
+							var json = jQuery.parseJSON(data);
+							var jsondata = json.data;
+							var data1=jsondata.STATE;
+							if(data1==1){
+								alert("保存成功!");
+								parent.execBackFun("aaa");
+								parent.$("#ajaxGrid").remove();
+							}else{
+								alert("保存失败!");
+							}
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							//关闭遮罩层
+							top.closeWait();
+							alert(textStatus);
+					    }
+					});
+				}else{
+					$.ajax({
+					    type: "POST",  //请求方式
+					// dataType: "JSON",
+						async: false,   //true表示异步 false表示同步
+						url:encodeURI(val),
+						data:{"XmlData":XmlData},
+						    success: function(data){
+							//关闭遮罩层
+							top.closeWait();
+						      if (data != null){
+						        try{
+						          var json = jQuery.parseJSON(data);
+						          	  data = json.data.STATE;
+						          if(data==1){
+						        	  	alert("保存成功!");
+						        		parent.execBackFun("aaa");
+										parent.$("#ajaxGrid").remove();
+										return false ;
+								  }else{
+										alert("保存失败! 请检查您的输入是否正确");
+										return false ;
+								  }
+						        }catch(e){
+						          return;
+						        }
+						      }
+						    },
+					        //获取错误信息
+					    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+						    	//关闭遮罩层
+								top.closeWait();
+						    	alert("获取数据失败，状态是："+textStatus+"+"+XMLHttpRequest+"+"+errorThrown);
+					        }
+						  });
+				}
+				
+			}
+			else return;
+		}
+
+//删除信息
+function del(){
+   var r = confirm('确认删除信息吗？');
+   if(r==true){
+	   var baseUrl="";
+	   var XmlData1 = $("#form1").formToJson();
+		XmlData1[0].gsid =user.ZCXX01;
+	   var XmlData=JSON.stringify(XmlData1);
+	   var alDetail="/Xxgl/delAllx.action?XmlData="+XmlData;
+	   var data=visitService(alDetail);
+	   if(data.state==1){
+		   alert("更新成功!");
+			   }else if(data.state==0){
+				   alert("更新失败!");
+				   }
+		   parent.$("#mainResult")[0].contentWindow.queryclick();
+   }
+   else return;
+}
+
+//获得kindeditor中的信息
+function getValues() {
+   // 取得HTML内容
+   var html = editor.html();
+   // 同步数据后可以直接取得textarea的value
+   editor.sync();
+}
+
+function isUpload(obj){
+	var value = obj.value;
+	if(value == 0){
+		document.getElementById("file").disabled = true;
+		$("#file").val("");
+	}
+	else if(value == 1){
+		document.getElementById("file").disabled = false;
+		document.getElementById("gjnr").disabled = false;
+	}
+}
+
+</script>
+</html>
+

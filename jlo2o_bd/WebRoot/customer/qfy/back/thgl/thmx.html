@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/qfy_order.css" />
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/css/th-main.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+</head>
+<body>
+<div id="list-main">
+<!--  <div class="dqlc"><a href="#" class="dqlc-a">订单管理</a>><a href="#" class="dqlc-a">我的订单</a>>  <b class="dqlc-b">订单：</b></div>
+ --> <!-- <div class="clear"></div> -->
+ <div class="dqlc">
+ 	<span class="ddh">订单号：</span>
+ 	<span class="zt"></span>
+ 	<span class="dp"></span>
+ </div>
+ <div class="clear"></div>
+ <div class="dqlc"><span class="tha">感谢您在汽服云平台采购商品，欢迎您评价/晒单此次交易，帮助我们改善工作。</span></div>
+</div>
+ <input type="hidden" value="" id="XSDD01" name="XSDD01"/>
+<div class="clear"></div>
+<!-- <div class="clearfix course_nr">
+	<ul class="course_nr2">
+		<li>
+			<div class="shiji">
+				<h1>提交订单</h1>
+				<p>2015-05-08 21:54:21</p>
+			</div>
+		</li>
+		<li>
+			<div class="shiji">
+				<h1>付款成功</h1>
+			</div>
+		</li>
+		<li>
+			<div class="shiji">
+				<h1>商品出库</h1>
+			</div>
+		</li>
+        <li>
+			<div class="shiji">
+				<h1>等待收货</h1>
+			</div>
+		</li>
+        <li>
+			<div class="shiji">
+				<h1>成功</h1>
+			</div>
+		</li>
+	</ul>
+</div>-->
+<div class="clear"></div>
+
+<ul class="ddxx">
+	<li class="title-zong">订单信息</li>
+	<li class="title-fen">物流信息</li>
+	<li id="title-fen_title"><span class="time">处理时间</span><span class="mass">处理信息</span><span class="pepo">操作人</span></li>
+	
+<!-- 	<li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo">客户</span></li>
+	<li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo"> 长春华众离合器</span></li>
+	<li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo"> 长春华众离合器</span></li>
+	<li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo">客户</span></li>
+	<li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo"> 长春华众离合器</span></li>
+	<li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo"> 长春华众离合器</span></li>
+    <li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo">客户</span></li>
+	<li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo"> 长春华众离合器</span></li>
+	<li><span class="time">2015-01-01 11:11:11</span><span class="mass">您提交了订单，请等待系统确认</span><span class="pepo"> 长春华众离合器</span></li> -->
+	
+	<lable id="fkxx">
+	<li class="title-fen">付款信息</li>
+	<li><span class="hui">订&nbsp&nbsp单&nbsp&nbsp号：<b id="zfdh"></b></span><span class="hui">支付方式：<b id="zffs"></b></span><span class="nn">支付来源：<b id="zfly"></b></span></li>
+    
+	<li><span class="hui">下单时间：<b id="fksj"></b></span><span class="hui">商品金额：<b id="spje">￥0.00 </b></span><span class="nn">运费金额：￥0.00</span></li>
+<!--    <li><span class="hui">优惠总金额：￥10.50  </span><span class="hui">实际运费：￥0.00</span><span class="nn">应支付金额：￥484.02</span></li>-->
+    <li><span class="hui">支付时间：<b id="zfsj"></b></span><span class="hui">应付金额：<b id="yfje">￥0.00</b></span><span class="nn"></span></li>
+	</lable>
+    <li class="title-fen">订单明细</li>
+    <li><span class="xx">收货人信息</span></li>
+     <li><span class="mx">收&nbsp&nbsp货&nbsp&nbsp人 ：<span id="KHNAME" ></span></span></li>
+     <li><span class="mx">地&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp址   ：<span id="XSDD20" ></span></span></li>
+     <li><span class="mx">手机号码 ：<span id="XSDD21" ></span></span></li>
+     <li><span class="mx">配送方式：<span id="PSFS" ></span></span></li>
+     <li><span class="mx">运&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp费：<span id="XSDD03" >免运费</span></span></li>
+     <!-- 2015.10.13. 
+     <li><span class="xx" >发票信息</span></li>
+     <li><span class="mx">发票类型：<span id="FPLXX"></span></span></li>
+     <li id="a"><span class="mx">发票抬头：<span id="FPTT"></span></span></li>
+     <li id="b"><span class="mx">开户银行：<span id="KHYH"></span></span></li>
+     <li id="c"><span class="mx">银行账号：<span id="YHZH"></span></span></li>
+     <li id="d"><span class="mx">邮寄地址：<span id="YJDZ"></span></span></li>
+     -->
+       <li><span class="mx">订单备注： <span id="XSDD07" ></span></span></li>
+     <div id="spitem">
+     <!-- 
+     <li ><span class="bm" style=" width:91px;">商品编码</span><span class="bm" style=" width:50px;">商品图片</span><span class="bm" style=" width:87px;">商品名称</span><span class="bm">商品串码</span><span class="bm" style=" width:31px;">单价</span><span class="bm">数量</span><span class=" cz">操作</span></li>
+     <li class="tp"><span class="bm">7681576513214</span><span class="bm"><img src="/customer/qfy/images/gantan.png" /></span><span class="bm">前减震器 伊兰特</span><span class="bm"><a href="#">点击查看</a></span><span class="bm" style=" width:31px;">35</span><span class="bm" style=" width:24px;">1</span><span><a href="#" class="pj">评价/晒单</a><a href="#" class="pj">退货/退款</a></span></li>
+     <li class="tp"><span class="bm">7681576513214</span><span class="bm"><img src="/customer/qfy/images/gantan.png"  /></span><span class="bm">前减震器 伊兰特</span><span class="bm"><a href="#">点击查看</a></span><span class="bm" style=" width:31px;">35</span><span class="bm" style=" width:24px;">1</span><span><a href="#" class="pj">评价/晒单</a><a href="#" class="pj">退货/退款</a></span></li>
+     <li class="tp"><span class="bm">7681576513214</span><span class="bm"><img src="/customer/qfy/images/gantan.png"/></span><span class="bm">前减震器 伊兰特</span><span class="bm"><a href="#">点击查看</a></span><span class="bm" style=" width:31px;">35</span><span class="bm" style=" width:24px;">1</span><span><a href="#" class="pj">评价/晒单</a><a href="#" class="pj">退货/退款</a></span></li>
+      -->
+     </div>
+     <li><span class="right">总商品金额：<span  id="XSDD02">￥0.00</span></span></li>
+     <li><span class="right" >返现：￥0.00</span></li>
+     <li><span class="right">运费：<span  id="XSDD03">￥0.00</span></span></li>
+     <li><span class="right">商品优惠： ￥0.00</span></li>
+     <li><span class="right">应付总额：<span style="color:#C00;" id="YFJE">￥0.00</span></span></li>
+           
+</ul>
+</body>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var XSDD04 = $.getUrlParam('XSDD04');
+var XSDD01 = $.getUrlParam('XSDD01');
+var DDZT = $.getUrlParam('DDZT');
+var ZCXX01 = $.getUrlParam('ZCXX01');
+//XSDD04,XSDD01,DDZT,ZCXX01
+var imgUrl=pubJson.path_sptp;
+function aaa(){
+	$("#as").click();
+}
+$(document).ready(function(){
+	//aaa();
+	  $(".dqlc-b").append(XSDD01);
+	  $(".ddh").append(XSDD01);
+	  $("#fkxx").hide();//待支付订单没有付款信息
+	  selectW_xsddMain();
+	});
+//物流信息
+function OrderWlxx(){
+	  //此处先写空，后需要动态取值
+	  var XmlData=[{"CKDH":""}];
+	  var rData= visitGrid("/OrderFlowManage/getOrderStatus.action",JSON.stringify(XmlData));
+	  if(rData!=undefined){
+		  var returnData=rData.data;
+		  for(var i=0;i<returnData.length;i++){
+			  $("#title-fen_title").append('<li><span class="time">'+returnData[0].created+'</span><span class="mass">'+returnData[0].message+'</span><span class="pepo">'+returnData[0].createdby+'</span></li>');
+		  }
+	  }
+}
+//订单商品明细
+function selectW_xsddItem(){
+	$("#spitem").html("");
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_xsddItem','QryType':'Report','dataType':'Json',"XSDD01":XSDD01}];
+	var rData=visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	$("#spitem").append('<li ><span class="bm" style="width:90px;">商品条码</span><span class="bm" style="width:50px;">商品图片</span><span class="bm" style="width:250px;">商品名称</span><span class="bm" style="width:50px;">单价</span><span class="bm" style="width:25px;">数量</span><span class=" cz" style="width:100px;">操作</span></li>');
+	$(rData).each(function(index,spxxList){
+		var picUrl=imgUrl+"/sptp/"+spxxList.ZCXX01+"/"+spxxList.SPXX02+"/images/"+spxxList.SPXX02+"_1_small."+spxxList.SPTP02;
+		$("#spitem").append('<li class="tp"><span class="bma" id="abcd" style="width:90px;">'+spxxList.BARCODE+'</span><span class="bma" style="width:50px;"><img style="width: 50px; height:50px;" id="imgUrl'+index+'" src="'+picUrl+'"/></span><span class="bma" style="width:250px;">"'+spxxList.SPXX04+'"</span><span class="bma" style="width:50px;">'+spxxList.XSDDI02+'</span><span class="bma" style="width:25px;">'+spxxList.XSDDI05+'</span><span style="width:100px;"><a href="#" class="ddpj" style="margin-left:40px;" onclick="toSPPJ(\''+spxxList.ZTID+'\',\''+spxxList.SPXX01+'\',\''+spxxList.PJBJ+'\')">评价/晒单</a></span></li>');
+		$("#imgUrl"+index).attr("src",picUrl).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+		if(spxxList.BARCODE==undefined){
+			$("#abcd").text("");
+		}
+		if(spxxList.PJBJ>0){
+			$(".ddpj").html("已评价");
+		}
+		if(DDZT!="6"){
+			$(".ddpj").removeAttr("onclick");
+			$(".ddpj").css({"color":"#cccccc","margin-left":"40px"});
+		}
+		 $("img").error(function() {
+	        	$(this).attr("src", pubJson.defaultImgUrl);
+	        });
+		});
+}
+//评价晒单
+function toSPPJ(ZTID,SPXX01,PJBJ){
+	parent.ajaxGrid('/customer/qfy/back/ddgl/myhtd_assess_open.html?SPXX01='+SPXX01+'&ZTID='+ZTID+'&XSDD01='+XSDD01+'&PJBJ='+PJBJ+'&XSDD04='+XSDD04);
+}
+//订单主表信息
+function selectW_xsddMain(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_xsddMain','QryType':'Report','dataType':'Json',"XSDD01":XSDD01}];
+	var rDatas=visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	rData=rDatas[0];
+	if(rData.FPLXX=="普通发票"){
+		$("#b").hide();
+		$("#c").hide();
+	}
+	if(rData.FPLXX=="不需要发票"){
+		$("#a").hide();
+		$("#b").hide();
+		$("#c").hide();
+		$("#d").hide();
+	}
+	if(rData!=undefined){
+		$("#KHNAME").text(rData.XSDD19);
+		$("#XSDD20").text(rData.XSDD20);
+		$("#XSDD21").text(rData.XSDD21);
+		$("#ZFFS").text(rData.XSDD08);
+		$("#PSFS").text(rData.XSDD26);
+		$("#XSDD03").text(rData.XSDD03);
+		$("#XSDD07").text(rData.XSDD07);
+		$("#FPLXX").text(rData.FPLXX);
+		$("#FPTT").text(rData.FPTT);
+		$("#KHYH").text(rData.xsdd14);
+		$("#YHZH").text(rData.xsdd15);
+		$("#YJDZ").text(rData.xsdd16);
+		$(".dp").html("销售企业 ："+rData.GSXXNAME);
+		$("#XSDD02").text(accounting.formatMoney(rData.XSDD02));
+		$("#YFJE").text(accounting.formatMoney(rData.XSDD02));
+	//	$(".zt").append(eval("changeColumns.W_DJZX02_"+rData.W_DJZX02)); 
+	    $(".zt").html("状态："+eval("changeColumns.W_DJZX02_"+rData.W_DJZX02));
+	if(rData.W_DJZX02!="3"){
+		selectFkxx();
+		$("#fkxx").show();//显示付款信息
+	}
+	selectW_xsddItem();
+	}
+}
+//付款信息
+function selectFkxx(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.order.selectW_XSDDSKFS','QryType':'Report','dataType':'Json',"XSDD01":XSDD01}];
+	var rDatas=visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	rData=rDatas[0];
+	if(rData!=undefined){
+	$("#zfdh").text(XSDD01);
+	$("#zfly").text(rData.skfs);
+	$("#fksj").text(rData.xdsj);
+	$("#spje").text(accounting.formatMoney(rData.zfje));
+	$("#yfje").text(accounting.formatMoney(rData.zfje));
+	$("#zfsj").text(rData.zfsj);
+	}
+	
+	//modify 2015.11.03. 修改支付方式显示
+	if(rData.skfs!="线下汇款"){
+		$("#zffs").text("在线支付"); 		
+	}
+	else{
+		$("#zffs").text("线下汇款");
+	}
+}
+
+//执行回调方法
+function backFun(){
+	selectW_xsddMain();
+}
+</script>
+</html>

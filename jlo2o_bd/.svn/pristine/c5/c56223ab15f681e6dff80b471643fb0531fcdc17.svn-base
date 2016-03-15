@@ -1,0 +1,10 @@
+/* kkPages */
+.Pagination{float: right;height: 55px;_height: 45px; line-height: 20px;margin-right: 5%;_margin-right: 5%; color: #565656;margin-top: 10px;_margin-top: 20px;}
+.Pagination span{margin-right: 5px;display: block;float: left;margin-left: 5px;}
+.Pagination span b{padding: 0 2px;}
+.Pagination div {float:left}
+.Pagination a{ font-size: 12px;text-decoration: none;display: block;float: left;color: #565656;border: 1px solid #cacaca;height: 20px;line-height: 20px;padding: 0 10px;margin: 0 2px;}
+.Pagination .Ellipsis {line-height: 32px;overflow: hidden; display:none;}
+cite.FormNum{display: block;float: left;line-height: 20px;height: 20px; font-style:  normal; padding-left:10px;}
+#PageNum{ color:#777;width: 30px;height: 20px;line-height: 20px; border: 1px solid #cacaca; margin:0 5px; text-align:center;}
+.Pagination a:hover,.Pagination a.PageCur{background-color: #ee6600;border: 1px solid #d64c01;color: #ffffff; }

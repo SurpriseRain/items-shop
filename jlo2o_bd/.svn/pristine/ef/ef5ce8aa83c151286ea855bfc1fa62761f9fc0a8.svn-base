@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电器服务云 - 找回密码 - 验证身份</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/zhmm-main.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/reg.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+</head>
+<style>
+.yzsj{
+margin-left: 5px;
+display: inline-block;
+width: 105px;
+height: 33px;
+border: 1px solid #e4e4e4;
+background-color: #e4e4e4;
+color: #000;
+line-height: 40px;
+text-align: center;
+box-shadow: 3px 4px 3px #999;
+}
+.yhxx{
+font-family: "microsoft yahei";
+font-size: 16px;
+color: #999;
+width: 150px;
+text-align: right;
+line-height: 37px;
+}
+</style>
+<script type="text/javascript">
+//var um=$.getUrlParam("um");
+//var tel=$.getUrlParam("tel");
+//var zcxx01=$.getUrlParam("zcxx01");
+var um="";
+var tel="";
+var zcxx01="";
+var email="";
+var flag=1;//验证身份方式：手机1，邮箱0
+
+var finfo = $.cookie('flagInfo');
+var flagCookies = JSON.parse(finfo);
+if(flagCookies !=null){
+if(flagCookies[0].flag=="true"){
+	zcxx01 = flagCookies[0].zcxx01;
+	um = flagCookies[0].um;
+	tel = flagCookies[0].tel;
+	email = flagCookies[0].email;
+	$.cookie("flagInfo", null, {
+		path : '/'
+	});}
+}else{
+	location.href="/customer/sydjt/index.html";
+}
+
+//验证发送时间/s
+var count = 60;
+//验证码失效时间/s
+var outCount = 120;
+
+$(document).ready(function(){
+	//加载初始时间
+	$("#endtime").html(count);
+	
+	$("#uname").html(um);
+	$("#uname2").html(um);
+	$("#tel").html(tel.substring(0,3)+"****"+tel.substring(8,11));
+	$("#email").html(email.substring(0,1)+"****"+email.substring(email.length-8,email.length));
+
+	//refreshCaptchaImage();
+	$(".reg_bot").click(function(){
+	if(flag=="1"){
+		if($("#userPwd").val()==""){
+			alert("短信验证码不能为空");
+			$(".reg_bot").attr("onclick","perfectSave()");
+			return false;
+		}
+		if($("#smsYzm").val()!=$("#mesflag").val()){
+			alert("短信验证码错误");
+			$(".reg_bot").attr("onclick","perfectSave()");
+			return false;
+		}else{
+			location.href="zhmm_xgmm.html";//?userName="+escape($.getUrlParam("um"));
+			var flagInfo=[{"flag":"true","userName":um}];
+			$.cookie("flagInfo", null, {
+				path : '/'
+			});
+			$.cookie("flagInfo", JSON.stringify(flagInfo), {
+				expires : 5,
+				path : '/'
+			});
+		}
+	}else{
+		var arr2 = [];
+		var p = {};
+		p["zcxx01"] = zcxx01;
+		p["username"] = um;
+		p["email"] = email;
+		p["flag"] = "true";
+		arr2.push(p);
+		var data = visitService("/ForgetPwd/sendEmail.action?XmlData="+JSON.stringify(arr2));
+		if(data["state"]==1){
+			$.cookie("flagInfo", null, {
+				path : '/'
+			});
+			$.cookie("flagInfo", JSON.stringify(arr2), {
+				expires : 5,
+				path : '/'
+			});
+			location.href="zhmm_yzyx.html"
+			}
+		else{
+			alert("发送邮件失败，请重试！")
+			}
+	}
+		
+		
+	});
+
+})
+
+function selectVerifyType(str){
+	if(str=="sj"){
+		flag=1;
+		$("#yx").attr("style","display: none;");
+		$("#sj").attr("style","display: block;");
+	}else{
+		flag=0;
+		$("#sj").attr("style","display: none;");
+		$("#yx").attr("style","display: block;");
+	}
+	
+}
+
+function GetNumber(){
+	$("#endtime").html(count);
+	outCount--;
+	if(outCount > 0&&count==0) {
+		setTimeout(GetNumber, 1000);
+	}else if(outCount==0){
+		$("#smsYzm").val(0);
+	}
+	if(count > 0) {
+	    count--;
+		setTimeout(GetNumber, 1000);
+	}else{
+		$("#endtime").html("0");
+		$(".yzsj").attr("onclick","sendPhone()");
+		$(".yzsj").attr("style","color: #000;");		
+	}
+}
+
+function sendPhone(){
+	//删除单击事件
+    $(".yzsj").removeAttr("onclick");
+	//验证发送时间/s
+	count = 60;
+	//验证码失效时间/s
+	outCount = 120;
+	//短信失效时间清0
+    $("#smsYzm").val(0);
+	$("#smsFlag").val(0)
+
+    //随机验证码
+	var yzm1=parseInt(Math.random()*10);
+	var yzm2=parseInt(Math.random()*10);
+	var yzm3=parseInt(Math.random()*10);
+	var yzm4=parseInt(Math.random()*10);
+	var shjyzm = yzm1+""+yzm2+""+yzm3+""+yzm4;
+	$("#smsYzm").val(shjyzm);
+	var json={};
+	json.SJHM=tel;	json.FSNR="您好，验证码为"+$("#smsYzm").val()+"（兴隆客服绝不会索要此验证码，切勿告知他人），请在页面中输入以完成验证,有效时间2分钟。"//有问题请致电400-6-6-5500转7
+	json.DJLX=8;
+	json.YWDH="";
+	json.ZCXX01=zcxx01;
+
+	if($("#smsFlag").val()==0){
+		$(".yzsj").attr("style","color: #999;");
+		GetNumber();
+	}else{
+		$(".yzsj").attr("onclick","sendPhone()");
+	}
+	if($("#smsYzm").val()>0&&$("#smsFlag").val()==0){
+    var url="/Register/insertSms.action?XmlData="+JSON.stringify(json);
+    visitService(url);
+  }
+}
+function refreshCaptchaImage(){
+	$("#realCaptcha").val("");
+	$("#yzmimg").attr("src","/servlet/CaptchaOutput?font=Helvetica&&fontsize=22&&min-width=150&&padding-x=5&&padding-y=5&&random="+Math.random());
+}
+function setCaptchaText(){
+	var data = visitService("/UserLogin/searchCaptcha.action");
+	var captchaText=data.captchaText;  
+	$("#realCaptcha").val(captchaText);
+}
+</script>
+<body>
+<!-----公共部门开始---->
+<div id="header">
+  <div class="header_main">
+    <a class="logo" href="/customer/sydjt/index.html" ><img src="/customer/sydjt/images/zhmm-logo.png" /></a>
+    <!------------------流程------------------>
+    <div class="tecPro">
+      <div class="userLc">
+      <div class="userlcMain">
+        <div class="userlcCase"><a class="fxlc_wz">1.填写用户名</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_zz">2.验证身份</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">3.修改密码</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">4.成功</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+<div class="clera"></div>
+<div id="main">
+  <ul class="userName">
+    <li class="title">您正在使用"找回密码"功能，请完成以下操作：</li>
+   
+    <li><span>请选择验证身份方式</span>
+    <select class="selt" id="type" name="" style="width: 200px;" onchange="selectVerifyType(this.options[this.options.selectedIndex].value);">
+		<option value="sj" selected >手机验证</option>
+        <option value="yx">邮箱验证</option>
+    </select>
+    <div class="tishi"></div>
+    </li>
+   	
+   	<ul id="sj">
+   	<li><span>昵称</span><b id="uname" class="yhxx"></b></li>
+   	<li><span>已验证手机</span><b id="tel" class="yhxx"></b></li>
+   	<li><span>请填写手机验证码</span><input type="text" class="text foce" placeholder="请填写手机验证码" id="mesflag" focusOn="请填写手机验证码" style="width: 187px;"/>
+   	<a id="#yzsj" class="yzsj" onclick="sendPhone()" >获取验证码（<b id="endtime" style="color: #090;"></b>）</a>
+   	<input type="hidden" class="text pwd" id="smsYzm" value="0"/>
+	<input type="hidden" class="text pwd" id="smsFlag" value="0"/>
+   	</li>
+   	</ul>
+   	
+   	<ul id="yx" style="display: none;">
+   	<li><span>昵称</span><b id="uname2" class="yhxx"></b></li>
+   	<li><span>邮箱地址</span><b id="email" class="yhxx"></b></li>
+   	</ul>
+   
+<!--    <li><span>验证码</span><input class="text yzm foce" id="userYzm" /> mg src="/customer/sydjt/images/logo01.png" class="yzmimg"/<img id="yzmimg"  onload="setCaptchaText()" class="yzmimg" src=""   border="0" ><input type="hidden" id="realCaptcha" value=""><a class="sxyzm"  title="刷新验证码" onclick="javascript:refreshCaptchaImage()">刷新</a><div class="tishi"></div></li>-->
+    <li><span>&nbsp;</span><a class="reg_bot">下一步</a></li>
+  </ul>
+</div>
+</body>
+</html>

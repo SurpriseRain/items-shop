@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>汽福云-报名协议</title>
+	<style>
+		*{padding:0;margin:0;list-style:none;}
+		.activeMain{width:830px;height:auto;}
+		.activeXY{width:828px;height:auto;border:1px solid #e4e4e4;}
+		.activeBtn{width:828px;height:auto;}
+		.activeXY h1,.activeXY h4{width:100%;height:40px;line-height:40px;text-align:center;font-size:14px;}
+		.activeXY h4{text-align:left;}
+		.activeXY ul{width:100%;height:auto;}
+		.activeXY ul li{font-size:14px;line-height:20px;text-indent:25px;}
+		.activeXY ul li ul{text-indent:20px;}
+		.activeBtn span{display:block;font-size:14px;line-height:40px;width:100%;text-indent:10px;}
+		.activeBtn .activeBtn2{text-align:center;}
+		.activeBtn input[type=button]{width:auto;height:30px;line-height:30px;background:#ff8800;border:none;border:1px solid #e4e4e4;padding:0 20px;color:#fff;cursor:pointer;margin-bottom:20px;margin-right:20px;}
+		#curPosition{margin-bottom:10px;}
+	</style>
+	<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+	<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+	<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+	<script type="text/javascript" src="/control/js/o2o.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript">
+		var ActivityId = $.getUrlParam("ActivityId"); //活动ID
+		var activityName = unescape($.getUrlParam("hdmc")); // 活动名称
+		function toSignUp(){
+			if(!$("#agree").attr("checked")){
+				alert("请阅读并同意报名协议！");
+				return false;
+			}
+			//活动ID为空回首页
+			if(ActivityId==null || ActivityId==""){
+				location.href="/"			
+				return false;
+			}
+			location.href="/customer/qfy/back/hdgl/Oper_HDBM.html?ActivityId="+ActivityId + "&activityName=" + escape(activityName);
+		}
+		
+		function cancel(){
+			location.href="/customer/qfy/back/hdgl/Oper_BMZX.html";
+		}
+	</script>
+</head>
+<body>
+<div class="activeMain">
+	<div class="activeXY">
+		<h1>报名协议</h1>
+		<h4>一、审核周期</h4>
+		<ul>
+			<li>1、活动报名后请勿催促，我们会在5个工作日内（自提交之日算起）对您的活动进行审核。</li>
+			<li>2、我们会优先考虑性价比高的商品，您可以自行调整商品活动价格，以便得到更快的审核进度。</li>
+			<li>3、每件商品报名间隔期为15天。</li>
+		</ul>
+		<h4>二、结果查询</h4>
+		<ul>
+			<li>1、您可以直接到商品管理查看您报名活动的审核动态，招商专员会将审核结果及操作指导发布在留言区。</li>
+			<li>2、请务必在报名时留下您的常用邮箱，系统还会将审核结果以邮件的形式及时发送到您填写的邮箱中。</li>
+		</ul>
+	
+	
+		<h4>三、审核状态</h4>
+		<ul>
+			<li>1、集价网审核条件非常严格，会先后经过多道工序，通过后才能发布上线。</li>
+			<li>2、招商专员会经过两轮的活动筛选，即初审、复审，确定您的商品是否适合在本站进行活动。</li>
+			<li>3、在待洽谈状态时，请主动点击与该活动对应的招商专员旺旺或者QQ与其取得联系。</li>
+			<li>4、到达排期时间后，您的活动即成功发布上线，您可以到集价网预告查看您的活动商品，活动结束后，您可以再次报名参与。</li>
+			<li>5、如果您的活动被设置为“未通过”，请根据招商专员的留言对活动进行调整、或更换符合要求的商品再来报名。</li>
+			<li>6、如果您报名的活动中连续9款商品均未通过审核，您的店铺将无法再报名参与任何活动。</li>
+			<li>7、如果您报名的活动被标记为“已锁定”状态，该款商品将无法再次进行报名。</li>
+		</ul>
+		<h4>四、商家报名规则</h4>
+		<ul>
+			<li>1、商家认真查看活动要求说明，符合要求的商家联系我们的客服索要活动报名地址。</li>
+			<li>2、准确填写报名信息，提交报名，我们会尽快进行审核，请关注自己的报名后台查看审核结果。</li>
+			<li>3、审核通过的活动，我们会联系商家，沟通活动准备工作及上线排期等问题。</li>
+			<li>4、活动报名准备阶段，商品库存为店铺本身的自然库存。</li>
+			<li>5、活动自报名起至专员审核排查结束，商家必须做好全面的配合工作。</li>
+		</ul>
+		<h4>五、黑名单</h4>
+		<ul>
+			<li>1、拉黑原因（重要）如果商家有以下行为，我们将终止与该商家合作，并将该商家列入黑名单永不合作。 我们真诚的提醒您，诚信合作，拉黑对您对我们都是损失！</li>
+			<p>
+				<ul>
+					<li>• 绕圈报名上活动，同款商品刻意联系不同专员审核者，发现即拉黑，活动随时终止； </li>
+					<li>• 未按约定排期上架宝贝，修改宝贝价格；</li>
+					<li>• 活动中单方面将宝贝下架；</li>
+					<li>• 活动中单方面修改价格或包邮情况；</li>
+					<li>• 活动期间同时参加其他促销活动；</li>
+					<li>• 售卖假货或劣质产品等欺骗消费者的行为；</li>
+					<li>• 未履行相应的售后服务，未能及时恰当处理用户投诉问题；</li>
+					<li>• 其他不诚信以及违规行为，最终解释权归本活动所有。</li>
+				</ul>
+			</p>
+			<li>2、其他说明加入黑名单的商家，本活动永不合作，且无法删除此黑名单。</li>
+			<li>3、黑名单由招商专员或活动排查专员添加。</li>
+		</ul>
+	</div>
+	<div id="btm" class="activeBtn">
+			<span><input type="checkbox" name="" class="fx" id="agree" value="" />我已阅读</span>
+			<span class="activeBtn2"><input type="button" name="" class="inpbtn1" id="" onclick="toSignUp();" value="报名" />
+			<input type="button" name="" class="inpbtn2" id="" value="取消" onclick="cancel()"/></span>
+			<div class="clear"></div>
+	</div>
+	</div>
+</body>
+</html>

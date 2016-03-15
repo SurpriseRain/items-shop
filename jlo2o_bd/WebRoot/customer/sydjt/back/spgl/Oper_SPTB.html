@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.SELECT_SPFB','QryType':'Report','dataType':'Json','SPXX01':$('#SPXX01').val(),'SPXX04':$('#SPXX04').val(),'ZCXX01':$('#ZCXX01').val(),'GSMC':$('#GSMC').val()}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+	    <li><i class="fa fa-home"></i><span>首页</span></li>
+	    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+	    <li><span>广告位管理</span></li>
+	    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+	    <li><b>首页商品广告</b></li>
+	</ul>
+	</div>
+	<div class="clera"></div>
+	<div class="w12 user_content">
+	<div class="w12 user_page_main">
+	<div class="w12 user_page_seach">	
+	<dl class="w04 public_form">
+		<dt class="w05">
+			<label class="w12">商品编码：</label>
+		</dt>
+        <dd class="w07">
+        	<input type="text" id="SPXX01" name="SPXX01" value="" size="20" />
+        </dd>
+	</dl>
+	<dl class="w08 public_form">
+		<dt class="w03">
+			<label class="w12">商品名称：</label>
+		</dt>
+        <dd class="w04">
+        	<input type="text" id="SPXX04" name="SPXX04" value="" size="20" />
+        </dd>
+        <dd class="w05"><input type="button" value="新增" onclick="newGoods()" class="jl_btn btn_blue"/></dd>
+	</dl>
+	<dl class="w04 public_form">
+		<dt class="w05">
+			<label class="w12">供货商编码：</label>
+		</dt>
+        <dd class="w07">
+        	<input type="text" id="ZCXX01" name="ZCXX01" value="" size="20" />
+        </dd>
+	</dl>
+	<dl class="w08 public_form">
+		<dt class="w03">
+			<label class="w12">供货商名称：</label>
+		</dt>
+        <dd class="w04">
+        	<input type="text" id="GSMC" name="GSMC" value="" size="20" />
+        </dd>
+        <dd class="w05"><input type="button" value="查询" onclick="query()" class="jl_btn btn_red"/></dd>
+	</dl>
+	</div>    
+	
+	<div class="clera"></div>
+
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[{'property':'SPXX01','header':'商品编码','type':'lable','width':'80px'},
+							{'property':'JXS','header':'供货商编码','type':'lable','width':'80px'},
+							{'property':'SPNAME','header':'商品名称','type':'lable','width':'100px'},
+							{'property':'FLNAME','header':'分类名称','type':'lable','width':'100px'},
+							{'property':'PPNAME','header':'品牌名称','type':'lable','width':'100px'},
+							{'property':'FBSJ','header':'发布时间','type':'lable','width':'100px'},
+							{'property':'SPJG','header':'发布价格','type':'lable','width':'80px'},
+							{'property':'CKSL','header':'库存数量','type':'lable','width':'80px'},
+							{'property':'GSMC','header':'公司名称','type':'lable','width':'160px'}]"
+		afterUrl="/customer/qfy/back/spgl/Oper_SPTB_item.html?SPXX01="
+		>
+		</div>
+	</div>
+	</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+function query(){
+  	init();
+}
+function newGoods(){
+	parent.ajaxGrid('/customer/qfy/back/spgl/Oper_SPTB_item.html');
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+</script>

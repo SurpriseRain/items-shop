@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="rptCKD" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["E:\\print\\printProgram\\cg\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ckdh" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT A.CKDH,B.ZCXX02,C.CK02 CK02,A.CKSJ,A.BZ
+FROM W_CKD A
+LEFT JOIN W_ZCGS B ON A.ZCXX01=B.ZCXX01
+LEFT JOIN CK C ON CK01=A.SHCK
+WHERE A.CKDH= $P{ckdh}]]>
+	</queryString>
+	<field name="CKDH" class="java.lang.String"/>
+	<field name="ZCXX02" class="java.lang.String"/>
+	<field name="CK02" class="java.lang.String"/>
+	<field name="CKSJ" class="java.sql.Timestamp"/>
+	<field name="BZ" class="java.lang.String"/>
+	<variable name="ckslSum" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement x="213" y="2" width="80" height="28"/>
+				<textElement textAlignment="Center">
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[汽服云运营平台
+出库单]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="30" width="50" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[出库单号:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="51" y="30" width="100" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CKDH}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="169" y="31" width="45" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[生产企业:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="214" y="31" width="100" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZCXX02}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="337" y="31" width="50" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[收货仓库:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="387" y="31" width="100" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CK02}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="47" width="50" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[出库时间:]]></text>
+			</staticText>
+			<textField pattern="yyyy-MM-dd HH:mm:ss">
+				<reportElement x="51" y="47" width="115" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CKSJ}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="169" y="48" width="25" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[备注:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="194" y="48" width="200" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{BZ}==null) ? "" : $F{BZ}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="65" width="554" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="55" y="67" width="50" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[厂家自编码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="67" width="50" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[商品条码]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="337" y="67" width="50" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[商品名称]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="67" width="50" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[出库数量]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="404" y="2" width="150" height="28"/>
+				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" moduleWidth="1.0" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$F{CKDH}]]></jr:codeExpression>
+				</jr:Code128>
+			</componentElement>
+			<staticText>
+				<reportElement x="3" y="67" width="30" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[序号]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="101" splitType="Stretch">
+			<subreport>
+				<reportElement x="1" y="0" width="200" height="100"/>
+				<subreportParameter name="ckdh">
+					<subreportParameterExpression><![CDATA[$F{CKDH}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="ckslSum" toVariable="ckslSum"/>
+				<subreportExpression><![CDATA["rptCKDMX.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<summary>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="1" width="30" height="16"/>
+				<textElement>
+					<font pdfFontName="STSong-Light" pdfEncoding="UniGB-UCS2-H"/>
+				</textElement>
+				<text><![CDATA[合计:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="483" y="2" width="66" height="16"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{ckslSum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="1" width="554" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

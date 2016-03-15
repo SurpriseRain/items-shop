@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 串码打包</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$('#makeCode').removeAttr('onclick');
+	$('#makeCode').css({'background':'#ccc','border':'1px solid #ccc'});
+})
+	
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var flag = true;
+var arr = [];
+//扫码操作
+function userName_onkeypress(event,obj){  
+ 	if(event.keyCode==13){
+ 		var code = $(obj).val();
+  		if(code.length < 20){
+ 			alert("请输入标准的串码信息");
+ 			return false;
+ 		}
+ 		
+ 		if($.inArray(code,arr) > -1){
+ 			alert("该列表已存在该条码");
+ 			$(obj).val("");
+ 			return false;
+ 		}
+ 		
+ 		if(flag){//第一次扫打包
+ 			
+ 			if($("#pCode").val()!=null && $("#pCode").val()!="" ){
+				//清空input
+				$("input").attr("value","");
+				$("#spcm").empty();
+			}
+ 			
+			var result = getCode(code);
+			if(alertState(result.state)){
+				$("#spcm").append(appendStr(code));
+	 			$("#spmc").val(result.cpmc);
+	 			$("#zxsj").val(result.drsj);
+			}else{
+				return false;
+			}
+			
+			flag = false;
+			$('#makeCode').attr('onclick','makeCode();');
+ 			$('#makeCode').css('background','#ff8800');
+ 		}else{
+ 			var result = getCode(code);
+ 			if(alertState(result.state)){
+				$("#spcm").append(appendStr(code));
+			}else{
+				return false;
+			}
+ 		}
+ 		arr.push(code);
+ 		$(obj).val("");
+  }	
+} 
+
+function alertState(state){
+	if(state == "0"){
+		alert("本次条码与已扫条码不匹配!");
+		return false;
+	}else if(state == "1"){
+		alert("不存在的条码信息");
+		return false;
+	}else if(state == "2"){
+		alert("该条码已包装");
+		return false;
+	}else if(state == "3"){
+		return true;
+	}else if(state == "4"){
+		alert("该条码不存在对应的商品名称");
+		return false;
+	}else if(state == "5"){
+		alert("请联系管理员");
+		return false;
+	}
+}
+
+//
+function getCode(code){
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["zcxx01"] = usercookie.ZCXX01;
+	XmlData["prevcode"] = arr[arr.length-1];
+	XmlData["cpmc"] = $("#spmc").val();
+	XmlData["code"] = code;
+	dataArr.push(XmlData);
+	
+	var url="/XmlUploadProduct/query.action?XmlData="+JSON.stringify(dataArr);
+	var returnVal = visitService(url);
+	return returnVal;
+} 
+
+function checkCode(code){
+	var regex = /^\(01\){1}\d{14}\(10\){1}\d{8}\(21\){1}[A-Z]\d{5}\(9999\){1}\d{2}$/;
+	var flag = regex.test(code);
+	if(!regex.test(code)){
+		return false;
+	}else{
+		return true;
+	}
+}
+
+function appendStr(r_cm){
+	var str='<b id="cmxx">'+r_cm+'</b><b style="color:red; font-size:24px;margin-left:5px;">√</b><br/>';
+	return str;
+}
+
+function makeCode(){
+	var codes = "";
+	
+	var length = $("b#cmxx").length;
+	if(length < 1){
+		alert("请扫码");
+		return false;
+	}
+	$("b#cmxx").each(function(index){
+ 		codes += $(this).text();
+ 		if(index < length - 1){
+ 			codes += ",";
+ 		}
+    })
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["zcxx01"] = usercookie.ZCXX01;
+	XmlData["codes"] = codes;
+	XmlData["drsj"] = $("#zxsj").val();
+	
+	dataArr.push(XmlData);
+	
+	var url="/XmlUploadProduct/insertMakeCode.action?XmlData="+JSON.stringify(dataArr);
+	
+	var returnVal = visitService(url);
+	var state = returnVal.state;
+	if(state == "1"){
+		alert("生成装箱码成功");
+		flag = true;
+		arr = [];
+		$("#pCode").val(returnVal.pCode);
+		$('#makeCode').css({'background':'#ccc','border':'1px solid #ccc'});
+		$('#makeCode').removeAttr('onclick');
+	}else if(state == "3"){
+		alert("有条码已打包，请重新扫码");
+	}else{
+		alert("生成装箱码失败");
+	}
+	return "";
+}
+
+</script>
+<style>
+	ul#screening li input.text1{border:none;background:#f4f4f4;}
+</style>
+</head>
+
+<body>
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:830px;">
+	   	<span>扫码打包：</span>
+		<input type="text" onkeypress="return userName_onkeypress(event,this)" name="ppbh" value="" size="20" class="text" style='width:200px;'/>
+	   </li>
+	</ul>
+	<ul id="screening">
+		<li style="width:830px;">
+	   	<span>产品名称：</span>
+		<input type="text" id="spmc" name="ppbh" readonly="readonly" value="" size="20" class="text text1" style='width:200px;'/>
+		<span>装箱时间：</span>
+		<input type="text" id="zxsj" name="ppbh" readonly="readonly" value="" size="20" class="text text1" style='width:200px;'/>
+		
+	   </li>
+	   <li style="width:830px;">
+	   	<span>装箱码：</span>
+		<input type="text" id="pCode" readonly="readonly" name="ppbh" value="" size="20" class="text text1" style='width:200px;'/>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" id="makeCode" onclick="makeCode();" style='display:block;width:100px;text-align:center;'>生成编码</a>
+	   </li>
+	</ul>
+	<div id='spcm'>
+		
+	<div>
+</body>
+</html>

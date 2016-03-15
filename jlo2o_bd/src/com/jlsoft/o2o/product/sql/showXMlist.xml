@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jlsoft.o2o.product.sql.showXMlist">
+	<!-- 查询商品名称数量 -->
+  	<select id="select_XMMC" parameterType="Map" resultType="java.util.Map">
+	SELECT
+		COUNT(1) AS COUNT
+	FROM
+		W_PROJECT WP
+	WHERE
+	1=1
+	<if test="XMMC!=null and XMMC!=''"> AND WP.XMMC = #{XMMC}</if>
+	<if test="XMBH!=null and XMBH!=''"> AND WP.XMBH &lt;&gt; #{XMBH}</if>
+	</select>
+	<!-- 查询商品列表 -->
+  	<select id="select_XM" parameterType="Map" resultType="java.util.Map">
+	SELECT
+		WP.XMBH,
+		WP.XMMC,
+		WPF.SPFL01
+	FROM
+		W_PROJECT WP
+	LEFT JOIN W_PROJECT_FL WPF ON WPF.XMBH =WP.XMBH
+	WHERE
+	 WP.XMBH =#{XMBH}
+	</select>
+	<!-- 查询商品列表 -->
+  	<select id="select_XMlist" parameterType="Map" resultType="java.util.Map">
+	SELECT
+		WP.XMBH,
+		WP.XMMC
+	FROM
+		W_PROJECT WP
+	WHERE
+	1=1
+	<if test="XMMC!=null and XMMC!=''"> AND WP.XMMC like concat('%',#{XMMC},'%')</if>
+	</select>
+	
+	<!-- 查询商品列表和 -->
+	<select id="select_XMlist_sum" parameterType="Map" resultType="java.util.Map">
+	SELECT
+		COUNT(1) AS COUNT
+	FROM
+		W_PROJECT WP
+	WHERE
+	1=1
+		<if test="XMMC!=null and XMMC!=''"> AND WP.XMMC like concat('%',#{XMMC},'%')</if>
+	</select>
+
+	
+</mapper>

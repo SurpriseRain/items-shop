@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 找回密码 - 验证邮箱</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/zhmm-main.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/reg.js"></script>
+</head>
+<script type="text/javascript">
+var email=unescape($.getUrlParam('email'));
+var count = 60;
+$(document).ready(function(){
+	$("#email").html(email);
+	//控制倒计时
+	GetNumber();
+})
+function GetNumber(){
+	$("#endtime").html(count);
+	count--;
+	if(count > 0) {
+		setTimeout(GetNumber, 1000);
+	}else{
+		$("#endtime").html("0");
+		$(".cxfs").attr("onclick","sendEmail()");
+		$(".cxfs").attr("style","color: #000;");		
+	}
+}
+function sendEmail(){
+	var arr2 = [];
+	var o = {};
+	o["zcxx01"] = unescape($.getUrlParam('zcxx01'));
+	o["username"] = unescape($.getUrlParam('um'));
+	o["email"] = unescape($.getUrlParam('email'));
+	arr2.push(o);
+	var data = visitService("/ForgetPwd/sendEmail.action?XmlData="+JSON.stringify(arr2));
+	$(".cxfs").attr("onclick","");
+	$(".cxfs").attr("style","color: #999;");
+	count = 60;
+	GetNumber();
+}
+
+function InEmail(){
+	var ee = email.toUpperCase();
+	if (ee.indexOf("@QQ") > -1) {
+		window.open("https://mail.qq.com/cgi-bin/loginpage");
+		return;
+	}
+	if (ee.indexOf("@163")> -1|| ee.indexOf("@126")> -1 || ee.indexOf("@YEAH")> -1 ) {
+		window.open("http://email.163.com");
+		return;
+	}
+	if (ee.indexOf("@SINA")> -1 || ee.indexOf("@2008")> -1 || ee.indexOf("@51UC")> -1 ) {
+		window.open("http://mail.sina.com.cn");
+		return;
+	}
+	if (ee.indexOf("@SOHU")> -1) {
+		window.open("http://mail.sohu.com/");
+		return;
+	}
+	if (ee.indexOf("@189")> -1) {
+		window.open("http://webmail30.189.cn/w2/");
+		return;
+	}
+	if (ee.indexOf("@139")> -1) {
+		window.open("http://mail.10086.cn/");
+		return;
+	}
+	if (ee.indexOf("@WO")> -1) {
+		window.open("http://mail.wo.cn/mail/login.action");
+		return;
+	}
+	if (ee.indexOf("@TOM")> -1) {
+		window.open("http://web.mail.tom.com/webmail/login/index.action");
+		return;
+	}
+	if (ee.indexOf("@21CN")> -1) {
+		window.open("http://mail.21cn.com/w2/");
+		return;
+	}else{
+		$("#yxdz").text("请您进入邮箱查看");
+	}
+}
+</script>
+<body>
+<!-----公共部门开始---->
+<div id="header">
+  <div class="header_main">
+    <a class="logo" href="/customer/qfy/index.html"><img src="/customer/qfy/images/zhmm-logo.png" /></a>
+    <!------------------流程------------------>
+    <div class="tecPro">
+      <div class="userLc">
+      <div class="userlcMain">
+        <div class="userlcCase"><a class="fxlc_wz">1.填写用户名或邮箱</a></div>
+        <div class="userlcCase"><span>→</span></div>
+       
+        <div class="userlcCase"><a class="fxlc_zz">2.验证邮箱</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">3.修改密码</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">4.成功</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+<div class="clera"></div>
+<div id="main">
+  <ul class="userName">
+    <li class="title">您正在使用"电子邮箱"验证身份，请完成以下操作：</li>
+  <li><span class="yz">汽服云已向您的邮箱&nbsp;&nbsp;<b id="email"></b>&nbsp;&nbsp;发送了一封邮件，请立即查收！</span></li>
+  <li class="csyj"><span class="ts">请进入邮箱查收邮件，若无法收到邮件，请点击重新发送邮件！</span><a class="cxfs">重新发送邮件（<b id="endtime" style="color: #090;">60</b>）</a><a class="ljjr" id="yxdz" onclick="InEmail()">点击立即进入邮箱查收</a></li>
+
+  </ul>
+</div>
+
+</body>
+</html>

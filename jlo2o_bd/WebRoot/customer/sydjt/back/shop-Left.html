@@ -1,0 +1,66 @@
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user = JSON.parse(MyCookie);
+
+//获取href传入参数
+$.getUrlParam = function(name){
+	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	var r = window.location.search.substr(1).match(reg);
+	if (r!=null) 
+		return unescape(r[2]); 
+		return null;
+}
+
+//获取菜单父节点
+String.prototype.getpid = function(){
+  if(this.length < 2) return -1;
+  else if(this.length == 2){
+    return  '0';
+  }
+  return this.substring(0, this.length - 2);
+};
+
+$(document).ready(function(){
+	//动态显示菜单
+	var XmlData=[{"PERSON_ID":user.XTCZY01}];
+	var url="/UserInfo/selectUserMenu.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	var menu=rData.menu;
+	for(var i=0;i<menu.length;i++){
+		if(menu[i].LEVELS==1){
+			$(".shop-left-nav").append("<li id='cd-"+menu[i].CODE+"'><h3><span>-</span><b>"+menu[i].NAME+""+
+													  "</b></h3></li>");
+		}else if(menu[i].LEVELS==2){
+			var tid = menu[i].CODE.getpid();
+			var url =menu[i].URL;
+			url = ((menu[i].URL).indexOf("?")>-1)?(url+"&menuId="+menu[i].CODE):(url+"?menuId="+menu[i].CODE);
+ 			$("#cd-"+tid).append("<a id='"+menu[i].CODE+"' class='nav' href='"+url+"' >"+
+ 											  ""+menu[i].NAME+"</a>");
+		}
+	}
+	//改变选中菜单底色
+	var menuId = $.getUrlParam("menuId");
+	if(menuId != null && menuId!=""){
+		$(".shop-left-nav a").removeClass();
+		$(".shop-left-nav a").addClass("nav");
+		$("#"+menuId).removeClass();
+		$("#"+menuId).addClass("nav xuan");
+	}
+})
+</script>
+<ul class="shop-left-nav">
+	<!-- 
+    <li>
+      <h3><span>-</span><b>商品管理</b></h3>
+      <a id="spgl_fbsp" class="nav xuan" href="/gui_o2o/qfy/fore/vendor/shop_centre.html">发布商品</a>
+      <a id="spgl_tmsq" class="nav " href="/gui_o2o/qfy/fore/vendor/shop-Tmsq.html">条码申请</a>
+    </li>
+    <li>
+      <h3><span>-</span><b>生产企业</b></h3>
+      <a id="spgl_scqydjb" class="nav" href="/gui_o2o/qfy/fore/vendor/mainVendor.html?menuId=spgl_scqydjb&rno=8">汽配生产企业登记表</a>
+      <a  class="nav" href="/gui_o2o/qfy/fore/vendor/shop-Storage.html">追溯文件上传</a>
+    </li>
+     -->
+</ul>

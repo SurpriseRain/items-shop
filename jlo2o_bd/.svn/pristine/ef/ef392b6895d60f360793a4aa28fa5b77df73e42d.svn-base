@@ -1,0 +1,332 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css"	href="/css/ext-all.css" />
+<link type="text/css" rel="stylesheet"	href="/customer/qfy/css/header-min.css" />
+<link type="text/css" rel="StyleSheet"	href="/css/jquery.autocomplete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript"	src="/js/ext-base.js"></script>
+<script type="text/javascript"	src="/js/ext-all.js"></script>
+<script type="text/javascript"	src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript"	src="/js/jquery-1.7.2.js"></script>
+<script type="text/javascript"	src="/js/json2.js"></script>
+<script type="text/javascript"	src="/js/commons.js"></script>
+<script type="text/javascript"	src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript"	src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript"	src="/js/jquery.cookie.js"></script>
+<script type="text/javascript"	src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<!-- <title>首页展示图片设置</title> -->
+<style type="text/css">
+.divLib{float: left;}
+.divLib .bgColor, .typeKuang .bgColor { border: 2px solid red; }
+.sortKuang {
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 10px 10px;
+    text-align: left;
+    width: 800px;
+    height:80px;
+    border: 1px solid #eeeeee;
+    margin-top: 10px;
+}
+.sortKuang:first-child{
+    margin-top: 0px;
+}
+.sortKuangP {
+	background-color:  #eeeeee;
+    border:4px solid #eeeeee; 
+    cursor: move;
+    font-size: 12px;
+    height: auto;
+    width:auto;
+    padding: 10px;
+    position: absolute;
+    text-align: left;
+    width: 800px;
+    height:80px;
+    z-index: 10000;
+}
+.sortKuang7 a{
+	margin: 8px;
+	font-size:14px;
+	font-family: Verdana,"微软雅黑","HelveticaNeue","Helvetica Neue",Arial,sans-serif;
+	color:#3c3c3c;
+}
+img{
+	height: 80px;
+	width: 80px;
+}
+.xh{
+	width: 50px;
+	height:80px;
+	float: left;
+	text-align: center;
+	line-height: 80px;
+}
+.tp{
+	width: 100px;
+	height:80px;
+	float: left;
+	text-align: center;
+	line-height: 80px;
+}
+.dz{
+	width: 550px;
+	height:80px;
+	float: left;
+	text-align: center;
+	line-height: 80px;
+}
+.eidt{
+	width: 100px;
+	height:80px;
+	float: left;
+	text-align: center;
+	line-height: 80px;
+}
+.add_tp{
+	width: 820px; 
+	height: 50px;
+	background-color: #f9f9f9; 
+	border: 1px solid #eeeeee;
+	margin-top:10px; 
+	line-height:50px;
+}
+.tp_title{
+	width: 820px; 
+	height: 40px;
+	background-color: #f9f9f9; 
+	border: 1px solid #eeeeee;
+	margin-top:10px;
+}
+.tp_title div{
+	font-size:14px;
+	line-height:40px;
+	color:#3c3c3c;
+	font-weight:bold;
+	font-family: "microsoft yahei";
+	
+}
+.title_xh{
+	height: 40px;
+	line-height:40px;
+	font-size:18px; 
+	width: 70px;
+	float: left;
+	text-align: center;
+}
+.title_tp{
+	height: 40px;
+	line-height:40px;
+	font-size:18px; 
+	width: 100px;
+	float: left;
+	text-align: center;
+}
+.title_dz{
+	height: 40px;
+	line-height:40px;
+	font-size:18px; 
+	width: 550px;
+	float: left;
+	text-align: center;
+}
+.title_eidt{
+	height: 40px;
+	line-height:40px;
+	font-size:18px; 
+	width: 100px;
+	float: left;
+	text-align: center;
+}
+.title_xh,.title_tp,.title_dz,.title_eidt{
+	font-weight:800;color:#3c3c3c;font-size:12px;
+}
+.lbtF{
+	color:#ff4a00;
+}
+
+</style>
+
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var defaultImgUrl = pubJson.defaultImgUrl;
+var imgUrl = pubJson.path_sptp
+function initData(){
+	var dataArr = [];
+	var XmlData = {};
+	XmlData["sqlid"]="com.jlsoft.o2o.sql.mjck.select_TP";
+	XmlData["dataType"]="Json";
+    XmlData["ZCXX01"]=usercookie.ZCXX01;
+	dataArr.push(XmlData);
+	var rData = visitGrid("/jlquery/selecto2o.action",JSON.stringify(dataArr));
+	var data = rData.data;
+	var str='';
+	for(var i=0;i<data.length;i++) {
+		str+='<div class="sortKuang sortKuang7" id="'+data[i].id+'">';
+		str+='<div class="xh">'+data[i].file06+'</div>';
+		str+='<div class="tp"><img src="'+imgUrl+'/banner/'+data[i].file01+'/'+data[i].file02+'" /></div>';
+		str+='<div class="dz">'+data[i].file05+'</div>';
+		str+='<div class="eidt"><a onclick="eidt_tp(\''+data[i].id+'\')">编辑</a><a onclick="delect_tp(\''+data[i].id+'\')">删除</a></div>';
+		str+='</div>';
+	 }
+	$("#divLib").html(str);
+	$("img").error(function() {
+    	$(this).attr("src", defaultImgUrl);
+    });
+}
+ 
+</script>
+
+</head>
+<body>
+<!-- <div style="width: 820px; height: 30px;background: #f9f9f9; border: 1px solid #eeeeee;"><a class="lbtF"style="line-height:30px;margin-left:15px;color:#ff4a00;font-size:12px;font-family: Arial,Verdana;">首页展示图片设置</a></div> -->
+	<div class="add_tp"><a class="bot Shot seach_bot" href="javascript:void(0);" onclick="insert_tp()">新增</a></div>
+	<div class="tp_title">
+		<div class="title_xh">序号</div>
+		<div class="title_tp">图片</div>
+		<div class="title_dz">图片链接地址</div>
+		<div class="title_eidt">操作</div>
+	</div>
+	<div id="divLib" class="divLib">
+	</div>
+	<div id="selectLib">
+	</div>
+	
+</body>
+<script type="text/javascript" charset="UTF-8">
+$(document).ready(function(){
+	initData();
+	//拖拽控制
+	this.move = false; // 移动的初始化 select_TP
+	this.$bg = $(".sortKuang"); //目标对象数组 
+	this.initDiv = null; //拖拽对象 目标对象 
+	this.tarDiv = null;
+	this.tarDivHalf = 0;
+	this.wHalf = 0;
+	this.relPos = {x: 0, y: 0};
+	this.temPos = {x: 0, y: 0}; 
+	this.dragPos = {x1: 0, x2: 0, y1: 0, y2: 0};// 拖拽对象的四个坐标 
+	this.tarDivPos = {x1: 0, y1: 0, x2: 0, y2: 0}; //目标对象的四个坐标 
+	var obthis = this;
+	this.sortType = null;//当前执行的排序类型（正常，拖动排序）
+	$(".sortKuang").on("dblclick", function(event) { 
+		obthis.initDiv = $(this).clone(); //拖拽对象  克隆一个
+		// 鼠标 与 目标元素的相对坐标 
+		obthis.relPos.x = event.pageX - $(this).offset().left; 
+		obthis.relPos.y = event.pageY - $(this).offset().top;
+		obthis.move = true;
+		obthis.initDiv.removeClass("sortKuang").addClass("sortKuangP");
+		obthis.initDiv.css({ left: $(this).offset().left +'px', top: $(this).offset().top + 'px',"margin-top":"0px" });
+		obthis.initDiv.appendTo($("body"));
+	});
+	//跟页面增加鼠标移动和抬起事件
+	$(document).on("mousemove", function(event) { 
+			if (!obthis.move) {  return false; } 
+			event=event.originalEvent.touches?event.originalEvent.touches[0]:event;
+			// 下列代码是 if(move)的 程序 
+			// 目标元素随鼠标移动的坐标 
+			obthis.dragPos.x1 = event.pageX - obthis.relPos.x; 
+			obthis.dragPos.y1 = event.pageY - obthis.relPos.y; 
+			obthis.dragPos.x2 = obthis.dragPos.x1 + obthis.initDiv.innerWidth(); 
+			obthis.dragPos.y2 = obthis.dragPos.y1 + obthis.initDiv.innerHeight(); 
+			obthis.initDiv.css({ left: obthis.dragPos.x1 +'px', top: obthis.dragPos.y1 + 'px' }); 
+			obthis.$bg.each(function() {
+				obthis.tarDiv = $(this); 
+				// 目标对象的坐标 
+				obthis.tarDivPos.x1 = obthis.tarDiv.offset().left; 
+				obthis.tarDivPos.x2 = obthis.tarDivPos.x1 + obthis.tarDiv.innerWidth(); 
+				obthis.tarDivPos.y1 = obthis.tarDiv.offset().top; 
+				obthis.tarDivPos.y2 = obthis.tarDivPos.y1 + obthis.tarDiv.innerHeight(); 
+				obthis.tarDivHalf = obthis.tarDiv.innerHeight()/2; //临时变量，以便于在if判断中使用 
+				obthis.wHalf = obthis.tarDiv.width()/2;   
+				if (
+					(obthis.dragPos.x2 >= (obthis.tarDivPos.x1 + obthis.wHalf) 
+					 && obthis.dragPos.x2 <= (obthis.tarDivPos.x2 + obthis.wHalf) 
+					 || obthis.dragPos.x1 <= obthis.tarDivPos.x1 
+					 && obthis.dragPos.x2 >=obthis.tarDivPos.x2 
+					 || obthis.dragPos.x1 >= (obthis.tarDivPos.x1 - obthis.wHalf) 
+					 && obthis.dragPos.x1 <= (obthis.tarDivPos.x2 - obthis.wHalf) )
+					 && obthis.dragPos.y2 >= (obthis.tarDivPos.y1 + obthis.tarDivHalf) 
+					 && obthis.dragPos.y2 <= obthis.tarDivPos.y2 + obthis.tarDivHalf 
+					) { //向下拖
+						if(obthis.tarDiv.attr("id") == obthis.initDiv.attr("id")) {
+							return false;
+						}
+					
+						$(".bgColor").removeClass("bgColor");
+						obthis.tarDiv.addClass("bgColor");
+					}
+			}); 
+			return false;
+	}).on("mouseup", function(event) {
+			if (!obthis.move) { return; }
+			event=event.originalEvent.changedTouches?event.originalEvent.changedTouches[0]:event;
+			//排序
+			if($(".bgColor").length > 0){
+				var obj=$(".sortKuang[id='"+obthis.initDiv.attr("id")+"']");
+				var mtop=obj.offset().top;
+				if(obthis.dragPos.y1>mtop){
+					$(".bgColor").after(obj);
+				}else{
+					$(".bgColor").before(obj);
+				}
+				$(".bgColor").removeClass("bgColor");
+			}
+			obthis.initDiv.remove();
+			obthis.move = false;
+			
+			//拖拽后的DIV排序
+			var arr=$(".sortKuang7");
+			var tp_id = "";
+			for(var i = 0; i < arr.length; i++){
+				tp_id += arr[i].id+",";
+			}
+			var id =tp_id.substring(0, tp_id.length-1);
+			var XmlData=[{"tp_id":id}];
+			var url="/Oper_LBT/updateLBTByOrder.action?XmlData="+JSON.stringify(XmlData);
+			var rData=visitService(url);
+			if(rData.STATE==1){
+				alert("操作成功!");
+				location.href="/customer/qfy/back/jcsz/Oper_LBT.html";
+			}else{
+				alert("操作失败!");
+			}
+	});
+});
+
+//新增
+function insert_tp(){
+	var url = pubJson.O2OUrl+"/customer/qfy/back/jcsz/Oper_LBT_item.html";
+	parent.ajaxGrid(url);
+}
+
+//编辑
+function eidt_tp(id){
+	var url = pubJson.O2OUrl+"/customer/qfy/back/jcsz/Oper_LBT_item.html?id="+id;
+	parent.ajaxGrid(url);
+}
+
+//删除
+function delect_tp(id){
+	var XmlData=[{"id":id}];
+	var url="/Oper_LBT/deleteLBT.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	if(rData.STATE==1){
+		alert("操作成功!");
+		location.href="/customer/qfy/back/jcsz/Oper_LBT.html";
+	}else{
+		alert("操作失败!");
+	}
+}
+
+function backFun(){
+ 	initData();
+}
+</script>
+</html>

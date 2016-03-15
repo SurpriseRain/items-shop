@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.pub.sql.SPFL">
+	<select id="selectSPFL" parameterType="map" resultType="java.util.Map">
+	SELECT spfl01,spfl02,spf_spfl01,spfl05 from spfl WHERE 1=1
+	<if test="SPFL05!='' and SPFL05!=null" >
+		AND SPFL05=#{SPFL05}  and spfl03='1'
+	</if>
+	<if test="SPF_SPFL01!='' and SPF_SPFL01!=null" >
+		AND SPF_SPFL01=#{SPF_SPFL01} 
+	</if>
+	</select>
+	<select id="selectCXCX" parameterType="map" resultType="java.util.Map">
+	
+	SELECT  DISTINCT brand ,fn_getpy(brand) as brand_py,brand_id,origin_country_id
+		
+	from w_automobile where 1=1 and  origin_country = #{origin_country}
+	
+	<!-- SELECT 
+		DISTINCT 
+		<if test="origin_country=='' or origin_country==null" >
+		origin_country
+		</if>
+		<if test="origin_country!='' and origin_country!=null" >
+		brand 
+		</if>
+	from w_automobile where 1=1
+	<if test="origin_country!='' and origin_country!=null" >
+	and origin_country=#{origin_country}
+	</if> -->
+	</select>
+	
+	<!-- 查询汽车类型品牌 排量-->
+	<select id="selectCXCX_2" parameterType="map" resultType="map">
+	    SELECT DISTINCT brand
+		FROM
+			w_automobile
+		WHERE
+			origin_country = #{origin_country}
+	</select>
+</mapper>

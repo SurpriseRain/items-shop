@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<style>
+.nav_li{
+ 	list-style-type: none;
+	margin: 0 auto;
+	width: 575px;
+	height: 355px;
+   margin-top:30px;
+}
+.nav_li li{
+    height: 54px;
+	line-height: 54px;
+	position: relative;
+	padding-left: 100px;
+
+}	
+.nav_li li span.label{
+	letter-spacing: 3px;
+	position: absolute;
+	left: 0;
+}
+.nav_li li span{
+   color: #777;
+    font-size: 17px;
+    letter-spacing: 3px;
+    display:table-cell;
+       height:50px;
+   line-height:50px;
+}
+.nav_li li input{
+  	border: 1px solid #e4e4e4;
+	height: 36px;
+	line-height: 36px;
+	margin-left: 16px;
+	width: 400px;
+}
+#xqms{
+ border: 1px solid #e4e4e4;
+    height: 128px;
+    margin-left: 15px;
+    width: 402px;
+}
+.sub_nav{
+     background: #ff4a00 none repeat scroll 0 0;
+    border: 0 none;
+    color: #fff;
+    display: block;
+    font-size: 20px;
+    height: 46px;
+    line-height: 46px;
+    margin-left: 334px;
+    margin-top: 24px;
+    width: 170px;
+        text-decoration:none;
+}
+.sub_nav span{
+  font-size: 24px;
+    margin-left: 60px;
+    color:#FFF; 
+
+}
+.fr_ns{
+  color:red;
+  display:inline;
+}
+</style>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+function checkNull(){
+	if($("#wxsj").val().length == 0){
+		alert("请输入有效时长!");
+		return false;
+	}
+	if($("#cpmc").val().length == 0){
+		alert("请输入产品名称!");
+		return false;
+	}
+	if($("#gmsl").val().length == 0){
+		alert("请输入购买数量!");
+		return false;
+	}
+	var spjq = $("#je").val();
+	if(spjq == "" || spjq == null){
+		alert("请输入期望金额!");
+		return false;
+	}
+	if(!/^\d{1,10}(\.\d{1,2})?$/.test(spjq)){
+		alert('价格输入错误,且最多保留两位小数')
+		return false;
+	}
+	return true;
+}
+
+// 保存商品需求信息
+function saveProduce(){
+	if(checkNull()){
+		$("#wxcdm").val(usercookie.ZCXX01);
+		var flag = confirm('确认保存信息吗？');
+		if(flag){
+			var jsonData = $("#form0").formToJson();
+			var json = escape(JSON.stringify(jsonData));
+			var url = "/RepairDemand/insert_Produce.action?jsonData=" + JSON.stringify(jsonData);
+			var rData = visitService(url);
+			if(rData.STATE == "1"){
+				alert("保存成功!");
+				var rememberUrl = "/customer/qfy/index.html";
+				parent.location.href = rememberUrl;
+			} else {
+				alert("保存失败!");
+			}
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+	
+}
+</script>
+</head>
+<body>
+	<form id="form0" action="" method="post" >
+		<input type="hidden" id="wxcdm" value="" name="BuyerId" />
+		<ul class="nav_li">
+			<li >
+				<span class="label">有效时长<p class="fr_ns">*</p></span><input type="text" id="wxsj" onkeyup="value=this.value.replace(/\D+/g,'')"  placeholder="请输入数字                                                                    单位/小时" value="" name="InvalidTime" />
+			</li>
+			<li>
+				<span class="label">产品名称<p class="fr_ns">*</p></span><input type="text" id="cpmc" placeholder="请输入产品名称" value="" name="ProduceName" />
+			</li>
+			<li>
+				<span class="label">购买数量<p class="fr_ns">*</p></span><input type="text" id="gmsl" onkeyup="value=this.value.replace(/\D+/g,'')" placeholder="请输入购买数量" value="" name="BuyCount" />
+			</li>
+			<li>
+				<span class="label">期望金额<p class="fr_ns">*</p></span><input type="text" id="je" placeholder="请输入期望金额                                                                 单位/元" value="" name="QuotedPrice" />
+			</li>
+			<li>
+				<span class="label">需求描述</span><textarea rows="5" cols="30" id="xqms" name="DemandDescription" ></textarea>
+			</li>
+				
+		</ul>
+		<!-- 修改样式后把submit改为<a>标签 -->
+		<a href="#" id="fbcpxq" onclick="saveProduce()" class="sub_nav"><span>发布</span></a>
+	</form>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.product.sql.Oper_SpglDao">
+		<!-- 轮播图查询商品 -->
+		<select id="SELECT_SPBJ_SPXX" parameterType="map" resultType="map">
+	   SELECT A.SPXX01,A.SPXX02,A.SPXX04,
+            A.SPFL02_NAME SPFL02NAME,D.BARCODE
+       FROM W_SPXX A,W_SPJS B,W_SPGL C,W_GOODS D
+      WHERE A.SPXX01=B.SPXX01
+        AND A.SPXX01=C.SPXX01
+        AND A.SPXX01=D.SPXX01
+      <if test="SPXX01!='' and SPXX01!=null">AND A.SPXX01 = #{SPXX01}</if>
+      <if test="ZCXX01!='' and ZCXX01!=null">AND C.ZCXX01 = #{ZCXX01}</if>
+	 <if test="SPXX04!='' and SPXX04!=null">AND A.SPXX04 like CONCAT ('%',#{SPXX04},'%')</if>
+	 ORDER BY A.SPXX01
+	</select>
+	
+	<!-- 商品大厅展示（同步）新增查询商品 -->
+	<select id="SELECT_SPTB_SPXX" parameterType="map" resultType="map">
+	   SELECT A.SPXX01,A.SPXX02,A.SPXX04,
+            A.SPFL02_NAME SPFL02NAME
+       FROM W_SPXX A,W_SPJS B,W_SPGL C
+      WHERE A.SPXX01=B.SPXX01
+        AND A.SPXX01=C.SPXX01
+        AND C.SPGL02=0
+      <if test="gsid!='' and gsid!=null">AND B.ZCXX01 = #{gsid}</if>
+      <if test="gsid!='' and gsid!=null">AND C.ZCXX01 = #{gsid}</if>
+	 <if test="spname!='' and spname!=null">AND A.SPXX04 like CONCAT ('%',#{spname},'%')</if>
+	 ORDER BY A.SPXX01
+	</select>
+	
+	<!-- 商品发布商品查询 -->
+	<select id="SELECT_SPFB" parameterType="map" resultType="map">
+	SELECT A.SPXX01 SPXX01,
+       			B.SPXX04 SPNAME,
+       			B.SPFL02_NAME FLNAME,
+       			B.PPB02 PPNAME,
+       			DATE_FORMAT(A.SPGL03, '%Y-%m-%d %k:%i:%s') FBSJ,
+       			A.SPGL04 SPJG,
+       			A.SPGL05 DYSJ,
+       			SUM(C.CKSP04 + C.CKSP05 - C.KCXX02) CKSL,
+       			(SELECT ZCXX02 FROM W_ZCXX D WHERE D.ZCXX01 = A.ZCXX01) GSMC,
+       			A.ZCXX01 JXS,
+       			A.SPGL02 DTBJ,
+       			A.SPGL08,
+       			A.SPGL17 SPLXBJ
+  		FROM W_SPGL A, W_SPXX B, W_KCXX C,CK
+ 		WHERE A.SPXX01 = B.SPXX01
+   			AND A.SPXX01 = C.SPXX01
+   			AND A.ZCXX01 = C.ZCXX01
+   			AND C.CK01 = CK.CK01 AND CK.ck09='0'
+   			AND A.SPGL02 = 2
+			<if test="GSMC!=''">AND (SELECT ZCXX02 FROM W_ZCXX  WHERE ZCXX01= A.ZCXX01) like CONCAT ('%',#{GSMC},'%')</if>
+			<if test="ZCXX01!=''">AND A.ZCXX01 = #{ZCXX01}</if>
+			<if test="SPXX01!=''">AND A.SPXX01 = #{SPXX01}</if>
+			<if test="SPXX04!=''">AND B.SPXX04 like CONCAT ('%',#{SPXX04},'%')</if>
+   			GROUP BY A.SPXX01,
+          B.SPXX04,
+          B.SPFL02_NAME,
+          B.PPB02,
+          A.SPGL03,
+          A.SPGL04,
+          A.SPGL05,
+          A.ZCXX01,
+          A.SPGL02,
+          A.SPGL08,
+          A.SPGL17
+	</select>
+	
+	<!-- 商品发布商品总和-->
+	<select id="SELECT_SPFB_sum" parameterType="map" resultType="map">
+	SELECT  COUNT(1) as COUNT FROM (
+	        SELECT A.SPXX01 SPXX01,
+	       			B.SPXX04 SPNAME,
+	       			B.SPFL02_NAME FLNAME,
+	       			B.PPB02 PPNAME,
+	       			DATE_FORMAT(A.SPGL03, '%Y-%m-%d %k:%i:%s') FBSJ,
+	       			A.SPGL04 SPJG,
+	       			A.SPGL05 DYSJ,
+	       			SUM(C.CKSP04 + C.CKSP05 - C.KCXX02) CKSL,
+	       			(SELECT ZCXX02 FROM W_ZCXX D WHERE D.ZCXX01 = A.ZCXX01) GSMC,
+	       			A.ZCXX01 JXS,
+	       			A.SPGL02 DTBJ,
+	       			A.SPGL08,
+	       			A.SPGL17 SPLXBJ
+	  		FROM W_SPGL A, W_SPXX B, W_KCXX C,CK
+	 		WHERE A.SPXX01 = B.SPXX01
+	   			AND A.SPXX01 = C.SPXX01
+	   			AND A.ZCXX01 = C.ZCXX01
+	   			AND C.CK01 = CK.CK01 AND CK.ck09='0'
+	   			AND A.SPGL02 = 2
+				<if test="GSMC!=''">AND (SELECT ZCXX02 FROM W_ZCXX  WHERE ZCXX01= A.ZCXX01) like CONCAT ('%',#{GSMC},'%')</if>
+				<if test="ZCXX01!=''">AND A.ZCXX01 = #{ZCXX01}</if>
+				<if test="SPXX01!=''">AND A.SPXX01 = #{SPXX01}</if>
+				<if test="SPXX04!=''">AND B.SPXX04 like CONCAT ('%',#{SPXX04},'%')</if>
+	   			GROUP BY A.SPXX01,
+	          B.SPXX04,
+	          B.SPFL02_NAME,
+	          B.PPB02,
+	          A.SPGL03,
+	          A.SPGL04,
+	          A.SPGL05,
+	          A.ZCXX01,
+	          A.SPGL02,
+	          A.SPGL08,
+	          A.SPGL17) as total
+	
+	</select>
+	
+	<!-- 查询导入配件 -->
+	<select id="selectW_goods" parameterType="Map" resultType="java.util.Map">
+	SELECT SPXX01,BARCODE,SPXX04,ZCXX01,SJLY FROM W_GOODS WHERE SJLY=1 AND SPXX01 NOT IN (SELECT SPXX01 FROM W_SPGL)
+	</select> 
+	<!-- 查询导入配件回填商品信息 -->
+	<select id="srchW_goods" parameterType="Map" resultType="java.util.Map">
+	SELECT BARCODE,SPXX04,ZCXX01,origin_cplace,SJLY FROM W_GOODS WHERE SJLY=1
+	<if test="SPXX01!=''">AND SPXX01 = #{SPXX01}</if>
+	</select> 
+
+	<!-- 后台查询所有订单评价 -->
+	<select id="selectAllOrderPj" parameterType="map" resultType="map">
+	 SELECT DISTINCT b.spxx04,a.SPPJ01,a.SPXX01, a.ZTID,a.HBID,a.ZCXX02,a.XSDD01,DATE_FORMAT(a.SPPJ02, '%Y-%m-%d %k:%i:%s') SPPJ02,
+  CASE a.SPPJ03 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ03,
+  	CASE a.SPPJ04 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ04,
+  	CASE a.SPPJ05 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ05,
+  	CASE a.SPPJ06 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符'   WHEN 5 THEN '非常好' END SPPJ06,
+  a.SPPJ07,DATE_FORMAT(a.SPPJ08, '%Y-%m-%d %k:%i:%s') SPPJ08,CASE a.SPPJ10 WHEN 0 THEN '未审核' WHEN 1 THEN '有效评价' WHEN 2 THEN '无效评价' END SPPJ10,a.XTCZY01
+  FROM W_SPPJ a,W_SPXX B  WHERE 1=1
+  <if test="xsdd01!=''">AND a.XSDD01 = #{xsdd01}</if>
+  <if test="beginTime!=''">AND a.SPPJ02 &gt;= DATE_FORMAT(#{beginTime} ' 00:00:00','%Y-%m-%d %k:%i:%s')</if>
+  <if test="endTime!=''">AND a.SPPJ02 &lt;= DATE_FORMAT(#{endTime} ' 23:59:59','%Y-%m-%d %k:%i:%s')</if>
+   <if test="zcxx02!=''">AND a.ZCXX02 like CONCAT ('%',#{zcxx02},'%')</if>
+   AND (a.HBID=#{ZCXX01} OR a.ZTID =#{ZCXX01})
+   AND a.spxx01=b.SPXX01
+   order by a.SPPJ02 DESC
+	</select>
+	
+	<!-- 后台查询所有订单评价 -->
+	<select id="selectAllOrderPj_sum" parameterType="map" resultType="map">
+	SELECT COUNT(1) as COUNT FROM (
+	SELECT DISTINCT SPPJ01,SPXX01, ZTID,HBID,ZCXX02,XSDD01,DATE_FORMAT(SPPJ02, '%Y-%m-%d %k:%i:%s') SPPJ02,
+		  CASE SPPJ03 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ03,
+		  	CASE SPPJ04 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ04,
+		  	CASE SPPJ05 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符' WHEN 5 THEN '非常好' END SPPJ05,
+		  	CASE SPPJ06 WHEN 1 THEN '不满意' WHEN 2 THEN '一般' WHEN 3 THEN '好' WHEN 4 THEN '相符'   WHEN 5 THEN '非常好' END SPPJ06,
+		  SPPJ07,DATE_FORMAT(SPPJ08, '%Y-%m-%d %k:%i:%s') SPPJ08,CASE SPPJ10 WHEN 0 THEN '未审核' WHEN 1 THEN '有效评价' WHEN 2 THEN '无效评价' END SPPJ10,XTCZY01
+		  FROM W_SPPJ WHERE 1=1
+		  <if test="xsdd01!=''">AND XSDD01 = #{xsdd01}</if>
+		  <if test="beginTime!=''">AND SPPJ02 &gt;= DATE_FORMAT(#{beginTime} ' 00:00:00','%Y-%m-%d %k:%i:%s')</if>
+		  <if test="endTime!=''">AND SPPJ02 &lt;= DATE_FORMAT(#{endTime} ' 23:59:59','%Y-%m-%d %k:%i:%s')</if>
+		   <if test="zcxx02!=''">AND ZCXX02 like CONCAT ('%',#{zcxx02},'%')</if>
+		      AND (HBID=#{ZCXX01} OR ZTID =#{ZCXX01})
+		   order by SPPJ02 DESC)as total
+	</select>
+	
+	<select id="selectKHPJ" parameterType="Map" resultType="java.util.Map">
+	   SELECT DATE_FORMAT(SPPJ02,'%Y-%m-%d') SPPJ02,
+  	   (select zcxx31 from w_zcxx where zcxx01 = a.hbid) KHDJ,
+       SPPJ03,
+       SPPJ04,
+       SPPJ05,
+       SPPJ06,
+       (SPPJ03 + SPPJ04 + SPPJ05 + SPPJ06 ) /4 ZHPJ,
+       SPPJ07,
+       DATE_FORMAT(SPPJ08,'%Y-%m-%d') SPPJ08,
+       XTCZY01
+       FROM W_SPPJ a
+       where  a.spxx01=#{spxx01}
+       ORDER BY SPPJ02 DESC
+	</select>
+	
+		<!-- 商品详情页查询商品条码 -->
+	<select id="selectBarcode" parameterType="Map" resultType="java.util.Map">
+	SELECT BARCODE,DESCRIPTION FROM W_GOODS WHERE 1=1
+	<if test="SPXX01!=''">AND SPXX01 = #{SPXX01}</if>
+	</select> 
+	
+	<!-- 商品详情页查询商品条码 -->
+	<select id="selectOEcode" parameterType="Map" resultType="java.util.Map">
+	SELECT SPGLLJH01 from w_spglljh WHERE 1=1
+	<if test="SPXX01!=''">AND SPXX01 = #{SPXX01}</if>
+	<if test="ZCXX01!=''">AND ZCXX01 = #{ZCXX01}</if>
+	</select> 
+	
+			<!-- 商品发布查询计量单位-->
+	<select id="showW_JLDW" parameterType="Map" resultType="java.util.Map">
+	SELECT JLDW01,JLDW02,JLDW03 FROM W_JLDW
+	</select>
+	
+	<!-- 查询商品串码-->
+	<select id="showW_SPCM" parameterType="Map" resultType="java.util.Map">
+	SELECT
+	B.SPXX04,
+	A.BARCODE,
+	A.SPCM01 
+	FROM W_SPCM A,W_SPXX B
+	WHERE A.SPXX01 = B.SPXX01
+	<if test="ZCXX01!='' and ZCXX01!=null"> AND A.ZCXX01 = #{ZCXX01}</if>
+	<if test="SPXX04!='' and SPXX04!=null"> AND B.SPXX04 LIKE CONCAT( '%',#{SPXX04},'%')</if>
+	<if test="BARCODE!='' and BARCODE!=null"> AND A.BARCODE = #{BARCODE}</if>
+	<if test="SPCM03!='' and SPCM03!=null"> AND A.SPCM03 = #{SPCM03}</if>
+	<if test="SPCM04!='' and SPCM04!=null"> AND A.SPCM04 = #{SPCM04}</if>
+	</select>
+	
+	<!-- 查询商品串码-和-->
+	<select id="showW_SPCM_sum" parameterType="Map" resultType="java.util.Map">
+	SELECT
+	COUNT(1) as COUNT
+	FROM W_SPCM A,W_SPXX B
+	WHERE A.SPXX01 = B.SPXX01
+	<if test="ZCXX01!='' and ZCXX01!=null"> AND A.ZCXX01 = #{ZCXX01}</if>
+	<if test="SPXX04!='' and SPXX04!=null"> AND B.SPXX04 LIKE CONCAT( '%',#{SPXX04},'%')</if>
+	<if test="BARCODE!='' and BARCODE!=null"> AND A.BARCODE = #{BARCODE}</if>
+	<if test="SPCM03!='' and SPCM03!=null"> AND A.SPCM03 = #{SPCM03}</if>
+	<if test="SPCM04!='' and SPCM04!=null"> AND A.SPCM04 = #{SPCM04}</if>
+	</select>
+	
+	<!-- 商品编辑查询回填商品信息 -->
+	<!-- <select id="srchW_SPXXitem" parameterType="Map" resultType="java.util.Map">
+	SELECT A.SPXX01,A.BARCODE,C.SPXX02 SPXX02,C.SPXX04,B.SPGL04 ,A.ZCXX01,A.origin_cplace,C.GGXH,C.GGB01,C.SPXX09,C.SPXX10,C.SPXX11,C.SPXX12,A.SJLY ,B.SPGL24,B.SPGL26,B.SPGL27,B.SPGL28,C.SPFL01 AS SPFL04,(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=C.SPFL01) AS SPFL03
+	,(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=C.SPFL01)) AS SPFL02
+	,(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=C.SPFL01))) AS SPFL01
+	,PPB01
+	,spgl25
+	,JLDW01,B.spgl08,B.spgl26,B.spgl27,B.spgl28,
+	(SELECT group_concat(mobile_modle) from w_spcx
+inner JOIN w_automobile on w_automobile.mobile_modle_id = w_spcx.mobile_modle_id where w_spcx.zcxx01 =B.zcxx01 and w_spcx.spxx01 = C.SPXX01) as yxcs_name,(SELECT group_concat(w_spcx.mobile_modle_id) from w_spcx
+inner JOIN w_automobile on w_automobile.mobile_modle_id = w_spcx.mobile_modle_id where w_spcx.zcxx01 =B.zcxx01 and w_spcx.spxx01 = C.SPXX01) as yxcs
+	FROM W_GOODS A,W_SPGL B,W_SPXX C
+	 WHERE A.SPXX01=B.SPXX01 AND A.SPXX01=C.SPXX01
+	<if test="SPXX01!=''">AND A.SPXX01 = #{SPXX01}</if>
+	</select>  -->
+	<!-- 20151217 齐俊宇 编辑商品显示详情 -->
+	<select id="srchW_SPXXitem" parameterType="Map" resultType="java.util.Map">
+		SELECT
+			A.SPXX01, A.BARCODE, C.SPXX02 SPXX02, C.SPXX04, B.SPGL04, A.ZCXX01,
+			A.origin_cplace, C.GGXH, C.GGB01, C.SPXX09, C.SPXX10, C.SPXX11,
+			C.SPXX12, A.SJLY, B.SPGL24, B.SPGL26, B.SPGL27, B.SPGL28,
+			C.SPFL01 AS SPFL04, D.SPF_SPFL01 AS SPFL03, G.SPF_SPFL01 AS SPFL02,
+			I.SPF_SPFL01 AS SPFL01, PPB01, spgl25, JLDW01, B.spgl08, B.spgl26, B.spgl27,
+			B.spgl28, F.MOBILE_MODLE yxcs_name, E.mobile_modle_id yxcs
+		FROM
+			W_GOODS A
+		LEFT JOIN
+			W_SPGL B
+		ON A.SPXX01 = B.SPXX01 
+		LEFT JOIN 
+			W_SPXX C
+		ON A.SPXX01 = C.SPXX01
+		LEFT JOIN 
+			W_SPCX E
+		ON E.SPXX01 = A.SPXX01 
+		AND E.ZCXX01 = A.ZCXX01 
+		LEFT JOIN 
+			W_AUTOMOBILE F
+		ON F.MOBILE_MODLE_ID = E.MOBILE_MODLE_ID
+		
+		LEFT JOIN SPFL D 
+		ON D.SPFL01 = C.SPFL01
+		
+		LEFT JOIN SPFL H
+		ON C.SPFL01 = H.SPFL01
+		LEFT JOIN SPFL G
+		ON G.SPFL01 = H.SPF_SPFL01
+		
+		LEFT JOIN SPFL K
+		ON C.SPFL01 = K.SPFL01
+		LEFT JOIN SPFL J
+		ON J.SPFL01 = K.SPF_SPFL01
+		LEFT JOIN SPFL I
+		ON I.SPFL01 = J.SPF_SPFL01
+		
+		WHERE 1 = 1 
+		<if test="SPXX01!=''">AND A.SPXX01 = #{SPXX01}</if>
+	</select> 
+	
+	<select id="srchW_SPTP" parameterType="Map" resultType="java.util.Map">
+		SELECT
+		TP.ZCXX01,
+		TP.SPXX01,
+		SUBSTRING_INDEX(TP.SPTP02, '.' ,- 1) SPTP02,
+		TP.SPTP01,
+		SP.SPXX02
+		FROM
+			W_SPTP TP
+		LEFT JOIN W_SPXX SP ON TP.SPXX01 = SP.SPXX01
+		WHERE 1=1
+	<if test="SPXX01!=''">AND TP.SPXX01 = #{SPXX01}</if>
+	</select> 
+	
+	<!-- 商品编辑查询主机厂零件号-->
+	<select id="srchW_SPGLLJH" parameterType="Map" resultType="java.util.Map">
+	SELECT SPGLLJH01 FROM W_SPGLLJH WHERE 1=1
+	<if test="ZCXX01!=''">AND ZCXX01 = #{ZCXX01}</if>
+	<if test="SPXX01!=''">AND SPXX01 = #{SPXX01}</if>
+	</select>
+	
+	<!-- 仓库入库查询仓库-->
+	<!-- <select id="selectW_XTCZYCK" parameterType="Map" resultType="java.util.Map">
+	SELECT B.CK01,A.CK02 FROM CK A,W_XTCZYCK B WHERE A.CK01=B.CK01 AND A.CK09=0 AND B.PERSON_ID=#{XTCZY01}
+	</select> -->
+	<select id="selectW_GSCKXZ" parameterType="Map" resultType="java.util.Map">
+		SELECT CK01, CK02 
+		FROM 
+			CK 
+		WHERE CK09 = 0
+			AND TYPE = 1
+		UNION
+		SELECT B.CK01, C.CK02 
+		FROM 
+			W_GSGX A
+		LEFT JOIN W_GSCK B
+		ON A.HBID = B.ZCXX01 
+		LEFT JOIN CK C 
+		ON B.CK01 = C.CK01 
+		WHERE
+			A.ZTID = #{ZCXX01}
+			AND C.CK09 = 0
+			AND C.TYPE = 0
+		<!-- LEFT JOIN W_GSGXQY D
+		ON A.ZTID = D.ZTID
+		AND A.HBID = D.HBID
+		LEFT JOIN W_DQCK E
+		ON D.DQBZM01 = E.DQXX01 
+		AND E.CK01 = B.CK01 
+		WHERE
+			A.ZTID = #{ZCXX01}
+			AND C.CK09 = 0
+			AND E.TYPE = 2
+			AND C.TYPE = 0 -->
+	</select>
+	
+		<!-- 商品编辑查询主机厂零件号是否唯一-->
+	<select id="srchW_SPGLLJHSum" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) COUNT FROM W_SPGLLJH WHERE 1=1 
+	<if test="SPGLLJH01!=''">AND SPGLLJH01 = #{SPGLLJH01}</if>
+	<if test="SPXX01!=''">AND SPXX01 &lt;&gt; #{SPXX01}</if>
+	<if test="ZCXX01 != '' and ZCXX01 != null">AND ZCXX01 = #{ZCXX01}</if>
+	</select>
+		<!-- 商品编辑查询生产企业自编码是否唯一-->
+	<select id="srchW_SPGLZBM" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) COUNT FROM W_SPGL WHERE 1=1 
+	<if test="SPGL24!=''">AND SPGL24 = #{SPGL24}</if>
+	<if test="SPXX01!=''">AND SPXX01 &lt;&gt; #{SPXX01}</if>
+	</select>
+
+	<!-- 商品发布时查询商品-沈阳兴隆(bj=0为发布，=1为增加评价用) -->
+	<select id="SELECT_SPBJ_SPXX_SYXL" parameterType="map" resultType="map">
+	   SELECT A.SPXX01,A.SPXX04,A.BARCODE,A.JLDW,A.MODAL,A.ZDJG,A.ZDKC  
+       FROM W_GOODS A  
+      WHERE A.goods_status=#{bj} 
+      <if test="SPXX01!='' and SPXX01!=null">AND A.SPXX01 = #{SPXX01}</if>
+      <if test="ZCXX01!='' and ZCXX01!=null">AND A.ZCXX01 = #{ZCXX01}</if>
+	 <if test="SPXX04!='' and SPXX04!=null">AND A.SPXX04 like CONCAT ('%',#{SPXX04},'%')</if>
+	 ORDER BY A.SPXX01
+	</select>
+	
+	<select id="SELECT_SPBJ_SPXX_SYXL_sum" parameterType="map" resultType="map">
+	   SELECT COUNT(1) AS COUNT  
+       FROM W_GOODS A  
+      WHERE A.goods_status=#{bj} 
+      <if test="SPXX01!='' and SPXX01!=null">AND A.SPXX01 = #{SPXX01}</if>
+      <if test="ZCXX01!='' and ZCXX01!=null">AND A.ZCXX01 = #{ZCXX01}</if>
+	 <if test="SPXX04!='' and SPXX04!=null">AND A.SPXX04 like CONCAT ('%',#{SPXX04},'%')</if>
+	 ORDER BY A.SPXX01
+	</select>
+
+	<!-- 商品编辑查询回填商品信息-沈阳兴隆 -->
+	<select id="srchW_SPXXitem_SYXL" parameterType="Map" resultType="java.util.Map">
+	SELECT A.SPXX01,A.BARCODE,C.SPXX04,B.SPGL04 ,A.ZCXX01,A.origin_cplace,C.GGXH,C.GGB01,C.SPXX09,C.SPXX10,C.SPXX11,C.SPXX12,A.SJLY ,B.SPGL24,C.SPFL01 AS SPFL04,(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=C.SPFL01) AS SPFL03
+	,A.ZDKC,A.ZDJG
+	,(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=C.SPFL01)) AS SPFL02
+	,(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=(SELECT SPF_SPFL01 FROM SPFL WHERE SPFL01=C.SPFL01))) AS SPFL01
+	,PPB01
+	,spgl25
+	,JLDW01,(select S.SPJS01 from W_SPJS S where A.SPXX01=S.SPXX01 )SPJS,
+	(select S.SPJS02 from W_SPJS S where A.SPXX01=S.SPXX01 )SPCS,
+	(select S.SPJS03 from W_SPJS S where A.SPXX01=S.SPXX01 )BZQD,
+	(SELECT group_concat(mobile_modle) from w_spcx
+inner JOIN w_automobile on w_automobile.mobile_modle_id = w_spcx.mobile_modle_id where w_spcx.zcxx01 =B.zcxx01 and w_spcx.spxx01 = C.SPXX01) as yxcs_name,(SELECT group_concat(w_spcx.mobile_modle_id) from w_spcx
+inner JOIN w_automobile on w_automobile.mobile_modle_id = w_spcx.mobile_modle_id where w_spcx.zcxx01 =B.zcxx01 and w_spcx.spxx01 = C.SPXX01) as yxcs,
+	D.CKSP04 
+	FROM W_GOODS A,W_SPGL B,W_SPXX C,W_KCXX D 
+	 WHERE A.SPXX01=B.SPXX01 AND A.SPXX01=C.SPXX01 AND A.SPXX01=D.SPXX01 
+	<if test="SPXX01!=''">AND A.SPXX01 = #{SPXX01}</if>
+	</select> 
+	
+	
+	<!-- 查询汽车类型品牌 -->
+	<select id="cxpp_mc" parameterType="map" resultType="map">
+	    SELECT
+			car_type,
+			GROUP_CONCAT(car) as car_name
+		FROM
+			(
+				SELECT DISTINCT
+					car_type,
+					car
+				FROM
+					w_automobile
+				WHERE
+					brand = #{brand_mc}
+			) t
+		GROUP BY
+			t.car_type
+	</select>
+	
+	<!-- 查询汽车类型品牌 年款-->
+	<select id="cxpp_mc_year" parameterType="map" resultType="map">
+	    SELECT DISTINCT mobile_modle_year
+		FROM
+			w_automobile
+		WHERE
+			car = #{brand_mc_2}
+	</select>
+	
+	<!-- 外部链接 进入配件商城，根据code值查找modle_id-->
+	<select id="cxpp_mc_id" parameterType="map" resultType="map">
+	    SELECT mobile_modle_id
+		FROM
+			w_automobile
+		WHERE
+			mobile_modle_id = #{mobile_modle_id}
+	</select>
+	
+	<!-- 查询汽车类型品牌 排量-->
+	<select id="mobile_displacement" parameterType="map" resultType="map">
+	    SELECT DISTINCT mobile_displacement
+		FROM
+			w_automobile
+		WHERE
+			car = #{brand_mc_2} AND mobile_modle_year=#{brand_year}
+	</select>
+	
+	<!-- 查询汽车类型品牌 末级车型-->
+	<select id="mobile_modle" parameterType="map" resultType="map">
+	    SELECT <!-- type_code, -->mobile_modle,mobile_modle_id
+		FROM
+			w_automobile
+		WHERE
+			car = #{brand_mc_2} AND mobile_modle_year=#{brand_year}
+	<if test="mobile_displacement!='' and mobile_displacement!=null">AND mobile_displacement=#{mobile_displacement}</if>
+	</select>
+	
+	<!-- 查询汽车类型品牌-->
+	<select id="selectCXCX_2" parameterType="map" resultType="map">
+	    SELECT DISTINCT brand
+		FROM
+			w_automobile
+		WHERE
+			origin_country = #{origin_country}
+	</select>
+	
+	<!-- 查询汽车类型名称 20151217 齐俊宇 -->
+	<select id="selectCXCXMC" parameterType="map" resultType="map">
+	    SELECT DISTINCT MOBILE_MODLE,MOBILE_MODLE_ID 
+		FROM
+			W_AUTOMOBILE
+		WHERE 
+			1 = 1
+		<if test="MMID != '' and MMID != null">
+			AND MOBILE_MODLE_ID IN 
+				<foreach collection="MMID" index="index" item="tag" open="(" separator="," close=")">
+				 	 #{tag}
+				</foreach>
+			<!-- ORDER BY FIELD(MOBILE_MODLE_ID,
+				<foreach collection="MMID" index="index" item="tag" open="" separator="," close=")">
+				 	 #{tag}
+				</foreach> -->
+		</if>
+	</select>
+</mapper>

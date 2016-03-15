@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/tablekj.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<style type="text/css">
+.qr:hover{ background-color:#1a47cc;}
+.qr{ float:left; width:200px; height:50px; background-color:#2f80eb; color:#fff; line-height:30px; text-align:center; margin:30px 0 30px 10px;}
+</style>
+</head>
+<body>
+<!--   <div id="curPosition">-->
+<!--    	<a href="#">楼层管理</a>-->
+<!--    	<span>></span>-->
+<!--    	<a href="#">楼层商品</a>-->
+<!--    	<span>></span>-->
+<!--    	<b>商品同步明细</b>-->
+<!--	</div>-->
+<!--	<div class="clera"></div>-->
+<!--	<form name="form1" id="form1" action="" method="post">-->
+<!--			<input type="hidden" id="sqlid" value="">-->
+<!--			<input type="hidden" id="SPXX01" name="SPXX01" value="">-->
+<!--			<input type="hidden" id="ZTID" name="ZTID" value="">-->
+<!--			<table id="TABLESty" cellpadding="3" cellspacing="3" class="table2" width="100%">-->
+<!--			<tr>-->
+<!--			<td id="l" width="60%" class="td" valign="top">-->
+<!--			<fieldset>-->
+<!--							<legend-->
+<!--								style="font-size: 12px; font-weight: bold; margin-left: 20px; border: 0px">-->
+<!--								楼层商品详细信息-->
+<!--							</legend>-->
+<!--							<table id="TABLE" cellpadding="0" cellspacing="0" width="100%">-->
+<!--								<tr>-->
+<!--									<td align="right" width="10%">-->
+<!--										商品名称-->
+<!--									</td>-->
+<!--									<td width="24%" style="POSITION:relative;border:0px;">-->
+<!--									<input type="text" class="text" name="SPXX04" id="SPXX04" value="" size="25" readonly="readonly"/>-->
+<!--			        				<img alt="查询" title="查询" src="../../images/srch.gif" style="cursor: pointer;"onclick="window.showModalDialog('/customer/qfy/back/floor/Oper_lcsp_spxx.html', window, 'dialogHeight:480px; dialogWidth:780px; status:no; help:no; resizable:yes;');" />-->
+<!--									</td>-->
+<!--									<td align="right" width="10%">-->
+<!--										商品分类-->
+<!--									</td>-->
+<!--									<td width="24%">-->
+<!--										<input type="text" name="FLNAME" value="" id="FLNAME" size="25" class="text" readonly="readonly"/>-->
+<!--									</td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<td align="right" width="10%">-->
+<!--										供货商名称-->
+<!--									</td>-->
+<!--									<td width="23%">-->
+<!--										<input type="text" name="GHSNAME" id="GHSNAME" value="" size="25" class="text" readonly="readonly"/>-->
+<!--									</td>-->
+<!--									<td align="right" style="color: #0066ff">-->
+<!--													首页楼层展示-->
+<!--												</td>-->
+<!--												<td>-->
+<!--													<select name="lcfl01" id="lcxz" style="width: 182px;">-->
+<!--														<option value="2" selected="selected">-->
+<!--															展示-->
+<!--														</option>-->
+<!--														<option value="0">-->
+<!--															不展示-->
+<!--														</option>-->
+<!--													</select>-->
+<!--												</td>-->
+<!--									-->
+<!--								</tr>-->
+<!--				<tr class="bot">-->
+<!--       				<td colspan="2">-->
+<!--         				<a class="bot Medium" href="javascript:void(0);" onclick="okclick();">新增</a>-->
+<!--       				</td>-->
+<!--       	-->
+<!--      			</tr>  -->
+<!--					</table>-->
+<!--				</fieldset>-->
+<!--			</td>-->
+<!--			</tr>-->
+<!--			</table>-->
+<!---->
+<!--			<jsp:include flush="true" page="../include/ViewDragDiv.jsp" />-->
+<!---->
+<!--		</form>-->
+<form id="form1" name="form1" action="" method="post">
+	<div id="curPosition">
+    	<a href="#">楼层管理</a>
+    	<span>></span>
+    	<a href="#">楼层商品</a>
+    	<span>></span>
+    	<b>商品同步明细</b>
+	</div>
+	<div class="clera"></div>
+    <input type="hidden" id="sqlid" value="">
+	<input type="hidden" id="SPXX01" name="SPXX01" value="">
+	<input type="hidden" id="ZTID" name="ZTID" value="">
+	<table class="single_table">
+	     <tr class="title"><td colspan="2"><b>楼层商品详细信息</b><font>* 必填项</font></td></tr>
+	     <tr>
+	       <td style="width:100px;"><span>商品名称：</span></td>
+	       <td style="width:550px;">
+	       <font>*</font>
+	       <input type="text" class="text" name="SPXX04" id="SPXX04" value="" size="25" disabled="true" readonly="readonly"/>
+			<img alt="查询" title="查询" src="../../images/srch.gif" style="cursor: pointer;"onclick="window.showModalDialog('/customer/qfy/back/floor/Oper_lcsp_spxx.html', window, 'dialogHeight:480px; dialogWidth:780px; status:no; help:no; resizable:yes;');" />
+	       </td>
+	     </tr>
+	     <tr>
+	       <td><span>商品分类：</span></td>
+	       <td><font>*</font><input type="text" name="FLNAME" value="" id="FLNAME" size="25" class="text" disabled="true" readonly="readonly"/></td>
+	     </tr> 
+	     <tr>
+	       <td><span>供货商名称：</span></td>
+	       <td><font>*</font><input type="text" name="GHSNAME" id="GHSNAME" value="" size="25" class="text" disabled="true" readonly="readonly"/></td>
+	     </tr>  
+	     <tr>
+	       <td><span>首页楼层展示：</span></td>
+	       <td>
+				<select name="lcfl01" id="lcxz" style="width: 182px;">
+					<option value="2" selected="selected">
+						展示
+					</option>
+					<option value="0">
+						不展示
+					</option>
+				</select>
+			</td>
+	     </tr>    
+	     <tr class="bot">
+	       <td colspan="2">
+	         <a href="javascript:void(0);" onclick="okclick();" class="bot Medium">确 定</a>
+	       </td>
+	     </tr>    
+	</table>
+  	<div class="clera"></div>
+</form>
+
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//var win = dialogArguments;
+var SPXX01=$.getUrlParam('SPXX01');
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+$(document).ready(function(){
+	loadLC();
+	/*
+	if(SPXX01!=null){
+		srchSPXX(SPXX01);
+		}
+	*/
+});
+
+function loadLC(){
+	$("#lcxz").empty();
+	$("<option value=''>请选择</option>").appendTo("#lcxz");
+  	var XmlData=[{"sqlid":"com.jlsoft.o2o.prpduct.sql.oper_floor.select_lcfl","lcfl01":"","lcfl02":"",'QryType':'Report','dataType':'Json'}];
+  	url = "/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+  	//alert(url);
+  	var rData=visitService(url);
+  	for(var i=0;i<rData.length;i++){
+  		$("#lcxz").append("<option value='"+rData[i].LCFL01+"'>"+rData[i].LCFL01+"F-"+rData[i].LCFL02+"</option>");
+  	}
+  }
+function okclick(){
+	var  XmlData1 = $("#form1").formToJson();
+	var lcxz = $("#lcxz").val();//发布商品简单些的描述话
+	if(lcxz == ""){
+		alert("请选择发布楼层!");
+		return false;
+	}
+	if($("#SPXX04").val()== ""){
+		alert("商品名称不能为空!");
+		return false;
+		}
+	var XmlData=JSON.stringify(XmlData1);
+	if(confirm("确认发布商品？")){
+	$.ajax({
+		type:"POST",
+		async:false,
+		url:encodeURI("/oper_floor/insertLcsp.action?XmlData="+XmlData),
+		data:{XmlData:XmlData},
+		dataType:"text",
+		success: function(data) { 
+			var json = jQuery.parseJSON(data);
+			var jsondata = json.data;
+			var data1=jsondata.STATE;
+			//alert(jsondata.STATE);
+			if(data1==1){
+				alert("保存成功!");
+				parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+				}else{
+				alert("保存失败!");
+					}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown) {
+	        alert(textStatus);
+	    }
+	});
+	}
+}
+//修改商品时查询商品详细信息
+function sel(rowObj){
+		$("#ZTID").val(rowObj.find("#GSID").val());
+		$("#SPXX01").val(rowObj.find("#SPXX01").val());
+		$("#SPXX04").val(rowObj.find("#SPXX04").val());
+		$("#GHSNAME").val(rowObj.find("#GHSNAME").val());
+		$("#FLNAME").val(rowObj.find("#FLNAME").val());
+	   }  
+
+
+</script>

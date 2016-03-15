@@ -1,0 +1,58 @@
+<div class="w12 xzfl">
+<h3 class="w12">请选择商品分类</h3>
+<div class="w12">
+  <div class="w03 xzfl_case">
+    <div class="w10 xzfl_main">
+      <div class="w12 xzfl_seach"><input type="text" class="w10" placeholder="拼音首字母/名称可检索分类" /><i class="w02 fa fa-search"></i></div>
+      <ul class="w12">
+        <li class="w12 xuan">大家电</li>
+        <li class="w12">小家电</li>
+        <li class="w12">个人家电</li>
+      </ul>
+    </div>
+    <div class="w02 xzfl_jt"><i class="fa fa-angle-right"></i></div>
+  </div>
+  <div class="w03 xzfl_case">
+    <div class="w10 xzfl_main">
+      <div class="w12 xzfl_seach"><input type="text" class="w10" placeholder="拼音首字母/名称可检索分类" /><i class="w02 fa fa-search"></i></div>
+      <ul class="w12">
+        <li class="w12 xuan">家用电器</li>
+        <li class="w12">厨卫电器</li>
+      </ul>
+    </div>
+    <div class="w02 xzfl_jt"><i class="fa fa-angle-right"></i></div>
+  </div>
+  <div class="w03 xzfl_case">
+    <div class="w10 xzfl_main">
+      <div class="w12 xzfl_seach"><input type="text" class="w10" placeholder="拼音首字母/名称可检索分类" /><i class="w02 fa fa-search"></i></div>
+      <ul class="w12">
+        <li class="w12">平板电视</li>
+        <li class="w12">空调</li>
+        <li class="w12 xuan">冰箱</li>
+        <li class="w12">洗衣机</li>
+        <li class="w12">测试</li>
+        <li class="w12">测试</li>
+        <li class="w12">测试</li>
+        <li class="w12">测试</li>
+        <li class="w12">测试</li>
+        <li class="w12">测试</li>
+      </ul>
+    </div>
+    <div class="w02 xzfl_jt"><i class="fa fa-angle-right"></i></div>
+  </div>
+  <div class="w03 xzfl_case">
+    <div class="w10 xzfl_main">
+      <div class="w12 xzfl_seach"><input type="text" class="w10" placeholder="拼音首字母/名称可检索分类" /><i class="w02 fa fa-search"></i></div>
+      <ul class="w12">
+        <li class="w12">创维</li>
+        <li class="w12 xuan">美的</li>
+        <li class="w12">格力</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="w12 fljg">
+您当前选择的分类：<span>大家电</span><i class="fa fa-angle-right"></i><span>家用电器</span><i class="fa fa-angle-right"></i><span>冰箱</span><i class="fa fa-angle-right"></i><span>美的</span>
+</div>
+<div class="w12 fljg"><input type="button" class="jl_btn btn_red" value="确认分类无误，立即发布商品 > " id="releasegoods_sx" /></div> 
+</div>

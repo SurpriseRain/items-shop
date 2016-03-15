@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/userIndex.css" />
+
+<title>我的电器服务云</title>
+</head>
+
+<body>
+<div class="w12 toper"><!---toper截点---></div>
+<div class="w12 userHeader"></div>
+<div class="w12 userMain"></div>
+<div class="w12 service"><!---底部截点---></div>
+<div class="w12 footer"><!---底部截点---></div>
+<div class="floor_nav display_none"><!---floor_nav截点---></div>
+<div class="fastop display_none"><!---返回顶部截点---></div>
+<!--<script type="text/javascript" src="/customer/sydjt/js/jquery-1.11.1.min.js"></script>-->
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<!--<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>-->
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/accounting.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/form/js/currentLog.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/json.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/ui-back.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/loadpage-back.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+<script type="text/javascript" src="/jllib/form/js/jl-all.js"></script>
+<script type="text/javascript" src="/jllib/form/js/jl-basic.js"></script>
+<script type="text/javascript" src="/jllib/form/js/jl-form.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/menu-new.js"></script>
+
+</body>
+
+</html>
+
+<script>
+//被动改变iframe高度
+function eventChangeIframeSize(){
+	//var mainheight = $("#centerFrame").contents().find("body").height()+30;
+	//$("#centerFrame").height(mainheight);
+}
+
+/************Grid调用************/
+function ajaxGrid(url,height){
+	if(height== undefined || height == null){
+		height=2000;
+		}
+   $("body").append('<div style="width:100%; height:1500px; background-color:rgba(1,1,1,0.3); position:fixed; top:0px; left:0px;" id="ajaxGrid">'+
+		   '<div style="width:834px; height:500px; background-color:#fff; border:3px solid #e4e4e4; margin:0 auto; margin-top:50px; position:relative;">'+
+		  //'<div style="width:986px; height:486px; margin:7px; background-color:#fff;">'+
+		   '<iframe id="alertDIV" name="alertDIV" src='+url+' style="width:830px ;height:496px"></iframe>'+
+		   //'</div>'+
+		   '</div>'+
+		   '<div style="width:30px; height:30px; position:absolute; top:50px; background-color:#fff; border:1px solid #e4e4e4; left:50%; margin-left:419px; font-size:30px; line-height:30px; text-align:center; color:#ff8800;" id="closeGrid" title="关闭">×</div>'+
+		   '</div>')
+   $("#closeGrid").mouseover(function(){
+	   $(this).css({"background-color":"#ff8800","color":"#fff","cursor":"pointer"});
+   })
+   $("#closeGrid").mouseleave(function(){
+	   $(this).css({"background-color":"#fff","color":"#ff8800"});
+   })
+   $("#closeGrid").click(function(){
+	   $("#ajaxGrid").remove();
+   })
+}
+
+//执行回调方法
+function execBackFun(parameters){
+	$("#centerFrame")[0].contentWindow.backFun(""+parameters+"");
+}
+
+$(document).on("click",".w09 > li",function(){
+	var aaa = $(this).text();
+	$("ul.w09 > li").removeClass("xuan");
+	$(this).addClass("xuan");
+		if(aaa == "基本资料"){
+			$(".user_page_main>#TXZP").css({"display":"none"});
+			$(".user_page_main>#GDGEXX").css({"display":"none"});
+			$(".user_page_main>#JBXX").css({"display":"block"});
+	  }else if(aaa == "头像照片"){
+		  	$(".user_page_main>#GDGEXX").css({"display":"none"});
+      		$(".user_page_main>#JBXX").css({"display":"none"});
+			$(".user_page_main>#TXZP").css({"display":"block"});
+			
+	  }else if(aaa == "更多个人信息"){
+       		$(".user_page_main>#TXZP").css({"display":"none"});
+			$(".user_page_main>#JBXX").css({"display":"none"});
+			$(".user_page_main>#GDGEXX").css({"display":"block"});
+	  }
+	 
+})
+
+$(document).on("click",".w09 > li",function(){
+	var b = $(this).text();
+	$("ul.w09 > li").removeClass("xuan");
+	$(this).addClass("xuan");
+		if(b == "可退换货订单"){
+			$(".fxthh").css({"display":"none"});
+			$(".sqsh").css({"display":"block"});
+	  }else if(b == "返修/退换货记录"){
+		  	$(".sqsh").css({"display":"none"});
+			$(".fxthh").css({"display":"block"});
+			
+	  }
+	 
+})
+
+$(document).on("click",".form > input",function(){
+		var c = $(this);
+		if(c.hasClass("a1")){
+			$(".yzsf").css({"display":"none"});
+      		$(".wc").css({"display":"none"});
+			$(".xgdlmm").css({"display":"block"});			
+	  }else if(c.hasClass("a2")){
+		  	
+			$(".yzsf").css({"display":"none"});
+			$(".xgdlmm").css({"display":"none"});
+			$(".wc").css({"display":"block"});			
+	  }	 
+})
+$(document).on("click","input#DJPJ",function(){
+		$(".zhankai").toggle();	
+})
+$(document).on("click","a.xg",function(){
+		$(".yzsf").toggle();	
+})
+
+//打开查询层
+var fLink = function(val){
+	$('.jl_modal').show();
+	$('.jl_modal_main').show();
+}
+//关闭查询层
+var popClose=function(){
+	$('.jl_modal').hide();
+	$('.jl_modal_main').hide();
+}
+
+</script>

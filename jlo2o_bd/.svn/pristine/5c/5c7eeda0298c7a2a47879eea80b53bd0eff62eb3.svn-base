@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/settlement.css" />
+<title>电器服云 - 其选择支付方式</title>
+</head>
+
+<body class="w12">
+<div class="w12 toper"><!---toper截点---></div>
+<div class="w12 pay_header"></div>
+<div class="w12 pay_main"><!---底部截点---></div>
+<!--<div class="w12 pay_main_cg">-底部截点</div>付款成功--->
+<div class="w12 service"><!---底部截点---></div>
+<div class="w12 footer"><!---底部截点---></div>
+</body>
+<script type="text/javascript" src="/customer/sydjt/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/loadpage.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/json.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/ui.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/menu-new.js"></script>
+</html>

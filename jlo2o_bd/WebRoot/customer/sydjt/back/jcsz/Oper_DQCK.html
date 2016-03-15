@@ -1,0 +1,221 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Author" content="汽服云集成" />  
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/control/js/dtree.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<title>商品分类管理</title>
+
+<style type="text/css">
+
+#main {
+/*
+height: 800px;
+overflow-y:hidden;*/
+}
+#left {
+    float: left;
+    height: 100%;
+    overflow: auto;
+    padding-left: 12px;
+    width: 45%;
+    border-right:1px solid #e4e4e4;
+   
+}
+#right {
+ float: left;
+    margin-left: 10px;
+    width: 50%;
+}
+#biaoge{
+border: 1px solid #e4e4e4;
+    clear: both;
+    height: 830px;
+    margin-top: 0px;
+    padding-top:5px;
+    width: 99.2%;
+    /*border-top:0px;*/
+}
+ul.dqbd{ display:block;width:auto; padding-left:10px; margin:10px 0; border:1px solid #e4e4e4; float:left; }
+ul.dqbd li{ line-height:50px; width:auto; position:relative; float:left;}
+ul.dqbd li span.name{ float:left; margin-left:15px; width:100px; text-align:right; color:#3c3c3c;}
+ul.dqbd li input{ border:1px solid #aaa; height:25px; line-height:25px; font-family:"microsoft yahei"; font-size:14px; padding-left:5px; float:left; margin:12px 0 0 10px;}
+ul.dqbd li input.sptm{ width:200px;}
+ul.dqbd li input.spmc{ width:500px;}
+ul.dqbd li input.spsl{ width:60px;}
+ul.dqbd li input.lsj{ width:100px; color:#e40000;}
+ul.dqbd li input.spgg-rl{ width:60px;}
+ul.dqbd li select{ margin:0px; padding:0px; border:1px solid #aaa; height:27px; line-height:27px; float:left; margin:12px 0 0 10px; font-family:"microsoft yahei"; font-size:14px;}
+ul.dqbd li select.cd{ margin-right:5px; width:150px;}
+ul.dqbd li select.ge{ width:100px;}
+ul.dqbd li select.cx{ width:150px;}
+ul.dqbd li label{ margin:0 0 0 5px; float:left;}
+ul.dqbd li .btx{ float:left; margin-right:5px; line-height:50px; color:#e40000; position:absolute; left:112px;}
+ul.dqbd li .tishi{ float:left; margin-left:20px; line-height:50px; color:#999;}
+ul.dqbd li .tishi font{ color:#090; font-weight:bold; margin:0 5px;}
+ul.dqbd li .spge{}
+ul.dqbd li a.qr{ float:left; width:200px; height:30px; background-color:#f97247; color:#fff; line-height:30px; text-align:center; margin:30px 0 30px 10px;}
+ul.dqbd li a.qr:hover{ background-color:#d22d29;}
+
+#curPosition {
+    border: 1px solid #e4e4e4;
+    float: left;
+    line-height: 30px;
+    padding-left: 10px;
+    width: 98%;
+}
+
+#curPosition a {
+    color: #004098;
+    float: left;
+    line-height: 30px;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+</style>
+<script type="text/javascript">
+$(function(){
+	$("#sureclick").on("click",function(){
+		var r = confirm('确认更新信息吗？');
+		if(r == true){ 
+			var ckdm = $("#ckdm").val() ;
+			var dqbm = $("#type_id").val();
+			var ckname = $("#dqck").val();
+			var JsonData= {"DQBM" : dqbm, "CKDM" : ckdm, "CKNAME" : ckname};
+			var url = "/Oper_DQCK/insertDQCKList.action?JsonData=" + JSON.stringify(JsonData);
+			var returnVal = visitService(url);
+			if(returnVal.STATE == 1){
+				alert("更新成功");
+				window.location.reload();
+			}else{
+				alert("更新失败");
+			}
+	 	 } 
+	 });
+});
+
+//更新
+function updatetype(typecode,pid,typename,isend){
+	$("#pid").attr("disabled","disabled");
+	$("#type_id").val(typecode);
+	$("#type_name").val(typename);
+	$("#pid").val(pid);
+	$(".dqbd").show();
+	var url="/Oper_DQCK/selectDQCKName.action?dqcode="+typecode;
+	var returnData=visitService(url);
+	var resultList = returnData.cklist;
+	var append = "";
+	$(resultList).each(function(index,dqck){
+		if(index==resultList.length-1){
+			append += dqck.ckname;
+		}else{
+			append += dqck.ckname+",";
+		}
+	});
+	if(append !=""){
+		$("#dqck").val(append);
+	}else{
+		$("#dqck").val("");
+	}
+}
+// 弹出页面
+function grid(){
+	if($("#type_id").val() != null && $("#type_id").val() != ""){
+		parent.ajaxGrid("/customer/qfy/back/qxgl/Oper_CKQX_item.html?RYZH=" + $("#type_id").val() + "&FPCK=" + escape($("#dqck").val()) + "&CKDM=" + $("#ckdm").val());
+	} else {
+		return false;
+	}
+}
+
+//执行回调方法
+function backFun(s){
+	// 进行拼串操作
+	var sArray=s.split("#");
+	$("#dqck").val(sArray[1]);
+	$("#ckdm").val(sArray[0]);
+}
+</script>
+</head>
+
+<body>
+<div id="main">
+<div class="w12 merch_main">
+	<ul class="w12 merch_breadcrumb">
+		<li><i class="fa fa-home"></i><span>首页</span></li>
+		<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+		<li><span>基础管理</span></li>
+		<li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+		<li><b>地址仓库对照</b></li>
+	</ul>
+</div>
+	<div class="clera"></div>
+<div class="w12 user_content">
+<div class="w12 user_page_main">
+	<div id="biaoge">
+<div id="left">
+	<div id="left_content">
+		<script type="text/javascript">
+				var d = new dTree('d');
+				d.add(0,-1, "地区仓库");
+				var pid = 0;
+				var btn = "";
+				var url="/Oper_DQCK/selectTotalDQCK.action?";
+				var returnData=visitService(url);
+				var resultList = returnData.spfllist;
+				 $(resultList).each(function(index,dqbz){
+					var typecode=dqbz.dqbzm01;
+					var typename=dqbz.dqbzm02;
+					var pid=dqbz.pid;
+					var isend=dqbz.isend;
+					if(typecode == pid){
+						pid=0;
+					}else{}
+					if(pid==0){
+						btn = "<a href='javascript:void(0)'>"+typename+"</a>";
+					}else{
+						btn = "<a  href='javascript:void(0)'>"+typename+"</a>&nbsp;&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"updatetype('"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\">修改</a>";
+					}
+					d.add(typecode,pid,btn);
+				});
+				//document.write(d);
+				$("#left_content").html(d.toString());
+			</script>
+	
+	</div>
+</div>
+<div id="right" >
+ <ul class="dqbd">
+    <li><span class="name"><span style="color:red"></span>地区编码：</span><input class="sptm" name="type_id" id="type_id" value=""     disabled="disabled"  /></li>
+    <li><span class="name"><span style="color:red">*</span>分配仓库：</span>
+    	<textarea cols="27" rows="6" class="sptm" id="dqck" style="width: 200px;margin-left: 10px; margin-top: 3px;" readonly="readonly"
+		onclick="grid()" placeholder="点击此处添加仓库！"></textarea> 
+    </li>
+    <li><span class="name">&nbsp;</span><a href="#" class="qr" id="sureclick">新增保存</a>
+    	<input type="hidden" id="ckdm" />
+    </li>    
+  </ul>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

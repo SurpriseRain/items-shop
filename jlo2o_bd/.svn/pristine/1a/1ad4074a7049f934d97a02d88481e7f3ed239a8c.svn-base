@@ -1,0 +1,540 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/jl_icon.css">
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/public-new.css">
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/userIndex.css">
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type='text/javascript' src="/js/jquery.foggle.min.js"></script>
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/commons.js" ></script>
+<script type="text/javascript" src="/customer/qfy/js/openbox.js"></script>
+<!--<script type="text/javascript" src="/customer/qfy/js/menu.js"></script>-->
+<script type="text/javascript" src="/customer/qfy/js/public1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/kindeditor.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/lang/zh_CN.js"></script>
+<script type="text/javascript" charset="utf-8" src="/keditor/plugins/code/prettify.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+<script type="text/javascript" src="/customer/qfy/js/shop-Delete.js"></script>
+<script type="text/javascript" src="/js/multiSelectTree.js"></script>
+<script type="text/javascript" src="/js/ext-tree-jl.js"></script>
+<script type="text/javascript" src="/js/ext-multree-jl.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+
+
+<div class="w12 fljg flppxz">
+您当前选择的分类：
+</div>
+<form id="form1" name="form1">
+<input type="hidden" id="sqlid" name="sqlid" value="com.jlsoft.o2o.sql.goods.SELECT_SPCX"/>
+<input type="hidden" id="gsid" name="ZCXX01" value=""/>
+<!-- 编码中心回传隐藏数据 -->
+<input type="hidden" name="ORIGIN_COUNTRY" value="" id="ORIGIN_COUNTRY" size="25" class="text" />
+<input type="hidden" name="ORIGIN_PLACE_CODE" value="" id="ORIGIN_PLACE_CODE" size="25" class="text" />
+<input type="hidden" name="ORIGIN_EPLACE" value="" id="ORIGIN_EPLACE" size="25" class="text" />
+<input type="hidden" name="CATEGORY_CODE" value="" id="CATEGORY_CODE" size="25" class="text" />
+<input type="hidden" name="BRAND" value="" id="BRAND" size="25" class="text" />
+<input type="hidden" name="KEYWORD" value="" id="KEYWORD" size="25" class="text" />
+<input type="hidden" name="DESCRIPTION" value="" id="DESCRIPTION" size="25" class="text" />
+<input type="hidden" name="PACKAGING_MATERIAL" value="" id="PACKAGING_MATERIAL" size="25" class="text" />
+<input type="hidden" name="PACKAGING_TYPE" value="" id="PACKAGING_TYPE" size="25" class="text" />
+<input type="hidden" name="SUPPLIER" value="" id="SUPPLIER" size="25" class="text" />
+<input type="hidden" id="spfl01name" name="spfl01name" />
+<input type="hidden" id="ppb01" name="PPB01" />
+<input type="hidden" id="ppbNAME" name="PPB02" />
+<input type="hidden" id="SPFL01_CODE" name="SPFL01_CODE" />
+<input type="hidden" id="SPFL02_CODE" name="SPFL02_CODE" />
+<input type="hidden" id="SPFL01_NAME" name="SPFL01_NAME" />
+<input type="hidden" id="SPFL02_NAME" name="SPFL02_NAME" />
+<input type="hidden" id="SPFL03_CODE" name="SPFL03_CODE" />
+<input type="hidden" id="SPFL03_NAME" name="SPFL03_NAME" />
+<input type="hidden" id="dtbj" name="dtbj" value="2"/>  <!-- 大厅标记默认为2, -->
+<input type="hidden" id="SPGL08" name="SPGL08" value="0"  />
+<input type="hidden" id="SPGL11" name="SPGL11" value="0" />
+<input type="hidden" id="sxfile" name="sxfile" value="" />
+<!-- 
+<input type="hidden" id="spsxid" name="spsxid" />
+<input type="hidden" id="spsxz" name="spsxz" />
+ -->
+<input type="hidden" name="file05" value="15" />
+<div class="w12 fbsp">
+  <dl class="w12 public_form">
+    <dt class="w02"><em class="font_red">*</em>商品名称：</dt>
+    <dd class="w10"><input type="text" id="SXSP02" name="SXSP02" class="w08" placeholder="输入首字母/商品名称等可直接搜索" /></dd>
+  </dl>
+  <dl class="w12 public_form" id="spsx">
+    <dt class="w02">商品属性：</dt>
+    <dd class="w10"><input type="text" class="w02"><span>元</span><label>本类目下，价格必须在1000元 - 3000元之间。</label></dd>
+  </dl>
+  <dl class="w12 public_form" >
+	<dt class="w02">商品描述：</dt>
+	<div id="JKDiv_spym" class="w09" style=" height:300px; float:left;">
+			<textarea id="spjs" name="spjs" style="width:100%; height:300px; float:left; margin:12px 0 0 10px; max-width:670px;" ></textarea>
+	</div>
+  </dl>
+  <dl class="w12 public_form" >
+	<dt class="w02">规格参数：</dt>
+	<div id="JKDiv_spym" class="w09" style=" height:300px; float:left;">
+			<textarea id="spcs" name="spcs" style="width:100%; height:300px; float:left; margin:12px 0 0 10px; max-width:670px;" ></textarea>
+	</div>
+  </dl>
+  <dl class="w12 public_form" >
+	<dt class="w02">包装清单：</dt>
+	<div id="JKDiv_spym" class="w09" style=" height:300px; float:left;">
+			<textarea id="bzqd" name="bzqd" style="width:100%; height:300px; float:left; margin:12px 0 0 10px; max-width:670px;" ></textarea>
+	</div>
+  </dl>
+   <dl class="w12 public_form">
+    <dt class="w02"><em class="font_red">*</em>商品图片：</dt>
+    <dd class="w10">
+      <ul class="w10">
+        <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="" style="display:none"></img><input type="file" class="modalInput" id="file01" name="files" title="上传图片"></div>
+        </li>
+        <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="" style="display:none"></img><input type="file" class="modalInput" id="file02" name="files" title="上传图片"></div>
+        </li>
+        <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="" style="display:none"></img><input type="file" class="modalInput" id="file03" name="files" title="上传图片"></div>
+        </li>
+        <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="" style="display:none"></img><input type="file" class="modalInput" id="file04" name="files" title="上传图片"></div>
+        </li>
+        <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="" style="display:none"></img><input type="file" class="modalInput" id="file05" name="files" title="上传图片"></div>
+        </li>
+      </ul>
+    </dd>
+  </dl>
+</div>
+</form>
+
+<script>var MyCookie = $.cookie('userInfo');
+if(MyCookie==null){
+	alert("亲，您还未登录！");
+	location.href="/gui_o2o/qfy/fore/index.html";
+}
+var user = JSON.parse(MyCookie);
+var json = JSON.parse($.getUrlParam("json"));
+$("#SPFL01_CODE").val(json.SPFL01_CODE);
+$("#SPFL01_NAME").val(json.SPFL01_NAME);
+$("#SPFL02_CODE").val(json.SPFL02_CODE);
+$("#SPFL02_NAME").val(json.SPFL02_NAME);
+$("#SPFL03_CODE").val(json.SPFL03_CODE);
+$("#SPFL03_NAME").val(json.SPFL03_NAME);
+$("#ppb01").val(json.ppb01);
+$("#ppbNAME").val(json.ppbNAME);
+$(".flppxz").empty();
+$(".flppxz").append('您当前选择的分类：<span>'+json.SPFL01_NAME+'</span><i class="fa fa-angle-right"></i><span>'+json.SPFL02_NAME+'</span><i class="fa fa-angle-right"></i><span>'+json.SPFL03_NAME+'</span><i class="fa fa-angle-right"></i><span>'+json.ppbNAME+'</span>');
+
+var editor1;
+var editor2;
+var editor3;
+
+var gsid=user.ZCXX01;
+//上传图片存放路径
+var path="spdetail/"+gsid+"/images/";
+var hbid=user.XTCZY01;
+var sxlxs={};
+KindEditor.ready(function(K) {
+	 editor1 = K.create('textarea[name="spjs"]', {
+		cssPath : '/keditor/plugins/code/prettify.css',
+		uploadJson : '/servlet/TpUploadServlet?filename='+path,//上传图片方法，在TpUploadServlet里
+		fileManagerJson : '/fileManageServlet?filename='+path,
+		allowFileManager : true,
+		afterCreate : function() {
+			var self = this;
+			K.ctrl(document, 13, function() {
+				self.sync();
+				document.forms['form0'].submit();
+			});
+			K.ctrl(self.edit.doc, 13, function() {
+				self.sync();
+				document.forms['form0'].submit();
+			});
+		}
+	});
+		
+	 editor2 = K.create('textarea[name="spcs"]', {
+			cssPath : '/keditor/plugins/code/prettify.css',
+			uploadJson : '/servlet/TpUploadServlet?filename='+path,//上传图片方法，在TpUploadServlet里
+			fileManagerJson : '/fileManageServlet?filename='+path,
+			allowFileManager : true,
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					document.forms['form0'].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					document.forms['form0'].submit();
+				});
+			}
+		});
+
+	 editor3 = K.create('textarea[name="bzqd"]', {
+			cssPath : '/keditor/plugins/code/prettify.css',
+			uploadJson : '/servlet/TpUploadServlet?filename='+path,//上传图片方法，在TpUploadServlet里
+			fileManagerJson : '/fileManageServlet?filename='+path,
+			allowFileManager : true,
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					document.forms['form0'].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					document.forms['form0'].submit();
+				});
+			}
+		});
+		
+	prettyPrint();
+	
+});
+
+$("#spsx").html('<dt class="w02">商品属性：</dt>');
+var SPFL03_CODE = $("#SPFL03_CODE").val();
+var XmlData = [{"SPFL03_CODE":SPFL03_CODE}];
+var urlspsx = "/Oper_SPSX/selectSxlist.action?XmlData=[{'Fcode':'"+SPFL03_CODE+"'}]";
+var returnData = visitService(urlspsx).selectSxlist;
+$("#spsx").append("<dd class='w10'><input hidden name='sumsx' id='sumsx' value='"+returnData.length+"' />");
+if(returnData=="" || returnData.length==0){
+	$("#spsx").find("dd").append("属性暂无");
+}else{
+	$(returnData).each(function(index,obj){
+	var str="";
+		str += "<input hidden name='spsx_"+index+"' id='spsx_"+index+"' value='"+obj.Ccode+"' />"+obj.Cname+":";
+		str += "<select style='float: none;' name='spsxz_"+index+"' id='spsxz_"+index+"' value=''>";
+		$(obj.SPSX02list).each(function(index2,obj2){
+			str += "<option value='"+obj2.Ccode+"'>"+obj2.Cname+"</option>";
+		});
+		str += "</select></dd>";
+		$("#spsx").find("dd").append(str);
+	});
+	
+}
+
+showFLSX();	
+
+//展示一级分类
+function showFLSX() {
+	var XmlData = [{"SPFL01":SPFL03_CODE,"ZCXX01":user.ZCXX01}];
+	var urlspsx = "/showGoods/selectFbspsxs.action?XmlData="+JSON.stringify(XmlData);
+	var returnData = visitService(urlspsx).hashMapList;
+	var count = parseInt(returnData.length-1);
+	var inputnum =0;
+	var codeString="";
+	var nameString="";
+	var sxfile=[];
+	$(returnData).each(function(i,FLSX01){
+		var ssindex=null;
+		var obj={};
+		if($(".fbsp").find("#sxlx_"+(i-1)).length>0){
+			ssindex=(i-1);
+			codeString += FLSX01.spflsx01mapcode;
+			nameString += FLSX01.spflsx01mapname;
+			sxlxs["codeString"] = codeString;
+			sxlxs["nameString"] = nameString;
+			$(".fbsp").append('<dl id="sxlx_'+i+'" data-ssindex="'+ssindex+'" class="w12 public_form" data-index="'+i+'" data-code="'+FLSX01.spflsx01mapcode+'" data-isfile="'+FLSX01.spflsx01isfile+'" data-val="'+FLSX01.spflsx01mapname+'">'+
+			'<dt class="w02"><em class="font_red">*</em>'+FLSX01.spflsx01mapname+'：</dt>'+
+			'<dd class="w10">'+
+				'<ul class="w10" data-index="'+i+'" 	data-code="'+FLSX01.spflsx01mapcode+'"></ul></dd>'+
+			'</dl>');
+		}else{
+			codeString += FLSX01.spflsx01mapcode+",";
+			nameString += FLSX01.spflsx01mapname+",";
+			sxlxs["codeString"] = codeString;
+			sxlxs["nameString"] = nameString;
+			$(".fbsp").append('<dl id="sxlx_'+i+'" class="w12 public_form" data-index="'+i+'" data-code="'+FLSX01.spflsx01mapcode+'" data-isfile="'+FLSX01.spflsx01isfile+'" data-val="'+FLSX01.spflsx01mapname+'">'+
+			'<dt class="w02"><em class="font_red">*</em>'+FLSX01.spflsx01mapname+'：</dt>'+
+			'<dd class="w10">'+
+				'<ul class="w10" data-index="'+i+'" 	data-code="'+FLSX01.spflsx01mapcode+'"></ul></dd>'+
+			'</dl>')
+		}
+		
+		$(FLSX01.flsx02list).each(function(j,FLSX02){
+			$(".fbsp").find("dl[data-index="+i+"]").find("ul").append('<li   class="w03" data-index="'+j+'"><input type="checkbox" id="'+j+'" data-code="'+FLSX02.spflsx02mapcode+'" data-val="'+FLSX02.spflsx02mapname+'"></input><input type="text" id="'+j+'" code="'+FLSX02.spflsx02mapcode+'" value="'+FLSX02.spflsx02mapname+'" class="w08 pos">'+
+			'</li>');
+			$(".fbsp").find("dl[data-index="+i+"]").find("ul li").find("input[type=checkbox][id="+j+"]").bind("click",function(){
+				var jsonData={};
+				if($(this).attr("checked")=="checked"){
+					if($(this).parents(".public_form").data("isfile")=="1"){
+						$(this).parents(".public_form").append('<div class="w12 mxdiv" data-index="'+j+'" data-code="'+FLSX01.spflsx01mapcode+'"><div class="w02 zh"></div><dl class="w09 public_table_title prf"><dd class="w04">颜色分类</dd><dd class="w08">图片（无图片可不填）</dd></dl><dl class="w09 public_table_main"'+
+						'data-index="'+j+'" data-code="'+FLSX01.spflsx01mapcode+'"'+ 'data-isfile="'+FLSX01.spflsx01isfile+'"'+ 'data-val="'+FLSX01.spflsx01mapname+'">'+
+							'<dd class="w04"><em class="color_05"></em><span>'+$(this).data("val")+'</span></dd>'+
+							'<dd class="w08"><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><img src="" style="display:none"><input type="file" class="modalFile" id="filecor0'+(j+1)+'" name="filecors" data-code="'+$(this).data("code")+'" data-val="'+$(this).data("val")+'" title="上传图片"></div>'+
+							'</dd>'+
+						'</dl></div>')
+						$("#filecor0"+(j+1)).change(function(){
+						        var tempsxz={};
+								tempsxz["code"] = $(this).data("code");
+								sxfile.push(tempsxz);
+								$("#sxfile").val(JSON.stringify(sxfile));
+								var objUrl = getObjectURL(this.files[0]) ;
+								$(this).attr("title",this.files[0].name)
+								console.log("objUrl = "+objUrl) ;
+								if (objUrl) {
+									$(this).parent().find("img").attr("src", objUrl) ;
+								}
+								$(this).parent().find("i").remove();
+								$(this).parent().find("img").show();
+						});
+					}
+					var index=$("#sxlx_"+$(this).parents(".public_form").data("index")).data("ssindex");
+					var temp=null;
+					//alert(JSON.stringify(jsonData));
+					jsonData["SPSXZ0"+(i+1)] =$(this).data("code");
+					jsonData["SPSXZNME0"+(i+1)] =$(this).data("val");
+					if($(".fbsp").find("td[data-ssindex="+index+"]").length==0){
+						if($(this).parent("li").data("index") == 0){
+						var val=$("#sxlx_"+$(this).parents(".public_form").data("index")).data("val");
+						var oTest = document.getElementById("add");
+						var newNode = document.createElement("th");
+						newNode.innerHTML = val;
+						oTest.insertBefore(newNode,oTest.childNodes[0]); 
+						}
+
+						$(".fbsp").find("div.sxmxz .tab1").append('<tr data-ssindex="'+i+'" data-index="'+j+'" data-data='+JSON.stringify(jsonData)+'><td class="one text_center font_grey" data-index="'+j+'">'+$(this).data("val")+'</td><td data-ssindex="'+i+'" ><table data-ssindex="'+i+'" frame="void"><tbody></table></td></tr>')
+
+						if(count==i){
+								inputnum++;
+								temp=$(".fbsp").find("div.sxmxz .tab1").find("tr[data-ssindex="+i+"][data-index="+j+"]").data("data")==undefined?null:$(".fbsp").find("div.sxmxz .tab1").find("tr[data-ssindex="+i+"]").data("data");
+								var tempData=$.extend(temp,jsonData)
+								$(".fbsp").find("div.sxmxz .tab1").find("tr[data-ssindex="+i+"][data-index="+j+"]").find("td[data-ssindex="+i+"]").find("table[data-ssindex="+i+"]").append('<tr data-ssindex="'+i+'" data-index="'+j+'" data-data='+JSON.stringify(tempData)+' class="sxlxz"></tr>');
+								$(".fbsp").find("div.sxmxz .tab1").find("tr[data-ssindex="+i+"]").find("td[data-ssindex="+i+"]").find("table[data-ssindex="+i+"]").find("tr[data-index="+j+"]").append(
+									'<td><select class="ge display_none" id="jldw01_'+inputnum+'" name="jldw01"  readonly="readonly"><option value="1">瓶</option><option value="2">根</option><option value="3">个</option><option value="5">只</option><option value="6">套</option><option value="7" selected="">台</option><option value="8">盒</option><option value="9">件</option></select><input type="hidden" class="lsj" name="ggxh" id="GGXH_'+inputnum+'" value=""/><input type="text" name="v7spjg" id="V7SPJG_'+inputnum+'" disabled="true" readonly="readonly" class="normal font_grey"></td>'+
+									'<td><input type="text" name="SPYJ" id="SPYJ_'+inputnum+'" class="small font_grey"></td>'+
+									'<td><input type="text" name="SPJGB02" id="SPJGB02_'+inputnum+'" class="small font_grey"></td>'+
+									'<td><input type="text" name="v7kcsl" id="V7KCSL_'+inputnum+'" disabled="true" readonly="readonly" class="normal font_grey"></td>'+
+									'<td class="byx"><input type="text" name="kcsl" id="KCSL_'+inputnum+'" class="normal font_grey"></td>'+
+									'<td class="byx"><input type="text" id="spid_'+inputnum+'" name="spid" value="" readonly="readonly"/><input type="hidden" class="normal font_grey" name="BARCODE" id="BARCODE_'+inputnum+'" value="" title="商品条码不可修改" readonly="readonly" ></td>'+
+									'<td class="byx"><input type="text" class="lsj" name="spname" id="SPXX04_'+inputnum+'" value=""/><i class="fa fa-search" onclick="xzsp('+inputnum+')"></i><a class="sc text_center">删除</a></td>');
+							}
+					}else{
+						if($(this).parent("li").data("index") == 0){
+							var val=$("#sxlx_"+$(this).parents(".public_form").data("index")).data("val");
+							var oTest = document.getElementById("add");
+							var reforeNode = document.getElementById("first");
+							var newNode = document.createElement("th");
+							newNode.innerHTML = val;
+							oTest.insertBefore(newNode,reforeNode);
+							 
+							}
+						
+						var sxz=$(this).data("val");
+						$(".fbsp").find("div.sxmxz .tab1").find("td[data-ssindex="+index+"]").each(function(w,val){
+							temp=$(this).parent().data("data")==undefined?null:$(this).parent().data("data");
+							var tempData=$.extend(temp,jsonData)
+							//alert(JSON.stringify(tempData));
+							$(".fbsp").find("div.sxmxz .tab1").find("td[data-ssindex="+index+"]").eq(w).find("table[data-ssindex="+index+"]").append('<tr  data-ssindex="'+i+'" data-index="'+j+'" data-data='+JSON.stringify(tempData)+'><td class="one text_center font_grey" data-index="'+j+'">'+sxz+'</td><td data-ssindex="'+i+'"><table frame="void" data-ssindex="'+i+'"><tbody></table></td></tr>');
+							alert(count+"=========="+i);
+							if(count==i){
+								inputnum++;
+								$(".fbsp").find("div.sxmxz .tab1").find("td[data-ssindex="+index+"]").find("table[data-ssindex="+index+"]").eq(w).find("tr[data-index="+j+"]").attr("class","sxlxz");
+								$(".fbsp").find("div.sxmxz .tab1").find("td[data-ssindex="+index+"]").find("table[data-ssindex="+index+"]").find("tr[data-index="+j+"]").eq(w).append(
+									'<td><select class="ge display_none" id="jldw01_'+inputnum+'" name="jldw01"  readonly="readonly"><option value="1">瓶</option><option value="2">根</option><option value="3">个</option><option value="5">只</option><option value="6">套</option><option value="7" selected="">台</option><option value="8">盒</option><option value="9">件</option></select><input type="hidden" class="lsj" name="ggxh" id="GGXH_'+inputnum+'" value=""/><input type="text" name="v7spjg" id="V7SPJG_'+inputnum+'" disabled="true" readonly="readonly" class="normal font_grey"></td>'+
+									'<td><input type="text" name="SPYJ" id="SPYJ_'+inputnum+'" class="small font_grey"></td>'+
+									'<td><input type="text" name="SPJGB02" id="SPJGB02_'+inputnum+'" class="small font_grey"></td>'+
+									'<td><input type="text" name="v7kcsl" id="V7KCSL_'+inputnum+'" disabled="true" readonly="readonly" class="normal font_grey"></td>'+
+									'<td class="byx"><input type="text" name="kcsl" id="KCSL_'+inputnum+'" class="normal font_grey"></td>'+
+									'<td class="byx"><input type="text" id="spid_'+inputnum+'" name="spid" value="" readonly="readonly" class="normal font_grey"/><input type="hidden" class="normal font_grey" name="BARCODE" id="BARCODE_'+inputnum+'" value="" title="商品条码不可修改" readonly="readonly" ></td>'+
+									'<td class="byx"><input type="text" class="lsj normal font_grey" name="spname" id="SPXX04_'+inputnum+'" value=""/></td><td><i class="fa fa-search" onclick="xzsp('+inputnum+')"></i><a class="sc text_center">删除</a></td>');
+							}
+						});
+						
+					}
+					/*if(count==i){
+						$(".fbsp").find("div.sxmxz .tab1").find("td[data-ssindex="+i+"]").append('<table>'+
+                          '<tbody><tr>'+
+                            '<td><input class="normal font_grey"></td>'+
+                            '<td><input class="small font_grey"></td>'+
+                            '<td><input class="normal font_grey"></td>'+
+                            '<td class="byx"><input class="normal font_grey"></td>'+
+                          '</tr>'+
+                        '</tbody></table>');
+					}*/
+						//$(".fbsp").find("div.mxdiv[data-index="+j+"]").insertAfter("#sxlx_"+i)
+				}else{
+						$(this).parents(".public_form").find("div.mxdiv[data-index="+j+"]").remove();
+						$(".fbsp").find("div.sxmxz .tab1").find("td[data-ssindex="+i+"]").parent().find("td[data-index="+j+"]").parent().remove();
+						//$(".fbsp").find("div.mxdiv[data-index="+j+"]").remove();
+				}
+			});
+		});
+	});
+	$(".fbsp").append('<div class="w12 sxmxz"><div id="lt"></div><table class="one tab1" border-collapse="collapse" cellpadding="0" cellspacing="0"><tbody></table></div><dl class="w12 public_form"><dt class="w02">&nbsp;</dt><dd class="w10"><input type="button" id="sureclick" value="发布商品" class="jl_btn btn_red" /></dd></dl>');
+	$("#lt").append('<table>'+
+			  '<tr id="add">'+
+			    '<th id="first" class="two">V7商品价格</th>'+
+			    '<th>商品原价</th>'+
+			    '<th>零售价</th>'+
+			    '<th class="two">V7库存数量</th>'+
+			    //'<th class="two">价格</th>'+
+			    '<th class="two">数量</th>'+
+			    '<th class="two">商品编码</th>'+
+			    '<th class="two">商品名称</th> '+
+			    '<th>操作</th>'+   
+			  '</tr>'+
+			'</table>');
+}
+
+
+//商品编码的放大镜功能
+function xzsp(num){
+	window.showModalDialog('/customer/sydjt/back/jcsz/Oper_Spbm.html?bj=0&code='+num, window, 'dialogHeight:480px; dialogWidth:640px; status:no; help:no; resizable:yes;');
+}
+
+function backFun2(code,spxx01,spmc,sptm,spjg,spsl,ggxh,jldw){
+	$("#spid_"+code).attr("value",spxx01);
+	$("#SPXX04_"+code).attr("value",spmc);
+	$("#BARCODE_"+code).attr("value",sptm);
+	$("#GGXH_"+code).attr("value",ggxh);
+	$("#V7SPJG_"+code).attr("value",spjg);
+	$("#V7KCSL_"+code).attr("value",spsl);
+	$("#jldw01_"+code).find("option").each(function(){
+		if($(this).html() == jldw){
+			$(this).attr("selected","selected");
+		}
+	})
+}
+
+$("#sureclick").on("click",function(){
+		okclick();
+
+});
+
+//新增保存
+function okclick(){
+		getValues();
+		$("#gsid").attr("value",gsid);
+		var XmlData = $("#form1").formToJson();
+		XmlData[0]["sxlxz"] = spellDetailsInput();
+		//var obj = XmlData[0];
+		alert(JSON.stringify(XmlData));
+		$.extend(XmlData[0],sxlxs);
+		var fileArray=[];
+
+		var arr=$("input[class='modalInput']");
+		for(var i=1;i<=arr.length;i++){
+		    fileArray.push("file0"+i);
+		}
+		var arrfile=$("input[class='modalFile']");
+	    for(var i=1;i<=arrfile.length;i++){
+		    fileArray.push("filecor0"+i);
+		}
+		alert(JSON.stringify(fileArray));
+		var spjs = escape(XmlData[0].spjs);
+		var spcs = escape(XmlData[0].spcs);
+		var bzqd = escape(XmlData[0].bzqd);
+		delete XmlData[0].spjs;
+		delete XmlData[0].spcs;
+		delete XmlData[0].bzqd;
+		alert(JSON.stringify(XmlData));
+		var val="/SydjtGoods/insertNewGoods.action";
+		var r = confirm('确认更新信息吗？');
+		if(r==true){
+		     //弹出遮罩层
+		     top.openWait();
+		     
+			$.ajaxFileUpload({
+				type:"POST",
+				secureuri:false,
+ 					fileElementId:fileArray,
+				url:encodeURI(val),//encodeURI避免中文乱码
+				dataType:"text",
+				data:{"spjs":spjs,"spcs":spcs,"bzqd":bzqd,"XmlData":escape(JSON.stringify(XmlData))},
+				success: function(data) { 
+					//关闭遮罩层
+					top.closeWait();
+					
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				//alert(jsondata.STATE);
+				if(data1==1){
+					alert("保存成功!");
+					//location.reload();
+					/*clearData();
+					if(SPXX01!=null){
+						parent.execBackFun("aaa");
+						parent.$("#ajaxGrid").remove();
+					}*/
+				}else{
+					alert("保存失败!");
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					//关闭遮罩层
+					top.closeWait();
+					alert(textStatus);
+					//alert(JSON.stringify(XMLHttpRequest)+"  ++ "+textStatus+"  ++  "+errorThrown);
+			    }
+			});
+		}
+		else return;
+}
+
+function spellDetailsInput(){
+	var XmlData=[];
+	$(".sxlxz").each(function(i,val){
+		var temp={};
+		temp["jldw01"]=$(this).find("select[name='jldw01']").val();
+		temp["spid"]=$(this).find("input[name='spid']").val();
+		temp["spname"]=$(this).find("input[name='spname']").val();
+		temp["ggxh"]=$(this).find("input[name='ggxh']").val();
+		temp["v7spjg"]=$(this).find("input[name='v7spjg']").val();
+		temp["SPYJ"]=$(this).find("input[name='SPYJ']").val();
+		temp["SPJGB02"]=$(this).find("input[name='SPJGB02']").val();
+		temp["v7kcsl"]=$(this).find("input[name='v7kcsl']").val();
+		temp["kcsl"]=$(this).find("input[name='kcsl']").val();
+		temp["BARCODE"]=$(this).find("input[name='BARCODE']").val();
+		var SXZ=$(this).data("data");
+		temp["SPSXZ01"]=SXZ.SPSXZ01==undefined?"":SXZ.SPSXZ01;
+		temp["SPSXZ02"]=SXZ.SPSXZ02==undefined?"":SXZ.SPSXZ02;
+		temp["SPSXZ03"]=SXZ.SPSXZ03==undefined?"":SXZ.SPSXZ03;
+		temp["SPSXZ04"]=SXZ.SPSXZ04==undefined?"":SXZ.SPSXZ04;
+		temp["SPSXZ05"]=SXZ.SPSXZ05==undefined?"":SXZ.SPSXZ05;
+		alert(JSON.stringify(temp));
+		XmlData.push(temp);
+	});
+	/*var arr = [];
+	$("div.mxdiv").find("dl[data-isfile=\"1\"]").each(function(i,val){
+		var tempall={};
+		var temp={};
+		temp["code"] = $(this).find("input[type=\"file\"]").data("code");
+		temp["name"] = $(this).find("input[type=\"file\"]").data("val");
+		arr.push(temp);
+		tempall["sxlx_"+$(this).data("code")] = arr;
+		XmlData.push(tempall);
+	});*/
+	return XmlData;
+}
+
+function getValues() {
+   // 取得HTML内容
+   var html1 = editor1.html();
+   var html2 = editor2.html();
+   var html3 = editor3.html();
+   // 同步数据后可以直接取得textarea的value
+   editor1.sync();
+   editor2.sync();
+   editor3.sync();
+}
+
+function getObjectURL(file) {
+	var url = null ; 
+	if (window.createObjectURL!=undefined) {
+		url = window.createObjectURL(file) ;
+	} else if (window.URL!=undefined) {
+		url = window.URL.createObjectURL(file) ;
+	} else if (window.webkitURL!=undefined) {
+		url = window.webkitURL.createObjectURL(file) ;
+	}
+	return url ;
+}
+</script>

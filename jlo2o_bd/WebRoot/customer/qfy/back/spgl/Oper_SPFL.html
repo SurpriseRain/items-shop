@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Author" content="汽服云集成" />  
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/control/js/dtree.js"></script>
+<title>商品分类管理</title>
+
+<style type="text/css">
+
+#main {
+height: 800px;
+}
+#left {
+    float: left;
+    height: 100%;
+    overflow: auto;
+    padding-left: 12px;
+    width: 45%;
+    border-right:1px solid #e4e4e4;
+   
+}
+#right {
+ float: left;
+    margin-left: 10px;
+    width: 50%;
+}
+#biaoge{
+border: 1px solid #e4e4e4;
+    clear: both;
+    height: 100%;
+    margin-top: 12px;
+    width: 99.2%;
+    border-top:0px;
+}
+ul.dqbd{ width:auto; padding-left:10px; margin:10px 0; border:1px solid #e4e4e4; float:left; }
+ul.dqbd li{ line-height:50px; width:auto; position:relative; float:left;}
+ul.dqbd li span.name{ float:left; margin-left:15px; width:100px; text-align:right; color:#3c3c3c;}
+ul.dqbd li input{ border:1px solid #aaa; height:25px; line-height:25px; font-family:"microsoft yahei"; font-size:14px; padding-left:5px; float:left; margin:12px 0 0 10px;}
+ul.dqbd li input.sptm{ width:200px;}
+ul.dqbd li input.spmc{ width:500px;}
+ul.dqbd li input.spsl{ width:60px;}
+ul.dqbd li input.lsj{ width:100px; color:#e40000;}
+ul.dqbd li input.spgg-rl{ width:60px;}
+ul.dqbd li select{ margin:0px; padding:0px; border:1px solid #aaa; height:27px; line-height:27px; float:left; margin:12px 0 0 10px; font-family:"microsoft yahei"; font-size:14px;}
+ul.dqbd li select.cd{ margin-right:5px; width:150px;}
+ul.dqbd li select.ge{ width:100px;}
+ul.dqbd li select.cx{ width:150px;}
+ul.dqbd li label{ margin:0 0 0 5px; float:left;}
+ul.dqbd li .btx{ float:left; margin-right:5px; line-height:50px; color:#e40000; position:absolute; left:112px;}
+ul.dqbd li .tishi{ float:left; margin-left:20px; line-height:50px; color:#999;}
+ul.dqbd li .tishi font{ color:#090; font-weight:bold; margin:0 5px;}
+ul.dqbd li .spge{}
+ul.dqbd li a.qr{ float:left; width:200px; height:30px; background-color:#2f80eb; color:#fff; line-height:30px; text-align:center; margin:30px 0 30px 10px;}
+ul.dqbd li a.qr:hover{ background-color:#1a47cc;}
+
+#curPosition {
+    border: 1px solid #e4e4e4;
+    float: left;
+    line-height: 30px;
+    padding-left: 10px;
+    width: 98%;
+}
+
+#curPosition a {
+    color: #004098;
+    float: left;
+    line-height: 30px;
+}
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+</style>
+<script type="text/javascript">
+
+//更新
+function updatetype(typecode,pid,typename,isend){
+	$("#type_name").removeAttr("disabled");
+	$("#pid").attr("disabled","disabled");
+	$("#tuid").val(typecode);
+	$("#type_id").val(typecode);
+	$("#type_name").val(typename);
+	if(isend=="1"){
+		$("#is_end").prop("checked",true);
+	}else{
+		$("#is_end").removeAttr("checked");
+	}
+	$("#pid").val(pid);
+	$(".dqbd").show();
+	$("#sureclick").text("更新保存");
+	$("#sureclick").show();
+}
+//新增
+function addtype(id,isend){
+	if(isend=="1"){
+		$("#is_end").prop("checked",true);
+	}else{
+		$("#is_end").removeAttr("checked");
+	}
+	$("#pid").attr("disabled","disabled");
+	$("#type_name").removeAttr("disabled");
+	
+	$("#tuid").val("");
+	$("#sureclick").text("新增保存");
+	$("#sureclick").show();
+	$("#type_id").val("");
+	$("#type_name").val("");
+	$("#pid").val(id);
+	$(".dqbd").show();
+}
+//删除
+function deletetype(typecode,pid,typename,isend){
+	if(isend=="1"){
+		$("#is_end").prop("checked",true);
+	}else{
+		$("#is_end").removeAttr("checked");
+	}
+	$("#type_name").attr("disabled","disabled");
+	$("#pid").attr("disabled","disabled");
+	$("#sureclick").hide();
+	$("#type_id").val(typecode);
+	$("#type_name").val(typename);
+	$("#pid").val(pid);
+	$(".dqbd").show();
+	if(isend=="1"){
+		if(window.confirm("确认删除"+typename)){
+			var searchMap={};
+			var searchlist=[];
+			searchMap["SPFL01"]=typecode;
+			searchMap["SPF_SPFL01"]=pid;
+			searchlist.push(searchMap);
+			
+			var url="/Oper_SPFL/deleteSPFL.action?XmlData="+JSON.stringify(searchlist);
+			var returnVal=visitService(url)
+			if(returnVal.STATE==1){
+				alert("已删除");
+				window.location.reload()
+			}else{
+				alert("删除失败");
+			}
+		}
+	}
+	
+}
+
+//保存
+function save(){
+	var tuid=$("#tuid").val();
+	if(tuid==""){
+		//新增
+		var SPFL01=$("#type_id").val();
+		var SPF_SPFL01=$("#pid").val();
+		var SPFL02=$("#type_name").val();
+		if(SPFL02==null||SPFL02==""){
+			alert("分类名称不能为空");
+			return false;
+		}
+		var searchMap={};
+		var searchlist=[];
+		searchMap["SPFL01"]=SPFL01;
+		searchMap["SPF_SPFL01"]=SPF_SPFL01;
+		searchMap["SPFL02"]=SPFL02;
+		searchlist.push(searchMap);
+		
+		var url="/Oper_SPFL/insert_SPFL.action?XmlData="+JSON.stringify(searchlist);
+		var returnVal=visitService(url)
+		if(returnVal.STATE=="1"){
+			alert("新增成功");
+			window.location.reload()
+		}else{
+			alert("新增失败");
+		}
+	}else{
+		var SPFL01=$("#type_id").val();
+		var SPFL02=$("#type_name").val();
+		if(SPFL02==null||SPFL02==""){
+			alert("分类名称不能为空");
+			return false;
+		}
+		var searchMap={};
+		var searchlist=[];
+		searchMap["SPFL01"]=SPFL01;
+		searchMap["SPFL02"]=SPFL02;
+		searchlist.push(searchMap);
+		
+		//修改
+		var url="/Oper_SPFL/update_SPFL.action?XmlData="+JSON.stringify(searchlist);
+		var returnVal=visitService(url)
+		if(returnVal.STATE==1){
+			alert("更新成功");
+			window.location.reload()
+		}else{
+			alert("更新失败");
+		}
+	}
+}
+function search(){
+	var search_type_name=$("#search_type_name").val();
+	if(search_type_name!=""){
+		window.location.href="/customer/qfy/back/spgl/Oper_SPFL.html?search_type_name="+escape(search_type_name);
+	}else{
+		window.location.href="/customer/qfy/back/spgl/Oper_SPFL.html";
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="main">
+ <!-- <div id="curPosition">
+    <a href="#">商品管理</a>
+    <span>></span>
+    <b>定义分类</b>
+  </div> -->
+	<div class="clera"></div>
+	<div id="biaoge">
+<div id="left">
+	<div style="display:none" height="50px"><span class="name">类型名称：</span><input type="text" id="search_type_name" name="search_type_name" onBlur="search()"></div>
+	<div id="left_content">
+		<script type="text/javascript">
+				var d = new dTree('d');
+				d.add(0,-1, "商品类型");
+				var pid = 0;
+				var btn = "";
+				var url="/Oper_SPFL/selectTotalSPLX.action";
+				var search_type_name=$.getUrlParam("search_type_name");
+				if(search_type_name==null){
+					
+				}else{
+					var searchMap={};
+					var searchlist=[];
+					searchMap["search_type_name"]=search_type_name;
+					searchlist.push(searchMap);
+					url=url+"?XmlData="+JSON.stringify(searchlist);
+				}
+				var returnData=visitService(url);
+				var resultList = returnData.spfllist;
+				 $(resultList).each(function(index,FL01){
+					var typecode=FL01.FLCODE;
+					var typename=FL01.FLNAME;
+					var pid=FL01.FATHERCODE;
+					var pname=FL01.FATHERNAME;
+					var isend=FL01.isend;
+					if(pid==""){
+						pid=0;
+					}
+					if(pid==0){
+						btn = "<a href='javascript:void(0)'>"+typename+"</a>";
+					}else{
+						if(isend=="1"){
+							btn = "<a  href='javascript:void(0)'>"+typename+"</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"addtype('"+typecode+"','"+isend+"')\">新增</a>&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"updatetype('"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\">修改</a>&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"deletetype('"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\">删除</a>";
+
+						}else{
+							btn = "<a  href='javascript:void(0)'>"+typename+"</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"addtype('"+typecode+"','"+isend+"')\">新增</a>&nbsp;&nbsp;<a style='color: blue' href=\"javascript:void(0)\" onclick=\"updatetype('"+typecode+"','"+pid+"','"+typename+"','"+isend+"')\">修改</a>";
+						}
+					}
+					
+					d.add(typecode,pid,btn);
+				});
+				//document.write(d);
+				$("#left_content").html(d.toString())
+			</script>
+	
+	</div>
+</div>
+<div id="right" >
+ <ul class="dqbd">
+    <li style="display:none"><div class="btx">*</div><span class="name">父类型名称：</span><input class="sptm" name="pidname" id="pidname" value=""    disabled="disabled"/></li>
+    <li><span class="name"><span style="color:red"></span>分类编码：</span><input class="sptm" name="type_id" id="type_id" value=""     disabled="disabled"  /></li>
+    <li><span class="name"><span style="color:red">*</span>分类名称：</span><input class="sptm" name="type_name" id="type_name" value=""  disabled="disabled"   /></li>
+    <li><span class="name"><span style="color:red"></span>上级编码：</span><input class="sptm" name="pid" id="pid" value=""  disabled="disabled"  /></li>
+    <li><span class="name"><span style="color:red"></span>是否末级：</span><input type="checkbox"  name="is_end" id="is_end" value=""  disabled="disabled"  /></li>
+    <li><span class="name">&nbsp;</span><a href="#" class="qr" id="sureclick" onclick="save()">新增保存</a></li>    
+    <input type="hidden" id="tuid">
+  </ul>
+</div>
+</div>
+</div>
+</body>
+</html>

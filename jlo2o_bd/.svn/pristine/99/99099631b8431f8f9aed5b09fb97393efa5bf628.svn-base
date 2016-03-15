@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.qxgl.sql.oper_fwsgl" >
+	<!-- 20151208 齐俊宇 ADD 查询生厂商对应的区域关系等信息的品牌  BEGIN-->
+	<select id="selectGSPPXX" parameterType="Map" resultType="Map">
+		SELECT
+			A.PPB01,
+			B.PPB02
+		FROM
+			W_PPQX A
+		LEFT JOIN PPB B ON A.PPB01 = B.PPB01
+		WHERE
+			A.ZCXX01 = #{ZTID}
+		AND A.STATE = 1
+		AND NOT EXISTS (
+			SELECT 1 FROM 
+			W_GSGXPP C 
+			LEFT JOIN W_GSGX D
+			ON C.ZTID = D.ZTID AND C.HBID = D.HBID
+			LEFT JOIN W_GSGXQY E
+			ON C.ZTID = E.ZTID AND C.HBID = E.HBID
+			WHERE 
+				D.STATE &lt;&gt; '3'
+			<if test="HBID != '' and HBID != null">
+				AND C.HBID &lt;&gt; #{HBID}
+			</if>
+			AND C.ZTID = A.ZCXX01
+			AND (E.DQBZM01 IN 
+				<foreach collection="cityList" index="index" item="tag" open="(" separator="," close=")">
+			 	 	#{tag}
+				</foreach>
+				OR EXISTS (
+					SELECT 1 FROM DQBZM F
+					WHERE (F.DQBZM01 IN 
+						<foreach collection="cityList" index="index" item="tag" open="(" separator="," close=")">
+				 	 		#{tag}
+						</foreach>
+					OR F.DQBZM_DQBZM01 IN 
+						<foreach collection="cityList" index="index" item="tag" open="(" separator="," close=")">
+					 	 	#{tag}
+						</foreach>
+					)
+					AND F.DQBZM03 IN (1, 2)
+					AND (E.DQBZM01 = F.DQBZM01 OR E.DQBZM01 = F.DQBZM_DQBZM01)
+					)
+				)
+			AND A.PPB01 = C.PPB01
+		)
+	</select>
+	
+	<select id="selectGSGXList" parameterType="Map" resultType="Map">
+		<!-- SELECT DISTINCT
+			B.ZCXX02,
+			A.ALIAS,
+			DATE_FORMAT(A.ENDTIME, '%Y-%m-%d') ENDTIME,
+			IF(A.ENDTIME &lt; NOW() AND A.STATE = 1, 4,
+	       		A.STATE
+	   		) FWSZT,
+			A.HBID,
+			GROUP_CONCAT(DISTINCT D.PPB02) PPMC,
+			GROUP_CONCAT(DISTINCT F.DQBZM02) DQMC
+		FROM
+			W_GSGX A
+		LEFT JOIN W_ZCXX B ON A.HBID = B.ZCXX01
+		LEFT JOIN W_GSGXPP C ON A.ZTID = C.ZTID
+		AND A.HBID = C.HBID
+		LEFT JOIN PPB D ON D.PPB01 = C.PPB01 
+		LEFT JOIN W_GSGXQY E ON A.ZTID = E.ZTID AND A.HBID = E.HBID 
+		LEFT JOIN DQBZM F ON E.DQBZM01 = F.DQBZM01 
+		 -->
+		
+		SELECT 
+			DISTINCT
+			B.ZCXX02,
+			B.ZCXX03,
+			B.ZCXX06,
+			A.ALIAS,
+			DATE_FORMAT(A.ENDTIME, '%Y-%m-%d') ENDTIME,
+			IF (A.ENDTIME &lt; NOW() AND A.STATE = 1, 4,
+			A.STATE) FWSZT,
+		 	A.HBID,
+			GROUP_CONCAT(DISTINCT D.PPB02) PPB02,
+			GROUP_CONCAT(DISTINCT D.PPB01) PPB01,
+			<if test="HBID == '' or HBID == null">
+		 		GROUP_CONCAT(DISTINCT IFNULL(M.DQBZM02, ''), F.DQBZM02) DQBZM02
+		 	</if>
+		 	<if test="HBID != '' and HBID != null">
+				IF(M.DQBZM02 IS NULL,F.DQBZM02, CONCAT(M.DQBZM02,F.DQBZM02)) DQBZM02,
+				F.DQBZM01 DQBZM01,
+				IFNULL(M.DQBZM01,F.DQBZM01) PROVBZM
+			</if>
+		FROM W_GSGX A
+		LEFT JOIN W_GSGXQY E ON A.ZTID = E.ZTID AND A.HBID = E.HBID
+		LEFT JOIN W_ZCXX B ON A.HBID = B.ZCXX01
+		LEFT JOIN DQBZM F ON E.DQBZM01 = F.DQBZM01
+		LEFT JOIN DQBZM M ON M.DQBZM01 = F.DQBZM_DQBZM01
+		LEFT JOIN (
+		 	SELECT P.PPB01, P.PPB02, C.ZTID, C.HBID 
+		 	FROM W_GSGXPP C LEFT JOIN W_PPQX Q ON C.PPB01 = Q.PPB01 
+		 	LEFT JOIN PPB P ON Q.PPB01 = P.PPB01 
+		 	WHERE C.ZTID = #{ZTID}
+		 	AND Q.STATE = 1) D 
+		ON A.ZTID = D.ZTID AND A.HBID = D.HBID
+		WHERE 
+			1 = 1
+		AND A.ZTID = #{ZTID}
+		<if test="HBID != '' and HBID != null">
+	 		AND A.HBID = #{HBID}
+	 	</if>
+		<if test="HYMC != '' and HYMC != null">
+			AND B.ZCXX02 LIKE CONCAT('%',#{HYMC},'%')
+		</if>
+		<if test="PPB01 != '' and PPB01 != null">
+			AND D.PPB01 = #{PPB01}
+		</if>
+		<if test="DQBZM01 != '' and DQBZM01 != null">
+			AND E.DQBZM01 = #{DQBZM01}
+		</if>
+		<if test="STATE != '' and STATE != null">
+			AND A.STATE = #{STATE}
+		</if>
+		GROUP BY A.HBID
+		<if test="HBID != '' and HBID != null">
+	 		, M.DQBZM01, F.DQBZM01
+	 	</if>
+		
+	</select>
+	
+	<select id="selectGSGXList_sum" parameterType="Map" resultType="Map">
+		SELECT COUNT(1) COUNT FROM 
+			(SELECT 
+				DISTINCT
+				B.ZCXX02,
+				B.ZCXX03,
+				B.ZCXX06,
+				A.ALIAS,
+				DATE_FORMAT(A.ENDTIME, '%Y-%m-%d') ENDTIME,
+				IF (A.ENDTIME &lt; NOW() AND A.STATE = 1, 4,
+				A.STATE) FWSZT,
+			 	A.HBID,
+				GROUP_CONCAT(DISTINCT D.PPB02) PPB02,
+				GROUP_CONCAT(DISTINCT D.PPB01) PPB01,
+				<if test="HBID == '' or HBID == null">
+			 		GROUP_CONCAT(DISTINCT IFNULL(M.DQBZM02, ''), F.DQBZM02) DQBZM02
+			 	</if>
+			 	<if test="HBID != '' and HBID != null">
+					IF(M.DQBZM02 IS NULL,F.DQBZM02, CONCAT(M.DQBZM02,F.DQBZM02)) DQBZM02,
+					F.DQBZM01 DQBZM01,
+					IFNULL(M.DQBZM01,F.DQBZM01) PROVBZM
+				</if>
+			FROM W_GSGX A 
+			LEFT JOIN W_GSGXQY E ON A.ZTID = E.ZTID AND A.HBID = E.HBID
+			LEFT JOIN W_ZCXX B ON A.HBID = B.ZCXX01
+			LEFT JOIN DQBZM F ON E.DQBZM01 = F.DQBZM01
+			LEFT JOIN DQBZM M ON M.DQBZM01 = F.DQBZM_DQBZM01
+			LEFT JOIN (
+			 	SELECT Q.PPB01, P.PPB02, C.ZTID, C.HBID 
+			 	FROM W_GSGXPP C LEFT JOIN W_PPQX Q ON C.PPB01 = Q.PPB01 
+			 	LEFT JOIN PPB P ON Q.PPB01 = P.PPB01 
+			 	WHERE C.ZTID = #{ZTID}
+		 		AND Q.STATE = 1) D 
+			ON A.ZTID = D.ZTID AND A.HBID = D.HBID
+			WHERE 
+				1 = 1
+			AND A.ZTID = #{ZTID}
+			<if test="HBID != '' and HBID != null">
+		 		AND A.HBID = #{HBID}
+		 	</if>
+			<if test="HYMC != '' and HYMC != null">
+				AND B.ZCXX02 LIKE CONCAT('%',#{HYMC},'%')
+			</if>
+			<if test="PPB01 != '' and PPB01 != null">
+				AND D.PPB01 = #{PPB01}
+			</if>
+			<if test="DQBZM01 != '' and DQBZM01 != null">
+				AND E.DQBZM01 = #{DQBZM01}
+			</if>
+			<if test="STATE != '' and STATE != null">
+				AND A.STATE = #{STATE}
+			</if>
+			GROUP BY A.HBID
+			<if test="HBID != '' and HBID != null">
+		 		, M.DQBZM01, F.DQBZM01
+		 	</if>) T
+	</select>
+	<!-- 20151208 齐俊宇 ADD 查询生厂商对应的区域关系等信息的品牌  END-->
+	<!-- 2015.12.9  叶栓 服务企业管理 -->
+	<select id="selectGSQYGXList" parameterType="Map" resultType="Map">
+					SELECT DISTINCT
+				B.ZCXX02,
+				B.ZCXX03,
+				B.ZCXX06,
+				A.ALIAS,
+				DATE_FORMAT(A.ENDTIME, '%Y-%m-%d') ENDTIME,
+			IF (A.ENDTIME &lt; NOW() AND A.STATE = 1, 4,
+			A.STATE) FWSZT,
+			 A.HBID,
+			A.ZTID,
+			 GROUP_CONCAT(DISTINCT D.PPB02) PPB02,
+			 GROUP_CONCAT(DISTINCT D.PPB01) PPB01,
+			 GROUP_CONCAT(
+				DISTINCT IFNULL(M.DQBZM02, ''),
+				F.DQBZM02
+			) DQBZM02
+			FROM
+				W_GSGX A
+			LEFT JOIN W_GSGXQY E ON A.ZTID = E.ZTID
+			AND A.HBID = E.HBID
+			LEFT JOIN W_ZCXX B ON A.ZTID = B.ZCXX01
+			LEFT JOIN DQBZM F ON E.DQBZM01 = F.DQBZM01
+			LEFT JOIN DQBZM M ON M.DQBZM01 = F.DQBZM_DQBZM01
+			LEFT JOIN (
+				SELECT
+					P.PPB01,
+					P.PPB02,
+					C.ZTID,
+					C.HBID
+				FROM
+					W_GSGXPP C
+				LEFT JOIN W_PPQX Q ON C.PPB01 = Q.PPB01
+				LEFT JOIN PPB P ON Q.PPB01 = P.PPB01
+				WHERE
+					C.HBID =#{HBID}
+				AND Q.STATE = 1
+			) D ON A.ZTID = D.ZTID
+			AND A.HBID = D.HBID
+				WHERE
+			1 = 1
+		AND A.HBID = #{HBID}
+		<if test="HYMC != '' and HYMC != null">
+			AND B.ZCXX02 LIKE CONCAT('%',#{HYMC},'%')
+		</if>
+		<if test="PPB01 != '' and PPB01 != null">
+			AND D.PPB01 = #{PPB01}
+		</if>
+		<if test="DQBZM01 != '' and DQBZM01 != null">
+			AND E.DQBZM01 = #{DQBZM01}
+		</if>
+		<if test="STATE != '' and STATE != null">
+			AND A.STATE = #{STATE}
+		</if>
+		GROUP BY A.ZTID
+	</select>
+	
+	<select id="selectGSQYGXList_sum" parameterType="Map" resultType="Map">
+		SELECT COUNT(1) COUNT FROM 
+			(SELECT DISTINCT
+				B.ZCXX02,
+				B.ZCXX03,
+				B.ZCXX06,
+				A.ALIAS,
+				DATE_FORMAT(A.ENDTIME, '%Y-%m-%d') ENDTIME,
+			IF (A.ENDTIME &lt; NOW() AND A.STATE = 1, 4,
+			A.STATE) FWSZT,
+			 A.HBID,
+			A.ZTID,
+			 GROUP_CONCAT(DISTINCT D.PPB02) PPB02,
+			 GROUP_CONCAT(DISTINCT D.PPB01) PPB01,
+			 GROUP_CONCAT(
+				DISTINCT IFNULL(M.DQBZM02, ''),
+				F.DQBZM02
+			) DQBZM02
+			FROM
+				W_GSGX A
+			LEFT JOIN W_GSGXQY E ON A.ZTID = E.ZTID
+			AND A.HBID = E.HBID
+			LEFT JOIN W_ZCXX B ON A.ZTID = B.ZCXX01
+			LEFT JOIN DQBZM F ON E.DQBZM01 = F.DQBZM01
+			LEFT JOIN DQBZM M ON M.DQBZM01 = F.DQBZM_DQBZM01
+			LEFT JOIN (
+				SELECT
+					P.PPB01,
+					P.PPB02,
+					C.ZTID,
+					C.HBID
+				FROM
+					W_GSGXPP C
+				LEFT JOIN W_PPQX Q ON C.PPB01 = Q.PPB01
+				LEFT JOIN PPB P ON Q.PPB01 = P.PPB01
+				WHERE
+					C.HBID =#{HBID}
+				AND Q.STATE = 1
+			) D ON A.ZTID = D.ZTID
+			AND A.HBID = D.HBID
+				WHERE
+			1 = 1
+		AND A.HBID = #{HBID}
+			GROUP BY A.ZTID) T
+	</select>
+	
+	<!-- 2015.12.9  叶栓 查询服务商信息 -->
+	<select id="selectQYDetails" parameterType="Map" resultType="Map">
+		SELECT DISTINCT
+				B.ZCXX02,
+				B.ZCXX03,
+				B.ZCXX06,
+				DATE_FORMAT(A.ENDTIME, '%Y-%m-%d') ENDTIME,
+				(
+					CASE A.State
+					WHEN 0 THEN
+						'邀请中'
+					WHEN 1 THEN
+						'服务中'
+					WHEN 2 THEN
+						'已拒绝'
+					WHEN 3 THEN
+						'终止服务'
+					WHEN 3 THEN
+						'已过期'
+					END
+				) STATE,
+				A.State ss,
+				GROUP_CONCAT(DISTINCT D.PPB02) PPMC,
+				GROUP_CONCAT(
+				DISTINCT IFNULL(M.DQBZM02, ''),
+				F.DQBZM02
+				) DQMC,
+				GROUP_CONCAT(
+				DISTINCT F.DQBZM01
+				) DQBM,
+				A.Notes
+			FROM
+				W_GSGX A
+			LEFT JOIN W_ZCXX B ON A.ZTID = B.ZCXX01
+			LEFT JOIN W_GSGXPP C ON A.ZTID = C.ZTID
+			AND A.HBID = C.HBID
+			LEFT JOIN PPB D ON D.PPB01 = C.PPB01
+			LEFT JOIN W_GSGXQY E ON A.ZTID = E.ZTID
+			AND A.HBID = E.HBID
+			LEFT JOIN DQBZM F ON E.DQBZM01 = F.DQBZM01
+			LEFT JOIN DQBZM M ON M.DQBZM01 = F.DQBZM_DQBZM01
+			WHERE
+				1 = 1
+		AND A.ZTID = #{ZTID}
+		AND A.HBID = #{HBID}
+	</select>
+	
+	<!-- 20151217 齐俊宇 提交时判断品牌是否授权 -->
+	<select id="selectFWSPPZT" parameterType="Map" resultType="Map">
+		SELECT COUNT(1) COUNT FROM W_GSGX A 
+		LEFT JOIN W_GSGXPP B
+		ON A.ZTID = B.ZTID AND A.HBID = B.HBID
+		LEFT JOIN W_GSGXQY C
+		ON A.ZTID = C.ZTID AND A.HBID = C.HBID 
+		WHERE 
+			A.ZTID = #{ZTID}
+		AND A.HBID &lt;&gt; #{HBID}
+		AND B.PPB01 IN 
+			<foreach collection="ppList" index="index" item="tag" open="(" separator="," close=")">
+		 	 	#{tag}
+			</foreach>
+		AND (C.DQBZM01 IN 
+				<foreach collection="cityList" index="index" item="tag" open="(" separator="," close=")">
+			 	 	#{tag}
+				</foreach>
+		OR C.DQBZM01 IN (
+			SELECT D.DQBZM01 FROM DQBZM D WHERE D.DQBZM01 IN 
+				<foreach collection="cityList" index="index" item="tag" open="(" separator="," close=")">
+			 	 	#{tag}
+				</foreach>
+				AND D.DQBZM03 IN (1, 2)
+			)
+		OR C.DQBZM01 IN (
+			SELECT E.DQBZM_DQBZM01 FROM DQBZM E WHERE E.DQBZM01 IN 
+				<foreach collection="cityList" index="index" item="tag" open="(" separator="," close=")">
+			 	 	#{tag}
+				</foreach>
+				AND E.DQBZM03 IN (1, 2)
+			)
+		)
+		AND A.STATE &lt;&gt; 3
+	</select>
+</mapper>

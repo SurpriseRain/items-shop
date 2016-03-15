@@ -1,0 +1,1422 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.product">
+	<!--   未登录时查询 首页商品     -->
+  	<select id="selectSpForNotLogin" parameterType="Map" resultType="java.util.Map">
+		SELECT G.SPXX01 ,
+		       G.ZCXX01 ,
+		       P.SPXX02 ,
+		       P.SPXX04 ,
+		       M.SPJGB01 ,
+		       M.SPJGB02 ,
+		       G.SPGL04 ,
+		       G.ZCXX01 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL13 ,
+		       G.SPGL09 ,
+		       G.SPGL11 ,
+		       G.SPGL10 ,
+		       G.SPGL08 ,
+		       IFNULL(M.SPJGB05, 0) SPJGB05,
+		       0 HDLX,
+		       0 CXJG
+		  FROM W_SPGL G, 
+		      W_SPJGB M,
+		       W_SPXX P
+		 WHERE G.SPXX01 = M.SPXX01
+		   AND G.ZCXX01 = M.ZCXX01
+		   AND G.SPXX01 = P.SPXX01
+		   AND G.SPGL12 IN ('1', '3')
+		    <if test="SPGL08==4">AND G.SPGL08 = 1</if>
+		    <if test="SPGL10==3">AND G.SPGL10 = 1</if>		   
+         <choose>
+			<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+			<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+		 </choose>
+		ORDER BY G.SPGL13 DESC
+	</select>
+	
+	<!--   已登录时查询 首页商品     -->
+	 <select id="selectSpForUserLogin" parameterType="Map" resultType="java.util.Map">
+		SELECT G.SPXX01 ,
+		       G.ZCXX01 ,
+		       P.SPXX02 ,
+			   P.SPXX04 ,
+			   M.SPJGB01 ,
+			   M.SPJGB02 ,
+			   G.SPGL04,
+			   G.ZCXX01,
+			   G.SPGL03 ,
+			   G.SPGL02 ,
+			   G.SPGL13 , 
+			   G.SPGL09 ,
+			   G.SPGL11 , 
+			   G.SPGL10 ,
+			   G.SPGL08 ,
+			   IFNULL(M.SPJGB05, 0) SPJGB05,
+			   C.HDLX ,
+			   IFNULL(C.CXJG,0) CXJG
+			FROM W_SPGL G, W_SPJGB M, W_SPXX P,  
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		       W_SPQY Q,
+		   </if>
+			(SELECT B.GSXX01, B.SPXX01, B.CXJG,B.HDLX
+			FROM W_CXZXB B
+			WHERE #{QYDM} LIKE   B.DQXX01|| '%'
+			<!-- WHERE B.DQXX01 LIKE SUBSTR(#{QYDM}, 1, 4) || '%' -->
+			AND SYSDATE &gt;= B.BEGAINDATE
+			AND SYSDATE &lt;= B.ENDDATE
+			) C
+			WHERE G.SPXX01 = M.SPXX01
+			AND G.ZCXX01 = M.ZCXX01
+			AND G.SPXX01 = P.SPXX01
+			AND G.SPGL12 IN ('1', '3')
+			AND G.ZCXX01 = C.GSXX01(+)
+			AND G.SPXX01 = C.SPXX01(+)
+		
+		    <if test="SPGL08==4">AND G.SPGL08 = 1</if>
+		    <if test="SPGL10==3">AND G.SPGL10 = 1</if>	
+		
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+			AND Q.JXS = G.ZCXX01
+		   	AND Q.SPID = G.SPXX01
+		   	<!--  加入区域权限     -->	
+			AND #{QYDM} LIKE Q.QYDM||'%'
+			</if>		
+	    	AND NOT EXISTS (SELECT 1 FROM 	W_SPQXHMD H 
+			WHERE 
+				H.ZTID=G.ZCXX01 
+				AND H.HBID=#{HBID}
+				AND H.SPXX01=G.SPXX01 )           <!--   增加客户商品授权黑名单权限     -->
+		 <choose>
+ 			<when test="SPGL02==2">AND G.SPGL02 = 2</when> 
+ 			<when test="SPGL02==0">
+			   AND EXISTS (SELECT 1
+               FROM W_FLPPQX R, W_GSGX H
+               WHERE  R.ZTID = H.ZTID
+	           AND R.HBID = H.HBID
+	           AND H.HBID = #{HBID} 
+	           AND R.PPB01 = P.PPB01
+	           AND R.SPFL01 = SUBSTR(P.SPFL01, 1, 4)
+	           AND R.ZTID = G.ZCXX01
+	           AND R.FLPP02 = 8
+	           )
+			   AND G.SPGL02 = 0 
+			   AND G.SPGL19 = 1
+ 			</when> 
+		</choose>
+		 ORDER BY G.SPGL13 DESC
+	</select>
+	
+	<!-- 全文搜商品时 【美】-->
+    <select id="aaaaaa" parameterType="Map" resultType="java.util.Map">
+	<!--SELECT *-->
+	<!--  FROM (SELECT P.SPXX04 SPNAME-->
+	<!--          FROM W_SPGL G, W_SPXX P-->
+	<!--         WHERE G.SPXX01 = P.SPXX01-->
+	<!--           AND G.SPGL02 = 2-->
+	<!--           AND G.SPGL12 IN ('1', '3')-->
+	<!--           AND UPPER(P.SPXX04) LIKE UPPER('%' || ? || '%')-->
+	<!--        UNION (SELECT PP.SPXX04 SPNAME-->
+	<!--                FROM W_SPGL GG, W_SPXX PP-->
+	<!--               WHERE GG.SPXX01 = PP.SPXX01-->
+	<!--                 AND GG.SPGL19 = 1-->
+	<!--                 AND GG.SPGL12 IN ('1', '3')-->
+	<!--                 AND GG.SPGL02 = 0-->
+	<!--                 AND UPPER(Pp.SPXX04) LIKE UPPER('%' || ? || '%')))-->
+	<!-- WHERE ROWNUM < 10-->
+	<!---->
+	<!-- [ 美, 美 ]-->
+	</select>
+    
+    <!-- 登入前全文搜商品-->
+	<select id="NotLogin_global_serach" parameterType="Map" resultType="java.util.Map">
+	SELECT *
+	  FROM (SELECT G.SPXX01 ,
+	               P.SPXX02 ,
+	               P.SPXX04 ,
+	               J.SPJGB01 ,
+	               J.SPJGB02 ,
+	               G.SPGL04 ,
+	               IFNULL(J.SPJGB05, 0) SPJGB05,
+	               G.ZCXX01 ,
+	               G.SPGL13 ,
+	               G.SPGL03 ,
+	               G.SPGL02 ,
+	               G.SPGL08 ,
+	               A.ZCXX02 ,
+	               G.SPGL06 ,
+	               G.SPGL14 ,
+	               G.SPGL15 ,
+	               P.SPXX08 ,
+	               G.SPGL18 ,	      
+	    	9999999 CXJG,0 CXLX,
+		SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+		     
+	        FROM W_SPGL G, W_SPJGB J, W_KCXX K, W_SPXX P, W_ZCXX A       
+	         WHERE G.SPXX01 = J.SPXX01
+	           AND G.ZCXX01 = J.ZCXX01
+	           AND G.ZCXX01 = A.ZCXX01
+	           AND G.SPXX01 = K.SPXX01
+	           AND G.ZCXX01 = K.ZCXX01
+	           AND G.SPXX01 = P.SPXX01                                            
+	           AND G.SPGL02 = 2
+	           AND G.SPGL12 IN ('1', '3')
+	      AND IFNULL(J.SPJGB05, 0) &gt;= to_number(#{prista},'99999999.0000') 
+	      AND IFNULL(J.SPJGB05, 0) &lt;= to_number(#{priend},'99999999.0000')
+	      AND UPPER(P.SPXX04) LIKE UPPER('%' || #{spnamelist} || '%')      
+	      <if test="SPFL01_CODE!=''">AND P.SPFL01 like #{SPFL01_CODE} || '%'</if>
+		 GROUP BY G.SPXX01,
+	                  P.SPXX02,
+	                  P.SPXX04,                                                        
+	                  J.SPJGB01,
+	                  J.SPJGB02,
+	                  G.SPGL04,
+	                  J.SPJGB05,
+	                  G.ZCXX01,
+	                  G.SPGL03,
+	                  G.SPGL02,
+	                  G.SPGL08,
+	                  G.SPGL13,
+	                  G.SPGL18,
+	                  A.ZCXX02,
+	                  G.SPGL06,
+	                  G.SPGL14,
+	                  G.SPGL15,
+	                  P.SPXX08,
+	                  A.ZCXX34
+	        UNION (SELECT GG.SPXX01 ,
+	                     PP.SPXX02 ,
+	                     PP.SPXX04 ,
+	                     JJ.SPJGB01 ,
+	                     JJ.SPJGB02 ,
+	                     GG.SPGL04 ,
+	                     IFNULL(JJ.SPJGB05, 0) SPJGB05,
+	                     GG.ZCXX01 ,
+	                     GG.SPGL13 ,
+	                     GG.SPGL03 ,
+	                     GG.SPGL02 ,
+	                     GG.SPGL08 ,
+	                     AA.ZCXX02 ,
+	                     GG.SPGL06 ,
+	                     GG.SPGL14 ,
+	                     GG.SPGL15 ,
+	                     PP.SPXX08 ,
+	                     GG.SPGL18 ,
+			           9999999 CXJG,
+			           0 CXLX,
+                SUM(KK.CKSP04 + KK.CKSP05 - KK.KCXX02) SPSL
+	                FROM W_SPGL GG, W_SPJGB JJ, W_SPXX PP, W_ZCXX AA, W_KCXX KK
+	               WHERE GG.SPXX01 = JJ.SPXX01
+	                 AND GG.ZCXX01 = JJ.ZCXX01
+	                 AND GG.SPXX01 = PP.SPXX01
+	                 AND GG.SPGL19 = 1
+	                 AND GG.SPGL12 IN ('1', '3')
+	                 AND GG.SPGL02 = 0
+	                 AND GG.SPXX01 = KK.SPXX01
+	                 AND GG.ZCXX01 = KK.ZCXX01
+	                 AND GG.ZCXX01 = AA.ZCXX01
+		      AND IFNULL(JJ.SPJGB05, 0) &gt;= to_number(#{prista},'99999999.0000') 
+		      AND  IFNULL(JJ.SPJGB05, 0) &lt;= to_number(#{priend},'99999999.0000')
+	          AND UPPER(PP.SPXX04) LIKE UPPER('%' || #{spnamelist} || '%')
+	          <if test="SPFL01_CODE!=''">AND PP.SPFL01 like #{SPFL01_CODE} || '%'</if>
+	               GROUP BY GG.SPXX01,
+	                        PP.SPXX02,
+	                        PP.SPXX04,
+	                        JJ.SPJGB01,
+	                        JJ.SPJGB02,
+	                        GG.SPGL04,
+	                        JJ.SPJGB05,
+	                        GG.ZCXX01,
+	                        GG.SPGL03,
+	                        GG.SPGL02,
+	                        GG.SPGL08,
+	                        GG.SPGL13,
+	                        GG.SPGL18,
+	                        AA.ZCXX02,
+	                        GG.SPGL06,
+	                        GG.SPGL14,
+	                        GG.SPGL15,
+	                        PP.SPXX08,
+	                        AA.ZCXX34))
+
+	</select>
+	
+	<select id="NotLogin_global_serachSum" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) SUM FROM (
+	SELECT * FROM (SELECT G.SPXX01 ,
+	               P.SPXX02 ,
+	               P.SPXX04 ,
+	               J.SPJGB01 ,
+	               J.SPJGB02 ,
+	               G.SPGL04 ,
+	               IFNULL(J.SPJGB05, 0) SPJGB05,
+	               G.ZCXX01 ,
+	               G.SPGL13 ,
+	               G.SPGL03 ,
+	               G.SPGL02 ,
+	               G.SPGL08 ,
+	               A.ZCXX02 ,
+	               G.SPGL06 ,
+	               G.SPGL14 ,
+	               G.SPGL15 ,
+	               P.SPXX08 ,
+	               G.SPGL18 ,	      
+	    	9999999 CXJG,0 CXLX,
+		SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+		     
+	        FROM W_SPGL G, W_SPJGB J, W_KCXX K, W_SPXX P, W_ZCXX A       
+	         WHERE G.SPXX01 = J.SPXX01
+	           AND G.ZCXX01 = J.ZCXX01
+	           AND G.ZCXX01 = A.ZCXX01
+	           AND G.SPXX01 = K.SPXX01
+	           AND G.ZCXX01 = K.ZCXX01
+	           AND G.SPXX01 = P.SPXX01                                            
+	           AND G.SPGL02 = 2
+	           AND G.SPGL12 IN ('1', '3')
+	      AND IFNULL(J.SPJGB05, 0) &gt;= to_number(#{prista},'99999999.0000') 
+	      AND IFNULL(J.SPJGB05, 0) &lt;= to_number(#{priend},'99999999.0000')
+	      AND UPPER(P.SPXX04) LIKE UPPER('%' || #{spnamelist} || '%')      
+	      <if test="SPFL01_CODE!=''">AND P.SPFL01 like #{SPFL01_CODE} || '%'</if>
+		 GROUP BY G.SPXX01,
+	                  P.SPXX02,
+	                  P.SPXX04,                                                        
+	                  J.SPJGB01,
+	                  J.SPJGB02,
+	                  G.SPGL04,
+	                  J.SPJGB05,
+	                  G.ZCXX01,
+	                  G.SPGL03,
+	                  G.SPGL02,
+	                  G.SPGL08,
+	                  G.SPGL13,
+	                  G.SPGL18,
+	                  A.ZCXX02,
+	                  G.SPGL06,
+	                  G.SPGL14,
+	                  G.SPGL15,
+	                  P.SPXX08,
+	                  A.ZCXX34
+	        UNION (SELECT GG.SPXX01 ,
+	                     PP.SPXX02 ,
+	                     PP.SPXX04 ,
+	                     JJ.SPJGB01 ,
+	                     JJ.SPJGB02 ,
+	                     GG.SPGL04 ,
+	                     IFNULL(JJ.SPJGB05, 0) SPJGB05,
+	                     GG.ZCXX01 ,
+	                     GG.SPGL13 ,
+	                     GG.SPGL03 ,
+	                     GG.SPGL02 ,
+	                     GG.SPGL08 ,
+	                     AA.ZCXX02 ,
+	                     GG.SPGL06 ,
+	                     GG.SPGL14 ,
+	                     GG.SPGL15 ,
+	                     PP.SPXX08 ,
+	                     GG.SPGL18 ,
+			           9999999 CXJG,
+			           0 CXLX,
+                SUM(KK.CKSP04 + KK.CKSP05 - KK.KCXX02) SPSL
+	                FROM W_SPGL GG, W_SPJGB JJ, W_SPXX PP, W_ZCXX AA, W_KCXX KK
+	               WHERE GG.SPXX01 = JJ.SPXX01
+	                 AND GG.ZCXX01 = JJ.ZCXX01
+	                 AND GG.SPXX01 = PP.SPXX01
+	                 AND GG.SPGL19 = 1
+	                 AND GG.SPGL12 IN ('1', '3')
+	                 AND GG.SPGL02 = 0
+	                 AND GG.SPXX01 = KK.SPXX01
+	                 AND GG.ZCXX01 = KK.ZCXX01
+	                 AND GG.ZCXX01 = AA.ZCXX01
+		      AND IFNULL(JJ.SPJGB05, 0) &gt;= to_number(#{prista},'99999999.0000') 
+		      AND  IFNULL(JJ.SPJGB05, 0) &lt;= to_number(#{priend},'99999999.0000')
+	          AND UPPER(PP.SPXX04) LIKE UPPER('%' || #{spnamelist} || '%')
+	          <if test="SPFL01_CODE!=''">AND PP.SPFL01 like #{SPFL01_CODE} || '%'</if>
+	               GROUP BY GG.SPXX01,
+	                        PP.SPXX02,
+	                        PP.SPXX04,
+	                        JJ.SPJGB01,
+	                        JJ.SPJGB02,
+	                        GG.SPGL04,
+	                        JJ.SPJGB05,
+	                        GG.ZCXX01,
+	                        GG.SPGL03,
+	                        GG.SPGL02,
+	                        GG.SPGL08,
+	                        GG.SPGL13,
+	                        GG.SPGL18,
+	                        AA.ZCXX02,
+	                        GG.SPGL06,
+	                        GG.SPGL14,
+	                        GG.SPGL15,
+	                        PP.SPXX08,
+	                        AA.ZCXX34)))
+
+	</select>
+	
+	<!-- 登入后全文搜商品 -->
+	<select id="Login_global_serach" parameterType="Map" resultType="java.util.Map">
+	 SELECT * FROM(     
+	  SELECT  
+	    G.SPXX01 ,
+	    P.SPXX02 ,
+	    P.SPXX04 ,
+	    J.SPJGB01 ,
+	    J.SPJGB02 ,
+	    G.SPGL04 ,  
+	    IFNULL(J.SPJGB05, 0) SPJGB05,
+	    G.ZCXX01 ,
+	    G.SPGL13 ,
+	    G.SPGL03 ,
+	    G.SPGL02 ,
+	    G.SPGL08 ,
+	    A.ZCXX02 ,
+	    G.SPGL06 ,  
+	    G.SPGL14 ,
+	    G.SPGL15 ,
+	    P.SPXX08 ,
+	    G.SPGL18 ,   
+	    CASE C.HDLX
+		    WHEN 1 THEN
+		      IFNULL(C.CXJG,9999999)
+		    ELSE
+		      9999999 
+		    END CXJG
+		    ,C.HDLX HDLX,
+	    SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+	    FROM W_SPGL G,W_SPJGB J, W_KCXX K, W_SPXX P,W_ZCXX A,
+	    (SELECT M.GSXX01,M.SPXX01,M.CXJG,M.HDLX 
+	    FROM W_CXZXB M 
+	    WHERE SYSDATE &gt;= M.BEGAINDATE 
+	    AND SYSDATE &lt;= M.ENDDATE
+		     <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		    AND #{QYDM} LIKE  M.DQXX01|| '%'
+		    </if>
+		    )C
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		      , W_SPQY Q
+		   </if>
+	  WHERE 
+	    G.SPXX01 = J.SPXX01
+	    AND G.ZCXX01 = J.ZCXX01
+	    AND G.ZCXX01 = A.ZCXX01
+	    AND G.SPXX01 = K.SPXX01
+	    AND G.ZCXX01 = K.ZCXX01
+	    AND G.ZCXX01 = C.GSXX01(+)
+	    AND G.SPXX01 = C.SPXX01(+)
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+			AND Q.JXS = G.ZCXX01
+		   	AND Q.SPID = G.SPXX01
+		   	AND #{QYDM} LIKE  Q.DQXX01|| '%'
+			   	<!--  加入区域权限     -->	
+			  <!-- 仓库权限
+			   AND EXISTS (SELECT 1
+          FROM W_CKQX A
+         WHERE A.ZTID = K.ZCXX01
+           AND A.CK01 = K.CK01
+           and A.GSID = #{ckqx_hbid})
+           </if>
+			   -->
+			</if>
+		<if test="SPFL01_CODE!=''">AND P.SPFL01 like #{SPFL01_CODE} || '%'</if>
+	    AND NOT EXISTS (SELECT 1 FROM   W_SPQXHMD D 
+	      WHERE 
+            D.ZTID=G.ZCXX01 
+            AND D.HBID=#{HBID}
+            AND D.SPXX01=G.SPXX01 ) 
+	    AND G.SPXX01 = P.SPXX01
+	    AND G.SPGL02 = 2
+	    AND G.SPGL12 IN ('1', '3')
+   		AND J.SPJGB01 &gt;= to_number(#{prista},'99999999.0000') 
+      	AND J.SPJGB01 &lt;= to_number(#{priend},'99999999.0000')
+      	AND UPPER(P.SPXX04) LIKE UPPER('%' || #{spnamelist} || '%')
+	    GROUP BY
+	    G.SPXX01,
+	    P.SPXX02,
+	    P.SPXX04,
+	    J.SPJGB01,
+	    J.SPJGB02,
+	    G.SPGL04,  
+	    J.SPJGB05,
+	    G.ZCXX01,
+	    G.SPGL03,
+	    G.SPGL02,
+	    G.SPGL08,
+	    G.SPGL13,
+	    G.SPGL18,
+	    A.ZCXX02,
+	    G.SPGL06,
+	    G.SPGL14,
+	    G.SPGL15,
+	    P.SPXX08,
+	    A.ZCXX34,  
+	    C.CXJG,
+	    C.HDLX
+	  UNION
+	  (SELECT 
+	    GG.SPXX01 ,
+	    PP.SPXX02 ,
+	    PP.SPXX04 ,
+	    JJ.SPJGB01 ,
+	    JJ.SPJGB02 ,
+	    GG.SPGL04 ,
+	    IFNULL(JJ.SPJGB05, 0) SPJGB05,
+	    GG.ZCXX01 ,
+	    GG.SPGL13 ,
+	    GG.SPGL03 ,
+	    GG.SPGL02 ,
+	    GG.SPGL08 ,
+	    AA.ZCXX02 ,
+	    GG.SPGL06 ,  
+	    GG.SPGL14 ,
+	    GG.SPGL15 ,
+	    PP.SPXX08 ,
+	    GG.SPGL18 ,
+	    CASE CC.HDLX
+		    WHEN 1 THEN
+		      IFNULL(CC.CXJG,9999999)
+		    ELSE
+		      9999999 
+		    END CXJG
+		    ,CC.HDLX CXLX,    
+	    SUM(KK.CKSP04 + KK.CKSP05 - KK.KCXX02) SPSL
+	  FROM 
+	    W_SPGL GG,
+	    W_SPJGB JJ,
+	    W_SPXX PP,
+	    W_ZCXX AA,
+	    W_KCXX KK,
+		    (SELECT BB.GSXX01, BB.SPXX01, BB.CXJG, BB.HDLX
+		     FROM W_CXZXB BB
+		     WHERE 
+		       SYSDATE &gt;= BB.BEGAINDATE
+		       AND SYSDATE &lt;= BB.ENDDATE
+		       AND BB.HDLX = 1
+		    <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		    AND #{QYDM} LIKE  BB.DQXX01|| '%'
+		    </if>
+		    ) CC
+		    <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+			    ,W_SPQY QQ
+			</if>
+	  	WHERE 
+	          GG.SPXX01 = JJ.SPXX01 
+	      AND GG.ZCXX01 = JJ.ZCXX01
+	      AND GG.SPXX01 = PP.SPXX01
+		      AND GG.ZCXX01 = CC.GSXX01(+) 
+		      AND GG.SPXX01 = CC.SPXX01(+) 
+
+	    <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+			      AND GG.ZCXX01 = QQ.JXS
+		          AND GG.SPXX01 = QQ.SPID
+	    		  AND #{QYDM} LIKE  QQ.QYDM|| '%'
+		</if>
+	    <if test="SPFL01_CODE!=''">AND PP.SPFL01 like #{SPFL01_CODE} || '%'</if>
+     	AND EXISTS (SELECT 1
+              FROM W_FLPPQX RR
+             WHERE 
+                   RR.ZTID = GG.ZCXX01
+               AND RR.HBID =#{HBID}
+               AND RR.SPFL01 = SUBSTR(PP.SPFL01, 1, 4)
+               AND RR.PPB01 = PP.PPB01
+               AND RR.FLPP02 = 8)
+          
+     AND NOT EXISTS (SELECT 1 FROM   W_SPQXHMD DD 
+                WHERE 
+                  DD.ZTID=GG.ZCXX01 
+                  AND DD.HBID=#{HBID}
+                  AND DD.SPXX01=GG.SPXX01 )
+	 
+	      AND GG.SPGL12 IN ('1', '3')     
+	      AND GG.SPGL02 = 0
+	      AND GG.SPXX01 = KK.SPXX01 
+	      AND GG.ZCXX01 = KK.ZCXX01
+	      AND GG.ZCXX01 = AA.ZCXX01
+	  
+  		AND JJ.SPJGB01 &gt;= to_number(#{prista},'99999999.0000') 
+    	AND  JJ.SPJGB01 &lt;= to_number(#{priend},'99999999.0000')
+    	 AND UPPER(PP.SPXX04) LIKE UPPER('%' || #{spnamelist} || '%')
+	      GROUP BY
+	      GG.SPXX01,
+	      PP.SPXX02,
+	      PP.SPXX04,
+	      JJ.SPJGB01,
+	      JJ.SPJGB02,
+	      GG.SPGL04, 
+	      JJ.SPJGB05,
+	      GG.ZCXX01,
+	      GG.SPGL03,
+	      GG.SPGL02,
+	      GG.SPGL08,
+	      GG.SPGL13,
+	      GG.SPGL18,
+	      AA.ZCXX02,
+	      GG.SPGL06,
+	      GG.SPGL14,
+	      GG.SPGL15,
+	      PP.SPXX08,
+	      AA.ZCXX34,    
+	      CC.CXJG,
+	      CC.HDLX
+	    )
+	  )
+	</select>
+	
+	
+	<select id="Login_global_serachSum" parameterType="Map" resultType="java.util.Map">
+	 SELECT COUNT(1) SUM FROM (
+	 SELECT * FROM(     
+	  SELECT  
+	    G.SPXX01 ,
+	    P.SPXX02 ,
+	    P.SPXX04 ,
+	    J.SPJGB01 ,
+	    J.SPJGB02 ,
+	    G.SPGL04 ,  
+	    IFNULL(J.SPJGB05, 0) SPJGB05,
+	    G.ZCXX01 ,
+	    G.SPGL13 ,
+	    G.SPGL03 ,
+	    G.SPGL02 ,
+	    G.SPGL08 ,
+	    A.ZCXX02 ,
+	    G.SPGL06 ,  
+	    G.SPGL14 ,
+	    G.SPGL15 ,
+	    P.SPXX08 ,
+	    G.SPGL18 ,   
+	    CASE C.HDLX
+		    WHEN 1 THEN
+		      IFNULL(C.CXJG,9999999)
+		    ELSE
+		      9999999 
+		    END CXJG
+		    ,C.HDLX HDLX,
+	    SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+	    FROM W_SPGL G,W_SPJGB J, W_KCXX K, W_SPXX P,W_ZCXX A,
+	    (SELECT M.GSXX01,M.SPXX01,M.CXJG,M.HDLX 
+	    FROM W_CXZXB M 
+	    WHERE SYSDATE &gt;= M.BEGAINDATE 
+	    AND SYSDATE &lt;= M.ENDDATE
+	    <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+	    AND #{QYDM} LIKE  M.DQXX01|| '%'
+		   </if>
+	    ) C
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		      , W_SPQY Q
+		   </if>
+	  WHERE 
+	    G.SPXX01 = J.SPXX01
+	    AND G.ZCXX01 = J.ZCXX01
+	    AND G.ZCXX01 = A.ZCXX01
+	    AND G.SPXX01 = K.SPXX01
+	    AND G.ZCXX01 = K.ZCXX01
+	    AND G.ZCXX01 = C.GSXX01(+)
+	    AND G.SPXX01 = C.SPXX01(+)
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+			AND Q.JXS = G.ZCXX01
+		   	AND Q.SPID = G.SPXX01
+			    	<!--  加入区域权限     -->	
+			AND #{QYDM} LIKE  Q.QYDM|| '%'
+			</if>
+		<if test="SPFL01_CODE!=''">AND P.SPFL01 like #{SPFL01_CODE} || '%'</if>
+	    AND NOT EXISTS (SELECT 1 FROM   W_SPQXHMD D 
+	      WHERE 
+            D.ZTID=G.ZCXX01 
+            AND D.HBID=#{HBID}
+            AND D.SPXX01=G.SPXX01 ) 
+	    AND G.SPXX01 = P.SPXX01
+	    AND G.SPGL02 = 2
+	    AND G.SPGL12 IN ('1', '3')
+   		AND J.SPJGB01 &gt;= to_number(#{prista},'99999999.0000') 
+      	AND J.SPJGB01 &lt;= to_number(#{priend},'99999999.0000')
+      	AND UPPER(P.SPXX04) LIKE UPPER('%' || #{spnamelist} || '%')
+	    GROUP BY
+	    G.SPXX01,
+	    P.SPXX02,
+	    P.SPXX04,
+	    J.SPJGB01,
+	    J.SPJGB02,
+	    G.SPGL04,  
+	    J.SPJGB05,
+	    G.ZCXX01,
+	    G.SPGL03,
+	    G.SPGL02,
+	    G.SPGL08,
+	    G.SPGL13,
+	    G.SPGL18,
+	    A.ZCXX02,
+	    G.SPGL06,
+	    G.SPGL14,
+	    G.SPGL15,
+	    P.SPXX08,
+	    A.ZCXX34,  
+	    C.CXJG,
+	    C.HDLX
+	  UNION
+	  (SELECT 
+	    GG.SPXX01 ,
+	    PP.SPXX02 ,
+	    PP.SPXX04 ,
+	    JJ.SPJGB01 ,
+	    JJ.SPJGB02 ,
+	    GG.SPGL04 ,
+	    IFNULL(JJ.SPJGB05, 0) SPJGB05,
+	    GG.ZCXX01 ,
+	    GG.SPGL13 ,
+	    GG.SPGL03 ,
+	    GG.SPGL02 ,
+	    GG.SPGL08 ,
+	    AA.ZCXX02 ,
+	    GG.SPGL06 ,  
+	    GG.SPGL14 ,
+	    GG.SPGL15 ,
+	    PP.SPXX08 ,
+	    GG.SPGL18 ,
+	    CASE CC.HDLX
+		    WHEN 1 THEN
+		      IFNULL(CC.CXJG,9999999)
+		    ELSE
+		      9999999 
+		    END CXJG
+		    ,CC.HDLX CXLX,    
+	    SUM(KK.CKSP04 + KK.CKSP05 - KK.KCXX02) SPSL
+	  FROM 
+	    W_SPGL GG,
+	    W_SPJGB JJ,
+	    W_SPXX PP,
+	    W_ZCXX AA,
+	    W_KCXX KK,
+		    (SELECT BB.GSXX01, BB.SPXX01, BB.CXJG, BB.HDLX
+		     FROM W_CXZXB BB
+		     WHERE 
+		       SYSDATE &gt;= BB.BEGAINDATE
+		       AND SYSDATE &lt;= BB.ENDDATE
+		       AND BB.HDLX = 1
+		       <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+				AND #{QYDM} LIKE  BB.DQXX01|| '%'
+			   </if>
+		       ) CC
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		      , W_SPQY QQ
+		   </if>
+	  	WHERE 
+	          GG.SPXX01 = JJ.SPXX01 
+	      AND GG.ZCXX01 = JJ.ZCXX01
+	      AND GG.SPXX01 = PP.SPXX01
+		      AND GG.ZCXX01 = CC.GSXX01(+) 
+		      AND GG.SPXX01 = CC.SPXX01(+) 
+		<if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+			      AND GG.ZCXX01 = QQ.JXS
+		          AND GG.SPXX01 = QQ.SPID
+	    		  AND #{QYDM} LIKE  QQ.QYDM|| '%'
+		</if>
+	    <if test="SPFL01_CODE!=''">AND PP.SPFL01 like #{SPFL01_CODE} || '%'</if>
+     	AND EXISTS (SELECT 1
+              FROM W_FLPPQX RR
+             WHERE 
+                   RR.ZTID = GG.ZCXX01
+               AND RR.HBID =#{HBID}
+               AND RR.SPFL01 = SUBSTR(PP.SPFL01, 1, 4)
+               AND RR.PPB01 = PP.PPB01
+               AND RR.FLPP02 = 8)
+          
+     AND NOT EXISTS (SELECT 1 FROM   W_SPQXHMD DD 
+                WHERE 
+                  DD.ZTID=GG.ZCXX01 
+                  AND DD.HBID=#{HBID}
+                  AND DD.SPXX01=GG.SPXX01 )
+	 
+	      AND GG.SPGL12 IN ('1', '3')     
+	      AND GG.SPGL02 = 0
+	      AND GG.SPXX01 = KK.SPXX01 
+	      AND GG.ZCXX01 = KK.ZCXX01
+	      AND GG.ZCXX01 = AA.ZCXX01
+	  
+  		AND JJ.SPJGB01 &gt;= to_number(#{prista},'99999999.0000') 
+    	AND  JJ.SPJGB01 &lt;= to_number(#{priend},'99999999.0000')
+    	 AND UPPER(PP.SPXX04) LIKE UPPER('%' || #{spnamelist} || '%')
+	      GROUP BY
+	      GG.SPXX01,
+	      PP.SPXX02,
+	      PP.SPXX04,
+	      JJ.SPJGB01,
+	      JJ.SPJGB02,
+	      GG.SPGL04, 
+	      JJ.SPJGB05,
+	      GG.ZCXX01,
+	      GG.SPGL03,
+	      GG.SPGL02,
+	      GG.SPGL08,
+	      GG.SPGL13,
+	      GG.SPGL18,
+	      AA.ZCXX02,
+	      GG.SPGL06,
+	      GG.SPGL14,
+	      GG.SPGL15,
+	      PP.SPXX08,
+	      AA.ZCXX34,    
+	      CC.CXJG,
+	      CC.HDLX
+	    )
+	  ))
+	</select>
+	
+	
+	 <!-- 登入前查询大厅商品   -->
+    <select id="select_only_dtsp" parameterType="Map" resultType="java.util.Map">
+	SELECT  
+		G.SPXX01 ,
+		P.SPXX02 ,
+		P.SPXX04 ,
+		J.SPJGB01 ,
+		J.SPJGB02 ,
+		G.SPGL04 ,  
+        IFNULL(J.SPJGB05, 0) SPJGB05,
+		G.ZCXX01 ,
+		G.SPGL13 ,
+		G.SPGL03 ,
+		G.SPGL02 ,
+		G.SPGL08 ,
+		A.ZCXX02 ,
+		G.SPGL06 ,  
+        G.SPGL14 ,
+		G.SPGL15 ,
+		P.SPXX08 ,
+		G.SPGL18 ,			   
+	   9999999 CXJG,
+	   0 CXLX,   
+    SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+	FROM 
+		W_SPGL G, W_SPJGB J, W_KCXX K, W_SPXX P,W_ZCXX A
+	WHERE 
+		G.SPXX01 = J.SPXX01
+		AND G.ZCXX01 = J.ZCXX01
+		AND G.ZCXX01 = A.ZCXX01
+		AND G.SPXX01 = K.SPXX01
+		AND G.ZCXX01 = K.ZCXX01	
+		AND G.SPXX01 = P.SPXX01
+		AND G.SPGL02 = 2
+		AND G.SPGL12 IN ('1', '3')	
+<!--	      AND IFNULL(J.SPJGB05, 0) &gt;= to_number(#{prista},'99999999.0000') -->
+<!--	      AND IFNULL(J.SPJGB05, 0) &lt;= to_number(#{priend},'99999999.0000')-->
+	      AND IFNULL(J.SPJGB05, 0) &gt;= to_number('0','99999999.0000') 
+	      AND IFNULL(J.SPJGB05, 0) &lt;= to_number('9999999','99999999.0000')
+<!--		  AND UPPER(P.SPXX04) LIKE UPPER('%' || #{spnamelist[]} || '%')-->
+		  AND UPPER(P.SPXX04) LIKE UPPER('%' || '' || '%')		  		  
+		  AND P.SPFL01 like #{SPFL01_CODE} || '%'      <!-- w_spxx  SPFL01_CODE-->		   
+<!--		<if test="SPFL01_CODE!=''">AND P.SPFL01 like #{SPFL01_CODE} || '%' </if>-->
+<!--	    <if test="flcode02!=''">AND P.SPFL01 like #{flcode02}||'%'</if>-->
+<!--	    <if test="ppbcode!=''">AND P.PPB01=#{ppbcode}</if>-->   
+		GROUP BY
+		G.SPXX01,
+		P.SPXX02,
+		P.SPXX04,
+		J.SPJGB01,
+		J.SPJGB02,
+		G.SPGL04,  
+        J.SPJGB05,
+        G.ZCXX01,
+        G.SPGL03,
+        G.SPGL02,
+        G.SPGL08,
+        G.SPGL13,
+        G.SPGL18,
+        A.ZCXX02,
+        G.SPGL06,
+        G.SPGL14,
+		G.SPGL15,
+		P.SPXX08,
+		A.ZCXX34			
+ 	    ORDER BY A.ZCXX34 DESC, G.SPGL13 DESC	 
+	</select>
+	
+	 <select id="select_only_dtspsum" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) SUM FROM (
+	SELECT  
+		G.SPXX01 ,
+		P.SPXX02 ,
+		P.SPXX04 ,
+		J.SPJGB01 ,
+		J.SPJGB02 ,
+		G.SPGL04 ,  
+        IFNULL(J.SPJGB05, 0) SPJGB05,
+		G.ZCXX01 ,
+		G.SPGL13 ,
+		G.SPGL03 ,
+		G.SPGL02 ,
+		G.SPGL08 ,
+		A.ZCXX02 ,
+		G.SPGL06 ,  
+        G.SPGL14 ,
+		G.SPGL15 ,
+		P.SPXX08 ,
+		G.SPGL18 ,			   
+	   9999999 CXJG,
+	   0 CXLX,   
+    SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+	FROM 
+		W_SPGL G, W_SPJGB J, W_KCXX K, W_SPXX P,W_ZCXX A
+	WHERE 
+		G.SPXX01 = J.SPXX01
+		AND G.ZCXX01 = J.ZCXX01
+		AND G.ZCXX01 = A.ZCXX01
+		AND G.SPXX01 = K.SPXX01
+		AND G.ZCXX01 = K.ZCXX01	
+		AND G.SPXX01 = P.SPXX01
+		AND G.SPGL02 = 2
+		AND G.SPGL12 IN ('1', '3')	
+	      AND IFNULL(J.SPJGB05, 0) &gt;= to_number('0','99999999.0000') 
+	      AND IFNULL(J.SPJGB05, 0) &lt;= to_number('9999999','99999999.0000')
+		  AND UPPER(P.SPXX04) LIKE UPPER('%' || '' || '%')		  		  
+		  <if test="SPFL01_CODE!=''">
+		  AND P.SPFL01 like #{SPFL01_CODE} || '%'      <!-- w_spxx  SPFL01_CODE-->		   
+		  </if>
+		GROUP BY
+		G.SPXX01,
+		P.SPXX02,
+		P.SPXX04,
+		J.SPJGB01,
+		J.SPJGB02,
+		G.SPGL04,  
+        J.SPJGB05,
+        G.ZCXX01,
+        G.SPGL03,
+        G.SPGL02,
+        G.SPGL08,
+        G.SPGL13,
+        G.SPGL18,
+        A.ZCXX02,
+        G.SPGL06,
+        G.SPGL14,
+		G.SPGL15,
+		P.SPXX08,
+		A.ZCXX34			
+ 	    ORDER BY A.ZCXX34 DESC, G.SPGL13 DESC)	 
+	</select>
+	
+	<!-- 登入后查询大厅商品 -->
+	<select id="select_dtsp" parameterType="Map" resultType="java.util.Map">
+	SELECT G.SPXX01 ,
+       P.SPXX02 ,
+       P.SPXX04 ,
+       J.SPJGB01 ,
+       J.SPJGB02 ,
+       G.SPGL04 ,
+       IFNULL(J.SPJGB05, 0) SPJGB05,
+       G.ZCXX01 ,
+       G.SPGL13 ,
+       G.SPGL03 ,
+       G.SPGL02 ,
+       G.SPGL08 ,
+       A.ZCXX02 ,
+       G.SPGL06 ,
+       G.SPGL14 ,
+       G.SPGL15 ,
+       P.SPXX08 ,
+       G.SPGL18 ,
+       CASE C.HDLX
+         WHEN 1 THEN
+          IFNULL(C.CXJG, 9999999)
+         ELSE
+          9999999
+       END CXJG,
+       
+       C.HDLX HDLX,
+       SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+  FROM W_SPGL G,
+       W_SPJGB J,
+       W_KCXX K,
+       W_SPXX P,
+       W_ZCXX A,
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		       W_SPQY Q,
+		   </if>
+       (SELECT M.GSXX01, M.SPXX01, M.CXJG, M.HDLX
+          FROM W_CXZXB M
+         WHERE  #{QYDM} LIKE  M.DQXX01|| '%'
+           AND SYSDATE &gt;=  M.BEGAINDATE
+           AND SYSDATE &lt;= M.ENDDATE) C
+ WHERE G.SPXX01 = J.SPXX01
+   AND G.ZCXX01 = J.ZCXX01
+   AND G.ZCXX01 = A.ZCXX01
+   AND G.SPXX01 = K.SPXX01
+   AND G.ZCXX01 = K.ZCXX01
+   AND G.ZCXX01 = C.GSXX01(+)
+   AND G.SPXX01 = C.SPXX01(+)
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+			AND Q.JXS = G.ZCXX01
+		   	AND Q.SPID = G.SPXX01
+			   	<!--  加入区域权限     -->	
+			AND #{QYDM} LIKE  Q.QYDM|| '%'
+			</if>
+   AND NOT EXISTS (SELECT 1
+          FROM W_SPQXHMD D
+         WHERE D.ZTID = G.ZCXX01
+           AND D.HBID = #{HBID}
+           AND D.SPXX01 = G.SPXX01)
+   AND G.SPXX01 = P.SPXX01
+   AND G.SPGL02 = 2
+   AND G.SPGL12 IN ('1', '3')
+   AND G.SPGL04 &gt;= to_number(#{prista}, '99999999.0000')
+   AND G.SPGL04 &lt;= to_number(#{priend}, '99999999.0000')
+   AND UPPER(P.SPXX04) LIKE UPPER('%' || '' || '%')
+   AND P.SPFL01 like #{SPFL01_CODE} || '%'
+ GROUP BY G.SPXX01,
+          P.SPXX02,
+          P.SPXX04,
+          J.SPJGB01,
+          J.SPJGB02,
+          G.SPGL04,
+          J.SPJGB05,
+          G.ZCXX01,
+          G.SPGL03,
+          G.SPGL02,
+          G.SPGL08,
+          G.SPGL13,
+          G.SPGL18,
+          A.ZCXX02,
+          G.SPGL06,
+          G.SPGL14,
+          G.SPGL15,
+          P.SPXX08,
+          A.ZCXX34,
+          C.CXJG,
+          C.HDLX
+ ORDER BY A.ZCXX34 DESC, G.SPGL13 DESC
+    </select>
+    
+    <select id="select_dtspsum" parameterType="Map" resultType="java.util.Map">
+	 SELECT COUNT(1) SUM FROM (
+	 SELECT G.SPXX01 ,
+       P.SPXX02 ,
+       P.SPXX04 ,
+       J.SPJGB01 ,
+       J.SPJGB02 ,
+       G.SPGL04 ,
+       IFNULL(J.SPJGB05, 0) SPJGB05,
+       G.ZCXX01 ,
+       G.SPGL13 ,
+       G.SPGL03 ,
+       G.SPGL02 ,
+       G.SPGL08 ,
+       A.ZCXX02 ,
+       G.SPGL06 ,
+       G.SPGL14 ,
+       G.SPGL15 ,
+       P.SPXX08 ,
+       G.SPGL18 ,
+       CASE C.HDLX
+         WHEN 1 THEN
+          IFNULL(C.CXJG, 9999999)
+         ELSE
+          9999999
+       END CXJG,
+       
+       C.HDLX HDLX,
+       SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+  FROM W_SPGL G,
+       W_SPJGB J,
+       W_KCXX K,
+       W_SPXX P,
+       W_ZCXX A,
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		       W_SPQY Q,
+		   </if>
+       (SELECT M.GSXX01, M.SPXX01, M.CXJG, M.HDLX
+          FROM W_CXZXB M
+         WHERE #{QYDM} LIKE  M.DQXX01|| '%'
+           AND SYSDATE &gt;=  M.BEGAINDATE
+           AND SYSDATE &lt;= M.ENDDATE) C
+ WHERE G.SPXX01 = J.SPXX01
+   AND G.ZCXX01 = J.ZCXX01
+   AND G.ZCXX01 = A.ZCXX01
+   AND G.SPXX01 = K.SPXX01
+   AND G.ZCXX01 = K.ZCXX01
+   AND G.ZCXX01 = C.GSXX01(+)
+   AND G.SPXX01 = C.SPXX01(+)
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+			AND Q.JXS = G.ZCXX01
+		   	AND Q.SPID = G.SPXX01
+			  	<!--  加入区域权限     -->	
+			AND #{QYDM} LIKE  Q.QYDM|| '%'
+			</if>
+   AND NOT EXISTS (SELECT 1
+          FROM W_SPQXHMD D
+         WHERE D.ZTID = G.ZCXX01
+           AND D.HBID = #{HBID}
+           AND D.SPXX01 = G.SPXX01)
+   AND G.SPXX01 = P.SPXX01
+   AND G.SPGL02 = 2
+   AND G.SPGL12 IN ('1', '3')
+   AND G.SPGL04 &gt;= to_number(#{prista}, '99999999.0000')
+   AND G.SPGL04 &lt;= to_number(#{priend}, '99999999.0000')
+   AND UPPER(P.SPXX04) LIKE UPPER('%' || '' || '%')
+   <if test="SPFL01_CODE!=''">
+		  AND P.SPFL01 like #{SPFL01_CODE} || '%'     	   
+    </if>
+ GROUP BY G.SPXX01,
+          P.SPXX02,
+          P.SPXX04,
+          J.SPJGB01,
+          J.SPJGB02,
+          G.SPGL04,
+          J.SPJGB05,
+          G.ZCXX01,
+          G.SPGL03,
+          G.SPGL02,
+          G.SPGL08,
+          G.SPGL13,
+          G.SPGL18,
+          A.ZCXX02,
+          G.SPGL06,
+          G.SPGL14,
+          G.SPGL15,
+          P.SPXX08,
+          A.ZCXX34,
+          C.CXJG,
+          C.HDLX
+ ORDER BY A.ZCXX34 DESC, G.SPGL13 DESC)
+    </select>
+	
+	<!-- 未登入查询商品详情页面 -->
+	<select id="selectW_SPXX-SPXXItemNotLogin" parameterType="Map" resultType="java.util.Map">
+		SELECT A.SPXX01 ,
+		       B.SPXX04 ,
+		       J.JLDW02,  
+		       A.SPGL01 ,
+		        A.SPGL08 ,
+		       B.SPXX02 ,
+		       A.ZCXX01 ,
+		       B.SPFL01_CODE ,
+		       B.SPFL02_CODE ,
+		       B.PPB01 ,
+		       B.PPB02 ,
+		       B.SPFL01_NAME ,
+		       B.SPFL01 ,
+		       B.SPFL02 ,
+		       N.GHHT01 ,
+		       B.SPFL02_NAME ,
+		       A.SPGL02 ,
+	       	   <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+			   <!--  (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= A.SPXX01 and k.zcxx01=A.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,-->
+		       fn_getStockNum(A.ZCXX01,#{DQXX01},A.SPXX01) SPIMGURL,
+			   <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 END -->
+		       Z.ZCXX02 ,
+		       N.SPJGB01 ,
+		       N.SPJGB02 ,
+		       IFNULL(N.SPJGB05,0) SPJGB05,
+		       IFNULL(N.SPJBG06,0) SPJGB06,
+		       A.SPGL04 ,
+		       Z.ZCXX06 ,
+		       A.SPGL14 ,
+			   A.SPGL15 ,
+			   A.SPGL06 ,
+			   A.CKSP12 ,
+			   B.SPXH01 ,
+			   B.JLDW01 ,
+			   (SELECT S.SPTP02 FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=A.SPXX01 AND S.SPTP01=1) SPTP02,
+			   B.GGB01,A.SPGL26,A.SPGL27,A.SPGL28 
+  		FROM W_SPGL A, W_SPJGB N, W_SPXX B, W_ZCXX Z,W_JLDW J
+ 		WHERE A.SPXX01 = N.SPXX01
+		   AND A.ZCXX01 = N.ZCXX01
+		   AND A.SPXX01 = B.SPXX01
+		   AND A.ZCXX01 = Z.ZCXX01
+		   AND J.JLDW01 = B.JLDW01
+		   AND A.SPGL12 IN ('1','3')
+		   AND A.SPXX01 = #{SPXX01}    <!-- SPXX01  商品编码-->
+		   AND A.ZCXX01 = #{ZCXX01}        <!-- ZCXX01   公司编码-->
+	</select>
+	
+	<!-- 未登入查询商品详情页面 -->
+	<select id="selectW_SXSPXX-SPXXItemNotLogin" parameterType="Map" resultType="java.util.Map">
+		SELECT (select SXSP01 from w_spsxz where zcxx01=A.ZCXX01 and spxx01=A.SPXX01) SXSP01,
+			   A.SPXX01 ,
+		       B.SPXX04 ,
+		       J.JLDW02,  
+		       A.SPGL01 ,
+		        A.SPGL08 ,
+		       (select sx.SXSP05 from w_sxsp sx,w_spsxz sxz where sx.ZCXX01=sxz.ZCXX01 and sx.SXSP01=sxz.SXSP01 and sxz.SPXX01=A.SPXX01)SPXX02 ,
+		       A.ZCXX01 ,
+		       B.SPFL01_CODE ,
+		       B.SPFL02_CODE ,
+		       B.PPB01 ,
+		       B.PPB02 ,
+		       B.SPFL01_NAME ,
+		       B.SPFL01 ,
+		       B.SPFL02 ,
+		       N.GHHT01 ,
+		       B.SPFL02_NAME ,
+		       A.SPGL02 ,
+		       <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+			   <!--  (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= A.SPXX01 and k.zcxx01=A.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,-->
+		       fn_getStockNum(A.ZCXX01,#{DQXX01},A.SPXX01) SPIMGURL,
+			   <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 END -->
+		       Z.ZCXX02 ,
+		       N.SPJGB01 ,
+		       N.SPJGB02 ,
+		       IFNULL(N.SPJGB05,0) SPJGB05,
+		       IFNULL(N.SPJBG06,0) SPJGB06,
+		       A.SPGL04 ,
+		       Z.ZCXX06 ,
+		       A.SPGL14 ,
+			   A.SPGL15 ,
+			   A.SPGL06 ,
+			   A.CKSP12 ,
+			   B.SPXH01 ,
+			   B.JLDW01 ,
+			   (SELECT S.SPTP02 FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=(select SXSP01 from w_spsxz where zcxx01=A.ZCXX01 and spxx01=A.SPXX01) AND S.SPTP01=1) SPTP02,
+			   B.GGB01,A.SPGL26,A.SPGL27,A.SPGL28 
+  		FROM W_SPGL A, W_SPJGB N, W_SPXX B, W_ZCXX Z,W_JLDW J
+ 		WHERE A.SPXX01 = N.SPXX01
+		   AND A.ZCXX01 = N.ZCXX01
+		   AND A.SPXX01 = B.SPXX01
+		   AND A.ZCXX01 = Z.ZCXX01
+		   AND J.JLDW01 = B.JLDW01
+		   AND A.SPGL12 IN ('1','3')
+		   AND A.SPXX01 = #{SPXX01}    <!-- SPXX01  商品编码-->
+		   AND A.ZCXX01 = #{ZCXX01}        <!-- ZCXX01   公司编码-->
+	</select>
+	
+	<!-- 商城推荐 -->
+	<select id="selectW_SPXX-recommend" parameterType="Map" resultType="java.util.Map">
+		SELECT A.SPXX01 ,
+		       B.SPXX04 ,
+		       A.SPGL01 ,
+		       B.SPXX02 ,
+		       A.ZCXX01 ,
+		       B.SPFL01_CODE ,
+		       B.SPFL02_CODE ,
+		       B.PPB01 ,
+		       B.PPB02 ,
+		       B.SPFL01_NAME ,
+		       B.SPFL01 ,
+		       N.GHHT01 ,
+		       B.SPFL02_NAME ,
+		       A.SPGL02 ,
+	       	   <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+			   <!--  (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= A.SPXX01 and k.zcxx01=A.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,-->
+		       fn_getStockNum(A.ZCXX01,#{DQXX01},A.SPXX01) SPIMGURL,
+			   <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 END -->
+			   Z.ZCXX02 ,
+		       N.SPJGB01 ,
+		       N.SPJGB02 ,
+		       IFNULL(N.SPJGB05,0) SPJGB05,
+		       A.SPGL04 ,
+		       Z.ZCXX06 ,
+		       A.SPGL14 ,
+			   A.SPGL15 ,
+			   A.SPGL06 ,
+			   A.CKSP12 ,
+			   B.SPXH01 ,
+			   B.JLDW01 ,
+			   (SELECT S.SPTP02 FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=A.SPXX01 AND S.SPTP01=1) SPTP02,
+			   B.GGB01 
+  		FROM W_SPGL A, W_SPJGB N, W_SPXX B, W_ZCXX Z
+ 		WHERE A.SPXX01 = N.SPXX01
+		   AND A.ZCXX01 = N.ZCXX01
+		   AND A.SPXX01 = B.SPXX01
+		   AND A.ZCXX01 = Z.ZCXX01
+		   AND A.SPGL12 IN ('1','3')
+		   AND A.ZCXX01 = #{ZCXX01}  <!-- ZCXX01   公司编码-->
+		   AND B.SPFL01 = #{SPFL01}        <!-- 相同分类-->
+		  LIMIT 6
+	</select>
+	
+	<!-- 最佳组合 -->
+	<select id="selectW_SPXX-bestGoods" parameterType="Map" resultType="java.util.Map">
+		SELECT A.SPXX01 ,
+		       B.SPXX04 ,
+		       A.SPGL01 ,
+		       B.SPXX02 ,
+		       A.ZCXX01 ,
+		       B.SPFL01_CODE ,
+		       B.SPFL02_CODE ,
+		       B.PPB01 ,
+		       B.PPB02 ,
+		       B.SPFL01_NAME ,
+		       B.SPFL01 ,
+		       N.GHHT01 ,
+		       B.SPFL02_NAME ,
+		       A.SPGL02 ,
+		       <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+			   <!--  (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= A.SPXX01 and k.zcxx01=A.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,-->
+		       fn_getStockNum(A.ZCXX01,#{DQXX01},A.SPXX01) SPIMGURL,
+			   <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 END -->
+			   Z.ZCXX02 ,
+		       N.SPJGB01 ,
+		       N.SPJGB02 ,
+		       IFNULL(N.SPJGB05,0) SPJGB05,
+		       A.SPGL04 ,
+		       Z.ZCXX06 ,
+		       A.SPGL14 ,
+			   A.SPGL15 ,
+			   A.SPGL06 ,
+			   A.CKSP12 ,
+			   B.SPXH01 ,
+			   B.JLDW01 ,
+			   (SELECT S.SPTP02 FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=A.SPXX01 AND S.SPTP01=1) SPTP02,
+			   B.GGB01 
+  		FROM W_SPGL A, W_SPJGB N, W_SPXX B, W_ZCXX Z,W_GLSP G
+ 		WHERE A.SPXX01 = N.SPXX01
+		   AND A.ZCXX01 = N.ZCXX01
+		   AND A.SPXX01 = B.SPXX01
+		   AND A.ZCXX01 = Z.ZCXX01
+		   AND A.SPXX01=G.GLSPXX01
+      	   AND A.ZCXX01 = G.ZCXX01
+		   AND A.SPGL12 IN ('1','3')
+		   AND A.ZCXX01 = #{ZCXX01}  <!-- ZCXX01   公司编码-->
+		   AND G.SPXX01 = #{SPXX01}       <!-- 关联商品-->
+		  ORDER BY G.GLSJ DESC
+		  LIMIT 6
+	</select>
+	
+	<!-- 登入后查询商品详情页面 -->
+	<select id="selectW_SPXX-SPXXItemLogin" parameterType="Map" resultType="java.util.Map">
+	SELECT A.SPXX01 ,
+       B.SPXX04 ,
+       A.SPGL01 ,
+       B.SPXX02 ,
+       A.ZCXX01 ,
+       B.SPFL01_CODE ,
+       B.SPFL02_CODE ,
+       B.PPB01 ,
+       B.PPB02 ,
+       B.SPFL01_NAME ,
+       B.SPFL01 ,
+       N.GHHT01 ,
+       B.SPFL02_NAME ,
+       A.SPGL02 ,
+       <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+	   <!--  (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= A.SPXX01 and k.zcxx01=A.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,-->
+       fn_getStockNum(A.ZCXX01,#{DQXX01},A.SPXX01) SPIMGURL,
+	   <!-- 20151222 齐俊宇 update 修改库存数量为函数显示 END -->
+       Z.ZCXX02 ,
+       N.SPJGB01 ,
+       N.SPJGB02 ,
+       IFNULL(N.SPJGB05, 0) SPJGB05,
+       A.SPGL04 ,
+       Z.ZCXX06 ,
+       A.SPGL14 ,
+       A.SPGL15 ,
+       A.SPGL06 ,
+       A.CKSP12 ,
+       B.SPXH01 ,
+       B.JLDW01 ,
+       B.GGB01 
+  FROM W_SPGL A, W_SPJGB N, W_SPXX B, W_ZCXX Z, W_KCXX K
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		      , W_SPQY Q
+		   </if>
+ WHERE A.SPXX01 = N.SPXX01
+   AND A.ZCXX01 = N.ZCXX01
+   AND A.SPXX01 = B.SPXX01
+   AND A.ZCXX01 = Z.ZCXX01
+   AND A.SPGL12 IN ('1', '3')
+   AND A.SPXX01 = #{SPXX01}    <!-- SPXX01  商品编码-->
+   AND A.ZCXX01 = #{ZCXX01}        <!-- ZCXX01   公司编码-->
+   		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+   	   AND A.ZCXX01 = Q.JXS
+       AND A.SPXX01 = Q.SPID
+       AND #{QYDM} LIKE Q.QYDM|| '%'
+			</if>
+			<!-- 添加属性权限 -->
+	<if test="spsxqx!=null and spsxqx!='' and ckqx_hbid !='' ">
+		AND EXISTS (SELECT 0 FROM W_SPSXQX Z WHERE Z.HBID=#{ckqx_hbid} AND Z.ZTID=A.ZCXX01 AND A.CKSP12=Z.CKSP12)
+	</if>
+			<!-- 仓库权限判断 -->
+		<if test="ckqx_hbid!='' and ckqx_hbid!=null and ckqx_hbid!=undefined">
+       AND EXISTS (SELECT 1
+          FROM W_CKQX C
+         WHERE C.ZTID = K.ZCXX01
+           AND C.CK01 = K.CK01
+           and C.GSID = #{ckqx_hbid})
+           </if>
+	</select>
+	
+	<!-- 商品详情页控制  (明珠专用)-->
+	<select id="selectW_SPXX-SPXXItemLoginLimit" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) COUNT
+  FROM W_SPGL A, W_SPQY B,W_KCXX K,W_SPXX P
+  WHERE  A.ZCXX01 = B.JXS
+   AND A.SPXX01=P.SPXX01
+   AND A.SPXX01 = K.SPXX01
+    <if test="spid!='' and spid!=null and spid!=undefined">
+   AND A.SPXX01 = #{spid}
+   </if>
+   <if test="ztid!='' and ztid!=null and ztid!=undefined">
+   AND A.ZCXX01 = #{ztid}
+ 	</if>
+   AND A.SPGL12 IN ('1', '3')
+   AND A.SPXX01 = B.SPID
+   <if test="qydm!='' and qydm!=null and qydm!=undefined">
+   AND #{qydm} LIKE  B.QYDM|| '%' 
+   </if>
+    <!-- 添加属性权限 -->
+	<if test="spsxqx!=null and spsxqx!='' and hbid !='' ">
+		AND EXISTS (SELECT 0 FROM W_SPSXQX Z WHERE Z.HBID=#{hbid} AND Z.ZTID=A.ZCXX01 AND A.CKSP12=Z.CKSP12)
+	</if>
+   <if test="hbid!='' and hbid!=null and hbid!=undefined">
+ 	 AND EXISTS (SELECT 1
+          FROM W_FLPPQX R, W_GSGX H 
+         WHERE R.ZTID = H.ZTID
+           AND R.HBID = H.HBID
+           AND H.HBID = #{hbid}
+           AND R.PPB01 = P.PPB01
+           AND R.SPFL01 = SUBSTR(P.SPFL01, 1, 4)
+           AND R.ZTID = A.ZCXX01
+           AND R.FLPP02 = 8)
+           <!-- 仓库权限暂时不加 -->
+   	 	AND EXISTS (SELECT 1
+          FROM W_CKQX C
+         WHERE C.ZTID = K.ZCXX01
+           AND C.CK01 = K.CK01
+           and C.GSID = #{hbid}) 
+           </if>
+	</select>
+	
+	<select id="selecQYghs" resultType="java.util.Map">	
+		SELECT A.PPB02||A.SPFL02 FLPP 
+  			FROM W_ZTFLPP A  WHERE A.ZCXX01 = #zcxx01# AND  A.TYBJ = 1
+	</select>
+	
+	<select id="selectKHPJ" parameterType="Map" resultType="java.util.Map">
+	   SELECT DATE_FORMAT(SPPJ02,'%Y-%m-%d %k:%i:%s') SPPJ02,
+	   ZCXX02,
+  	   (select zcxx31 from w_zcxx where zcxx01 = a.hbid) KHDJ,
+       SPPJ03,
+       SPPJ04,
+       SPPJ05,
+       SPPJ06,
+       (SPPJ03 + SPPJ04 + SPPJ05 + SPPJ06 ) /4 ZHPJ,
+       SPPJ07,
+       SPPJ12,
+       DATE_FORMAT(SPPJ08,'%Y-%m-%d') SPPJ08,
+       XTCZY01
+       FROM W_SPPJ a
+       where  a.spxx01=#{spxx01}
+       ORDER BY SPPJ02 DESC
+	</select>
+	
+	<select id="selectKHPJsum" parameterType="Map" resultType="java.util.Map">
+	  SELECT count(1) AMOUNT  FROM (
+	   SELECT DATE_FORMAT(SPPJ02,'%Y-%m-%d') SPPJ02,
+  	   (select zcxx31 from w_zcxx where zcxx01 = a.hbid) KHDJ,
+       SPPJ03,
+       SPPJ04,
+       SPPJ05,
+       SPPJ06,
+       (SPPJ03 + SPPJ04 + SPPJ05 + SPPJ06 ) /4 ZHPJ,
+       SPPJ07,
+       SPPJ12,
+       DATE_FORMAT(SPPJ08,'%Y-%m-%d') SPPJ08,
+       XTCZY01
+       FROM W_SPPJ a
+       where a.spxx01=#{spxx01}
+       ORDER BY SPPJ02 DESC
+      ) C
+	</select>
+	
+</mapper>
+  

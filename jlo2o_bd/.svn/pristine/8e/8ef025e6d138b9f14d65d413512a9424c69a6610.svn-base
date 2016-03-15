@@ -1,0 +1,56 @@
+var json = [
+{"id":"Srch_ZXXW","name":"资讯新闻查看",
+	 "columns":[
+		              {"property":"JLBH","show":"1","sum":"0","text":"","type":"string","explain":"编号","width":"100"},
+		              {"property":"TITLE","show":"1","sum":"0","text":"","type":"string","explain":"标题","width":"250"},
+		              {"property":"FBSJ","show":"1","sum":"0","text":"","type":"string","explain":"发布时间","width":"100"},
+		              {"property":"LXNAME","show":"1","sum":"0","text":"","type":"string","explain":"资讯类型","width":"100"},
+		              {"property":"LXCODE","show":"0","sum":"0","text":"","type":"string","explain":"资讯类型编码","width":"100"},
+		              {"property":"ZSFW","show":"0","sum":"0","text":"","type":"string","explain":"展示范围","width":"100"}
+		              //{"property":"CON","show":"0","sum":"0","text":"","type":"string","explain":"正文","width":"100"}
+		              ]},
+{"id":"Srch_ALFX","name":"案例分享查看",
+	 "columns":[
+	            	  {"property":"ALTITLE","show":"1","sum":"0","text":"","type":"string","explain":"案例标题","width":"250"},
+	            	  {"property":"LXNAME","show":"1","sum":"0","text":"","type":"string","explain":"类型","width":"100"},
+	            	  {"property":"STATE","show":"1","sum":"0","text":"","type":"string","explain":"状态","width":"100"},
+	            	  {"property":"CKQX","show":"1","sum":"0","text":"","type":"string","explain":"权限","width":"100"},
+	            	  {"property":"FBR","show":"1","sum":"0","text":"","type":"string","explain":"发布人","width":"100"},
+	            	  {"property":"FBSJ","show":"1","sum":"0","text":"","type":"string","explain":"发布时间","width":"100"},
+	            	  {"property":"ALBH","show":"0","sum":"0","text":"","type":"string","explain":"","width":"100"},
+	            	  {"property":"FILENAME","show":"0","sum":"0","text":"","type":"string","explain":"","width":"100"},
+	            	  {"property":"FILEPATH","show":"0","sum":"0","text":"","type":"string","explain":"","width":"100"},
+	            	  {"property":"GJNR","show":"0","sum":"0","text":"","type":"string","explain":"","width":"100"},
+	            	  {"property":"LXBH","show":"0","sum":"0","text":"","type":"string","explain":"","width":"100"},
+	            	  {"property":"TJBJ","show":"0","sum":"0","text":"","type":"string","explain":"","width":"100"}
+	            	  ]},
+{"id":"select_LxList","name":"案例类型定义",
+	 "columns":[
+	                 {"property":"ALLX","show":"1","sum":"0","text":"","type":"string","explain":"案例编号","width":"100"},
+	                 {"property":"LXNAME","show":"1","sum":"0","text":"","type":"string","explain":"案例类型","width":"100"},
+	                 {"property":"CKQX","show":"1","sum":"0","text":"","type":"string","explain":"查看权限","width":"100"}
+	                 ]},
+{"id":"Srch_XXLX","name":"信息类型定义",
+  	"columns":[
+		  			 {"property":"CODE","show":"1","sum":"0","text":"","type":"string","explain":"信息编号","width":"100"},
+		  			 {"property":"NAME","show":"1","sum":"0","text":"","type":"string","explain":"信息名称","width":"100"}
+		  			  ]},
+ /** 基础信息 关联部门信息查询*/
+{"id":"Srch_BM","name":"部门信息",
+  	"columns":[
+		  			 {"property":"BMBM","show":"1","sum":"0","text":"","type":"string","explain":"部门编号","width":"100"},
+		  			 {"property":"BMNAME","show":"1","sum":"0","text":"","type":"string","explain":"部门名称","width":"100"},
+		  			 {"property":"BMJB","show":"1","sum":"0","text":"","type":"string","explain":"部门级别","width":"100"}
+		  			  ]},
+{"id":"Srch_CK","name":"仓库信息",
+  	"columns":[
+		  			  {"property":"CKBM","show":"1","sum":"0","text":"","type":"string","explain":"仓库编号","width":"100"},
+		  			  {"property":"CKNAME","show":"1","sum":"0","text":"","type":"string","explain":"仓库名称","width":"100"}
+		  			  ]},
+{"id":"Srch_Relelation","name":"销售部门关联",
+	"columns":[
+		  			  {"property":"DQXX01","show":"1","sum":"0","text":"","type":"string","explain":"销售部门关联","width":"100"},
+		  			  {"property":"BMNAME","show":"1","sum":"0","text":"","type":"string","explain":"销售部门名称","width":"100"},
+		  			  {"property":"CKNAME","show":"1","sum":"0","text":"","type":"string","explain":"仓库名称","width":"100"}
+		  			  ]}
+]

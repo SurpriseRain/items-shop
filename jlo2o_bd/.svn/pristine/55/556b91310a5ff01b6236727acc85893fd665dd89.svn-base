@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中国汽服云平台</title>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<link rel="stylesheet" type="text/css" href="../css/products.css" />
+<link rel="stylesheet" type="text/css" href="../css/carSs.css" />
+<link rel="stylesheet" type="text/css" href="../css/menu.css" />
+<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="../js/openbox.js"></script>
+<script type="text/javascript" src="../js/jq.Slide.js"></script>
+<script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../js/jquery.bxslider2.min.js"></script>
+<script type="text/javascript" src="../js/scripts.js"></script>
+<script type="text/javascript" src="../js/accounting.min.js"></script>
+<script type="text/javascript" src="../js/lrtk.js"></script>
+<script type="text/javascript" src="../js/carSs.js"></script>
+<script type="text/javascript" src="../js/pubJson.js"></script>
+<style>
+body{ margin:0 auto;}
+.main_text{ width:1200px; margin:0 auto; font-size:12px; font-family:"microsoft yahei";}
+.main_text span.title{ float:left; width:100%; height:50px; line-height:50px;}
+.main_text ul{ float:left; width:1200px;}
+.main_text p{ float:left; width:1158px; border:1px solid #f9d2a3; background-color:#faf3ea; padding:20px; font-size:16px; line-height:35px; margin:0px;}
+.main_text p span{ float:left; width:600px;}
+.main_text p img{ float:right; border:1px solid #e4e4e4;}
+.clear{ clear:both;}
+ul,li{ list-style:none; padding:0px; margin:0px;}
+.main_text ul{ margin-top:10px;}
+.main_text ul li{ float:left; width:100%;}
+.main_text ul span{ float:left; font-size:20px; height:50px; line-height:50px; color:#999; width:100%;}
+.main_text ul input{ float:left; width:300px; height:40px; border:1px solid #ccc; padding:0 5px; margin:0 10px 0 0;}
+.bot{ float:right; width:80px; height:30px; font-size:15px; border:1px solid #c76e09; background-color:#ff8800; text-align:center; color:#fff; font-family:"microsoft yahei"; box-shadow:0px 0px 2px #ccc; text-shadow: 0px 0 1px #666; margin:0px;}
+.bot:hover{ cursor:pointer; background-color:#c76e09;}
+.main_text ul#ul0{ float:left; width:100%; height:200px; line-height:200px; font-size:50px; text-align:center; color:#ccc; display:none;}
+
+.main_text .pro{ float:left; width:1198px; border:1px solid #ccc; margin:20px 0;}
+.main_text .pro .pro_left{ float:left; width:499px; border-right:1px solid #ccc; height:650px;}
+.main_text .pro .pro_left img{ float:left; width:309px; height:300px; background-color:#fff;margin-left: 80px;}
+.main_text .pro .pro_right{ float:right; width:698px; height:650px;}
+.main_text .pro .pro_right ul{ float:left; width:100%; margin:0px;}
+.main_text .pro .pro_right ul li{ float:left; width:90%; margin:0 5%; line-height:50px; border-bottom:1px solid #e4e4e4; font-size:14px; color:#666;}
+.main_text .pro .pro_right ul li lable{ color:#3c3c3c; font-weight:bold;}
+</style>
+<script type="text/javascript">
+var ImgUrl=pubJson.path_sptp;//图片默认路径
+$(document).ready(function(){
+	$("#ul0").hide();
+	$(".pro").hide();
+	//加载头和尾 
+	$("#header").load("/customer/qfy/head.jsp?ss="+Math.random(),function(reponse,status){
+		if(status=="success"){
+		$(".sptms").css({"color":"#ff8800"});
+		}
+	});
+	$("#footer").load("/customer/qfy/foot.html?ss="+Math.random());	
+})
+function submit(){
+	var barcode=$("#barcode").val();
+	var spcm03=$("#spcm03").val();
+	var spcm04=$("#spcm04").val();
+	var XmlData;
+	var url;
+	if(spcm03!=""&&spcm04!=""){
+		 XmlData=[{"barcode":barcode,"spcm03":spcm03,"spcm04":spcm04}];
+		 url="/HomePage/selectRemind_tmzsPch.action?XmlData="+JSON.stringify(XmlData);
+		 var rData=visitService(url);
+		 if(rData.STATE=="1"){
+			$("#SPXX04").text(rData.SPXX04);
+			$("#barcode2").text(rData.BARCODE);
+			$("#description").attr("href",rData.description);
+			$("#ZCXX02").text(rData.ZCXX02);
+			$("#ZCXX08").text(rData.ZCXX08);
+			$("#ZCXX06").text(rData.ZCXX06);
+			$("#CKSJ").text(rData.CKSJ);
+			$("#SHCK").text(rData.SHCK);
+			$("#SHF").text(rData.SHF);
+			$("#SHSJ").text(rData.SHSJ);
+			$("#PHONE").text(rData.PHONE);
+			$("#GMSJ").text(rData.GMSJ);
+			$("#GHF").text(rData.GHF);
+			$("#imgUrl").attr("src",ImgUrl+"/sptp/"+rData.ZCXX01+"/"+rData.SPXX02+"/images/"+rData.SPXX02+"_1_big.jpg").attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+			$("#ul0").hide();
+			$("#ul1").show();
+			$("#ul2").show();
+			$(".pro").show();
+			 }else{
+				$("#SPXX04").text("");
+				$("#barcode2").text("");
+				$("#description").attr("href","#");
+				$("#ZCXX02").text("");
+				$("#ZCXX08").text("");
+				$("#ZCXX06").text("");
+				$("#CKSJ").text("");
+				$("#SHCK").text("");
+				$("#SHF").text("");
+				$("#SHSJ").text("");
+				$("#PHONE").text("");
+				$("#GMSJ").text("");
+				$("#GHF").text("");
+				$("#imgUrl").attr("src","/customer/qfy/images/msimg.jpg");
+				$("#ul0").show();
+				$("#ul1").hide();
+				$("#ul2").hide();
+				$(".pro").hide();
+			 }
+	}else if(spcm03!=""&&spcm04==""){
+		alert("请继续输入完整批次号");
+		return false;
+		}else{
+		XmlData=[{"barcode":barcode}];
+		url="/HomePage/selectRemind_tmzs.action?XmlData="+JSON.stringify(XmlData);
+		var rData=visitService(url);
+		if(rData.STATE=="1"){
+		$("#SPXX04").text(rData.SPXX04);
+		$("#barcode2").text(rData.BARCODE);
+		$("#ZCXX02").text(rData.ZCXX02);
+		$("#ZCXX08").text(rData.ZCXX08);
+		$("#ZCXX06").text(rData.ZCXX06);
+		$("#ul0").hide();
+		$("#ul1").show();
+		$("#ul2").hide();
+		$(".pro").show();
+		$("#description").attr("href",rData.description).css("color","black");
+		$("#imgUrl").attr("src",ImgUrl+"/sptp/"+rData.ZCXX01+"/"+rData.SPXX02+"/images/"+rData.SPXX02+"_1_big.jpg").attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+			}else if(rData.STATE=="0"){
+				srch();
+				}
+		}
+	//alert(barcode.length);
+}
+function srch(){
+	var BARCODE=$("#barcode").val();
+	var  XmlData1 = [{"BARCODE":BARCODE}];
+	//XmlData1[0].xpbj=xpbj;
+	var XmlData=JSON.stringify(XmlData1);
+	if(BARCODE==""){
+		alert("请输入商品条码!");
+		return false;
+	}
+	var url="/MyGoods/SrchGoods.action?XmlData="+XmlData;
+	var rData=visitService(url);
+	if(rData.STATE=="1"){
+		if(rData.goodsMap!=null&&rData.goodsMap.FLAG!="NO"&&rData.goodsMap.JL_State!="接收失败"){
+			var goodsMap=rData.goodsMap;
+			$("#SPXX04").text(goodsMap.itemName);
+			$("#barcode2").text(BARCODE);
+			$("#description").attr("href",goodsMap.description);
+	
+			$(".pro").show();
+		}else{
+			$("#ul0").show();
+			$("#ul1").hide();
+			$("#ul2").hide();
+			$(".pro").hide();
+			$("#SPXX04").text("");
+			$("#barcode2").text("");
+			$("#ZCXX02").text("");
+			$("#ZCXX08").text("");
+			$("#ZCXX06").text("");
+			$("#description").attr("href","#");
+			$("#imgUrl").attr("src","/customer/qfy/images/sptp.jpg");
+		}
+	}
+}
+</script>
+</head>
+<body>
+<!--------------------------------头部-------------------------------------->
+<div id="header">
+</div>
+<div class="clera"></div>
+<div class="main_text" >
+<span class="title">客户专区 >  条码追溯  > 商品详情</span>
+<p><span>说明：条码追溯是汽服云平台配合打假保优而开放的社会公众查询平台，目前仅限本平台内流通的商品查询。通过输入商品外包装上的商品条码就能追溯到商品的流通信息。<br />
+操作说明：如右图，空调泵下的数字+字母即可查询商品信息，右图中的商品条码为6931939760014,150520 B0007是商品批次号，条码+批次号+序列号是商品唯一标识符。<br />
+
+<span style="color:red;">查询条件</span>
+<input id="barcode" name="barcode" placeholder="请输入商品条码"/>
+<input id="spcm03" name="spcm03" placeholder="请输入批次号"/>
+<input id="spcm04" name="spcm04" placeholder="请输入序列号"/>
+<input type="submit" value="查询" onclick="submit();" class="bot"/>
+
+</span><img src="/customer/qfy/images/erm.jpg" /></p>
+<div class="clear"></div>
+<ul>
+</ul>
+<ul id="ul0"><li>无法查到该条码信息</li></ul>
+<div class="pro">
+<div class="pro_left" ><img id="imgUrl" src="/customer/qfy/images/sptp.jpg" /></div>
+<div class="pro_right">
+<ul id="ul1">
+<li>商品名称：<lable id="SPXX04" name="SPXX04"></lable></li>
+<li>商品条码：<a id="description"><lable id="barcode2" name="barcode2" ></lable></a></li>
+<li>供货方：<lable id="ZCXX02" name="ZCXX02" > </lable></li>
+<li>供货方地址：<lable id="ZCXX08" name="ZCXX08" ></lable></li>
+<li>供货方电话：<lable id="ZCXX06" name="ZCXX06" /></lable> </li>
+</ul>
+<ul id="ul2">
+<li>出厂时间：<lable id="CKSJ" name="CKSJ" /></lable> </li>
+<li>收货仓库：<lable id="SHCK" name="SHCK" /></lable> </li>
+<li>送货方：<lable id="SHF" name="SHF" /></lable> </li>
+<li>送货时间：<lable id="SHSJ" name="SHSJ" /></lable> </li>
+<li>送货方电话：<lable id="PHONE" name="PHONE" /></lable> </li>
+<li>购货时间：<lable id="GMSJ" name="GMSJ" /></lable> </li>
+<li>购货方：<lable id="GHF" name="GHF" /></lable> </li>
+</ul>
+</div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

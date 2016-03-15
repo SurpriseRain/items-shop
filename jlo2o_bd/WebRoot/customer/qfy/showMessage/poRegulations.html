@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="Keywords" content="汽车维修；汽车后市场；汽车维修保养；新能源汽车；混合动力汽车；汽车；汽车维修技术总结" />
+<title>汽车|汽车维修|汽车后市场|汽服云平台</title>
+<link rel="stylesheet" type="text/css" href="../css/public.css" />
+<link rel="stylesheet" type="text/css" href="../css/products.css" />
+<link rel="stylesheet" type="text/css" href="../css/carSs.css" />
+<link rel="stylesheet" type="text/css" href="../css/menu.css" />
+<link rel="stylesheet" type="text/css" href="../css/styles.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery.bxslider2.min.js"></script>
+<script type="text/javascript" src="../js/openbox.js"></script>
+<script type="text/javascript" src="../js/jq.Slide.js"></script>
+<script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="../js/scripts.js"></script>
+<script type="text/javascript" src="../js/accounting.min.js"></script>
+<script type="text/javascript" src="../js/lrtk.js"></script>
+<script type="text/javascript" src="../js/carSs.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+
+<script type="text/javascript">
+var imgUrl=pubJson.path_sptp+"/zcfg/";
+$(document).ready(function(){
+	//加载头和尾 
+	$("#header").load("/customer/qfy/head-08.jsp?ss="+Math.random(),function(reponse,status){
+		if(status=="success"){
+		$(".zcfg").css({"color":"#ff8800"});
+		}
+	});
+	$("#footer").load("/customer/qfy/foot-08.html?ss="+Math.random());	
+	selectMoreZCFG();
+	var ALID=$.getUrlParam('ALID');
+	if(ALID!=null) {
+		loadZCFG(ALID);
+	} else {
+		loadZCFG("1");
+	}
+		
+})
+
+//查询政策法规
+function selectMoreZCFG(){
+	var newsXmlData=[];
+	var newsJson={};
+		newsJson.num=9;
+		newsJson.DHBJ="1";
+		newsXmlData.push(newsJson);
+	var infoUrl="/HomePage/selectInforMation.action?XmlData="+JSON.stringify(newsXmlData);
+	var returnVal=visitService(infoUrl);
+	var newInfoList=returnVal.mapList;
+	var DHID = "poRegulations.html";
+	var DHMC = escape("政策法规");
+	$(newInfoList).each(function(index,newsObj){
+		$("#sxtj").find("a").eq(index).html(newsObj.LXMC).attr("value",newsObj.LXBH);
+		$("#sxtj").find("a").eq(index).on("click",function(){
+			loadZCFG(newsObj.LXBH,newsObj.LXMC);
+			//$("#sxtj").find("a").removeClass("xuan");
+			//$(this).attr("class","xuan");
+			
+		});
+		$(newsObj.alInfo).each(function(m,infoNews){
+			if(index == 0) {
+				$("#select_btn").find("li").eq(m).find("a").find("span").first().html(infoNews.ALTITLE);
+				$("#select_btn").find("li").eq(m).find("a").find("span").last().html(infoNews.FBSJ);
+				$("#select_btn").find("li").eq(m).find("a").attr("href","/customer/qfy/showMessage/newMain.html?ALBH="+infoNews.ALBH).find("img").attr("src",imgUrl+infoNews.FILENAME).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+			}
+		});
+	});
+}
+//政策法规展示
+function loadZCFG(LXBH){
+	$("#sxtj").find("a").removeClass("xuan");
+	$("ul.news-fl").find(".left").find("div.new").remove();
+	$("ul.news-fl").find(".right").find("div.new").remove();
+	/*
+	$("#select_btn").find("li").find("a").find("span").empty();
+	$("#select_btn").find("li").find("a").removeAttr();
+	$("#select_btn").find("li").find("img").removeAttr();
+	$("#picshow_img").find("ul").find("li").find("a").removeAttr();
+	$("#picshow_tx").find("li").find("a").removeAttr();
+	$("#picshow_tx").find("li").find("img").removeAttr();
+	*/
+	$("#sxtj").find("a").each(function(index,obj){
+		if(obj.attributes[0].value == LXBH) {
+			$(this).attr("class","xuan");
+		}
+	});
+	var XmlData=[{"LXBH":LXBH}];
+	var url="/HomePage/selectZCFG.action?XmlData="+JSON.stringify(XmlData);
+	var rData = visitService(url);
+	$(rData.mapList).each(function(m,infoNews){
+		if(m<6) {
+			$("#select_btn").find("li").eq(m).find("a").find("span").first().html(infoNews.ALTITLE);
+			$("#select_btn").find("li").eq(m).find("a").find("span").last().html(infoNews.FBSJ);
+			$("#select_btn").find("li").eq(m).find("a").attr("href","/customer/qfy/showMessage/newMain.html?ALBH="+infoNews.ALBH).find("img").attr("src",imgUrl+infoNews.FILENAME).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+			$("#picshow_img").find("ul").find("li").eq(m).find("a").attr("href","/customer/qfy/showMessage/newMain.html?ALBH="+infoNews.ALBH).find("img").attr("src",imgUrl+infoNews.FILENAME).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'");
+			$("#picshow_tx").find("li").eq(m).find("a").html(infoNews.ALTITLE);
+			$("#picshow_tx").find("ul").find("li").eq(m).find("a").attr("href","/customer/qfy/showMessage/newMain.html?ALBH="+infoNews.ALBH);
+		}
+		//公告类展示
+		if(infoNews.XWGG == 1) {
+			$("ul.news-fl").find(".left").append("<div class='new'><a href='' class='zc'>"+infoNews.ALTITLE+"</a><span>"+infoNews.FBSJ+"</span></div>");
+			$("ul.news-fl").find(".left").find("a").last().attr("href","/customer/qfy/showMessage/newMain.html?ALBH="+infoNews.ALBH).find("img").attr("src",imgUrl+infoNews.FILENAME);
+		} else {//热门新闻展示
+			$("ul.news-fl").find(".right").append("<div class='new'><a href='' class='zc'>"+infoNews.ALTITLE+"</a><span>"+infoNews.FBSJ+"</span></div>");
+			$("ul.news-fl").find(".right").find("a").last().attr("href","/customer/qfy/showMessage/newMain.html?ALBH="+infoNews.ALBH).find("img").attr("src",imgUrl+infoNews.FILENAME);
+		}
+	});
+}
+</script>
+</head>
+<body>
+<input id="ALLXID" type="hidden" value=""/>
+<!--------------------------------头部-------------------------------------->
+<div id="header">
+</div>
+<div class="clera"></div>
+<!-----------------------------菜单、banner--------------------------------->
+<div id="sxtj">
+  <a value="1">交通运输部</a>
+<!--  <a value="2">国家发展和改革委员会</a>-->
+<!--  <a value="3">教育部</a>-->
+<!--  <a value="4">公安部</a>-->
+<!--  <a value="5">环境保护部</a>-->
+<!--  <a value="6">住房和城乡建设部</a>-->
+<!--  <a value="7">商务部</a>-->
+<!--  <a value="8">工商总局</a>-->
+<!--  <a value="9">质量监督总局</a>-->
+<!--  <a value="10">保监会</a>-->
+</div>
+
+<!-----------------------------新闻--------------------------------->
+<div id="mains">
+ <div id="zSlider">
+	<div id="picshow">
+		<div id="picshow_img">
+			<ul>
+			  <li><a href="" target="_blank"><img src=""></a></li>
+			  <li><a href="" target="_blank"><img src=""></a></li>
+			  <li><a href="" target="_blank"><img src=""></a></li>
+			  <li><a href="" target="_blank"><img src=""></a></li>
+			  <li><a href="" target="_blank"><img src=""></a></li>
+			  <li><a href="" target="_blank"><img src=""></a></li>
+			</ul>
+		</div>
+		<div id="picshow_tx">
+			<ul>
+			  <li><h3><a href="" target="_blank"></a></h3></li>
+			  <li><h3><a href="" target="_blank"></a></h3></li>
+			  <li><h3><a href="" target="_blank"></a></h3></li>
+			  <li><h3><a href="" target="_blank"></a></h3></li>
+			  <li><h3><a href="" target="_blank"></a></h3></li>
+			  <li><h3><a href="" target="_blank"></a></h3></li>
+			</ul>
+		</div>
+	</div>
+	<div id="select_btn">
+		<ul>
+		  <li><a href="" target="_blank"><img src=""><span class="select_text"></span><span class="select_date"></span></a></li>
+		  <li><a href="" target="_blank"><img src=""><span class="select_text"></span><span class="select_date"></span></a></li>
+		  <li><a href="" target="_blank"><img src=""><span class="select_text"></span><span class="select_date"></span></a></li>
+		  <li><a href="" target="_blank"><img src=""><span class="select_text"></span><span class="select_date"></span></a></li>
+		  <li><a href="" target="_blank"><img src=""><span class="select_text"></span><span class="select_date"></span></a></li>
+		  <li><a href="" target="_blank"><img src=""><span class="select_text"></span><span class="select_date"></span></a></li>
+		</ul>
+	</div>	
+ </div>
+ 
+ <ul class="news-fl">
+   <li class="left">
+     <h3><b>政策公告</b></h3>
+   </li>
+   <li class="right">
+     <h3><b>热门新闻</b></h3>
+   </li>
+ </ul>
+</div>
+<div class="clear"></div>
+<!-- foot开始 -->
+<div id="footer">
+</div>
+<!-- foot结束 -->
+</body>
+</html>

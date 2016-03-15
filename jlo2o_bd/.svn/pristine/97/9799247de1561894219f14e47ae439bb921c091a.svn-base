@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 活动管理</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+	//初始化数据
+	function initData(){
+		var XmlData=[{'sqlid':'com.jlsoft.o2o.hdgl.sql.Oper_HDGL.select_Activity','QryType':'Report','dataType':'Json','hdlx':$('#hdlx').val(),'ACTIVITYSTATE':$("#ACTIVITYSTATE").val(), 'ACTIVITYSTARTTIME':$('#ACTIVITYSTARTTIME').val(),'ACTIVITYENDTIME':$('#ACTIVITYENDTIME').val()}];
+		return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	}
+	$(document).ready(function(){
+	     init();
+	});
+	//执行回调方法
+	function backFun(parameters){
+		query();
+	}
+	// 查询
+	function query(){
+		init();
+	}
+	// 参加商品
+	function cjsp(hdid){
+		location.href = "/customer/qfy/back/hdgl/Oper_HDSP_item.html?activityId=" + hdid;
+	}
+	// 活动关闭
+	function hdgb(hdid){
+		var jsonData =[{'ACTIVITYID':hdid}];
+		var url = "/Oper_HDGL/updateActivityForState.action?jsonData=" + JSON.stringify(jsonData);
+		visitService(url);
+		query();
+	}
+	$(document).ready(function(){
+		//初始化活动种类
+		var url = "/Oper_HDGL/select_NHDZL.action";
+		var rData = visitService(url);
+		if(rData != undefined && rData != ""){
+			 $(rData.hdzlList).each(function(index,val){
+		    	$("#hdlx").append("<option value='"+val.ActivityTypeId+"'>"+val.ActivityTypeName+"</option>");
+		     });
+		}
+		});
+</script>
+<style>
+#screening .active_bot{float:right;width:auto;}
+#screening .active_bot a{width:65px;padding:0 20px;}
+</style>
+</head>
+<body>
+	<div class="clera"></div>
+		<ul id="screening">
+			<li style="width:830px;">
+		    	<span>活动类型：</span>
+				<select id="hdlx" name="hdlx" style="width: 100px;" >
+	       		<option value="">全部</option>
+				</select>
+	        	<span>活动状态：</span>
+	       		<script type="text/javascript" style="width:550px;">
+					document.write(showStateHtml('ACTIVITYSTATE','ACTIVITYSTATE'));
+				</script>
+			</li>
+			<li style="width:830px;" >
+				<span>活动时间：</span>
+				<input id="ACTIVITYSTARTTIME" name="" value="" type="text" style="width: 140px;" class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+		   		<span class="z" style="width:20px;">~</span>
+		    	<input id="ACTIVITYENDTIME" name="" value="" type="text" style="width: 140px;" class="Wdate" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+				<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+			</li>
+		</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+		{'property':'ACTIVITYID','header':'活动编号','type':'lable','width':'140px'},
+		{'property':'ACTIVITYNAME','header':'活动名称','type':'lable','width':'100px'},
+		{'property':'ACTIVITYSTATE','header':'活动状态','type':'number','width':'105px'},
+		{'property':'ACTIVITYBUDGET','header':'活动预算','type':'lable','width':'60px'},
+		{'property':'ACTIVITYSTARTTIME','header':'活动开始时间','type':'lable','width':'120px'},
+		{'property':'ACTIVITYENDTIME','header':'活动结束时间','type':'lable','width':'120px'},
+		{'property':'ACTIVITYID','header':'参加商品','type':'cjsp','width':'100px'}
+		]" 
+		>
+		</div>
+		<!-- {'property':'ACTIVITYID','header':'操作','type':'hdgb','width':'100px'} 
+			 {'property':'RESTBUDGET','header':'剩余预算','type':'lable','width':'60px'},
+		 -->
+	</div>
+</body>
+</html>

@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/css/public_bd.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript">
+var userInfo=JSON.parse($.cookie("userInfo"));
+var rydm = userInfo.XTCZY01;
+var XMBH;
+var GZLBH;
+var BZBH;
+var RZBH;
+var listWorkflowStepAction;
+
+$(document).ready(function(){
+	var GWBH;
+	//获取岗位
+	var url3=pubJson.PcrmUrl+"/streamDocument/getGw.do?PI_USERNAME="+rydm;
+	var returnVal = visitService(url3);
+	if(returnVal != "undefined"){
+		GWBH = returnVal.GWFZBH;
+		XMBH=$.getUrlParam("XMBH");
+		GZLBH=$.getUrlParam("GZLBH");
+		BZBH=$.getUrlParam("BZBH");
+		RZBH=$.getUrlParam("RZBH");
+		var rydm2 = $.getUrlParam("rydm");
+		if(rydm2 != null && rydm !="" && rydm != "undefinde"){
+			rydm=rydm2;
+		}
+		loadWorkFlow(XMBH,GZLBH,BZBH,RZBH,GWBH);
+	}else{
+		alert("岗位请求失败！");
+		return;
+	}
+});
+
+function loadWorkFlow(XMBH,GZLBH,BZBH,RZBH,GWBH){
+	$("#main").empty();
+	$("#main").append("<div id='right'  class='currentForm' align='center'></div>");
+	var XmlData={"XMBH":XMBH,"GZLBH":GZLBH,"BZBH":BZBH,"RZBH":RZBH,"PI_USERNAME":""+rydm+""};
+	var url=pubJson.PcrmUrl+"/document/viewWorkflowFirstStep.do?XmlData="+JSON.stringify(XmlData);
+	$.ajax({
+        type: "POST",
+    	url: pubJson.PcrmUrl+"/document/viewWorkflowFirstStep.do",
+    	data: {sid:Math.random(),XmlData:JSON.stringify(XmlData)},
+    	success: function(data){
+    		var tempData=JSON.parse(data).data;
+    		if(data == "" || tempData=="" || tempData==undefined){
+	    	  alert("数据获取失败");
+	    	  return;
+	    	}else{
+	    		appendStepAction(tempData,GWBH);
+	    	}
+    	},
+    	error:function(XMLHttpRequest, textStatus, errorThrown) {
+	    	alert("数据获取失败，状态是："+textStatus+"+"+XMLHttpRequest.responseText+"+"+errorThrown);
+        }
+	});
+}
+
+function appendStepAction(proxyData,gwbh){
+	var data=proxyData.listWorkflowStepAction;
+	listWorkflowStepAction = proxyData.listWorkflowStepAction;
+	GWBH = gwbh;
+	if(data[0].jklx==5){
+		loadForm(data[0],GWBH);
+	}
+}
+
+function loadForm(data,GWBH){
+	var jkdm=JSON.parse(data.hdjkdm);
+	var bdbh=data.bdbh;
+	if(data.bdbh==null || data.bdbh==undefined||data.bdbh=="{}"){
+		bdbh=jkdm.name;
+	}
+	var jlbh=data.jlbh;
+	if(data.jlbh==null||data.jlbh==undefined||data.jlbh=="{}"){
+		jlbh=0;
+	}
+	var msgid=data.msgid;
+	if(data.msgid==null||data.msgid==undefined||data.msgid=="{}"){
+		msgid="";
+	}
+	var initfield=data.initfield;
+	var hidefield=data.hidefield;
+	if(initfield==null||initfield==undefined||initfield=="{}"){
+		initfield="[]";
+	}
+	if(hidefield==null||hidefield==undefined||hidefield=="{}"){
+		hidefield="[]";
+	}
+	var preRecord="";
+	var YWSJ = {};
+	var MXSJ = {};
+	var tempPrerecord = {};
+	if(data.ywsj==null&&data.mxsj==null){
+		preRecord="";
+	}else{
+		if(data.ywsj!=null){
+			$.each(JSON.parse(data.ywsj),function(key,value){
+		        //其中key相当于是JAVA中MAP中的KEY，VALUE就是KEY相对应的值
+		        YWSJ=value;
+		 	});
+		}
+		if(data.mxsj!=null){
+		 	MXSJ = JSON.parse(data.mxsj);		
+		}
+		tempPrerecord=jQuery.extend({} ,YWSJ, MXSJ);
+	}
+	var CSCS="";
+	if(data.cscs != null && data.cscs != ""){
+		CSCS = getCSCS(JSON.parse(data.cscs));
+	}
+	if(CSCS != null && CSCS != ""){
+		tempPrerecord = jQuery.extend({} ,tempPrerecord, CSCS);
+	} 
+	preRecord="&preRecord="+JSON.stringify(tempPrerecord);
+	
+	//查询保单是否是新的写发
+	var url5=pubJson.FormUrl+"/form/getFormURL.do?bdbh="+bdbh;
+	var url="";
+	var returnVal = visitService(url5);
+	if(returnVal != "undefined"){
+		if(returnVal.string != null && returnVal.string != undefined && returnVal.string != ""){
+			url=pubJson.O2OUrl+returnVal.string+"?XMBH="+XMBH+"&GZLBH="+GZLBH+"&BZBH="+BZBH+"&RZBH="+RZBH+"&XWBH="+data.xwbh;
+		}else{
+			url=pubJson.FormUrl+"/form/findForm.do?bdbh="+bdbh+"&jlbh="+jlbh+"&msg_id="+msgid+preRecord+"&initField="+initfield+"&hidField="+hidefield+"&gwbh=-1";
+		}
+		$("#right").empty();
+	    $("#right").append("<iframe id='FormIframe' name='iframe' src='"+url+"' width='100%' frameborder='0' marginheight='0' marginwidth='0' style='border:0px solid #F0F0F0;margin:-11px 0 0 -2px;' scrolling='yes'></iframe>");
+	    $("#right").append("<div class='xia'></div>");
+	}else{
+		alert('Record请求失败！');
+		return;
+	}
+	
+	$("#FormIframe").load(function(){
+      var mainheight = $(this).contents().find("body").height()+500;
+      //var mainheight = "920px";
+      var mainwidth = $(this).contents().find("body").width();
+      $(this).height(mainheight);
+      //$(this).width(mainwidth);
+    });
+}
+
+function chooseAction(xwbh){
+	var data=$("#XWBH"+xwbh).attr("href").substring(20,($("#XWBH"+xwbh).attr("href").length-1)); 
+	loadForm(JSON.parse(data));
+} 
+
+function getCSCS(obj){
+	var tempCscs = {};
+	for(var item in obj){
+		if(obj[item].key != undefined){
+			if(obj[item].key.toLocaleLowerCase() == "date"){
+				var now= new Date();
+				var year=now.getFullYear();
+				var month=now.getMonth();
+				var date=now.getDate();
+				var myDate = year+"-"+(month+1)+"-"+date;
+				tempCscs[item]=myDate;
+			}else if(obj[item].key.toLocaleLowerCase() == "rymc"){
+				if(userInfo == undefined || userInfo == null || userInfo == ""){
+		   			tempCscs[item]="";
+	   			}else{
+	   				tempCscs[item]=userInfo.RYMC;
+	   			}
+			}else if(obj[item].key.toLocaleLowerCase() == "rydm"){
+				if(userInfo == undefined || userInfo == null || userInfo == ""){
+		   			tempCscs[item]="";
+	   			}else{
+	   				tempCscs[item]=userInfo.RYDM;
+	   			}
+			}else if(obj[item].key.toLocaleLowerCase() == "bmdm"){
+				if(userInfo == undefined || userInfo == null || userInfo == ""){
+		   			tempCscs[item]="";
+	   			}else{
+	   				tempCscs[item]=userInfo.BMDM;
+	   			}
+			}else if(obj[item].key.toLocaleLowerCase() == "bmmc"){
+				if(userInfo == undefined || userInfo == null || userInfo == ""){
+		   			tempCscs[item]="";
+	   			}else{
+	   				tempCscs[item]=userInfo.BMMC;
+	   			}
+			}else{
+				tempCscs[item]=obj[item].key;
+			}
+		}else{
+			tempCscs[item] = obj[item];
+		}
+	}
+	return tempCscs;
+}
+</script>
+<title>待办事宜</title>
+</head>
+<body>
+<div id="main"  align="center">
+	<div id="right"  align="center">
+		<!-- 原展示流程 <div id="workflow"></div> -->
+	</div>
+</div>
+</body>
+</html>

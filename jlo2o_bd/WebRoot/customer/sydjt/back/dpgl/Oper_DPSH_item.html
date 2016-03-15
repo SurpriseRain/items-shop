@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/backPub.css" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/tablekj.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+
+</head>
+<body>
+ 	 <div id="curPosition" style="width:98.5%">
+    	<a href="#">基础设置</a>
+    	<span>></span>
+    	<a href="#">店铺审核</a>
+    	<span>></span>
+    	<b>审核明细</b>
+	</div>
+	<div class="clera"></div>
+    <table class="single_table">
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">公司名称：</span></td>
+       <td style="width:550px;"><input id="gsmc" name="gsmc" value="" readonly="readonly" /></td>
+     </tr>
+     <tr>
+     	<td style="width:120px;"><span style="width:120px;">店铺LOGO图片：</span></td>
+     	<td style="width:550px;"><img class="img" alt="店铺LOGO" title="店铺LOGO" src="" id="imgurl"/></td>
+     </tr>
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">店铺信息：</span></td>
+       <td style="width:550px;"><input id="gjnr" value="" readonly="readonly" name="gjnr" maxlength="47" size="80" /><label class="bz">此处限字数50</label></td>
+     </tr>
+     <tr class="bot">
+       <td colspan="2">
+         <a href="javascript:void(0);" onclick="okclick();" class="bot Long">审核通过</a>
+       </td>
+      </tr>    
+    </table>
+    <div class="clera"></div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+//var ZCXX01=$.getUrlParam('ZCXX01');
+var ZCXX01=null;
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	ZCXX01 = rowObj.find("#ZCXX01").val();
+	query();
+}
+$(document).ready(function(){
+	query();
+});
+
+function query(){
+	var XmlData=[{"ZCXX01":ZCXX01,"sqlid":"com.jlsoft.o2o.info.sql.selectW_DPXX","dataType":"Json"}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(data){
+			if(data!=undefined&&data!=""){
+				$("#gsmc").val(data[0].ZCXX02);
+				$("#imgurl").attr("src",data[0].DPXX03);
+				$("#gjnr").val(data[0].DPXX01);
+			}
+		}
+	});
+}
+
+function okclick(){
+	var XmlData=[{"HBID":ZCXX01}];
+	var url="/QFY/checkDPXX.action?XmlData="+JSON.stringify(XmlData);
+	ajaxQ({
+		"url" : url,
+		"callback" : function(a){
+			if(a.STATE=="1"){
+				alert("审核成功!");
+				parent.execBackFun("aaa");
+				parent.$("#ajaxGrid").remove();
+			}else{
+				alert("审核失败!");
+			}
+		}
+	});	
+}
+</script>

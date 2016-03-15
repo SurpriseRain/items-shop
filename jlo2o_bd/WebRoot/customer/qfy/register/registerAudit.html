@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云注册审核页面</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/form/js/ajaxfileupload_bd.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/form/js/form2.js"></script>
+<script type="text/javascript" src="/form/js/JLUpload.js"></script>
+</head>
+<script type="text/javascript">
+$(document).ready(function(){
+	//为公司类型赋值
+	var person_id=$("#username").val();
+	var url = "/Register/getGSLX.action?json={'person_id':'"+person_id+"'}";
+	var returnVal = visitService(url);
+	$("#gslx").val(returnVal.GSLX);
+})
+</script>
+<body>
+	<input type="text" id="username" name="username" value="" style="display:none;"/>
+    <input type="text" id="password" name="password" value="" style="display:none;"/>
+	
+	<ul class="shusermain">
+	    <li><h2><b>会员详情</b></h2></li>   
+	    
+	    <li><h3>基本信息</h3></li>
+	    <li>
+	    	<span>审核意见：</span>	
+	    	<b>
+	    		<input type="radio" name="shyj" value="4" />审核通过
+	    		<!-- <input type="radio" name="shyj" value="5" />审核不通过 -->
+	    	</b>
+	    </li>
+	    <li>
+	    	<span>公司类型：</span>
+	    	<b>
+	    		<input type="text" class="text" id="gslx" name="gslx" value="" />
+	    	</b>
+	    </li>
+	    <li>
+	    	<span>企业名称：</span>
+	    	<b>
+	    		<input type="text" class="text" id="qymc" name="qymc" value="" />
+	    	</b>
+	    </li>
+	    <li>
+	    	<span>联系人：</span>
+	    	<b><input type="text" class="text" id="lxr" name="lxr" value="" /></b>
+	    </li>
+	    <li>
+	    	<span>手机：</span>
+	    	<b><input type="text" class="text" id="phone" name="phone" value="" /></b>
+	    </li>
+	    <li>
+	    	<span>联系电话：</span>
+	    	<b><input type="text" class="text"  id="lxdh" name="lxdh" value=""/></b>
+	    </li>
+	    <li>
+	    	<span>地址：</span>
+	    	<b><input type="text" class="text" id="QYdzdetail" name="QYdzdetail" value=""/></b>
+	    </li>
+	    <li>
+	    	<span>邮箱：</span>
+	    	<b><input type="text" class="text" id="email" name="email" value=""/></b>
+	    </li>
+	    
+	    <li>
+	    	<h3>企业基本信息</h3>
+	    </li>
+	    <li>
+	    	<span>法人身份证正面：</span>
+	    	<div jl jlid="uploadFile" id="div_fssfzzm" field='[{"zdid":"fssfzzm","file":2,"type":"text","filenum":"1"}]' >
+	    </li>
+	    <li>
+	    	<span>法人身份证反面：</span>
+	    	<div jl jlid="uploadFile" id="div_fssfzfm" field='[{"zdid":"fssfzfm","file":2,"type":"text","filenum":"1"}]' >
+	    </li>
+	    <li>
+	    	<span>营业执照副本：</span>
+	    	<div jl jlid="uploadFile" id="div_yyzzfb" field='[{"zdid":"yyzzfb","file":2,"type":"text","filenum":"1"}]' >
+	    </li>
+	    <li><h3>驳回说明</h3></li>
+	    <li>
+	    	<span>驳回说明：</span><textarea name="bhsm"></textarea>
+	    </li>
+	    <li>
+	    	<span>&nbsp;</span>
+	    	<a href="javascript:void(0);" onclick="audit()" class="bot">确定</a>
+	    </li>
+    </ul>
+</body>
+<script type="text/javascript">
+//审核
+function audit(){
+	save();
+}
+
+//表单保存成功
+function formSaveSuccess(){
+	alert("审核成功");
+	return;
+}
+</script>
+</html>

@@ -1,0 +1,239 @@
+package com.jlsoft.o2o.qxgl.service; 
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jlsoft.framework.JLBill;
+import com.jlsoft.framework.dataset.DataSet;
+import com.jlsoft.utils.JLTools;
+
+@Controller
+@RequestMapping("/Oper_FWSGL")
+public class Oper_FWSGL extends JLBill{
+	
+	@Autowired
+	public Oper_FWQYGL fwqygl;
+
+	/**
+	 * 查询当前生产企业下的品牌信息
+	 * @param jsonData
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/selectKXPP.action")
+	public Map<String, Object> selectKXPP(String jsonData) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			cds = new DataSet(jsonData);
+			String sql = "SELECT A.PPB01 PPBH, B.PPB02 PPMC FROM W_PPQX A LEFT JOIN PPB B ON A.PPB01 = B.PPB01 "
+					   + "WHERE A.ZCXX01 = '" + cds.getField("ZCXX01", 0) + "' AND A.STATE = 1";
+			List resultList = queryForList(o2o, sql);
+			resultMap.put("resultList", resultList);
+			resultMap.put("STATE", "1");
+		} catch (Exception e) {
+			resultMap.put("STATE", "0");
+			throw e;
+		}
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 查询服务商
+	 * @param jsonData
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/selectJXSAX.action")
+	public Map<String, Object> selectJXSAX(String jsonData) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			cds = new DataSet(jsonData);
+			String sql = "SELECT A.ZCXX01, A.ZCXX02 label "
+					   + "FROM W_ZCXX A "
+					   + "LEFT JOIN W_GSLX B "
+					   + "ON A.ZCXX01 = B.GSID "
+					   + "LEFT JOIN W_ZCGS C "
+					   + "ON A.ZCXX01 = C.ZCXX01 "
+					   + "WHERE "
+					   + "A.ZCXX02 LIKE '%" + cds.getField("ZCXX02", 0) + "%' "
+					   + "AND B.LX = '42' "
+					   + "AND C.ZCGS01 = 4 "
+					   + "AND A.ZCXX01 NOT IN (SELECT "
+					   + "C.HBID FROM W_GSGX C WHERE C.ZTID = '" + cds.getField("ZTID", 0) + "') "
+			   		   + "ORDER BY A.ZCXX02 ASC";
+			List resultList = queryForList(o2o, sql);
+			resultMap.put("resultList", resultList);
+			resultMap.put("STATE", "1");
+		} catch (Exception e) {
+			resultMap.put("STATE", "0");
+			throw e;
+		}
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 插入服务商相关表
+	 * @param jsonData
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/insertFWS.action")
+	public Map<String, Object> insertFWS(String jsonData) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			jsonData = JLTools.unescape(jsonData);
+			cds = new DataSet(jsonData);
+			String w_gsgx_sql = "INSERT INTO W_GSGX(ZTID, HBID, LX, ALIAS, ENDTIME, NOTES, STATE) "
+					   + "VALUES(ZTID?, HBID?, LX?, ALIAS?, ENDTIME?, NOTES?, 0)";
+			Map row = getRow(w_gsgx_sql, null, 0);
+			execSQL(o2o, w_gsgx_sql, row);
+			
+			
+			String[] ppbStr = cds.getField("ppxx", 0).split(",");
+			for (int i = 0; i < ppbStr.length; i++) {
+				String w_gsgspp_sql = "INSERT INTO W_GSGXPP(ZTID, HBID, PPB01) "
+						+ "VALUES(ZTID?, HBID?, '" + ppbStr[i] + "')";
+				Map row2 = getRow(w_gsgspp_sql, null, 0);
+				execSQL(o2o, w_gsgspp_sql, row2);
+			}
+			
+			String[] cityArr = cds.getField("CITYLIST", 0).split(",");
+			for (int i = 0; i < cityArr.length; i++) {
+				String w_gsgsqy_sql = "INSERT INTO W_GSGXQY(ZTID, HBID, DQBZM01) "
+						+ "VALUES(ZTID?, HBID?, '" + cityArr[i] + "')";
+				Map row3 = getRow(w_gsgsqy_sql, null, 0);
+				execSQL(o2o, w_gsgsqy_sql, row3);
+			}
+			resultMap.put("STATE", "1");
+		} catch (Exception e) {
+			resultMap.put("STATE", "0");
+			throw e;
+		}
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 查询当前生产企业下的区域信息
+	 * @param jsonData
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/selectGSGXQY.action")
+	public Map<String, Object> selectGSGXQY(String jsonData) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			cds = new DataSet(jsonData);
+			String sql = "SELECT DISTINCT A.DQBZM01, IFNULL(C.DQBZM02,'') PROV, B.DQBZM02 "
+					   + "FROM W_GSGXQY A "
+					   + "LEFT JOIN DQBZM B "
+					   + "ON A.DQBZM01 = B.DQBZM01 "
+					   + "LEFT JOIN DQBZM C "
+					   + "ON B.DQBZM_DQBZM01 = C.DQBZM01 "
+					   + "WHERE A.ZTID = '" + cds.getField("ZCXX01", 0) + "'";
+			List resultList = queryForList(o2o, sql);
+			resultMap.put("resultList", resultList);
+			resultMap.put("STATE", "1");
+		} catch (Exception e) {
+			resultMap.put("STATE", "0");
+			throw e;
+		}
+		
+		return resultMap;
+	}
+	
+	/**
+	 * 修改服务商状态为启用还是终止
+	 * @param jsonData
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/updateFWSGLZT.action")
+	public Map<String, Object> updateFWSGLZT(String jsonData) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			cds = new DataSet(jsonData);
+			String sql = "UPDATE W_GSGX SET STATE = STATE? "
+					   + "WHERE ZTID = ZTID? "
+					   + "AND HBID = HBID? ";
+			Map row = getRow(sql, null, 0);
+			execSQL(o2o, sql, row);
+			resultMap.put("STATE", "1");
+		} catch (Exception e) {
+			resultMap.put("STATE", "0");
+			throw e;
+		}
+		return resultMap;
+	}
+	
+	/**
+	 * 修改服务商管理信息
+	 * @param jsonData
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/updateFWSGLXX.action")
+	public Map<String, Object> updateFWSGLXX(String jsonData) throws Exception{
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		try {
+			jsonData = JLTools.unescape(jsonData);
+			cds = new DataSet(jsonData);
+			// 修改公司关系
+			String gsgxSql = "UPDATE W_GSGX SET ALIAS = ALIAS?, ENDTIME = ENDTIME? "
+					   + "WHERE ZTID = ZTID? "
+					   + "AND HBID = HBID? ";
+			Map row = getRow(gsgxSql, null, 0);
+			execSQL(o2o, gsgxSql, row);
+			
+			// 修改公司关系品牌
+			String w_gsgspp_sql = "DELETE FROM W_GSGXPP WHERE ZTID = ZTID? AND HBID = HBID?";
+			Map row2 = getRow(gsgxSql, null, 0);
+			execSQL(o2o, w_gsgspp_sql, row2);
+			
+			String[] ppbStr = cds.getField("ppxx", 0).split(",");
+			for (int i = 0; i < ppbStr.length; i++) {
+				w_gsgspp_sql = "INSERT INTO W_GSGXPP(ZTID, HBID, PPB01) "
+						+ "VALUES(ZTID?, HBID?, '" + ppbStr[i] + "')";
+				Map row3 = getRow(w_gsgspp_sql, null, 0);
+				execSQL(o2o, w_gsgspp_sql, row3);
+			}
+			
+			// 修改公司关系区域
+			String w_gsgsqy_sql = "DELETE FROM W_GSGXQY WHERE ZTID = ZTID? AND HBID = HBID?";
+			Map row4 = getRow(w_gsgsqy_sql, null, 0);
+			execSQL(o2o, w_gsgsqy_sql, row4);
+			String[] cityArr = cds.getField("DQBM", 0).split(",");
+			for (int i = 0; i < cityArr.length; i++) {
+				w_gsgsqy_sql = "INSERT INTO W_GSGXQY(ZTID, HBID, DQBZM01) "
+						+ "VALUES(ZTID?, HBID?, '" + cityArr[i] + "')";
+				Map row5 = getRow(w_gsgsqy_sql, null, 0);
+				execSQL(o2o, w_gsgsqy_sql, row5);
+			}
+			
+			fwqygl.insert_DQXX(jsonData);
+			
+			String insertUsrMsg = "INSERT INTO USERMESSAGE(SENDUSERID, RECEIVEUSERID, CONTENT, MESSAGECREATETIME, MESSAGESTATE, MESSAGETYPE) "
+					+ "SELECT 'JL', HBID?, CONCAT('尊敬的',A.ZCXX02,',您的授权商',B.ZCXX02,'刚刚修改了您的授权服务商信息,请注意查看!'), NOW(), 0, 0 "
+					+ "FROM W_ZCXX A,W_ZCXX B "
+					+ "WHERE A.ZCXX01 = HBID? "
+					+ "AND B.ZCXX01 = ZTID?";
+			Map row6 = getRow(insertUsrMsg, null, 0);
+			execSQL(o2o, insertUsrMsg, row6);
+			
+			resultMap.put("STATE", "1");
+		} catch (Exception e) {
+			resultMap.put("STATE", "0");
+			throw e;
+		}
+		return resultMap;
+	}
+	
+}
+ 

@@ -1,0 +1,289 @@
+<!--<div class="w12 user_page_title"><h3>账户安全</h3></div>-->
+<div class="w12 merch_main"><ul class="w12 merch_breadcrumb">
+    <li><i class="fa fa-home"></i><span>首页</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><span>个人管理</span></li>
+    <li class="jt"><i class="jt fa fa-angle-double-right"></i></li>
+    <li><b>账户安全</b></li>
+</ul>
+</div>
+
+<div class="w12 user_content">
+<div class="w12 user_page_main">
+<div class="w12">
+  <dl class="w12 accSecur">
+    <dd class="w01"><i class="w12 right fa fa-check"></i></dd>
+    <dd class="w02"><h2 class="w12">登录密码</h2><div class="line"></div></dd>
+    <dd class="w05"><label class="font_red">互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</label></dd>
+    <dd class="w04"><span class="w12" id="xgmm">修改</span></dd>
+  </dl>
+  <div class="w12 detaInfo detaInfo_none" id="xgmm_yzzh" style="display: none;">
+      <div class="jt"></div>
+      <div class="w06 ml_w03 techProcess">
+        <div class="w12 jdt"></div>
+        <ul class="w12">
+          <li class="w04 yjzg">
+            <dl class="w12"><dt></dt><dd>1</dd></dl>
+            <span class="w12">验证账户</span>
+          </li>
+          <li class="w04">
+            <dl class="w12"><dt></dt><dd>2</dd></dl>
+            <span class="w12 yjzg_tex">修改密码</span>
+          </li>
+          <li class="w04">
+            <dl class="w12"><dt></dt><dd><i class="fa fa-check"></i></dd></dl>
+            <span class="w12 yjzg_tex">完成</span>
+          </li>
+        </ul>
+      </div>
+      <dl class="w12 public_form">
+        <dt class="w05">已验证手机：</dt><dd class="w07" id="sjhm"></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">请填写短信验证码：</dt>
+        <dd class="w07"><input id="msgYzm" type="text" class="w03" /><input id="yzsj" onclick="sendPhone()" type="button" class="jl_btn btn_grey" value="获取短信校验" /></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">验证码：</dt>
+        <dd class="w07"><input id="userYzm" name="userYzm" class="w02" type="text" /><img id="yzm"  onload="setCaptchaText()" onclick="javascript:refreshCaptchaImage()" class="yzm" src="" ><input type="hidden" id="realCaptcha" value=""><a class="sxyzm"  title="刷新验证码" onclick="javascript:refreshCaptchaImage()" style="width: 85px;">看不清？换一张</a></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">&nbsp;</dt>
+        <dd class="w07"><input type="button" class="jl_btn btn_red" value="提交" id="tj"></dd>
+      </dl>
+  </div>
+  
+  <div class="w12 detaInfo detaInfo_none" id="xgmm_item" style="display: none;">
+      <div class="jt"></div>
+      <div class="w06 ml_w03 techProcess">
+        <div class="w12 jdt"></div>
+        <ul class="w12">
+          <li class="w04">
+            <dl class="w12"><dt></dt><dd>1</dd></dl>
+            <span class="w12">验证账户</span>
+          </li>
+          <li class="w04 yjzg">
+            <dl class="w12"><dt></dt><dd>2</dd></dl>
+            <span class="w12 yjzg_tex">修改密码</span>
+          </li>
+          <li class="w04">
+            <dl class="w12"><dt></dt><dd><i class="fa fa-check"></i></dd></dl>
+            <span class="w12 yjzg_tex">完成</span>
+          </li>
+        </ul>
+      </div>
+      <dl class="w12 public_form">
+        <dt class="w05">请输入新密码：</dt>
+        <dd class="w07"><input id="userPwd" type="password" class="w03" /><label class="putong_msg">密码需为6位以上的数字字母组合！</label></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">再次输入密码：</dt>
+        <dd class="w07"><input id="userPwd2" type="password" class="w03" /></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">验证码：</dt>
+        <dd class="w07"><input id="userYzm2" class="w02" type="text" /><img id="yzm2"  onload="setCaptchaText()" onclick="javascript:refreshCaptchaImage()" class="yzm" src="" ><input type="hidden" id="realCaptcha2" value=""><a class="sxyzm"  title="刷新验证码" onclick="javascript:refreshCaptchaImage()" style="width: 85px;">看不清？换一张</a></dd>
+      </dl>
+      <dl class="w12 public_form">
+        <dt class="w05">&nbsp;</dt>
+        <dd class="w07"><input type="button" class="jl_btn btn_red" value="提交" id="tjxg"></dd>
+      </dl>
+  </div>
+  
+    <div class="w12 detaInfo detaInfo_none" id="xgmm_success" style="display: none;">
+      <div class="jt"></div>
+      <div class="w06 ml_w03 techProcess">
+        <div class="w12 jdt"></div>
+        <ul class="w12">
+          <li class="w04">
+            <dl class="w12"><dt></dt><dd>1</dd></dl>
+            <span class="w12">验证账户</span>
+          </li>
+          <li class="w04">
+            <dl class="w12"><dt></dt><dd>2</dd></dl>
+            <span class="w12 yjzg_tex">修改密码</span>
+          </li>
+          <li class="w04 yjzg">
+            <dl class="w12"><dt></dt><dd><i class="fa fa-check"></i></dd></dl>
+            <span class="w12 yjzg_tex">完成</span>
+          </li>
+        </ul>
+      </div>
+      <dl class="w12 public_form">
+        	<s class="icon-01"></s><h3 class="w06">恭喜您，修改密码成功！</h3><h4 class="w06">您的账户安全级还能提升哦，快去完善其它安全设置提高评级吧！</h4>
+      </dl>
+  </div>
+
+</div>
+<div class="w12">
+  <dl class="w12 accSecur">
+    <dd class="w01"><i class="w12 error fa fa-exclamation-triangle"></i></dd>
+    <dd class="w02"><h2 class="w12">手机验证</h2><div class="line"></div></dd>
+    <dd class="w05"><label>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</label></dd>
+    <dd class="w04"><input type="button" class="jl_btn btn_red" value="立即绑定" /></dd>
+  </dl>
+</div>
+<div class="w12">
+  <dl class="w12 accSecur">
+    <dd class="w01"><i class="w12 error fa fa-exclamation-triangle"></i></dd>
+    <dd class="w02"><h2 class="w12">绑定邮箱</h2><div class="line"></div></dd>
+    <dd class="w05"><label>互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</label></dd>
+    <dd class="w04"><input type="button" class="jl_btn btn_red" value="立即绑定" /></dd>
+  </dl>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+var username = userCookie.XTCZY01;//alert(JSON.stringify(userCookie))
+var zcxx01 = userCookie.ZCXX01;
+var sjhm=userCookie.ZCXX06;
+$("#sjhm").html(sjhm.substring(0,3)+"****"+sjhm.substring(8,11));
+
+//验证发送时间/s
+var count = 120;
+//验证码失效时间/s
+var outCount = 300;
+
+var smsYzm=0;
+var smsFlag=0;
+function GetNumber(){
+	$("#yzsj").val(count+"秒后可重发");
+	outCount--;
+	if(outCount > 0 && count==0) {
+		setTimeout(GetNumber, 1000);
+	}else if(outCount==0){
+		smsYzm=0;
+	}
+	if(count > 0) {
+	    count--;
+		setTimeout(GetNumber, 1000);
+	}else{
+		$("#yzsj").val("获取短信校验");
+		$("#yzsj").attr("onclick","sendPhone()");
+		//$("#yzsj").attr("style","color: #000;");		
+	}
+}
+
+function sendPhone(){
+	//删除单击事件
+    $("#yzsj").removeAttr("onclick");
+	//验证发送时间/s
+	count = 120;
+	//验证码失效时间/s
+	outCount = 300;
+	//短信失效时间清0
+    smsYzm=0;
+	smsFlag=0;
+    //随机验证码
+	var yzm1=parseInt(Math.random()*10);
+	var yzm2=parseInt(Math.random()*10);
+	var yzm3=parseInt(Math.random()*10);
+	var yzm4=parseInt(Math.random()*10);
+	var shjyzm = yzm1+""+yzm2+""+yzm3+""+yzm4;
+	smsYzm=shjyzm;
+	var json={};
+	json.SJHM=sjhm;	
+	json.FSNR="您好，验证码为"+smsYzm+"（兴隆客服绝不会索要此验证码，切勿告知他人），请在页面中输入以完成验证,有效时间5分钟。"//有问题请致电400-6-6-5500转7
+	json.DJLX=8;
+	json.YWDH="";
+	json.ZCXX01=zcxx01;
+
+	if(smsFlag==0){
+		//$(".yzsj").removeAttr("onclick");
+		//$("#yzsj").attr("style","color: #999;");
+		GetNumber();
+	}else{
+		$("#yzsj").attr("onclick","sendPhone()");
+	}
+	//var xmlData=[];
+	if(smsYzm>0&&smsFlag==0){
+		//xmlData.push(json);
+	    var url="/Register/insertSms.action?XmlData="+JSON.stringify(json);
+	    visitService(url);
+  	}
+}
+
+//刷新验证码
+function refreshCaptchaImage(){
+	$("#realCaptcha").val("");
+	$("#realCaptcha2").val("");
+	$("#yzm").attr("src","/servlet/CaptchaOutput?font=Helvetica&&fontsize=22&&min-width=150&&padding-x=5&&padding-y=5&&random="+Math.random());
+	$("#yzm2").attr("src","/servlet/CaptchaOutput?font=Helvetica&&fontsize=22&&min-width=150&&padding-x=5&&padding-y=5&&random="+Math.random());
+}
+//加载验证码
+function setCaptchaText(){
+	var data = visitService("/UserLogin/searchCaptcha.action");
+	var captchaText=data.captchaText;  
+	$("#realCaptcha").val(captchaText);
+	$("#realCaptcha2").val(captchaText);
+}
+
+
+$(document).ready(function(){
+	$("#xgmm").click(function(){
+		$("#xgmm_item").hide();
+		$("#xgmm_success").hide();
+		if($("#xgmm_yzzh").css("display") == "none"){
+			refreshCaptchaImage();
+			$("#xgmm_yzzh").show();
+		}else{
+			$("#xgmm_yzzh").hide();
+		}
+	});
+	//验证身份
+	$("#tj").click(function() {
+		$("#xgmm_yzzh").find("label").remove();
+		if($("#msgYzm").val() == ""){
+			$("#msgYzm").parent().append('<label class="error_msg">短信验证码不能为空！</label>');
+		}else if($("#msgYzm").val() != smsYzm){
+			$("#msgYzm").parent().append('<label class="error_msg">短信验证码错误！</label>');
+			return false;
+			}else if($("#userYzm").val().toLowerCase() != $("#realCaptcha").val().toLowerCase()){
+			$("#userYzm").parent().append('<label class="error_msg">验证码错误！</label>');
+			return false;
+			}else{
+				$("#xgmm_yzzh").hide();
+				$("#xgmm_item").show();
+				}
+	});
+	//修改密码
+	$("#tjxg").click(function() {
+		$("#xgmm_item").find("label").remove();
+		$("#userPwd").parent().append('<label class="putong_msg">密码需为6位以上的数字字母组合！</label>');
+		var password = $("#userPwd").val();
+		var password2 = $("#userPwd2").val();
+	  	var str=/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/;
+		if(str.test(password) && password.length>5){
+				//$("#password").val(password);
+			}else{
+				$("#userPwd").focus();
+				$("#userPwd").parent().find("label").remove();
+				$("#userPwd").parent().append('<label class="error_msg">密码需为6位以上的数字字母组合！</label>');
+				return false;
+			}
+		if (password != password2) {
+			$("#userPwd2").parent().append('<label class="error_msg">两次输入的密码不一致！</label>');
+			$("#userPwd2").focus();
+			return false;
+		}
+		else{
+			var arr = [];
+			var o = {};
+				o["XTCZY01"] = $.trim(username);
+				o["XTCZY02"] = password;
+				arr.push(o);
+				var data = visitService("/UserLogin/updatePwd.action?XmlData="+JSON.stringify(arr));
+				if(data.state){
+					$("#xgmm_item").hide();
+					$("#xgmm_success").show();
+				}
+				else{
+					$("tj2").parent().append('<label class="error_msg">修改密码失败，请重试。。。</label>');
+				}
+		}
+	  });
+});
+</script>

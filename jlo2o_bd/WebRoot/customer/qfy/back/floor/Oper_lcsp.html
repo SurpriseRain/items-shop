@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+//初始化数据
+function initData(){
+  var MyCookie = $.cookie('userInfo');
+  var usercookie = JSON.parse(MyCookie);
+  var XmlData=[{'sqlid':'com.jlsoft.o2o.prpduct.sql.oper_floor.selectlcsp','QryType':'Report','dataType':'Json','spxx01':$('#spxx01').val(),'lcspmc':$('#lcspmc').val()}];
+  return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+  <!-- <div id="curPosition">
+    	<a href="#">楼层管理</a>
+    	<span>></span>
+    	<b>首页楼层商品</b>
+	</div> -->
+	<div class="clera"></div>
+ 	<input type="hidden" name="ZCXX01" id="ZCXX01" value=""/>
+ 	<input type="hidden" id="allx" name="allx" value=""/>
+<!-- 	<table class="single_table">-->
+<!-- 		<tr class="title"><td colspan="2"><b>楼层商品</b><font>* 必填项</font></td></tr>-->
+<!--		<tr>-->
+<!--			<td class="lable_10">商品编码</td>-->
+<!--    		<td><input type="text" id="spxx01" name="spxx01" value="" size="20" class="text"/></td>-->
+<!--		</tr>-->
+<!--		<tr>-->
+<!--			<td class="lable_10">商品名称</td>-->
+<!--			<td>-->
+<!--		 	<input type="text" id="lcspmc" name="lcspmc" value="" size="20" class="text"/>-->
+<!--			</td> -->
+<!---->
+<!--		</tr>-->
+<!--		<tr class="bot">-->
+<!--       	<td colspan="2">-->
+<!--       	<a class="bot Medium" href="javascript:void(0);" onclick="query();">查询</a>-->
+<!--         	<a class="bot Medium" href="javascript:void(0);" onclick="newXX();">新增</a>-->
+<!--       	</td>-->
+<!--       	-->
+<!--      	</tr>    -->
+<!-- </table>-->
+ 	<ul id="screening">
+	   <li style="width:818px;">
+	   	<span>商品编码：</span>
+		<input type="text" id="spxx01" name="spxx01" value="" size="20" class="text"/>
+
+	   	<span>商品名称：</span>
+		<input type="text" id="lcspmc" name="lcspmc" value="" size="20" class="text"/>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="newXX()">新增</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4" rowClick="false" multiPage="true"  url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'SPXX01','header':'商品编码','type':'lable','width':'80px'},
+{'property':'SPMC','header':'商品名称','type':'lable','width':'200px'},
+{'property':'GSMC','header':'供货商名称','type':'lable','width':'150px'},
+{'property':'OPERTIME','header':'操作时间','type':'lable','width':'80px'},
+{'property':'LCFL01','header':'楼层编号','type':'lable','width':'80px'},
+{'property':'LCFL01','header':'操作','type':'delete','width':'30px'}]" 
+afterUrl="/customer/qfy/back/floor/Oper_lcsp_item.html"
+>
+</div>
+
+ </div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+	var temp = $("#allx").val();
+	if(temp==""){
+		$(".update_bot").removeAttr("onclick");
+		$(".update_bot").attr("style","background-color:#EAF1FA");
+	}
+	else{
+		$(".update_bot").removeAttr("style","background-color:#EAF1FA");
+	}
+})
+function query(){
+  	init();
+}
+function newXX(){
+	parent.ajaxGrid('/customer/qfy/back/floor/Oper_lcsp_item.html');
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+function del(SPXX01){
+	var XmlData=[{"SPXX01":SPXX01}];
+    var url="/oper_floor/deleteLcsp.action?XmlData="+JSON.stringify(XmlData);
+    var rData=visitService(url);
+    if(rData.STATE==1){
+        alert("操作成功!");
+        query();
+        }else{
+        	alert("操作失败!");
+            }
+}
+</script>

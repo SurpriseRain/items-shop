@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中国汽服云平台</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/products.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/carSs.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/menu.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/styles.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/carSs.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/gyl-index.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/openbox.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/jq.Slide.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/slides.min.jquery.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public1.js"></script>
+<script type="text/javascript" src="/js/jquery.bxslider2.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/scripts.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/lrtk.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/carSs.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	//加载头和尾 
+	$("#header").load("/customer/qfy/head.jsp");	
+	$("#footer").load("/customer/qfy/foot.html");
+	showFL();
+})
+
+//全部分类品牌
+function showFL() {
+	var functionName = "loadFL";
+	var baseUrl = "";	
+	var url = baseUrl+"/showGoods/selectGlobals.action";
+	visitService1(url,functionName);
+}
+
+function loadFL(){
+	loadSPFLZJ(returnData.fl);
+	$(returnData.fl).each(function(index,FL01){
+		$("#mains").append("<div class='flower'><div class='fltitle'><a class='zm' id='main-a' name='mao"+FL01[index].SPFLZJ+"'>"+FL01.ppfl01name+"</a></div><div class='clera'></div><div class='flmain'><ul class='accSs-case'></ul></div></div>");
+		$(FL01.SPFL02List).each(function(m,FL02){
+			$(FL02.PPBLIST).each(function(n,PP){
+				$("#mains").children().eq(index).find("ul.accSs-case").append("<li><a class='img' href=''><img src='/gui_o2o/qfy/images/accSs-img.png' /></a><a class='text' href=''>"+PP.PPBNAME+"</a></li>");
+			});
+		});
+	});
+}
+
+function loadSPFLZJ(a){
+	$(returnData.fl).each(function(index,FL01){
+		$("#mains").append("<div class='flower'><div class='fltitle'><a class='zm' id='main-a' name='mao"+FL01[index].SPFLZJ+"'>"+FL01.ppfl01name+"</a></div><div class='clera'></div><div class='flmain'><ul class='accSs-case'></ul></div></div>");
+		$(FL01.SPFL02List).each(function(m,FL02){
+			$(FL02.PPBLIST).each(function(n,PP){
+				$("#mains").children().eq(index).find("ul.accSs-case").append("<li><a class='img' href=''><img src='/gui_o2o/qfy/images/accSs-img.png' /></a><a class='text' href=''>"+PP.PPBNAME+"</a></li>");
+			});
+		});
+	});
+}
+</script>
+</head>
+<body>
+
+
+<!--------------------------------头部-------------------------------------->
+<div id="header">
+</div>
+<div class="clera"></div>
+<!-----------------------------菜单、banner--------------------------------->
+<div id="gyl-nav">
+  <a class="nav" href="gyl-index.html">车型分类</a>
+  <a class="nav xuan" href="gyl-accClass.html">配件分类</a>
+  <a class="nav" href="gyl-accSs.html">配件品牌</a>
+  <a class="nav" href="remind.html">汽车品牌</a>
+</div>
+<div class="clera"></div>
+<div id="sxtj">
+  <a href="#" class="xuan">按首字母A~Z查找</a>
+</div>
+<div id="sxtjxx" class="sxtjxx">
+  <div class="xxtitle"><a href="#">全部：</a><a class="zmxuan" id="title-a">A</a><a class="zm" id="title-b">B</a><a href="#" class="zm" id="title-c">C</a><a href="#" class="zm">D</a><a href="#" class="zm">E</a><a href="#" class="zm">F</a><a href="#" class="zm">G</a><a href="#" class="zm">H</a><a href="#" class="zm">I</a><a href="#" class="zm">J</a><a href="#" class="zm">K</a><a href="#" class="zm">L</a><a href="#" class="zm">M</a><a href="#" class="zm">N</a><a href="#" class="zm">O</a><a href="#" class="zm">P</a><a href="#" class="zm">Q</a><a href="#" class="zm">R</a><a href="#" class="zm">S</a><a href="#" class="zm">T</a><a href="#" class="zm">U</a><a href="#" class="zm">V</a><a href="#" class="zm">W</a><a href="#" class="zm">S</a><a href="#" class="zm">Y</a><a href="#" class="zm">Z</a></div>
+</div>
+<!-----------------------------楼层--------------------------------->
+<div id="pjfl">
+	<!-----------------------------一楼--------------------------------->
+<div class="left">
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>油品</label>
+<div class=" hwz"><a href="#">汽油</a><a href="#">柴机油</a><a href="#">自动变速箱油</a><a href="#">齿轮油</a><a href="#">刹车油</a><a href="#">助力转向油</a></div>
+</div>
+</div>  
+
+
+<!-----------------------------二楼--------------------------------->
+
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>制动系</label>
+<div class=" hwz"><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a></div>
+</div>
+</div>  
+
+<div class="clear"></div>
+
+
+<!-----------------------------三楼--------------------------------->
+
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>皮带涨紧轮</label>
+<div class=" hwz"><a href="#">正时皮带</a><a href="#">正时涨紧轮</a><a href="#">正时涨紧器</a><a href="#">正时惰轮</a><a href="#">转向助力泵皮带</a><a href="#">空调泵皮带</a><a href="#">空调涨紧轮</a><a href="#">散热器风扇皮带</a><a href="#">水泵皮带</a><a href="#">水泵皮带轮</a><a href="#">发动机皮带</a></div>
+</div>
+</div>  
+<div class="clear"></div>
+
+<!-----------------------------四楼--------------------------------->
+
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>油品</label>
+<div class=" hwz"><a href="#">汽油</a><a href="#">柴机油</a><a href="#">自动变速箱油</a><a href="#">齿轮油</a><a href="#">刹车油</a><a href="#">助力转向油</a></div>
+</div>
+</div>  
+
+<!-----------------------------五楼--------------------------------->
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>皮带涨紧轮</label>
+<div class=" hwz"><a href="#">正时皮带</a><a href="#">正时涨紧轮</a><a href="#">正时涨紧器</a><a href="#">正时惰轮</a><a href="#">转向助力泵皮带</a><a href="#">空调泵皮带</a><a href="#">空调涨紧轮</a><a href="#">散热器风扇皮带</a><a href="#">水泵皮带</a><a href="#">水泵皮带轮</a><a href="#">发动机皮带</a></div>
+</div>
+</div>  
+<div class="clear"></div>
+<!-----------------------------六楼--------------------------------->
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>制动系</label>
+<div class=" hwz"><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a></div>
+</div>
+</div>  
+
+<div class="clear"></div>
+<!-----------------------------七楼--------------------------------->
+
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>油品</label>
+<div class=" hwz"><a href="#">汽油</a><a href="#">柴机油</a><a href="#">自动变速箱油</a><a href="#">齿轮油</a><a href="#">刹车油</a><a href="#">助力转向油</a></div>
+</div>
+</div>  
+
+<!-----------------------------八楼--------------------------------->
+<div class="m" style="border-bottom:1px solid #e1e1e1">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>皮带涨紧轮</label>
+<div class=" hwz"><a href="#">正时皮带</a><a href="#">正时涨紧轮</a><a href="#">正时涨紧器</a><a href="#">正时惰轮</a><a href="#">转向助力泵皮带</a><a href="#">空调泵皮带</a><a href="#">空调涨紧轮</a><a href="#">散热器风扇皮带</a><a href="#">水泵皮带</a><a href="#">水泵皮带轮</a><a href="#">发动机皮带</a></div>
+</div>
+</div>  
+<div class="clear"></div>
+</div>
+
+
+   <!-----------------------------九楼--------------------------------->
+   <div class="right">
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>制动系</label>
+<div class=" hwz"><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a></div>
+</div>
+</div>  
+
+<div class="clear"></div>
+<!-----------------------------十楼--------------------------------->
+
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>油品</label>
+<div class=" hwz"><a href="#">汽油</a><a href="#">柴机油</a><a href="#">自动变速箱油</a><a href="#">齿轮油</a><a href="#">刹车油</a><a href="#">助力转向油</a></div>
+</div>
+</div>  
+
+<!-----------------------------十一楼--------------------------------->
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>皮带涨紧轮</label>
+<div class=" hwz"><a href="#">正时皮带</a><a href="#">正时涨紧轮</a><a href="#">正时涨紧器</a><a href="#">正时惰轮</a><a href="#">转向助力泵皮带</a><a href="#">空调泵皮带</a><a href="#">空调涨紧轮</a><a href="#">散热器风扇皮带</a><a href="#">水泵皮带</a><a href="#">水泵皮带轮</a><a href="#">发动机皮带</a></div>
+</div>
+</div>  
+<div class="clear"></div>
+<!-----------------------------十二楼--------------------------------->
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>制动系</label>
+<div class=" hwz"><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a></div>
+</div>
+</div>  
+
+<div class="clear"></div>
+ 
+ <!-----------------------------十三楼--------------------------------->
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>油品</label>
+<div class=" hwz"><a href="#">汽油</a><a href="#">柴机油</a><a href="#">自动变速箱油</a><a href="#">齿轮油</a><a href="#">刹车油</a><a href="#">助力转向油</a></div>
+</div>
+</div>  
+<!-----------------------------十四楼--------------------------------->
+<div class="m">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>皮带涨紧轮</label>
+<div class=" hwz"><a href="#">正时皮带</a><a href="#">正时涨紧轮</a><a href="#">正时涨紧器</a><a href="#">正时惰轮</a><a href="#">转向助力泵皮带</a><a href="#">空调泵皮带</a><a href="#">空调涨紧轮</a><a href="#">散热器风扇皮带</a><a href="#">水泵皮带</a><a href="#">水泵皮带轮</a><a href="#">发动机皮带</a></div>
+</div>
+</div>  
+<div class="clear"></div>
+<!-----------------------------十五楼--------------------------------->
+<div class="m" style="border-bottom:1px solid #e1e1e1">
+<div class="tp"><img src="/customer/qfy/images/lqq.png" /></div>
+<div class="wz"><label>制动系</label>
+<div class=" hwz"><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a><a href="#">前刹车片</a><a href="#">后刹车片</a><a href="#">前刹车蹄</a><a href="#">后刹车蹄</a><a href="#">后刹车鼓</a><a href="#">前刹车盘</a></div>
+</div>
+</div>  
+
+<div class="clear"></div>  
+</div>
+</div>
+<div class="clear"></div>  
+<!---------------------底部--------------------->
+<div id="footer"></div>
+
+</body>
+</html>

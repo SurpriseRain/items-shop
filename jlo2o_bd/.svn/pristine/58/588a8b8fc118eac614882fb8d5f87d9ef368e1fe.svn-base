@@ -1,0 +1,26 @@
+<div class="floor_nav_main">
+  <dl>
+    <dt class="w12">1F</dt>
+    <dd class="w12 xuan">名称</dd>
+  </dl>
+  <dl>
+    <dt class="w12">2F</dt>
+    <dd class="w12">名称</dd>
+  </dl>
+  <dl>
+    <dt class="w12">3F</dt>
+    <dd class="w12">名称</dd>
+  </dl>
+  <dl>
+    <dt class="w12">4F</dt>
+    <dd class="w12">名称</dd>
+  </dl>
+  <dl>
+    <dt class="w12">5F</dt>
+    <dd class="w12">名称</dd>
+  </dl>
+  <dl>
+    <dt class="w12">6F</dt>
+    <dd class="w12">名称</dd>
+  </dl>
+</div>

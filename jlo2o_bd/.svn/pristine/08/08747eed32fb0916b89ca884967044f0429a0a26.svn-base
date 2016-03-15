@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript">
+//初始化数据
+var xsdd01=$.getUrlParam("xsdd01");
+function initData(){
+	
+}
+</script>
+</head>
+<body>
+	<div id="curPosition">
+    	<a href="#">库房管理</a>
+    	<span>></span>
+    	<b>订单出库</b>
+	</div>
+	<div class="clera"></div>
+  <ul id="screening">
+    <li style="width:819px;">
+    <span>快递公司名称</span>
+    <input type="text" name="XSDD42" id="XSDD42" value="" placeholder="请输入快递公司名称"   style="width:200px;"/>
+    <span>快递单号</span>
+	<input type="text" name="XSDD43" id="XSDD43" value="" placeholder="请输入快递单号" onkeyup="value=value.replace(/[^\w\.\/]/ig,'')" style="width:200px;"/>
+	<a href="javascript:void(0);" class="bot Short sub_bot">提交</a>
+   </li>
+  </ul>
+	<div class="clera"></div>
+	
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+var usercookie;
+$(document).ready(function(){
+	$(".sub_bot").on('click',function(){
+		select_xsddd_2(xsdd01);
+	});
+  
+});
+
+function checked(){
+	if ($("#XSDD42").val() == "" || $("#XSDD42").val() == null) {
+		alert("快递公司名称不能为空");
+		return false;
+	}else if ($("#XSDD43").val() == "" || $("#XSDD43").val() == null) {
+		alert("快递单号不能为空");
+		return false;
+	}
+	return true;
+}
+//发货连接
+function select_xsddd_2(obj){
+	 if(!checked()){
+		 return false;
+	 }
+	 var XmlData = [{"XSDD01":obj,"XSDD42":$("#XSDD42").val(),"XSDD43":$("#XSDD43").val()}];
+	 var url="/Oper_MJRK/XSDDCK.action?XmlData="+JSON.stringify(XmlData);
+	 var rData=visitService(url);
+	 if(rData.STATE==0){
+		 alert('出库失败');
+	 }else{
+		 alert('出库成功');
+		 location.href="/customer/qfy/back/ddgl/mjddfh.html"
+	 }
+}
+</script>

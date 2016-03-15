@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心 - 上传配件串码</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript"  src="/js/jquery.foggle.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/openbox.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/control/js/tableGrid.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.kkPages.js"></script>
+<style>
+	ul#screening li input.XZCK{height:20px;margin:15px 0;width:50px;}
+	ul#screening li span.xzckContent{width:auto;}
+</style>
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var user = JSON.parse(MyCookie);
+var gsid=user.ZCXX01;
+var gslx = user.LX;
+var xtczy01=user.XTCZY01;
+var returnData="";
+var ckdData="";
+//初始化数据
+var DJBH=-1;
+var barcode = "";
+function initData(){
+	//jsonData=[{"DJBH"=0, CKDTIEM={cmclry=系统管理员, cmclsj=2015-02-12 16:12:11, SPXX01=177,SPXX04=进气系统清洗剂, spcm01=(01)06920128200028(10)150211(21)B4(9999)02, ckqymc=上海汽车有限公司}, TraceNum=1, CompanyCode=6951361, state=1, DRSJ=2015-04-28 10:12:45, GuildCode=91A00002, ZCXX01=0151, PositionCode=xxldsewarew}];
+  if(returnData==""){
+  }else{
+	ckdData=returnData.CKDITEM[0].spcmList;
+	barcode = returnData.CKDITEM[0].spcmList[0].barcode;
+	if(gslx == 42){
+		$(".STCK").remove();
+	} else {
+		selectW_dqck();//查询仓库信息
+	}
+  }
+  return ckdData;
+}
+
+$(document).ready(function(){
+	var xmlType = $.getUrlParam("xmlType");
+	//点击上传按钮
+	$("#sure").on("click",function(){
+	   var XmlData=[{"gsid":gsid,"xmlType":"2"}];
+	   var url = "/XmlUploadProduct/insertXmlCKD.action";
+	   if($("#filename01").html()==""){
+		   alert("请选择XML文件");
+		   return false;
+	   }
+	   var fileArray=[];
+	   $("#files").find("input").each(function(){
+		  fileArray.push($(this).attr("id"));
+	   });
+	  // if(confirm('确认提交资料吗？')==true){
+	     //弹出遮罩层
+	     top.openWait();
+	     
+		 $.ajaxFileUpload({
+			type:"POST",
+  			url:"/XmlUploadProduct/insertXmlCKD.action?XmlData="+JSON.stringify(XmlData),
+  			secureuri:false,
+  			fileElementId:fileArray,
+  			dataType: 'text',
+  			success:function(data){
+  				//关闭遮罩层
+				top.closeWait();
+  			  	var jsonData= jQuery.parseJSON(data).data;
+  			 	 if(jsonData.state == 1) {
+	  			  	alert("上传成功！");
+	  			  	//查询已经上传XML的串码明细
+	  			  	DJBH=jsonData.DJBH;
+	  			    returnData=jsonData;
+	  			  	showCKD(jsonData);
+	  			  	$("#screening").css({"display":"block"});
+	  			  	init();
+  			     } else if (jsonData.state == 0){
+	  			 	 alert("您还未绑定行业管理码，请完善资料！");
+  			  	 }else if(jsonData.state == 3){
+  	  			  	  alert("请检查导入XML数据是否正确,商品编码:"+jsonData.barcode+"有误!");
+  	  			 }else if(jsonData.state == 4){
+  	  				alert("请检查导入XML数据是否正确,商品串码:"+JSON.stringify(jsonData.isExitList)+"已存在!")
+  	  	  		 }else if(jsonData.state == 5){
+  	  			  	  alert("请检查导入XML数据是否正确,商品串码:"+jsonData.spcm01+"有误!");
+  	  			 } else {
+  					 alert("上传失败，请刷新页面重试或联系运营人员！");
+  					 $("#filename01").html("");
+  			  	 }  
+  				},
+  				error: function(XMLHttpRequest, textStatus, errorThrown) {
+  					//关闭遮罩层
+					top.closeWait();
+					alert("上传失败，请刷新页面重试或联系运营人员！");
+					$("#filename01").html("");
+			    },
+  			});
+	   //}else return;
+	});
+});
+
+function showCKD(jsonData){
+	$("#CKDH").attr("readonly","readonly");
+	$("#ZCXX01").val(jsonData.ZCXX01);
+	$("#CKR").val(returnData.CKDITEM[0].barcodeList[0].cmclry);
+}
+
+//查询收货仓库信息
+var dqckList = [];
+function selectW_dqck(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.product.sql.Oper_SpglDao.selectW_GSCKXZ','QryType':'Report','dataType':'Json','ZCXX01':gsid, 'BARCODE' : barcode }];
+	var returnVal = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	if(returnVal != undefined && returnVal != "" && returnVal.length > 0){
+		dqckList = [];
+		$("#SHCK").empty();
+		$("#SHCK").append('<option value="">请选择</option>');
+		$(returnVal).each(function(index,val){
+			$("#SHCK").append('<option value="'+val.CK01+'" class="' + val.TYPE + '">'+val.CK02+'</option>');
+			dqckList.push(val.CK01 + "," + val.TYPE + "," + val.GSXX01);
+		});
+	} else {
+		$("#SHCK").empty();
+		$("#SHCK").append('<option value="nock">没有实体仓库</option>');
+	}
+}
+
+function okclick(){
+	var $xzck = $("input[name='XZCK']:checked");
+	var SHCK = $("#SHCK").val();
+	if(SHCK == null || SHCK == "null"){
+		SHCK = "";
+	}
+	if($xzck.length == 0){
+		alert("请选择出库仓库类型!");
+		return false;
+	} else {
+		if($xzck.val() == 1 && SHCK == ""){
+			alert("请选择出库实体仓库!");
+			return false;
+		}
+		if($xzck.val() == 1 && SHCK == "nock"){
+			alert("没有实体仓库可以选择!请关联安迅仓库或添加区域服务商!");
+			return false;
+		}
+	}
+	var CKTYPE = $("#SHCK").find("option:selected").attr("class");
+	var BZ=$("#BZ").val();
+	var CKR=$("#CKR").val();
+	var XmlData={"SHCK":SHCK,"BZ":BZ,"CKR":CKR,"CKDLX":"1","CKD":returnData, "CKLX" : $xzck.val(), "CKTYPE" : CKTYPE};
+	//var url="/Oper_CKD/insertW_CKD.action?XmlData=" + escape(JSON.stringify(XmlData));
+	 //弹出遮罩层
+    top.openWait();
+    
+/* 	var rData=visitService(url);
+	//alert(rData.STATE);
+	//关闭遮罩层
+	top.closeWait();
+	if (rData == undefined || rData == '') {
+		alert("操作失败!");
+		return false;
+	}
+	if(rData.STATE=="1"){
+		alert("操作成功，出库单号是："+rData.CKDH);
+		$("#CKDH").val(rData.CKDH);
+		$(".sure").css({"display":"none"});
+		$(".print").css({"display":"block"}); 
+	}else if(rData.STATE == "undefined" || rData.STATE == ""){
+		alert("操作失败!");
+		return false;
+	} */
+	
+	//modify 2015.12.01. 修改请求方式GET为POST，解决上传的XML中数据太多的问题。
+	var url = "/Oper_CKD/insertW_CKD.action";
+		ajaxQ({
+			"type" :"POST",
+			"url" : url,
+			"data" : {"XmlData":JSON.stringify(XmlData)},
+			"callback" : function(data) {
+				rData = data;
+				top.closeWait();
+				if (rData == undefined || rData == '') {
+					alert("操作失败!");
+					return false;
+				}
+				if (rData.STATE == "1") {
+					alert("操作成功，出库单号是：" + rData.CKDH);
+					$("#CKDH").val(rData.CKDH);
+					$(".sure").css({
+						"display" : "none"
+					});
+					$(".print").css({
+						"display" : "block"
+					});
+					$(".XZCK").attr("disabled", true);
+					$("#SHCK").attr("disabled", true);
+				} 
+				//modify 2015.12.02. 增加后台返回的状态处理
+				else if(rData.STATE == "0" || rData.state=="error"){
+					alert("操作失败!");
+					return false;
+				}
+				else if (rData.STATE == "undefined" || rData.STATE == "") {
+					alert("操作失败!");
+					return false;
+				}
+			}
+		});
+	}
+
+	//待删除
+	function upload() {
+		var xmlurl = $(".pldr").val();
+		var XmlData1 = [ {
+			"xmlurl" : xmlurl
+		} ];
+		var XmlData = JSON.stringify(XmlData1);
+
+		var url = "/XmlUploadProduct/insertXmlUpload.action?XmlData=" + XmlData;
+		var rData = visitService(url);
+	}
+
+	function print() {
+		var CKDH = $("#CKDH").val();
+		//var url = "/PubPrtDocument?prtType=ckd&ckdh=CK1430232098";
+		var url = "/PubPrtDocument?prtType=ckd&ckdh=" + CKDH;
+		window.open(url);
+	}
+
+	$(function() {
+		$(".nloption").foggle({
+			acceptVal : "subscribe",
+			targetClass : "nlSupplier"
+		});
+	});
+
+	//获取附件名称
+	function getFileName() {
+		var file=$("#jbox-content").find("input[type='file']").val();
+		var stuff = file.split(".")[1];
+	    if (file == "" || (stuff != "xml" && stuff != "XML")){
+	      alert("请选择正确的xml文件");
+	      return false;
+	    }
+		var box = window.$.jBox.getBox();
+		var oldfile = $(box).find("input[name='pic']");
+		var num = $(box).find("input[name='idFile']").val();
+		$(box).find("input[name='idFile']").val("");
+		var id = "file" + num;
+		$("#files").find("#" + id).remove();
+		$("#files").append(oldfile);
+		$("#files").find("input[name='pic']").attr("id", id).attr("name",
+				"files").removeClass("browbtn");
+		var path = $("#files").find("#" + id).val();
+		if (path != "") {
+			var filename = "";
+			var pos1 = path.lastIndexOf('/');
+			var pos2 = path.lastIndexOf('\\');
+			var pos = Math.max(pos1, pos2);
+			if (pos < 0) {
+				filename = path;
+			} else {
+				filename = path.substring(pos + 1);
+			}
+			$("#filename" + num).html(filename).addClass("photook");
+		} else {
+			alert("请上传XML文件!");
+			return;
+		}
+		window.jBox.close();
+		$("body").css("overflow", "auto");
+	}
+
+	//取消附件上传
+	function removeFile(obj) {
+		var fileNameId = $(obj).find("span.photook").attr("id");
+		var num = fileNameId.replace("filename", "");
+		//alert(num);
+		$("#files").find("#file" + num).remove();
+		$("#" + fileNameId).text("");
+		$("#" + fileNameId).removeClass("photook");
+	}
+
+	//页面点击上传按钮
+	function photo_open(obj) {
+		//判断是否要跟跟物流对接
+		var wlUrl = "/PubService/getZCGSWL.action?ZCXX01=" + gsid;
+		var wlReturnData = visitService(wlUrl);
+		if (wlReturnData.CurConf == "1" && wlReturnData.APP_KEY == undefined) {
+			alert("请先在安迅物流上注册");
+			return;
+		}
+
+		var id = $(obj).attr("id");
+		$("input[name='idFile']").val(id);
+		jBox('id:photo_open', {
+			showIcon : 'jbox-title-icon'
+		});
+		$("tr").css("height", "0px");
+	}
+	
+	// 单选按钮 20151214
+	function radioCheck(){
+  		var ckVal = $("input[name='XZCK']:checked").val();
+		if(ckVal == 1){
+  			$("#SHCK").css("display", "block");
+  		} else {
+  			$("#SHCK").css("display", "none");
+  			$("#SHCK").val("");
+  			// 20160107 Qijy 确认功能
+  			if(dqckList.length > 0){
+  				var jsonData = [{"ZCXX01" : gsid, "BARCODE" : barcode, "XZCK" : ckVal, "CKLIST" : dqckList}];
+  				var ckUrl = "/Oper_CKD/selectQYCK.action?jsonData=" + JSON.stringify(jsonData);
+  				var ckData = visitService(ckUrl);
+  				if(ckData.STATE == "2"){
+  					alert("此商品不能入该仓库,该仓库销售区域与实体仓库区域重叠,请重新选择仓库!");
+  					$("input[name='XZCK']").attr("checked", false);
+  					return false;
+  				}
+  			}
+  		}
+  		
+  	}
+	
+</script>
+<body>
+<div id="photo_open">
+    <div class="cart_ok" >
+        <h3 class="cart_opentit">上传</h3>
+        <div class="modbox">
+        	<input id="idFile" type="file" name="pic" class="browbtn" value="1" />
+        	<input type="hidden" name="idFile" value="" />
+        	<p class="">上传文件格式仅限于XML<br/>如果文件较大请耐心等待上传时间</p>
+        	<input type="button" name="button4" id="button4" onclick="getFileName();" value="上传" class="modalInput fl" />
+        	<input type="button" name="button5" id="button5" value="取消" class="jbox-close closebtn fl" />
+        	<br class="clear"/>
+    	</div>
+    </div>
+</div>
+<div id="files"  class="clear"></div>
+
+ <!--  <div id="curPosition">
+    	<a href="#">我是卖家</a>
+    	<span>></span>
+    	<a href="#">商品管理</a>
+    	<span>></span>
+    	<b>厂家出库</b>
+	</div> -->
+	<div class="dqtb">
+	 <span style="font-size:16px;color:#e40000;margin:0 5px 0 3px;float:left; width:100%;">操作说明：</span>
+	 <b style="line-height:30px; float:left; width:95%; margin-left:10%;">①选择商品XML文件,确定导入;</b><br/>
+	 <b style="line-height:30px; float:left; width:95%; margin-left:10%;">②选择发货仓库，确认出库;</b><br/>
+	 <b style="line-height:30px; float:left; width:95%; margin-left:10%;">③点击打印按钮,打印出库单。</b><br/>
+	 </div>
+	<div class="dqtb">
+     <label style="font-size:16px;">请选择要出库的商品(XML格式)：</label>
+     <input type="button" value="上传" id="01" onclick="photo_open(this);" class="modalInput pldr" />
+	  <div class="photoupok" style="float:left; width:150px; height:25px; margin:-2px 1 0 -15px; border:1px solid #e4e4e4;">
+	    <span class="photook" id="filename01" style=" color:#3c3c3c; font-size:12px; margin-left:5px; padding-left:0px; text-indent:5px; line-height:25px;"></span>
+      </div>
+     <input type="button" id="sure" value="确定" class="bot" />
+     </div>
+  	<ul id="screening" style="display:none">
+	   <li style="width:830px;">
+<!--  		<span>出库单号：</span>-->
+  		<input type="hidden" id="CKDH" name="CKDH" value="" class="text"/>
+<!--  		<span>生产企业编号：</span>-->
+  		<input type="hidden" id="ZCXX01" name="ZCXX01" value="" class="text"/>
+  		<span>出库人：</span><input type="text" id="CKR" name="CKR" value="" class="text"/>
+  		<span>请选择收货仓库：</span>
+  		<span><input type="radio" name="XZCK" class="XZCK" value="0" onclick="radioCheck();" />自有仓库</span>
+  		<span class="STCK"><input type="radio" name="XZCK" class="XZCK STCK" value="1" onclick="radioCheck();" />其他仓库</span>
+		<select id="SHCK" name="SHCK" style="width:150px;display: none;">
+        </select>
+		</li>
+ 		<li style="width:830px;">
+  		<span>备注：</span><input type="text" id="BZ" name="BZ" value="" class="text"/>
+  		<a href="javascript:void(0);" class="bot Short seach_bot sure" id="sure" style="display: block;width:100px;" onclick="okclick();">确认出库</a>
+  		<a href="javascript:void(0);" class="bot Short seach_bot print" id="print" style="display: none;" onclick="print();">打印</a>
+  		</li>
+  </ul>
+
+<div class="clear"></div>
+
+<!-- 展示导入数据开始 -->
+<div class="center">
+<div jl jlid="DefStaPer" id="lb" newclos="4" multiPage="false"  url="/jlquery/selecto2o.action" 
+columnsArr="[
+{'property':'barcode','header':'条码','type':'lable','width':'100px'},
+{'property':'SPXX04','header':'名称','type':'lable','width':'120px'},
+{'property':'num','header':'出库数量','type':'lable','width':'60px'}]"
+afterUrl=""
+>
+</div>
+</div>
+<!-- 展示导入数据结束 -->
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+</html>

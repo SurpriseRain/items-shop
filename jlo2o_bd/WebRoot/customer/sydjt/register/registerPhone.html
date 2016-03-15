@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>手机注册</title>
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/reg-main.css" />
+
+<link rel="stylesheet" type="text/css" href="/customer/sydjt/css/reg-main.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/zhmm-main.css" />
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/sydjt/js/reg.js"></script>
+<script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="../js/regPhone.js"></script>
+</head>
+<style>
+.yzsj{
+display: inline-block;
+width: 105px;
+height: 40px;
+border: 1px solid #e4e4e4;
+background-color: #e4e4e4;
+color: #000;
+line-height: 40px;
+text-align: center;
+box-shadow: 3px 4px 3px #999;
+}
+</style>
+<body>
+<!-----公共部门开始---->
+<div id="header">
+  <div class="header_main">
+    <a class="logo" href="/customer/sydjt/index.html"><img src="../images/reg-logo.png" /></a>
+    <!------------------流程------------------>
+    <div class="tecPro">
+      <div class="userLc">
+      <div class="userlcMain">
+        <div class="userlcCase"><a class="fxlc_zz">1.创建账户</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">2.填写信息</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">3.后台审核</a></div>
+        <div class="userlcCase"><span>→</span></div>
+        <div class="userlcCase"><a class="fxlc_wz">4.注册成功</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+
+<div class="clera"></div>
+<div id="main">
+  <ul class="userName">
+    <li class="title">手机注册</li>
+    <li><span>手机号</span><input type="text" id="phone" name="phone" class="text" placeholder="" focusOn="" style="width: 200px;" /><div class="tishi"></div></li>
+    <li><span>&nbsp;</span><a id="#yzsj" class="yzsj" onclick="sendPhone()" >获取验证码（<b id="endtime" style="color: #090;"></b>）</a></li>
+    <li><span>短信动态码</span><input type="text" class="text pwd" id="userPwd" focusOn="请输入短信动态码" />
+	</li>
+	<li><span>邮箱地址</span><input type="text" id="email" name="email" class="text" placeholder="" focusOn="" style="width: 200px;" /><div class="tishi"></div></li>
+    <li><span>验证码</span><input class="text yzm" id="userYzm" name="userYzm" /><img id="yzmimg"  onload="setCaptchaText()" onclick="javascript:refreshCaptchaImage()" class="yzmimg" src=""   border="0" style="width: 88px;" ><input type="hidden" id="realCaptcha" value=""><a class="sxyzm"  title="刷新验证码" onclick="javascript:refreshCaptchaImage()" style="width: 85px;">看不清？换一张</a><div class="tishi"></div></li>
+    <li style="height:20px;"><span>&nbsp;</span><input type="checkbox" class="checkbox" />同意<a href="reg-sev-text.html" class="text" target="_blank">《电器服务云服务协议》</a></li>
+    <li><span>&nbsp;</span><a class="reg_bot" onclick="perfectSave()">快速注册</a></li>
+  </ul>
+</div>
+
+</body>
+</html>

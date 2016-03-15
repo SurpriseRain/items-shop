@@ -1,0 +1,60 @@
+.jl_page{ width:100%; float:left;  position:relative; font-family:"microsoft yahei"; background-color:#fff;}
+
+.jl_page .page_title{ width:100%; min-height:50px; border-bottom:1px solid #e1e1e1;}
+.jl_page .page_title h2{ line-height:50px; margin-left:20px; float:none;}
+
+.jl_page .page_main{}
+
+/**********************定义工作组样式开始*************************/
+
+.jl_page .dygzz_left{ float:left; width:290px; min-height:650px; border-right:1px solid #e1e1e1; padding:20px 0 0 30px;}
+
+.dygzz_left dt input[type="text"]{ width:160px;}
+
+.dygzz_left dd{ width:100%; line-height:35px; color:#999;}
+.dygzz_left dd:hover{ background-color:rgb(241, 248, 253); cursor:pointer;}
+.dygzz_left dd.xz{ width:232px; margin-bottom:10px; background-color:#fff !important;}
+
+.dygzz_left dd span{ font-size:16px; color:#3c3c3c; margin-left:30px;}
+.dygzz_left dd.xuan{ border:1px solid #e1e1e1; border-right:0px; margin-left:1px; background-color:#fff;}
+
+.dygzz_left ul{ float:right !important; margin-right:30px;}
+
+
+.jl_page .dygzz_right{ float:right; width:708px; min-height:650px; padding:0 50px;}
+
+.dygzz_right dl{ width:100%;}
+.dygzz_right dl:first-child{ margin-top:20px;}
+
+.dygzz_right dt{ width:100%; line-height:30px; font-size:16px;}
+.dygzz_right dt font{ color:red; font-size:12px; margin-left:20px;}
+
+.dygzz_right dd{width:100%;}
+.dygzz_right dd input[type="text"]{ width:100%;}
+
+.dygzz_right .box{ border:1px solid #e1e1e1; border-top:1px solid #c1c1c1; width:100%; padding-bottom:20px; margin-bottom:10px; max-height:250px; overflow-y:auto}
+.dygzz_right span{ padding:0 10px; line-height:28px; font-size:14px; margin:15px 0 0 15px; border:1px solid #e1e1e1; cursor:pointer}
+.dygzz_right span i{ margin:0px 0 0 8px; color:#d45149;}
+.dygzz_right span:hover{ background-color:#f5f5f5;}
+
+
+
+/**********************定义工作组样式结束*************************/
+
+
+/**********************充值样式开始*************************/
+.jl_page .recharge dl{ margin-top:20px;}
+.jl_page .recharge dt{ line-height:50px; text-align:right; font-size:16px; color:#999;}
+.jl_page .recharge dd{ padding-left:10px;}
+.jl_page .recharge dd span{ color:#999; line-height:50px; margin-left:10px;}
+.jl_page .recharge dd a{ float:left; height:52px; border:1px solid #e1e1e1; position:relative; cursor:pointer; margin:0 10px 10px 0;}
+.jl_page .recharge dd a img{ height:40px; margin:5px 10px 5px 30px;}
+.jl_page .recharge dd input[type="radio"]{ position:absolute; left:5px; top:15px;}
+.jl_page .recharge dd a:hover{ border:2px solid #3896d4;}
+.jl_page .recharge dd a:hover img{ height:38px;}
+.jl_page .recharge dd a.xuan{ border:2px solid #3896d4;}
+.jl_page .recharge dd a.xuan img{ height:38px;}
+.jl_page .recharge dd input[type="button"]{ padding:8px 40px; font-size:18px; margin-right:20px;}
+.jl_page .recharge dd b{ line-height:50px; font-size:25px; color:#e84d1c;}
+
+/**********************充值样式结束*************************/

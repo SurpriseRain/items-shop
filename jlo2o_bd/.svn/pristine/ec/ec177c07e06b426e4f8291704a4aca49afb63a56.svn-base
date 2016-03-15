@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" type="text/css" href="../css/pinpai.css" />
+	<link rel="stylesheet" type="text/css" href="../css/public.css" />
+	<link rel="stylesheet" type="text/css" href="../css/qypublic.css" />
+	<link rel="stylesheet" type="text/css" href="../css/qy_allgoodsfl.css" />
+	<link rel="stylesheet" type="text/css" href="../css/products-main.css" />
+	<link rel="stylesheet" type="text/css" href="/customer/qfy/css/head.css" />
+	<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+	<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+	<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../js/openbox.js"></script>
+	<script type="text/javascript" src="../js/jq.Slide.js"></script>
+	<script type="text/javascript" src="../js/slides.min.jquery.js"></script>
+	<script type="text/javascript" src="../js/pubJson.js"></script>
+	<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+	<script type="text/javascript" src="../js/public1.js"></script>
+	<script type="text/javascript" src="../js/jquery.bxslider2.min.js"></script>
+	<script type="text/javascript" src="../js/scripts.js"></script>
+	<script type="text/javascript" src="../js/accounting.min.js"></script>
+	<title>配件品牌搜索</title>
+</head>
+<body>
+	<input type="hidden" id="code" value=""/>
+	
+	<div id="header">
+	</div>
+	
+	<div class="clera"></div>
+	
+	<div id="sxtj">
+	  <a href="#" class="xuan">按首字母A~Z查找</a>
+	</div>
+	
+	<div id="sxtjxx" class="sxtjxx">
+	  <div class="xxtitle">
+	  <a href="#">全部：</a>
+	  <div id="CarOne">
+	  </div>
+	  </div>
+	</div>
+	
+	<div id="mains">
+	</div>
+	<div class="clera"></div>
+	<div id="footer"></div>
+	<script type="text/javascript">
+		var zcxx01 = $.getUrlParam("gsid");
+		$(document).ready(function(){
+			if(zcxx01 != null){
+				$("#header").load("/customer/qfy/showDpxx/shopHead.html");
+				$("#footer").load("/customer/qfy/foot-08.html");
+			} else {
+				$("#header").load("/customer/qfy/head-08.jsp");
+				$("#footer").load("/customer/qfy/foot-08.html");
+			}
+			$(window).scroll(function(){
+			   if($(window).scrollTop()>250){
+				   $("#sxtjxx").removeClass("sxtjxx");
+			       $("#sxtjxx").addClass("sxtjxx-bian");
+			   }else if($(window).scrollTop()<250){
+				   $("#sxtjxx").removeClass("sxtjxx-bian");
+			       $("#sxtjxx").addClass("sxtjxx"); 
+			   }
+		   });
+			selectpp();//页面加载时,配件品牌显示
+		});
+		
+		function selectpp(){
+			var XmlData = [{"pptp":"0", "ZCXX01":zcxx01}]
+			var Url='/MemberShop/getJson/searchPPB.action?XmlData=' + JSON.stringify(XmlData);
+			var rData0 = visitService(Url);
+			for(var i=0; i<rData0.length;i++){
+				$("#mains").append('<div class="flower car_list" id="flower'+i+'">'+
+						  '<div class="fltitle"><a class="zm" name="mao'+rData0[i].code+'">'+rData0[i].code+'</a></div>'+
+						  '<div class="clera"></div>'+
+						  '</div>');
+				$("#CarOne").append('<a class="zm" href="#mao'+rData0[i].code+'"  >'+rData0[i].code+'</a>');
+		
+				$("#CarOne > a").click(function(){
+		             $("#CarOne > a").removeClass("zmxuan");
+		             $(this).addClass("zmxuan");
+				});		
+				for(var j=0;j<rData0[i].list.length;j++){
+					$("#flower"+i).append('<div id="mao_'+rData0[i].list[j].ppb01+'" class="flmain pplist" code="'+rData0[i].list[j].ppb01+'" code2="'+rData0[i].list[j].ppb02+'">'+
+											  '<a class="flmain-left">'+
+											  	'<img src="'+pubJson.path_sptp+'/pptp/'+rData0[i].list[j].PPTP02+'" /><div class="text">'+rData0[i].list[j].ppb02+'</div> '+
+											  '</a>'+
+		   								  '</div>');
+				}
+			} 
+			$("img").error(function() {
+		    	$(this).attr("src", pubJson.defaultImgUrl);
+		    });
+			// 搜索引擎页面跳转
+			var solr = pubJson.Solr;
+		    var searchUrl = "";
+			if(solr == "1"){
+				searchUrl = "/customer/qfy/showProduct/member_shop_s.html";
+			} else {
+				searchUrl = "/customer/qfy/showProduct/member_shop_n.html";
+			}
+			$(".pplist").on('click',function(){
+		        var pp_id = $(this).attr("code");
+		        var pp_name = $(this).attr("code2");
+		        location.href= searchUrl + "?pp_id="+pp_id+"&pp_name="+escape(pp_name);
+			});	
+		}
+	
+	</script>
+</body>
+</html>

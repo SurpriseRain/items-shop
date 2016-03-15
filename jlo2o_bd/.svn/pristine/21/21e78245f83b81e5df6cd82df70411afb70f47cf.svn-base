@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>退货申请</title>
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/th-sq.css" />
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+var yxcs = $.getUrlParam("yxcs");
+var yxcs_name = $.getUrlParam("yxcs_name");
+yxcs_name=unescape(yxcs_name);
+var yxcsArray = [];
+var yxcs_nameArray = [];
+if(yxcs!=""){
+	yxcsArray=yxcs.split(",");
+	yxcs_nameArray=yxcs_name.split(",");
+}
+function selectcar(){
+	var Car1=$("#select1").val();
+	var Car2=$("#select2").val();
+	var Car3=$("#select3").val();
+	if(Car4!=""){
+		select_car();
+	}
+	if(Car1!=""||Car2!=""||Car3!=""){
+		select_car();
+	}
+}
+
+function select_car(){
+	$(".clear").html("");
+	var Car1=$("#select1").val();
+	var Car2=$("#select2").val();
+	var Car3=$("#select3").val();
+	var Car4=$("#Car4").val();
+	if(Car1=="请选择"){
+		Car1="";
+	}
+	if(Car2=="请选择"){
+		Car2="";
+	}
+	if(Car3=="请选择"){
+		Car3="";
+	}
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.show.selectCX','dataType':'Json','BRAND':Car1,'CAR_TYPE':Car2,'CAR':Car3,'MODEL':Car4}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+    var rData=visitService(url);
+    if(rData!=undefined&&rData!=""){
+        $(rData).each(function(index,val){
+        	$(".clear").append("<div style='width:45%;float:left;font-size:14px;margin-left:20px;margin-top:10px;'><input type='checkbox' name='cxpp' style=' margin-bottom:3px;position:static;' class='checks' id='"+val.MOBILE_MODLE_ID+"' value='"+val.mobile_modle+"'/>"+val.mobile_modle+"</div>");
+            });
+        $(".checks").on("click",function(){
+        	var obj = $(this).is(":checked");
+        	var i = $(this).attr("id");
+        	var val = $(this).val();
+        	if(obj){
+        		$(".clears").append("<div  id='"+i+"' codes='"+val+"' name='checkedcar' style='border:1px solid #e4e4e4;width:auto;float:left;font-size:14px;margin-left:15px;margin-top:5px;'>"+val+"&nbsp;<a class='clone' id='"+i+"' name='"+val+"'>×</a>&nbsp;</div>");
+        	}else{
+        		$(".clears").find("#"+i).remove();
+        	}
+			$(".clone").on("click",function(){
+				$(".clears").find("#"+i).remove();
+				$("#"+i)[0].checked=false;
+			});
+        });
+        var cks=$("div[name='checkedcar']");
+    	var str=$("input[name='cxpp']");
+    	for(var i=0;i<cks.length;i++) {
+    		for(var j=0;j<str.length;j++) {
+    			if(cks[i].id==str[j].id){
+    				str[j].checked=true;
+    				break;
+    			}
+    		}
+    	}
+	 }
+    
+}
+
+function okclick(){
+	var cks=$("a[class='clone']");
+	var str_id="";
+	var str_name="";
+	for(var i=0;i<cks.length;i++) {
+		str_id += cks[i].id+",";
+		str_name += cks[i].name+",";
+	}
+	str_id =str_id.substring(0, str_id.length-1);
+	str_name =str_name.substring(0, str_name.length-1);
+	var s =str_id+"#"+str_name;
+	parent.execBackFun(s);
+	parent.$("#ajaxGrid").remove();
+	top.closeWait();
+}
+function selectCXFL_1(){
+	var car1=$("#select1").val();
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.show.selectCXFL01','dataType':'Json','BRAND':car1}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+    var rData=visitService(url);
+    if(rData!=undefined&&rData!=""){
+    	$("#select_1").html("");
+        $(rData).each(function(index,val){
+        	$("#select_1").append("<li>"+val.brand+"</li>");
+        });
+	 }
+    $("#Car1 > ul > li").click(function(){
+		 var selectSea_text = $(this).text();
+		 $(this).parent("ul").prev().val(selectSea_text);
+		 $(this).parent("ul").css({"display":"none"});
+		 $("#select_2").html("");
+		 $("#select2").val("");
+		 $("#select_3").html("");
+		 $("#select3").val("");
+		 $("#Car4").val("");
+		 select_car();
+		 selectCXFL_2();
+	});
+}
+function selectCXFL_2(){
+	var car1=$("#select1").val();
+	var car2=$("#select2").val();
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.show.selectCXFL02','dataType':'Json','BRAND':car1,'CAR_TYPE':car2}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+    var rData=visitService(url);
+    if(rData!=undefined&&rData!=""){
+    	$("#select_2").html("");
+        $(rData).each(function(index,val){
+        	$("#select_2").append("<li>"+val.CAR_TYPE+"</li>");
+        });
+	 }
+    $("#Car2 > ul > li").click(function(){
+		 var selectSea_text = $(this).text();
+		 $(this).parent("ul").prev().val(selectSea_text);
+		 $(this).parent("ul").css({"display":"none"});
+		 $("#select_3").html("");
+		 $("#select3").val("");
+		 select_car();
+		 selectCXFL_3();
+	});
+}
+function selectCXFL_3(){
+	var car1=$("#select1").val();
+	var car2=$("#select2").val();
+	var car3=$("#select3").val();
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.show.selectCXFL03','dataType':'Json','BRAND':car1,'CAR_TYPE':car2,'CAR':car3}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+    var rData=visitService(url);
+    if(rData!=undefined&&rData!=""){
+    	$("#select_3").html("");
+        $(rData).each(function(index,val){
+        	$("#select_3").append("<li>"+val.CAR+"</li>");
+        });
+	 }
+    $("#Car3 > ul > li").click(function(){
+		 var selectSea_text = $(this).text();
+		 $(this).parent("ul").prev().val(selectSea_text);
+		 $(this).parent("ul").css({"display":"none"});
+		 select_car();
+	});
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+<style>
+.tj{ background: #ff8800 none repeat scroll 0 0;border: 1px solid #cccccc;color: #ffffff; cursor: pointer;font-size: 16px;line-height: 20px; margin-left: 50px;padding: 5px 10px;text-align: center;width: 100px; }
+.tj:hover{background: #c76e09 none repeat scroll 0 0;}
+.dqlcs{margin-top: 20px;}
+.clears{border-bottom:1px solid #e4e4e4;border-top:1px solid #e4e4e4; height:120px;width:auto;margin-top:10px; overflow: auto;}
+.clear{border-bottom:1px solid #e4e4e4; height: 300px;width:auto; overflow: auto;}
+ul,li{ margin:0px; padding:0px; list-style:none;}
+.selectSea{ float:left; position:relative; margin:0 6px;}
+.selectSea .jt{ position:absolute; right:3px; top:1px; width:20px; height:33px; background:url("../../images/selectSea_ico.png");}
+.selectSea input{ float:left; height:35px; line-height:35px; width:130px; padding:0 5px; border:1px solid #ccc;}
+.selectSea ul{ float:left; position:absolute; top:35px; width:140px; left:0px; border:1px solid #ccc; background-color:#fff; display:none;min-height:100px;  max-height:230px; height:auto; overflow-y:auto; overflow:scroll; overflow-x:hidden;}
+.selectSea ul li{ float:left; width:140px; overflow-x:auto; height:35px; line-height:35px; padding:0 5px; font-size:12px;}
+.selectSea ul li:hover{ background-color:#eee; cursor:pointer;width:140px}
+</style>
+<div class="dqlcs">
+	<div class="selectSea"  id="Car1">
+		<div class="jt"></div>
+		<input id="select1"  placeholder="请选择"  value=""/>
+		<ul id="select_1">
+		  
+		</ul>
+	</div>
+	
+	<div class="selectSea"  id="Car2">
+		<div class="jt"></div>
+		<input id="select2"  placeholder="请选择"  value=""/>
+		<ul id="select_2">
+		  
+		</ul>
+	</div>
+	
+	<div class="selectSea"  id="Car3">
+		<div class="jt"></div>
+		<input id="select3"  placeholder="请选择"  value=""/>
+		<ul id="select_3">
+		  
+		</ul>
+	</div>
+	
+	<input id="Car4"  style="height: 35px;" type="text" placeholder=" 输入特定车型名称" onblur="selectcar()"/>
+	<a class="tj" onclick="okclick()">提交</a>
+</div>
+<div class="clears"></div>
+<div class="clear"></div>
+
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	selectCXFL_1();
+	for(var i=0; i<yxcsArray.length;i++){
+		$(".clears").append("<div id='"+yxcsArray[i]+"' name='checkedcar' style='border:1px solid #e4e4e4;width:auto;float:left;font-size:14px;margin-left:15px;margin-top:5px;'>"+yxcs_nameArray[i]+"&nbsp;<a class='clone' id='"+yxcsArray[i]+"' name='"+yxcs_nameArray[i]+"'>×</a>&nbsp;</div>");
+	}
+	$(".clone").on("click",function(){
+		var obj = $(this).attr("id");
+		$(".clears").find("#"+obj).remove();
+	});
+	
+	if(/msie/i.test(navigator.userAgent)){ //ie浏览器 
+		document.getElementById("select1").onpropertychange = selectCXFL_1;
+		document.getElementById("select2").onpropertychange = selectCXFL_2;
+		document.getElementById("select3").onpropertychange = selectCXFL_3;
+	}else{//非ie浏览器，比如Firefox 
+		document.getElementById("select1").addEventListener("input", selectCXFL_1, false);
+		document.getElementById("select2").addEventListener("input", selectCXFL_2, false);
+		document.getElementById("select3").addEventListener("input", selectCXFL_3, false);
+	} 
+
+	$("#Car1 > input").focus(function(){
+		$("#select_1").css({"display":"block"});
+	});
+	$("#Car1 > .jt").click(function(){
+		$("#select_1").css({"display":"block"});
+	});
+	$("#Car1 > ul > li").click(function(){
+		 var selectSea_text = $(this).text();
+		 $(this).parent("ul").prev().val(selectSea_text);
+		 $(this).parent("ul").css({"display":"none"});
+	});
+	$("#Car1").mouseleave(function(){
+		$("#select_1").css({"display":"none"});
+	});
+	
+	
+	$("#Car2 > input").focus(function(){
+		$("#select_2").css({"display":"block"});
+	});
+	$("#Car2 > .jt").click(function(){
+		$("#select_2").css({"display":"block"});
+	});
+	$("#Car2 > ul > li").click(function(){
+		 var selectSea_text = $(this).text();
+		 $(this).parent("ul").prev().val(selectSea_text);
+		 $(this).parent("ul").css({"display":"none"});
+	});
+	$("#Car2").mouseleave(function(){
+		$("#select_2").css({"display":"none"});
+	});
+	
+	
+	$("#Car3 > input").focus(function(){
+		$("#select_3").css({"display":"block"});
+	});
+	$("#Car3 > .jt").click(function(){
+		$("#select_3").css({"display":"block"});
+	});
+	$("#Car3 > ul > li").click(function(){
+		 var selectSea_text = $(this).text();
+		 $(this).parent("ul").prev().val(selectSea_text);
+		 $(this).parent("ul").css({"display":"none"});
+	});
+	$("#Car3").mouseleave(function(){
+		$("#select_3").css({"display":"none"});
+	});
+
+});
+</script>
+</html>

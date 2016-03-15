@@ -1,0 +1,316 @@
+<div class="w12">
+  <div class="w12">
+	<dl class="w12 public_form">
+      <dt class="w01">地区：</dt>
+      <dd class="w11"><input type="text" class="w04" /></dd>
+	</dl>
+    <dl class="w12 public_form">
+      <dt class="w01">时间：</dt>
+      <dd class="w11"><input type="text" class="w05"/></dd>
+	</dl>
+  </div>  
+  <dl class="w12 public_form">
+		<dt class="w01">小时:</dt>
+        <dd class="w11">
+          <ul class="w12 area">
+            <li class="w01" title="凌晨1点到2点"><span>1</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01 xuan" title="凌晨2点到3点"><span>2</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="凌晨3点到4点"><span>3</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="凌晨4点到5点"><span>4</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="凌晨5点到6点"><span>5</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01 xuan" title="早晨6点到7点"><span>6</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="早晨7点到8点"><span>7</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="上午8点到9点"><span>8</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="上午9点到10点"><span>9</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01 xuan" title="上午10点11点"><span>10</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="上午11点到上午12点"><span>11</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="中午12点到中午1点"><span>12</span></li>
+            <li class="w01" title="中午1点到中午2点"><span>13</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01 xuan" title="中午2点到下午3点"><span>14</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="下午3点到下午4点"><span>15</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01" title="下午4点到下午5点"><span>16</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01"><span>17</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01 xuan"><span>18</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01"><span>19</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01"><span>20</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01"><span>21</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01 xuan"><span>22</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01"><span>23</span><i class="fa fa-angle-right"></i></li>
+            <li class="w01"><span>24</span></li>
+          </ul>
+        </dd> 
+  </dl>
+  <dl class="w12 public_form">
+    <dt class="w01">布局图：</dt>
+    <dd class="w05 adv_main">
+      <ul class="w12 xz">
+        <li class="w03"><em class="color_03"></em>可选广告位</li>
+        <li class="w03"><em class="color_01"></em>已售广告位</li>
+        <li class="w03"><em class="color_02"></em>我的广告位</li>
+      </ul>
+      <div class="w12 adv_index">
+        <div class="adv_header">电器服务云首页广告推广</div>
+        <div class="adv_index_banner">
+          <ul class="banner_main">
+            <li class="w12 color_03" title="可以投放广告"><i class="fa fa-check-circle-o"></i></li>
+            <li class="w12 color_01 xuan" title="不可以投放广告"><i class="fa fa-times-circle-o"></i></li>
+            <li class="w12 color_03">可投放广告</li>
+            <li class="w12 color_03">可投放广告</li>
+            <li class="w12 color_03">可投放广告</li>
+            <li class="w12 color_03">可投放广告</li>
+          </ul>
+          <ul class="banner_nav">
+            <li class="w02"><span>1</span></li>
+            <li class="w02 xuan"><span>2</span></li>
+            <li class="w02"><span>3</span></li>
+            <li class="w02"><span>4</span></li>
+            <li class="w02"><span>5</span></li>
+            <li class="w02"><span>6</span></li>
+          </ul>
+        </div>
+        <div class="w12 adv_index_floor">
+          <h3 class="w12">1F 冰箱/洗衣机/空调</h3>
+          <div class="w12 adve_main">
+          <div class="w03 floor_adve color_03" title="可以投放广告">
+            <i class="fa fa-check-circle-o"></i>
+          </div>
+          <ul class="w09 floor_pro">
+            <li class="w03">
+              <div class="w12 pro_main color_03" title="可以投放广告">
+                <i class="fa fa-check-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_02" title="我投放的广告">
+                <i class="fa fa-clock-o"></i> 
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+          </ul>
+          </div>
+          <div class="w12 floor_brand">
+            <ul class="w12">
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>      
+            </ul>
+          </div>
+          <div class="w12 floor_brand">
+            <ul class="w12">
+              <li class="w12"><div class="pro_main color_03" title="可以投放广告"><i class="fa fa-check-circle-o"></i></div></li>        
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="w12 adv_index_floor">
+          <h3 class="w12">1F 冰箱/洗衣机/空调</h3>
+          <div class="w12 adve_main">
+          <div class="w03 floor_adve color_03" title="可以投放广告">
+            <i class="fa fa-check-circle-o"></i>
+          </div>
+          <ul class="w09 floor_pro">
+            <li class="w03">
+              <div class="w12 pro_main color_03" title="可以投放广告">
+                <i class="fa fa-check-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_03" title="我投放的广告">
+                <i class="fa fa-clock-o"></i> 
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+            <li class="w03">
+              <div class="w12 pro_main color_01" title="不可以投放广告">
+                <i class="fa fa-times-circle-o"></i>
+              </div>
+            </li>
+          </ul>
+          </div>
+          <div class="w12 floor_brand">
+            <ul class="w12">
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>
+              <li class="w02">
+                <div class="pro_main color_03" title="可以投放广告">
+                  <i class="fa fa-check-circle-o"></i>
+                </div>
+              </li>      
+            </ul>
+          </div>
+          <div class="w12 floor_brand">
+            <ul class="w12">
+              <li class="w12"><div class="pro_main color_03" title="可以投放广告"><i class="fa fa-check-circle-o"></i></div></li>        
+            </ul>
+          </div>
+        </div>
+    </dd>
+    <dd class="w06 adv_jg">
+      <ul class="w12">
+        <li class="w12 title">我选择的广告位</li>
+        <li class="w12">
+          <dl class="w12 public_table_title">
+            <dd class="w05">时间段</dd>
+            <dd class="w03">广告位</dd>
+            <dd class="w02">价格</dd>
+            <dd class="w02">操作</dd>
+          </dl>
+          <dl class="w12 public_table_main">
+            <dd class="w05">2015-12-07 08-09</dt>
+            <dd class="w03">01-01</dt>
+            <dd class="w02">3,999.00</dt>
+            <dd class="w02"><i class="fa fa-trash-o"></i></dt>
+          </dl>
+          <dl class="w12 public_table_main">
+            <dd class="w05">2015-12-07 08-09</dt>
+            <dd class="w03">01-01</dt>
+            <dd class="w02">3,999.00</dt>
+            <dd class="w02"><i class="fa fa-trash-o"></i></dt>
+          </dl>
+          <dl class="w12 public_table_main">
+            <dd class="w05">2015-12-07 08-09</dt>
+            <dd class="w03">01-01</dt>
+            <dd class="w02">3,999.00</dt>
+            <dd class="w02"><i class="fa fa-trash-o"></i></dt>
+          </dl>
+        </li>
+        <li class="w12"><span class="w02">合计：</span><b>3,000.00元</b></li>
+        <li class="w12"><span class="w02">图片：</span><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><input type="file" title="上传图片"></div></li>
+        <li class="w12"><span class="w02">链接：</span><input type="text" class="w08" /></li>
+        <li class="w12"><span class="w02">标题：</span><input type="text" class="w08" /></li>
+        <li class="w12"><span class="w02">&nbsp;</span><input type="button" class="w04 jl_btn btn_red" value="确认发布" /></li>
+      </ul>
+      <ul class="w12">
+        <li class="w12 title">历史广告</li>
+        <li class="w12">
+          <dl class="w12 public_table_title">
+            <dd class="w05">时间段</dd>
+            <dd class="w03">广告位</dd>
+            <dd class="w02">价格</dd>
+            <dd class="w02">操作</dd>
+          </dl>
+          <dl class="w12 public_table_main">
+            <dd class="w05">2015-12-07 08-09</dt>
+            <dd class="w03">01-01</dt>
+            <dd class="w02">3,999.00</dt>
+            <dd class="w02"><i class="fa fa-trash-o"></i><i class="fa fa-eye"></i></dt>
+          </dl>
+          <dl class="w12 public_table_main">
+            <dd class="w05">2015-12-07 08-09</dt>
+            <dd class="w03">01-01</dt>
+            <dd class="w02">3,999.00</dt>
+            <dd class="w02"><i class="fa fa-trash-o"></i><i class="fa fa-eye"></i></dt>
+          </dl>
+          <dl class="w12 public_table_main">
+            <dd class="w05">2015-12-07 08-09</dt>
+            <dd class="w03">01-01</dt>
+            <dd class="w02">3,999.00</dt>
+            <dd class="w02"><i class="fa fa-trash-o"></i><i class="fa fa-eye"></i></dt>
+          </dl>
+        </li>
+      </ul>
+    </dd>
+  </dl>

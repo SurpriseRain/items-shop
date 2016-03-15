@@ -1,0 +1,1588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心 - 基本信息</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPubxg.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Basinfo.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script> 
+<script type="text/javascript" src="/js/json2.js"></script>
+
+<script language="javascript"  src="http://webapi.amap.com/maps?v=1.3&key=b2992a19dfcee083c3e8647b38db8420"></script>
+<script type="text/javascript" src="/js/amap.js"></script>
+<style>
+#zhezhao{
+ background:#fff;
+    height: 40%;
+    left: 28%;
+  position: fixed;
+    top: 13px;
+    width: 35%;
+    z-index: 2147483647;
+    border:1px solid #e4e4e4;
+
+}
+#zhezhao ul{
+margin-top:30px;
+margin-left:35px;
+}
+
+#zhezhao li{
+height:53px;
+width:100%;
+margin-left:20px;
+
+}
+#zhezhao li span{
+}
+#zhezhao li input{
+border:1px solid #e4e4e4;
+width:212px;
+height:32px;
+}
+.yzm{
+ background: #ff4a00 none repeat scroll 0 0;
+    border: 1px solid #e4e4e4;
+    display: inline-block;
+    height: 33px;
+    margin-left: 10px;
+    width: 79px;
+}
+.yzm span{
+color:#fff;
+font-size:12px;
+margin-left:10px;
+margin-top:8px;
+display: inline-block;
+}
+.yzm b{
+color:#fff;
+font-size:12px;
+margin-left:26px;
+margin-top:8px;
+display: inline-block;
+}
+.shzt{
+color:red;
+font-size:18px;
+}
+.bhyj{
+margin-left:15px;
+}
+.xs label:hover,.cc label:hover{
+	text-decoration:underline;
+}
+.fgqy{
+	float:left;
+	height:110px;
+	width:310px;
+	border:1px solid #ccc;
+	margin:20px 0;
+	background:#fff;
+	overflow:auto;
+}
+</style>
+</head>
+<script type="text/javascript">
+var dqdm="";
+var imgUrl=pubJson.path_sptp+"/dptp/";
+var ZCXX01_ = $.getUrlParam('ZCXX01');
+var sbm01;
+var eml;
+var SJHM;
+var GSLX;
+var defaultAddress;
+
+//2015/12/14 ---新增区域覆盖范围-----------开始-------------
+function setSPZXHtml(data) {
+	var str = "";
+	if(data.SF == null ){
+		str += "<li style='height:30px;line-height:30px;'>"+data.SJ+"</li>";
+		return str;
+		
+	}else{
+		str += "<li style='height:30px;line-height:30px;'>"+data.SF+""+data.SJ+"</li>";
+		return str;
+	}
+}
+$(document).ready(function(){
+	//初始化数据
+ 	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	var zcxx01=userCookie.ZCXX01;
+	var gslx=userCookie.LX;
+	if(gslx == '44'){
+		
+	}else{
+		// 20151231 qijy 增加dqckType
+		var dqckType = "0";
+		if(gslx == "42"){
+			dqckType = "1";
+		}
+		$('.fsfw').show();
+		var json = {"zcxx01":zcxx01,"type":0, "dqckType" : dqckType};//type0表示虚拟仓库
+		var url = "/UserInfo/select_QYFGFW.action?XmlData=" + JSON.stringify(json);
+		var returnData=visitService(url);
+	 	var spObj = $(".fgqy");
+		var s = returnData.resultList.length;
+		if(s == 0){
+			var str = "";
+			str +="<li style='height:30px;line-height:30px;'>没有添加辐射范围，请及时添加</li>";
+			spObj.html(str);
+		}else{
+			if(returnData.resultList[0].dqbzm01 == null ){
+				var str = "";
+				str +="<li style='height:30px;line-height:30px;'>没有添加辐射范围，请及时添加</li>";
+				spObj.html(str);
+			}else{
+				var u =returnData.resultList;
+				var str = "";
+				for (var i = 0; i < u.length; i++) {
+					str += setSPZXHtml(u[i]);
+				}
+				spObj.html(str);
+			}
+		}
+	}
+});
+//2015/12/14 ---新增区域覆盖范围-----------结束-------------
+
+
+$(document).ready(function(){
+	//加载地址信息
+	showDQXX("QY");
+	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	var gslx=userCookie.LX;
+	if (gslx == null || gslx == undefined) {
+		gslx = userCookie.GSLX;
+	}
+	var zcxx01 = "";
+	var jss=userCookie.Role;
+	var zcgs01=userCookie.ZCGS01;
+	
+	if(ZCXX01_==null){
+		zcxx01 = userCookie.ZCXX01;
+	}else{
+		zcxx01 = ZCXX01_;
+	}
+	var XmlData = {};
+	XmlData["XTCZY01"]=zcxx01;
+	var url="/Register/selectW_ZCGSHF.action?json="+JSON.stringify(XmlData);
+	ajaxQ({
+		"url" : url,//原始url 
+		"callback" : function(data){
+			if(data.CONTENT==undefined || data.CONTENT == null || data.CONTENT == ""){
+				$("#data_yj").remove();
+			}else{
+				$("#data_yj").html('<td style="width: 150px;"><span style="width: 145px;">审核意见：</span></td><td style="width: 550px;">'+data.CONTENT+'</td>');
+			}
+		}
+	});
+		
+	$("#ZCGS01").val(userCookie.ZCGS01);
+	  /*   if(gslx==44){
+		    $(".yc").hide();
+	    	$(".mjjbxx").show();
+	    	$(".abc").show();
+	    	$(".mjjx").show();
+	    	$(".dp_logo").html("我的头像");
+	    } 
+	    if(gslx==42 && (zcgs01 == 3 || zcgs01 == 4 || zcgs01 == 6)){
+	    	$(".jxqyjbxx").show();
+	    	$(".mjjx").show();
+	    	$(".caozuo").remove();
+	    	$(".abc").remove();
+	    	$(".cc").remove();
+	    	
+	    }
+	    if(gslx==43 && (zcgs01 == 3 || zcgs01 == 4 || zcgs01 == 6)){
+	    	$(".abc").show();
+	    	$(".mjjx").show();
+	    	$(".caozuo").remove();
+	    	$(".abc").hide();
+	    	$(".cc").hide();
+	    } */
+	$("#ZCXX01").val(zcxx01);
+	var arr = [];
+	var o = {};
+	o["ZCXX01"] = zcxx01;
+	arr.push(o);
+	var data = visitService("/UserInfo/selectCompanyInfo.action?XmlData="+JSON.stringify(arr));
+	var list=data.lists;
+	var zt=list[0].zcgs01;
+	var lx = list[0].LX;
+	GSLX = lx;
+	if (jss == 0) {			
+		 if(lx ==44 && (zcgs01 == 3 || zcgs01 == 4 || zcgs01 == 6)){
+			$(".dp_logo").html("我的头像:");
+			$(".sfz").hide();
+			$(".ZCXX70").hide();
+		    $(".yc").hide();
+	    	$(".mjjbxx").show();
+	    	$(".mjjx").show();
+	    	$(".caozuo").hide();
+	    	$(".abc").hide();
+	    	$(".baocun").hide();
+	    }
+	 	if((lx==42 || lx ==43) && (zcgs01 == 3 || zcgs01 == 4 || zcgs01 == 6)){
+	    	$(".mjjx").show();
+	    	$(".caozuo").hide();
+	    	$(".abc").hide();
+	    	$(".cc").hide();
+	    	$(".mjjbxx").hide(); 	
+	    	$('.sbm').css({'display':'block'});
+	    }
+	    /* if(lx==43 && (zcgs01 == 3 || zcgs01 == 4 || zcgs01 == 6)){
+	    	$(".mjjx").show();
+	    	$(".sbm").show();
+	    	$(".caozuo").hide();
+	    	$(".abc").hide();
+	    	$(".cc").hide();
+	    	$(".mjjbxx").hide();
+	    } */
+	}
+	$("#DPXX02").attr("src",imgUrl+zcxx01+"/"+list[0].ZCXX27);
+	$(".yhmName").val(list[0].XTCZY01);
+	$(".yhmName").attr("title",list[0].XTCZY01);
+	$(".dpName").val(list[0].ZCXX02);
+	$(".dpName").attr("title",list[0].ZCXX02);
+	$(".add").val(list[0].ZCXX08);
+	defaultAddress = list[0].ZCXX08;
+	$(".add").attr("title",list[0].ZCXX08);
+	$(".lxr").val(list[0].ZCXX03);
+	$(".lxr").attr("title",list[0].ZCXX03);
+	$(".phone").val(list[0].ZCXX06);
+	SJHM = list[0].ZCXX06;
+	$(".phone").attr("title",list[0].ZCXX06);
+	$(".eml").val(list[0].ZCXX09);
+	eml = list[0].ZCXX09;
+	$(".eml").attr("title",list[0].ZCXX09);
+	$(".cssbm").val(list[0].SBM);
+	sbm01 = list[0].SBM;
+	$(".cssbm").attr("title",list[0].SBM);
+	$(".wzm").val(list[0].WZM);
+	$(".wzm").attr("title",list[0].WZM);
+	$(".hyjgm").val(list[0].HYGLM);
+	$(".hyjgm").attr("title",list[0].HYGLM);
+	$(".qq").val(list[0].ZCXX57);
+	$(".qq").attr("title",list[0].ZCXX57);
+	$(".weixin").val(list[0].ZCXX67);
+	$(".weixin").attr("title",list[0].ZCXX67);
+	$(".fplx").val(list[0].ZCXX64);
+	$(".fplx").attr("title",list[0].ZCXX64);
+	$("#GSYHK01").val(list[0].GSYHK01);
+	$(".jshkhh").val(list[0].GSYHK03);
+	$(".jshkhh").attr("title",list[0].GSYHK03);
+	$(".jskhhmc").val(list[0].GSYHK09);
+	$(".jskhhmc").attr("title",list[0].GSYHK09);
+	$(".jshkhhzh").val(list[0].GSYHK02);
+	$(".jshkhhzh").attr("title",list[0].GSYHK02);
+	$(".ZCXX70").val(list[0].ZCXX70);
+	$(".ZCXX70").attr("title",list[0].ZCXX70);
+	$("#hyglm").val(list[0].HYGLM);
+	$("#hyglm").attr("title",list[0].HYGLM);
+	dqdm = list[0].ZCXX07;
+	$(data.lists).each(function(index,val){
+		if(val.DPTP01==1){
+			$("#imgUrl9").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+		if(val.DPTP01==2){
+			$("#imgUrl10").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+		if(val.DPTP01==3){
+			$("#yyzzfb_code").val(val.DPTP05);
+			$("#imgUrl1").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+		if(val.DPTP01==4){//zzjg_4
+			$("#zzjg_code").val(val.DPTP05);
+			$("#imgUrl2").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+		if(val.DPTP01==5){
+			$("#swdj_code").val(val.DPTP05);
+			$("#imgUrl3").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+		if(val.DPTP01==6){
+			$("#khyh_code").val(val.DPTP05);
+			$("#imgUrl4").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+		if(val.DPTP01==7){
+			$("#ybnsr_code").val(val.DPTP05);
+			$("#imgUrl5").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+		if(val.DPTP01==8){
+			$("#imgUrl7").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+		if(val.DPTP01==9){
+			$("#dlxzk_code").val(val.DPTP05);
+			$("#imgUrl8").attr("src",imgUrl+zcxx01+"/"+val.DPTP02);
+		}
+
+	})  
+	//审核状态
+	    if(zt==2){
+			$(".shzt").html("待完善");
+		}
+		if(zt==3||zt==6){
+			$(".shzt").html("审核中  (账户正在审核,客服热线:18519109250)");
+		}
+		if(zt==5||zt==7){
+			$(".shzt").html("待修改");
+		}
+		if(zt==4){
+			$(".shzt").html("已审核");
+		}
+	//选择角色,2待完善 3待审核 4业务审核成功 5业务审核不通过 6财务审核成功 7财务审核不通过,jss 0普通用户 2财务 3业务 4客服
+		  //审核完毕后可以修改基本信息
+		  if (zt==4 && jss == 0){
+			  if (lx != 44){
+				  	 $("#baocun").show();
+					 $(".caozuo").hide();
+					 $(".finalDo").show();
+					 $(".cc").hide();
+					 $(".mjjbxx").hide();
+					 $('.sbm').css({'display':'block'});
+					 $('.hyglm').css({'display':'block'});
+				}else{
+					 $(".dp_logo").html("我的头像:");
+					 $(".ZCXX70").hide();
+					 $(".sfz").hide();
+					 $("#baocun").show();
+					 $(".caozuo").hide();
+					 $(".finalDo").show();
+					 $(".cc").show();
+					 $(".mjjbxx").show();
+					 $(".yc").hide();
+					 
+				}
+		}
+	
+		  if((zt==3 || zt==6 ) && jss==0){
+			  if (lx != 44){
+				  	 $("#baocun").hide();
+					 $(".caozuo").hide();
+					 $(".cc").hide();
+					 $(".mjjbxx").hide();
+					 $('.sbm').css({'display':'block'});
+				}else{
+					 $(".dp_logo").html("我的头像:");
+					 $(".ZCXX70").hide();
+					 $(".sfz").hide();
+					 $("#baocun").hide();
+					 $(".caozuo").hide();
+					 $(".cc").show();
+					 $(".mjjbxx").show();
+					 $(".yc").hide();
+				}
+		  }
+	      if(jss==0){
+	    	  if (lx != 44 && zt == 7) 
+	    	  {
+				 $("#baocun").show();
+				 $(".caozuo").show();
+				 $(".cc").hide();
+				 $(".mjjbxx").hide();
+				 $(".cscz").hide();
+				 $('.sbm').css({'display':'block'});
+				 $('input[name=dpName]').removeAttr("readonly");
+				 $('input[name=lxr]').removeAttr("readonly");
+				 $('input[name=ZCXX70]').removeAttr("readonly");
+				 $('input[name=qq]').removeAttr("readonly");
+				 $('input[name=weixin]').removeAttr("readonly");
+				 $('input[name=yyzzfb_code]').removeAttr("readonly");
+				 $('input[name=zzjg_code]').removeAttr("readonly");
+				 $('input[name=swdj_code]').removeAttr("readonly");
+				 $('input[name=khyh_code]').removeAttr("readonly");
+				 $('input[name=ybnsr_code]').removeAttr("readonly");
+				 $('input[name=jskhhmc]').removeAttr("readonly");
+				 $('input[name=jshkhh]').removeAttr("readonly");
+				 $('input[name=jshkhhzh]').removeAttr("readonly");
+	    	  }
+	    	  else if(lx ==44 && zt == 7)
+	    	  {
+		    		  $(".dp_logo").html("我的头像:");
+		    		  $(".ZCXX70").hide();
+					  $("#baocun").show();
+					  $(".caozuo").show();
+					  $(".yc").hide();
+				      $(".mjjbxx").show();
+				      $(".mjjx").show();
+				      $(".abc").hide();
+				      $(".ZCXX70").hide();
+				      $(".sccwcz").show();
+				      $(".ywwxcz").hide();
+				      $(".sfz").hide();
+				      $(".sfzcz").hide();
+				      $('input[name=lxr]').removeAttr("readonly");
+				      $('input[name=yyzzfb_code]').removeAttr("readonly");
+				      $('input[name=dpName]').removeAttr("readonly");
+					  $('input[name=qq]').removeAttr("readonly");
+					  $('input[name=weixin]').removeAttr("readonly");
+	    	  }
+	    	  else if(lx != 44 && zt == 5)
+	    	  {
+		    		  	 $("#baocun").show();
+		    		  	 $(".caozuo").hide();
+						 $(".yc").show();
+						 $(".cc").hide();
+						 $(".mjjbxx").hide();
+						 $('.sbm').css({'display':'block'});
+						 $('input[name=dpName]').removeAttr("readonly");
+						 $('input[name=qq]').removeAttr("readonly");
+						 $('input[name=weixin]').removeAttr("readonly");
+						 $('input[name=sbm]').removeAttr("readonly");
+	    	  }
+	    	  else if(lx == 44 && zt == 5)
+	    	  {
+				    		  $(".dp_logo").html("我的头像:");
+							  $('input[name=dlxzk_code]').removeAttr("readonly");
+							  $("#baocun").show();
+							  $(".caozuo").hide();
+							  $(".yc").hide();
+						      $(".mjjbxx").show();
+						      $(".mjjx").show();
+						      $(".abc").hide();
+						      $(".ZCXX70").hide();
+						      $(".wxcz").show();
+						      $(".ywwxcz").show();
+						      $(".sfz").hide();
+	    	  }
+	      }
+	    	 /*  if (lx == 44){
+	    		  $(".dp_logo").html("我的头像:");
+	    		  $('input[name=dpName]').removeAttr("readonly");
+				  $('input[name=qq]').removeAttr("readonly");
+			      $('input[name=weixin]').removeAttr("readonly");
+				  $('input[name=yyzzfb_code]').removeAttr("readonly");
+				  $('input[name=dlxzk_code]').removeAttr("readonly");
+				  $('input[name=wzm]').removeAttr("readonly");
+				  $("#baocun").show();
+				  $(".caozuo").show();
+				  $(".yc").hide();
+			      $(".mjjbxx").show();
+			      $(".mjjx").show();
+			      $(".abc").hide();
+			      $(".ZCXX70").hide();
+			    	
+			} */
+	    	  
+			   if(zt==4 &&jss==4){
+				  if(lx == 44){
+					  $(".ZCXX70").hide();
+					  $(".dp_logo").html("我的头像:");
+					  $('input[name=dpName]').removeAttr("readonly");
+					 /*  $('input[name=lxr]').removeAttr("readonly");
+					  $('input[name=qq]').removeAttr("readonly");
+				      $('input[name=weixin]').removeAttr("readonly"); */
+					  $('input[name=yyzzfb_code]').removeAttr("readonly");
+					  $('input[name=dlxzk_code]').removeAttr("readonly");
+					  $("#baocun").show();
+					  $(".caozuo").show();
+					  $(".yc").hide();
+				      $(".mjjbxx").show();
+				      $(".mjjx").show();
+				      $(".abc").hide();
+				      $(".sfz").hide();
+				 }
+				  else if(lx == 43 || lx == 42) 
+				 {
+					 $("#baocun").show();
+					 $(".caozuo").show();
+					 $(".cc").hide();
+					 $(".mjjbxx").hide();
+					 $('.sbm').css({'display':'block'});
+					 $('input[name=ZCXX70]').removeAttr("readonly");
+					 $('input[name=dpName]').removeAttr("readonly");
+					/*  $('input[name=lxr]').removeAttr("readonly");
+					 $('input[name=qq]').removeAttr("readonly");
+					 $('input[name=weixin]').removeAttr("readonly"); */
+					 $('input[name=yyzzfb_code]').removeAttr("readonly");
+					 $('input[name=zzjg_code]').removeAttr("readonly");
+					 $('input[name=swdj_code]').removeAttr("readonly");
+					 $('input[name=khyh_code]').removeAttr("readonly");
+					 $('input[name=ybnsr_code]').removeAttr("readonly");
+					 $('input[name=GSYHK01]').removeAttr("readonly");
+					 $('input[name=jskhhmc]').removeAttr("readonly");
+					 $('input[name=jshkhh]').removeAttr("readonly");
+					 $('input[name=jshkhhzh]').removeAttr("readonly");
+		    	}
+				else if((zt==2 || zt==3 || zt==5 || zt== 6 || zt== 7 || zt== 3)&&jss==4)
+				{
+				$("#baocun").hide();
+			    $(".caozuo").hide();
+			    	if(lx == 44){
+			    		$(".dp_logo").html("我的头像 :");
+			    		$(".sfz").hide();
+			    		$(".yc").hide();
+			    		/* $('.mjjbxx').css({
+			    			'display':'block'}); */
+			    		$(".mjjbxx").show();
+			    			
+			    }else{
+			    		$('.sbm').css({'display':'block'});
+			    		$(".cc").hide();
+			    	}
+			 }
+		}
+	//图片点击放大
+		$("td > img").click(function(){
+		  var td_img = $(this).attr("class");
+		  if(td_img == "img"){
+			 $(this).attr("class","big")
+			}else if(td_img == "big"){
+			 $(this).attr("class","img") 
+			}
+		 })
+});
+
+//加载地址信息
+function showDQXX(id){
+  $("#province"+id).parent().children("select").each(function(index){
+  	if(index==0){
+  	  var num=0;
+  	  var dqjb=1;
+  	  var dqxx=dqxxList(num,dqjb);
+  	  $(dqxx).each(function(i,dqxxjson){
+  		$("#province"+id).append("<option>"+dqxxjson.DQXX02+"</option>");
+  		$("#province"+id).find("option").eq(i+1).val(dqxxjson.DQXX01);
+  	  });		 
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#city"+id,2);
+  	  });	
+  	}
+    if(index==1){
+  	  var dqjb=2;
+  	  $(this).bind("change",function(inx){
+  		setVal(this,"#country"+id,3);
+  	  });	
+  	}
+    if(index==2){
+	   	  $(this).bind("change",function(inx){
+	   		setVal(this,"#street"+id,4);
+	   	  });	
+	   	}
+  });
+}
+
+//展示地址信息
+function dqxxList(num,dqjb){
+  	var xmlData=[];
+  	var json={};
+    json.qydm=num;
+	json.dqjb=dqjb;
+  	xmlData.push(json);
+  	var url="/oper_qydz/qryDQ.action?XmlData="+JSON.stringify(xmlData);
+  	var data=visitService(url);
+  	return data.mapList;
+}
+
+//设置地址信息
+function setVal(objnow,objaft,dqjb){
+  	var num=$(objnow).find("option:selected").val();
+  	var list=dqxxList(num,dqjb);
+  	$(list).each(function(i,json){
+  		if(i==0){
+  	 		$(objaft).empty();
+  	  		$(objaft).append("<option value='0'>请选择</option>");
+    	}
+  		$(objaft).append("<option>"+json.DQXX02+"</option>");
+  		$(objaft).find("option").eq(i+1).val(json.DQXX01);
+  	});
+}
+</script>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<input type="hidden" value="" id="ZCXX01" name="ZCXX01" />
+	<input type="hidden" value="" id="ZCGS01" name="ZCGS01"/>
+	<!-- <div id="curPosition">
+    	<a href="#">账户管理</a>
+    	<span>></span>
+    	<b>基本信息</b>
+	</div> -->
+	<table class="single_table">
+		<tr class="title">
+			<td colspan="2"><b>基本信息</b></td>
+		</tr>
+	    <tr>
+			<td style="width: 150px;"><span style="width: 145px;"
+				class="dp_tpp">审核状态：</span></td>
+			<td style="width: 550px;"><label class="shzt" style="font-size: 25px;
+    font-family:'microsoft yahei'"></label></td>
+		</tr>
+		<tr id="data_yj" style="border-bottom:1px solid #e4e4e4;">
+			
+		</tr>
+		</table>
+		<table class="single_table">
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;"
+				class="dp_logo">店铺LOGO：</span></td>
+			<td class="xstp"><img src="" id="DPXX02" class="img" /><label
+				class="caozuo">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename14" /> <input style="width: 300px;" type="file"
+				name="dp_logo" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" value=""
+				id="dp_logo" size="34" onchange="changefile(4);" /><label
+				class="caozuo" onclick="cancelfile(4);">取消</label></td>
+		</tr>
+		<tr class="ZCXX70">
+			<td style="width: 150px;"><span style="width: 145px;">店铺名称：</span></td>
+			<td style="width: 550px;"><input value="" class="ZCXX70" id="ZCXX70"
+				name="ZCXX70"  readonly="readonly" 
+				style="width: 300px;" /><label class="bz"></label></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">用户名：</span></td>
+			<td style="width: 550px;"><input value="" class="yhmName"
+				name="yhmName" disabled="true" readonly="readonly"
+				style="width: 300px;" /><label class="bz"></label></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">联系人：</span></td>
+			<td style="width: 550px;"><font>*</font><input value="" class="lxr"
+				name="lxr" readonly="readonly"
+				style="width: 300px;" /><label class="bz"></label><label
+				class="caozuo finalDo">修改</label></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">企业名称：</span></td>
+			<td style="width: 550px;"><font>*</font><input value="" class="dpName" 
+				name="dpName" style="width: 300px;" readonly="readonly" placeholder="需与上传营业执照一致" /><label
+				class="bz"></label></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">经营地址：</span></td>
+			<td class="add1" style="display: none;"><select id="provinceQY"
+				class="dy" title=""><option value="0">请选择</option></select> <select
+				id="cityQY"><option value="0">请选择</option></select> <select
+				id="countryQY"><option value="0">请选择</option></select> <select
+				id="streetQY"><option value="0">请选择</option></select> <input
+				value="" title="" class="address" id="QYdzdetail" name="QYdzdetail" onblur="searchByBtn()"
+				style="width: 156px" /><label class="caozuo finalDo">取消</label></td>
+			<td class="add2" style="display: table-cell block; width: 550px;"><font>*</font><input
+				value="" title="" class="add" readonly="readonly"
+				style="width: 300px;" /><label class="caozuo finalDo">修改</label>
+				<input type="hidden" id="Longitude" name="Longitude" value=""></input>
+				<input type="hidden" id="Latitude" name="Latitude" value=""></input> </td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">手机号码：</span></td>
+			<td style="width: 550px;"><font>*</font><input value="" id="phone"
+				class="phone" name="phone" title="" style="width: 300px;" readonly="readonly" onblur="selectPhone()"/><label
+				class="caozuo finalDo">修改</label></td>
+		</tr>
+		<!-- <tr>
+		<div id="zhezhao" style="display: none;">
+			<ul>
+				<li><span style="width: 45px;">原手机号：</span><input value=""
+					class="yphone" name="yphone" title="" style="width: 251px;" /></li>
+				<li><span style="width: 45px;">新手机号：</span><input value=""
+					class="xphone" name="xphone" title="" style="width: 251px;" /></li>
+				<li><span style="width: 45px;">校&nbsp&nbsp验&nbsp&nbsp码：</span><input
+					value="" class="yzm" name="yzm" title="" style="width: 160px;" /><a
+					class="yzm"><span>获取验证码</span></a></li>
+				<li style="margin-left: 60px;"><a class="yzm"><b>确定</b></a><a
+					class="yzm" onclick="qx()"><b>取消</b></a></li>
+			</ul>
+		</div>
+		</tr> -->
+		 
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">邮箱地址：</span></td>
+			<td style="width: 550px;"><font>*</font><input value="" class="eml"
+			  id="eml"	 name="eml" title="" style="width: 300px;" readonly="readonly" onblur="selectEmail()"/><label
+				class="caozuo finalDo">修改</label></td>
+		</tr>
+		<td style="width: 150px;"><span style="width: 145px;">QQ号码：</span></td>
+		<td style="width: 550px;"><input value="" class="qq" name="qq"
+			title="" style="width: 300px;"  readonly="readonly"/><label class="bz"></label><label
+				class="caozuo finalDo">修改</label></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">微信：</span></td>
+			<td style="width: 550px;"><input value="" class="weixin" name="weixin"
+				title="" style="width: 300px;" readonly="readonly" /><label class="bz"></label><label
+				class="caozuo finalDo">修改</label></td>
+		</tr>
+		<tr class='fsfw'  style='display:none;'>
+			<td style="width: 150px;"><span style="width: 145px;">辐射范围：</span></td>
+			<td style="width: 550px;">
+				<font></font><div style="margin-left:15px;">
+					<ul class="fgqy">
+					</ul>
+					<label class="bz"></label><label class="caozuo finalDo" style="float:left;margin-top:45px;"  onclick="javascrtpt:window.location.href='/customer/qfy/back/qxgl/Oper_SCFSFW.html'">新增/修改</label>
+				</div>
+				
+				
+			</td>
+		</tr>
+		<tr class="title">
+			<td colspan="2"><b>资质认证</b></td>
+		</tr>
+		<tr class="sfz">
+			<td style="width: 150px;"><span style="width: 145px;">法人身份证正面：</span></td>
+			<td class="xstp"><img src="" id="imgUrl9" class="img" /><label
+				class="caozuo sfzcz">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename9" /> <input style="width: 300px;" type="file"
+				name="fssfzzm_1" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"
+				value="" id="fssfzzm_1" size="34" onchange="changefile(9);" /><label
+				class="caozuo" onclick="cancelfile(9);">取消</label></td>
+		</tr>
+		<tr class="sfz">
+			<td style="width: 150px;"><span style="width: 145px;">法人身份证反面：</span></td>
+			<td class="xstp"><img src="" id="imgUrl10" class="img" /><label
+				class="caozuo sfzcz">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename10" /> <input style="width: 300px;" type="file"
+				name="fssfzfm_2" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"
+				value="" id="fssfzfm_2" size="34" onchange="changefile(10);" /><label
+				class="caozuo" onclick="cancelfile(10);">取消</label></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">营业执照编号：</span></td>
+			<td style="width: 550px;"><input value="" id="yyzzfb_code"
+				name="yyzzfb_code" title="" style="width: 300px;" readonly="readonly" /><label
+				class="bz"></label></td>
+		</tr>
+		<tr>
+			<td style="width: 150px;"><span style="width: 145px;">营业执照：</span></td>
+			<td class="xstp"><img src="" id="imgUrl1" class="img" /><label
+				class="caozuo sccwcz">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename1" /> <input style="width: 300px;" type="file"
+				name="yyzzfb_3" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"
+				value="" id="yyzzfb_3" size="34" onchange="changefile(1);" /><label
+				class="caozuo sccwcz" onclick="cancelfile(1);">取消</label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">组织机构代码证编号：</span></td>
+			<td style="width: 550px;"><input value="" id="zzjg_code"
+				name="zzjg_code" title="" style="width: 300px;" readonly="readonly" /><label
+				class="bz"></label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">组织机构代码证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl2" class="img" /><label
+				class="caozuo">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename2" /> <input style="width: 300px;" type="file"
+				accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" name="zzjg_4" value=""
+				id="zzjg_4" size="34" onchange="changefile(2);" /><label
+				class="caozuo" onclick="cancelfile(2);">取消</label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">税务登记证编号：</span></td>
+			<td style="width: 550px;"><input value="" id="swdj_code"
+				name="swdj_code" title="" style="width: 300px;" readonly="readonly" /><label
+				class="bz"></label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">税务登记证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl3" class="img" /><label
+				class="caozuo">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename3" /> <input style="width: 300px;" type="file"
+				accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" name="swdj_5" value=""
+				id="swdj_5" size="34" onchange="changefile(3);" /><label
+				class="caozuo" onclick="cancelfile(3);">取消</label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">银行开户许可证编号：</span></td>
+			<td style="width: 550px;"><input value="" id="khyh_code"
+				name="khyh_code" title="" style="width: 300px;"  readonly="readonly" /><label
+				class="bz"></label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">银行开户许可证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl4" class="img" /><label
+				class="caozuo">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename4" /> <input style="width: 300px;" type="file"
+				name="khyh_6" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" value=""
+				id="khyh_6" size="34" onchange="changefile(4);" /><label
+				class="caozuo" onclick="cancelfile(4);">取消</label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">一般纳税人证明：</span></td>
+			<td style="width: 550px;"><input value="" id="ybnsr_code"
+				name="ybnsr_code" title="" style="width: 300px;" readonly="readonly" /><label
+				class="bz"></label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">一般纳税人许可证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl5" class="img" /><label
+				class="caozuo">修改</label></td>
+			<td class="sctp" style="display: none;"><input type="hidden"
+				id="filename5" /> <input style="width: 300px;" type="file"
+				name="ybnsr_7" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"
+				value="" id="ybnsr_7" size="34" onchange="changefile(5);" /><label
+				class="caozuo" onclick="cancelfile(5);">取消</label></td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">结算户账户名称：</span></td>
+			<td style="width: 550px;"><font>*</font>
+				<input type="hidden" id="GSYHK01" name="GSYHK01" value="" readonly="readonly" />
+				<input value="" class="jskhhmc" name="jskhhmc" title="" style="width: 300px;"  readonly="readonly"/>
+			</td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">结算户开户行：</span></td>
+			<td style="width: 550px;"><font>*</font>
+				<input value="" class="jshkhh" name="jshkhh" title="" style="width: 300px;" readonly="readonly" />
+			</td>
+		</tr>
+		<tr class="yc">
+			<td style="width: 150px;"><span style="width: 145px;">结算户账号 ：</span></td>
+			<td style="width: 550px;"><font>*</font>
+				<input value="" class="jshkhhzh" name="jshkhhzh" title="" style="width: 300px;" readonly="readonly" />
+			</td>
+		</tr>
+		
+		</table>
+		<table class="single_table">
+		<tr class="title" style="background:#eee;color:#333;">
+			<td colspan="2" style="line-height:40px;text-indent:20px;"><b style="font-size: 15px;
+    font-family:'microsoft yahei'">行业认证</b></td>
+		</tr>
+		<tr class="mjjbxx">
+			<td style="width: 150px;text-indent:50px;"><span style="width: 145px;">企业位置码：</span></td>
+			<td style="width: 550px;line-height:40px;text-indent:20px;"><input value="" class="wzm"
+				name="wzm" title="" style="width: 300px;line-height:20px;height:30px;" readonly="readonly" /><label class="caozuo ywwxcz"style="font-size:14px;color:#f80;font-weight:bold;font-family:microsoft yahei;margin-left:20px;">修改</label></td>
+		</tr>
+
+		<tr class="abc yc sbm xs" style="display: none;margin-top:10px;">
+			<td style="width: 150px;text-indent:50px;"><span style="width: 145px;">厂商识别码：</span></td>
+			<td style="width: 550px;line-height:40px;text-indent:40px;"><input value="" class="cssbm" id="cssbm"
+				name="cssbm" title="" style="width: 300px;height:30px;line-height:20px;"  readonly="readonly" /><label
+				class="caozuo yc cscz" style="font-size:14px;color:#f80;font-weight:bold;font-family:microsoft yahei; margin-left:20px;">修改</label></td>
+		</tr>
+		<tr class="hyglm" style="display: none;margin-top:10px;">
+			<td style="width: 150px;"><span style="width: 145px;">行业管理码：</span></td>
+			<td style="width: 550px;line-height:40px;text-indent:20px;"><input value="" id="hyglm"
+				name="hyglm" title="" style="width: 300px;height:30px;line-height:20px;" readonly="readonly" /><label
+				class="bz"></label></td>
+		</tr>
+		<tr class="cc">
+			<td style="width: 150px;"><span style="width: 145px;">道路许可证编号：</span></td>
+			<td style="width: 550px;line-height:40px;text-indent:20px;"><input value="" id="dlxzk_code"
+				name="dlxzk_code" title="" style="width: 300px;height:30px;line-height:20px;" readonly="readonly" /><label
+				class="bz"></label></td>
+		</tr>
+		<tr class="cc">
+			<td style="width: 150px;text-indent:50px;"><span style="width: 145px;">道路许可证：</span></td>
+			<td class="xstp"><img src="" id="imgUrl8" class="img" style="margin-left:20px;"/>
+			<label class="caozuo ywwxcz" style='font-size:14px;color:#f80;font-weight:bold;font-family:"microsoft yahei";margin-left:20px;'>修改</label></td>
+			<td class="sctp" style="display:none;"><input type="hidden"
+				id="filename8" /> <input style="width: 300px;" type="file"
+				name="dlxkz_9" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"
+				value="" id="dlxkz_9" size="34" onchange="changefile(8);" /><label style='font-size:14px;color:#f80;font-weight:bold;font-family:"microsoft yahei";margin-left:20px;'
+				class="caozuo ywwxcz" onclick="cancelfile(8); ">取消</label></td>
+		</tr>
+		
+	<!-- <tr class="jxqyjbxx" style="display: none;">
+			<td style="width: 150px;"><span style="width: 145px;">经销商授权：</span></td>
+			<td class="xstp" id="jxs"><img src="" id="imgUrl7" class="img" /><label
+				class="caozuoa" onclick="jxssqa()">修改</label></td>
+			<td class="sctp" id="jxssq" style="display: none;"><input type="hidden"
+				id="filename7" /> <input style="width: 300px;" type="file"
+				name="jx_logo_8" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"
+				value="" id="jx_logo_8" onchange="changefile(7);" /><label
+				class="caozuo" onclick="cancelfile(7);">取消</label></td>
+		</tr> -->
+		<tr class="bot">
+			<td colspan="2"><a style="margin-left: 193px;display:none;"
+				class="bot Medium" id="baocun" onclick="ok()">保存</a></td>
+		</tr>
+	</table>
+	<div class="clera"></div>  
+  	<input type="hidden" value="" id="dqdm" name="dqdm" />
+  	<input type="hidden" value="" id="address" name="address" />
+</form>
+<!---------------------底部--------------------->
+</body>
+<script type="text/javascript">
+function changefile(id){
+	$("#filename"+id).val(id);
+}
+function cancelfile(id){
+	$("#filename"+id).val("");
+}
+function ok(){
+	//2015/12/14 ---新增区域覆盖范围-----------开始-------------
+	//初始化数据
+ 	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	var zcxx01=userCookie.ZCXX01;
+	var gslx=userCookie.LX;
+	if(gslx == '44'){
+		
+	}else{
+		var dqckType = "0";
+		if(gslx == "42"){
+			dqckType = "1";
+		}
+		var json = {"zcxx01":zcxx01,"type":0,"dqckType":dqckType};
+		var url = "/UserInfo/select_QYFGFW.action?XmlData=" + JSON.stringify(json);
+		var returnData=visitService(url);
+		var s = returnData.resultList.length;
+		if(s == 0){
+			
+		}else{
+			if(returnData.resultList[0].dqbzm01 == null ){
+				var r = confirm('区域辐射范围为空,确认继续更新信息吗？');
+				if(r==true){
+				}else{
+					return false;
+				}
+				
+			}
+		}
+	}
+	//2015/12/14 ---新增区域覆盖范围-----------结束-------------
+	
+	if(checkNull()){
+		var temp = $(".add2").attr("style");
+		if(temp=="display: none"){
+		 	//拼接地址
+		 	var ZCXX07="";  //地址编码
+		   	var ZCXX08="";  //中文地址
+		   	if($("#provinceQY").val() != "0"){
+			  	ZCXX07=$("#provinceQY").val();
+			  	ZCXX08=ZCXX08+$("#provinceQY option:selected").text();
+		   	}
+		   	if($("#cityQY").val() != "0"){
+			  	ZCXX07=$("#cityQY").val();
+			  	ZCXX08=ZCXX08+$("#cityQY option:selected").text();
+		   	}
+		   	if($("#countryQY").val() != "0"){
+		      	ZCXX07=$("#countryQY").val();
+			  	ZCXX08=ZCXX08+$("#countryQY option:selected").text();
+		   	}
+		  	if($("#streetQY").val() != "0"){
+		      	ZCXX07=$("#streetQY").val();
+			  	ZCXX08=ZCXX08+$("#streetQY option:selected").text();
+		   	}
+		   	$("#dqdm").val(ZCXX07);
+		   	var Faddress;
+		   	var address=ZCXX08+$("#QYdzdetail").val();
+		   	$("#address").val(address);
+		   	Faddress = $("#address").val();
+			}else{
+		   	$("#dqdm").val(dqdm);
+		   	$("#address").val($(".add").val());
+		   	Faddress = $("#address").val();
+		}
+		if (defaultAddress != Faddress) {
+			if(!checkedAddress()){
+				return false;
+			}
+		}
+	
+		var XmlData1 = $("#form1").formToJson();
+		XmlData1[0]["yhmName"]=$(".yhmName").val();
+		XmlData1[0]["dpName"]=$(".dpName").val();
+		XmlData1[0]["add"]=$(".add").val();
+		XmlData1[0]["phone"]=$(".phone").val();
+		XmlData1[0]["fplx"]=$(".fplx").val();
+		XmlData1[0]["eml"]=$(".eml").val();
+		XmlData1[0]["qq"]=$(".qq").val();
+		XmlData1[0]["weixin"]=$(".weixin").val();
+		XmlData1[0]["yyzzfb_code"]=$("#yyzzfb_code").val();
+		XmlData1[0]["zzjg_code"]=$("#zzjg_code").val();
+		XmlData1[0]["swdj_code"]=$("#swdj_code").val();
+		XmlData1[0]["khyh_code"]=$("#khyh_code").val();
+		XmlData1[0]["ybnsr_code"]=$("#ybnsr_code").val();
+		XmlData1[0]["GSYHK01"]=$("#GSYHK01").val();
+		XmlData1[0]["jskhhmc"]=$(".jskhhmc").val();
+		XmlData1[0]["jshkhh"]=$(".jshkhh").val();
+		XmlData1[0]["jshkhhzh"]=$(".jshkhhzh").val();
+		XmlData1[0]["wzm"]=$(".wzm").val();
+		XmlData1[0]["csm"]=$(".cssbm").val();
+		XmlData1[0]["lxr"]=$(".lxr").val();
+		XmlData1[0]["dlxzk_code"]=$("#dlxzk_code").val();
+		XmlData1[0]["GSLX"]=GSLX;
+		//增加状态:当财务审核不通过修改改后变成3；当业务审核不通过修改后变成6
+		var state=$("#ZCGS01").val();
+		if($("#ZCGS01").val() == "7"){
+			state="3";
+		}else if($("#ZCGS01").val() == "5"){
+			state="6";
+		}
+		XmlData1[0]["state"]=state;  
+		if (GSLX != 44) {
+			XmlData1[0]["ZCXX70"]=$("#ZCXX70").val();
+		}
+		var XmlData=escape(JSON.stringify(XmlData1));
+		var fileArray=[];
+		
+		if($("#filename1").val()=="" && $("#imgUrl1").attr("src")=="" ){
+			alert("请上传营业执照!");
+			return false;
+		}
+		if($("#dp_logo").val() != "" && $("#dp_logo").val() != undefined){
+			fileArray.push("dp_logo");
+		}
+		if($("#yyzzfb_3").val() != "" && $("#yyzzfb_3").val() != undefined){
+			fileArray.push("yyzzfb_3");
+		}
+		if (GSLX == 44) {
+			/* if($("#filename8").val()=="" && $("#imgUrl8").attr("src")==""){
+				alert("请上传道路许可证!");
+				return false;
+			} */
+			if($("#dlxkz_9").val() != "" && $("#dlxkz_9").val() != undefined){
+				fileArray.push("dlxkz_9");
+			}
+		}
+		if (GSLX != '44') {
+			if($("#filename2").val()=="" && $("#imgUrl2").attr("src")==""){
+				alert("请上传组织机构代码证!");
+				return false;
+			}
+			if($("#filename3").val()=="" && $("#imgUrl3").attr("src")==""){
+				alert("请上传税务登记证!");
+				return false;
+			}
+			if($("#filename4").val()=="" && $("#imgUrl4").attr("src")==""){
+				alert("请上传银行开户许可证!");
+				return false;
+			}
+			if($("#fssfzzm_1").val()=="" && $("#imgUrl9").attr("src")==""){
+				alert("请上传法人身份证正面!");
+				return false;
+			}
+			if($("#fssfzfm_2").val()=="" && $("#imgUrl10").attr("src")==""){
+				alert("请上传法人身份证反面!");
+				return false;
+			}
+			
+			if($("#zzjg_4").val() != "" && $("#zzjg_4").val() != undefined){
+				fileArray.push("zzjg_4");
+			}
+			if($("#swdj_5").val() != "" && $("#swdj_5").val() != undefined){
+				fileArray.push("swdj_5");
+			}
+			if($("#khyh_6").val() != "" && $("#khyh_6").val() != undefined){
+				fileArray.push("khyh_6");
+			}
+			if($("#ybnsr_7").val() != "" && $("#ybnsr_7").val() != undefined){
+				fileArray.push("ybnsr_7");
+			}
+			if($("#fssfzzm_1").val() != "" && $("#fssfzzm_1").val() != undefined){
+				fileArray.push("fssfzzm_1");
+			}
+			if($("#fssfzfm_2").val() != "" && $("#fssfzfm_2").val() != undefined){
+				fileArray.push("fssfzfm_2");
+			}
+		}
+	
+		var val="/UserInfo/updateCompanyInfo.action";
+		var r = confirm('确认更新信息吗？');
+		if(r==true){
+		$.ajaxFileUpload({
+			type:"POST",
+			secureuri:false,
+			fileElementId:fileArray,
+			url:encodeURI(val),//encodeURI避免中文乱码
+			data:{"XmlData":XmlData},
+			dataType:"text",
+			success: function(data) { 
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				if(data1==1){
+					alert("保存成功!");
+					window.location.reload();//刷新当前页面
+				}else{
+					alert("保存失败!");
+				}
+			}/* ,
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert(textStatus);
+		    } */
+		});
+	}
+	else return;
+	} 
+}
+
+
+function checkedAddress(){
+	var province = $("#provinceQY").val();
+	if (province == '990000' || province == '820000' || province == '810000' || province =='710000'){
+		alert("暂不支持港澳台及海外地区");
+		return false;
+	}
+	if($("#provinceQY").val() == "0"){
+		alert("请选择您的省份");
+		return false;
+	}
+	if ($("#cityQY").val() == "0") {
+		alert("请选择您的城市");
+		return false;
+	}
+	if ($("#countryQY").val() == "0") {
+		alert("请选择您的城区");
+		return false;
+	}
+	if ($("#QYdzdetail").val() == "") {
+		alert ("请输入您的详细地址");
+		return false;
+	}
+	return true;
+}
+//判断输入项是否合法
+function checkNull(){
+	gslx = GSLX;
+	if($(".lxr").val().length == 0){
+		alert("请输入联系人");
+		return false;
+	}
+	if($(".dpName").val().length == 0){
+		alert("请输入企业名称");
+		return false;
+	}
+	if($(".add").val().length == 0){
+		alert("请输入经营地址");
+		return false;
+	}
+	if($(".phone").val().length == 0){
+		alert("请输入手机号码");
+		return false;
+	}else{
+		if(!checkPhone()){
+			return false;
+		}else if(!selectPhone()){
+			return false;
+		}
+	}
+	if($(".eml").val() == "0"){
+		alert("请输入邮箱地址");
+		return false;
+	}else{
+		if(!checkEmail()){
+			return false;
+		}else if(!selectEmail()){
+			return false;
+		}
+	}
+	if($("#dp_logo").val().length == "0" && !$("#dp_logo").is(":hidden")){
+		alert("请上传"+$(".dp_logo").text());
+		return false;
+	}else{
+		if(!dp_logo($(".dp_logo").text())){
+			return false;
+		}
+	}
+	
+	
+ 	if(!$("#yyzzfb_3").is(":hidden") && $("#yyzzfb_3").val().length=="0"){
+		alert("请上传营业执照");
+		return false;
+	}else{
+		if(!filea()){
+			return false;
+		}
+	}
+ 	/* if(gslx == '44'){
+ 		if(!$("#dlxkz_9").is(":hidden") && $("#dlxkz_9").val().length=="0"){
+			alert("请上传道路许可证");
+			return false;
+		}else{
+			if(!dlxkz()){
+				return false;
+			}
+		}
+ 	} */
+ 	if (gslx != '44') {
+ 		if($("#cssbm").val().length == 0){
+			alert("请输入厂商识别码");
+			return false;
+		}else{
+			if(!wzmabca()){
+				return false;
+			}
+		}
+		if(!$("#zzjg_4").is(":hidden") && $("#zzjg_4").val().length=="0"){
+			alert("请上传组织机构代码证");
+			return false;
+		}else{
+			if(!fileb()){
+				return false;
+			}
+		}
+		if(!$("#swdj_5").is(":hidden") && $("#swdj_5").val().length=="0"){
+			alert("请上税务登记证");
+			return false;
+		}else{
+			if(!filec()){
+				return false;
+			}
+		}
+		if(!$("#fssfzzm_1").is(":hidden") && $("#fssfzzm_1").val().length=="0"){
+			alert("请上传身份证正面");
+			return false;
+		}else{
+			if(!filesf1()){
+				return false;
+			}
+		}
+		if(!$("#fssfzfm_2").is(":hidden") && $("#fssfzfm_2").val().length=="0"){
+			alert("请上传身份证反面");
+			return false;
+		}else{
+			if(!filesf2()){
+				return false;
+			}
+		}
+	if(!$("#khyh_6").is(":hidden") && $("#khyh_6").val().length=="0"){
+		alert("请上传银行开户许可证");
+		return false;
+	}else{
+		if(!filed()){
+			return false;
+		}
+	}
+	if(!$("#ybnsr_7").is(":hidden") && $("#ybnsr_7").val().length=="0"){
+		alert("请上传一般纳税人许可证");
+		return false;
+	}else{
+		if(!filee()){
+			return false;
+		}
+	}
+	if($(".jskhhmc").val().length == 0){
+		alert("请输入结算户账户名称");
+		return false;
+	}
+	if($(".jshkhh").val().length == 0){
+		alert("请输入结算户开户行");
+		return false;
+	}
+	if($(".jshkhhzh").val().length == 0){
+		alert("请输入结算户账号");
+		return false;
+	}
+	}
+
+	return true;
+}
+
+function dlxkz(){
+	if(!$("#dlxkz_9").is(":hidden")){
+		if(document.getElementById("dlxkz_9").value == ""){
+			return false;
+		}
+		 var i=document.getElementById("dlxkz_9").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+}
+ 
+function dp_logo(obj){
+	if(!$("#dp_logo").is(":hidden")){
+		if(document.getElementById("dp_logo").value == ""){
+			return false;
+		}
+		 var i=document.getElementById("dp_logo").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+} 
+
+function filesf1(){
+	if(!$("#fssfzzm_1").is(":hidden")){
+		if(document.getElementById("fssfzzm_1").value == ""){
+			return false;
+		}
+		 var i=document.getElementById("fssfzzm_1").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+} 
+
+function filesf2(){
+	if(!$("#fssfzfm_2").is(":hidden")){
+		if(document.getElementById("fssfzfm_2").value == ""){
+			return false;
+		}
+		 var i=document.getElementById("fssfzfm_2").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+} 
+
+
+function filea(){
+	if(!$("#yyzzfb_3").is(":hidden")){
+		if(document.getElementById("yyzzfb_3").value == ""){
+			return false;
+		}
+		 var i=document.getElementById("yyzzfb_3").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+} 
+function fileb(){
+	if(!$("#zzjg_4").is(":hidden")){
+		if(document.getElementById("zzjg_4").value == ""){
+			return false;
+		}   
+		 var i=document.getElementById("zzjg_4").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+}
+function filec(){
+	if(!$("#swdj_5").is(":hidden")){
+		if(document.getElementById("swdj_5").value == ""){
+			return false;
+		}
+		 var i=document.getElementById("swdj_5").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+}
+function filed(){
+	if(!$("#khyh_6").is(":hidden")){
+		if(document.getElementById("khyh_6").value == ""){
+			return false;
+		}
+		 var i=document.getElementById("khyh_6").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+}
+function filee(){
+	if(!$("#ybnsr_7").is(":hidden")){
+		if(document.getElementById("ybnsr_7").value == ""){
+			return false;
+		}
+		 var i=document.getElementById("ybnsr_7").files[0].size;
+		 var limit= 1*1024*1024;
+		if(i > limit){
+			alert("上传的图片大小要在1M以下");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	return true;
+}
+function checkPhone(){
+	var isMobile=/^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	if(!isMobile.test($(".phone").val())){
+		alert("请正确填写手机号码,例如:13415764179");
+		return false;
+	}else{
+		return true;
+	}
+}
+function checkEmail(){
+		var email= /\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+		if(!email.test($(".eml").val())){
+			alert("请正确输入邮箱地址");
+			return false;
+		}else{
+			return true;
+		}
+}
+
+function jxssqa(){
+	$("#jxssq").show();
+	$("#jxs").hide()
+}
+
+function wzmabca(){
+	var a = $("#cssbm").val().length;
+	if (sbm01 != $("#cssbm").val()){	
+		if($("#cssbm").val().length != '8' && $("#cssbm").val().length != '9'){
+			alert("请输入8或9位的识别码");
+			return false;
+		}else{
+		var XmlData=[];
+		var sbm = $("#cssbm").val();
+		XmlData.sbm=sbm;
+		var url="/Register/selectSMB.action?sbm="+sbm;
+		var data = visitService(url);
+			if(data.state=="success"){
+					return true;
+				}else{
+					alert("识别码重复!");
+					return false;
+				}
+			}
+	}
+	return true;
+}
+
+function selectEmail(){
+	var XmlData=[];
+	var email = $("#eml").val();
+	if (email.length != 0) {
+		if (eml == email) {
+			return true;
+		}else{
+			XmlData.email=email;
+			var url="/Register/selectEmail.action?email="+email;
+			var data = visitService(url);
+				if(data.state=="success"){
+						return true;
+					}else{
+						alert("该邮箱已注册!");
+						return false;
+					}
+		}
+	}else{
+			return false;
+	}
+}
+
+
+function selectPhone(){
+	var XmlData={};
+	var phone = $("#phone").val();
+	if (phone.length != 0) {
+		if (SJHM == phone) {
+			return true;
+		}else{
+			XmlData["SJHM"]=phone;
+			var url="/Register/selectSms.action?XmlData="+JSON.stringify(XmlData);
+			var data = visitService(url);
+				if(data.flag=="1000"){
+						return true;
+					}else{
+						alert("该手机号已注册!");
+						return false;
+					}
+		 }
+	}else{
+		 return false;
+	}
+}
+		
+		
+mapInit();
+//cityCode 城市代码  address
+function searchPostionA(cityCode, address,flag){
+	if(undefined != address && "" != address){
+		AMap.service(["AMap.PlaceSearch"], function() {
+	    var placeSearch;
+	    if(null != cityCode && "" != cityCode){
+	    	placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+	        pageSize: 5,
+	        pageIndex: 1,
+	        city: cityCode, //城市
+	        map: mapObj,
+	        panel: "resultDiv"
+	   	 });
+	    }else{
+	    	placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+	        pageSize: 5,
+	        pageIndex: 1,
+	        map: mapObj,
+	        panel: "resultDiv"
+	   	 });
+	    }
+	    //关键字查询
+	    placeSearch.search(address, function(status, result) {
+	    	if(result.info == "OK" && null != result.poiList && result.poiList.count > 0 ){
+	    		var obj = (result.poiList.pois)[0];
+	    		var locat = obj.location;
+	    		$("#Longitude").val(locat.lng);
+	    		$("#Latitude").val(locat.lat);
+	    	}
+	    });
+		});
+	}
+}
+//初始地图
+function searchByBtn() {
+	/* $("#iCenter").show(); */
+	//var cityCode = document.getElementById("cityQY").value;
+	var address = document.getElementById("QYdzdetail").value;
+	if (undefined != address && "" != address) {
+		//找位置
+		searchPostionA("022",address,"show");
+	}
+};
+
+//经纬度赋值
+var lng_,lat_,address_;
+function setLngLat(lng,lat,address) {
+	lng_ = lng;
+	lat_ = lat;
+	address_ = address;
+	if(address_ != undefined && address_ != ""){
+		$("#QYdzdetail").val(address_);
+	} else {
+		address_ = $("#QYdzdetail").val();
+	}
+}
+
+/* function abc(){
+	  abcd();//卖家
+} 
+function abcd(){
+	$("#zhezhao").show();
+}
+function qx(){
+	$("#zhezhao").hide(); 
+} */
+</script>
+</html>

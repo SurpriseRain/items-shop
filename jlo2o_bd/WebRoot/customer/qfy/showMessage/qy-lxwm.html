@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 联系我们</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/qypublic.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/head.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/qy_head.js"></script>
+<script language="javascript"  src="http://webapi.amap.com/maps?v=1.3&key=b2992a19dfcee083c3e8647b38db8420"></script>
+<script type="text/javascript" src="/js/amap.js"></script>
+<style>
+.lxwmCon{
+	position:relative;
+	width:100%;
+	height:auto;
+}
+.content{
+	width: 900px;
+	clear: both;
+	position:relative;
+	margin-left:170px;
+	
+	
+}
+.lin{
+	position: relative;
+	width: 300px;
+    height: 45px;
+    font-size: 26px;
+    padding-left: 8px;
+    border-bottom: 4px solid #FF7111;
+}
+</style>
+<script type="text/javascript">
+var gsid=unescape($.getUrlParam("gsid"));
+$(document).ready(function(){
+	$("#header").load("/customer/qfy/showDpxx/shopHead.html?ss="+Math.random());
+	$("#footer").load("/customer/qfy/foot-08.html");
+	selectDPInfo(gsid);
+	mapInit("",".content");
+	searchByBtn();
+});
+
+var zcxx08 = "";
+function selectDPInfo(gsid) {
+	var xmlData = [{"gsid":gsid}];
+	var url="/SellersShop/selectDPInfo.action?XmlData="+JSON.stringify(xmlData);
+	var	returnVal=visitService(url);
+	$("#lng").val(returnVal.list.Longitude);
+	$("#lat").val(returnVal.list.Latitude);
+	lng_ = $("#lng").val();
+	lat_ = $("#lat").val();
+	
+	$(returnVal.list).each(function(i,val){
+		var ZCXX02="";
+		if(val.ZCXX02!=null){
+			ZCXX02=val.ZCXX02;
+			}
+		var ZCXX08="";
+		if(val.ZCXX02!=null){
+			ZCXX08=val.ZCXX08;
+			}
+		var ZCXX06="";
+		if(val.ZCXX06!=null){
+			ZCXX06=val.ZCXX06;
+			}
+		var ZCXX09="";
+		if(val.ZCXX09!=null){
+			ZCXX09=val.ZCXX09;
+			}
+		$("#sj-lxwm").append("<p class='lin'></p><span class='beijing'>"+ZCXX02+"</span>"+
+				"<span>地址："+ZCXX08+"</span>"+
+				"<span>电话："+ZCXX06+"</span>"+
+				"<span>邮箱："+ZCXX09+"</span>"
+			);
+		zcxx08 = ZCXX08;
+	});
+}
+//初始地图
+function searchByBtn() {
+	$("#iCenter").show();
+	$("#iCenter").attr("style","height: 400px; cursor: url(http://js.webapi.amap.com/theme/v1.3/openhand.cur), default;");
+	var address = zcxx08;
+	if (undefined != address && "" != address) {
+		//找位置
+		searchPostion("",address,"show");
+	}
+}; 
+
+var lng_,lat_,address_;
+function setLngLat(lng,lat,address) {
+	lng_ = lng;
+	lat_ = lat;
+	address_ = address;
+}
+</script>
+</head>
+<body>
+<!-----公共部门开始---->
+<div id="header"></div>
+<div class="clera"></div>
+<div class="lxwmCon">
+<div id="sj-lxwm">
+<span class="women">联系我们（Contact us）</span>
+</div>
+<div>
+	<input type="hidden" name="lngt" id="lng" />
+	<input type="hidden" name="lntt" id="lat" />
+</div>
+	<div class="content">
+	</div>
+</div>
+
+<div class="clera"></div>
+<div id="footer"></div>
+</body>
+</html>

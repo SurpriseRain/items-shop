@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPubxg.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/public.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Basinfo.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script> 
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/amap.js"></script>
+<style>
+#zhezhao{
+ background:#fff;
+    height: 40%;
+    left: 28%;
+  position: fixed;
+    top: 13px;
+    width: 35%;
+    z-index: 2147483647;
+    border:1px solid #e4e4e4;
+
+}
+#zhezhao ul{
+margin-top:30px;
+margin-left:35px;
+}
+
+#zhezhao li{
+height:53px;
+width:100%;
+margin-left:20px;
+
+}
+#zhezhao li span{
+}
+#zhezhao li input{
+border:1px solid #e4e4e4;
+width:212px;
+height:32px;
+}
+.yzm{
+ background: #ff4a00 none repeat scroll 0 0;
+    border: 1px solid #e4e4e4;
+    display: inline-block;
+    height: 33px;
+    margin-left: 10px;
+    width: 79px;
+}
+.yzm span{
+color:#fff;
+font-size:12px;
+margin-left:10px;
+margin-top:8px;
+display: inline-block;
+}
+.yzm b{
+color:#fff;
+font-size:12px;
+margin-left:26px;
+margin-top:8px;
+display: inline-block;
+}
+.shzt{
+color:red;
+font-size:18px;
+}
+.bhyj{
+margin-left:15px;
+}
+.xs label:hover,.cc label:hover{
+	text-decoration:underline;
+}
+.con{width: 829px;height: auto;border: 1px solid #e3e3e3;float:left;margin:10px 0;padding:10px 0;}
+	/*.aa{height: auto;border: 1px solid #ccc;float: left;}*/
+	.con>span{display: block;width: 198px;height: auto;line-height: 40px;float: left;text-align:center;}
+	.aa{float: left;width: 629px;
+	border:none;}
+	.aa>li{float: left;line-height: 30px;padding: 0 20px;}
+	.lx{width:100px;}
+	 .aa li label.caozuo{color: red;font-weight: 200;font-size: 12px;margin-left: 20px;cursor:pointer;}
+	 .sfwz{display:block;width:120px;text-align:center;}
+	 .sfys{border:1px solid #e3e3e3;border-top:none;}
+	.clear{clear: both;}
+	.ziti{ color: #ff8800;font-weight: bold;}
+</style>
+</head>
+<body>
+<form id="form1" name="form1" action="" method="post">
+	<input type="hidden" value="" id="ZCXX01" name="ZCXX01" />
+	<input type="hidden" value="" id="ZCGS01" name="ZCGS01"/>
+	<table class="single_table">
+		<tr class="title">
+			<td colspan="2"><b>物流辐射区域</b><a class="ziti" href="/customer/qfy/back/qxgl/Oper_SCFSFW.html">返回 </a></td>
+		</tr>
+	</table>
+	<!-- 存数据 -->
+	<table class="con">
+	</table>
+</form>
+<!---------------------底部--------------------->
+<script type="text/javascript">
+
+//初始化数据
+$(document).ready(function(){
+	indate();
+});
+
+
+function indate(){
+	var MyCookie = $.cookie('userInfo');
+	var userCookie = JSON.parse(MyCookie);
+	//初始化数据
+//【注意：待修改---------------------】目前只有安迅物流一个：写死 AXWL【注意：待修改---------------------】
+	var AXWL = "AXWL";
+	var type ="1";//表示实体仓
+	var json = {"zcxx01":AXWL,"type":type};
+	var url = "/UserInfo/select_QYFGFW.action?XmlData=" + JSON.stringify(json);
+	var returnData=visitService(url);
+	var u =returnData.resultList;
+	
+	if(u[0].dqbzm01 == null){
+	}else{
+		for (var i = 0; i < u.length; i++) {
+			//添加
+			if(u[i].SF == null){
+				$(".single_table").append(" <tr   id='"+u[i].dqbzm01+"'> <td style='width: 150px;'><span style='width: 145px;'>区域：</span></td> 	<td style='width: 550px;'><input value='"+u[i].SJ+"'   class='lx' name='"+u[i].dqbzm01+"' readonly='readonly' style='width: 300px;' /> <label class='caozuo finalDo' onclick='cle("+u[i].dqbzm01+");'></label><div class='tishis'></div></td></tr>");
+			}else{
+				
+				//截取大区编码设置为id
+				var isf =u[i].dqbzm01.substring(0,2);
+				//判断id是否存在
+				if($('#'+isf+'').length>0){
+					//存在,添加
+					$('#'+isf+'').append("<li id='"+u[i].dqbzm01+"' class='"+isf+"b'><input value='"+u[i].SJ+"' class='lx' name='"+u[i].dqbzm01+"' readonly='readonly'><label class='caozuo finalDo' onclick='cle("+u[i].dqbzm01+","+isf+");'></label></li>");
+				}else{
+					  $(".con").append(" <tr class='sfys' id='"+isf+"s' ><td><span class='sfwz' >"+u[i].SF+"</span></td><td><ul class='aa' id='"+isf+"'> <li id='"+u[i].dqbzm01+"' class='"+isf+"b'><input value='"+u[i].SJ+"' class='lx' name='"+u[i].dqbzm01+"' readonly='readonly'><label class='caozuo finalDo' onclick='cle("+u[i].dqbzm01+","+isf+");'></label></li></ul></td></tr> ");
+				}
+				
+			}
+		}
+	}
+}
+
+</script>
+</body>
+</html>

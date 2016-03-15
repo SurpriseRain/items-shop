@@ -1,0 +1,21 @@
+<div class="floor_nav_main">
+<!--  <dl>-->
+<!--    <dt class="w12">1F</dt>-->
+<!--    <dt hidden>1</dt>-->
+<!--    <dd class="w12 xuan">名称</dd>-->
+<!--  </dl>-->
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var url="/oper_floor/selectAllFloor.action";
+	var result = visitService(url);
+	$(result.mapList).each(function(index,obj){
+		var temp = parseInt(index)+1;
+		$(".floor_nav_main").append('  <dl>'+
+			    '<dt class="w12">'+temp+'F</dt>'+
+			    '<input style="display:none;" value="'+obj.LCFL01+'"></input>'+
+			    '<dd class="w12">'+obj.LCFL02.substring(0,2)+'</dd>'+
+			  '</dl>');
+	});
+});
+</script>

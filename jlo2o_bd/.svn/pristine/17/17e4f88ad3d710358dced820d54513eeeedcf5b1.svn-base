@@ -1,0 +1,15 @@
+<div class="content">
+<div class="row">
+   <ul class="w12">
+     <li class="xuan"><a href="#">首页</a></li>
+     <li><a href="#">我的店铺</a></li>
+     <li><a href="#">订单管理</a></li>
+     <li><a href="#">促销推广</a></li>
+     <li><a href="#">广告管理</a></li>
+     <li><a href="#">仓储物流</a></li>
+     <li><a href="#">账号管理</a></li>
+     <li><a href="#">消息中心</a></li>
+     <li class="back_index"><i class="fa fa-home"></i><a href="../index.html">电器服务云首页 ></a></li>
+   </ul>
+</div>
+</div>

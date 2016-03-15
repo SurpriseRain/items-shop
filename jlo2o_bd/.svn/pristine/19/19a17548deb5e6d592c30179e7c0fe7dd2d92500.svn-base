@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+
+  <title>WEIXIN SCAN</title>
+ 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>中国汽服云平台</title>
+	<link rel="stylesheet" type="text/css" href="/customer/qfy/css/index.css" />
+	<link rel="stylesheet" type="text/css" href="../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../css/qypublic.css" />
+	<link rel="stylesheet" type="text/css" href="../css/public.css" />
+	<link rel="stylesheet" type="text/css" href="../css/products-main.css" />
+	<link rel="stylesheet" type="text/css" href="/customer/qfy/css/head.css" />
+	<link rel="stylesheet" type="text/css" href="../css/base.css" />
+	<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+	<script type="text/javascript" src="/js/openbox.js"></script>
+	<script type="text/javascript" src="/js/commons.js"></script>
+	<script type="text/javascript" src="/js/json2.js"></script>
+	<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../js/qy_head.js"></script>
+	<script type="text/javascript" src="../js/jquery.jqzoom.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+	<script type="text/javascript" src="/customer/qfy/js/qrcode.js"></script>
+	<script type="text/javascript" src="../js/accounting.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/control/css/pictureScanStyle.css" />
+	<script type="text/javascript" src="../js/pubJson.js"></script>
+	<script type="text/javascript" src="/control/js/pictureScan.js" charset="gbk"></script>
+	<link rel="stylesheet" type="text/css" href="/customer/qfy/css/wechatpay.css">
+	<style>
+	.saopic{
+		    width: 250px;
+		    height: 250px;
+		}
+	</style>
+</head>
+<body>
+    <!--页头-->
+    <div id="header">
+        <p>
+            <img src="/images/weixin/logo.png" alt=""/>
+            <span>收银台</span>
+        </p>
+    </div>
+    <div id="qfyPay">
+        <!--内容-->
+        <div id="content">
+            <div id="payInfo">
+                <!--描述-->
+                <div class="pay-ifno">
+                    <p class="pay-desc-1">
+                        请您及时付款，以便订单尽快处理！订单号：<span id="spanjyd"></span>
+                    </p>
+                    <p class="pay-desc-2">
+                        请您在提交订单后<span>24小时</span>内完成支付，否则订单会自动取消。
+                    </p>
+                    <div class="pay-price">
+                        应付金额<span id="spanmoney">199.0</span>元
+                    </div>
+                </div>
+                <!--支付内容-->
+                <div class="pay-content">
+                    <p>微信支付</p>
+                    <div class="pay-erwm">
+                        <div class="pay-zf">
+                            <div id="saodiv" class="pay-erwm-wrap"></div>
+                            <img src="/images/weixin/erwmdesc.png" title="请使用微信扫一扫"/>
+                        </div>
+                        <div class="pay-phone">
+                            <img src="/images/weixin/phone.png" title="请使用微信扫一扫"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+ <script>
+ 	 function getPayResult(){
+ 		 var JYDH=$.getUrlParam("JYDH");
+ 		var searchMap={};
+ 		var searchlist=[];
+ 		searchMap["JYDH"]=JYDH;
+ 		searchlist.push(searchMap);
+ 		var url="/WeixinController/querOrder.action?XmlData="+JSON.stringify(searchlist);
+ 		var returnData=visitService(url);
+ 		var trade_state=returnData.trade_state;
+ 		if(trade_state=="SUCCESS"){
+ 			window.location.href="/customer/qfy/weixin/weixin_success.jsp";
+ 		}
+ 	} 
+	  var JYDH=$.getUrlParam("JYDH");
+	 var skfsArr=$.getUrlParam("skfsArr");
+	 
+	 var zfje=$.getUrlParam("zfje");
+	 $("#spanjyd").text(JYDH);
+	 $("#spanmoney").text(zfje);
+	if(typeof(JYDH)!="undefined"||JYDH!=null&&typeof(skfsArr)!="undefined"||skfsArr!=null&&typeof(zfje)!="undefined"||zfje!=null){
+		setInterval('getPayResult()', 5000);
+		var searchMap={};
+		var searchlist=[];
+		searchMap["JYDH"]=JYDH;
+		searchMap["skfsArr"]=skfsArr;
+		searchlist.push(searchMap);
+		
+		var url="/WeixinController/getcoreurl.action?XmlData="+JSON.stringify(searchlist)+"&skfsArr="+skfsArr;
+		
+		var returnData=visitService(url);
+		var flag=returnData.flag;
+		if(flag=="1"){
+			var code_url=returnData.code_url;
+			//参数1表示图像大小，取值范围1-10；参数2表示质量，取值范围'L','M','Q','H'
+			var qr = qrcode(10, 'M');
+			qr.addData(code_url);
+			qr.make();
+			document.getElementById("saodiv").innerHTML=qr.createImgTag()
+
+		}else{
+			var return_msg=returnData.err_code_des;
+			alert("生成二维码失败,原因："+return_msg);
+			window.location.href="/customer/qfy/index.html";
+		}
+		
+	}  
+ </script>
+</html>

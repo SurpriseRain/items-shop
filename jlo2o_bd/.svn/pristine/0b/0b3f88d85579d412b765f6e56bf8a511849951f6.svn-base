@@ -1,0 +1,93 @@
+/********************product-listҳ�濪ʼ**************************/
+#pro-min{ width:1200px; margin:0 auto; border-top:0px solid #3061ef; padding-top:0px;}
+#pro-min .pro-none{ width:1200px; margin-top:0px;}
+#pro-min .pro-none h1{ width:1200px; height:120px; font-size:40px; font-family:"microsoft yahei"; color:#eee; text-align:center; margin:50px auto; display:none;}
+#pro-min .pro-none img.bmzx{ width:280px; height:280px; padding:10px; border:1px solid #eee; float:left; display:none;}
+#pro-min .pro-none .bmzx-text{ width:880px; height:300px; float:right; display:none;}
+#pro-min .pro-none .bmzx-text h2{ width:880px; height:30px; line-height:30px; color:#3c3c3c; font-size:18px; font-family:"microsoft yahei";}
+#pro-min .pro-none .bmzx-text p{ line-height:40px; font-size:14px;}
+
+
+
+#pro-min .pro-left{ width:950px; float:left;}
+#pro-min .pro-left .pro-tj{ width:930px; height:30px; line-height:30px; margin-left:20px;}
+#pro-min .pro-left .pro-tj span{ float:left;}
+#pro-min .pro-left .pro-tj span.jt{ margin:0 10px;}
+#pro-min .pro-left .pro-tj a{ float:left; height:18px; line-height:18px; border:1px solid #e4e4e4; margin:5px 0 0 0; padding:0 5px; color:#6c6c6c; margin-right:10px;}
+#pro-min .pro-left .pro-tj a:hover{ border-color:#3061ef;}
+#pro-min .pro-left .pro-tj a label{ margin-left:5px; font-family:"microsoft yahei"; color:#aaa; font-weight:bold; font-size:14px; line-height:16px;}
+#pro-min .pro-left .pro-tj a:hover label{ color:#3061ef; cursor:pointer;}
+
+#pro-min .pro-left .pro-sxtj{ width:948px; border:1px solid #eee; margin-top:10px; float:left; padding-bottom:10px; margin-bottom:-11px; border-bottom:2px solid #e4e4e4;}
+#pro-min .pro-left .pro-sxtj .sxtj-bt{ float:left; width:88px; line-height:40px; text-indent:20px; color:#999;}
+#pro-min .pro-left .pro-sxtj .sxtj-main{ float:left; width:700px; height:60px; overflow:hidden;}
+#pro-min .pro-left .pro-sxtj .sxtj-main ul li{ height:20px; line-height:20px; float:left; margin:10px 10px 0;}
+#pro-min .pro-left .pro-sxtj .sxtj-main ul li a{ color:#6c6c6c;}
+#pro-min .pro-left .pro-sxtj .sxtj-main ul li a:hover{ color:#3061ef;}
+#pro-min .pro-left .pro-sxtj .sxtj-more{ width:50px; height:20px; float:right; margin:10px;line-height:20px; text-align:center; font-family:"microsoft yahei"; color:#3c3c3c; font-weight:bold; background:url(../images/pro-list-more.png);}
+#pro-min .pro-left .pro-sxtj .sxtj-more:hover{color:#e40000; cursor:pointer;}
+#pro-min .pro-left .pro-sxtj .sxtj-morebian{ background-position:0 -40px;}
+
+#pro-min .pro-left .pro-sx{ width:948px; height:34px; background-color:#f5f5f5; margin:21px 0 0 0; float:left;}
+#pro-min .pro-left .pro-sx .sx-left{ height:24px; margin:5px; float:left;}
+#pro-min .pro-left .pro-sx .sx-left a{ float:left; height:22px; line-height:22px; border:1px solid #ccc; background-color:#fff; cursor:pointer; color:#3c3c3c;}
+#pro-min .pro-left .pro-sx .sx-left a.jiangxu{ padding:0 20px 0 10px; margin-left:-1px; background:url(../images/sx-ico.png) no-repeat; background-position:30px 0px;  background-color:#fff;}
+#pro-min .pro-left .pro-sx .sx-left a:hover{ color:#3061ef; background-position:30px -22px; background-color:#edf1fd;}
+#pro-min .pro-left .pro-sx .sx-left a.shenxu{ padding:0 20px 0 10px; background:url(../images/sx-ico.png) no-repeat; background-position:30px -45px; background-color:#fff; margin-left:-1px;}
+#pro-min .pro-left .pro-sx .sx-left a.shenxu:hover{ background-position:30px -67px;}
+#pro-min .pro-left .pro-sx .sx-left a.dq{ float:left; margin-left:20px; line-height:22px;}
+#pro-min .pro-left .pro-sx .sx-left a.dq span{ float:left; height:22px; background-color:#eee; padding:0 5px; color:#999;}
+#pro-min .pro-left .pro-sx .sx-left a.dq input{ float:left; margin:0px; padding:0px; border:0px; background-color:#fff; height:22px; width:60px; padding:0 0 0 5px; color:#3c3c3c; cursor:pointer;}
+#pro-min .pro-left .pro-sx .sx-right{ float:right; height:24px; margin:5px 10px 5px 5px;}
+#pro-min .pro-left .pro-sx .sx-right a{ cursor:pointer; text-align:center; background-color:#fff; font-weight:bold; line-height:18px;}
+#pro-min .pro-left .pro-sx .sx-right a:hover{ background-color:#edf1fd; color:#3061ef;}
+#pro-min .pro-left .pro-sx .sx-right a.previous-nv{ width:50px; height:18px; border:1px solid #ccc; float:left; margin:2px 0px;}
+#pro-min .pro-left .pro-sx .sx-right a.next-nv{ width:40px; height:18px; border:1px solid #ccc; float:left; margin:2px 0px; margin-left:5px;}
+#pro-min .pro-left .pro-sx .sx-right span{ float:left; line-height:24px;}
+#pro-min .pro-left .pro-sx .sx-right font{ float:left; margin:0 2px; line-height:24px;}
+#pro-min .pro-left .pro-sx .sx-right label{ float:left; line-height:24px; margin-right:10px;}
+
+#pro-min .pro-left ul.pro-case{ width:950px; float:left; }
+#pro-min .pro-left ul.pro-case li{ float:left; width:220px; height:340px; border:1px solid #eee; margin:20px 0 0 20px;position:relative;}
+#pro-min .pro-left ul.pro-case li:hover{ border-color:#3061ef;}
+#pro-min .pro-left ul.pro-case li.first{margin-left:0px;}
+#pro-min .pro-left ul.pro-case li a.img{ width:220px; height:220px; float:left; margin-bottom:5px;}
+#pro-min .pro-left ul.pro-case li a.img img{ width:220px; height:220px; border:0px;}
+#pro-min .pro-left ul.pro-case li .pro-pic{ width:210px; height:25px; margin:0 0 0 10px; float:left;}
+#pro-min .pro-left ul.pro-case li .pro-pic span{ float:left; line-height:23px; color:#999;}
+#pro-min .pro-left ul.pro-case li .pro-pic b{ float:left; font-size:16px; color:#da271c; font-family:"microsoft yahei"; font-weight:bold;}
+
+#pro-min .pro-left ul.pro-case li .pro-name{ width:200px; height:45px; margin:5px 10px 0 10px; float:left;}
+#pro-min .pro-left ul.pro-case li .pro-name a{ color:#3c3c3c; line-height:18px;}
+#pro-min .pro-left ul.pro-case li .pro-name a:hover{ color:#3061ef; text-decoration:underline;}
+#pro-min .pro-left ul.pro-case li .pro-dp{ width:200px; height:30px; float:left; margin:10px 10px 0 10px;}
+#pro-min .pro-left ul.pro-case li .pro-dp a.dp{ width:145px; float:left; height:30px; color:#999;}
+#pro-min .pro-left ul.pro-case li .pro-dp a.dq{ float:right; width:50px; height:30px; margin-right:5px; color:#999;}
+
+#pro-min .pro-right{ width:230px; float:right;}
+#pro-min .pro-right .pro-wxc-title{ width:230px; height:40px; border-bottom:1px solid #e4e4e4; line-height:40px; font-size:16px; font-family:"microsoft yahei"; color:#3c3c3c;}
+#pro-min .pro-right ul.pro-wxc-list{ width:230px; float:left;}
+#pro-min .pro-right ul.pro-wxc-list li{ margin:10px 0 0 0; width:228px; height:260px; border:1px solid #eee;position:relative;}
+#pro-min .pro-right ul.pro-wxc-list li:hover{ border-color:#3061ef; background-color:#3061ef;}
+#pro-min .pro-right ul.pro-wxc-list li a.img{ width:228px; height:228px; float:left;}
+#pro-min .pro-right ul.pro-wxc-list li a.img img{ width:228px; border:0px; height:228px;}
+#pro-min .pro-right ul.pro-wxc-list li .wxc-name{ width:200px; height:32px; margin:5px 14px 0 14px; float:left;}
+#pro-min .pro-right ul.pro-wxc-list li .wxc-name a{ color:#3c3c3c; font-family:"microsoft yahei"; font-size:13px;}
+#pro-min .pro-right ul.pro-wxc-list li .wxc-name span{ background-color:#da271c; color:#fff; padding:2px 5px; margin-left:5px;}
+#pro-min .pro-right ul.pro-wxc-list li .wxc-name span.wrz{ background-color:#ccc;}
+#pro-min .pro-right ul.pro-wxc-list li:hover .wxc-name a{ color:#fff; text-decoration:underline;}
+
+#pro-fy{ width:1200px; height:40px; margin:40px auto; font-size:14px;}
+#pro-fy .fy{ width:700px; margin:0 auto;}
+#pro-fy .fy a{ float:left; height:38px; line-height:38px; border:1px solid #ccc; padding:0 12px; margin-left:-1px; color:#004098; text-decoration:none;}
+#pro-fy .fy a.xuan{ background-color:#e9e9e9; color:#999;}
+#pro-fy .fy a:hover{ background-color:#e9e9e9; text-decoration:underline;}
+#pro-fy .fy a.xuan:hover{ background-color:#e9e9e9; color:#999; text-decoration:none;}
+#pro-fy .fy b{ float:left; line-height:38px; margin:0 5px;}
+#pro-fy .fy span{ float:left; line-height:38px; margin:0 2px 0 20px;}
+#pro-fy .fy span.tb{ margin-left:2px;}
+#pro-fy .fy input{ float:left; width:40px; height:18px; border:1px solid #ccc; margin:8px 2px 0 2px;}
+#pro-fy .fy a.botton{ height:20px; width:30px; background-color:#ccc; margin:8px 0 0 20px; line-height:20px; text-align:center;}
+/********************product-listҳ�����**************************/
+
+

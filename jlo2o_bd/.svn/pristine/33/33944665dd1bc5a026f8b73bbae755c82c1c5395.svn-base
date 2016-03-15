@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.sql.mjrk">
+	<!--根据入库单查询入库信息  -->
+	<select id="selectCKD" parameterType="Map" resultType="java.util.Map">
+	SELECT
+		CKDH,
+		(
+			SELECT
+				ZCXX02
+			FROM
+				W_ZCXX
+			WHERE
+				ZCXX01 = w_ckd.ZCXX01
+		) ZCXX02,
+		(
+			SELECT
+				CK02
+			FROM
+				CK
+			WHERE
+				CK01 = w_ckd.SHCK
+		) CK02,
+		w_ckd.CKR,
+		DATE_FORMAT(
+			w_ckd.CKSJ,
+			'%Y-%m-%d %H:%i:%S'
+		) CKSJ
+	FROM
+		w_ckd
+	LEFT JOIN w_zcxx on w_zcxx.zcxx01 = w_ckd.zcxx01
+	WHERE
+		1 = 1
+		AND SHCK in (select ck01 from W_XTCZYCK where person_id = #{ZCXX01})
+		<if test="CKDH!='' and CKDH!=null" > AND CKDH = #{CKDH}</if>
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+	</select>
+	
+	<!--根据入库单查询商品信息  -->
+	<select id="selectCKDSP" parameterType="Map" resultType="java.util.Map">
+		SELECT DISTINCT 
+				BARCODE,
+				spxx04,
+				spfl.spfl02,
+				w_ckditem.CKSL,
+				w_ckditem.RKSL,
+				(
+					w_ckditem.CKSL - w_ckditem.RKSL
+				) ZTSL
+			FROM
+				w_ckditem
+			LEFT JOIN w_ckdcm ON w_ckdcm.SPXX01 = w_ckditem.SPXX01
+			LEFT JOIN w_spxx ON w_spxx.spxx01 = w_ckdcm.SPXX01
+			LEFT JOIN spfl ON spfl.spfl01 = w_spxx.spfl01
+			LEFT JOIN w_ckd ON w_ckd.CKDH = w_ckditem.CKDH
+			LEFT JOIN w_zcxx ON w_ckd.zcxx01 = w_zcxx.zcxx01
+			where 1=1
+					AND w_ckd.SHCK in (select ck01 from W_XTCZYCK where person_id = #{XTCZY01})
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="CKDH!='' and CKDH!=null" > AND w_ckditem.CKDH = #{CKDH}</if>
+	</select>
+	
+	<!--根据入库单查询商品信息  -->
+	<select id="selectCKDSP_sum" parameterType="Map" resultType="java.util.Map">
+		select count(1) COUNT from (SELECT DISTINCT 
+			BARCODE,
+			spxx04,
+			spfl.spfl02,
+			w_ckditem.CKSL,
+			w_ckditem.RKSL,
+			(
+				w_ckditem.CKSL - w_ckditem.RKSL
+			) ZTSL
+			FROM
+				w_ckditem
+			LEFT JOIN w_ckdcm ON w_ckdcm.SPXX01 = w_ckditem.SPXX01
+			LEFT JOIN w_spxx ON w_spxx.spxx01 = w_ckdcm.SPXX01
+			LEFT JOIN spfl ON spfl.spfl01 = w_spxx.spfl01
+			LEFT JOIN w_ckd ON w_ckd.CKDH = w_ckditem.CKDH
+			LEFT JOIN w_zcxx ON w_ckd.zcxx01 = w_zcxx.zcxx01
+			where 1=1
+				AND w_ckd.SHCK in (select ck01 from W_XTCZYCK where person_id = #{XTCZY01})
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="CKDH!='' and CKDH!=null" > AND w_ckditem.CKDH = #{CKDH}</if>)t
+	</select>
+	
+	<!--根据入库单查询商品信息  -->
+	<select id="selectCKDSPXX" parameterType="Map" resultType="java.util.Map">
+		SELECT w_ckd.CKDH dh,group_concat(SPCM01) wr,null yr from w_ckd
+		inner JOIN w_ckditem on w_ckditem.CKDH = w_ckd.CKDH
+		LEFT JOIN w_ckdcm on w_ckdcm.SPXX01 = w_ckditem.SPXX01
+		where w_ckd.CKDH= #{CKDH}
+		union
+		SELECT w_rkd.CKDH dh,null wr,group_concat(SPCM01) yr from w_rkd
+		inner JOIN w_rkditem on w_rkd.RKDH = w_rkditem.RKDH
+		LEFT JOIN w_rkdcm on w_rkditem.spxx01 = w_rkdcm.spxx01
+		where w_rkd.CKDH= #{CKDH}
+		GROUP BY dh
+	</select>
+	
+	<!--入库后货位查询列表  -->
+	<select id="selectRKD" parameterType="Map" resultType="java.util.Map">
+		SELECT
+			RKDH,
+			SHCK,
+			CKDH,
+			(
+				SELECT
+					ck02
+				FROM
+					CK
+				WHERE
+					CK01 = SHCK
+			) SHCK_NAME,
+			DATE_FORMAT(RKSJ, '%Y-%m-%d %k:%i:%s') RKSJ
+		FROM
+			W_RKD
+		LEFT JOIN w_zcxx  ON w_zcxx.zcxx01 = W_RKD.zcxx01
+		WHERE
+			1 = 1 
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="RKDH!='' and RKDH!=null" > AND W_RKD.RKDH = #{RKDH}</if>
+	</select>
+	
+	<select id="selectRKD_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT count(1) COUNT FROM W_RKD
+		LEFT JOIN w_zcxx  ON w_zcxx.zcxx01 = W_RKD.zcxx01
+		WHERE
+			1 = 1 AND w_zcxx.zcxx65 = '0'
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="RKDH!='' and RKDH!=null" > AND W_RKD.RKDH = #{RKDH}</if>
+	</select>
+	
+	<!--入库后货位查询列表  -->
+	<select id="selectHJBH" parameterType="Map" resultType="java.util.Map">
+		SELECT w_spxx.SPXX04,w_goods.BARCODE,case when w_rkditem.HJBH='0' then w_spflhj.HJBH else w_rkditem.HJBH end HJBH,w_rkditem.SPXX01 from w_rkditem
+		LEFT JOIN w_spxx on w_spxx.spxx01 = w_rkditem.SPXX01
+		LEFT JOIN w_goods ON w_goods.spxx01 = w_spxx.SPXX01
+		LEFT JOIN w_spflhj on w_spflhj.SPFL01 = w_spxx.spfl01
+		WHERE w_rkditem.rkdh = #{RKDH}
+	</select>
+	
+</mapper>

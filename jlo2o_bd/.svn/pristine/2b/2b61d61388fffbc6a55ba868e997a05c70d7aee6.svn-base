@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+</head>
+<body>
+  <div id="curPosition" style="width:98.5%;">
+    <a href="#">店铺管理</a>
+    <span>></span><label id="span_sjly" title=""></label>
+    <b>审核 </b>
+  </div>
+  <div class="clera"></div>  
+  <input type="text" id="XTCZY01" name="XTCZY01" value="" style="display:none;"/>
+  <input type="text" id="ZCXX01" name="ZCXX01" value="" style="display:none;"/>
+  <input type="text" id="ZCGS01" name="ZCGS01" value="" style="display:none;"/>
+  <input type="text" id="LX" name="LX" value="" style="display:none;"/>
+  <table class="show_table">
+    <tr>
+    	<td><span>用户名：</span></td><td><label id="span_userName" title=""></label></td>
+    	<td><span>公司名称：</span></td><td><label id="span_gsmc" title=""></label></td>
+    	<td><span>公司地址：</span></td><td><label id="span_gsdz" title=""></label></td>
+    </tr>
+    <tr>
+    	<td><span>手机号码：</span></td><td><label id="span_sjhm" title=""></label></td>
+    	<td><span>状态：</span></td><td><label id="span_zt" title=""></label></td>
+    	<td class="abc"><span>放心汽修：</span></td><td class="abc"><input type= "checkbox" value= " " name='zcxx69' id="zcxx69"> </td>
+    	<td><span></span></td><td><label id="" title=""></label></td>
+    </tr>
+  </table>
+  <div class="clera"></div>
+  <table class="single_table"> 
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">法人身份证正面：</span></td>
+       <td id="fssfzzm">
+        <img src="" class="img"/>
+       </td>
+     </tr> 
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">法人身份证反面：</span></td>
+       <td id="fssfzfm">
+        <img src="" class="img"/>
+       </td>
+     </tr> 
+     <tr>
+       <td style="width:120px;"><span style="width:120px;">营业执照副本：</span></td>
+       <td id="yyzzfb">
+        <img src="" class="img"/>
+       </td>
+     </tr>   
+  </table>
+  <div class="clera"></div>
+  <div style="text-align:center;margin-left: 400px;">
+     <a href="javascript:void(0);" onclick="shtg();" class="bot Medium">审核通过</a>
+  </div>
+</body>
+<script type="text/javascript">
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+    $("#XTCZY01").val(rowObj.find("#XTCZY01").val());
+    $("#ZCXX01").val(rowObj.find("#ZCXX01").val());
+    var XmlData={"XTCZY01":$("#XTCZY01").val(),"ZCXX01":rowObj.find("#ZCXX01").val()};
+	var url="/Register/getZCXX.action?json="+JSON.stringify(XmlData);
+    var returnVal = visitService(url);
+    $("#span_userName").html(returnVal.XTCZY01);
+	$("#span_gsmc").html(returnVal.ZCXX02);
+	$("#span_gsdz").html(returnVal.ZCXX08);
+	$("#span_gsdz").attr("title", returnVal.ZCXX08);
+	$("#span_sjhm").html(returnVal.ZCXX06);
+	if (returnVal.ZCXX56 == 0) {
+		$("#span_sjly").html(" ： PC注册用户");
+	}
+	if (returnVal.ZCXX56 == 1){
+		$("#span_sjly").html(" ： APP注册用户")
+	}
+	
+	$("#ZCGS01").val(returnVal.ZCGS01);
+	if(returnVal.LX!=44){
+		$(".abc").hide();
+	}
+	$("#span_zt").html(eval("changeColumns.ZCGS01_"+returnVal.ZCGS01));
+	//显示图片
+	var str="";
+	var imgUrl="";
+	var dptpObj={};
+	var dptpList = returnVal.dptpList;
+	for(var i=0;i<dptpList.length;i++){
+		dptpObj=dptpList[i];
+		imgUrl=pubJson.path_sptp+"/dptp/"+dptpObj.ZCXX01+"/"+dptpObj.TPMC;
+		//str="<a href=\""+imgUrl+"\" target=\"_blank\"><img src=\""+imgUrl+"\" style=\"height:40px;\"/></a>";
+		if(dptpObj.TPLX == "1"){
+			//$("#fssfzzm").html(str);
+			$("#fssfzzm").find(".img").attr("src",imgUrl);
+		}
+		if(dptpObj.TPLX == "2"){
+			//$("#fssfzfm").html(str);
+			$("#fssfzfm").find(".img").attr("src",imgUrl);
+		}
+		if(dptpObj.TPLX == "3"){
+			//$("#yyzzfb").html(str);
+			$("#yyzzfb").find(".img").attr("src",imgUrl);
+		}
+	}
+}
+
+//审核通过
+function shtg(){
+	if($("#ZCGS01").val() == 2){
+		alert("请完善注册信息");
+		return;
+	}
+	if($("#ZCGS01").val() == 4){
+		alert("已审核");
+		return;
+	}
+	if($("#ZCGS01").val() == 3){
+		   var XmlData = {};
+			XmlData["XTCZY01"]=$("#XTCZY01").val();
+			if($("#zcxx69").attr("checked")){
+				XmlData["ZCXX69"]="1";	
+			}else{
+				XmlData["ZCXX69"]="0";
+			}		
+		var url="/Register/auditRegister.action?json="+JSON.stringify(XmlData);
+		var returnVal = visitService(url);
+    	if(returnVal.state=="success"){
+			$("#ZCGS01").val(returnVal.gszt);
+			$("#span_zt").html(eval("changeColumns.ZCGS01_"+returnVal.gszt));
+			alert("审核成功");
+			parent.execBackFun("aaa");
+			parent.$("#ajaxGrid").remove();
+		}else{
+			alert("审核失败");
+		}
+	}
+}
+
+$(document).ready(function(){
+	$("td > img").click(function(){
+	  var td_img = $(this).attr("class");
+	  if(td_img == "img"){
+		 $(this).attr("class","big")
+		}else if(td_img == "big"){
+		 $(this).attr("class","img") 
+		}
+	 })
+})
+</script>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+<!--
+  TMSConfig
+  id      唯一关键字
+  type    接口ID
+  xml_ns  命名空间（SAP接口中用到）
+  rootTag      根节点元素
+  sender    发送方编码
+  receiver   接收方编码
+  from
+  to
+  required   true 代表所有查询条件都是必填项
+  insertsql    写已抽取数据记录
+  querysql    查询语句
+  mul        出现多次的节点
+  pk         日志
+  child
+
+  FIELD
+  attrname 字段的名字
+  target    目标字段名称
+  fieldtype    字段的类型
+  WIDTH     cds中需要
+  parent    父节点
+  decode    数据转换(1=Y;0=N 将1转换成Y,0转成N)
+  sql
+  -->
+  
+
+
+    <JLConfig id="DHD">
+        <FIELD attrname="DHDH" target="ebeln"/> <!--订单编码-->
+        <FIELD attrname="CWGS" target="bukrs"/> <!--公司编码-->
+        <FIELD attrname="CGZZ01" target="ekorg"/>  <!--采购组织--> 
+        <FIELD attrname="JHRQ" target="eindt"/>  <!--交货日期--> 
+        <FIELD attrname="CGZ" target="ekgrp"/>  <!--采购组--> 
+        <FIELD attrname="DZDJLX" target="bsart"/>  <!--订单类型-->
+        <FIELD attrname="WLDW01" target="lifnr"/>  <!--供应商编码-->     
+        <FIELD attrname="SHR" target="ernam"/>  <!--订单创建人-->
+        <FIELD attrname="SHRQ" target="aedat"/>  <!--订单创建时间-->   
+        <FIELD attrname="NOTE" target="tdline"/>  <!--备注文本-->
+    </JLConfig>
+    
+    <JLConfig id="DHDMX">
+        <FIELD attrname="DHDH" target="ebeln"/> <!--订单编码-->
+        <FIELD attrname="XH" target="ebelp"/> <!--行项目-->
+        <FIELD attrname="SPBM" target="matnr"/> <!--物料编码-->
+        <FIELD attrname="DZCK" target="werks"/> <!--工厂-->        
+        <FIELD attrname="DZKQ" target="lgort"/> <!--库存地点-->
+        <FIELD attrname="JLDW" target="meins"/> <!--单位-->
+        <FIELD attrname="DHSL" target="menge"/> <!--采购订单数量-->  
+        <!--FIELD attrname="" target="tdline"/--> <!--备注文本--> 
+    </JLConfig>
+    
+
+</root>

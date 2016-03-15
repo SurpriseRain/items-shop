@@ -1,0 +1,13 @@
+
+.pro-fy{ width:800px; height:40px; margin:20px auto; font-size:14px; float:left;}
+.pro-fy .fy{ width:700px; margin:0 auto;}
+.pro-fy .fy a{ float:left; height:38px; line-height:38px; border:1px solid #ccc; padding:0 12px; margin-left:-1px; color:#004098; text-decoration:none;}
+.pro-fy .fy a.xuan{ background-color:#e9e9e9; color:#999;}
+.pro-fy .fy a:hover{ background-color:#e9e9e9; text-decoration:underline;}
+.pro-fy .fy a.xuan:hover{ background-color:#e9e9e9; color:#999; text-decoration:none;}
+.pro-fy .fy b{ float:left; line-height:38px; margin:0 5px;}
+.pro-fy .fy span{ float:left; line-height:38px; margin:0 2px 0 20px;}
+.pro-fy .fy span.tb{ margin-left:2px;}
+.pro-fy .fy input{ float:left; width:40px; height:18px; border:1px solid #ccc; margin:8px 2px 0 2px;}
+.pro-fy .fy a.botton{ height:20px; width:30px; background-color:#ccc; margin:8px 0 0 20px; line-height:20px; text-align:center;}
+

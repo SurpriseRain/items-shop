@@ -1,0 +1,28 @@
+<div class="small_header">
+    <div class="w12"><a href="../index.html"><img src="../images/logo.png" /></a><h1>欢迎注册</h1></div>
+</div>
+<div class="reg_title_main">
+    <div class="w12"><ul><li class="xuan">个人</li><li class="">企业</li><li class="">分销商</li></ul></div>
+</div>
+
+<div class="reg_main">
+  <div class="w12 reg_info">
+  <div class="w10 reg_main_left">
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>用户名:</dt><dd class="w04"><input class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /><i class="fa fa-user"></i></dd><dd class="w06"><label class="putong_msg">6-20位英文字母、数字、字符等。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>设置密码:</dt><dd class="w04"><input class="w12" type="password" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /><i class="fa fa-unlock"></i></dd><dd class="w06"><label class="error_msg">6-20字符，建议字母，数字，字符组合使用。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>确认密码:</dt><dd class="w04"><input class="w12" type="password" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /><i class="fa fa-unlock"></i></dd><dd class="w06"><label class="right_msg">请再次输入密码。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>手机验证:</dt><dd class="w04"><input class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /><i class="fa fa-mobile-phone"></i></dd><dd class="w06"><label>请再次输入密码。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>短信验证码:</dt><dd class="w02"><input class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /></dd><dd class="w02"><input class="jl_btn btn_grey" type="button" value="获取验证码" /></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>绑定邮箱:</dt><dd class="w04"><input class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /><i class="fa fa-envelope-o"></i></dd><dd class="w06"><label>请再次输入密码。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>验证码:</dt><dd class="w02"><input class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /></dd><dd class="w02"><img src="../images/flp.png" class="yzm" /></dd></dl>
+    <dl class="w12"><dt class="w02">&nbsp;</dt><dd class="w04"><input type="checkbox" checked="checked" />我已经阅读<a class="font_blue">《电器服务云注册协议》</a></dd></dl>
+    <dl class="w12 public_form"><dt class="w02">&nbsp;</dt><dd class="w04"><input type="button" class="jl_btn btn_red w12" value="免费注册"></dd></dl>
+  </div>
+  <div class="w02 reg_main_right">
+    <ul>
+      <li><a href="login.html">已经注册，去登陆 > </a></li>
+      <li><img src="../images/footer_ewm.png" /></li>
+    </ul>
+  </div>
+  </div>
+</div>

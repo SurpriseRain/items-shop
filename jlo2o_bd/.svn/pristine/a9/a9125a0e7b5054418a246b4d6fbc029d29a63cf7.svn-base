@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电器服务云 - 卖家中心</title>
+<link href="/customer/qfy/css/backPublic.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script> 
+</head>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var userCookie = JSON.parse(MyCookie);
+var username = userCookie.XTCZY01;
+$(document).ready(function(){
+//点击登录
+$("#loginbtn").click(
+function() {
+	var password0 = $("#userPwd0").val();
+	var password = $("#userPwd").val();
+	var password2 = $("#userPwd2").val();
+	if (password != password2) {
+		alert("输入的新密码不一致!");
+		$("#userPwd2").focus();
+	}
+	else{
+		var arr = [];
+		var o = {};
+		o["XTCZY01"] = $.trim(username);
+		o["XTCZY02"] = password0;
+		arr.push(o);
+		var data = visitService("/UserLogin/login.action?XmlData="+JSON.stringify(arr));
+		var loginState = data.state;
+		if (loginState == 1) {
+			alert("用户名有误!");
+			$("#XTCZY01").focus();
+		} else if (loginState == 2) {
+			alert("旧密码错误!");
+			$("#XTCZY02").focus();
+		} else if (loginState == 3) {
+			o["XTCZY01"] = $.trim(username);
+			o["XTCZY02"] = password;
+			arr.push(o);
+			var data = visitService("/UserLogin/updatePwd.action?XmlData="+JSON.stringify(arr));
+			if(data.state){
+				alert("修改密码成功！");
+			}
+			else{
+				alert("修改密码失败！请重试。。。");
+			}
+		}
+	}
+  });
+})
+
+</script>
+<body>
+<div class="shop-right-main">
+  <form id="form1" name="form1" action="" method="post">
+  <div class="dqlc"><a href="#" class="dqlc-a">我是卖家</a> > <a href="#" class="dqlc-a">帐号管理</a> > <b class="dqlc-b">修改密码</b></div>
+  <ul id="pdb-info">
+		<li>
+			<span>请输入旧密码：</span>
+			<div class="btx">*</div>
+			<input  type="text" placeholder="请输入旧密码" name="userPwd0" value="" id="userPwd0"  size="34" />
+		</li>
+		<li>
+			<span>请输入新密码：</span>
+			<div class="btx">*</div>
+			<input  type="text" placeholder="请输入新密码" name="userPwd" value="" id="userPwd"  size="34" />
+		</li>		<li>
+			<span>确认新密码：</span>
+			<div class="btx">*</div>
+			<input  type="text" placeholder="确认新密码" name="userPwd2" value="" id="userPwd2"  size="34" />
+		</li>
+		<li><span>&nbsp;</span><a id="loginbtn" href="javascript:void(0);" onclick="" class="bot">确定</a></li>
+  </ul>
+  </form>
+</div>
+<div class="clear"></div>
+
+</body>
+</html>

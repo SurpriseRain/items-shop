@@ -1,0 +1,839 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 买家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<style>
+.applyFP {
+	padding: 0 10px;
+	float: right;
+	height: 28px;
+	line-height: 28px;
+	background-color: #ff8800;
+	color: #fff;
+	font-family: "microsoft yahei";
+	font-size: 15px;
+	width: 70px;
+	text-align: center;
+	cursor: pointer;
+	border: 1px solid #c76e09;
+	margin: 10px 35px;
+	margin-left: 75px;
+}
+
+.order_style {
+	position: absolute;
+	height: 1900px;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 1988;
+	opacity: 0.2;
+	background-color: #000;
+	display:none;
+}
+
+.titles {
+	float: left;
+	width: 100%;
+	margin: 0px;
+	padding: 0px;
+	height: 35px;
+	line-height: 40px;
+	text-align: left;
+	font-size: 14px;
+	font-family: "microsoft yahei";
+	color: #333;
+	font-weight: bold;
+	display:none;
+}
+
+.modbox span{
+    display: block;
+    line-height: 22px;
+    font-size: 15px;
+    font-weight: 100;
+    width: 200px;
+}
+
+.modbox b{
+	display: inline;
+}
+
+.inp {
+	cursor: pointer;
+	height: 1.5em;
+	color: #111;
+	border: 1px solid #ccc;
+	width: 390px;
+	font-size: 15px;
+	font-weight: 100;
+}
+
+.order_open {
+	position: absolute;
+	z-index: 2000;
+	background-color: #fff;
+	left: 50%;
+	top: 50%;
+	margin-left: -180px;
+	margin-top: -100px;
+	display:none;
+}
+
+.msg-menu {
+	height: 36px;
+}
+
+.msg-menu ul {
+	list-style: outside none none;
+}
+
+.msg-menu li {
+	margin-left: 75px;
+	border-color: -moz-use-text-color;
+	border-image: none;
+	border-style: solid solid solid;
+	border-width: 1px 1px 1px;
+    border-color: #ccc;
+	float: left;
+	height: 36px;
+	line-height: 36px;
+	text-align: center;
+	width: 90px;
+    margin-top: 5px;
+	cursor: pointer;
+	width:90px;
+	line-height:36px;
+	border-radius:10px;
+    font-size: 15px;
+}
+
+li.active {
+	background-color: #ff8800;
+}
+
+.msg-main {
+	min-height: 400px;
+	position: relative;
+	width: 830px;
+	top:-2px;
+	background:#fff;
+	z-index:1000;
+}
+.msg-menu li{
+
+}
+
+.msg-content {
+	border: 1px solid;
+	border-left: 0;
+	min-height: 398px;
+	position: absolute;
+	left: 414px;;
+	top: 0;
+	width: 380px;
+}
+
+.order_opentit{
+    display: block;
+    background: #ddd;
+    padding: 0px;
+    color: #333;
+    font-size: 16px;
+    text-align: center;
+}
+
+.appl {
+    padding: 1px 10px;
+    float: left;
+    height: 28px;
+    line-height: 28px;
+    background-color: #ff8800;
+    color: #fff;
+    font-family: "microsoft yahei";
+    font-size: 15px;
+    width: 50px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #c76e09;
+    margin-left: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.inpf{
+	cursor: pointer;
+    height: 1.5em;
+    background: #eee;
+    color: #111;
+    border: 1px solid #ccc;
+    width: 390px;
+    height: 24px;
+}
+
+.red {
+	color: red;
+}
+
+.line{
+	border-top: 1px dotted #e4e4e4;
+	width: 390px;
+}
+
+.jcxx{
+	cursor: auto;
+}
+
+</style>
+<script type="text/javascript">
+// 初始化数据
+var usercookie;
+function initData(){
+	var MyCookie = $.cookie('userInfo');
+	usercookie = JSON.parse(MyCookie);
+	var ZCXX02 = $("#ghs").val();
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.sql.orderInvoice.select_OrderItem','QryType':'Report','dataType':'Json','INVOICESTATE': $("#fpzt").val(),'HBID':usercookie.ZCXX01, 'ZCXX02':ZCXX02}];
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData)); 
+}
+</script>
+</head>
+<body>
+<input id="taitou" type="hidden" name="taitou" class="fptt" />
+<div class="order_style"></div>
+<div class="order_open" id="order_open">
+	<div class="cart_ok" >
+           <h3 class="order_opentit" style="padding: 10px;">发票信息</h3>
+           <div class="msg-menu">
+				<ul id="menu">
+					<li class="active" id="ptfp" value="1">普通发票</li>
+					<li id="zzsfp" value="2">增值税发票</li>
+				</ul>
+		 	</div>
+           	<div class="modbox ptfp">
+	             <span><b class="red">*</b>发票抬头:</span><input id="fptt" type="text" name="fptt" class="inp fptt" /><br/>
+	             <span><b class="red">*</b>发票内容:</span><input id="fpnr" type="text" name="fpnr" class="inp fpnr" value="明细" disabled="disabled" /><br/>
+	             <span><b class="red">*</b>联系人:</span><input type="text" id="lxr" name="lxr" value="" class="inp lxr jcxx"/><br/>
+	             <span><b class="red">*</b>联系电话:</span><input type="text" id="lxdh" name="lxdh" maxlength="15" value="" class="inp lxdh jcxx" onkeyup="value=this.value.replace(/\D+/g,'')" /><br/>
+	             <span><b class="red">*</b>邮寄地址:</span><input type="text" title="" id="yjdz" name="yjdz" value="" class="inp yjdz jcxx" /><br/>
+             	 <a href="javascript:void(0);" class="appl" style="margin-left: 60px;margin-right: 80px;" onclick="addOrderInvoic()">申请</a>
+	             <a href="javascript:void(0);" class="appl" onclick="cancel()">取消</a>
+	             <br class="clear"/>
+           </div>
+           
+			<div class="modbox zzsfp" style="display: none;">
+    			 <span>单位名称:</span>
+    			 	<input id="dwmc" type="text" name="dwmc" class="inp dwmc" style="color: red;" disabled="disabled" /><br/>
+    			 <span><b class="red">*</b>纳税人识别码:</span>
+    			 <a id="aaaa"></a>
+    			 	<input id="ybnsr_7" type="text" name="ybnsr_7" class="inp foce xgxx" onkeyup="this.value=this.value.replace(/\D/g,'')" /><br/>
+    			 <span><b class="red">*</b>注册地址:</span>    			
+    			 	<input type="text" class="inp foce xgxx" id="zcdz" name="zcdz" value="" maxlength="120"  />
+    			 <span><b class="red">*</b>注册电话:</span>    			
+    			 	<input type="text" class="inp foce xgxx"  id="zcdh" name="zcdh" value="" maxlength="15" onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+    			 <span><b class="red">*</b>开户银行:</span>    			
+    				<input type="text" class="inp foce xgxx" id="khyh" name="khyh" value="" maxlength="18"/>
+    			 <span><b class="red">*</b>银行账户:</span>    			
+    				<input type="text" class="inp foce xgxx" id="yhzh" name="yhzh" value=""  maxlength="26" onkeyup="this.value=this.value.replace(/\D/g,'')"/> <br />
+    				<br />
+    			<ul>
+    				<li class="line"></li>
+    			</ul>
+    			 <span><b class="red">*</b>营业执照:</span>
+    			 	<img id="imgUrl" style="height: 260px;width: 390px;" src="" alt="" />
+    			 <div class="jbtp" style="display: none;">
+	    			 <span><b class="red">*</b>组织机构代码证:</span>
+	    			 	<img id="imgUrl1" style="height: 260px;width: 390px;" src="" alt="" />
+	    			 <span><b class="red">*</b>税务登记证:</span>
+	    			 	<img id="imgUrl2" style="height: 260px;width: 390px;" src="" alt="" />
+	    			 <span><b class="red">*</b>开户许可证:</span>
+	    			 	<img id="imgUrl3" style="height: 260px;width: 390px;" src="" alt="" />	
+    			 </div>
+    			 <div class="jbxx" style="display: none;">
+	    			 <span><b class="red">*</b>组织机构代码证:</span>
+	    				<input type="file" class="inpf" id="zzjg_4" name="zzjg_4" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"  value=""/><br/>
+	    			 <span><b class="red">*</b>税务登记证:</span>
+	    				<input type="file" class="inpf" id="swdj_5" name="swdj_5" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"  value=""/><br/>
+	    			 <span><b class="red">*</b>开户许可证:</span>
+	    				<input type="file" class="inpf" id="khyh_6" name="khyh_6" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"  value=""/><br/>
+    				<br/>
+    			 </div>
+    			 <ul>
+    				<li class="line"></li>
+    			 </ul>
+    			 <span><b class="red">*</b>联系人:</span>
+	             	<input type="text" id="zzlxr" name="lxr" value="" class="inp lxr jcxx"/><br/>
+	             <span><b class="red">*</b>联系电话:</span>
+	             	<input type="text" id="zzlxdh" name="lxdh" value="" class="inp lxdh jcxx" maxlength="15" onkeyup="this.value=this.value.replace(/\D/g,'')" /><br/>
+	             <span><b class="red">*</b>邮寄地址:</span>
+	             	<input type="text" title="" id="zzyjdz" name="yjdz" value="" class="inp yjdz jcxx" /><br/>
+				 <a href="javascript:void(0);" class="appl gxzz" onclick="updateInvoiceUserInfo()" style="display: none">修改</a>
+             	 <a href="javascript:void(0);" class="appl zzsq" onclick="perfectSave()">申请</a>
+	             <a href="javascript:void(0);" class="appl" onclick="cancel()">取消</a>
+	             <br class="clear"/>
+			</div>
+     </div>
+</div>
+	<!-- <div id="curPosition">
+    	<a href="#">发票管理</a>
+    	<span>></span>
+    	<b>申请发票</b>
+	</div> -->
+	<ul id="screening" style="height:50px" >
+	  <li style="width:830px;">
+	  	<span>发票状态:</span>
+	  	<script type="text/javascript">
+			document.write(showStateHtml('INVOICESTATE','fpzt'));
+		</script>
+	   	<span>供货商:</span>
+		<input type="text" id="ghs" name="ghs" class="text" style="width: 160px;" size="100" value=""/>
+		<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+	   </li>	   
+	</ul>
+	<div class="clera"></div>
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="6" rowClick="open" multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+							{'property':'ZCXX01','header':'','type':'hidden','width':'0px'},
+							{'property':'XSDD01','header':'','type':'fpxz','width':'10px'},
+							{'property':'ZCXX02','header':'供货商','type':'lable','width':'210px'},
+							{'property':'XSDD01','header':'订单编号','type':'lable','width':'180px'},
+							{'property':'XSDD04','header':'订单时间','type':'lable','width':'180px'},
+							{'property':'XSDD02','header':'价格','type':'lable','width':'80px'},
+							{'property':'INVOICESTATE','header':'发票状态','type':'number','width':'90px'}]">
+		</div>
+	</div>
+	<div class="clera"></div>
+	<div class="clears">
+		<div id="ghsmc">
+			<table class='list_table'></table>
+		</div>
+		<div class="titles" id="sqfp" >
+			<label style="float:left;">发票总金额:</label>
+			<div style="float:left;" class=" pic pic1">¥0.00</div>
+			<a href="javascript:void(0);" class="applyFP" onclick="apply_FP()">申请开票</a>
+		</div>
+	</div>
+	<div class="check"></div>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript">
+var i = 0;
+var j = 0;
+var FPZT; // 发票类别状态 
+var imgUrl=pubJson.path_sptp + "/dptp/";
+$(document).ready(function(){
+	//普通发票和增值税发票之间的切换
+	$("#menu").on("click", "li", function() {
+		if(FPZT == "3"){
+			var $this = $(this), index = $this.index();
+			$this.addClass("active").siblings("li").removeClass("active");
+			$(".modbox").hide().eq(index).show();
+			if(j == 0){
+				select_zzsfpinf();
+				j = 1;
+			}
+		}
+	});
+});
+
+// 查询增值税发票基本信息
+function select_zzsfpinf(){
+	var url = "/UserInfo/select_InvoiceForUserInfo.action?ZCXX01=" + usercookie.ZCXX01;
+	var rData = visitService(url);
+	if(rData.STATE == "1"){
+		$("#dwmc").val(rData.resultList[0].ZCXX02);
+		$("#imgUrl").attr("src",imgUrl + usercookie.ZCXX01 + "/" + rData.resultList[0].DPTP02);
+		if(rData.resultList[0].ZCXX28 != "" && rData.resultList[0].ZCXX28 != undefined){
+			$("#ybnsr_7").val(rData.resultList[0].ZCXX28);
+			$("#ybnsr_7").attr("disabled","disabled");
+			$("#zcdz").val(rData.resultList[0].ZCXX71);
+			$("#zcdz").attr("disabled","disabled");
+			$("#zcdh").val(rData.resultList[0].ZCXX72);
+			$("#zcdh").attr("disabled","disabled");
+			$("#yhzh").val(rData.resultList[0].GSYHK02);
+			$("#yhzh").attr("disabled","disabled");
+			$("#khyh").val(rData.resultList[0].GSYHK03);
+			$("#khyh").attr("disabled","disabled");
+			$(".gxzz").attr("style", "display:block;");
+		    $(".jbtp").attr("style", "display:block;");
+		    for(var k = 1; k < rData.resultList.length; k++){
+		    	$("#imgUrl" + (k)).attr("src",imgUrl + usercookie.ZCXX01 + "/" + rData.resultList[k].DPTP02);
+		    }
+			i = 1;
+		} else {
+			$(".jbxx").attr("style", "display:block;");
+			$(".gxzz").hide();
+			$(".zzsq").attr("style","margin-left: 60px;margin-right: 80px;");
+		}
+	}
+}
+
+// 查询方法
+function query(){
+	init();
+	// 查询后给checkbox勾选
+	var $ddh = $("[id^=ddh_]");
+	for(var i = 0; i < $ddh.length; i++){
+		$("#" + $ddh[i].innerHTML).attr("checked",true);
+	}
+}
+
+// 回调方法
+function backFun(){
+ 	init();
+}
+
+// 选择发票
+function check_fp(id){
+    	var obj = $("#" + id).is(":checked");
+    	// 订单编号
+    	var XSDD01 = $("#" + id).parents("tr").find("#XSDD01").val();
+    	// 订单时间
+    	var XSDD04 = $("#" + id).parents("tr").find("#XSDD04").val();
+    	// 订单价格
+    	var XSDD02 = $("#" + id).parents("tr").find("#XSDD02").val();
+    	// 供货商
+    	var ZCXX02 = $("#" + id).parents("tr").find("#ZCXX02").val();
+    	var ZCXX01 = $("#" + id).parents("tr").find("#ZCXX01").val();
+    	var val = $("#" + id).val();
+    	if(obj){
+    		
+    		if($("#ghsmc").children("table").html() === ""){
+    			var url = "/OrderInvoice/select_invoiceMoney.action?ZCXX01=" + ZCXX01;
+    			var rData = visitService(url);
+    			var XKPJE = "";
+    			if(rData.STATE == "1"){
+	    			if(rData.INVOICEMONEY != "" && rData.INVOICEMONEY != undefined){
+	    				XKPJE = rData.INVOICEMONEY;
+	    			}
+	    			FPZT = rData.INVOICETYPE;
+	    			if(FPZT == "1"){
+	    				$("#ptfp").addClass("active");
+	    				$("#ptfp").show();
+	    				$(".ptfp").show();
+	    				$("#zzsfp").hide();
+	    				$("#zzsfp").attr("class","");
+	    				$(".zzsfp").hide();
+	    			} else if(FPZT == "2"){
+	    				$("#zzsfp").show();
+	    				$("#zzsfp").addClass("active");
+	    				$(".zzsfp").show();
+	    				$("#ptfp").attr("class","");
+	    				$("#ptfp").hide();
+	    				$(".ptfp").hide();
+	    				select_zzsfpinf();
+	    			} else if(FPZT == "3"){
+	    				$("#ptfp").addClass("active");
+	    				$("#ptfp").show();
+	    				$(".ptfp").show();
+	    				$("#zzsfp").attr("class","");
+	    				$("#zzsfp").show();
+	    				$(".zzsfp").hide();
+	    			}
+    			}
+	     		$("#ghsmc").children("table").append("<tr id='tr_ghs'><td colspan='2' style='text-align: left'>供货商:<span style='color:red;' id='ghs_" + ZCXX01 + "'>" + ZCXX02 + "</span><input type='hidden' value='" + ZCXX01 + "' id='hid_zcxx01'/></td><td colspan='2'>本公司增值税发票开票金额不得低于<span id='xkpje' style='color:red;'>" + XKPJE + "</span>元</td></tr>");
+	     		$("#sqfp").show();
+    		} else {
+    			if($("#hid_zcxx01").val() != ZCXX01){
+    				alert("开票公司与已选发票公司信息不一致,请重新选择!");
+    				$("#" + id).attr("checked",false);
+    				return;
+    			}
+    		}
+    		
+    		var str = "";
+    		str+="<tr id='tr_" + id + "'>";
+    		str+="<td class='xsdd' id='ddh_" + XSDD01 +"'>" + XSDD01 + "</td>";
+    		str+="<td id='sj_" + XSDD04 +"'>" + XSDD04 + "</td>";
+    		str+="<td id='jg_" + XSDD02 +"'>" + XSDD02 + "</td>";
+    		str+="<td><a class='clone' id='sc_" + id + "' onclick='delfpxx(\"" + id + "\")' name='" + val + "'>×</a></td>"
+    		str+="</tr>";
+    		$(".clears").children().find("table").append(str);
+    		
+    	}else{
+    		$(".clears").find("#tr_" + id).remove();
+    		if($("#tr_ghs").next("tr").html() == undefined){
+    			$("#ghsmc").children().html("");
+    			$("#sqfp").hide();
+    		}
+    	}
+    	money_count(id);
+}
+
+//合计
+function money_count(XSDD01) {
+	 var cks=$("[id^=jg_]");
+	 var x=0.0;
+	 if(cks.length > 0){
+		 for(var i=0;i<cks.length;i++) {
+			   x+=parseFloat(cks[i].innerHTML);
+			 }
+		 $(".pic1").html(accounting.formatMoney(x));
+	 }
+}
+
+// 删除发票
+function delfpxx(id){
+	$("#tr_" + id).remove();
+	if($("#" + id).attr("checked") != undefined){
+		$("#" + id)[0].checked=false;
+	}
+	if($("#tr_ghs").next("tr").html() == undefined){
+		
+		$("#ghsmc").children().html("");
+		$("#sqfp").hide();
+	}
+	money_count(id);
+}
+
+// 申请发票
+function apply_FP(){
+	var jsonData = [{"ZCXX01":usercookie.ZCXX01}];
+	var url = "/OrderInvoice/select_InvoiceFromZcxx.action?jsonData=" + JSON.stringify(jsonData);
+	var rData = visitService(url);
+	if(rData.STATE == "1"){
+		$(".lxr").val(rData.LXR);
+		if(rData.FPLB != "" && rData.FPLB != null){
+			$(".fplb").val(rData.FPLB);
+		}
+		$(".lxdh").val(rData.LXDH);
+		$(".yjdz").val(rData.YJDZ);
+		$(".yjdz").attr("title",rData.YJDZ);
+		$(".fptt").val(rData.FPTT);
+		$(".fptt").attr("disabled","disabled");
+	}
+	$(".order_open").show();
+	$(".order_style").show();
+}
+
+//申请发票
+function addOrderInvoic(){
+	
+	if($(".active").val() == "1"){
+		if($("#lxr").val().length == 0){
+			alert("请输入联系人");
+			$("#lxr").focus();
+			return false;
+		}
+		if($("#lxdh").val().length == 0){
+			alert("请输入联系电话");
+			$("#lxdh").focus();
+			return false;
+		}
+		if($("#yjdz").val().length == 0){
+			alert("请输入邮寄地址");
+			$("#yjdz").focus();
+			return false;
+		}
+	}
+	
+	var ZTID = $("#hid_zcxx01").val();
+	var HBID = usercookie.ZCXX01;
+	var FPLB = $(".active").val();
+	var FPTT = $("#taitou").val();
+	var FPJE = $(".pic1").html();
+	FPJE = FPJE.substring(1);
+	var YJDZ;
+	var LXR;
+	var LXDH;
+	if($(".active").val() == "1"){
+		YJDZ = $("#yjdz").val();
+		LXR = $("#lxr").val();
+		LXDH = $("#lxdh").val();
+	} else {
+		YJDZ = $("#zzyjdz").val();
+		LXR = $("#zzlxr").val();
+		LXDH = $("#zzlxdh").val();
+	}
+	var jsonData = [];
+	var json = {};
+	json.ZTID = ZTID;
+	json.HBID = HBID;
+	json.FPLB = FPLB;
+	json.FPTT = FPTT;
+	json.FPJE = FPJE;
+	json.YJDZ = YJDZ;
+	json.LXR = LXR;
+	json.LXDH = LXDH;
+	var cks = $(".xsdd");
+	json.xsddList = [];
+	for(var i = 0; i < cks.length; i++) {
+		json.xsddList.push(cks[i].innerHTML);
+	}
+	jsonData.push(json);
+	if($(".active").val() == "1"){
+		var flag = confirm("确认申请普通发票吗?");
+		if(flag){
+			var url = "/OrderInvoice/insert_OrderInvoice.action?jsonData=" + JSON.stringify(jsonData);
+			var rData = visitService(url);
+			if(rData.STATE == "1"){
+				alert("申请成功!");
+				window.location.reload();
+			} else {
+				alert("申请失败!");
+				return;
+			}
+		} else {
+			return;
+		}
+	} else {
+		var url = "/OrderInvoice/insert_OrderInvoice.action?jsonData=" + JSON.stringify(jsonData);
+		var rData = visitService(url);
+		return rData.STATE;
+	}
+}
+
+// 修改信息
+function updateInvoiceUserInfo(){
+	var flag = confirm("确定修改账户信息吗?");
+	if(flag){
+		$(".jbtp").hide();
+		$("#ybnsr_7").attr("disabled",false);
+		$("#zcdz").attr("disabled",false);
+		$("#zcdh").attr("disabled",false);
+		$("#yhzh").attr("disabled",false);
+		$("#khyh").attr("disabled",false);
+		$(".jbxx").show();
+		$(".inp").attr("style","cursor:auto;");
+		i = 0;
+		window.scrollTo(0,0);
+	}
+}
+
+//取消
+function cancel(){
+	$(".order_open").hide();
+	$(".order_style").hide();
+	$(".jbtp").show();
+	$(".jbxx").hide();
+	$(".xgxx").attr("disabled",true);
+	$(".inp").attr("style","cursor:pointer;");
+	$(".jcxx").attr("style","cursor:auto;");
+}
+
+//判断输入项是否合法
+function checkNull(){
+	if($("#ybnsr_7").val() == undefined || $("#ybnsr_7").val()==""){
+		alert("请填写纳税人识别码");
+		return false;
+	}
+	if($("#zcdz").val().length == 0){
+		alert("请输入注册地址");
+		$("#zcdz").focus();
+		return false;
+	}
+	if($("#zcdh").val().length == 0){
+		alert("请输入注册电话");
+		$("#zcdh").focus();
+		return false;
+	}
+	if($("#khyh").val().length == 0){
+		alert("请输入开户银行");
+		$("#khyh").focus();
+		return false;
+	}
+	if($("#yhzh").val().length == 0){
+		alert("请输入银行账户");
+		$("#yhzh").focus();
+		return false;
+	}
+	if(!/^[0-9]*[1-9][0-9]*$/.test($("#yhzh").val())){
+		alert("请输入正确的银行账户");
+		$("#yhzh").focus();
+		return false;
+	}
+	
+	if(!$(".jbxx").is(":hidden")){
+		if($("#zzjg_4").val() == undefined || $("#zzjg_4").val()==""){
+			alert("请上传组织机构代码证");
+			return false;
+		}else{
+			if(!zzjg_4()){
+				return false;
+			}
+		}
+		if($("#swdj_5").val() == undefined || $("#swdj_5").val()==""){
+			alert("请上传税务登记证");
+			return false;
+		}else{
+			if(!swdj_5()){
+				return false;
+			}
+		}
+		if($("#khyh_6").val() == undefined || $("#khyh_6").val()==""){
+			alert("请上传开户许可证");
+			return false;
+		}else{
+			if(!khyh_6()){
+				return false;
+			}
+		}
+	}
+	if($("#zzlxr").val().length == 0){
+		alert("请输入联系人");
+		$("#zzlxr").focus();
+		return false;
+	}
+	if($("#zzlxdh").val().length == 0){
+		alert("请输入联系电话");
+		$("#zzlxdh").focus();
+		return false;
+	}
+	if($("#zzyjdz").val().length == 0){
+		alert("请输入邮寄地址");
+		$("#zzyjdz").focus();
+		return false;
+	}
+	return true;
+}
+
+// 税务登记证图片
+function swdj_5(){
+	 var i=document.getElementById("swdj_5").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		alert("税务登记证图片过大，上传的图片大小要在1M以下");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+// 组织机构代码证图片
+function zzjg_4(){
+	 var i=document.getElementById("zzjg_4").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		alert("组织机构代码证图片过大，上传的图片大小要在1M以下");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+// 开户许可证图片验证
+function khyh_6(){
+	 var i=document.getElementById("khyh_6").files[0].size;
+	 var limit= 1*1024*1024;
+	if(i > limit){
+		alert("开户许可证图片过大，上传的图片大小要在1M以下");
+		return false;
+	}else{
+		return true;
+	}
+}
+
+//注册完善方法
+function perfectSave(){
+	var flag = checkNull();
+	if(flag){
+		flag = confirm("确定申请增值税发票吗?");
+		if(flag){
+			var FPJE = $(".pic1").html();
+			FPJE = FPJE.substring(1);
+			var xkpje = $("#xkpje").html();
+			if(xkpje > FPJE){
+				alert("发票金额低于该公司最低增值税开票金额!最低增值税开票金额为【" + xkpje + "】元!");
+				return false;
+			};
+			if(i == 0){
+				//弹出遮罩层
+				openWait();
+				//修改注册信息
+			 	var XmlData = {};
+			 	XmlData["ZCXX01"] = usercookie.ZCXX01;
+			 	XmlData["SJLY"] = "0";
+			 		 	
+			 	XmlData["ZCXX71"] = $("#zcdz").val();
+			 	XmlData["ZCXX72"] = $("#zcdh").val();
+			 	XmlData["GSYHK02"] = $("#yhzh").val();
+			 	XmlData["GSYHK03"] = $("#khyh").val();
+			 	XmlData["GSYHK07"] = "";
+			 	XmlData["ZCXX28"] = $("#ybnsr_7").val();
+			 	
+			   	//拼接图片
+			   	var fileArray=[];
+			   	fileArray.push("swdj_5");
+			   	fileArray.push("zzjg_4");
+			   	fileArray.push("khyh_6");
+			   	
+			   	//与数据库交互
+			   	var url = "/Register/updateUserInfo.action";
+			   	$.ajaxFileUpload({
+						type:"POST",
+						secureuri:false,
+						fileElementId:fileArray,
+						url:encodeURI(url),
+						data:{"XmlData":escape(JSON.stringify(XmlData))},
+						dataType:"text",
+						success: function(data) { 
+							//关闭遮罩层
+							top.closeWait();
+							
+							var json = jQuery.parseJSON(data);
+							var jsondata = json.data;
+							var data1 = jsondata.state;
+							if(data1 == "success"){
+								var STATE = addOrderInvoic();
+								if(STATE == "1"){
+									alert("申请成功!");
+									window.location.reload();
+								} else {
+									alert("申请失败!");
+								}
+									
+							}else{
+								alert("申请失败!");
+							}
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown) {
+							//关闭遮罩层
+							top.closeWait();
+							alert(textStatus);
+					    }
+					});
+				//与数据库交互完毕
+			} else {
+				var STATE = addOrderInvoic();
+				if(STATE == "1"){
+					alert("申请成功!");
+					window.location.reload();
+				} else {
+					alert("申请失败!");
+				}
+			}
+			
+		} else {
+			return;
+		}
+		
+	}
+}
+</script>
+</body>
+
+</html>
+

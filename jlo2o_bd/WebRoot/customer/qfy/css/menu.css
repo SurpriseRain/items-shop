@@ -1,0 +1,17 @@
+/******************头部菜单开始**********************/
+#nav-banner{ width:1200px; margin:0px auto;} 
+#nav-banner .nav{ width:188px;float:left; border:1px solid #3061ef;}
+#nav-banner .nav h2{height:0px; float:left; width:188px; height:34px; line-height:34px; font-family:"microsoft yahei"; font-size:15px; color:#fff; background-color:#3061ef; text-indent:20px;} 
+#nav-banner .nav h2 a{ color:#fff;}
+#nav-banner .nav-top{ width:1000px; margin:0 0 0 200px; height:34px; border-bottom:2px solid #3061ef; position:relative; overflow:hidden;}
+#nav-banner .nav-top a{ color:#333; font-weight:bold; padding:6px 6px; font-size:14px; float:left;}
+#nav-banner .nav-top a.zc{ color:#3061ef; font-size:16px;}
+#nav-banner .nav-top span{ float:left; width:2px; height:18px; background-color:#eee; margin:7px 10px;}
+#nav-banner .nav-top a.xuan{ color:#3061ef}
+#nav-banner .nav-top .morenav{ position:absolute; width:88px; background-color:#fff; top:32px; right:12px; border:2px solid #3061ef; border-top:0px; padding:0 0 10px 2px; display:none;}
+#nav-banner .nav-top .more{ width:80px; padding:7px 0; text-align:center;}
+#nav-banner .nav-top a:hover{ background-color:#f5f5f5; color:#3061ef;}
+
+/******************头部菜单结束**********************/
+
+#shunav{ width:40px; height:500px; background-color:#000; position:absolute;}

@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jlsoft.o2o.hdgl.sql.Oper_HDGL">
+	<!-- 20151110  NineDragon  查询活动 BEGIN -->
+  	<select id="select_Activity" parameterType="Map" resultType="java.util.Map">
+		SELECT
+			A.ACTIVITYID ACTIVITYID,
+			B.ACTIVITYTYPEID ACTIVITYTYPEID,
+			B.ACTIVITYTYPENAME ACTIVITYTYPENAME,
+			A.ACTIVITYNAME ACTIVITYNAME,
+			A.STATE ACTIVITYSTATE,
+			A.ACTIVITYBUDGET ACTIVITYBUDGET,
+			A.RESTBUDGET RESTBUDGET,
+			DATE_FORMAT(A.ACTIVITYSTARTTIME, '%Y-%m-%d %H:%i:%S') ACTIVITYSTARTTIME,
+		  	DATE_FORMAT(A.ACTIVITYENDTIME, '%Y-%m-%d %H:%i:%S') ACTIVITYENDTIME
+		FROM
+			ACTIVITY A
+		LEFT JOIN ACTIVITYTYPE B
+		ON A.ACTIVITYTYPEID = B.ACTIVITYTYPEID
+		WHERE 1 = 1 AND A.STATE != 0
+		<if test="hdlx != '' and hdlx != null">AND A. ACTIVITYTYPEID = #{hdlx}</if>
+		<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null">AND STATE = #{ACTIVITYSTATE}</if>
+		<if test="ACTIVITYSTARTTIME != '' and ACTIVITYSTARTTIME != null">
+			AND DATE_FORMAT(ACTIVITYSTARTTIME, '%Y-%m-%d %H:%i:%S') &gt;= #{ACTIVITYSTARTTIME}
+		</if>
+		<if test="ACTIVITYENDTIME != '' and ACTIVITYENDTIME != null">
+			AND DATE_FORMAT(ACTIVITYENDTIME, '%Y-%m-%d %H:%i:%S') &lt;= #{ACTIVITYENDTIME}
+		</if>
+		ORDER BY ACTIVITYSTATE
+	</select>
+	
+	<select id="select_Activity_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT COUNT(1) COUNT 
+		FROM
+			ACTIVITY A
+		LEFT JOIN ACTIVITYTYPE B
+		ON A.ACTIVITYTYPEID = B.ACTIVITYTYPEID
+		WHERE 1 = 1 AND A.STATE != 0
+		<if test="hdlx != '' and hdlx != null">AND A. ACTIVITYTYPEID = #{hdlx}</if>
+		<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null">AND STATE = #{ACTIVITYSTATE}</if>
+		<if test="ACTIVITYSTARTTIME != '' and ACTIVITYSTARTTIME != null">
+			AND DATE_FORMAT(ACTIVITYSTARTTIME, '%Y-%m-%d %H:%i:%S') &gt;= #{ACTIVITYSTARTTIME}
+		</if>
+		<if test="ACTIVITYENDTIME != '' and ACTIVITYENDTIME != null">
+			AND DATE_FORMAT(ACTIVITYENDTIME, '%Y-%m-%d %H:%i:%S') &lt;= #{ACTIVITYENDTIME}
+		</if>
+	</select>
+	<!-- 20151110  NineDragon  查询活动 END -->
+	
+	<!-- 我的活动 start-->
+	<select id="select_MyActivity" parameterType="Map" resultType="java.util.Map">
+		SELECT
+			A.ACTIVITYID,
+			B.ACTIVITYTYPENAME,
+			CASE 
+			WHEN NOW() &gt;= A.ACTIVITYSTARTTIME AND NOW() &lt;= A.ACTIVITYENDTIME THEN "进行中"
+			WHEN NOW() &lt;= A.ACTIVITYSTARTTIME THEN "即将开始"
+			when NOW() &gt;= A.ACTIVITYENDTIME THEN "已过期"
+			ELSE ""
+			END  TEMP,
+			A.ACTIVITYNAME,
+			DATE_FORMAT(A.ACTIVITYSTARTTIME, '%Y-%m-%d %H:%i:%S') ACTIVITYSTARTTIME,
+		  	DATE_FORMAT(A.ACTIVITYENDTIME, '%Y-%m-%d %H:%i:%S') ACTIVITYENDTIME
+		FROM 
+			ACTIVITY A
+		LEFT JOIN ACTIVITYTYPE B ON A.ACTIVITYTYPEID = B.ACTIVITYTYPEID
+		WHERE 
+			1 = 1
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   开始-->
+			<if test="hdmc != '' and hdmc != null">
+				AND  A.ACTIVITYNAME=#{hdmc}
+			</if>
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   结束-->
+			<if test="ZCXX01 != '' and ZCXX01 != null">
+				AND  A.ActivityId IN (SELECT DISTINCT ACTIVITYID FROM ACTIVITYPRODUCT where ZCXX01=#{ZCXX01})
+			</if>
+			<if test="ACTIVITYTYPEID != '' and ACTIVITYTYPEID != null">AND A.ACTIVITYTYPEID = #{ACTIVITYTYPEID}</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==1 ">
+				AND NOW() &gt;= A.ACTIVITYSTARTTIME  AND NOW() &lt;= A.ACTIVITYENDTIME 
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==2 ">
+				AND NOW() &lt;= A.ACTIVITYSTARTTIME
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==3 ">
+				AND NOW() &gt;= A.ACTIVITYENDTIME
+			</if>
+			<if test="ACTIVITYSTARTTIME != '' and ACTIVITYSTARTTIME != null">
+				AND DATE_FORMAT(ACTIVITYSTARTTIME, '%Y-%m-%d') &gt;= #{ACTIVITYSTARTTIME}
+			</if>
+			<if test="ACTIVITYENDTIME != '' and ACTIVITYENDTIME != null">
+				AND DATE_FORMAT(ACTIVITYENDTIME, '%Y-%m-%d') &lt;= #{ACTIVITYENDTIME}
+			</if>
+	</select>
+	
+	<select id="select_MyActivity_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT COUNT(1) COUNT 
+		FROM
+			(SELECT
+				A.ACTIVITYID,
+				B.ACTIVITYTYPENAME,
+				CASE 
+				WHEN NOW() &gt;= A.ACTIVITYSTARTTIME  AND NOW() &lt;= A.ACTIVITYENDTIME THEN "1"
+				WHEN NOW() &lt;= A.ACTIVITYSTARTTIME THEN "2"
+				when NOW() &gt;= A.ACTIVITYENDTIME THEN "3"
+				ELSE ""
+				END  TEMP,
+				A.ACTIVITYNAME,
+				DATE_FORMAT(A.ACTIVITYSTARTTIME, '%Y-%m-%d %H:%i:%S') ACTIVITYSTARTTIME,
+			  	DATE_FORMAT(A.ACTIVITYENDTIME, '%Y-%m-%d %H:%i:%S') ACTIVITYENDTIME
+			FROM
+				ACTIVITY A
+			LEFT JOIN ACTIVITYTYPE B ON A.ACTIVITYTYPEID = B.ACTIVITYTYPEID
+			WHERE 
+				1 = 1
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   开始-->
+			<if test="hdmc != '' and hdmc != null">
+				AND  A.ACTIVITYNAME=#{hdmc}
+			</if>
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   结束-->
+			<if test="ZCXX01 != '' and ZCXX01 != null">
+				AND  A.ActivityId IN (SELECT DISTINCT ACTIVITYID FROM ACTIVITYPRODUCT where ZCXX01=#{ZCXX01})
+			</if>
+			<if test="ACTIVITYTYPEID != '' and ACTIVITYTYPEID != null">AND A.ACTIVITYTYPEID = #{ACTIVITYTYPEID}</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==1 ">
+				AND NOW() &gt;= A.ACTIVITYSTARTTIME  AND NOW() &lt;= A.ACTIVITYENDTIME 
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==2 ">
+				AND NOW() &lt;= A.ACTIVITYSTARTTIME
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==3 ">
+				AND NOW() &gt;= A.ACTIVITYENDTIME
+			</if>
+			<if test="ACTIVITYSTARTTIME != '' and ACTIVITYSTARTTIME != null">
+				AND DATE_FORMAT(ACTIVITYSTARTTIME, '%Y-%m-%d') &gt;= #{ACTIVITYSTARTTIME}
+			</if>
+			<if test="ACTIVITYENDTIME != '' and ACTIVITYENDTIME != null">
+				AND DATE_FORMAT(ACTIVITYENDTIME, '%Y-%m-%d') &lt;= #{ACTIVITYENDTIME}
+			</if>
+			) t
+	</select>
+	<!-- 我的活动 end-->
+	
+	<!-- 我的活动 退出报名start-->
+	<select id="select_ALLSP" parameterType="Map" resultType="java.util.Map">
+			SELECT C.ActivityViews,C.ACTIVITYNAME,A.ActivityShopId,B.SPXX04,B.SPXX01,B.SPFL01,D.ZCXX02,E.SPFL02,F.SPJGB05,A.ACTIVITYNUMBER,A.STATE PRODUCTSTATE,D.ZCXX01,"是" TEMP
+			FROM ACTIVITY C,ACTIVITYPRODUCT A,W_SPXX B,W_ZCXX D,SPFL E, W_SPJGB F ,ACTIVITYTYPE G
+			WHERE 1=1 
+			AND  A.ActivityId=C.ActivityId
+			AND  A.SPXX01=B.SPXX01
+			AND A.ZCXX01=D.ZCXX01
+			AND B.SPFL01=E.SPFL01
+			AND A.SPXX01=F.SPXX01
+			AND C.ACTIVITYTYPEID = G.ACTIVITYTYPEID
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   开始-->
+			<if test="hdmc != '' and hdmc != null">
+				AND  C.ACTIVITYNAME=#{hdmc}
+			</if>
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   结束-->
+			<if test="ZCXX01 != '' and ZCXX01 != null">
+				AND  A.ZCXX01=#{ZCXX01}
+			</if>
+			<if test="ACTIVITYID != '' and ACTIVITYID != null">AND A.ACTIVITYID = #{ACTIVITYID}</if>
+			<if test="ACTIVITYTYPEID != '' and ACTIVITYTYPEID != null">
+				AND G.ACTIVITYTYPEID = #{ACTIVITYTYPEID}
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==1 ">
+				AND NOW() &gt;= C.ACTIVITYSTARTTIME  AND NOW() &lt;= C.ACTIVITYENDTIME 
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==2 ">
+				AND NOW() &lt;= C.ACTIVITYSTARTTIME
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==3 ">
+				AND NOW() &gt;= C.ACTIVITYENDTIME
+			</if>
+			<if test="SPFL!= '' and SPFL!= null">AND E.SPFL01 = #{SPFL}</if> 
+	</select>
+	
+	<select id="select_ALLSP_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT COUNT(1) COUNT 
+		FROM
+			(SELECT C.ActivityViews,C.ACTIVITYNAME,A.ActivityShopId,B.SPXX04,B.SPXX01,B.SPFL01,D.ZCXX02,E.SPFL02,F.SPJGB05,A.ACTIVITYNUMBER,A.STATE PRODUCTSTATE,D.ZCXX01,"是" TEMP
+			FROM ACTIVITY C,ACTIVITYPRODUCT A,W_SPXX B,W_ZCXX D,SPFL E, W_SPJGB F ,ACTIVITYTYPE G
+			WHERE 1=1 
+			AND  A.ActivityId=C.ActivityId
+			AND  A.SPXX01=B.SPXX01
+			AND A.ZCXX01=D.ZCXX01
+			AND B.SPFL01=E.SPFL01
+			AND A.SPXX01=F.SPXX01
+			AND C.ACTIVITYTYPEID = G.ACTIVITYTYPEID
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   开始-->
+			<if test="hdmc != '' and hdmc != null">
+				AND  C.ACTIVITYNAME=#{hdmc}
+			</if>
+			<!-- 2015/11/18 NineDragon修改 检索条件加上 “活动名称”   结束-->
+			<if test="ZCXX01 != '' and ZCXX01 != null">
+				AND  A.ZCXX01=#{ZCXX01}
+			</if>
+			<if test="ACTIVITYID != '' and ACTIVITYID != null">AND A.ACTIVITYID = #{ACTIVITYID}</if>
+			<if test="ACTIVITYTYPEID != '' and ACTIVITYTYPEID != null">
+				AND G.ACTIVITYTYPEID = #{ACTIVITYTYPEID}
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==1 ">
+				AND NOW() &gt;= C.ACTIVITYSTARTTIME  AND NOW() &lt;= C.ACTIVITYENDTIME 
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==2 ">
+				AND NOW() &lt;= C.ACTIVITYSTARTTIME
+			</if>
+			<if test="ACTIVITYSTATE != '' and ACTIVITYSTATE != null and ACTIVITYSTATE ==3 ">
+				AND NOW() &gt;= C.ACTIVITYENDTIME
+			</if>
+			<if test="SPFL!= '' and SPFL!= null">AND E.SPFL01 = #{SPFL}</if> 
+			) t
+	</select>
+	<!-- 我的活动 退出报名 end-->
+	
+	<!-- NineDragon 活动-商品的审批 -->
+  	<select id="select_NSPSP" parameterType="Map" resultType="java.util.Map">
+<!-- 	SELECT  C.ActivityViews, A.ActivityShopId, C.ACTIVITYNAME ACTIVITYNAME, B.SPXX04 SPXX04, D.ZCXX02 ZCXX02,B.SPFL02, F.SPJGB05 SPJGB05,A.ACTIVITYNUMBER ACTIVITYNUMBER,A.STATE PRODUCTSTATE, 
+	B.SPXX01 SPXX01, D.ZCXX01 ZCXX01 
+	FROM ACTIVITYPRODUCT A LEFT JOIN W_SPXX B ON A.SPXX01 = B.SPXX01 LEFT JOIN ACTIVITY C ON A.ACTIVITYID = C.ACTIVITYID LEFT JOIN W_ZCXX D ON A.ZCXX01 = D.ZCXX01 LEFT JOIN SPFL E ON E.SPFL01 IN (C.SPFL01) LEFT JOIN W_SPJGB F ON A.SPXX01 = F.SPXX01 AND A.ZCXX01 = F.ZCXX01 LEFT JOIN ACTIVITYTYPE G ON C.ACTIVITYTYPEID = G.ACTIVITYTYPEID 
+	WHERE 1 = 1 -->
+	SELECT C.ActivityViews,C.ACTIVITYNAME,A.ActivityShopId,B.SPXX04,B.SPXX01,B.SPFL01,D.ZCXX02,E.SPFL02,F.SPJGB05,A.ACTIVITYNUMBER,A.STATE PRODUCTSTATE,D.ZCXX01
+	FROM ACTIVITY C,ACTIVITYPRODUCT A,W_SPXX B,W_ZCXX D,SPFL E, W_SPJGB F ,ACTIVITYTYPE G
+	WHERE 1=1 
+	AND  A.ActivityId=C.ActivityId
+	AND  A.SPXX01=B.SPXX01
+	AND A.ZCXX01=D.ZCXX01
+	AND B.SPFL01=E.SPFL01
+	AND A.SPXX01=F.SPXX01
+	AND C.ACTIVITYTYPEID = G.ACTIVITYTYPEID
+			<if test="zcxx01 != '' and zcxx01 != null">
+			AND  A.ZCXX01=#{zcxx01}
+			</if>
+			<if test="activityId != '' and activityId != null">
+			AND A.ACTIVITYID = #{activityId}
+			</if>
+			<if test="hdlx != '' and hdlx != null">
+			AND G.ACTIVITYTYPEID = #{hdlx}
+			</if>
+			<if test="spzt != '' and spzt != null">
+			AND A.State = #{spzt}
+			</if>
+			<if test="dpmc != '' and dpmc != null">
+			AND D.ZCXX02 LIKE CONCAT('%',#{dpmc},'%')
+			</if>
+			<if test="spmc != '' and spmc != null">
+			AND B.SPXX04 LIKE CONCAT('%',#{spmc},'%')
+			</if>
+	</select>
+	
+	<select id="select_NSPSP_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT COUNT(1) COUNT 
+	FROM ACTIVITY C,ACTIVITYPRODUCT A,W_SPXX B,W_ZCXX D,SPFL E, W_SPJGB F ,ACTIVITYTYPE G
+	WHERE 1=1 
+	AND  A.ActivityId=C.ActivityId
+	AND  A.SPXX01=B.SPXX01
+	AND A.ZCXX01=D.ZCXX01
+	AND B.SPFL01=E.SPFL01
+	AND A.SPXX01=F.SPXX01
+	AND C.ACTIVITYTYPEID = G.ACTIVITYTYPEID
+			<if test="zcxx01 != '' and zcxx01 != null">
+			AND  A.ZCXX01=#{zcxx01}
+			</if>
+			<if test="activityId != '' and activityId != null">
+			AND A.ACTIVITYID = #{activityId}
+			</if>
+			<if test="hdlx != '' and hdlx != null">
+			AND G.ACTIVITYTYPEID = #{hdlx}
+			</if>
+			<if test="spzt != '' and spzt != null">
+			AND A.State = #{spzt}
+			</if>
+			<if test="dpmc != '' and dpmc != null">
+			AND D.ZCXX02 LIKE CONCAT('%',#{dpmc},'%')
+			</if>
+			<if test="spmc != '' and spmc != null">
+			AND B.SPXX04 LIKE CONCAT('%',#{spmc},'%')
+			</if>
+	</select>
+	<!-- 20151111  齐俊宇  查询活动商品 END -->
+	
+	<!-- 20151112 齐俊宇 update 查询活动审批 BEGIN -->
+  	<select id="select_SPHD" parameterType="Map" resultType="java.util.Map">
+		SELECT
+			A.ACTIVITYID ACTIVITYID,
+			B.ACTIVITYTYPENAME ACTIVITYTYPENAME,
+			A.ACTIVITYNAME ACTIVITYNAME,
+			A.STATE ACTIVITYSTATE,
+			A.ACTIVITYBUDGET ACTIVITYBUDGET,
+			DATE_FORMAT(A.ACTIVITYSTARTTIME,'%Y-%m-%d %H:%i:%S') ACTIVITYSTARTTIME,
+			DATE_FORMAT(A.ACTIVITYENDTIME,'%Y-%m-%d %H:%i:%S') ACTIVITYENDTIME
+		FROM
+			ACTIVITY A
+		LEFT JOIN ACTIVITYTYPE B 
+		ON A.ACTIVITYTYPEID = B.ACTIVITYTYPEID
+		WHERE
+			1 = 1
+		 <if test="hdlx!='' and hdlx!=null "> AND B.ACTIVITYTYPEID = #{hdlx} </if>
+		 <if test="spzt!='' and spzt!=null "> AND A.STATE = #{spzt} </if>
+		 <if test="hdmc!='' and hdmc!=null "> AND A.ACTIVITYNAME LIKE CONCAT('%',#{hdmc},'%') </if>
+	</select>
+	
+	<select id="select_SPHD_sum" parameterType="Map" resultType="java.util.Map">
+		SELECT
+			COUNT(1) COUNT
+		FROM
+			ACTIVITY A,
+			ACTIVITYTYPE B
+		WHERE
+			A.ACTIVITYTYPEID = B.ACTIVITYTYPEID
+		<if test="hdlx!='' and hdlx!=null "> AND B.ACTIVITYTYPEID = #{hdlx} </if>
+		<if test="spzt!='' and spzt!=null "> AND A.STATE = #{spzt} </if>
+		<if test="hdmc!='' and hdmc!=null "> AND A.ACTIVITYNAME LIKE CONCAT('%',#{hdmc},'%') </if>
+	</select>
+	<!-- 20151112 齐俊宇 update 查询活动审批 BEGIN     -->
+	
+	<!-- 获取活动类型 chenjh-->
+	<select id="selectA_Type" parameterType="map" resultType="map">
+		SELECT  
+			ActivityTypeId ac_id,
+			ActivityTypeName ac_name
+		FROM activitytype
+		WHERE Mark=1 
+	</select>
+	<!--退出活动chenjh  -->
+	<select id="update_state" parameterType="map" resultType="map">
+		UPDATE activityproduct
+			SET State=3
+		WHERE ActivityShopId=#{activityShopId}
+			AND SPXX01=#{spxx01}
+			AND State=0
+	</select>
+	
+</mapper>
+  

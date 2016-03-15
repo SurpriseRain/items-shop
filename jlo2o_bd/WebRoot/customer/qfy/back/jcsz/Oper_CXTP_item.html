@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 品牌上传</title>
+<link type="text/css" rel="stylesheet"href="/customer/qfy/css/backPub.css"  />
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/th-sq.css" />
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Delete.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/shop-Public.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/jquery.jBox-2.3.min.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript">
+// 全局变量用于动态添加 id 或 class 的顺序号
+var a = 1;
+// 添加图片的文本框
+function addphoto(){
+	var arr = $("li[name='photoscount']");
+	var arrs = arr.length;
+	if(arrs <= 4){
+		a++;
+		var str = "";
+		str+='<li class="photolist' + a + '" name="photoscount"> ';
+		str+='<div class="bt">&nbsp;*&nbsp;</div>';
+		str+='<span>图&nbsp;片&nbsp;信&nbsp;息：</span>';
+		str+='<input type="file" id="file0' + a + '" name="file0' + a + '" class="addphoto" value="" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"/>';
+		str+='&nbsp;<span class="clearlink" ><a class="delete0' + a + '" href="javascript:void(0)" onclick="delectphoto(' + a + ')">删除</a></span></li>';
+		$(".photos").append(str);
+	}else{
+		alert("最多上传5张图片！");
+	}
+}
+// 删除图片的文本框
+function delectphoto(num){
+	$(".photolist" + num).remove();
+	$(".delete0" + num).remove();
+}
+</script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+</head>
+<body>
+	<form id="form1" name="form1" action="" method="post">
+		<div id="curPosition" style="width:98.5%">
+	    	<a href="#">基础管理</a>
+	    	<span>></span>
+	    	<b>车型图片</b>
+		</div>
+		<input type="hidden" name="cxsxh" id="cxsxh" value="" />
+		<input type="hidden" name="mmid" id="mmid" value="">
+		<input type="hidden" name="maxsxh" id="maxsxh" value="">
+		<div class="clera"></div>
+		<ul class="tuidan" style="display: block">
+			<li>
+				<div class="bt">*</div>
+				<span>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;牌：</span>
+				<input  type="text" class="text" name="brand" value="" id="brand"  readonly="readonly" />
+			</li>
+			<li>
+				<div class="bt">*</div>
+				<span>车&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;系：</span>
+				<input  type="text" name="car" class="text" value="" id="car"  size="34" readonly="readonly" />
+			</li>
+			<li>
+				<div class="bt">*</div>
+				<span>车&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</span>
+				<input  type="text" name="cxmm" value="" class="text"  id="cxmm"  size="34" readonly="readonly" />
+			</li>
+			<li>
+				<div class="bt">*</div>
+				<span>年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;款：</span>
+				<input  type="text" name="cxmmy" value="" class="text" id="cxmmy"  size="34" readonly="readonly" /></td>
+			</li>
+			<li>
+				<div class="bt">*</div>
+				<span>排&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;量：</span>
+				<input  type="text" name="cxmd" value="" class="text" id="cxmd"  size="34" readonly="readonly" /></td>
+			</li>
+			<li>
+				<div class="bt">*</div>
+				<span>发动机类型：</span>
+				<input  type="text" name="cxmtt" value="" class="text" id="cxmtt"  size="34" readonly="readonly" /></td>
+			</li>
+			<li class="photos" >
+	    	</li>
+	    	<li>
+	    	 	<a style="margin: 10px 20px 0 80px;" href="javascript:void(0);" onclick="saveCXTP();" class="bot Medium" style="display: block;">提交</a>
+	    	 	<a style="margin: 10px 20px 0 80px;" href="javascript:void(0);" onclick="cancel();" class="bot Medium" style="display: block;">取消</a>
+	    	</li>
+		</ul>
+	</form>
+</body>
+<script type="text/javascript">
+var MMID = null;
+var o = document.forms[0];
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+//点击行，弹开窗口执行事件
+function openUrlInit(rowObj){
+	// 获取从父页面传过来的MOBILE_MODLE_ID，是一个ID值
+	MMID = rowObj.find("#MOBILE_MODLE_ID").val();
+	query();
+}
+
+// 查询方法
+function query(){
+	// 执行查询操作
+	var XmlData = [{"sqlid":"com.jlsoft.o2o.info.show.selectCXBYID","dataType":"Json",'MOBILE_MODLE_ID':MMID}];
+	var url = "/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var data = visitService(url);
+	if(data != undefined && data != ""){
+		$("#brand").val(data[0].BRAND);
+		$("#car").val(data[0].CAR);
+		$("#cxmm").val(data[0].MOBILE_MODLE);
+		$("#cxmmy").val(data[0].MOBILE_MODLE_YEAR);
+		$("#cxmd").val(data[0].MOBILE_DISPLACEMENT);
+		$("#cxmtt").val(data[0].MOBILE_TRANSMISSION_TYPE);
+		$("#mmid").val(MMID);
+		// 显示图片信息
+		var XmlData1 = {"MMID":MMID};
+		var url1="/JcszDt/showPicture.action?jsonData="+JSON.stringify(XmlData1);
+	    var returnVal = visitService(url1);
+    	if(returnVal != undefined && returnVal != ""){ 
+    		// 显示图片
+    		var imgUrl="";
+        	var cxtpObj={};
+        	var cxtpList = returnVal.cxtpList;
+        	// 遍历数据
+        	for(var i = 0; i < cxtpList.length; i++){
+        		cxtpObj = cxtpList[i];
+        		if(cxtpObj.CXTP != null && cxtpObj.CXTP != ""){
+        			// 图片地址的url
+	        		imgUrl = pubJson.path_sptp + "/cxtp/" + cxtpObj.MMID + "/" + cxtpObj.CXTP;
+	        		var str="";
+	        		str+='<li class="photolist' + cxtpObj.CXSXH + '"  name="photoscount"> ';
+	        		str+='<div class="bt">&nbsp;*&nbsp;</div>';
+	        		str+='<span id="tpxx' + cxtpObj.CXSXH + '" class="name">图&nbsp;片&nbsp;信&nbsp;息：</span>';
+	        		str+='<img id="img' + cxtpObj.CXSXH +'" class="img" height="80px" width="80px" src="'+ imgUrl +'" onclick="imgshow(' + cxtpObj.CXSXH + ')" style="float:left;" />';
+	        		str+='<img id="big' + cxtpObj.CXSXH +'" class="img" height="200px" width="200px" src="'+ imgUrl +'" onclick="imghide(' + cxtpObj.CXSXH + ')" style="display:none; float:left;" />';
+	        		str+='<span class="clearlink" ><a id="cancel' + cxtpObj.CXSXH + '" style="display:none" href="javascript:void(0)" onclick="removeFile(' + cxtpObj.CXSXH + ')">取消</a></span>'
+	        		str+='<span class="clearlink" style="float: left;"><a id="change' + cxtpObj.CXSXH + '" onclick="changeTP(' + cxtpObj.CXSXH + ')">修改</a></span>';
+	        		str+='&nbsp;&nbsp;&nbsp;'
+	        		str+='<span class="clearlink" style="float: left;"><a id="delete' + cxtpObj.CXSXH + '" onclick="deleteTP(' + cxtpObj.CXSXH + ',\'' + cxtpObj.CXTP + '\')">删除</a></span>';
+	        		str+='</li>'
+	        		$(".photos").before(str);
+        		}
+        	}
+        	// 为隐藏域赋值最大值
+        	$("#maxsxh").val(cxtpObj.MAXSXH);
+        	// 判断图片是否全部添加
+	    	if(cxtpList.length >= 5){
+	    		$(".photos").empty();
+	    	} else {
+	    		if(cxtpObj.MAXSXH != undefined && cxtpObj.MAXSXH !=""){
+		    		a = cxtpObj.MAXSXH + 1;
+	    		}
+	    		var str = "";
+	    		str+='<li id="tplist' + a + '" class="photolist' + a + '" name="photoscount"> ';
+	    		str+='<div class="bt">&nbsp;*&nbsp;</div>';
+	    		str+='<span>图&nbsp;片&nbsp;信&nbsp;息：</span>';
+	    		str+='<input type="file" id="file0' + a + '" name="file0' + a + '" class="addphoto" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" />';
+	    		str+='<span class="clearlink" ><a href="javascript:void(0)" onclick="addphoto()">添加</a></span></li>';
+	    		$(".photos").append(str);
+	    	}
+    	} 
+	}
+}
+
+// 显示大图片
+function imgshow(id){
+	$("#img" + id).hide();
+	$("#big" + id).show();
+}
+
+// 显示小图片
+function imghide(id){
+	$("#big" + id).hide();
+	$("#img" + id).show();
+}
+
+// 修改图片方法
+function changeTP(cxsxh){
+	$("#file0" + cxsxh).show();
+	$("#cancel" + cxsxh).show();
+	$("#img" + cxsxh).hide();
+	$("#delete" + cxsxh).hide();
+	$("#change" + cxsxh).hide();
+	var str = "";
+	str+='<input type="file" id="file0' + cxsxh + '" name="file0' + cxsxh + '" class="addphoto" value="" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg" />';
+	$("#tpxx" + cxsxh).after(str);
+}
+
+// 移除图片文件
+function removeFile(cxsxh){
+    $("#img" + cxsxh).show();
+	$("#file0" + cxsxh).remove();
+	$("#cancel" + cxsxh).hide();
+	$("#delete" + cxsxh).show();
+	$("#change" + cxsxh).show();
+}
+
+// 删除图片方法
+function deleteTP(cxsxh, cxtp){
+	var r = confirm('确认操作？');
+	if(r == true){
+		var JsonData = {"MMID":MMID, "CXSXH":cxsxh, "CXTP": cxtp};
+		var deleteUrl = "/JcszDt/deletePicture.action?jsonData="+JSON.stringify(JsonData);
+		var rData = visitService(deleteUrl);
+	 	if(rData != undefined && rData != ""){
+			if(rData.STATE == 1){
+				$(".photolist" + cxsxh).remove();
+				var arr = $("li[name='photoscount']");
+				if($("li[id^='tplist']").length == 0){
+					a = $("#maxsxh").val();
+					a = parseInt(a);
+					if(arr.length < 5){
+						var str = "";
+			    		str+='<li id="tplist' + (a + 1) + '" class="photolist' + (a + 1) + '" name="photoscount"> ';
+			    		str+='<div class="bt">&nbsp;*&nbsp;</div>';
+			    		str+='<span>图&nbsp;片&nbsp;信&nbsp;息：</span>';
+			    		str+='<input type="file" id="file0' + (a + 1) + '" name="file0' + (a + 1) + '" class="addphoto" accept=".png,.JPEG,.GIF,.SVG,.PNG,.BMP,.jpg"/>';
+			    		str+='<span class="clearlink" ><a href="javascript:void(0)" onclick="addphoto()">添加</a></span></li>';
+			    		$(".photos").append(str);
+			    		$(".photos").show();
+			    		a++;
+		    		}
+				}
+			} else {
+				return false;
+			}
+	    }
+	}
+	else return;
+}
+
+// 执行保存方法
+function saveCXTP(){
+	// 判断是否有没选择的文件上传框
+	var inp = true;
+	$("input[id^='file0']").each(function(){
+		if($(this).val() == ""){
+			inp = false;	
+		}
+	});
+	// 标识如果有没添加图片的文本框就提示
+	if(!inp){
+		alert("请上传商品图片信息!");
+		return false;
+	}
+	// 判断每个文件大小是否超过2M
+	$("input[id^='file0']").each(function(){
+		var id = $(this).attr("id");
+		if(!fileSize(id)){
+			inp = false;
+		} 
+	});
+	// 如果大于2M 则会提示
+	if(!inp){
+		alert("上传的图片大小要在2M以下");
+		return false;
+	}
+	
+	// 获取数据
+	var XmlData1 = $("#form1").formToJson();
+	var XmlData = escape(JSON.stringify(XmlData1));
+	var fileArray = [];
+	var arr=$("li[name='photoscount']");
+	for(var i = 0; i < arr.length; i++){
+		var arrs=$("input[class='addphoto']:eq(" + i + ")");
+		if(arrs.attr("value") != "" && arrs.attr("value") != undefined){
+		    fileArray.push(arrs.attr("id"));
+		}
+	}
+	// 确认操作
+	var r = false;
+	if(fileArray.length == 0){
+		r = confirm('没有任何操作,确认操作?');
+	} else {
+		r = confirm('确认操作？');
+	}
+	
+	// 执行上传
+	var url="/JcszDt/addPicture.action";
+	if(r == true){
+		//弹出遮罩层
+		 top.openWait();
+		$.ajaxFileUpload({
+			type:"POST",
+			secureuri:false,
+			fileElementId:fileArray,
+			url:encodeURI(url),//encodeURI避免中文乱码
+			dataType:"text",
+			data:{"XmlData":XmlData},
+			success: function(data) { 
+				//关闭遮罩层
+				top.closeWait();
+				var json = jQuery.parseJSON(data);
+				var jsondata = json.data;
+				var data1=jsondata.STATE;
+				if(data1 == 1){
+					alert("保存成功!");
+					//关闭遮罩层
+					parent.$("#ajaxGrid").remove();
+					}else{
+						alert("保存失败!");
+					}
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				//关闭遮罩层
+				top.closeWait();
+				alert(textStatus);
+		    }
+		});
+	}
+	else return;
+}
+
+// 文件大小限制
+function fileSize(id){
+	var i = $("#" + id)[0].files[0].size;
+	var limit = 2*1024*1024;
+	if(i > limit){
+		return false;
+	}
+	return true;
+} 
+
+// 取消操作
+function cancel(){
+	parent.$("#ajaxGrid").remove();
+}
+</script>
+</html>

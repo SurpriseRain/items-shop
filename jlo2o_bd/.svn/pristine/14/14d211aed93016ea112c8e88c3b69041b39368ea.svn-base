@@ -1,0 +1,717 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title id="title">汽服云 - 买家中心 -加入购物车</title>
+<meta name="Author" content="汽服云集成" />  
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/public.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/css/edlg.css" />
+
+<style>
+.check_ddh{margin-top:6px; height:40px;}
+.check_ddh .checkbox{float:left; margin:15px 5px;}
+.check_ddh .titles{float:left;width:100%; margin:0px; padding:0px; height:35px; line-height:40px;  text-align:left; font-size:14px; font-family:"microsoft yahei";  color:#333;  font-weight:bold;}
+.check_ddh a.qrsh{float:left; width:80px; height:30px; background-color:#ff3c3c; color:#fff; display:block; text-align:center; line-height:30px; font-family:"microsoft yahei"; border-radius:10px;margin-left:95px;}
+
+.select_city{ float: left;  margin: 0 auto; position: relative;}
+.select_city ul{  float:left; position:absolute; top:36px; width:310px; left:54px; border:1px solid #2f80eb; background-color:#fff; display:none; height:135px;  overflow-x:hidden;}
+.select_city ul li{ float:left; width:auto; height:33px;  padding:0 5px; font-size:12px; line-height: 35px;}
+.select_city ul li:hover{ background-color:#eee; color:#2f80eb; cursor:pointer;}
+
+</style>
+</head>
+<body>
+<!-- toplink -->
+
+<!-- hearder -->
+<div id="header">
+</div>
+
+<!-- main -->
+<div class="clear"></div>
+<div id="main" class="w980 clearfix" >
+	<div class="cart" >
+	<div class="cart_top">
+		<h2>我的购物车</h2>
+		<div class="cartcurrent mt20">
+			<ul class="carttitlist">
+				<li class="current">
+				<strong></strong>
+				<span>1.我的购物车</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>2.订单审核</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>3.确认付款</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>4.等待收货</span>
+				</li>
+				<li>
+				<strong></strong>
+				<span>5.完成订单</span>
+				</li>
+			</ul>
+		</div>
+	<div id="splist"></div>
+	</div>
+	<br class="clear"/>
+</div>
+
+</div>
+<div id="footer" class="clearfix mt20">
+</div>
+
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/payfor.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="../js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/edlg.min.js"></script>
+<script type="text/javascript">
+var DQXX01="120100";
+//获取公用默认图片路径
+var imgUrl=pubJson.path_sptp+"/sptp/"
+$(document).ready(function(){
+	var user = $.cookie('userInfo');
+	var user=JSON.parse(user);
+	var city_list = $.cookie("city_list");
+	if(city_list==null){
+		    var city_list = [];
+			var o = {};
+			o.city_value = "120000";
+			o.city_name = "天津";
+			o.city_value_2 = "120100";
+			o.city_name_2 = "天津市";
+			city_list.push(o);
+			$.cookie("city_list", JSON.stringify(city_list), {
+				expires : 365, path : '/'
+			});
+			city_list = $.cookie("city_list");
+	}
+	city_list = JSON.parse(city_list);
+	var a = city_list[0].city_name;
+	var b = city_list[0].city_name_2;
+	DQXX01 = city_list[0].city_value_2;
+
+	//加载头和尾 
+	$("#header").load("/customer/qfy/head-08.jsp?ss="+Math.random(), function() {
+		  //$("#menu-lest").remove();
+		  $("#header").find("a[id='qbsp']").attr("class","bian");
+	      $("#header").find("a[id='sy']").attr("class","");
+	});
+	$("#footer").load("/customer/qfy/foot-08.html?ss="+Math.random());	
+	$("a.topLink").click(function(){
+		$("html, body").animate({
+		scrollTop: $($(this).attr("href")).offset().top + "px"
+		}, {
+		duration: 800,
+		easing: "swing"
+	});
+		return false;
+	});
+	$(".cartpackage1").click(function(){
+	           $("#a01").toggleClass("displayblock")
+	       });
+	$(".cartpackage2").click(function(){
+	           $("#a02").toggleClass("displayblock")
+	       });
+	$(".cartpackage3").click(function(){
+	           $("#a03").toggleClass("displayblock")
+	       });
+	     //展示购物车信息
+	var baseUrl="";
+	var gwcList =""; 
+	   if(user==null){
+			/*******未登录账号加入购物车15.5.7*(以后B2C使用)liyong*********
+			*************不要删除!!*********
+		   	var tempHbid=$.cookie('JSESSIONID');
+		    gwcList =selectGwcTempInfomation(tempHbid).GWCLIST;
+		    *******/
+			//alert("请登录后查看");
+			location.href="/customer/qfy/register/login.html";
+	   } else if(user!=null){
+		   /*******未登录账号加入购物车15.5.7*(以后B2C使用)liyong*********
+			*************不要删除!!*********
+		  	 var tempHbid=$.cookie('JSESSIONID');
+			 //临时表数据插入到GWC表中
+			insertW_GWC(tempHbid);
+		   *******/
+			    gwcList =selectGwcInfomation(user).GWCLIST;  	
+				if(gwcList.length==0){
+				  location.href="/customer/qfy/shopping/cart_04.jsp";
+				}
+				var str ="";
+				str+='<div class="check_ddh" style="margin-top: 78px; margin-bottom: -5px; background-color:#f3f3f3;"><div class="titles">';
+				str+='<div style="float:left;"><input type="checkbox" name="selectall" value="0" class="checkbox" onclick="selectAll($(this))" />全选</div>';
+				str+='<div style="float:left; margin-left:20px;"><a class="delectsp">删除选中的商品</a></div>';
+				str+='<div style="float:right; margin-top: 6px; margin-right: 30px; margin-left:-60px;"><a class="qrsh" onclick="go_cart2();">去结算</a></div>';
+				str+='<div class="select_city" style="display:none; float:left; margin-top:-5px;margin-left:20px;"><span>配送至:</span>';
+				str+='<a style="border: 1px solid #2f80eb; border-radius:5px; line-height: 50px; padding: 4px; margin-left:8px;" id="psdz"></a>';
+				str+='<a id="kcxx_1" style="margin-left:15px;"></a> <input type="hidden" id="select_city_val" value=""/><ul class="select_city_list" style="z-index:1;"></ul></div>';
+				str+='<div style="float:right;"><label style="float:left;">总价（不含运费）：</label><div style="float:left;" class=" pic pic1">¥0.00</div></div>';
+				str+='</div></div>'
+				$("#splist").html(str); 
+				
+				$("#psdz").html(a+"&nbsp;&nbsp;"+b);
+				//配送至鼠标事件
+				$(".select_city").mouseleave(function(){
+					$(".select_city_list").hide();
+				  });  
+				$(".select_city").on('click',function(){
+					select_city();
+				  	$(".select_city_list").show();
+				});  
+	   }
+	$(gwcList).each(function(index){
+		var proName = "";
+		$("#main").find("div.cart").append("<div class='car_remaining mt10'><div class='cart_list_top'><input class='ddxz' id='"+this.ZCXX01+"' name='ddh"+this.ZCXX01+"' type='checkbox' value='0'  onclick='select_ZCXX01("+"\""+this.ZCXX01+"\")' style='margin:10px 5px; float:left;'/><input type='hidden' id='ztid' value='"+this.ZCXX01+"'/><input type='hidden' id='ztmc' value='"+this.ZCXX02+"'/><b style='padding-left:6px; width:80%;'></b><span></span></div><div class='cart_list_in clearfix' style='padding-left:24px; padding-right:24px;'><table class='sorting_table'><tr class='writcolor'  style='border-bottom:2px solid #e4e4e4;'><td style='width:30%;'>商品</td><td style='width:12%;'>单价</td><td style='width:13%;'>数量</td><td style='width:15%;'>小计</td><td style='width:10%;'>操作</td></tr></div><div>");
+		$("#main").find("div.cart").children().eq(index+2).find("div.cart_list_top b").html("供货商："+this.ZCXX02);
+		$("#main").find("div.cart").children().eq(index+2).find("div.cart_list_top span").html("");
+	    	var mainObj=$("#main").find("div.cart").children().eq(index+2);
+	    	$(this.SPITEMLIST).each(function(i,spxxjson){
+	    		var picUrl="";
+			if(spxxjson.SPTP02==null){//为null时候后面商品不显示了.
+				picUrl=pubJson.defaultImgUrl;
+			}else{ 
+	        		picUrl=imgUrl+spxxjson.ZTID+"/"+spxxjson.SPXX02+"/images/"+spxxjson.SPXX02+"_1_big."+(spxxjson.SPTP02).split(".")[1];
+			 }
+
+			
+			if(spxxjson.CKSL!=0){
+				var CKSL = "<b>有货</b>";
+				var a = "有货";
+			}else{
+				var CKSL = "<b style='color:red;'>无货</b>";
+				var a = "无货";
+			}
+			
+	    		$("#main").find("div.cart").children().eq(index+2).find(".sorting_table").append("<tr id='del_"+spxxjson.SPXX01+"'><td class='p_number' style='text-align:left;'><input class='spxxs' id='"+spxxjson.SPXX01+"' code='"+spxxjson.GWC02+"' code1='"+DQXX01+"'  name='"+spxxjson.ZTID+"' onclick='selectgoods("+"\""+spxxjson.ZTID+"\")'  type='checkbox'  value='' style='margin-top:10px; margin-left:20px; float:left;'/><img style='width:40px;height:40px; margin:auto 10px; display:inline;' src='"+picUrl+"' onerror=this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'><a href='/customer/qfy/showProduct/product.html?spxx01="+spxxjson.SPXX01+"&zcxx01="+spxxjson.ZTID+"&gsid="+spxxjson.ZTID+"&gsmc="+escape(gwcList[index].ZCXX02)+"'></a></td><td></td><td class='number'><div class='buy_btn' style='float:left;'><div class='p_number'><div class='add_chose fl' style='width:auto;'><a class='reduce' style='margin-left:10px;'>-</a><input type='text' style='text-align:center;' class='text spxx_"+spxxjson.SPXX01+"' name='qty_item_1' id='qty_item_1'/><a class='add'>+</a></div></div></div><div style='width:auto;float:left;margin-left:10px;margin-top:3px;'>"+CKSL+"</div></td><td ><div class='buy'></div><input type='hidden' name='total_price' value=''/></td><div class='buy' style='display: none;'></div><td class='nub'><a>删除</a></td></tr>");
+	    		proName = spxxjson.SPXX04;
+	    		proName = proName.length > 22 ? proName.substring(0,22) + "..." : proName;
+	    		$("#main").find("div.cart").children().eq(index+2).find(".sorting_table tr").eq(i+1).find("td").first().find("a").attr("title",spxxjson.SPXX04).html(proName);
+	    		$("#main").find("div.cart").children().eq(index+2).find(".sorting_table tr").eq(i+1).find("td").first().next("td").html(accounting.formatMoney(spxxjson.GWC02)).attr("id","price").next().next().find("div.buy").html(accounting.formatMoney(spxxjson.GWC02*spxxjson.GWC01)).next().attr("href","javascript:void(0)");
+	    		$("#main").find("div.cart").children().eq(index+2).find(".sorting_table tr").eq(i+1).find(".text").val(spxxjson.GWC01);
+	    		mainObj.find(".sorting_table tr").eq(i+1).find("input[name='total_price']").val(spxxjson.GWC01*spxxjson.GWC02);
+	    		mainObj.find(".sorting_table tr").eq(i+1).find("input[type='checkbox']").val(spxxjson.GWC01*spxxjson.GWC02);
+	    		var pobj=product(spxxjson.SPGL14,spxxjson.SPGL15);
+	    		$("#main").find("div.cart").children().eq(index+2).find("a.reduce").eq(i).attr("href","javascript:void(0)").on("click",function(){
+	    					var pro={};
+	    					var changeObj=$("#main").find("div.cart").children().eq(index+2).find("a.reduce").eq(i);
+
+							pro.SPXX01=spxxjson.SPXX01;
+							pro.ZTID=gwcList[index].ZTID;
+							pobj.reduce($(this).siblings("input"),user,pro);
+							subtotal($(this),index);
+							//购物车联动
+							$(".cat-products").remove();
+							selectMyCart(user);
+	    		});
+	    		mainObj.find("a.add").eq(i).attr("href","javascript:void(0)").on("click",function(){
+	    								var pro={};
+	    								var changeObj=$("#main").find("div.cart").children().eq(index+2).find("a.add").eq(i);
+									pro.SPXX01=spxxjson.SPXX01;
+									pro.ZTID=gwcList[index].ZTID;
+									pobj.add(changeObj.siblings("input"),user,pro);
+									subtotal($(this),index);
+									//购物车联动
+									$(".cat-products").remove();
+									selectMyCart(user);
+	    		});
+	    		mainObj.find("input[name='qty_item_1']").eq(i).on("keyup",function(){
+	    				pobj.modify($(this));
+					subtotal($(this),index);
+	    		}).on("change",function(){
+	    			var pro={};
+				    pro.SPXX01=spxxjson.SPXX01;
+					pro.ZTID=gwcList[index].ZTID;
+					updatePrudoctNum($(this).val(),user,pro);
+	    		});
+	    		$(mainObj).find("td.nub a").eq(i).attr("href","javascript:void(0)").on("click",function(){
+	    			dlgShow({content:"确定从购物车中删除此商品",yesFn:function(){
+	    				var spxx01=spxxjson.SPXX01;
+						var spztid=gwcList[index].ZTID;
+						var returnVal=deleteSpSingle(spxx01,spztid,user);
+						if(returnVal.STATE=='1'){
+								//删除节点 刷新jiem
+								//$(this).parent().parent().remove();
+								$("#del_"+spxx01).remove();
+								window.location.reload();
+								statisticalData(index);
+								//购物车联动
+								$(".cat-products").remove();
+								selectMyCart(user);
+								//购物车商品清空时将购物车浮标数量置为0
+								if(mainObj.find(".writcolor").parents().find("tr").length==1) {										
+								 	//$("#header-cat").find(".shuliang").html("0");
+								 	$(".shuliang").html("0");
+								}
+								var Lists =selectGwcInfomation(user).GWCLIST;  
+								if(Lists.length==0){
+							        location.href="/customer/qfy/shopping/cart_04.jsp";
+							    }
+						}else{
+								//alert("删除失败!");
+								dlgShow({content:"删除失败"});
+								return false;
+						}
+	    			},noFn:function(){}
+	    			});
+	    		  /* if(!confirm("确定从购物车中删除此商品？")){
+				    return;
+				  }
+	    		 
+    				var spxx01=spxxjson.SPXX01;
+					var spztid=gwcList[index].ZTID;
+					var returnVal=deleteSpSingle(spxx01,spztid,user);
+					if(returnVal.STATE=='1'){
+							//删除节点 刷新jiem
+							$(this).parent().parent().remove();
+							statisticalData(index);
+							//购物车联动
+							$(".cat-products").remove();
+							selectMyCart(user);
+							//购物车商品清空时将购物车浮标数量置为0
+							if(mainObj.find(".writcolor").parents().find("tr").length==1) {										
+							 	//$("#header-cat").find(".shuliang").html("0");
+							 	$(".shuliang").html("0");
+							}
+							var Lists =selectGwcInfomation(user).GWCLIST;  
+							if(Lists.length==0){
+						        location.href="/customer/qfy/shopping/cart_04.jsp";
+						    }
+					}else{
+							//alert("删除失败!");
+							dlgShow({content:"删除失败"});
+							return false;
+					} */
+	    		});
+	    		
+	    	});
+	    	$("#main").find("div.cart").children().eq(index+2).find("div.cart_list_in").append("<div class='c_list_close mt20 clearfix'><div><p class='fl' >:</p><p><span class='fl mt10 mr20'>订单商品数：<b class='price'></b>&nbsp;&nbsp;总金额：<b class='price ddze'id='money_"+this.ZCXX01+"'></b></span><a></a><div class='weizhi'></p></div></div></div>");
+	    	$("#main").find("div.cart").children().eq(index+2).find("div.cart_list_in").find("p").first().html("").next().find("b").first().html(this.TOTALNUM_).next().html(accounting.formatMoney(this.TOTALAMOUNT));
+	    		$(mainObj).find("#button").on("click",function(){
+	        			if(user==null){
+	            			location.href="/customer/qfy/register/login.html?rememberUrl='"+location.href+"'&GWCBH="+$.getUrlParam('GWCBH');
+	            			}else if(user!=null){
+	    						var json=statisticalData(index);
+	    						if(json.num>0){
+	    						location.href="cart_02.html?ztid="+gwcList[index].ZCXX01+"&zcxx02="+escape(gwcList[index].ZCXX02)+"&price="+gwcList[index].TOTALAMOUNT+"&xmlData="+xmlData;
+	    						}
+	                		}
+	    		});
+	});
+	
+	var str ="";
+	str+='<div class="cart_list_top check_ddh"><div class="titles">';
+	str+='<div style="float:left;"><input type="checkbox" name="selectall" value="0" class="checkbox" onclick="selectAll($(this))" />全选</div>';
+	str+='<div style="float:left; margin-left:20px;"><a class="delectsp">删除选中的商品</a></div>';
+	str+='<div style="float:right; margin-top: 6px; margin-right: 30px; margin-left:-60px;"><a class="qrsh" onclick="go_cart2();">去结算</a></div>';
+	str+='<div style="float:right;"><label style="float:left;">总价（不含运费）：</label><div style="float:left;" class=" pic pic1">¥0.00</div></div>';
+	str+='</div></div>'
+	$("#main").find("div.cart").append(str);
+	//删除选择的商品
+	$(".delectsp").on("click",function(){
+		var spnumobj=$("input[class='spxxs']").is(":checked");
+		 if(spnumobj==true){
+			 dlgShow({content:"确定从购物车中删除这些商品?",yesFn:function(){
+				 var sp_num=$("input[class='spxxs']");
+				 for(var i=0;i<sp_num.length;i++) {
+						if(sp_num[i].checked){
+							var spztid = sp_num[i].name;
+							var spxx01 = sp_num[i].id;
+							var returnVal=deleteSpSingle(spxx01,spztid,user);
+							if(returnVal.STATE!='1'){
+								//alert("删除商品"+spxx01+"失败!");
+								dlgShow({content:"删除商品"+spxx01+"失败"});
+								return false;
+							}
+						}
+					}
+					//alert("删除成功");
+					//window.location.reload();
+				 dlgShow({content:"删除商品"+spxx01+"失败",callback:function(){
+					 window.location.reload();
+				 }});
+			},noFn:function(){}
+			});
+			/* if(!confirm("确定从购物车中删除这些商品？")){
+			    return false;
+			  }
+			
+			 var sp_num=$("input[class='spxxs']");
+			 for(var i=0;i<sp_num.length;i++) {
+					if(sp_num[i].checked){
+						var spztid = sp_num[i].name;
+						var spxx01 = sp_num[i].id;
+						var returnVal=deleteSpSingle(spxx01,spztid,user);
+						if(returnVal.STATE!='1'){
+							//alert("删除商品"+spxx01+"失败!");
+							dlgShow({content:"删除商品"+spxx01+"失败"});
+							return false;
+						}
+					}
+				}
+				//alert("删除成功");
+				//window.location.reload();
+			 dlgShow({content:"删除商品"+spxx01+"失败",callback:function(){
+				 window.location.reload();
+			 }}); */
+			}else{
+				//alert("没有选中的商品！");
+				dlgShow({content:"没有选中的商品"});
+			}
+	});
+});
+function select_city(){
+    var XmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.select_dqmc','dataType':'Json'}];
+	var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(XmlData);
+	var rData=visitService(url);
+	var str="";
+	for(var j=0;j<rData.length;j++) {
+		if(rData[j].dqbzm02=="黑龙江省"){
+			var obj =rData[j].dqbzm02.substring(0,3);
+		}else{
+			var obj =rData[j].dqbzm02.substring(0,2);
+		}
+		str+="<li class='city' id='"+rData[j].dqbzm01+"'>"+obj+"</li>";
+	}
+	$(".select_city_list").html(str);
+	$(".city").on('click',function(){
+		selectSea_text = $(this).text();
+		var DQMC = $(this).attr("id");
+		select_city_2(DQMC);
+		return false;
+	});
+	
+}
+
+
+function select_city_2(data){
+var xmlData=[{'sqlid':'com.jlsoft.o2o.user.sql.select_dqmc_3','dataType':'Json','DQMC':data}];
+var url="/jlquery/selecto2o.action?XmlData="+JSON.stringify(xmlData);
+var returnData=visitService(url);
+var s=""
+for(var i=0;i<returnData.length;i++) {
+	s+="<li class='abc' id='"+returnData[i].dqbzm01+"'>"+returnData[i].dqbzm02+"</li>";
+}
+$(".select_city_list").html(s);
+$(".abc").on('click',function(){
+	var a = $(this).text();
+	DQXX01= $(this).attr("id");
+	$("#psdz").html(selectSea_text+"&nbsp;&nbsp;"+a);
+	var city_list = [];
+	var o = {};
+	o.city_value = data;
+	o.city_name = selectSea_text;
+	o.city_value_2 = DQXX01;
+	o.city_name_2 = a;
+	city_list.push(o);
+	$.cookie("city_list", JSON.stringify(city_list), {
+		expires : 365, path : '/'
+	});
+	window.location.reload();
+});
+
+}
+
+//全选所有供货商的商品
+function selectAll(objs) {
+	 var logo = objs.is(":checked")
+	 var obj = $("input[name='selectall']"); 
+	 var cks=$("input[type='checkbox']");
+	 for(var i=0;i<obj.length;i++) {
+		 obj[i].checked = logo;
+	 }
+	 for(var i=0;i<cks.length;i++) {
+		 cks[i].checked = logo;
+	 }
+	 money_count();
+}
+
+//全选供货商内的所有商品
+function select_ZCXX01(ZCXX01) {
+	 var obj = $("input[name='ddh"+ZCXX01+"']"); 
+	 var cks = $("input[name='"+ZCXX01+"']"); 
+	 for(var i=0;i<cks.length;i++) {
+		   cks[i].checked = obj[0].checked;
+	 }
+	 selectAlls();
+}
+
+function selectAlls() {
+	 var cks=$("input[type='checkbox']");
+	 var obj = $("input[name='selectall']"); 
+	 for(var i=0;i<cks.length;i++) {
+		   if(cks[i].checked==false){
+			   obj[0].checked = false;
+			   obj[1].checked = false;
+			   break;
+		   }else{
+			   obj[0].checked = true;
+			   obj[1].checked = true;
+		   }
+		 }
+	 money_count();
+}
+
+function selectgoods(ZCXX01) {
+	 var obj = $("input[name='ddh"+ZCXX01+"']"); 
+	 var cks = $("input[name='"+ZCXX01+"']"); 
+	 var objs = $("input[name='selectall']"); 
+	 for(var i=0;i<cks.length;i++) {
+		 if(cks[i].checked==false){
+			   obj[0].checked = false;
+			   objs[0].checked = false;
+			   objs[1].checked = false;
+			   break;
+		   }else{
+			   obj[0].checked = true;
+			   objs[0].checked = true;
+			   objs[1].checked = true;
+		   }
+	}
+	 selectAlls();
+}
+
+//购物车商品总价格
+function money_count() {
+	 var cks=$("input[type='checkbox']");
+	 var x=0.0;
+	 if(cks.length>0){
+		 for(var i=0;i<cks.length;i++) {
+			   if(cks[i].checked){
+				   x+=parseFloat(cks[i].value);
+			   }
+			 }
+		 $(".pic1").html(accounting.formatMoney(x));
+	 }
+}
+
+//结算订单
+function go_cart2() {
+	var users = $.cookie('userInfo');
+	if(users==null){
+		//alert("请登录后再结算商品！");
+		dlgShow({content:"请登录后再结算商品"});
+		//location.href="/customer/qfy/register/login.html";
+		return false;
+	}
+	 var cks=$("input[class='ddxz']");
+	 if(cks.length>0){
+	     var xmlData=[];
+		 for(var i=0;i<cks.length;i++) {
+			var goods=$("input[name='"+cks[i].id+"']");
+			var json={};
+			var splist = [];
+			for(var x=0;x<goods.length;x++) {
+				if(goods[x].checked){
+			        json.ZTID=cks[i].id;
+					var sp_json = {};
+					sp_json.SPXX01 = goods[x].id
+					sp_json.CKZT = document.getElementById(goods[x].id).getAttribute("code1");
+					sp_json.GWC02 = document.getElementById(goods[x].id).getAttribute("code");
+					sp_json.GWC01 = $(".spxx_"+goods[x].id).val();
+					splist.push(sp_json);
+					json.SPLIST=splist;
+				}
+			}
+			if(splist.length>0){
+					xmlData.push(json);
+				}
+		}
+	 }
+	 var spnumobj=$("input[class='spxxs']").is(":checked");
+	 if(spnumobj==true){
+			location.href="cart_02.html?xmlData="+escape(JSON.stringify(xmlData));
+	 }else{
+		    //alert("请勾选要结算的商品");
+		 dlgShow({content:"请勾选要结算的商品"});
+	}
+}
+
+/*******未登录账号加入购物车15.5.7*(以后B2C使用)liyong*********
+*************不要删除!!*********
+function insertW_GWC(tempHbid){
+	var XmlData=[{"tempHbid":tempHbid,"HBID":user.ZCXX01}];
+	var url="/CartManage/insertW_GWC.action?XmlData="+JSON.stringify(XmlData)+"&s="+Math.random();  
+	var data= visitService(url); 
+}
+function selectGwcTempInfomation(tempHbid){
+	var xmlData=[];
+	var json={};
+	json.HBID=tempHbid;
+	xmlData.push(json);
+	var url="/CartManage/selectGwcTemp.action?XmlData="+JSON.stringify(xmlData)+"&s="+Math.random();
+	var data= visitService(url);
+	return data;
+}
+**************/
+
+function selectGwcInfomation(user){
+	var xmlData=[];
+	var json={};
+	json.HBID=user.ZCXX01;
+	json.DQXX01=DQXX01;
+	xmlData.push(json);
+	//加入库存验证 -- 待修改
+	var url="/CartManage/selectGwcByHbid.action?XmlData="+JSON.stringify(xmlData)+"&s="+Math.random();
+	var data= visitService(url);
+	return data;
+}
+
+function product(min,max){
+	var obj=new Object();
+	obj.min=min;
+	obj.max=max;
+	obj.reg=function(x) {
+        return new RegExp("^[1-9]\\d*$").test(x);
+    },
+    obj.amount=function(obj, mode) {
+        var x = $(obj).val();
+        if (this.reg(x)) {
+            if (mode) {
+                x++;
+            } else {
+                x--;
+            }
+        } else {
+            //alert("请输入正确的数量！");
+            dlgShow({content:"请输入正确的数量"});
+            $(obj).val(1);
+            $(obj).focus();
+        }
+        return x;
+    },
+    obj.reduce=function(obj,user,pro) {
+        var x = this.amount(obj, false);
+        if (x >= this.min) {
+        	var returnVal=updatePrudoctNum(x,user,pro);
+        	if(returnVal=='1'){
+        		 $(obj).val(x);
+            	}else{
+					//alert("修改失败!");
+            		dlgShow({content:"修改失败"});
+              }
+        } else {
+            //alert("商品数量最少为" + this.min);
+            dlgShow({content:"商品数量最少为:" + this.min});
+            $(obj).val(this.min);
+            $(obj).focus();
+        }
+    },
+    obj.add=function(obj,user,pro) {
+        var x = this.amount(obj, true);
+        if (x <= this.max) {
+        	var returnVal=updatePrudoctNum(x,user,pro);
+        	if(returnVal=='1'){
+        		 $(obj).val(x);
+            	}else{
+					//alert("修改失败!");
+            		dlgShow({content:"修改失败"});
+              }
+            //recalc();
+        } else {
+            //alert("商品数量最多为" + this.max);
+            /* dlgShow({content:"商品数量最多为" + this.max}); */
+            this.max;
+            dlgShow({content:"最大购买数量为:"+this.max});
+            $(obj).val(this.max);
+            $(obj).focus();
+        }
+    },
+    obj.modify=function(obj) {
+        var x = $(obj).val();
+        if (this.reg(x)) {
+			if (x < this.min || x > this.max) {
+				$(obj).val(1);
+	            $(obj).focus();
+	            dlgShow({content:"最大购买数量为:"+this.max});
+			}
+		} else {
+		    dlgShow({content:"请输入正确的数量"});
+		    $(obj).val(1);
+            $(obj).focus();
+		}
+       /*  if (x < this.min || x > this.max || !this.reg(x)) {
+            //alert("请输入正确的数量！");
+            dlgShow({content:"请输入正确的数量"});
+            $(obj).val(1);
+            $(obj).focus();
+        }else{
+            } */
+    }
+    return obj;
+}
+
+//修改商品数量 -- 点击加减号，实时与数据库交互获取库存
+function updatePrudoctNum(x,user,pro){
+	var xmlData=[];
+	var json={};
+	json.HBID=user.ZCXX01;
+	json.ZTID=pro.ZTID;
+	json.DQXX01=DQXX01;
+	json.SPXX01=pro.SPXX01;
+	json.GWC01=x;
+	xmlData.push(json);
+	var url="/CartManage/updateGWCspxx.action?XmlData="+JSON.stringify(xmlData)+"&s="+Math.random();
+	var jsonData=visitService(url);
+	return jsonData.STATE;
+}
+
+//删除购物车商品
+function deleteSpSingle(spxx01,ztid,user){
+	//商品信息
+	var sp={};
+	var spList=[];
+	sp.SPXX01=spxx01;
+	spList.push(sp);
+	var SPLIST=[];
+	var spxx={};
+	spxx.ZTID=ztid;
+	spxx.HBID=user.ZCXX01;
+	spxx.SPLIST=spList;
+	SPLIST.push(spxx);
+	var url="/CartManage/deleteGwc.action?XmlData="+JSON.stringify(SPLIST)+"&s="+Math.random();
+	var returnVal=visitService(url);	
+	return returnVal;
+}
+
+//小计
+function subtotal(obj,index){
+	var qty=parseInt($(obj).parent().find("input[name='qty_item_1']").val());
+	var price=accounting.unformat($(obj).parents("tr").find("#price").text());
+	$(obj).parents("tr").find("div.buy").text(accounting.formatMoney(qty*price));
+	$(obj).parents("tr").find("input[name='total_price']").val(qty*price);
+	$(obj).parents("tr").find("input[type='checkbox']").val(qty*price);
+	money_count();
+	statisticalData(index);
+}
+
+//总计
+function statisticalData(index){
+	var amount=0;
+	var num=0;
+	$("#main").find("div.cart").children().eq(index+2).find("input[name='total_price']").each(function (){
+	    amount+=accounting.unformat($(this).val());
+	});
+	$("#main").find("div.cart").children().eq(index+2).find("input[name='qty_item_1']").each(function (){
+			num +=parseInt($(this).val());
+		});
+	$("#main").find("div.cart").children().eq(index+2).find("b.price").first().text(num).next().text(accounting.formatMoney(amount));
+	var json={};
+	json.num=num;
+	json.amount=amount;
+	return json;
+}
+</script>
+</body>
+</html>

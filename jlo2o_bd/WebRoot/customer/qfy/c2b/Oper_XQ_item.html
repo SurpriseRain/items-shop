@@ -1,0 +1,807 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中国汽服云平台</title>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+<style>
+#pro-main{
+    height: 1450px;
+    padding-bottom: 0px;
+    width: 800px;
+}
+.nav_content{
+	border-bottom: 1px solid #e4e4e4;
+    height: 53px;
+    width: 800px;
+}
+.nav_down{
+	border-bottom: 1px solid #ff4a00;
+    height: 62px;
+    width: 800px;
+}
+.nav_left{
+	border-bottom: 4px solid #ff4a00;
+    float: left;
+    font-size: 21px;
+    height: 50px;
+    letter-spacing: 4px;
+    width: 110px;
+}
+.nav_right{
+    float: left;
+    font-size: 15px;
+    height: 59px;
+    letter-spacing: 3px;
+    line-height: 80px;
+    margin-left: 30px;
+    width: 650px;
+}
+.nav_top{
+	font-size: 23px;
+    height: 60px;
+    letter-spacing: 6px;
+    line-height: 80px;
+    width: 800px;
+}
+.content{
+    float: left;
+    height: 160px;
+    margin-top: 10px;
+    width: 800px;
+}
+.content .order_list{
+    float: left;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 80px;
+    width: 300px;
+    font-size:15px;
+}
+.order_list_biao{
+    font-size: 15px;
+    line-height: 40px;
+    padding-left: 80px;
+    width: 720px;
+}
+.order_list_tp{
+    font-size: 15px;
+    height: 200px;
+    line-height: 40px;
+    padding-left: 80px;
+    width: 700px;
+}
+.order_list_tp img{
+    float: left; 
+    width: 350px; 
+    height: 210px;
+}
+
+.tp_list{
+    height: 170px;
+    margin-top: 10px;
+    width: 800px;
+}
+.tp_list .model{
+     float: left;
+    height: 140px;
+    margin: 13px;
+    text-align: center;
+    width: 128px;
+}
+.tp_list .model img{
+    margin-left:-16px;
+}
+.row_part{
+	height: 220px;
+    width: 780px;
+    margin-top: 10px;
+}
+.row_part .part_list{
+	float: left;
+    font-size: 16px;
+    height: 30px;
+    width: 260px;
+}
+.row_part .part_list input{
+	margin-right: 5px;
+}
+li{
+	list-style-type:none;
+}
+.row_WXXM{
+	height: 13px;
+    margin: 20px auto;
+    width: 700px;
+}
+.row_WXXM_2{
+	height: 13px;
+    margin: 50px auto;
+    width: 700px;
+}
+.row_WXXM_2 a{
+	background-color: #ff4a00;
+    color: #ffffff;
+    padding: 8px;
+    cursor: pointer;
+}
+.row_WXXM_2 a:hover{
+	background-color: red;
+}
+
+.row_WXXM .row_title{
+	border: 1px solid #eeeeee;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 230px
+}
+.row_list_1{
+	height:0px;
+    margin: 20px auto;
+    width: 700px;
+}
+.row_list_1 .row_title{
+	border: 1px solid #eeeeee;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 230px
+}
+.row_list_1 .row_title input{
+	margin: 5px;
+	width: 180px;
+	text-align:center;
+	border: 0px ;
+}
+.row_list_2{
+	height:0px;
+    margin: 20px auto;
+    width: 700px;
+}
+.row_list_2 .row_title{
+	border: 1px solid #eeeeee;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 230px
+}
+.row_title a{
+	border-left: 1px solid #eeeeee;
+    color: #ff0000;
+    cursor: pointer;
+    float: right;
+    font-size: 20px;
+    height: 30px;
+    line-height: 30px;
+    width: 24px
+}
+
+.row_list_2 .row_title input{
+	margin: 5px;
+	width: 180px;
+	text-align:center;
+	border:0;
+}
+.row_count{
+	height: 30px;
+    margin: 0 auto;
+    width: 700px;
+    line-height: 30px;
+}
+.wx_service{
+	height: 66px;
+    margin: 0;
+    width: 800px;
+}
+.Sparepart{
+	height: 66px;
+    margin: 0;
+    width: 800px;
+}
+.add_list{
+	width: 30px;
+	height: 30px; 
+	border: 1px solid red; 
+	font-size: 12px;
+	cursor: pointer;
+	padding: 2px;
+}
+.add_list:hover{
+	background-color: #ff4a00;
+	color: #ffffff;
+}
+/*遮罩查詢*/
+#select_fw{
+	width:100%; 
+	height:100%; 
+	background-color:rgb(1,1,1); 
+	filter:alpha(opacity=60);
+	opacity:0.5;
+	position:fixed; 
+	top:0;
+	left:0;
+	display:none;
+	z-index:99999999;
+	position: fixed;
+	
+}
+#select_fw_1{
+	position: fixed;
+	background: #ffffff none repeat scroll 0 0;
+    height: 400px;
+    width: 750px;
+    left: 50%;
+    top: 70%;
+    margin-left: -380px;
+	display:none;
+	z-index:999999999;
+	
+}
+.title_zz{
+	height: 30px; 
+	width: 750px; 
+	background-color: #eeeeee;
+}
+.title_zz b{
+	font-size: 15px;
+}
+.title_zz a{
+	background: #ff3c3c none repeat scroll 0 0;
+    border: 1px solid #ff4a00;
+    float: right;
+    height: 28px;
+    line-height: 28px;
+    padding: 0;
+    text-align: center;
+    width: 55px;
+    color: #fff;
+    cursor: pointer;
+}
+#member_list{
+	width: 750px; 
+	height: 369px; 
+	overflow:auto; 
+	border-top:1px solid #eeeeee;
+}
+</style>
+</head>
+<body>
+<!--------公共开始---------->
+<div id="select_fw"></div>
+<div id="select_fw_1">
+	<div id="container">
+		<div class="title_zz">
+			<a onclick="close_service()">確定</a>
+		</div>
+		
+		<div id="member_list">
+			
+		</div>
+	</div>
+</div>
+<!-----------------------------产品详细--------------------------------->
+<div id="pro-main">
+	<div class="nav_content">
+		<div class="nav_left">
+			<p>门店接单</p>
+		</div>
+		<div class="nav_right">
+			<label>单号:</label><span id="service_id">123123123123</span>
+		</div>
+	</div>
+	<div class="content">
+		<div class="order_list">
+			<label>客户名称：</label><span id="ReallyName">123123123123</span>
+		</div>
+		<div class="order_list">
+			<label>联系电话：</label><span id="Phone">123123123123</span>
+		</div>
+		<div class="order_list">
+			<label>&nbsp;车&nbsp;牌&nbsp;号：</label><span id="CarNumber">123123123123</span>
+		</div>
+		<div class="order_list">
+			<label>接单时间：</label><span id="ReceiveOrderTime">123123123123</span>
+		</div>
+		<div class="order_list">
+			<label>&nbsp;车&nbsp;架&nbsp;号：</label>
+			<input type="text" id="VIN" />
+		</div>
+		<div class="order_list">
+			<label>接车时间：</label>
+			<input id="FetchCarTime"  value="" type="text" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+		</div>
+		<div class="order_list">
+			<label>&nbsp;接&nbsp;车&nbsp;人：</label><input type="text"  id="FetchCarEmployeeId" value=""/>
+		</div>
+		<div class="order_list">
+			<label>进场里程：</label>
+			<input id="CurrentMileage" type="text" />
+		</div>
+	</div>
+	
+	<div class="order_list_biao">
+		<label>&nbsp;油&nbsp;表&nbsp;位：</label>
+		<input type="radio" checked="checked" id="youbiao" name="CurrentOilMeter" value="0"/>&nbsp;0/0&nbsp;&nbsp;
+		<input type="radio"  id="youbiao" name="CurrentOilMeter" value="1"/>&nbsp;1/4&nbsp;&nbsp;
+		<input type="radio"  id="youbiao" name="CurrentOilMeter" value="2"/>&nbsp;2/4&nbsp;&nbsp;
+		<input type="radio"  id="youbiao" name="CurrentOilMeter" value="3"/>&nbsp;3/4&nbsp;&nbsp;
+		<input type="radio"  id="youbiao" name="CurrentOilMeter" value="4"/>&nbsp;全满&nbsp;&nbsp;
+	</div>
+	<div class="order_list_tp">
+		<div style="float: left;">现场图片：</div><img src="/customer/qfy/images/msimg.jpg"  />
+	</div>
+
+	<div class="nav_down">
+		<div class="nav_top">
+		<p>外观部位</p>
+		</div>
+	</div>
+	
+	<div class="tp_list">
+		<div class="model">
+			<img src="/customer/qfy/images/qian.png"  /><input type="text" id="head"/>
+		</div>
+		<div class="model">
+			<img src="/customer/qfy/images/hou.png"  /><input type="text" id="tail"/>
+		</div>
+		<div class="model">
+			<img src="/customer/qfy/images/zuo.png"  /><input type="text" id="left"/>
+		</div>
+		<div class="model">
+			<img src="/customer/qfy/images/you.png"  /><input type="text" id="right"/>
+		</div>
+		<div class="model">
+			<img src="/customer/qfy/images/shang.png" /><input type="text" id="top"/>
+		</div>
+	</div>
+	
+	<div class="nav_down">
+		<div class="nav_top">
+		<p>室内部饰品</p><input type="hidden" id="InsideSeleced" ></input>
+		</div>
+	</div>
+	<ul class="row_part">
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="0"/><label>喇叭</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="1"/><label>点烟器</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="2"/><label>音响</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="3"/><label>空调系统</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="4"/><label>电动车窗/天窗</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="5"/><label>座椅调节和安全带</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="6"/><label>内外后视镜</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="7"/><label>灯光和仪表系统</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="8"/><label>雨刮胶条/清洗系统状况</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="9"/><label>发动机油位/泄漏</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="10"/><label>防冻液液位/泄漏</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="11"/><label>刹车油油位/泄漏</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="12"/><label>皮带</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="13"/><label>玻璃清洗液液位/渗漏</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="14"/><label>转向助力泵油/泄漏</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="15"/><label>轮胎状况</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="16"/><label>燃油系统状况/泄漏</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="17"/><label>排气系统状况/吊耳/垫片</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="18"/><label>刹车系统盘片厚度/漏油</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="19"/><label>橡胶及球头状况</label>
+		</li>
+		<li class="part_list">
+			<input type="checkbox"  name="part" id="20"/><label>发动机/变速箱漏油</label>
+		</li>
+		
+	</ul>
+	<div class="nav_down">
+		<div class="nav_top">
+			<span>维修及服务项目</span> <a class="add_list" id="add_service">点击新增</a>
+		</div>
+	</div>
+	
+	
+	<div class="wx_service">
+		<div class="row_WXXM">
+			<div class="row_title">
+				<span>维修及服务项目</span>
+			</div>
+			<div class="row_title">
+				<span>维修人员</span>
+			</div>
+			<div class="row_title">
+				<span>工时费</span>
+			</div>
+			
+		</div>
+		
+		<div class="row_list_1">
+		
+		</div>
+		
+		<div class="row_WXXM">
+			<div class="row_title">
+				<span>合计</span>
+			</div>
+			<div class="row_title">
+				<span></span>
+			</div>
+			<div class="row_title">
+				<span id="fw_count">0</span><!-- 服务总金额 -->
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="nav_down">
+		<div class="nav_top">
+		<span>配件及材料清单</span> <a class="add_list" id="add_pj">点击新增</a>
+		</div>
+	</div>
+	<div class="Sparepart">
+		<div class="row_WXXM">
+			<div class="row_title">
+				<span>维修及服务项目</span>
+			</div>
+			<div class="row_title">
+				<span>配件数量</span>
+			</div>
+			<div class="row_title">
+				<span>金额</span>
+			</div>
+			
+		</div>
+		
+		<div class="row_list_2">
+		
+		</div>
+		
+		<div class="row_WXXM">
+			<div class="row_title">
+				<span>合计</span>
+			</div>
+			<div class="row_title">
+				<span></span>
+			</div>
+			<div class="row_title">
+				<span id="pj_count">0</span>
+			</div>
+		</div>
+	</div>
+	<div class="row_WXXM_2">
+		<a id="save">服务完成</a>
+	</div>
+	
+	<input type="hidden" id="falg" /><!-- 新增服務配件 1服務  2配件 -->
+</div>
+
+<div class="clera"></div>
+<div id="footer"></div>
+<script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/accounting.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript">
+ var MyCookie =$.cookie('userInfo');
+ var usercookie = JSON.parse(MyCookie);
+ var carOwerId = usercookie.Id;
+ var id=$.getUrlParam('ID');
+ var CurrentPrice="";
+ var defaultImgUrl = pubJson.defaultImgUrl;
+
+ $(document).ready(function(){
+	$("#service_id").html(id);//来源单号
+	selectBarcode(id);//查询服务信息
+	//新增服務
+	$("#add_service").on('click',function(){
+		$("#falg").val(0);
+		var fw_num=$("input[name='yx_fw']");
+		var fw_id= [];
+		for(var i=0;i<fw_num.length;i++) {
+			fw_id.push(fw_num[i].value);
+		}
+		var XmlData;
+		if(fw_id.length>0)
+		{
+			XmlData=[{'sqlid':'com.jlsoft.c2b.sql.takeorder.selectServiceItem','dataType':'Json','id':id,'yxid':fw_id}];
+		}
+		else
+		{
+			XmlData=[{'sqlid':'com.jlsoft.c2b.sql.takeorder.selectServiceItem','dataType':'Json','id':id}];
+		}
+		
+		var rData = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+		var str = '';
+		for ( var i = 0; i < rData.length; i++) {
+			str+='<div style="height:40px;width:220px;margin:10px;float:left;">';
+			str+='<input type="checkbox" name="fw_name"  value="'+rData[i].Id+'"/>';
+			str+= '<span id="service_name_'+rData[i].Id+'" code="'+rData[i].Price+'" >' + rData[i].MaintainServiceName + '</span></div>';
+		}
+		$("#select_fw").show();
+		$("#select_fw_1").show();
+		$("#member_list").html(str);
+	});
+	//新增配件
+	$("#add_pj").on('click',function(){
+		$("#falg").val(1);
+		var pj_num=$("input[name='yx_pj']");
+		var pj_id= [];
+		for(var i=0;i<pj_num.length;i++) {
+			pj_id.push(pj_num[i].value);
+		}
+		var XmlData; 
+		if(pj_id.length>0)
+		{
+			XmlData=[{'sqlid':'com.jlsoft.c2b.sql.takeorder.selectMaterial','dataType':'Json','id':id,'yxid':pj_id}];
+		}else{
+			XmlData=[{'sqlid':'com.jlsoft.c2b.sql.takeorder.selectMaterial','dataType':'Json','id':id}];
+		}
+		var rData = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+		var str = '';
+		for ( var i = 0; i < rData.length; i++) {
+			str+='<div style="height:40px;width:230px;margin:10px;float:left;">';
+			str+='<input type="checkbox" name="pj_name" value="'+rData[i].Id+'"/>';
+			str+= '<span id="service_name_'+rData[i].Id+'" code="'+rData[i].SalesPrice+'" >' + rData[i].materialName + '</span></div>';
+		}
+		$("#select_fw").show();
+		$("#select_fw_1").show();
+		$("#member_list").html(str);
+	});
+	$("#save").on('click',function(){
+		var FetchCarTime = $("#FetchCarTime").val();//接单时间
+		if(FetchCarTime==""){
+			alert("接单时间不能为空！");
+			return false;
+		}
+		var FetchCarEmployeeId = $("#FetchCarEmployeeId").val();//维修场人员
+		if(FetchCarEmployeeId==""){
+			alert("维修场接车人员不能为空！");
+			return false;
+		}
+		var CurrentMileage = $("#CurrentMileage").val();//进场里程
+		if(CurrentMileage==""){
+			alert("进场里程不能为空！");
+			return false;
+		}
+		var CurrentOilMeter = $("input[type='radio']:checked").val();//油量
+		//室内部件InsideSeleced
+		var bj_num=$("input[name='part']");
+		var insideSeleced = "";
+		for(var i=0;i<bj_num.length;i++) {
+			if(bj_num[i].checked){
+				insideSeleced+=1+",";
+			}else{
+				insideSeleced+=0+",";
+			}
+		}
+		var InsideSeleced = insideSeleced.substring(0,insideSeleced.length-1);
+		//TotalPrice总金额
+		var TotalPrice = parseFloat($("#fw_count").html())+parseFloat($("#pj_count").html());
+		var SourceId = id;//来源单号
+		var VIN = $("#VIN").val();
+		/* if(VIN==""){
+			alert("车架号不能为空！");
+			return false;
+		} */
+		//车身部位
+		var head = $("#head").val();
+		var tail = $("#tail").val();
+		var left = $("#left").val();
+		var right = $("#right").val();
+		var top = $("#top").val();
+		if(head=="" || tail=="" || left=="" || right=="" || top==""){
+			alert("外观情况不能为空！");
+			return false;
+		}
+		//服务维修项目
+		var  yx_fw_=$("input[name='yx_fw']");
+		var fw_list_ = "";
+		for(var i=0;i<yx_fw_.length;i++) {
+			fw_list_ +=yx_fw_[i].value+",";
+		}
+		var MaintainServiceItemId = fw_list_.substring(0,fw_list_.length-1);
+		//服务维修人员
+		var  wx_user_=$("input[name='wx_user']");
+		var user_list = "";
+		for(var i=0;i<wx_user_.length;i++) {
+			user_list +=wx_user_[i].value+",";
+		}
+		var EmployeeId = user_list.substring(0,user_list.length-1);
+		//配件维修
+		var  yx_pj_=$("input[name='yx_pj']");
+		var pj_list = "";
+		for(var i=0;i<yx_pj_.length;i++) {
+			pj_list +=yx_pj_[i].value+",";
+		}
+		var MaterialId = pj_list.substring(0,pj_list.length-1);
+		//配件数量
+		var  pj_count_=$("input[name='pj_count']");
+		var  pj_count_list = "";
+		for(var i=0;i<pj_count_.length;i++) {
+			pj_count_list +=pj_count_[i].value+",";
+		}
+		var Count = pj_count_list.substring(0,pj_count_list.length-1);
+		
+ 		var XmlData={"Count":Count,"MaterialId":MaterialId,"EmployeeId":EmployeeId,"MaintainServiceItemId":MaintainServiceItemId,"top":top,"right":right,"left":left,"tail":tail,"head":head,"VIN":VIN,"SourceId":SourceId,"TotalPrice":TotalPrice,"InsideSeleced":InsideSeleced,"CurrentOilMeter":CurrentOilMeter,"CurrentMileage":CurrentMileage,"FetchCarEmployeeId":FetchCarEmployeeId,"FetchCarTime":FetchCarTime};
+ 		var url="/TakeOrder/insertTakeOrder.action";
+ 		var returnVal = visit(url,JSON.stringify(XmlData));
+ 		var loginState = returnVal.STATE;
+ 		var JYDH = returnVal.JYDH;
+ 		var zfje = returnVal.zfje;
+ 		if (loginState == 1) {
+ 			alert("保存成功！");
+ 			parent.location.href="/customer/qfy/c2b/zhifu/weixin_scan_pay_fw.html?JYDH="+JYDH+"&skfsArr=9&zfje="+zfje;
+ 		}else{
+ 			alert("保存失败！");
+ 		} 
+	});
+ });
+
+//查询服务信息
+function selectBarcode(id){
+	var XmlData=[{'sqlid':'com.jlsoft.c2b.sql.takeorder.selectTakeById','dataType':'Json','id':id}];
+	var rData0 = visit("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+	$("#ReallyName").html(rData0[0].ReallyName);
+	$("#Phone").html(rData0[0].Phone);
+	$("#CarNumber").html(rData0[0].CarNumber);
+	$("#ReceiveOrderTime").html(rData0[0].ReceiveOrderTime);
+	$("#Title").attr("src","/jlsoft/fftp/xctp/"+rData0.SceneImagePage).attr("onerror","this.onerror=null;this.src='/customer/qfy/images/msimg.jpg'" );;
+ }
+//保存關閉
+function close_service(){
+	var flag = $("#falg").val();
+	if(flag=="1"){//新增配件
+		 var pj_num=$("input[name='pj_name']");
+		 var str = "";
+		 var a = 0;
+		 for(var i=0;i<pj_num.length;i++) {
+			if(pj_num[i].checked){
+				a++;
+				var pj_id = pj_num[i].value;
+				var pj_name = $("#service_name_"+pj_id).text();
+				var Price = $("#service_name_"+pj_id).attr("code");
+				str += '<div class="row_title row_1'+pj_id+'">';
+			 	str+='<input type="text" readonly value="'+pj_name+'"/>';
+			 	str+='<input type="hidden" name="yx_pj" value="'+pj_id+'"/>';
+			 	str+= '</div><div class="row_title row_1'+pj_id+'">';
+			 	str+='<input type="text" id="pjPrice_'+pj_id+'" name="pj_count" value="1" onkeyup="sum_money('+pj_id+','+Price+')" />';
+			 	str+= '</div><div class="row_title row_1'+pj_id+'">';
+			 	str+='<input type="text" readonly name="money_1" id="money_'+pj_id+'" value="'+Price+'"/>';
+			 	str+='<a title="删除行" onclick="delect_div('+pj_id+','+Price+','+flag+')">×</a></div>';
+			}
+		}
+		var heig = a*35+$(".Sparepart").height();
+		$(".Sparepart").css("height",heig+"px");
+		var heig_ = a*35+parent.$("#centerFrame").height();
+		parent.$("#centerFrame").css("height",heig_+"px");
+		$(".row_list_2").append(str);
+		var pj_money=$("input[name='money_1']");
+		var money_1 = 0.0;
+		for(var i=0;i<pj_money.length;i++) {
+			money_1 += parseFloat(pj_money[i].value);
+		}
+		$("#pj_count").html(money_1);//服务合计价格
+	}else{
+		 var fw_num=$("input[name='fw_name']");
+		 var str = "";
+		 var a = 0;
+		 for(var i=0;i<fw_num.length;i++) {
+			if(fw_num[i].checked){
+				a++;
+				var fw_id = fw_num[i].value;
+				var fw_name = $("#service_name_"+fw_id).text();
+				var Price = $("#service_name_"+fw_id).attr("code");
+				str += '<div class="row_title row_2'+fw_id+'">';
+			 	str+='<input type="text" readonly value="'+fw_name+'"/>';
+			 	str+='<input type="hidden" name="yx_fw" value="'+fw_id+'"/>';
+			 	str+= '</div><div class="row_title row_2'+fw_id+'">';
+			 	str+='<input type="text" name="wx_user" />';
+			 	str+= '</div><div class="row_title row_2'+fw_id+'">';
+			 	str+='<input type="text" readonly name="money_0" value="'+Price+'"/>';
+			 	str+='<a title="删除行" onclick="delect_div('+fw_id+','+Price+','+flag+')">×</a></div>';
+			}
+		}
+		var heig = a*35+$(".wx_service").height();
+		$(".wx_service").css("height",heig+"px");
+		var heig_ = a*35+parent.$("#centerFrame").height();
+		parent.$("#centerFrame").css("height",heig_+"px");
+		$(".row_list_1").append(str);
+		var fw_money=$("input[name='money_0']");
+		var money_0 = 0.0;
+		for(var i=0;i<fw_money.length;i++) {
+		   money_0 += parseFloat(fw_money[i].value);
+		}
+		$("#fw_count").html(money_0);//服务合计价格
+	}
+	 
+	$("#select_fw").hide();
+	$("#select_fw_1").hide();
+}
+//配件数量价格计算
+function sum_money(id,Price){
+	var count = $("#pjPrice_"+id).val();
+	if(!/^[0-9]*$/.test(count)){
+		alert("请正确填数量！");
+		$("#pjPrice_"+id).val("");
+		return false;
+	}
+	if(count==""){
+	   count=0;
+	}
+	if(count>1000){
+		count=1000;
+		$("#pjPrice_"+id).val(1000);
+	}
+	
+	$("#money_"+id).val((parseFloat(count)*parseFloat(Price)).toFixed(2));
+	var pj_money=$("input[name='money_1']");
+	var money_1 = 0.0;
+	for(var i=0;i<pj_money.length;i++) {
+		money_1 += parseFloat(pj_money[i].value);
+	}
+	$("#pj_count").html(parseFloat(money_1).toFixed(2));//服务合计价格
+	
+}
+//删除已选项
+function delect_div(obj,money,str){//配件ID 单价 str区分配件与服务
+	if(str=="1"){//删除配件
+		var heig = $(".Sparepart").height()-35;
+		$(".Sparepart").css("height",heig+"px");
+		$(".row_1"+obj).remove();
+		var pj_money=$("input[name='money_1']");
+		var money_1 = 0.0;
+		for(var i=0;i<pj_money.length;i++) {
+			money_1 += parseFloat(pj_money[i].value).toFixed(2);
+		}
+		$("#pj_count").html(money_1);//服务合计价格
+	}else{
+		var heig = $(".wx_service").height()-35;
+		$(".wx_service").css("height",heig+"px");
+		$(".row_2"+obj).remove();
+		var fw_count = $("#fw_count").text();//服务合计价格
+		$("#fw_count").html(parseFloat(fw_count)-parseFloat(money));//服务合计价格
+	}
+}
+</script>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+</body>
+</html>

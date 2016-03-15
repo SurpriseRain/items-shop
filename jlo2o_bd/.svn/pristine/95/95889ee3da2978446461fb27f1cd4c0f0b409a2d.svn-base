@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.sql.mjck">
+	<select id="selectMJCK" parameterType="Map" resultType="java.util.Map">
+			SELECT 
+				wx.xsdd01,(select zcxx02 from w_zcxx where zcxx01 = wx.hbid) as zxcc02,wx.xsdd19,wx.xsdd21,sum(wxi.xsddi05) xsddi05,DATE_FORMAT(xsdd04, '%Y-%m-%d %k:%i:%s') xsdd04  from w_xsdd wx
+		LEFT JOIN w_xsdditem wxi on wx.xsdd01 = wxi.xsdd01
+		LEFT JOIN w_djzx wd on wd.w_djzx01 =wx.xsdd01
+		LEFT JOIN w_zcxx ON w_zcxx.zcxx01 = wx.ztid
+		where 1=1 
+				AND wxi.ck01 IN (select ck01 from W_XTCZYCK where person_id = #{XTCZY01})
+				AND wd.w_djzx02 = '15'
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="XSDD01!='' and XSDD01!=null" > AND WX.XSDD01 = #{XSDD01}</if>
+		GROUP BY wx.xsdd01
+	</select>
+	
+	<select id="selectMJCK_sum" parameterType="Map" resultType="java.util.Map">
+			select count(1) COUNT FROM (SELECT 
+				wx.xsdd01,(select zcxx02 from w_zcxx where zcxx01 = wx.hbid) as zxcc02,wx.xsdd19,wx.xsdd21,sum(wxi.xsddi05) xsddi05,wx.xsdd04 from w_xsdd wx
+		LEFT JOIN w_xsdditem wxi on wx.xsdd01 = wxi.xsdd01
+		LEFT JOIN w_djzx wd on wd.w_djzx01 =wx.xsdd01
+		LEFT JOIN w_zcxx ON w_zcxx.zcxx01 = wx.ztid
+		where 1=1 
+				AND wxi.ck01 IN (select ck01 from W_XTCZYCK where person_id = #{XTCZY01})
+				AND wd.w_djzx02 = '15'
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="XSDD01!='' and XSDD01!=null" > AND WX.XSDD01 = #{XSDD01}</if>
+		GROUP BY wx.xsdd01)t
+	</select>
+	
+	<select id="selectMJCKSPXX" parameterType="Map" resultType="java.util.Map">
+			SELECT w_goods.spxx04,w_goods.barcode,(SELECT zcxx02 from w_zcxx where zcxx01 = w_xsdd.ztid) zcxx02,spfl02,w_xsdditem.xsddi05 from w_xsdd
+		LEFT JOIN w_xsdditem on w_xsdditem.xsdd01 = w_xsdd.xsdd01
+		LEFT JOIN w_goods on w_goods.spxx01 = w_xsdditem.spxx01
+		LEFT JOIN w_spxx on w_spxx.spxx01 = w_goods.spxx01
+		where 1=1
+		<if test="XSDD01!='' and XSDD01!=null" > AND w_xsdd.XSDD01 = #{XSDD01}</if>
+	</select>
+	
+	<select id="selectMJCK_" parameterType="Map" resultType="java.util.Map">
+			SELECT 
+				wx.xsdd01,(select zcxx02 from w_zcxx where zcxx01 = wx.hbid) as zxcc02,(select zcxx65 from w_zcxx where zcxx01 = wx.ztid) as zcxx65,wx.xsdd19,wx.xsdd21,sum(wxi.xsddi05) xsddi05,DATE_FORMAT(xsdd04, '%Y-%m-%d %k:%i:%s') xsdd04  from w_xsdd wx
+		LEFT JOIN w_xsdditem wxi on wx.xsdd01 = wxi.xsdd01
+		LEFT JOIN w_djzx wd on wd.w_djzx01 =wx.xsdd01
+		LEFT JOIN w_zcxx ON w_zcxx.zcxx01 = wx.ztid
+		where 1=1 
+				AND wxi.ck01 IN (select ck01 from W_XTCZYCK where person_id = #{XTCZY01})
+				AND wd.w_djzx02 = '16'
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="XSDD01!='' and XSDD01!=null" > AND WX.XSDD01 = #{XSDD01}</if>
+		GROUP BY wx.xsdd01
+	</select>
+	
+	<select id="selectMJCK__sum" parameterType="Map" resultType="java.util.Map">
+			select count(1) COUNT FROM (SELECT 
+				wx.xsdd01,(select zcxx02 from w_zcxx where zcxx01 = wx.ztid) as zxcc02,wx.xsdd19,wx.xsdd21,sum(wxi.xsddi05) xsddi05,wx.xsdd04 from w_xsdd wx
+		LEFT JOIN w_xsdditem wxi on wx.xsdd01 = wxi.xsdd01
+		LEFT JOIN w_djzx wd on wd.w_djzx01 =wx.xsdd01
+		LEFT JOIN w_zcxx ON w_zcxx.zcxx01 = wx.ztid
+		where 1=1 
+				AND wxi.ck01 IN (select ck01 from W_XTCZYCK where person_id = #{XTCZY01})
+				AND wd.w_djzx02 = '16'
+		<if test="GSLX==34" > AND w_zcxx.zcxx65= '0'</if>
+		<if test="GSLX!=34" > AND w_zcxx.zcxx01= #{ZCXX01}</if>
+		<if test="XSDD01!='' and XSDD01!=null" > AND WX.XSDD01 = #{XSDD01}</if>
+		GROUP BY wx.xsdd01)t
+	</select>
+	
+	
+	
+	<!--  根据当前登录人查询轮播图    -->
+    <select id="select_TP" parameterType="Map" resultType="java.util.Map">
+       		SELECT 
+       		file01,file02,file03,file04,file05,file06,id
+       		from W_FILE
+       		where  file01= #{ZCXX01}  ORDER BY  file06
+    </select> 
+    
+    <!--  当前登录人编辑轮播图    -->
+    <select id="select_eidt" parameterType="Map" resultType="java.util.Map">
+       		SELECT 
+       		file01,file02,file03,file04,file05,file06,id
+       		from W_FILE
+       		where  id= #{id}
+    </select> 
+    
+</mapper>

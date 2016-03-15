@@ -1,0 +1,62 @@
+<div class="w12 user_page_infor">	
+	<dl class="w12 public_form">
+		<dt class="w02">
+			<label class="w12">广告标题:</label>
+		</dt>
+        <dd class="w10">
+        	<input type="text" class="w03" />
+        </dd>
+	</dl>
+    <dl class="w12 public_form">
+		<dt class="w02">
+			<label class="w12"><em class="font_red">*</em>查看权限:</label>
+		</dt>
+        <dd class="w10">
+        	<select class="w03"><option>请选择</option><option>全部</option></select>
+        </dd>
+	</dl>
+    <dl class="w12 public_form">
+		<dt class="w02">
+			<label class="w12">类型:</label>
+		</dt>
+        <dd class="w10">
+        	<select class="w03"><option>请选择</option><option>全部</option></select>
+        </dd>
+	</dl>
+    <dl class="w12 public_form">
+		<dt class="w02">
+			<label class="w12">特别法规:</label>
+		</dt>
+        <dd class="w10">
+        	<input type="radio" /><label>否（不需上传图片）</label>
+            <input type="radio" /><label>是（需上传图片）</label>
+        </dd>
+	</dl>
+    <dl class="w12 public_form">
+    <dt class="w02">LOGO图片：</dt>
+    <dd class="w10">
+      <ul class="w10">
+        <li><div class="up_img"><img src="../images/sp.jpg"><input type="file" title="上传图片"></div>
+        </li>
+        <li><div class="up_img"><i class="w12 fa fa-cloud-upload"></i><input type="file" title="上传图片"></div>
+        </li>
+        <li><label class="w12">图片尺寸为80*80</label></li>
+      </ul>
+    </dd>
+  </dl>
+    <dl class="w12 public_form">
+		<dt class="w02">
+			<label class="w12">公告或新闻:</label>
+		</dt>
+        <dd class="w10">
+        	<select class="w03"><option>请选择</option><option>公告</option><option>新闻</option></select>
+        </dd>
+	</dl>
+    
+    <dl class="w12 public_form">
+    	<dt class="w02">&nbsp;</dt>
+        <dd class="w03"><input type="button" value="提交" class="jl_btn btn_red"/></dd>
+    </dl>
+    </div>
+   
+    

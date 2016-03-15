@@ -1,0 +1,1734 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jlsoft.o2o.PCproduct">
+	
+	<!--   未登录时查询 首页商品     -->
+  	<select id="HYSPnotloginPX" parameterType="Map" resultType="java.util.Map">
+		SELECT G.SPXX01 ,
+		(
+			SELECT
+				group_concat(w_spglljh.SPGLLJH01)
+			FROM
+				w_spglljh
+			WHERE
+				w_spglljh.spxx01 = G.spxx01
+		) AS SPGLLJH01,
+		       P.SPXX02 ,
+		       WG.BARCODE,
+		       P.GGXH,
+		       P.SPXX04 ,
+		       J.SPJGB01 ,
+		       J.SPJGB02 ,
+		       G.SPGL04 ,
+		       IFNULL(J.SPJGB05, 0) SPJGB05,
+		       G.ZCXX01 ,
+		       G.SPGL13 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL08 ,
+		       A.ZCXX02 ,
+		       G.SPGL06 ,
+		       G.SPGL14 ,
+		       G.SPGL15 ,
+		       P.SPXX08 ,
+		       G.SPGL18 ,
+		       G.CKSP12 SPSX,
+		     	0 CXJG,
+				0 YHJG,
+				0 CXLX,
+				(SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE G.ZCXX01=S.ZCXX01 AND S.SPXX01=P.SPXX01 AND S.SPTP01=1) SPTP02,
+				(select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,
+		       (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPSL
+		  FROM W_SPGL G, W_SPJGB J, W_SPXX P, W_ZCXX A,W_GOODS WG
+		  <if test="cxList!='' and cxList!=null">
+		  	 ,W_SPCX C
+		  </if>
+	     <if test="SXZDM!=null">
+		      <if test="SXZDM!=''">,W_SPSX X </if>
+		 </if> 
+		 WHERE G.SPXX01 = J.SPXX01
+		   AND G.ZCXX01 = J.ZCXX01
+		   AND G.ZCXX01 = A.ZCXX01
+		   AND G.SPXX01 = P.SPXX01
+		   AND G.SPGL12 IN ('1', '3')
+		   AND WG.SPXX01 = P.SPXX01
+   		  <if test="cxList!='' and cxList!=null">
+		  	AND G.ZCXX01=C.ZCXX01 AND G.SPXX01=C.SPXX01
+		  </if>
+		   <if test="cxList!='' and cxList!=null">
+		  	AND C.MOBILE_MODLE_ID in
+				<foreach collection="cxList" index="index" item="tag" open="(" separator="," close=")">
+			 	 #{tag}
+				</foreach>
+		  </if>
+         <choose>
+			<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+			<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+			<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+			<otherwise></otherwise>
+		 </choose>
+		   AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{prista} as decimal(10,4))
+		   AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priend} as decimal(10,4))
+		<if test="SPNAMELIST!=null and SPNAMELIST!='' and SPNAMELIST!=undefined" >
+	  		AND (P.SPXX04 LIKE CONCAT ('%',#{SPNAMELIST},'%') or WG.BARCODE =#{SPNAMELIST} or A.ZCXX02 =#{SPNAMELIST})
+		</if>
+		  <if test="flList!='' and flList!=null">
+				AND P.SPFL01 in
+				<foreach collection="flList" index="index" item="tag" open="(" separator="," close=")">
+			 	 #{tag}
+				</foreach>
+			</if>
+			
+			
+		   
+		  <if test="ppList!='' and ppList!=null">
+				AND P.PPB01 in
+				<foreach collection="ppList" index="index" item="tag" open="(" separator="," close=")">
+			 	 #{tag}
+				</foreach>
+			</if>
+		 <if test="oe!='' and oe!=null">
+				and exists(select 1 from W_SPGLLJH tt where tt.SPGLLJH01 like concat('%',#{oe},'%') and G.SPXX01=tt.spxx01)
+			</if>
+						
+		 GROUP BY G.SPXX01,
+		          P.SPXX02,
+		          P.SPXX04,
+		          J.SPJGB01,
+		          J.SPJGB02,
+		          G.SPGL04,
+		          J.SPJGB05,
+		          G.ZCXX01,
+		          G.SPGL03,
+		          G.SPGL02,
+		          G.SPGL08,
+		          G.SPGL13,
+		          G.SPGL18,
+		          G.CKSP12,
+		          A.ZCXX02,
+		          G.SPGL06,
+		          G.SPGL14,
+		          G.SPGL15,
+		          P.SPXX08,
+		          A.ZCXX34	 
+        <choose>
+			<when test="jiage==5">ORDER BY 	J.SPJGB05 ASC</when>
+			<when test="jiage==6">ORDER BY 	J.SPJGB05 DESC</when>
+		 </choose>
+		 
+	</select>
+	
+	<select id="HYSPnotloginPXsum" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) SUM FROM (
+			SELECT G.SPXX01 ,
+		(
+			SELECT
+				group_concat(w_spglljh.SPGLLJH01)
+			FROM
+				w_spglljh
+			WHERE
+				w_spglljh.spxx01 = G.spxx01
+		) AS SPGLLJH01,
+		       P.SPXX02 ,
+		       WG.BARCODE,
+		       P.GGXH,
+		       P.SPXX04 ,
+		       J.SPJGB01 ,
+		       J.SPJGB02 ,
+		       G.SPGL04 ,
+		       IFNULL(J.SPJGB05, 0) SPJGB05,
+		       G.ZCXX01 ,
+		       G.SPGL13 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL08 ,
+		       A.ZCXX02 ,
+		       G.SPGL06 ,
+		       G.SPGL14 ,
+		       G.SPGL15 ,
+		       P.SPXX08 ,
+		       G.SPGL18 ,
+		       G.CKSP12 SPSX,
+		     	0 CXJG,
+				0 YHJG,
+				0 CXLX,
+				(SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE G.ZCXX01=S.ZCXX01 AND S.SPXX01=P.SPXX01 AND S.SPTP01=1) SPTP02,
+				(select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,
+		       (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPSL
+		  FROM W_SPGL G, W_SPJGB J, W_SPXX P, W_ZCXX A,W_GOODS WG
+		  <if test="cxList!='' and cxList!=null">
+		  	 ,W_SPCX C
+		  </if>
+	     <if test="SXZDM!=null">
+		      <if test="SXZDM!=''">,W_SPSX X </if>
+		 </if> 
+		 WHERE G.SPXX01 = J.SPXX01
+		   AND G.ZCXX01 = J.ZCXX01
+		   AND G.ZCXX01 = A.ZCXX01
+		   AND G.SPXX01 = P.SPXX01
+		   AND G.SPGL12 IN ('1', '3')
+		   AND WG.SPXX01 = P.SPXX01
+   		  <if test="cxList!='' and cxList!=null">
+		  	AND G.ZCXX01=C.ZCXX01 AND G.SPXX01=C.SPXX01
+		  </if>
+		   <if test="cxList!='' and cxList!=null">
+		  	AND C.MOBILE_MODLE_ID in
+				<foreach collection="cxList" index="index" item="tag" open="(" separator="," close=")">
+			 	 #{tag}
+				</foreach>
+		  </if>
+         <choose>
+			<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+			<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+			<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+			<otherwise></otherwise>
+		 </choose>
+		   AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{prista} as decimal(10,4))
+		   AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priend} as decimal(10,4))
+		<if test="SPNAMELIST!=null and SPNAMELIST!='' and SPNAMELIST!=undefined" >
+	  		AND (P.SPXX04 LIKE CONCAT ('%',#{SPNAMELIST},'%') or WG.BARCODE =#{SPNAMELIST} or A.ZCXX02 =#{SPNAMELIST})
+		</if>
+		  <if test="flList!='' and flList!=null">
+				AND P.SPFL01 in
+				<foreach collection="flList" index="index" item="tag" open="(" separator="," close=")">
+			 	 #{tag}
+				</foreach>
+			</if>
+			
+			
+		   
+		  <if test="ppList!='' and ppList!=null">
+				AND P.PPB01 in
+				<foreach collection="ppList" index="index" item="tag" open="(" separator="," close=")">
+			 	 #{tag}
+				</foreach>
+			</if>
+		 <if test="oe!='' and oe!=null">
+				and exists(select 1 from W_SPGLLJH tt where tt.SPGLLJH01 like concat('%',#{oe},'%') and G.SPXX01=tt.spxx01)
+			</if>
+						
+		 GROUP BY G.SPXX01,
+		          P.SPXX02,
+		          P.SPXX04,
+		          J.SPJGB01,
+		          J.SPJGB02,
+		          G.SPGL04,
+		          J.SPJGB05,
+		          G.ZCXX01,
+		          G.SPGL03,
+		          G.SPGL02,
+		          G.SPGL08,
+		          G.SPGL13,
+		          G.SPGL18,
+		          G.CKSP12,
+		          A.ZCXX02,
+		          G.SPGL06,
+		          G.SPGL14,
+		          G.SPGL15,
+		          P.SPXX08,
+		          A.ZCXX34	 
+        <choose>
+			<when test="jiage==5">ORDER BY 	J.SPJGB05 ASC</when>
+			<when test="jiage==6">ORDER BY 	J.SPJGB05 DESC</when>
+		 </choose>
+	) as total
+	</select>
+	
+	<!--   登录时查询 首页商品     -->
+  	<select id="selectHYSPloginPX" parameterType="Map" resultType="java.util.Map">
+		SELECT G.SPXX01 ,
+		       P.SPXX02 ,
+		       P.SPXX04 ,
+		       J.SPJGB01 ,
+		       J.SPJGB02 ,
+		       G.SPGL04 ,
+		       IFNULL(J.SPJGB05, 0) SPJGB05,
+		       G.ZCXX01 ,
+		       G.SPGL13 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL08 ,
+		       A.ZCXX02 ,
+		       G.SPGL06 ,
+		       G.SPGL14 ,
+		       G.SPGL15 ,
+		       P.SPXX08 ,
+		       G.SPGL18 ,
+		       G.CKSP12 SPSX ,		              
+		IFNULL(C.CXJG,0) CXJG,
+		IFNULL((SELECT D.DWJG02
+	             FROM DWJGB D
+	            WHERE D.GSXX01 = G.ZCXX01
+	              AND D.KH01 = #{HBID}
+	              AND D.SPXX01 = G.SPXX01),0) YHJG,
+				C.HDLX CXLX,
+		       SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL		       
+		  FROM W_SPGL G
+		   <!-- 促销标记 -->
+		   <choose>
+		   		<when test="CXBJ!='' and CXBJ!=null and CXBJ!=undefined">
+		   			 ,(SELECT
+					M.GSXX01,
+					M.SPXX01,
+					M.CXJG,
+					M.HDLX
+					FROM
+					W_CXZXB M
+					WHERE
+					M.DQXX01 LIKE CONCAT('%', SUBSTR('0101', 1, 4), '%')
+					AND NOW() &gt;= M.BEGAINDATE
+					AND NOW() &lt;= M.ENDDATE) C,
+		   		</when>
+		   		<otherwise>
+		   			LEFT JOIN (
+					SELECT
+					M.GSXX01,
+					M.SPXX01,
+					M.CXJG,
+					M.HDLX
+					FROM
+					W_CXZXB M
+					WHERE
+					M.DQXX01 LIKE CONCAT('%', SUBSTR('0101', 1, 4), '%')
+					AND NOW() &gt;= M.BEGAINDATE
+					AND NOW() &lt;= M.ENDDATE
+					) C ON G.ZCXX01 = C.GSXX01 AND G.SPXX01 = C.SPXX01,
+		   		</otherwise>
+		   </choose>
+		       W_SPJGB J,
+		       W_KCXX K,
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		       W_SPQY Q,
+		   </if>
+		   <if test="sxzdm!=null">
+		      <if test="SXZDM!=''">
+				W_SPSX X,
+			  </if>
+		  </if>
+		       W_SPXX P,
+		       W_ZCXX A
+	
+		 WHERE G.SPXX01 = J.SPXX01
+		   AND G.ZCXX01 = J.ZCXX01
+		   AND G.ZCXX01 = A.ZCXX01
+		   AND G.SPXX01 = K.SPXX01
+		   AND G.ZCXX01 = K.ZCXX01
+		   <!--如果促销标记。。 -->
+		  <if test="CXBJ!='' and CXBJ!=null and CXBJ!=undefined"> 
+		   	AND	G.ZCXX01 = C.GSXX01 AND G.SPXX01 = C.SPXX01
+		   </if>
+		  
+		    <!-- 区域权限 -->
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		   		AND G.ZCXX01 = Q.JXS
+		   		AND CAST(G.SPXX01 AS CHAR(8)) = Q.SPID
+		    	AND Q.QYDM LIKE CONCAT('%',SUBSTR(#{QYDM}, 1, 4),'%')
+		    	
+		    	<!-- AND Q.QYDM LIKE SUBSTR(#{QYDM}, 1, 6) || '%' 
+		    	 -->
+		   </if>
+		   <!-- 分类品牌权限 -->
+		    <if test="flppqx_hbid!='' and flppqx_hbid!=null and flppqx_hbid!='JL'">
+		    AND EXISTS (SELECT 1
+            FROM W_FLPPQX R, W_GSGX H
+           WHERE R.ZTID = H.ZTID
+             AND R.HBID = H.HBID
+             AND H.HBID = #{flppqx_hbid}
+             AND R.PPB01 = P.PPB01
+             AND R.SPFL01 = SUBSTR(P.SPFL01, 1, 4)
+             AND R.ZTID = G.ZCXX01
+             AND R.FLPP02 = 8)
+        		<!-- 仓库权限 -->
+           AND EXISTS (SELECT 1
+                  FROM W_CKQX CK
+                 WHERE CK.ZTID = K.ZCXX01 
+                   AND CK.CK01 = K.CK01
+                   and CK.GSID = #{flppqx_hbid})
+		   </if>
+		   <!-- 添加属性权限 -->
+	<if test="spsxqx!=null and spsxqx!='' and HBID !='' ">
+		AND EXISTS (SELECT 0 FROM W_SPSXQX Z WHERE Z.HBID=#{HBID} AND Z.ZTID=G.ZCXX01 AND G.CKSP12=Z.CKSP12)
+	</if>
+	<if test="HBID!='JL'">
+		AND NOT EXISTS (SELECT 1
+		          FROM W_SPQXHMD D
+		         WHERE D.ZTID = G.ZCXX01
+		         
+		           AND D.HBID = #{HBID}
+		           
+		           AND D.SPXX01 = G.SPXX01)
+		   </if>
+		   AND G.SPXX01 = P.SPXX01
+		   AND G.SPGL12 IN ('1', '3')
+		   
+		 <choose>
+			<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+			<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+			<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+			<otherwise></otherwise>
+		 </choose>
+		 
+		 <choose>
+		 <when test="SPGL02==-1 and SPGL02!=null"><!-- 明珠 -->
+		    AND J.SPJGB01 &gt;= cast(#{prista} as decimal(10,4))
+		    AND J.SPJGB01 &lt;= cast(#{priend} as decimal(10,4))
+		 </when>
+		 <otherwise>
+		   AND G.SPGL04 &gt;= cast(#{prista} as decimal(10,4))
+		   AND G.SPGL04 &lt;= cast(#{priend} as decimal(10,4))
+		 </otherwise>
+		 </choose> 
+	<foreach collection="SPNAMELIST" index="index" item="tag" open="" separator="" close="">
+	    	<!--	AND P.SPXX04 LIKE '%'||#{tag}||'%'-->
+	    		AND P.SPXX04 LIKE CONCAT('%',#{tag},'%')
+	    </foreach>
+	 <if test="SXZDM!=null" >	
+		 <if test="SXZDM!=''">
+			AND G.SPXX01 = X.SPXX01(+)
+			AND G.ZCXX01 = X.ZCXX01(+)		
+			AND X.SXZDM IN
+			 <foreach item="SXZDM" index="index" collection="SXZDM"
+				open="(" separator="," close=")">
+				<![CDATA[#{SXZDM}]]>
+			</foreach>
+		 </if>			
+	</if>		
+		
+	    <if test="sppl!='' and sppl!=null"><!-- AND P.SPFL01 like #{sppl} || '%' -->
+		 	AND P.SPFL01 LIKE CONCAT(#{sppl},'%')
+		</if>  
+		
+		<if test="fourCODE!='' and fourCODE!=null"><!-- AND P.SPFL01 like #{fourCODE} || '%' -->
+		 	AND P.SPFL01 LIKE CONCAT(#{fourCODE},'%')
+		</if>  
+
+		<if test="sixCODE!='' and sixCODE!=null">
+			AND P.PPB01=#{sixCODE}
+		</if>  		
+		   
+		 GROUP BY G.SPXX01,
+		          P.SPXX02,
+		          P.SPXX04,
+		          J.SPJGB01,
+		          J.SPJGB02,
+		          G.SPGL04,
+		          J.SPJGB05,
+		          G.ZCXX01,
+		          G.SPGL03,
+		          G.SPGL02,
+		          G.SPGL08,
+		          G.SPGL13,
+		          G.SPGL18,
+		          A.ZCXX02,
+		          G.SPGL06,
+		          G.SPGL14,
+		          G.SPGL15,
+		          G.CKSP12,
+		          P.SPXX08,
+		          A.ZCXX34,
+		          C.CXJG,
+		          C.HDLX
+		 
+        <choose>
+			<when test="jiage==5">ORDER BY 	J.SPJGB05 ASC</when>
+			<when test="jiage==6">ORDER BY 	J.SPJGB05 DESC</when>
+		 </choose>
+	</select>
+	
+	<select id="selectHYSPloginPXSUM" parameterType="Map" resultType="java.util.Map">
+		SELECT COUNT(1) SUM FROM (
+		SELECT G.SPXX01 ,
+		       P.SPXX02 ,
+		       P.SPXX04 ,
+		       J.SPJGB01 ,
+		       J.SPJGB02 ,
+		       G.SPGL04 ,
+		       IFNULL(J.SPJGB05, 0) SPJGB05,
+		       G.ZCXX01 ,
+		       G.SPGL13 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL08 ,
+		       A.ZCXX02 ,
+		       G.SPGL06 ,
+		       G.SPGL14 ,
+		       G.SPGL15 ,
+		       P.SPXX08 ,
+		       G.SPGL18 ,
+		       G.CKSP12 SPSX ,		              
+		IFNULL(C.CXJG,0) CXJG,
+		IFNULL((SELECT D.DWJG02
+	             FROM DWJGB D
+	            WHERE D.GSXX01 = G.ZCXX01
+	              AND D.KH01 = #{HBID}
+	              AND D.SPXX01 = G.SPXX01),0) YHJG,
+				C.HDLX CXLX,
+		       SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL		       
+		  FROM W_SPGL G
+		   <!-- 促销标记 -->
+		   <choose>
+		   		<when test="CXBJ!='' and CXBJ!=null and CXBJ!=undefined">
+		   			 ,(SELECT
+					M.GSXX01,
+					M.SPXX01,
+					M.CXJG,
+					M.HDLX
+					FROM
+					W_CXZXB M
+					WHERE
+					M.DQXX01 LIKE CONCAT('%', SUBSTR('0101', 1, 4), '%')
+					AND NOW() &gt;= M.BEGAINDATE
+					AND NOW() &lt;= M.ENDDATE) C,
+		   		</when>
+		   		<otherwise>
+		   			LEFT JOIN (
+					SELECT
+					M.GSXX01,
+					M.SPXX01,
+					M.CXJG,
+					M.HDLX
+					FROM
+					W_CXZXB M
+					WHERE
+					M.DQXX01 LIKE CONCAT('%', SUBSTR('0101', 1, 4), '%')
+					AND NOW() &gt;= M.BEGAINDATE
+					AND NOW() &lt;= M.ENDDATE
+					) C ON G.ZCXX01 = C.GSXX01 AND G.SPXX01 = C.SPXX01,
+		   		</otherwise>
+		   </choose>
+		       W_SPJGB J,
+		       W_KCXX K,
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		       W_SPQY Q,
+		   </if>
+		     		   <if test="sxzdm!=null">
+		      <if test="SXZDM!=''">
+			W_SPSX X,
+			  </if>
+		  </if>
+		       W_SPXX P,
+		       W_ZCXX A
+	
+		 WHERE G.SPXX01 = J.SPXX01
+		   AND G.ZCXX01 = J.ZCXX01
+		   AND G.ZCXX01 = A.ZCXX01
+		   AND G.SPXX01 = K.SPXX01
+		   AND G.ZCXX01 = K.ZCXX01
+		   <!--如果促销标记。。 -->
+		  <if test="CXBJ!='' and CXBJ!=null and CXBJ!=undefined"> 
+		   	AND	G.ZCXX01 = C.GSXX01 AND G.SPXX01 = C.SPXX01
+		   </if>
+		  
+		    <!-- 区域权限 -->
+		   <if test="QYDM!='' and QYDM!=null and QYDM!=undefined">
+		   		AND G.ZCXX01 = Q.JXS
+		   		AND CAST(G.SPXX01 AS CHAR(8)) = Q.SPID
+		    	AND Q.QYDM LIKE CONCAT('%',SUBSTR(#{QYDM}, 1, 4),'%')
+		    	
+		    	<!-- AND Q.QYDM LIKE SUBSTR(#{QYDM}, 1, 6) || '%' 
+		    	 -->
+		   </if>
+		   <!-- 分类品牌权限 -->
+		    <if test="flppqx_hbid!='' and flppqx_hbid!=null and flppqx_hbid!='JL'">
+		    AND EXISTS (SELECT 1
+            FROM W_FLPPQX R, W_GSGX H
+           WHERE R.ZTID = H.ZTID
+             AND R.HBID = H.HBID
+             AND H.HBID = #{flppqx_hbid}
+             AND R.PPB01 = P.PPB01
+             AND R.SPFL01 = SUBSTR(P.SPFL01, 1, 4)
+             AND R.ZTID = G.ZCXX01
+             AND R.FLPP02 = 8)
+        		<!-- 仓库权限 -->
+           AND EXISTS (SELECT 1
+                  FROM W_CKQX CK
+                 WHERE CK.ZTID = K.ZCXX01 
+                   AND CK.CK01 = K.CK01
+                   and CK.GSID = #{flppqx_hbid})
+		   </if>
+		   <!-- 添加属性权限 -->
+	<if test="spsxqx!=null and spsxqx!='' and HBID !='' ">
+		AND EXISTS (SELECT 0 FROM W_SPSXQX Z WHERE Z.HBID=#{HBID} AND Z.ZTID=G.ZCXX01 AND G.CKSP12=Z.CKSP12)
+	</if>
+	<if test="HBID!='JL'">
+		AND NOT EXISTS (SELECT 1
+		          FROM W_SPQXHMD D
+		         WHERE D.ZTID = G.ZCXX01
+		         
+		           AND D.HBID = #{HBID}
+		           
+		           AND D.SPXX01 = G.SPXX01)
+		   </if>
+		   AND G.SPXX01 = P.SPXX01
+		   AND G.SPGL12 IN ('1', '3')
+		   
+		 <choose>
+			<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+			<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+			<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+			<otherwise></otherwise>
+		 </choose>
+		 
+		 <choose>
+		 <when test="SPGL02==-1 and SPGL02!=null"><!-- 明珠 -->
+		    AND J.SPJGB01 &gt;= cast(#{prista} as decimal(10,4))
+		    AND J.SPJGB01 &lt;= cast(#{priend} as decimal(10,4))
+		 </when>
+		 <otherwise>
+		   AND G.SPGL04 &gt;= cast(#{prista} as decimal(10,4))
+		   AND G.SPGL04 &lt;= cast(#{priend} as decimal(10,4))
+		 </otherwise>
+		 </choose> 
+	<foreach collection="SPNAMELIST" index="index" item="tag" open="" separator="" close="">
+	    	<!--	AND P.SPXX04 LIKE '%'||#{tag}||'%'-->
+	    		AND P.SPXX04 LIKE CONCAT('%',#{tag},'%')
+	    </foreach>
+	 <if test="SXZDM!=null" >	
+		 <if test="SXZDM!=''">
+			AND G.SPXX01 = X.SPXX01(+)
+			AND G.ZCXX01 = X.ZCXX01(+)		
+			AND X.SXZDM IN
+			 <foreach item="SXZDM" index="index" collection="SXZDM"
+				open="(" separator="," close=")">
+				<![CDATA[#{SXZDM}]]>
+			</foreach>
+		 </if>			
+	</if>		
+		
+	    <if test="sppl!='' and sppl!=null"><!-- AND P.SPFL01 like #{sppl} || '%' -->
+		 	AND P.SPFL01 LIKE CONCAT(#{sppl},'%')
+		</if>  
+		
+		<if test="fourCODE!='' and fourCODE!=null"><!-- AND P.SPFL01 like #{fourCODE} || '%' -->
+		 	AND P.SPFL01 LIKE CONCAT(#{fourCODE},'%')
+		</if>  
+
+		<if test="sixCODE!='' and sixCODE!=null">
+			AND P.PPB01=#{sixCODE}
+		</if>  		
+		   
+		 GROUP BY G.SPXX01,
+		          P.SPXX02,
+		          P.SPXX04,
+		          J.SPJGB01,
+		          J.SPJGB02,
+		          G.SPGL04,
+		          J.SPJGB05,
+		          G.ZCXX01,
+		          G.SPGL03,
+		          G.SPGL02,
+		          G.SPGL08,
+		          G.SPGL13,
+		          G.SPGL18,
+		          A.ZCXX02,
+		          G.SPGL06,
+		          G.SPGL14,
+		          G.SPGL15,
+		          G.CKSP12,
+		          P.SPXX08,
+		          A.ZCXX34,
+		          C.CXJG,
+		          C.HDLX
+		 
+        <choose>
+			<when test="sppx==1">ORDER BY A.ZCXX34 DESC, G.SPGL13 ASC</when>
+			<when test="sppx==2">ORDER BY CXJG ASC, J.SPJGB01 ASC</when>
+			<when test="sppx==3">ORDER BY SPGL18 DESC</when>
+		 </choose>
+		 ) T
+	</select>
+	
+	<select id="selectSPMCLxss" parameterType="Map" resultType="java.util.Map" >
+	SELECT * FROM (
+		SELECT P.SPXX04 SPNAME
+		FROM W_SPGL G, W_SPXX P
+		<if test="GSID!=''">
+			<if test="isSpQy==0">,W_SPQY Q </if>
+		</if>
+		<if test="ckqx_hbid==0 and ckqx_hbid!=null and ckqx_hbid!=undefined">
+			<if test="isSpQy==0">,W_KCXX K </if>
+		</if>
+		WHERE G.SPXX01 = P.SPXX01
+			<if  test="GSID!=''">
+				<if test="isSpQy==0">
+					AND G.ZCXX01 = Q.JXS
+					AND G.SPXX01 = Q.SPID
+					<if test="isSpQyCodeLength==0">AND Q.QYDM LIKE SUBSTR(#{USERQY}, 1, 4) || '%' </if>
+					<if test="isSpQyCodeLength==1">AND Q.QYDM LIKE SUBSTR(#{USERQY}, 1, 6) || '%' </if>
+				</if>
+				AND NOT EXISTS (SELECT 1 FROM W_SPQXHMD D 
+						WHERE D.ZTID=G.ZCXX01 
+						AND D.HBID=#{GSID}
+						AND D.SPXX01=G.SPXX01 )	 						
+			</if>
+			<choose>
+			<when test="SPGL02==3 and SPGL02!=null">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+			<when test="SPGL02!=3">AND G.SPGL02 = 2 </when>
+		 </choose>
+<!--			AND G.SPGL02 = 2-->
+			AND G.SPGL12 IN ('1', '3')
+<!--			<if test="SPNAMELIST!=''">AND UPPER(P.SPXX04)  LIKE UPPER('%'||#{SPNAMELIST}||'%' )</if>-->
+			<foreach collection="SPNAMELIST" index="index" item="tag" open="" separator="" close="">
+	    		AND P.SPXX04 LIKE '%'||#{tag}||'%'
+	    </foreach>
+		UNION
+		(SELECT PP.SPXX04 SPNAME
+		 FROM W_SPGL GG,W_SPXX PP
+		 <if  test="GSID!=''">
+			<if test="isSpQy==0">,W_SPQY QQ </if>
+		 </if>
+		 WHERE GG.SPXX01 = PP.SPXX01
+			 <if test="GSID!=''">
+			 	 <if test="isSpQy==0">
+					AND GG.ZCXX01 = QQ.JXS
+					AND GG.SPXX01 = QQ.SPID
+					<if test="isSpQyCodeLength==0">AND QQ.QYDM LIKE SUBSTR(#{USERQY}, 1, 4) || '%'</if>
+					<if test="isSpQyCodeLength==1">AND QQ.QYDM LIKE SUBSTR(#{USERQY}, 1, 6) || '%'</if>
+				 </if>
+				 <if test="isFlppqx==0">
+				  AND EXISTS (SELECT 1 FROM W_FLPPQX RR
+					        WHERE RR.ZTID = GG.ZCXX01
+						AND RR.HBID =#{GSID}
+						AND RR.SPFL01 = SUBSTR(PP.SPFL01, 1, 4)
+						AND RR.PPB01 = PP.PPB01
+						AND RR.FLPP02 = 8)
+				  </if>  
+				   <if test="ckqx_hbid==0 and ckqx_hbid!=null and ckqx_hbid!=undefined">
+				AND EXISTS (SELECT 1
+          FROM W_CKQX A
+         WHERE A.ZTID = K.ZCXX01
+           AND A.CK01 = K.CK01
+           and A.GSID = #{ckqx_hbid})
+				  </if>   
+				  AND NOT EXISTS (SELECT 1 FROM W_SPQXHMD DD 
+				 		    WHERE DD.ZTID=GG.ZCXX01 
+				 		    AND DD.HBID=#{GSID}
+				 		    AND DD.SPXX01=GG.SPXX01 )
+			  </if>
+			  <if test="GSID!=''">
+			  	AND GG.SPGL19=1
+			  </if>
+			  AND GG.SPGL12 IN ('1', '3')  
+			  <choose>
+			<when test="SPGL02==3 and SPGL02!=null">AND GG.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+			<when test="SPGL02!=3">AND GG.SPGL02 = 2 </when>
+		 </choose>
+			AND GG.SPGL02 = 2
+<!--			  <if test="SPNAMELIST!=''">AND UPPER(PP.SPXX04) LIKE UPPER('%'||#{SPNAMELIST}||'%' )</if>-->
+		<foreach collection="SPNAMELIST" index="index" item="tag" open="" separator="" close="">
+	    		AND PP.SPXX04 LIKE '%'||#{tag}||'%'
+	    </foreach>
+		 )
+	) t LIMIT 10
+	
+	
+	</select>
+	<!-- 店铺查询全部商品 -->
+	<select id="selectAllGoods" parameterType="Map" resultType="java.util.Map" >
+		SELECT A.ZCXX02,
+			   G.SPXX01, ljh.SPGLLJH01,
+               P.SPXX02,  
+               P.SPXX04,  
+          	   (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= G.SPXX01 and k.zcxx01=A.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} ))CKSP04,
+               M.SPJGB01,  
+               M.SPJGB02,  
+               G.SPGL04,  
+               G.ZCXX01,  
+               G.SPGL02,  
+               G.SPGL13,  
+               G.SPGL08,
+               G.SPGL09, 
+               G.SPGL10, 
+               G.SPGL11,     
+               G.CKSP12 SPSX,
+               IFNULL(M.SPJGB05, 0) SPJGB05,  
+               0 HDLX,  
+               0 CXJG,<!-- (SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=G.SPXX01 AND S.SPTP01=1) SPTP02, -->
+               (SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=G.SPXX01 LIMIT 1) SPTP02,
+               (SELECT SPTP01 FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=G.SPXX01 LIMIT 1) SPTP01,  
+               p.ppb02
+          FROM W_ZCXX A, W_SPGL G, W_SPJGB M, W_SPXX P ,W_GOODS WG,w_spglljh ljh
+         WHERE G.SPXX01 = M.SPXX01  
+           AND A.ZCXX01 = G.ZCXX01  
+           AND G.ZCXX01 = M.ZCXX01  
+           AND G.SPXX01 = P.SPXX01  
+           AND WG.SPXX01 = P.SPXX01
+           AND ljh.spxx01 = P.spxx01
+           AND G.SPGL12 IN ('1', '3')
+           	<if  test="PPB01!='' and PPB01!=null">AND P.PPB01=#{PPB01} </if>
+           	<if  test="gsid!='' and gsid!=null">AND G.ZCXX01=#{gsid} </if>
+           	<if  test="SPFLCODE!='' and SPFLCODE != null">AND P.SPFL01 LIKE concat(concat('%',#{SPFLCODE}),'%') </if>
+       	 	<if test="SPNAMELIST != '' and SPNAMELIST != null">
+	       	 	<foreach collection="SPNAMELIST" index="index" item="tag" open="" separator="" close="">
+		    		AND (P.SPXX04 LIKE CONCAT ('%',#{tag},'%') or WG.BARCODE =#{tag})
+		    	</foreach>
+           	</if>
+		GROUP BY
+		G.SPXX01,
+		A.ZCXX02,
+		P.SPXX02,
+		P.SPXX04,
+		M.SPJGB01,
+		M.SPJGB02,
+		G.SPGL04,
+		G.ZCXX01,
+		G.SPGL02,
+		G.SPGL13,
+		G.SPGL08,
+		G.SPGL09,
+		G.SPGL10,
+		G.SPGL11,
+		G.CKSP12,
+		M.SPJGB05,
+		p.ppb02 
+		<choose>
+			<when test="sppx==1">ORDER BY A.ZCXX34 DESC, G.SPGL13 ASC</when>
+			<when test="sppx==2">ORDER BY SPGL18 DESC</when>
+			<when test="sppx==3">ORDER BY CXJG ASC,SPJGB05 ASC</when>
+			<when test="sppx==4">ORDER BY CXJG ASC,SPJGB05 DESC</when>
+			<when test="sppx==5">ORDER BY G.SPGL18 ASC</when>
+			<when test="sppx==6">ORDER BY G.SPGL18 DESC</when>
+		 </choose>
+		 <if test="limit != '' and limit != null"> LIMIT #{limit}</if>
+	</select>
+	
+	<!-- 店铺查询全部商品 -->
+	<select id="selectAllGoodsSUM" parameterType="Map" resultType="java.util.Map" >
+	SELECT COUNT(1) SUM FROM(
+		SELECT A.ZCXX02,
+			   G.SPXX01, 
+               P.SPXX02,  
+               P.SPXX04,  
+          	   (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= G.SPXX01 and k.zcxx01=A.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} ))CKSP04,
+               M.SPJGB01,  
+               M.SPJGB02,  
+               G.SPGL04,  
+               G.ZCXX01,  
+               G.SPGL02,  
+               G.SPGL13,  
+               G.SPGL08,
+               G.SPGL09, 
+               G.SPGL10, 
+               G.SPGL11,     
+               G.CKSP12 SPSX,
+               IFNULL(M.SPJGB05, 0) SPJGB05,  
+               0 HDLX,  
+               0 CXJG,<!-- (SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=G.SPXX01 AND S.SPTP01=1) SPTP02, -->
+               (SELECT SUBSTRING_INDEX(sptp02,'.',-1) FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=G.SPXX01 LIMIT 1) SPTP02,
+               (SELECT SPTP01 FROM W_SPTP S WHERE A.ZCXX01=S.ZCXX01 AND S.SPXX01=G.SPXX01 LIMIT 1) SPTP01,  
+               p.ppb02 
+          FROM W_ZCXX A, W_SPGL G, W_SPJGB M, W_SPXX P ,W_GOODS WG 
+         WHERE G.SPXX01 = M.SPXX01  
+           AND A.ZCXX01 = G.ZCXX01  
+           AND G.ZCXX01 = M.ZCXX01  
+           AND G.SPXX01 = P.SPXX01  
+           AND WG.SPXX01 = P.SPXX01
+           AND G.SPGL12 IN ('1', '3')
+           <if  test="PPB01!='' and PPB01!=null">AND P.PPB01=#{PPB01} </if>
+           <if  test="gsid!='' and gsid!=null">AND G.ZCXX01=#{gsid} </if>
+           <if  test="SPFLCODE!='' and SPFLCODE != null">AND P.SPFL01 LIKE concat(concat('%',#{SPFLCODE}),'%') </if>
+           <if test="SPNAMELIST != '' and SPNAMELIST != null">
+	       	 	<foreach collection="SPNAMELIST" index="index" item="tag" open="" separator="" close="">
+		    		AND (P.SPXX04 LIKE CONCAT ('%',#{tag},'%') or WG.BARCODE =#{tag})
+		    	</foreach>
+           </if>
+		GROUP BY
+		G.SPXX01,
+		A.ZCXX02,
+		P.SPXX02,
+		P.SPXX04,
+		M.SPJGB01,
+		M.SPJGB02,
+		G.SPGL04,
+		G.ZCXX01,
+		G.SPGL02,
+		G.SPGL13,
+		G.SPGL08,
+		G.SPGL09,
+		G.SPGL10,
+		G.SPGL11,
+		G.CKSP12,
+		M.SPJGB05 
+		<choose>
+			<when test="sppx==1">ORDER BY A.ZCXX34 DESC, G.SPGL13 ASC</when>
+			<when test="sppx==2">ORDER BY SPGL18 DESC</when>
+			<when test="sppx==3">ORDER BY CXJG ASC,SPJGB05 ASC</when>
+			<when test="sppx==4">ORDER BY CXJG ASC,SPJGB05 DESC</when>
+			<when test="sppx==5">ORDER BY G.SPGL18 ASC</when>
+			<when test="sppx==6">ORDER BY G.SPGL18 DESC</when>
+		 </choose>
+		 <if test="limit != '' and limit != null"> LIMIT #{limit}</if>
+         ) A
+	</select>
+	
+	<!--   未登录时查询促销商品     -->
+  	<select id="CXSPnotlogin" parameterType="Map" resultType="java.util.Map">
+		SELECT G.SPXX01 ,
+		       P.SPXX02 ,
+		       P.SPXX04 ,
+		       J.SPJGB01 ,
+		       J.SPJGB02 ,
+		       G.SPGL04 ,
+		       IFNULL(J.SPJGB05, 0) SPJGB05,
+		       G.ZCXX01 ,
+		       G.SPGL13 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL08 ,
+		       A.ZCXX02 ,
+		       G.SPGL06 ,
+		       G.SPGL14 ,
+		       G.SPGL15 ,
+		       P.SPXX08 ,
+		       G.SPGL18 ,
+		       G.CKSP12 SPSX,
+		     	0 CXJG,
+				0 YHJG,
+		       SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL,
+			    CX.HDLX  CXLX
+		  FROM W_SPGL G, W_SPJGB J, W_KCXX K, W_SPXX P, W_ZCXX A,
+		          (SELECT M.GSXX01, M.SPXX01, M.CXJG, M.HDLX
+		          FROM W_CXZXB M  WHERE
+		          <!-- 
+		         M.DQXX01 LIKE SUBSTR(#{DQXX01}, 1, 4) || '%'
+		           AND 
+		           -->
+		           SYSDATE &gt;= M.BEGAINDATE
+		           AND SYSDATE &lt;= M.ENDDATE) CX
+	<!-- 
+	     <if test="sxzdm!=null">
+		      <if test="SXZDM!=''">
+			,W_SPSX X
+			  </if>
+		  </if>
+	-->
+		 WHERE G.SPXX01 = J.SPXX01
+		   AND G.ZCXX01 = J.ZCXX01
+		   AND G.ZCXX01 = A.ZCXX01
+		   AND G.SPXX01 = K.SPXX01
+		   AND G.ZCXX01 = K.ZCXX01
+		   AND G.SPXX01 = P.SPXX01
+		   AND G.SPGL12 IN ('1', '3')
+		   AND G.ZCXX01 = CX.GSXX01
+		   AND G.SPXX01 = CX.SPXX01
+		<!-- 
+   		   <if test="MOBILE_MODLE_ID!=null" >
+		   AND (NOT EXISTS (SELECT 1 FROM W_SPCX C WHERE G.ZCXX01=C.ZCXX01 AND G.SPXX01=C.SPXX01)
+  		   OR EXISTS(SELECT 1 FROM W_SPCX C WHERE G.ZCXX01=C.ZCXX01 AND G.SPXX01=C.SPXX01 AND C.MOBILE_MODLE_ID=#{MOBILE_MODLE_ID}))
+		   </if>
+		 -->
+         <choose>
+			<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+			<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+			<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+			<otherwise></otherwise>
+		 </choose>
+		   
+		   AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{prista} as decimal(10,4))
+		   AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priend} as decimal(10,4))
+		<foreach collection="SPNAMELIST" index="index" item="tag" open="" separator="" close="">
+	    		AND P.SPXX04 LIKE '%'||#{tag}||'%'
+	    </foreach>
+	    <!-- 
+	 <if test="SXZDM!=null" >	
+		 <if test="SXZDM!=''">
+			AND G.SPXX01 = X.SPXX01(+)
+			AND G.ZCXX01 = X.ZCXX01(+)		
+			AND X.SXZDM IN
+			 <foreach item="SXZDM" index="index" collection="SXZDM"
+				open="(" separator="," close=")">
+				<![CDATA[#{SXZDM}]]>
+			</foreach>
+		 </if>			
+	</if>
+	     -->
+
+		<if test="sppl!='' and sppl!=null">
+		 	AND P.SPFL01 like #{sppl} || '%' 
+		</if>  
+		
+		<if test="fourCODE!='' and fourCODE!=null">
+		 	AND P.SPFL01 like #{fourCODE} || '%' 
+		</if>  
+		
+		<if test="sixCODE!='' and sixCODE!=null">
+			AND P.PPB01=#{sixCODE}
+		</if>  		
+	
+		 GROUP BY G.SPXX01,
+		          P.SPXX02,
+		          P.SPXX04,
+		          J.SPJGB01,
+		          J.SPJGB02,
+		          G.SPGL04,
+		          J.SPJGB05,
+		          G.ZCXX01,
+		          G.SPGL03,
+		          G.SPGL02,
+		          G.SPGL08,
+		          G.SPGL13,
+		          G.SPGL18,
+		          G.CKSP12,
+		          A.ZCXX02,
+		          G.SPGL06,
+		          G.SPGL14,
+		          G.SPGL15,
+		          P.SPXX08,
+		          CX.HDLX,
+		          A.ZCXX34	 
+         <choose>
+			<when test="sppx==1">ORDER BY A.ZCXX34 DESC, G.SPGL13 ASC</when>
+			<when test="sppx==2">ORDER BY CXJG ASC,SPJGB05 ASC</when>
+			<when test="sppx==3">ORDER BY SPGL18 DESC</when>
+		 </choose>
+	</select>
+	<!--   未登录时查询促销商品  SUM   -->
+  	<select id="CXSPnotloginSum" parameterType="Map" resultType="java.util.Map">
+  		SELECT COUNT(1) SUM FROM(
+		SELECT G.SPXX01 ,
+		       P.SPXX02 ,
+		       P.SPXX04 ,
+		       J.SPJGB01 ,
+		       J.SPJGB02 ,
+		       G.SPGL04 ,
+		       IFNULL(J.SPJGB05, 0) SPJGB05,
+		       G.ZCXX01 ,
+		       G.SPGL13 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL08 ,
+		       A.ZCXX02 ,
+		       G.SPGL06 ,
+		       G.SPGL14 ,
+		       G.SPGL15 ,
+		       P.SPXX08 ,
+		       G.SPGL18 ,
+		       G.CKSP12 SPSX,
+		     	0 CXJG,
+				0 YHJG,
+			    CX.HDLX  CXLX,
+		       SUM(K.CKSP04 + K.CKSP05 - K.KCXX02) SPSL
+		  FROM W_SPGL G, W_SPJGB J, W_KCXX K, W_SPXX P, W_ZCXX A,
+		          (SELECT M.GSXX01, M.SPXX01, M.CXJG, M.HDLX
+		          FROM W_CXZXB M
+		         WHERE 
+		         <!-- 
+		         M.DQXX01 LIKE SUBSTR(#{DQXX01}, 1, 4) || '%'
+		           AND
+		          -->
+		            SYSDATE &gt;= M.BEGAINDATE
+		           AND SYSDATE &lt;= M.ENDDATE) CX
+	     <if test="sxzdm!=null">
+		      <if test="SXZDM!=''">
+			,W_SPSX X
+			  </if>
+		  </if>
+		 WHERE G.SPXX01 = J.SPXX01
+		   AND G.ZCXX01 = J.ZCXX01
+		   AND G.ZCXX01 = A.ZCXX01
+		   AND G.SPXX01 = K.SPXX01
+		   AND G.ZCXX01 = K.ZCXX01
+		   AND G.SPXX01 = P.SPXX01
+		   AND G.SPGL12 IN ('1', '3')
+		   AND G.ZCXX01 = CX.GSXX01
+		   AND G.SPXX01 = CX.SPXX01
+		   <!-- 
+   		   <if test="MOBILE_MODLE_ID!=null" >
+		   AND (NOT EXISTS (SELECT 1 FROM W_SPCX C WHERE G.ZCXX01=C.ZCXX01 AND G.SPXX01=C.SPXX01)
+  		   OR EXISTS(SELECT 1 FROM W_SPCX C WHERE G.ZCXX01=C.ZCXX01 AND G.SPXX01=C.SPXX01 AND C.MOBILE_MODLE_ID=#{MOBILE_MODLE_ID}))
+		   </if>
+		    -->
+         <choose>
+			<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+			<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+			<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+			<otherwise></otherwise>
+		 </choose>
+		   
+		   AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{prista} as decimal(10,4))
+		   AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priend} as decimal(10,4))
+		<foreach collection="SPNAMELIST" index="index" item="tag" open="" separator="" close="">
+	    		AND P.SPXX04 LIKE '%'||#{tag}||'%'
+	    </foreach>
+	    <!-- 
+	 <if test="SXZDM!=null" >	
+		 <if test="SXZDM!=''">
+			AND G.SPXX01 = X.SPXX01(+)
+			AND G.ZCXX01 = X.ZCXX01(+)		
+			AND X.SXZDM IN
+			 <foreach item="SXZDM" index="index" collection="SXZDM"
+				open="(" separator="," close=")">
+				<![CDATA[#{SXZDM}]]>
+			</foreach>
+		 </if>			
+	</if>
+	     -->
+
+		<if test="sppl!='' and sppl!=null">
+		 	AND P.SPFL01 like #{sppl} || '%' 
+		</if>  
+		
+		<if test="fourCODE!='' and fourCODE!=null">
+		 	AND P.SPFL01 like #{fourCODE} || '%' 
+		</if>  
+		
+		<if test="sixCODE!='' and sixCODE!=null">
+			AND P.PPB01=#{sixCODE}
+		</if>  		
+	
+		 GROUP BY G.SPXX01,
+		          P.SPXX02,
+		          P.SPXX04,
+		          J.SPJGB01,
+		          J.SPJGB02,
+		          G.SPGL04,
+		          J.SPJGB05,
+		          CX.HDLX ,
+		          G.ZCXX01,
+		          G.SPGL03,
+		          G.SPGL02,
+		          G.SPGL08,
+		          G.SPGL13,
+		          G.SPGL18,
+		          G.CKSP12,
+		          A.ZCXX02,
+		          G.SPGL06,
+		          G.SPGL14,
+		          G.SPGL15,
+		          P.SPXX08,
+		          A.ZCXX34	 
+         <choose>
+			<when test="sppx==1">ORDER BY A.ZCXX34 DESC, G.SPGL13 ASC</when>
+			<when test="sppx==2">ORDER BY CXJG ASC,SPJGB05 ASC</when>
+			<when test="sppx==3">ORDER BY SPGL18 DESC</when>
+		 </choose>)
+	</select>
+	
+	<!--   未登录时查询 首页商品    分词 搜索 -->
+  	<select id="FCSS" parameterType="Map" resultType="java.util.Map">
+  		<if test="SPMC != '' and SPMC != null">
+		(SELECT DISTINCT GROUP_CONCAT(DISTINCT SH.SPGLLJH01 ORDER BY SH.SPGLLJH01) SPGLLJH01,
+			P.SPXX01, P.SPXX02, WG.BARCODE, P.GGXH, P.SPXX04, J.SPJGB01, J.SPJGB02, G.SPGL04, 
+			IFNULL(J.SPJGB05, 0) SPJGB05, G.ZCXX01, G.SPGL13, G.SPGL03, G.SPGL02, G.SPGL08,
+		    A.ZCXX02, G.SPGL06, G.SPGL14, G.SPGL15, P.SPXX08, G.SPGL18, G.CKSP12 SPSX, 0 CXJG,
+			0 YHJG, 0 CXLX, SUBSTRING_INDEX(S.SPTP02,'.',-1) SPTP02, S.SPTP01, spgl25,
+			<!-- 20151221 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+			<!-- (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,
+		    (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPSL   -->  
+		    fn_getStockNum(G.ZCXX01,#{DQXX01},G.SPXX01) SPIMGURL,
+			fn_getStockNum(G.ZCXX01,#{DQXX01},G.SPXX01) SPSL
+			<!-- 20151221 齐俊宇 update 修改库存数量为函数显示 END -->
+			FROM 	W_SPGL G
+		INNER JOIN W_SPJGB J on G.SPXX01 = J.SPXX01 AND G.ZCXX01 = J.ZCXX01
+		INNER JOIN W_SPXX P on G.SPXX01 = P.SPXX01
+		INNER JOIN W_ZCXX A on G.ZCXX01 = A.ZCXX01
+		LEFT JOIN W_SPGLLJH SH ON G.ZCXX01 = SH.ZCXX01
+		LEFT JOIN (SELECT SPTP01,SPTP02,ZCXX01,SPXX01 FROM W_SPTP GROUP BY SPXX01) S 
+		ON G.ZCXX01 = S.ZCXX01  
+	    AND S.SPXX01 = G.SPXX01
+		INNER JOIN W_GOODS WG on WG.SPXX01 = P.SPXX01
+		INNER JOIN spfl on  spfl.spfl01 = P.spfl01
+		<if test="cxList!='' and cxList!=null and (fcssList=='' or fcssList==null)">
+			LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+		</if>
+		<if test="sxList!='' and sxList!=null">
+			LEFT JOIN W_SPSX SX on G.ZCXX01 = SX.ZCXX01 AND G.SPXX01 = SX.SPXX01
+		</if>
+		<if test="fcssList!='' and fcssList!=null">
+			<if test="cxList!='' and cxList!=null and (cx=='' or cx==null)">
+				LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+			</if>
+			<if test="cx!='' and cx!=null">
+				LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+				LEFT JOIN (SELECT mobile_modle_id,mobile_modle from w_automobile) WA on WA.mobile_modle_id = C.MOBILE_MODLE_ID
+				LEFT JOIN ppb on ppb.ppb01 = P.PPB01
+			</if>
+		</if>
+		WHERE
+			1=1 AND G.SPGL12 IN ('1', '3')
+			AND SH.SPXX01 = G.SPXX01 
+	   		AND(
+	   			P.SPXX04 LIKE CONCAT ('%',#{SPMC},'%')
+	   			<if test="cx != '' and cx != null">
+	   			OR WA.mobile_modle like  CONCAT ('%',#{SPMC},'%')
+	   			</if>
+	   			<if test="fl != '' and fl != null">
+	   			OR spfl.spfl02 like  CONCAT ('%',#{SPMC},'%')
+	   			</if>
+	   			<if test="pp != '' and pp != null">
+	   			OR P.PPB02 like  CONCAT ('%',#{SPMC},'%')
+	   			</if>
+	   		)
+		   	<if test="cxList!='' and cxList!=null">
+			  	AND C.MOBILE_MODLE_ID in
+				<foreach collection="cxList" index="index" item="tag" open="(" separator="," close=")">
+			 	 	#{tag}
+				</foreach>
+		  	</if>
+		  	<if test="sxList!='' and sxList!=null">
+		  		AND SX.SXZDM in
+				<foreach collection="sxList" index="index" item="tag" open="(" separator="," close=")">
+		 	 		#{tag}
+				</foreach>
+		  	</if>
+         	<choose>
+				<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+				<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+				<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+				<otherwise></otherwise>
+		 	</choose>
+		 	<if test="priLow!='' and priTop!=null"><!-- 个人价格 、分销价-电器服云用-->
+			 	<if test="LX==24"><!-- 个人价格 -->
+				   	AND IFNULL(J.SPJGB02, 0) &gt;= cast(#{priLow} as decimal(10,4))
+				   	AND IFNULL(J.SPJGB02, 0) &lt;= cast(#{priTop} as decimal(10,4))
+			 	</if>
+			 	<if test="LX!=24"><!-- 分销价 -->
+				   	AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{priLow} as decimal(10,4))
+				   	AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priTop} as decimal(10,4))
+		 		</if>
+		 	</if>
+		 	<if test="prista!='' and prista!=null"><!-- 分销价-汽服云用 -->
+		   		AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{prista} as decimal(10,4))
+		   		AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priend} as decimal(10,4))
+		 	</if>
+		  	<if test="flList!='' and flList!=null">
+				AND P.SPFL01 in
+				<foreach collection="flList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+			</if>
+		  	<if test="ppList!='' and ppList!=null">
+				AND P.PPB01 in
+				<foreach collection="ppList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+			</if>
+		 	<if test="oe!='' and oe!=null">
+				and exists(select 1 from W_SPGLLJH tt where tt.SPGLLJH01 like CONCAT ('%',#{oe},'%') and G.SPXX01=tt.spxx01)
+			</if>
+			<if test="barcode!='' and barcode!=null">
+				and wg.barcode like CONCAT ('%',#{barcode},'%')
+			</if>
+			<if test="spfl01!='' and spfl01!=null">
+				AND spfl.spfl01 LIKE CONCAT ('%',#{spfl01},'%')
+			</if>
+			<if test="spfl!='' and spfl!=null"><!-- 每级分类均可筛选-20151112-yangwenli -->
+				AND P.SPFL01 like CONCAT (#{spfl},'%')
+			</if>
+        	<choose>
+				<when test="jiage==5">group by P.SPXX01 ORDER BY 	J.SPJGB05 ASC</when>
+				<when test="jiage==6">group by P.SPXX01 ORDER BY 	J.SPJGB05 DESC</when>
+				<when test="jiage==55"><!-- 区分个人价和分销价-电器服云 -->
+					<if test="LX==24">group by P.SPXX01 ORDER BY 	J.SPJGB02 ASC</if>
+					<if test="LX!=24">group by P.SPXX01 ORDER BY 	J.SPJGB05 ASC</if>
+				</when>
+				<when test="jiage==66"><!-- 区分个人价和分销价-电器服云 -->
+					<if test="LX==24">group by P.SPXX01 ORDER BY 	J.SPJGB02 DESC</if>
+					<if test="LX!=24">group by P.SPXX01 ORDER BY 	J.SPJGB05 DESC</if>
+				</when>
+				<when test="jiage==0">group by P.SPXX01 ORDER BY 	P.SPXX04,spfl.SPFL02 ASC</when>
+		 	</choose>)
+		UNION	
+		</if>
+		(SELECT DISTINCT
+				GROUP_CONCAT(DISTINCT SH.SPGLLJH01 ORDER BY SH.SPGLLJH01) SPGLLJH01,
+				P.SPXX01 ,
+		       P.SPXX02 ,
+		       WG.BARCODE,
+		       P.GGXH,
+		       P.SPXX04 ,
+		       J.SPJGB01 ,
+		       J.SPJGB02 ,
+		       G.SPGL04 ,
+		       IFNULL(J.SPJGB05, 0) SPJGB05,
+		       G.ZCXX01 ,
+		       G.SPGL13 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL08 ,
+		       A.ZCXX02 ,
+		       G.SPGL06 ,
+		       G.SPGL14 ,
+		       G.SPGL15 ,
+		       P.SPXX08 ,
+		       G.SPGL18 ,
+		       G.CKSP12 SPSX,
+		     	0 CXJG,
+				0 YHJG,
+				0 CXLX,
+				<!-- 20151123 齐俊宇 update 增加查询图片顺序号 BEGIN -->
+				<!-- SUBSTRING_INDEX(sptp02,'.',-1) SPTP02, -->
+				SUBSTRING_INDEX(S.SPTP02,'.',-1) SPTP02,
+				S.SPTP01,
+				<!-- 20151123 齐俊宇 update 增加查询图片顺序号 END -->
+				spgl25,
+				<!-- 20151221 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+				<!-- (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,
+			    (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPSL   -->  
+			    fn_getStockNum(G.ZCXX01,#{DQXX01},G.SPXX01) SPIMGURL,
+				fn_getStockNum(G.ZCXX01,#{DQXX01},G.SPXX01) SPSL
+				<!-- 20151221 齐俊宇 update 修改库存数量为函数显示 END -->
+		  FROM W_SPGL G
+		INNER JOIN W_SPJGB J on 	G.SPXX01 = J.SPXX01 AND G.ZCXX01 = J.ZCXX01
+		INNER JOIN W_SPXX P on G.SPXX01 = P.SPXX01
+		INNER JOIN W_ZCXX A on G.ZCXX01 = A.ZCXX01
+		<!-- 20151126 齐俊宇 update 优化SQL BEGIN -->
+		<!-- LEFT JOIN w_spglljh SH ON SH.spxx01 = P.spxx01 AND A.zcxx01 = SH.ZCXX01  -->
+		LEFT JOIN W_SPGLLJH SH ON G.ZCXX01 = SH.ZCXX01
+		<!-- 20151126 齐俊宇 update 优化SQL END -->
+		<!-- 20151123 齐俊宇 update 增加查询图片顺序号 BEGIN -->
+		<!-- LEFT JOIN W_SPTP S ON G.ZCXX01=S.ZCXX01 AND S.SPXX01=P.SPXX01 AND S.sptp01 = 1 -->
+		LEFT JOIN (SELECT SPTP01,SPTP02,ZCXX01,SPXX01 FROM W_SPTP GROUP BY SPXX01) S 
+		ON G.ZCXX01 = S.ZCXX01  
+	    AND S.SPXX01 = G.SPXX01
+	    <!-- 20151123 齐俊宇 update 增加查询图片顺序号 END -->
+		INNER JOIN W_GOODS WG on WG.SPXX01 = P.SPXX01
+		INNER JOIN spfl on  spfl.spfl01 = P.spfl01
+		<if test="cxList!='' and cxList!=null and (fcssList=='' or fcssList==null)">
+		LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+		</if>
+		<if test="sxList!='' and sxList!=null">
+		LEFT JOIN W_SPSX SX on G.ZCXX01 = SX.ZCXX01 AND G.SPXX01 = SX.SPXX01
+		</if>
+		<if test="fcssList!='' and fcssList!=null">
+			<!-- 20151211 齐俊宇 update BEGIN -->
+			<if test="cxList!='' and cxList!=null and (cx=='' or cx==null)">
+				LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+			</if>
+			<!-- 20151211 齐俊宇 update END -->
+			<if test="cx!='' and cx!=null">
+			<!-- 20151126 齐俊宇 update 优化SQL BEGIN -->
+				LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+				LEFT JOIN (SELECT <!-- type_code, -->mobile_modle_id,mobile_modle from w_automobile) WA on WA.mobile_modle_id = C.MOBILE_MODLE_ID  <!-- C.modle_id -->
+				LEFT JOIN ppb on ppb.ppb01 = P.PPB01
+			</if>
+			<!-- 20151126 齐俊宇 update 优化SQL END -->
+		</if>
+		WHERE
+			1=1 AND G.SPGL12 IN ('1', '3')
+			<!-- 20151126 齐俊宇 update 优化SQL BEGIN -->
+			AND SH.SPXX01 = G.SPXX01 
+			<!-- 20151126 齐俊宇 update 优化SQL END -->
+   		   	<if test="fcssList!='' and fcssList!=null">
+   		   	<!-- 20151211 齐俊宇 update SQL BEGIN -->
+			AND (
+				<if test="SPXX04_list!='' and SPXX04_list!=null">
+					<foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+				 		P.SPXX04 like  CONCAT ('%',#{tag},'%')
+					</foreach>
+		  		</if>
+			  	<if test="cx!='' and cx!=null">
+				  	OR
+				    <foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+				 		WA.mobile_modle like  CONCAT ('%',#{tag},'%')
+					</foreach>
+			  	</if>
+		  		<if test="fl!='' and fl!=null">
+			  		OR
+			  		<foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+				 		spfl.spfl02 like  CONCAT ('%',#{tag},'%')
+					</foreach>
+		  		</if>
+			  	<if test="pp!='' and pp!=null">
+				  	OR
+				  	<foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+					 	P.PPB02 like  CONCAT ('%',#{tag},'%')
+					</foreach>
+			  	</if>
+			  	)
+		 	<!-- 20151211 齐俊宇 update SQL END -->
+		 	</if>
+		   	<if test="cxList!='' and cxList!=null">
+			  	AND C.MOBILE_MODLE_ID in
+				<foreach collection="cxList" index="index" item="tag" open="(" separator="," close=")">
+			 	 	#{tag}
+				</foreach>
+		  	</if>
+		  	<if test="sxList!='' and sxList!=null">
+		  		AND SX.SXZDM in
+				<foreach collection="sxList" index="index" item="tag" open="(" separator="," close=")">
+		 	 		#{tag}
+				</foreach>
+		  	</if>
+         	<choose>
+				<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+				<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+				<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+				<otherwise></otherwise>
+		 	</choose>
+		 	<if test="priLow!='' and priTop!=null"><!-- 个人价格 、分销价-电器服云用-->
+			 	<if test="LX==24"><!-- 个人价格 -->
+				   	AND IFNULL(J.SPJGB02, 0) &gt;= cast(#{priLow} as decimal(10,4))
+				   	AND IFNULL(J.SPJGB02, 0) &lt;= cast(#{priTop} as decimal(10,4))
+			 	</if>
+			 	<if test="LX!=24"><!-- 分销价 -->
+				   	AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{priLow} as decimal(10,4))
+				   	AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priTop} as decimal(10,4))
+		 		</if>
+		 	</if>
+		 	<if test="prista!='' and prista!=null"><!-- 分销价-汽服云用 -->
+		   		AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{prista} as decimal(10,4))
+		   		AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priend} as decimal(10,4))
+		 	</if>
+		  	<!--  
+			<if test="SPNAMELIST!=null and SPNAMELIST!='' and SPNAMELIST!=undefined" >
+		  		AND (P.SPXX04 LIKE CONCAT ('%',#{SPNAMELIST},'%') or WG.BARCODE =#{SPNAMELIST} or A.ZCXX02 =#{SPNAMELIST})
+			</if>
+			-->
+		  	<if test="flList!='' and flList!=null">
+				AND P.SPFL01 in
+				<foreach collection="flList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+			</if>
+		  	<if test="ppList!='' and ppList!=null">
+				AND P.PPB01 in
+				<foreach collection="ppList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+			</if>
+		 	<if test="oe!='' and oe!=null">
+				and exists(select 1 from W_SPGLLJH tt where tt.SPGLLJH01 like CONCAT ('%',#{oe},'%') and G.SPXX01=tt.spxx01)
+			</if>
+			<if test="barcode!='' and barcode!=null">
+				and wg.barcode like CONCAT ('%',#{barcode},'%')
+			</if>
+			<if test="spfl01!='' and spfl01!=null">
+				AND spfl.spfl01 LIKE CONCAT ('%',#{spfl01},'%')
+			</if>
+			<!-- <if test="SPXX04_list!='' and SPXX04_list!=null">
+		  		AND(
+				<foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+			 		P.SPXX04 like  CONCAT ('%',#{tag},'%')
+				</foreach>
+				)
+		  	</if> -->
+		  	<if test="spfl!='' and spfl!=null"><!-- 每级分类均可筛选-20151112-yangwenli -->
+				AND P.SPFL01 like CONCAT (#{spfl},'%')
+			</if>
+        	<choose>
+				<when test="jiage==5">group by P.SPXX01 ORDER BY 	J.SPJGB05 ASC</when>
+				<when test="jiage==6">group by P.SPXX01 ORDER BY 	J.SPJGB05 DESC</when>
+				<when test="jiage==55"><!-- 区分个人价和分销价-电器服云 -->
+					<if test="LX==24">group by P.SPXX01 ORDER BY 	J.SPJGB02 ASC</if>
+					<if test="LX!=24">group by P.SPXX01 ORDER BY 	J.SPJGB05 ASC</if>
+				</when>
+				<when test="jiage==66"><!-- 区分个人价和分销价-电器服云 -->
+					<if test="LX==24">group by P.SPXX01 ORDER BY 	J.SPJGB02 DESC</if>
+					<if test="LX!=24">group by P.SPXX01 ORDER BY 	J.SPJGB05 DESC</if>
+				</when>
+				<when test="jiage==0">group by P.SPXX01 ORDER BY 	P.SPXX04,spfl.SPFL02 ASC</when>
+		 	</choose>)
+		 	
+	</select>
+	
+	<select id="FCSSSUM" parameterType="Map" resultType="java.util.Map">
+	SELECT COUNT(1) SUM FROM (
+		<if test="SPMC != '' and SPMC != null">
+		(SELECT DISTINCT GROUP_CONCAT(DISTINCT SH.SPGLLJH01 ORDER BY SH.SPGLLJH01) SPGLLJH01,
+			P.SPXX01, P.SPXX02, WG.BARCODE, P.GGXH, P.SPXX04, J.SPJGB01, J.SPJGB02, G.SPGL04, 
+			IFNULL(J.SPJGB05, 0) SPJGB05, G.ZCXX01, G.SPGL13, G.SPGL03, G.SPGL02, G.SPGL08,
+		    A.ZCXX02, G.SPGL06, G.SPGL14, G.SPGL15, P.SPXX08, G.SPGL18, G.CKSP12 SPSX, 0 CXJG,
+			0 YHJG, 0 CXLX, SUBSTRING_INDEX(S.SPTP02,'.',-1) SPTP02, S.SPTP01, spgl25,
+			<!-- 20151221 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+			<!-- (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,
+		    (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPSL   -->  
+		    fn_getStockNum(G.ZCXX01,#{DQXX01},G.SPXX01) SPIMGURL,
+			fn_getStockNum(G.ZCXX01,#{DQXX01},G.SPXX01) SPSL
+			<!-- 20151221 齐俊宇 update 修改库存数量为函数显示 END -->
+		FROM W_SPGL G
+		INNER JOIN W_SPJGB J on G.SPXX01 = J.SPXX01 AND G.ZCXX01 = J.ZCXX01
+		INNER JOIN W_SPXX P on G.SPXX01 = P.SPXX01
+		INNER JOIN W_ZCXX A on G.ZCXX01 = A.ZCXX01
+		LEFT JOIN W_SPGLLJH SH ON G.ZCXX01 = SH.ZCXX01
+		LEFT JOIN (SELECT SPTP01,SPTP02,ZCXX01,SPXX01 FROM W_SPTP GROUP BY SPXX01) S 
+		ON G.ZCXX01 = S.ZCXX01  
+	    AND S.SPXX01 = G.SPXX01
+		INNER JOIN W_GOODS WG on WG.SPXX01 = P.SPXX01
+		INNER JOIN spfl on  spfl.spfl01 = P.spfl01
+		<if test="cxList!='' and cxList!=null and (fcssList=='' or fcssList==null)">
+			LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+		</if>
+		<if test="sxList!='' and sxList!=null">
+			LEFT JOIN W_SPSX SX on G.ZCXX01 = SX.ZCXX01 AND G.SPXX01 = SX.SPXX01
+		</if>
+		<if test="fcssList!='' and fcssList!=null">
+			<if test="cxList!='' and cxList!=null and (cx=='' or cx==null)">
+				LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+			</if>
+			<if test="cx!='' and cx!=null">
+				LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+				LEFT JOIN (SELECT mobile_modle_id,mobile_modle from w_automobile) WA on WA.mobile_modle_id = C.MOBILE_MODLE_ID
+				LEFT JOIN ppb on ppb.ppb01 = P.PPB01
+			</if>
+		</if>
+		WHERE
+			1=1 AND G.SPGL12 IN ('1', '3')
+			AND SH.SPXX01 = G.SPXX01 
+	   		AND(
+	   			P.SPXX04 LIKE CONCAT ('%',#{SPMC},'%')
+	   			<if test="cx != '' and cx != null">
+	   			OR WA.mobile_modle like  CONCAT ('%',#{SPMC},'%')
+	   			</if>
+	   			<if test="fl != '' and fl != null">
+	   			OR spfl.spfl02 like  CONCAT ('%',#{SPMC},'%')
+	   			</if>
+	   			<if test="pp != '' and pp != null">
+	   			OR P.PPB02 like  CONCAT ('%',#{SPMC},'%')
+	   			</if>
+	   		)
+		   	<if test="cxList!='' and cxList!=null">
+			  	AND C.MOBILE_MODLE_ID in
+				<foreach collection="cxList" index="index" item="tag" open="(" separator="," close=")">
+			 	 	#{tag}
+				</foreach>
+		  	</if>
+		  	<if test="sxList!='' and sxList!=null">
+		  		AND SX.SXZDM in
+				<foreach collection="sxList" index="index" item="tag" open="(" separator="," close=")">
+		 	 		#{tag}
+				</foreach>
+		  	</if>
+         	<choose>
+				<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+				<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+				<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+				<otherwise></otherwise>
+		 	</choose>
+		 	<if test="priLow!='' and priTop!=null"><!-- 个人价格 、分销价-电器服云用-->
+			 	<if test="LX==24"><!-- 个人价格 -->
+				   	AND IFNULL(J.SPJGB02, 0) &gt;= cast(#{priLow} as decimal(10,4))
+				   	AND IFNULL(J.SPJGB02, 0) &lt;= cast(#{priTop} as decimal(10,4))
+			 	</if>
+			 	<if test="LX!=24"><!-- 分销价 -->
+				   	AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{priLow} as decimal(10,4))
+				   	AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priTop} as decimal(10,4))
+		 		</if>
+		 	</if>
+		 	<if test="prista!='' and prista!=null"><!-- 分销价-汽服云用 -->
+		   		AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{prista} as decimal(10,4))
+		   		AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priend} as decimal(10,4))
+		 	</if>
+		  	<if test="flList!='' and flList!=null">
+				AND P.SPFL01 in
+				<foreach collection="flList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+			</if>
+		  	<if test="ppList!='' and ppList!=null">
+				AND P.PPB01 in
+				<foreach collection="ppList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+			</if>
+		 	<if test="oe!='' and oe!=null">
+				and exists(select 1 from W_SPGLLJH tt where tt.SPGLLJH01 like CONCAT ('%',#{oe},'%') and G.SPXX01=tt.spxx01)
+			</if>
+			<if test="barcode!='' and barcode!=null">
+				and wg.barcode like CONCAT ('%',#{barcode},'%')
+			</if>
+			<if test="spfl01!='' and spfl01!=null">
+				AND spfl.spfl01 LIKE CONCAT ('%',#{spfl01},'%')
+			</if>
+			<if test="spfl!='' and spfl!=null"><!-- 每级分类均可筛选-20151112-yangwenli -->
+				AND P.SPFL01 like CONCAT (#{spfl},'%')
+			</if>
+        	<choose>
+				<when test="jiage==5">group by P.SPXX01 ORDER BY 	J.SPJGB05 ASC</when>
+				<when test="jiage==6">group by P.SPXX01 ORDER BY 	J.SPJGB05 DESC</when>
+				<when test="jiage==55"><!-- 区分个人价和分销价-电器服云 -->
+					<if test="LX==24">group by P.SPXX01 ORDER BY 	J.SPJGB02 ASC</if>
+					<if test="LX!=24">group by P.SPXX01 ORDER BY 	J.SPJGB05 ASC</if>
+				</when>
+				<when test="jiage==66"><!-- 区分个人价和分销价-电器服云 -->
+					<if test="LX==24">group by P.SPXX01 ORDER BY 	J.SPJGB02 DESC</if>
+					<if test="LX!=24">group by P.SPXX01 ORDER BY 	J.SPJGB05 DESC</if>
+				</when>
+				<when test="jiage==0">group by P.SPXX01 ORDER BY 	P.SPXX04,spfl.SPFL02 ASC</when>
+		 	</choose>)
+		UNION	
+		</if>
+				(SELECT DISTINCT
+				GROUP_CONCAT(DISTINCT SH.SPGLLJH01 ORDER BY SH.SPGLLJH01) SPGLLJH01,
+				P.SPXX01 ,
+		       P.SPXX02 ,
+		       WG.BARCODE,
+		       P.GGXH,
+		       P.SPXX04 ,
+		       J.SPJGB01 ,
+		       J.SPJGB02 ,
+		       G.SPGL04 ,
+		       IFNULL(J.SPJGB05, 0) SPJGB05,
+		       G.ZCXX01 ,
+		       G.SPGL13 ,
+		       G.SPGL03 ,
+		       G.SPGL02 ,
+		       G.SPGL08 ,
+		       A.ZCXX02 ,
+		       G.SPGL06 ,
+		       G.SPGL14 ,
+		       G.SPGL15 ,
+		       P.SPXX08 ,
+		       G.SPGL18 ,
+		       G.CKSP12 SPSX,
+		     	0 CXJG,
+				0 YHJG,
+				0 CXLX,
+				<!-- 20151123 齐俊宇 update 增加查询图片顺序号 BEGIN -->
+				<!-- SUBSTRING_INDEX(sptp02,'.',-1) SPTP02, -->
+				SUBSTRING_INDEX(S.SPTP02,'.',-1) SPTP02,
+				S.SPTP01,
+				<!-- 20151123 齐俊宇 update 增加查询图片顺序号 END -->
+				spgl25,
+				<!-- 20151221 齐俊宇 update 修改库存数量为函数显示 BEGIN -->
+				<!-- (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPIMGURL,
+			    (select ifnull(sum(K.CKSP04 + K.CKSP05 + K.KCXX01 - K.KCXX02),0) from W_KCXX K LEFT JOIN CK ON ck.ck01 = K.ck01 WHERE ck.ck09= '0' and k.spxx01= P.SPXX01 and k.zcxx01=G.ZCXX01 and k.ck01 in (select ck01 from w_dqck where dqxx01=#{DQXX01} )) SPSL   -->  
+			    fn_getStockNum(G.ZCXX01,#{DQXX01},G.SPXX01) SPIMGURL,
+				fn_getStockNum(G.ZCXX01,#{DQXX01},G.SPXX01) SPSL
+				<!-- 20151221 齐俊宇 update 修改库存数量为函数显示 END -->
+		FROM W_SPGL G
+		INNER JOIN W_SPJGB J on 	G.SPXX01 = J.SPXX01 AND G.ZCXX01 = J.ZCXX01
+		INNER JOIN W_SPXX P on G.SPXX01 = P.SPXX01
+		INNER JOIN W_ZCXX A on G.ZCXX01 = A.ZCXX01
+		<!-- 20151126 齐俊宇 update 优化SQL BEGIN -->
+		<!-- LEFT JOIN w_spglljh SH ON SH.spxx01 = P.spxx01 AND A.zcxx01 = SH.ZCXX01  -->
+		LEFT JOIN W_SPGLLJH SH ON G.ZCXX01 = SH.ZCXX01
+		<!-- 20151126 齐俊宇 update 优化SQL END -->
+		<!-- 20151123 齐俊宇 update 增加查询图片顺序号 BEGIN -->
+		<!-- LEFT JOIN W_SPTP S ON G.ZCXX01=S.ZCXX01 AND S.SPXX01=P.SPXX01 AND S.sptp01 = 1 -->
+		LEFT JOIN (SELECT SPTP01,SPTP02,ZCXX01,SPXX01 FROM W_SPTP GROUP BY SPXX01) S 
+		ON G.ZCXX01 = S.ZCXX01  
+	    AND S.SPXX01 = G.SPXX01
+	    <!-- 20151123 齐俊宇 update 增加查询图片顺序号 END -->
+		INNER JOIN W_GOODS WG on WG.SPXX01 = P.SPXX01
+		INNER JOIN spfl on  spfl.spfl01 = P.spfl01
+		<if test="cxList!='' and cxList!=null and (fcssList=='' or fcssList==null)">
+			LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+		</if>
+		<if test="sxList!='' and sxList!=null">
+			LEFT JOIN W_SPSX SX on G.ZCXX01 = SX.ZCXX01 AND G.SPXX01 = SX.SPXX01
+		</if>
+		<if test="fcssList!='' and fcssList!=null">
+			<if test="cxList!='' and cxList!=null and (cx=='' or cx==null)">
+				LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+			</if>
+			<!-- 20151126 齐俊宇 update 优化SQL BEGIN -->
+			<if test="cx!='' and cx!=null">
+				LEFT JOIN W_SPCX C on G.ZCXX01 = C.ZCXX01 AND G.SPXX01 = C.SPXX01
+				LEFT JOIN (SELECT <!-- type_code, -->mobile_modle_id,mobile_modle from w_automobile) WA on WA.mobile_modle_id = C.MOBILE_MODLE_ID  <!-- C.modle_id -->
+				LEFT JOIN ppb on ppb.ppb01 = P.PPB01
+			</if>
+			<!-- 20151126 齐俊宇 update 优化SQL END -->
+		</if>
+		WHERE
+			1=1 AND G.SPGL12 IN ('1', '3')
+			<!-- 20151126 齐俊宇 update 优化SQL BEGIN -->
+			AND SH.SPXX01 = G.SPXX01 
+			<!-- 20151126 齐俊宇 update 优化SQL END -->
+   		   	<if test="fcssList!='' and fcssList!=null">
+   		   	<!-- 20151211 齐俊宇 update SQL BEGIN -->
+   		   	AND (
+				<if test="SPXX04_list!='' and SPXX04_list!=null">
+					<foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+				 		P.SPXX04 like  CONCAT ('%',#{tag},'%')
+					</foreach>
+		  		</if>
+			  	<if test="cx!='' and cx!=null">
+				  	OR
+				    <foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+				 		WA.mobile_modle like  CONCAT ('%',#{tag},'%')
+					</foreach>
+			  	</if>
+		  		<if test="fl!='' and fl!=null">
+			  		OR
+			  		<foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+				 		spfl.spfl02 like  CONCAT ('%',#{tag},'%')
+					</foreach>
+		  		</if>
+			  	<if test="pp!='' and pp!=null">
+				  	OR
+				  	<foreach collection="fcssList" index="index" item="tag" open="(" separator="OR" close=")">
+					 	P.PPB02 like  CONCAT ('%',#{tag},'%')
+					</foreach>
+			  	</if>
+			  	)
+		 	</if>
+		 	<!-- 20151211 齐俊宇 update SQL END -->
+		   	<if test="cxList!='' and cxList!=null">
+		  		AND C.MOBILE_MODLE_ID in
+				<foreach collection="cxList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+		  	</if>
+		  	<if test="sxList!='' and sxList!=null">
+		  		AND SX.SXZDM in
+				<foreach collection="sxList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+		  	</if>
+         	<choose>
+				<when test="SPGL02==2">AND G.SPGL02 = 2 </when>
+				<when test="SPGL02==0">AND G.SPGL02 = 0 AND G.SPGL19 = 1 </when>
+				<when test="SPGL02==3">AND G.SPGL02 = 0 </when><!--  明珠B2B增加 -->
+				<otherwise></otherwise>
+		 	</choose>
+		 	<if test="priLow!='' and priTop!=null"><!-- 个人价格 、分销价-电器服云用-->
+				<if test="LX==24"><!-- 个人价格 -->
+				  	AND IFNULL(J.SPJGB02, 0) &gt;= cast(#{priLow} as decimal(10,4))
+				   	AND IFNULL(J.SPJGB02, 0) &lt;= cast(#{priTop} as decimal(10,4))
+			 	</if>
+				<if test="LX!=24"><!-- 分销价 -->
+				   	AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{priLow} as decimal(10,4))
+				   	AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priTop} as decimal(10,4))
+			 	</if>
+		 	</if>
+		 	<if test="prista!='' and prista!=null"><!-- 分销价-汽服云用 -->
+			   	AND IFNULL(J.SPJGB05, 0) &gt;= cast(#{prista} as decimal(10,4))
+			   	AND IFNULL(J.SPJGB05, 0) &lt;= cast(#{priend} as decimal(10,4))
+		 	</if>
+		  	<!--  
+			<if test="SPNAMELIST!=null and SPNAMELIST!='' and SPNAMELIST!=undefined" >
+	  			AND (P.SPXX04 LIKE CONCAT ('%',#{SPNAMELIST},'%') or WG.BARCODE =#{SPNAMELIST} or A.ZCXX02 =#{SPNAMELIST})
+			</if>
+			-->
+		  	<if test="flList!='' and flList!=null">
+				AND P.SPFL01 in
+				<foreach collection="flList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+			</if>
+		  	<if test="ppList!='' and ppList!=null">
+				AND P.PPB01 in
+				<foreach collection="ppList" index="index" item="tag" open="(" separator="," close=")">
+			 		#{tag}
+				</foreach>
+			</if>
+		 	<if test="oe!='' and oe!=null">
+				and exists(select 1 from W_SPGLLJH tt where tt.SPGLLJH01 like CONCAT ('%',#{oe},'%') and G.SPXX01=tt.spxx01)
+			</if>
+			<if test="barcode!='' and barcode!=null">
+				and wg.barcode like CONCAT ('%',#{barcode},'%')
+			</if>
+			<if test="spfl01!='' and spfl01!=null">
+				AND spfl.spfl01 LIKE CONCAT ('%',#{spfl01},'%')
+			</if>
+		  	<if test="spfl!='' and spfl!=null"><!-- 每级分类均可筛选-20151112-yangwenli -->
+				AND P.SPFL01 like CONCAT (#{spfl},'%')
+			</if>
+        	<choose>
+				<when test="jiage==5">group by P.SPXX01 ORDER BY 	J.SPJGB05 ASC</when>
+				<when test="jiage==6">group by P.SPXX01 ORDER BY 	J.SPJGB05 DESC</when>
+				<when test="jiage==55"><!-- 区分个人价和分销价-电器服云 -->
+					<if test="LX==24">group by P.SPXX01 ORDER BY 	J.SPJGB02 ASC</if>
+					<if test="LX!=24">group by P.SPXX01 ORDER BY 	J.SPJGB05 ASC</if>
+				</when>
+				<when test="jiage==66"><!-- 区分个人价和分销价-电器服云 -->
+					<if test="LX==24">group by P.SPXX01 ORDER BY 	J.SPJGB02 DESC</if>
+					<if test="LX!=24">group by P.SPXX01 ORDER BY 	J.SPJGB05 DESC</if>
+				</when>
+				<when test="jiage==0">group by P.SPXX01</when><!-- add 20151023 商品查询过滤 -->
+		 	</choose>)
+		) as total
+	</select>
+</mapper>
+  

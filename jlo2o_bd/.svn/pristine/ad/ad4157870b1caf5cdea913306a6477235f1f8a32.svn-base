@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 卖家中心</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<script type="text/javascript" src="/js/ext-base.js"></script>
+<script type="text/javascript" src="/js/ext-all.js"></script>
+<script type="text/javascript" src="/js/ext-lang-zh_CN.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+var MyCookie = $.cookie('userInfo');
+var usercookie = JSON.parse(MyCookie);
+//初始化数据
+function initData(){
+	var XmlData=[{'sqlid':'com.jlsoft.o2o.qxgl.sql.oper_fwsgl.selectGSGXList','QryType':'Report','dataType':'Json','ZTID' : usercookie.ZCXX01, 'HYMC' : $("#hymc").val(), 'DQBZM01' : $("#sqqy").val(), 'PPB01' : $("#ppmc").val(), 'STATE' : $("#state").val()}];
+	return visitGrid("/jlquery/selecto2o.action",JSON.stringify(XmlData));
+}
+</script>
+<script type="text/javascript" src="/js/jquery.kkPages.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<div class="clera"></div>
+	<ul id="screening">
+	   <li style="width:830px;">
+	   	<span>会员名称：</span>
+		<input type="text" id="hymc" name="hymc" value="" size="20" class="text" />
+
+	   	<span>品牌名称：</span>
+	   	<select id="ppmc" name="ppmc">
+	   		<option value="">全部</option>
+	   	</select>
+	   	
+	   	<span>授权区域：</span>
+	   	<select id="sqqy" name="sqqy">
+	   		<option value="">全部</option>
+	   	</select>
+	   </li>
+	   
+	   <li style="width:830px;float:left;">
+	    	<span class="shzt">审核状态：</span>
+	     	<script type="text/javascript">
+				document.write(showStateHtml('FWSZT','state','0'));
+			</script>
+			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="newXX()">新增</a>
+			<a href="javascript:void(0);" class="bot Shot seach_bot" onclick="query()">查询</a>
+			<a href="javascript:void(0);" class="bot Shot seach_bot" style="width:auto;" onclick="go()">物流范围</a>
+	   </li>
+	</ul>
+	<div class="clera"></div>
+	
+	<div class="center">
+		<div jl jlid="DefStaPer" id="lb"  style="overflow:auto;" newclos="4"  multiPage="true"  url="/jlquery/selecto2o.action" 
+		columnsArr="[
+						{'property':'ZCXX02','header':'会员名称','type':'lable','width':'100px'},
+						{'property':'PPB02','header':'品牌名称','type':'lable','width':'200px'},
+						{'property':'DQBZM02','header':'授权区域','type':'lable','width':'130px'},
+						{'property':'ENDTIME','header':'有效期至','type':'lable','width':'100px'},
+						{'property':'FWSZT','header':'状态','type':'number','width':'100px'},
+						{'property':'HBID','header':'操作','type':'fwscz','width':'100px'}
+					]">
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(function(){
+	var jsonData = [{"ZCXX01" : usercookie.ZCXX01}];
+	var url = "/Oper_FWSGL/selectKXPP.action?jsonData=" + JSON.stringify(jsonData);
+	var rData = visitService(url);
+	if(rData.STATE == "1"){
+		var rsList = rData.resultList;
+		if(rsList != "" && rsList != undefined){
+			$(rsList).each(function(i,val){
+				var s = "<option value='" + val.PPBH + "'>" + val.PPMC + "</option>";
+				$("#ppmc").append(s);
+			});
+		}
+	}
+	
+	var url = "/Oper_FWSGL/selectGSGXQY.action?jsonData=" + JSON.stringify(jsonData);
+	var qyData = visitService(url);
+	if(qyData.STATE == "1"){
+		var rsList = qyData.resultList;
+		if(rsList != "" && rsList != undefined){
+			$(rsList).each(function(i,val){
+				var dq = val.PROV + val.DQBZM02;
+				/* if(val.PROV == ""){
+					dq =  val.DQBZM02 + "全境"; 
+				} */
+				var s = "<option value='" + val.DQBZM01 + "'>" + dq + "</option>";
+				$("#sqqy").append(s);
+			});
+		}
+	}
+});
+
+// 查询
+function query(){
+  	init();
+}
+function newXX(){
+	window.location.href = '/customer/qfy/back/qxgl/Oper_FWSCJ.html';
+}
+
+function go(){
+	window.location.href = '/customer/qfy/back/qxgl/Oper_FWSWL.html';
+}
+//执行回调方法
+function backFun(parameters){
+	query();
+}
+
+// 品牌查看
+function check(hbid, sqzt){
+	window.location.href = "/customer/qfy/back/qxgl/Oper_FWSGL_item.html?HBID=" + escape(hbid) +"&SQZT=" + escape(sqzt);
+}
+
+// 服务商终止 启用
+function changeState(gid, zt){
+	var jsonData = [{"ZTID" : usercookie.ZCXX01, "HBID" : gid, "STATE" : zt}]
+	var url = "/Oper_FWSGL/updateFWSGLZT.action?jsonData=" + JSON.stringify(jsonData);
+	var rData = visitService(url);
+	if(rData.STATE == "1"){
+		alert("操作成功!");
+	}
+	window.location.reload();
+}
+
+</script>

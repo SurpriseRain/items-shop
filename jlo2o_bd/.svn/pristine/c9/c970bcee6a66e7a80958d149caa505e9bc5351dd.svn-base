@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>串码管理</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<link rel="stylesheet" type="text/css" href="/css/kkPages.css" />
+<link href="/customer/qfy/css/default.css" type="text/css" rel="stylesheet" />
+<link href="/customer/qfy/css/style.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="/css/multiSelectTree.css" />
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/tsStyle.css" />
+<link type="text/css" rel="stylesheet" href="/customer/qfy/css/style.css"/>
+<link rel="stylesheet" type="text/css" href="/control/css/tablekj.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script>
+<script type="text/javascript" src="/js/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/columns_carlist.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/columns/extGridColumns_change.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/control/js/tableGridList.js"></script>
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript" src="/js/jquery.gridPages.js"></script>
+<style>
+	.tj {
+	    float: right;
+	    background: #ff8800 none repeat scroll 0 0;
+	    border: 1px solid #cccccc;
+	    color: #ffffff;
+	    cursor: pointer;
+	    font-size: 16px;
+	    line-height: 20px;
+	    margin-left: 50px;
+	    padding: 5px 10px;
+	    text-align: center;
+	    width: 80px;
+	}
+	.list_table{margin-left:30px;}
+	.list_table .title{font-size:16px;height:30px;line-height:30px;text-align:left;}
+	.list_table li{width:440px;line-height:30px;height:30px;font-size:14px;}
+	
+</style>
+<script type="text/javascript">
+//初始化数据
+var MyCookie = $.cookie('userInfo');
+/* if(MyCookie==null){
+	alert("亲，您还未登录！");
+	location.href="/gui_o2o/qfy/fore/index.html";
+} */
+var user = JSON.parse(MyCookie);
+var gsid=user.ZCXX01;
+var czr = user.XTCZY01;
+function okclick(){
+	//商品条码
+	var Barcode = $("#Barcode").val();
+	//商品名称
+	var GoodsName = $("#GoodsName").val();
+	//批次号
+	var BatchNumber = $("#BatchNumber").val();
+	//公司编码
+	var ZCXX01 = gsid ;
+	//顺序号
+	var SerialNumber =  $("#SerialNumber").val();
+	//配件数量
+	var GoodsNumber =  $("#GoodsNumber").val();
+	$(".list_table").empty();
+	var XmlData=[{'Barcode':Barcode,'GoodsName':GoodsName,'BatchNumber':BatchNumber,'ZCXX01':gsid,'CZR':czr,'SerialNumber':SerialNumber,'GoodsNumber':GoodsNumber}];
+	var url="/XmlUploadProduct/insertW_SPCM.action?XmlData="+JSON.stringify(XmlData);
+	var returnVal=visitService(url);
+	if(returnVal.list!=null){
+		var loginState = returnVal.STATE;
+		$(".list_table").append("<h4 class='title' style='width:180px;'>串码</h4>")
+		 $(returnVal.list).each(function(x,obj){
+			 $(".list_table").append("<ul id='tr_"+x+"' class='jl'>")
+							 .append("<li class='case2'><span>"+obj+"</span><b style='color:red; font-size:24px;margin-left:5px;'>√</b></li>")
+							 .append("</ul>");
+		});
+		if (loginState == 1) {
+			alert("保存成功！");
+		}else{
+			alert("保存失败！");
+		}
+	}
+	
+}
+</script>
+</head>
+<body>
+	<ul id="screening">
+		<li>
+    	<span style="width:80px">商品条码：</span>
+    	<input name="Barcode" id="Barcode" style="width:100px"/>
+		<span style="width:80px">产品名称：</span>
+		<input type="text" id="GoodsName" readonly="readonly" style="width:80px"/>
+		<span style="width:60px">批次号：</span>
+		<input id="BatchNumber" style="width:60px" type="text"/>
+		<span style="width:80px">顺序号：</span>
+		<input id="SerialNumber" type="text" placeholder="顺序号" style="width:60px"/>
+		<span style="width:60px">数量：</span>
+		<input id="GoodsNumber" type="text" placeholder="数量" style="width:60px"/>
+	   </li>
+	   <li>
+			<a class="tj" onclick="excelExport();">导出</a>
+		   	<a class="tj" onclick="okclick();">生成</a>
+	   </li>
+	</ul>
+<div class="clera"></div>
+<div class="center">
+	<div class="list_table">
+ 	
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="/control/js/o2o.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var date = new Date()
+	var currentTime = date.getFullYear()+""+(date.getMonth()+1)+""+date.getDate();
+	$("#BatchNumber").val(currentTime);
+
+	//批次号
+	$("#BatchNumber").blur(function(){
+		if($("#BatchNumber").val()==""){
+			alert("请先填写批次号");
+			return false;
+		}
+		if (!/^[A-Z0-9]+$/.test($("#BatchNumber").val())) {
+			alert("批次号只能是大写字母或者数字");
+			$("#BatchNumber").val("");
+	    	return false;
+	  	} 
+	}); 
+
+	//顺序号判断
+	$("#SerialNumber").blur(function(){
+		if($("#Barcode").val()==""){
+			alert("请先填写条码");
+			return false;
+		}
+		if($("#SerialNumber").val()==""){
+			alert("请输入顺序!");
+			return false;
+		}else{
+			if(!/^[A-Z0-9]+$/.test($("#SerialNumber").val())){
+		  		alert("顺序号只能是大写字母或者数字");
+		  		$("#SerialNumber").val("");
+		    	return false;
+		  	}
+
+			//顺序号
+			var SerialNumber=$("#SerialNumber").val();
+			//批次号
+			var BatchNumber = $("#BatchNumber").val();
+			//条码
+			var Barcode = $("#Barcode").val();
+			var XmlData = [{"Barcode":Barcode,"BatchNumber":BatchNumber,"SerialNumber":SerialNumber}];
+			var url="/XmlUploadProduct/get_SXH.action?XmlData="+JSON.stringify(XmlData);
+			var rData=visitService(url);
+			if(rData!=null){
+				if(rData.STATE!=null&&rData.STATE==0){
+					$("#SerialNumber").val("");
+					alert("已存在!");
+					return false;
+				}
+			}
+		}
+	}); 
+	//数量判断
+	$("#GoodsNumber").blur(function(){
+		if($("#GoodsNumber").val()==""){
+			alert("请输数量!");
+			return false;
+		}
+		if (escape($("#GoodsNumber").val()).indexOf('%u') != -1) {
+			alert("不能输入中文");
+	    	return false;
+	  	}
+	});
+	//商品条码判断是是否存在
+	$("#Barcode").blur(function(){
+		var Barcode=$("#Barcode").val();
+		var XmlData = [{"BARCODE":Barcode}];
+		var XmlData=JSON.stringify(XmlData);
+		if(Barcode==""){
+			alert("请输入商品条码!");
+			return false;
+		}else if(Barcode.length != 13){
+			alert("请输入13位商品条码!");
+			return false;
+		}
+		var url="/MyGoods/SrchGoods.action?XmlData="+XmlData;
+		var rData=visitService(url);
+		if(rData.goodsMap!=null&&rData.goodsMap.FLAG!="NO"&&rData.goodsMap.JL_State!="接收失败"){
+			var goodsMap=rData.goodsMap;
+			$("#GoodsName").val(goodsMap.itemName);
+		}else{
+			alert("不存在此条码!");
+			$("#GoodsName").val("");
+			return false;
+		}
+	});
+});
+
+function initData(){
+	//jsonData=[{"DJBH"=0, CKDTIEM={cmclry=系统管理员, cmclsj=2015-02-12 16:12:11, SPXX01=177,SPXX04=进气系统清洗剂, spcm01=(01)06920128200028(10)150211(21)B4(9999)02, ckqymc=上海汽车有限公司}, TraceNum=1, CompanyCode=6951361, state=1, DRSJ=2015-04-28 10:12:45, GuildCode=91A00002, ZCXX01=0151, PositionCode=xxldsewarew}];
+  if(returnData==""){
+  }else{
+	ckdData=returnData.CKDITEM[0].spcmList;
+  }
+  return ckdData;
+}
+
+//Excel导出
+function excelExport(){
+	var realColumns="cm:串码";
+	var url;
+	var realdata=[];
+	$(".case2").each(function(){
+		realdata.push({"cm":$(this).find("span").text()});
+	});
+	if(realdata!=""){
+		url = pubJson.O2OUrl+"/servlet/DownLoadExcel?pageTotal=1&filename=_cb8cedc7-18e3-48ef-ae2b-107ed2e4c554&columnsArr="+realColumns+"&t=" + Math.random()+"&data="+JSON.stringify(realdata);
+	}else{
+		url = pubJson.O2OUrl+"/servlet/DownLoadExcel?pageTotal=1&filename=_cb8cedc7-18e3-48ef-ae2b-107ed2e4c554&columnsArr="+realColumns+"&t=" + Math.random();
+	}
+	window.open(url);
+}
+</script>
+</html>

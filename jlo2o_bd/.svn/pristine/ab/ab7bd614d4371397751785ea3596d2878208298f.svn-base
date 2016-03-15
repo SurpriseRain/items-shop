@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>汽服云 - 超级管理员 - 更新全量索引数据</title>
+<link rel="stylesheet" type="text/css" href="/customer/qfy/css/backPub.css" />
+<script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/js/commons.js"></script>
+<script type="text/javascript" src="/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Public.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/shop-Basinfo.js"></script>
+<script type="text/javascript" src="/customer/qfy/js/pubJson.js"></script> 
+<script type="text/javascript" src="/js/json2.js"></script>
+<script type="text/javascript">
+function restart(){
+	var flag = confirm("确认全量更新索引数据?");
+	if(flag){
+		var url = "/SearchHandler/searchAllIndex.action";
+	  	var rData = visitService(url);
+	  	if(rData.STATE == 1){
+	  		alert("全量更新索引成功!");
+	  		window.location.reload();
+	  	} else {
+	  		alert("全量更新索引失败!");
+	  	}
+	} else {
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+	<div id="curPosition" style="width:98%">
+    	<a href="#">基础设置</a>
+    	<span>></span>
+    	<b>全量更新索引</b>
+	</div>
+	<div class="clera"></div>
+ 	<table class="single_table">
+		<tr class="title">
+			<td>
+				<b>全量更新索引</b>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<a href="javascript:void(0);" style="float: right;" class="bot Shot seach_bot" onclick="restart()">更新</a>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

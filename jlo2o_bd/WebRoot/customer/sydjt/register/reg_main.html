@@ -1,0 +1,490 @@
+<div class="small_header">
+    <div class="w12"><a href="/customer/sydjt/index.html"><img src="/customer/sydjt/images/logo02.png" /></a><h1>欢迎注册</h1></div>
+</div>
+<div class="reg_title_main">
+    <div class="w12"><ul><li id="person" class="xuan">个人</li><li class="" title="暂未开通!敬请期待">企业</li><li id="distributor" class="">分销商</li></ul></div>
+</div>
+
+<div class="reg_main">
+  <div class="w12 reg_info">
+  <div class="w10 reg_main_left">
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>用户名:</dt><dd class="w04"><input id="username" name="username" class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');checkOperator();" onKeyUp="value=value.replace(/[^\w\.\/]/ig,'')" onkeypress="return userName_onkeypress(event)" /><i class="fa fa-user"></i></dd><dd class="w06"><label>用户名不能为空。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>设置密码:</dt><dd class="w04"><input id="password" name="password" class="w12" type="password" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');checkPassword();" onKeyUp="value=value.replace(/[^\w\.\/]/ig,'')" onkeypress="return password_onkeypress(event)" /><i class="fa fa-unlock"></i></dd><dd class="w06"><label>6-20字符，建议字母，数字组合使用。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>确认密码:</dt><dd class="w04"><input id="repassword" name="repassword" class="w12" type="password" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');checkRepassword()" /><i class="fa fa-unlock"></i></dd><dd class="w06"><label>请再次输入密码。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>手机验证:</dt><dd class="w04"><input id="phone" name="phone" class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');checkPhone();" /><i class="fa fa-mobile-phone"></i></dd><dd class="w06"><label>请输入正确的手机号。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>短信验证码:</dt><dd class="w02"><input id="msgYzm" class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /></dd><dd class="w02"><a id="yzsj" class="yzsj" onclick="sendPhone()" >获取验证码（<b id="endtime" style="color: #090;"></b>）</a></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>绑定邮箱:</dt><dd class="w04"><input id="email" name="email" class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');checkEmail();" /><i class="fa fa-envelope-o"></i></dd><dd class="w06"><label>请绑定您的常用邮箱。</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02"><em>*</em>验证码:</dt><dd class="w02"><input id="userYzm" name="userYzm" class="w12" type="text" onfocus="$(this).addClass('xuan');" onblur="$(this).removeClass('xuan');" /></dd><dd class="w04"><img id="yzmimg"  onload="setCaptchaText()" onclick="javascript:refreshCaptchaImage()" class="yzm" src=""   border="0" style="cursor: pointer;" ><input type="hidden" id="realCaptcha" value=""><label class="right_msg" title="刷新验证码" onclick="javascript:refreshCaptchaImage()" style="cursor: pointer;float: right;">看不清？换一张</label></dd></dl>
+    <dl class="w12 public_form"><dt class="w02">&nbsp;</dt><dd class="w04"><input id="checkbox" type="checkbox" checked="checked" />我已经阅读<a class="font_blue">《电器服务云注册协议》</a></dd></dl>
+    <dl class="w12 public_form"><dt class="w02">&nbsp;</dt><dd class="w04"><input type="button" class="jl_btn btn_red w12 reg_bot" onclick="perfectSave()" value="免费注册"></input></dd></dl>
+  </div>
+  <div class="w02 reg_main_right">
+    <ul>
+      <li><a href="/customer/sydjt/register/login.html">已经注册，去登陆 > </a></li>
+      <li><img src="/customer/sydjt/images/footer_ewm.png" /></li>
+    </ul>
+  </div>
+  </div>
+</div>
+
+<style>
+.yzsj{
+display: inline-block;
+width: 135px;
+height: 30px;
+border: 1px solid #e4e4e4;
+background-color: #e4e4e4;
+color: #000;
+line-height: 28px;
+text-align: center;
+/*box-shadow: 3px 4px 3px #999;*/
+}
+.yzsj:hover{color: #FFF;background-color: #e84d1c;}
+</style>
+<script type="text/javascript">
+var ZC={};
+ZC.alertError = function(id,text){
+	//$("#"+id).focus();
+	$("#"+id).parent().next().html("<label class=\"error_msg\">"+text+"</label>");
+}
+ZC.alertRight = function(id,text){
+	if(text =="" || text == null){
+		$("#"+id).parent().next().html("<i class=\"fa fa-check\" style=\"left: 10px;color: #66FF00;\"></i>");
+	}else{
+		$("#"+id).parent().next().html(text);
+	}
+}
+//验证发送时间/s
+var count = 120;
+//验证码失效时间/s
+var outCount = 300;
+
+$(document).ready(function(){
+	$("#person").click(function(){
+		$(".registered").empty();
+		$(".registered").load("/customer/sydjt/register/reg_main.html");
+	});
+	$("#distributor").click(function(){
+		$(".registered").empty();
+		$(".registered").load("/customer/sydjt/register/reg_main_distributor.html");
+	});
+	//加载初始时间
+	$("#endtime").html(count);
+
+	refreshCaptchaImage();
+})
+var smsYzm=0;
+var smsFlag=0;
+function GetNumber(){
+	$("#endtime").html(count);
+	outCount--;
+	if(outCount > 0 && count==0) {
+		setTimeout(GetNumber, 1000);
+	}else if(outCount==0){
+		smsYzm=0;
+	}
+	if(count > 0) {
+	    count--;
+		setTimeout(GetNumber, 1000);
+	}else{
+		$("#endtime").html("0");
+		$(".yzsj").attr("onclick","sendPhone()");
+		$(".yzsj").attr("style","color: #000;");		
+	}
+}
+
+function sendPhone(){
+	//删除单击事件
+    $("#yzsj").removeAttr("onclick");
+	//验证发送时间/s
+	count = 120;
+	//验证码失效时间/s
+	outCount = 300;
+	//短信失效时间清0
+    smsYzm=0;
+	smsFlag=0;
+    if(!checkPhone()){
+		$(".yzsj").attr("onclick","sendPhone()");
+		return false;
+	};
+    //随机验证码
+	var yzm1=parseInt(Math.random()*10);
+	var yzm2=parseInt(Math.random()*10);
+	var yzm3=parseInt(Math.random()*10);
+	var yzm4=parseInt(Math.random()*10);
+	var shjyzm = yzm1+""+yzm2+""+yzm3+""+yzm4;
+	smsYzm=shjyzm;
+	var json={};
+	json.SJHM=$("#phone").val();	json.FSNR="您好，验证码为"+smsYzm+"（兴隆客服绝不会索要此验证码，切勿告知他人），请在页面中输入以完成验证,有效时间5分钟。"//有问题请致电400-6-6-5500转7
+	json.DJLX=8;
+	json.YWDH="";
+	json.ZCXX01=zcxx01;
+	//检查手机是否已注册
+	var url="/Register/selectSms.action?XmlData="+JSON.stringify(json);
+    var smscheck=visitService(url);
+	if(smscheck.flag=="1003"){
+		smsFlag=smscheck.flag;
+		alert("该手机号已被注册！")
+		$("#yzsj").attr("onclick","sendPhone()");
+		return false;
+	}
+
+	if(smsFlag==0){
+		//$(".yzsj").removeAttr("onclick");
+		$("#yzsj").attr("style","color: #999;");
+		GetNumber();
+	}else{
+		$("#yzsj").attr("onclick","sendPhone()");
+	}
+	//var xmlData=[];
+	if(smsYzm>0&&smsFlag==0){
+	//xmlData.push(json);
+    var url="/Register/insertSms.action?XmlData="+JSON.stringify(json);
+    visitService(url);
+  }
+}
+
+function refreshCaptchaImage(){
+	$("#realCaptcha").val("");
+	$("#yzmimg").attr("src","/servlet/CaptchaOutput?font=Helvetica&&fontsize=22&&min-width=150&&padding-x=5&&padding-y=5&&random="+Math.random());
+}
+function setCaptchaText(){
+	var data = visitService("/UserLogin/searchCaptcha.action");
+	var captchaText=data.captchaText;  
+	$("#realCaptcha").val(captchaText);
+}
+
+function checkPassword(){
+  	var password=$("#password").val();
+  	var str=/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/;
+	if(str.test(password) && password.length>5){
+		$("password").val(password);
+		ZC.alertRight("password","");
+		return true;
+	}else{
+		//$("#password").focus();
+		//alert("密码需为6位以上的数字字母组合！");
+		ZC.alertError("password","密码需为6位以上的数字、字母组合！");
+		return false;
+	}
+}
+
+//判断两次密码是否相同
+function checkRepassword(){
+	var password=$("#password").val();
+  	var repassword=$("#repassword").val();
+  	if(password != repassword || repassword.length<6){
+  		//alert("两次输入密码不同");
+  		//$("#password").focus();
+  		ZC.alertError("repassword","两次输入的密码不一致！");
+  		return false;
+  	}else{
+  		$("#repassword").val(repassword);
+  		ZC.alertRight("password","");
+  		ZC.alertRight("repassword","");
+  		return true;
+  	}
+}
+
+//判断用户名是否存在
+function checkOperator(){
+	if($("#username").val().length > 0){
+		var json = {};
+		json["RYDM"]=$("#username").val();
+		var url = "/Register/checkUserExist.action?json="+JSON.stringify(json);
+		var returnVal=visitService(url);
+		if(returnVal != "undefined"){
+			if(returnVal.num == "1"){
+				//$("#username").focus();
+				ZC.alertError("username","用户名已被注册！");
+				return false;
+			}else{
+				ZC.alertRight("username","");//("username","<i class=\"fa fa-check\" style=\"left: 10px;color: #66FF00;\"></i>");
+				return true;
+			}
+		}/***
+		ajaxQ({
+			"url" : url,
+			"callback" : function(returnVal){
+				if(returnVal != "undefined"){
+					if(returnVal.num == "1"){
+						$("#username").focus();
+						alert("用户已存在!");
+						return false;
+					}else{
+						return true;
+					}
+				}
+			}
+		});/***/
+	}else{
+		//$("#username").focus();
+		ZC.alertError("username","用户名不能为空！");
+		return false;
+	}
+}
+
+//判断输入项是否合法
+function checkNull(){
+    var flag = true;
+    /*
+	if($("#username").val().length == 0){
+		alert("请输入用户名");
+		flag=false;
+		return false;
+	}
+	if($("#password").val().length == 0){
+		alert("请输入密码");
+		flag=false;
+		return false;
+	}
+	if($("#repassword").val().length == 0){
+		alert("请确认密码");	
+		flag=false;
+		return false;
+	}
+	if($("#phone").val().length == 0){
+		alert("请输入手机号码");
+		flag=false;
+		return false;
+	}
+	if($("#email").val().length == 0){
+		alert("请输入邮箱地址");
+		flag=false;
+		return false;
+	}*/
+	var i = checkOperator()*checkPassword()*checkRepassword()*checkPhone()*checkEmail();
+	if(i == 1){
+		flag = true;
+	}else{
+		flag = false;
+	}
+	return flag;
+}
+
+function checkPhone(){
+	var isMobile=/^(?:13\d|15\d|18\d)\d{5}(\d{3}|\*{3})$/; //手机号码验证规则
+	if(!isMobile.test($("#phone").val())){
+		//alert("请正确填写手机号码,例如:13415764179");
+		//$("#phone").focus();
+		ZC.alertError("phone","请正确填写手机号码,例如:134****4179");
+		return false;
+	}else{
+		ZC.alertRight("phone","");
+		return true;
+	}
+}
+function checkTel(){
+	var isPhone=/^((0\d{2,3}))?(\d{7,8})(-(\d{3,}))?$/;   //座机验证规则
+	if(!isPhone.test($("#lxdh").val())){
+		//alert("请正确填写联系电话,例如:0104816048");
+		ZC.alertError("lxdh","请正确填写座机号码,例如:0598***4179");
+		return false;
+	}else{
+		ZC.alertRight("lxdh","");
+		return true;
+	}
+}
+
+function checkEmail(){
+		var email=/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+		if(!email.test($("#email").val())){
+			//alert("邮箱地址不合法！");
+			//$("#email").focus();
+			ZC.alertError("email","邮箱地址不合法！");
+			return false;
+		}else{
+			ZC.alertRight("email","");
+			return true;
+		}
+}
+function userName_onkeypress(event){   
+    if(event.keyCode==13)   
+    	$("#password").focus();   
+}  
+function password_onkeypress(event){  
+    if(event.keyCode==13)  
+    	$("#repassword").focus();  
+} 
+function passsword_onkeypress(event){  
+    if(event.keyCode==13)
+    	{
+    	$("#a2").blur(); 
+    	register();   
+    	}
+} 
+
+
+//注册完善方法
+function perfectSave(){
+    $(".reg_bot").removeAttr("onclick");
+	var flag = checkNull();
+	if(flag){
+	var realCaptcha= $("#realCaptcha").val().toLowerCase();
+	var userYzm= $("#userYzm").val().toLowerCase();
+	if($("#msgYzm").val()==""){
+		//alert("请输入短信验证码");
+		$("#msgYzm").parent().parent().find("label").remove();
+		$("#msgYzm").parent().parent().append("<label class=\"error_msg\">请输入短信验证码！</label>");
+		$(".reg_bot").attr("onclick","perfectSave()");
+		return false;
+	}
+	if(smsYzm!=$("#msgYzm").val()){
+		//alert("短信验证码错误");
+		$("#msgYzm").parent().parent().find("label").remove();
+		$("#msgYzm").parent().parent().append("<label class=\"error_msg\">短信验证码错误！</label>");
+		$(".reg_bot").attr("onclick","perfectSave()");
+		return false;
+	}else{
+		$("#msgYzm").parent().parent().find("label").remove();
+		$("#msgYzm").parent().parent().find("i").remove();
+		$("#msgYzm").parent().parent().append("<i class=\"fa fa-check\" style=\"left: 10px;color: #66FF00;\"></i>");
+	}
+	
+	if(userYzm==""||realCaptcha==""){
+		//alert("验证码不能为空");
+		$("#userYzm").parent().parent().find("label.error_msg").remove();
+		$("#userYzm").parent().parent().append("<label class=\"error_msg\">验证码不能为空！</label>");
+		$(".reg_bot").attr("onclick","perfectSave()");
+		return false;
+	}
+	if(userYzm!=realCaptcha){
+		//alert("验证码输入错误");
+		$("#userYzm").parent().parent().find("label.error_msg").remove();
+		$("#userYzm").parent().parent().append("<label class=\"error_msg\">验证码输入错误！</label>");
+		$(".reg_bot").attr("onclick","perfectSave()");
+		return false;
+	}else{
+		$("#userYzm").parent().parent().find("label.error_msg").remove();
+		$("#userYzm").parent().parent().find("i").remove();
+		$("#userYzm").parent().parent().append("<i class=\"fa fa-check\" style=\"left: 10px;color: #66FF00;\"></i>");
+	}
+	if(!$("#checkbox").is(":checked")){
+		//alert("请阅读并勾选电器服务云注册协议！");
+		$("#checkbox").parent().parent().find("label").remove();
+		$("#checkbox").parent().parent().append("<label class=\"error_msg\">请阅读并勾选电器服务云注册协议！</label>");
+		$(".reg_bot").attr("onclick","perfectSave()");
+		return false;
+	}else{
+		$("#checkbox").parent().parent().find("label").remove();
+	}
+	
+
+		//弹出遮罩层
+		openWait();
+
+		//先生成o2o账号
+		var userInfo = {};
+		userInfo["XTCZY01"] = $("#username").val();
+		userInfo["XTCZY02"] = $("#password").val();
+		userInfo["ZCXX02"] = $("#username").val();
+		userInfo["GSLX"] = "24";
+		userInfo["SJLY"] = "0";
+		userInfo["ZCGS01"]="4";
+		//生成O2O账号数据
+		url = "/Register/insertQuickRegister.action?XmlData="+JSON.stringify(userInfo);
+		var returnVal=visitService(url);
+		if(returnVal.state == "success"){
+			var zcxx01=returnVal.ZCXX01;
+		}else{
+			return false;
+		}
+				
+		//修改注册信息
+	 	var XmlData = {};
+	 	XmlData["SJLY"] = "0";
+	 	XmlData["ZCXX06"]=$("#phone").val();
+	 	XmlData["ZCXX55"]=$("#lxdh").val();
+	 	XmlData["ZCXX09"]=$("#email").val();
+	 	XmlData["XTCZY01"]=$("#username").val();
+	 	XmlData["ZCXX01"]=zcxx01;
+	 	//拼接图片
+	   	var fileArray=[];
+	   	var url="/Register/updateSytjtRegister.action?jmbj=1";
+	   	$.ajaxFileUpload({
+				type:"POST",
+				secureuri:false,
+				fileElementId:fileArray,
+				url:encodeURI(url),
+				data:{"XmlData":escape(JSON.stringify(XmlData))},
+				dataType:"text",
+				success: function(data) { 
+					//关闭遮罩层
+					top.closeWait();
+					
+					var json = jQuery.parseJSON(data);
+					var jsondata = json.data;
+					var data1=jsondata.state;
+					if(data1=="success"){
+					    var username = $.trim($("#username").val());
+					var password = $("#password").val();
+					var arr = [];
+					var o = {};
+					o["XTCZY01"] = username;
+					o["XTCZY02"] = password;
+					arr.push(o);
+					var users=arr;// modify by liuwx jhj  2014年8月5日10:53:39 初始化users
+					var data = visitService("/UserLogin/login.action?XmlData="
+							+ JSON.stringify(arr));
+					var loginState = data.state;
+					if (loginState == 1) {
+						alert("用户名有误!");
+						//$("#XTCZY01").focus();
+					} else if (loginState == 2) {
+						alert("密码错误!");
+						//$("#XTCZY02").focus();
+					} else if (loginState == 3) {
+							if (users != null) {
+									o.userName = $("#username").val();
+									o.passWord = $("#password").val();
+									users.push(o);
+							}
+							$.cookie("users", null, {
+								path : '/'
+							});
+							$.cookie("users", JSON.stringify(users), {
+								expires : 90,
+								path : '/'
+							});
+						}
+						else// modify by liuwx jhj  2014年8月5日10:53:39  不记录密码时候 清空 users
+						{
+							$.cookie("users", null, {
+								path : '/'
+							});
+						};
+						var userInfo = data.userInfo;
+						var updateDate = new Date();
+						updateDate.setTime(updateDate.getTime() + 1 * 24 * 60 * 60
+								* 1000);//超过1天,cookie需要重新更新
+						userInfo.UPDATETIME = updateDate.getTime();
+						$.cookie("userInfo", null, {
+							path : '/'
+						});
+						$.cookie("userInfo", JSON.stringify(userInfo), {
+							expires : 30,
+							path : '/'
+						});
+	 					//跳转到成功页面
+						url = "/customer/sydjt/index.html";//?ZCXX02="+escape(rydm);
+						window.location.href=url;
+					}else{
+						$(".reg_bot").attr("onclick","perfectSave()");
+						alert("保存失败!");
+					}
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					//关闭遮罩层
+					top.closeWait();
+					//alert(textStatus);
+					$(".reg_bot").attr("onclick","perfectSave()");
+					alert("注册失败！请重试。。。");
+			    }
+			});
+		//与数据库交互完毕
+	}else{
+		$(".reg_bot").attr("onclick","perfectSave()");
+	}
+}
+
+</script>
